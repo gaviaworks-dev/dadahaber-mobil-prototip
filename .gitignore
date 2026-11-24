@@ -1,0 +1,7 @@
+# Proje kuralı (kardeş depolarla aynı): tasks/ ve ekran görüntüleri git'e girmez; devir paketi ve referans görüntüler iç belgedir, açık depoya girmez.
+tasks/
+docs/kaynak/
+docs/referans/
+docs/screenshots/
+assets/gorsel/mock/
+.DS_Store
