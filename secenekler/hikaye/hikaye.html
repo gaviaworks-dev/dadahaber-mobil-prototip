@@ -19,7 +19,7 @@ html,body{background:#000}
 .kart{position:absolute;inset:0;background-size:cover;background-position:center;display:flex;flex-direction:column;justify-content:flex-end}
 .kart::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.55) 0,rgba(0,0,0,0) 22%,rgba(0,0,0,0) 45%,rgba(0,0,0,.88) 100%)}
 .kart.gorselsiz{background:radial-gradient(120% 70% at 100% 0%,rgba(254,204,23,.35),transparent 60%),#121212}
-.ic{position:relative;padding:0 var(--kenar) calc(var(--alt-guvenli) + 20px);color:#fff}
+.ic{position:relative;padding:0 var(--kenar) calc(var(--alt-guvenli) + 28px);color:#fff}
 .eyb{display:inline-flex;align-items:center;gap:var(--ikon-bosluk);font-size:12px;font-weight:var(--y-kalin);letter-spacing:.12em;text-transform:uppercase;color:var(--marka)}
 .ic h1{margin-top:12px;font-size:30px;line-height:1.12;font-weight:var(--y-kalin);letter-spacing:-.02em;text-wrap:pretty}
 .bilgi{margin-top:12px;display:flex;align-items:center;gap:14px;font-size:13px;color:rgba(255,255,255,.78);white-space:nowrap}
@@ -94,7 +94,7 @@ html,body{background:#000}
   var durum = Q.get('durum');
   if (durum === 'yukleniyor'){
     hy.innerHTML = '<div class="isk"><div class="p" style="top:62px;height:3px"></div><div class="p" style="top:78px;width:42%;height:36px;border-radius:var(--k-daire)"></div>' +
-      '<div class="donen"></div><div class="p" style="bottom:200px;width:30%;height:12px"></div><div class="p" style="bottom:150px;height:26px"></div><div class="p" style="bottom:118px;width:70%;height:26px"></div><div class="p" style="bottom:48px;height:52px;border-radius:var(--k-kontrol)"></div></div>';
+      '<div class="donen"></div><div class="p" style="bottom:172px;width:30%;height:12px"></div><div class="p" style="bottom:122px;height:26px"></div><div class="p" style="bottom:90px;width:70%;height:26px"></div><div class="p" style="bottom:62px;width:40%;height:12px"></div></div>';
     return;
   }
   if (durum === 'bos'){
@@ -112,7 +112,7 @@ html,body{background:#000}
     document.getElementById('kartlar').innerHTML = '<article class="kart' + (h.g ? '' : ' gorselsiz') + '"' + (h.g ? ' style="background-image:' + G(h.g) + '"' : '') + '><div class="ic">' +
       '<span class="eyb"><i class="fa-solid ' + k.ikon + '"></i>' + k.kat + '</span><h1>' + h.baslik + '</h1>' +
       '<div class="bilgi"><span><i class="fa-solid fa-user"></i>' + h.yazar + '</span><span><i class="fa-solid fa-clock"></i>' + h.sure + '</span></div>' +
-      '<div class="oku"><a class="ana" href="../detay/hd-b.html"><i class="fa-solid fa-book-open"></i>Haberi oku</a><button class="ik" type="button" aria-label="Kaydet"><i class="fa-solid fa-bookmark"></i></button><button class="ik" type="button" aria-label="Paylaş"><i class="fa-solid fa-share-nodes"></i></button></div></div></article>';
+      '</div></article>';
     document.getElementById('cizgiler').innerHTML = k.haberler.map(function(_, i){ return '<span><i style="width:' + (i < hi ? 100 : 0) + '%"></i></span>'; }).join('');
     document.getElementById('kimIkon').innerHTML = '<i class="fa-solid ' + k.ikon + '"></i>';
     document.getElementById('kimAd').textContent = k.kat;
