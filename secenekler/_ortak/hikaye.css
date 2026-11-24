@@ -1,0 +1,21 @@
+/* Hikâye şeridi · ortak bileşen (TEK YAZAR: lider). Her ana sayfa alternatifi aynı şeridi kullanır; yeri yerleşime göre değişir.
+   Fotoğraflı daire = kategori hikâyesi. Görülmemiş: marka sarısı halka. Görülen: ince gri halka, soluk ad.
+   Halka outline ile çizilir (araya giren boşluk zeminin rengini alır, her zeminde doğru görünür). Değerler yalnız marka.css değişkenleri. */
+.hk{display:flex;gap:14px;overflow-x:auto;scrollbar-width:none;scroll-snap-type:x proximity;scroll-padding-inline:var(--kenar);padding:8px var(--kenar) 10px}
+.hk::-webkit-scrollbar{display:none}
+.hk::after{content:"";flex:0 0 2px}
+.hk-o{flex:0 0 auto;width:66px;display:flex;flex-direction:column;align-items:center;gap:8px;scroll-snap-align:start;-webkit-tap-highlight-color:transparent}
+.hk-f{position:relative;width:58px;height:58px;margin:4px;border-radius:var(--k-daire);background-size:cover;background-position:center;background-color:var(--zemin-2);
+  outline:2.5px solid var(--marka);outline-offset:3px}
+.hk-f i{position:absolute;right:-6px;bottom:-6px;width:22px;height:22px;border-radius:var(--k-daire);display:grid;place-items:center;font-size:10px;
+  background:var(--marka);color:#121212;box-shadow:0 0 0 2.5px var(--hk-zemin,var(--zemin))}
+.hk-a{max-width:66px;font-size:12px;font-weight:var(--y-orta);color:var(--metin);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2}
+.hk-o.gor .hk-f{outline-color:var(--cizgi);outline-width:1.5px}
+.hk-o.gor .hk-f i{background:var(--zemin-2);color:var(--metin-3)}
+.hk-o.gor .hk-a{color:var(--metin-3)}
+.hk-o:active .hk-f{transform:scale(.94);transition:transform .12s}
+/* Koyu zemin üstünde (görsel ya da koyu bant) */
+.hk.koyu .hk-a{color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.45)}
+.hk.koyu .hk-o.gor .hk-a{color:rgba(255,255,255,.66)}
+.hk.koyu .hk-o.gor .hk-f{outline-color:rgba(255,255,255,.45)}
+@media (prefers-reduced-motion:reduce){.hk-o:active .hk-f{transform:none}}

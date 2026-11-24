@@ -1,0 +1,3 @@
+Mock görseller public depodan (dadahaber-prototip/assets/gorsel, picsum.photos, Unsplash lisanslı). Yalnızca seçenek önizlemeleri içindir; haber içeriğiyle ilgisizdir.
+spiker-kare.jpg: public depo assets/video/spiker-kare.jpg (Spiker yüzü).
+Logo: public depo assets/gorsel/logo (yeni "dada", #FECC17).

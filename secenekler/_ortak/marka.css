@@ -1,0 +1,19 @@
+/* Dada Haber Mobil · MARKA SABİTLERİ VE TASARIM DEĞERLERİ (TEK YAZAR: lider).
+   CLAUDE.md: değerler siteyle birebir aynı; ne daha keskin ne daha yuvarlak. Adlar public depo assets/css/degiskenler.css ile aynı.
+   Ekran dosyaları köşe, gölge ve ağırlık için yalnız bu değişkenleri kullanır; elle sayı yazılmaz.
+   Köşe: 8 iç/küçük · 12 düğme, giriş, etiket, çip · 16 kart ve görsel · 24 alt sayfa, pencere, büyük kap. Ayrıca yalnız %50 (tam daire) ve 999px (anahtar, ilerleme çubuğu).
+   Ağırlık: yalnız sitedeki üç dosya: 300 Light, 500 Medium, 800 ExtraBold. */
+@font-face{font-family:"Gilroy";src:url("../../assets/font/gilroy/Gilroy-Light.woff2") format("woff2");font-weight:300;font-display:swap}
+@font-face{font-family:"Gilroy";src:url("../../assets/font/gilroy/Gilroy-Medium.woff2") format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"Gilroy";src:url("../../assets/font/gilroy/Gilroy-ExtraBold.woff2") format("woff2");font-weight:800;font-display:swap}
+:root{
+  --yazi:"Gilroy",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
+  --k-ic:8px; --k-kontrol:12px; --k-kart:16px; --k-buyuk:24px;
+  --k-daire:50%; --k-cubuk:999px; /* yalnız tam daire; yalnız anahtar ve ilerleme çubuğu */
+  --golge-sm:0 1px 2px rgba(33,30,22,.04),0 2px 6px rgba(33,30,22,.05);
+  --golge-md:0 6px 22px rgba(33,30,22,.09);
+  --ikon-bosluk:8px;
+  --y-ince:300; --y-orta:500; --y-kalin:800;
+}
+html,body{font-family:var(--yazi);font-weight:var(--y-orta)}
+b,strong,h1,h2,h3,h4,h5,h6,th{font-weight:var(--y-kalin)}

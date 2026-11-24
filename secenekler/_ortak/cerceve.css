@@ -1,0 +1,70 @@
+/* Dada Haber Mobil · seçenek ekranlarının ortak tabanı (TEK YAZAR: lider).
+   Her alternatif ekranı 390×844 bir telefon ekranıdır; iframe içinde gösterilir.
+   Tema: ?tema=koyu → html[data-tema="koyu"]. Renk ve logo Dada Haber'in; yazı tipi, köşe ve boşluk ölçeği henüz seçilmedi (CLAUDE.md açık konular),
+   bu yüzden burada sistem yazı tipi ve nötr ölçek var. Alternatifler kendi görsel dilini bu değişkenlerin üstüne kurar. */
+@import url("../../assets/vendor/fontawesome-6.5.2/css/all.min.css");
+
+:root{
+  --marka:#FECC17; --marka-rgb:254,204,23; --marka-400:#E5B815; --marka-koyu:#514107;
+  --marka-metin:#7A620B; --marka-25:#FFF2C5; --marka-10:#F7F7F9;
+  --siyah:#121212; --beyaz:#FFFFFF;
+  --zemin:#FFFFFF; --zemin-2:#F4F4F5; --yuzey:#FFFFFF; --yuzey-2:#F7F7F8;
+  --metin:#121212; --metin-2:#494949; --metin-3:#6B6B6B; --cizgi:#E5E5E7;
+  --anlik:#C8102E; --artis:#19750A; --azalis:#C8102E;
+  --cam:rgba(18,18,18,.55); --cam-cizgi:rgba(255,255,255,.22);
+  --ortu:rgba(0,0,0,.45);
+  --golge:0 1px 2px rgba(0,0,0,.05),0 4px 14px rgba(0,0,0,.06);
+  --yazi:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,system-ui,sans-serif;
+  --ust-guvenli:54px; --alt-guvenli:34px; --kenar:16px; --dokun:44px;
+  --logo:url("../../assets/gorsel/logo/dada.svg");
+  color-scheme:light;
+}
+html[data-tema="koyu"]{
+  --marka-metin:#FECC17; --marka-25:rgba(254,204,23,.16); --marka-10:rgba(254,204,23,.08);
+  --zemin:#0E0E10; --zemin-2:#17171A; --yuzey:#1C1C20; --yuzey-2:#232328;
+  --metin:#F3F3F1; --metin-2:#CACAC6; --metin-3:#9A9A96; --cizgi:#2D2D32;
+  --anlik:#FF5A6E; --artis:#5BD16B; --azalis:#FF6B6B;
+  --golge:0 1px 2px rgba(0,0,0,.4),0 4px 14px rgba(0,0,0,.35);
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:390px;height:844px;overflow:hidden;background:var(--zemin);color:var(--metin);font-family:var(--yazi);
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-webkit-tap-highlight-color:transparent}
+body{position:relative}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+img{display:block;max-width:100%}
+.ekran{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;overscroll-behavior:contain}
+.ekran::-webkit-scrollbar{display:none}
+
+/* Durum çubuğu (iOS çizimi; Android notu seçenek sayfasında) */
+.dc{position:absolute;left:0;right:0;top:0;height:var(--ust-guvenli);z-index:90;display:flex;align-items:center;justify-content:space-between;
+  padding:0 30px 0 38px;font-size:16px;font-weight:600;letter-spacing:-.01em;color:var(--metin);pointer-events:none}
+.dc .dc-sag{display:flex;gap:6px;font-size:13px;align-items:center}
+.dc .ada{position:absolute;left:50%;top:11px;width:124px;height:36px;margin-left:-62px;border-radius:20px;background:#000}
+body[data-durum="acik"] .dc{color:#fff}
+body[data-durum="koyu"] .dc{color:#121212}
+/* Ana ekran çizgisi */
+.ec{position:absolute;left:50%;bottom:8px;width:134px;height:5px;margin-left:-67px;border-radius:3px;background:var(--metin);opacity:.9;z-index:95;pointer-events:none}
+body[data-ec="acik"] .ec{background:#fff}
+
+/* Ortak yardımcılar */
+.gr{background-size:cover;background-position:center;background-color:var(--zemin-2)} /* görsel: div + arka plan (CLAUDE.md) */
+.logo{display:inline-block;height:26px;aspect-ratio:2.97;background:var(--logo) center/contain no-repeat}
+.tek{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.iki{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.uc{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.ks{display:flex;overflow-x:auto;scrollbar-width:none;scroll-snap-type:x mandatory;scroll-padding-inline:var(--kenar)} /* kaydırma yerine otururken kenar boşluğu korunur */
+.ks::-webkit-scrollbar{display:none}
+.ks>*{scroll-snap-align:start;flex:0 0 auto}
+.ik{display:inline-flex;align-items:center;gap:8px} /* ikon + metin: aralık her yerde 8px */
+.tnum{font-variant-numeric:tabular-nums}
+.canli-nokta{width:8px;height:8px;border-radius:50%;background:var(--anlik);display:inline-block;position:relative}
+.canli-nokta::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--anlik);animation:nabiz 1.6s ease-out infinite}
+@keyframes nabiz{from{transform:scale(1);opacity:.7}to{transform:scale(3);opacity:0}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* Denetim kipi (?tam=1): sayfanın tamamı tek görüntüde */
+html.tam,html.tam body{height:auto;overflow:visible}
+html.tam .ekran{position:relative;inset:auto;overflow:visible}
