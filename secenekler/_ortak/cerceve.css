@@ -39,10 +39,18 @@ img{display:block;max-width:100%}
 .ekran::-webkit-scrollbar{display:none}
 
 /* Durum çubuğu (iOS çizimi; Android notu seçenek sayfasında) */
-.dc{position:absolute;left:0;right:0;top:0;height:var(--ust-guvenli);z-index:90;display:flex;align-items:center;justify-content:space-between;
-  padding:0 30px 0 38px;font-size:16px;font-weight:600;letter-spacing:-.01em;color:var(--metin);pointer-events:none}
-.dc .dc-sag{display:flex;gap:6px;font-size:13px;align-items:center}
-.dc .ada{position:absolute;left:50%;top:11px;width:124px;height:36px;margin-left:-62px;border-radius:20px;background:#000}
+/* Telefonun kendi parçası (marka değerleri dışında): iOS sistem yazı tipi ve ölçüleri */
+.dc{position:absolute;left:0;right:0;top:0;height:var(--ust-guvenli);z-index:90;display:flex;align-items:center;
+  font-family:-apple-system,"SF Pro Text","SF Pro Display",BlinkMacSystemFont,"Helvetica Neue",sans-serif;color:var(--metin);pointer-events:none;-webkit-font-smoothing:antialiased}
+.dc{justify-content:space-between}
+.dc .dc-sol,.dc .dc-sag{width:calc((100% - 125px) / 2);flex:none;display:flex;align-items:center;justify-content:center;padding-top:3px}
+.dc .dc-sol{padding-left:6px}
+.dc .dc-sag{gap:7px;padding-right:4px}
+.dc .dc-saat{font-size:17px;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.dc svg{display:block;fill:currentColor}
+.dc .dc-pil-c{opacity:.4}
+.dc .ada{flex:none}
+.dc .ada{position:absolute;left:50%;top:11px;width:125px;height:37px;margin-left:-62.5px;border-radius:19px;background:#000}
 body[data-durum="acik"] .dc{color:#fff}
 body[data-durum="koyu"] .dc{color:#121212}
 /* Ana ekran çizgisi */
