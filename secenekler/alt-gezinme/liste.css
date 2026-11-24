@@ -1,0 +1,14 @@
+/* Alt gezinme denemesi · arkadaki sade liste (TEK YAZAR: lider) */
+.lb{padding:calc(var(--ust-guvenli) + 6px) var(--kenar) 8px}
+.lb .logo{height:24px}
+.lb-t{margin-top:14px}
+.lb h1{font-size:34px;line-height:1.05;font-weight:var(--y-kalin);letter-spacing:-.025em}
+.lb p{margin-top:4px;font-size:14px;color:var(--metin-3)}
+.ls{list-style:none;padding:4px var(--kenar) 0}
+.sat{display:grid;grid-template-columns:minmax(0,1fr) 84px;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--cizgi)}
+.sat-k{font-size:12px;font-weight:var(--y-kalin);color:var(--marka-metin);letter-spacing:.01em}
+.sat h2{font-size:16.5px;line-height:1.28;font-weight:var(--y-kalin);letter-spacing:-.01em;margin:4px 0 6px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.sat-s{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--metin-3)}
+.sat-s i{font-size:10px}
+.sat-g{width:84px;height:84px;border-radius:var(--k-kart)}
+.pay{height:180px}

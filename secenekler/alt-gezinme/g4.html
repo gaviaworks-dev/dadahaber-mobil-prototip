@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>G4 · Ortada Spiker</title>
+<link rel="stylesheet" href="../_ortak/cerceve.css">
+<link rel="stylesheet" href="../_ortak/marka.css">
+<link rel="stylesheet" href="liste.css">
+<script src="../_ortak/icerik.js"></script>
+<script src="../_ortak/cerceve.js"></script>
+<style>
+/* G4 · Orta eylem düğmesi (TikTok/Instagram'ın orta düğmesi; Le Monde Oku · Dinle · İzle): ortada çubuktan taşan sarı Spiker düğmesi,
+   yanında 4 sekme. Seçili sekme: ikon altında kısa sarı çizgi. Spiker canlıyken düğmenin çevresinde yayılan halka. */
+.g4{position:absolute;left:0;right:0;bottom:0;z-index:80;height:calc(64px + var(--alt-guvenli) - 6px);background:var(--zemin);border-top:1px solid var(--cizgi);
+  display:grid;grid-template-columns:1fr 1fr 92px 1fr 1fr;padding:0 6px calc(var(--alt-guvenli) - 6px)}
+.g4 a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;font-size:10.5px;font-weight:var(--y-orta);color:var(--metin-3);white-space:nowrap;position:relative}
+.g4 a i{font-size:20px}
+.g4 a.etkin{color:var(--metin);font-weight:var(--y-kalin)}
+.g4 a.etkin::after{content:"";position:absolute;bottom:4px;width:18px;height:3px;border-radius:var(--k-cubuk);background:var(--marka)}
+.spk{position:relative;align-self:start;justify-self:center;margin-top:-26px;width:72px;height:72px;border-radius:var(--k-daire);background:var(--marka);display:grid;place-items:center;
+  border:5px solid var(--zemin);box-shadow:0 6px 18px rgba(254,204,23,.45)}
+.spk .yuz{width:50px;height:50px;border-radius:var(--k-daire);border:2px solid #121212}
+.spk .oyn{position:absolute;right:-2px;bottom:-2px;width:24px;height:24px;border-radius:var(--k-daire);background:#121212;color:#FECC17;display:grid;place-items:center;font-size:9px;border:2px solid var(--zemin)}
+.spk::before{content:"";position:absolute;inset:-5px;border-radius:var(--k-daire);border:2px solid var(--marka);animation:halka 2s ease-out infinite}
+@keyframes halka{from{transform:scale(1);opacity:.8}to{transform:scale(1.35);opacity:0}}
+.spk-e{position:absolute;bottom:calc(var(--alt-guvenli) - 2px);left:50%;transform:translateX(-50%);font-size:10.5px;font-weight:var(--y-kalin);color:var(--metin);white-space:nowrap}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"><div id="icerik"></div></div>
+<nav class="g4" aria-label="Alt gezinme">
+  <a class="etkin" data-sekme><i class="fa-solid fa-house"></i>Bugün</a>
+  <a data-sekme><i class="fa-solid fa-bolt"></i>Son Dakika</a>
+  <button class="spk" type="button" aria-label="Spiker: 16.00 Bülteni"><span class="yuz gr" data-g="spiker-kare"></span><span class="oyn"><i class="fa-solid fa-play"></i></span></button>
+  <a data-sekme><i class="fa-solid fa-mobile-screen-button"></i>Akış</a>
+  <a data-sekme><i class="fa-solid fa-circle-user"></i>Sen</a>
+  <span class="spk-e">Spiker</span>
+</nav>
+<script src="liste.js"></script>
+<script>document.querySelectorAll('[data-sekme]').forEach(function(a){ a.addEventListener('click',function(){ document.querySelectorAll('[data-sekme]').forEach(function(b){ b.classList.toggle('etkin', b===a); }); }); });</script>
+</body>
+</html>

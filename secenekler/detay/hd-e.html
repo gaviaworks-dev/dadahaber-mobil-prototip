@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>HD-E · Hikâye kartları</title>
+<link rel="stylesheet" href="../_ortak/cerceve.css">
+<link rel="stylesheet" href="../_ortak/marka.css">
+<script src="../_ortak/icerik.js"></script>
+<script src="../_ortak/icerik-ek.js"></script>
+<script src="../_ortak/cerceve.js"></script>
+<style>
+/* HD-E · Hikâye kartları (BBC "Ten to Watch" ve Espresso: sınırlı, kaydırarak/dokunarak ilerleyen kartlar · Instagram hikâye kalıbı).
+   Haber 6 tam ekran karta bölünür; sağa dokun ileri, sola dokun geri, basılı tut duraklat. Üstte ilerleme çizgileri. */
+body{background:#121212}
+.hk{position:absolute;inset:0;overflow:hidden;background:#121212}
+.kart{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:0 20px calc(var(--alt-guvenli) + 22px);
+  opacity:0;transform:scale(1.02);transition:opacity .35s ease,transform .45s ease;pointer-events:none;isolation:isolate;overflow:hidden}
+.kart.etkin{opacity:1;transform:none;pointer-events:auto}
+.kart .zemin{position:absolute;inset:0;z-index:-2;background-size:cover;background-position:center}
+.kart .ortu{position:absolute;inset:0;z-index:-1}
+.koyu-k{color:#fff}
+.acik-k{color:var(--metin);background:var(--zemin)}
+.sari-k{color:#121212;background:#FECC17}
+
+/* üst: ilerleme + başlık satırı */
+.ust{position:absolute;left:0;right:0;top:0;z-index:30;padding:calc(var(--ust-guvenli) + 2px) 12px 0;pointer-events:none}
+.cizgiler{display:flex;gap:4px;padding:0 4px}
+.cizgiler span{flex:1;height:3px;border-radius:var(--k-cubuk);background:rgba(255,255,255,.32);overflow:hidden}
+.cizgiler span i{display:block;height:100%;width:0;background:#fff}
+.cizgiler span.bitti i{width:100%}
+.cizgiler span.simdi i{animation:dol 7s linear forwards}
+.durdu .cizgiler span.simdi i{animation-play-state:paused}
+@keyframes dol{to{width:100%}}
+.satir{margin-top:10px;display:flex;align-items:center;gap:10px;color:#fff;pointer-events:auto}
+.satir .rozet{width:36px;height:36px;border-radius:var(--k-daire);background:#FECC17;display:grid;place-items:center;flex:none}
+.satir .rozet span{width:26px;height:9px;background:url("../../assets/gorsel/logo/dada-koyu.svg") center/contain no-repeat}
+.satir .t{min-width:0;flex:1;line-height:1.2}
+.satir .t b{display:block;font-size:14px;font-weight:var(--y-kalin)}
+.satir .t small{font-size:12px;opacity:.75;white-space:nowrap}
+.satir button{width:44px;height:44px;border-radius:var(--k-daire);display:grid;place-items:center;color:inherit;font-size:18px}
+body.ust-koyu .cizgiler span{background:rgba(18,18,18,.18)}
+body.ust-koyu .cizgiler span i{background:#121212}
+body.ust-koyu .satir{color:#121212}
+html[data-tema="koyu"] body.ust-acikk .cizgiler span{background:rgba(255,255,255,.22)}
+
+/* kart içerikleri */
+.etiket{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 12px;border-radius:var(--k-kontrol);font-size:12.5px;font-weight:var(--y-kalin);letter-spacing:.06em;text-transform:uppercase;align-self:flex-start}
+.koyu-k .etiket{background:rgba(255,255,255,.14);color:#fff;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.koyu-k .etiket i{color:#FECC17}
+.sari-k .etiket{background:#121212;color:#FECC17}
+.acik-k .etiket{background:var(--marka-25);color:var(--marka-metin)}
+.k1 h1{margin-top:14px;font-size:34px;line-height:1.08;letter-spacing:-.03em;font-weight:var(--y-kalin);text-wrap:pretty}
+.k1 .bil{margin-top:14px;font-size:13.5px;opacity:.8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.k1 .ortu{background:linear-gradient(180deg,rgba(10,10,10,.6),rgba(10,10,10,0) 24%),linear-gradient(0deg,rgba(10,10,10,.96) 8%,rgba(10,10,10,.45) 52%,rgba(10,10,10,.15) 80%)}
+.buyuk{margin-top:16px;font-size:27px;line-height:1.22;letter-spacing:-.02em;font-weight:var(--y-kalin);text-wrap:pretty}
+.ol{list-style:none;margin-top:18px;display:grid;gap:14px;counter-reset:s}
+.ol li{counter-increment:s;display:grid;grid-template-columns:44px minmax(0,1fr);gap:12px;align-items:start;font-size:20px;line-height:1.3;font-weight:var(--y-kalin)}
+.ol li::before{content:counter(s);width:44px;height:44px;border-radius:var(--k-kart);background:#121212;color:#FECC17;display:grid;place-items:center;font-size:18px;font-weight:var(--y-kalin)}
+.k3{background:#121212}
+.k3 .tirnak{font-size:96px;line-height:.6;font-weight:var(--y-kalin);color:#FECC17;height:52px}
+.k4 .ik{width:64px;height:64px;border-radius:var(--k-buyuk);background:var(--marka);color:#121212;display:grid;place-items:center;font-size:26px;margin-bottom:22px}
+.k5 .ortu{background:linear-gradient(180deg,rgba(10,10,10,.55),rgba(10,10,10,0) 24%),linear-gradient(0deg,rgba(10,10,10,.97) 30%,rgba(10,10,10,.6) 70%,rgba(10,10,10,.3))}
+.k4,.k6{justify-content:center;padding-top:calc(var(--ust-guvenli) + 70px)}
+.dev{position:absolute;left:18px;top:calc(var(--ust-guvenli) + 96px);font-size:150px;line-height:.8;font-weight:var(--y-kalin);letter-spacing:-.06em;color:#121212}
+.dev small{font-size:44px;letter-spacing:-.02em;margin-left:6px}
+.taraf{margin-top:14px;padding:16px;border-radius:var(--k-buyuk);background:rgba(255,255,255,.1);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.taraf b{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:var(--y-kalin);letter-spacing:.08em;text-transform:uppercase;color:#FECC17}
+.taraf p{margin-top:8px;font-size:16.5px;line-height:1.45;font-weight:var(--y-orta)}
+.k6{background:var(--zemin-2)}
+.takvim{margin-top:16px;display:grid;gap:10px}
+.takvim div{display:flex;align-items:center;gap:12px;min-width:0;font-size:15px;font-weight:var(--y-kalin)}
+.takvim i{width:36px;height:36px;border-radius:var(--k-kontrol);background:var(--marka-25);color:var(--marka-metin);display:grid;place-items:center;font-size:14px;flex:none}
+.takvim span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.k6 .not{margin-top:16px;font-size:16px;line-height:1.5;color:var(--metin-2)}
+.dugmeler{margin-top:22px;display:flex;gap:10px}
+.dg{height:54px;border-radius:var(--k-kart);display:inline-flex;align-items:center;justify-content:center;gap:10px;font-size:15.5px;font-weight:var(--y-kalin);white-space:nowrap}
+.dg.ana{flex:1;background:var(--metin);color:var(--zemin)}
+.dg.ikinci{padding:0 18px;background:var(--marka);color:#121212}
+.sonraki{margin-top:14px;display:grid;grid-template-columns:56px minmax(0,1fr) 20px;gap:12px;align-items:center;padding:10px;border-radius:var(--k-kart);background:var(--yuzey);border:1px solid var(--cizgi)}
+.sonraki .gr{width:56px;height:56px;border-radius:var(--k-kontrol)}
+.sonraki small{display:block;font-size:11.5px;font-weight:var(--y-kalin);letter-spacing:.08em;text-transform:uppercase;color:var(--marka-metin)}
+.sonraki b{display:block;margin-top:3px;font-size:14.5px;line-height:1.25;font-weight:var(--y-kalin);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sonraki>i{color:var(--metin-3)}
+
+/* dokunma bölgeleri */
+.bolge{position:absolute;top:120px;bottom:0;z-index:20}
+.bolge.geri{left:0;width:30%}
+.bolge.ileri{right:0;width:70%}
+.kart .dugmeler,.kart .sonraki{position:relative;z-index:25}
+
+/* denetim kipi: kartlar alt alta */
+html.tam .hk{position:relative;inset:auto}
+html.tam .kart{position:relative;inset:auto;height:844px;opacity:1;transform:none;margin-bottom:8px}
+html.tam .bolge,html.tam .ust{display:none}
+</style>
+</head>
+<body data-durum="acik" data-ec="acik">
+<div class="hk" id="hk"></div>
+<div class="ust" id="ust">
+  <div class="cizgiler" id="cizgiler"></div>
+  <div class="satir">
+    <span class="rozet" aria-hidden="true"><span></span></span>
+    <span class="t"><b>Dada Haber</b><small id="ust-alt"></small></span>
+    <button type="button" aria-label="Paylaş"><i class="fa-solid fa-arrow-up-from-bracket"></i></button>
+    <button type="button" aria-label="Kapat"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+</div>
+<button class="bolge geri" id="geri" type="button" aria-label="Önceki kart"></button>
+<button class="bolge ileri" id="ileri" type="button" aria-label="Sonraki kart"></button>
+
+<script>
+(function(){
+  var d = D.detay, $ = function(id){ return document.getElementById(id); };
+  function ilk(t){ var m = t.match(/^.*?[.?!](\s|$)/); return m ? m[0].trim() : t; }
+  var taraflar = d.govde.filter(function(b){ return b.p; });
+  var kartlar = [
+    { cls: 'koyu-k k1', ust: 'acik', html: '<div class="zemin" style="background-image:' + G(d.g) + '"></div><div class="ortu"></div>' +
+      '<span class="etiket"><i class="fa-solid ' + d.ikon + '"></i>' + d.kat + '</span><h1>' + d.baslik + '</h1>' +
+      '<div class="bil">' + d.yazar + ' · ' + d.tarih + ' · ' + d.saat + '</div>' },
+    { cls: 'sari-k k2', ust: 'koyu', html: '<div class="dev" aria-hidden="true">15<small>sn</small></div><span class="etiket"><i class="fa-solid fa-stopwatch"></i>15 saniyede</span><ol class="ol">' +
+      d.ozet.map(function(o){ return '<li>' + o + '</li>'; }).join('') + '</ol>' },
+    { cls: 'koyu-k k3', ust: 'acik', html: '<div class="tirnak">“</div><span class="etiket"><i class="fa-solid fa-circle-exclamation"></i>Neden önemli?</span><p class="buyuk">' + d.nedenOnemli + '</p>' },
+    { cls: 'acik-k k4', ust: 'tema', html: '<div class="ik"><i class="fa-solid fa-wallet"></i></div><span class="etiket"><i class="fa-solid fa-user"></i>Bana etkisi</span><p class="buyuk">' + d.banaEtkisi + '</p>' },
+    { cls: 'koyu-k k5', ust: 'acik', html: '<div class="zemin" style="background-image:' + G('tbmm') + '"></div><div class="ortu"></div>' +
+      '<span class="etiket"><i class="fa-solid fa-scale-balanced"></i>Taraflar ne istiyor?</span>' +
+      '<div class="taraf"><b><i class="fa-solid fa-helmet-safety"></i>İşçi tarafı</b><p>' + ilk(taraflar[2].p) + '</p></div>' +
+      '<div class="taraf"><b><i class="fa-solid fa-briefcase"></i>İşveren tarafı</b><p>' + ilk(taraflar[3].p) + '</p></div>' },
+    { cls: 'acik-k k6', ust: 'tema', html: '<span class="etiket"><i class="fa-solid fa-calendar-days"></i>Bundan sonra</span>' +
+      '<div class="takvim"><div><i class="fa-solid fa-people-group"></i><span>4 Aralık · İlk toplantı, Ankara</span></div>' +
+      '<div><i class="fa-solid fa-gavel"></i><span>Aralık son haftası · Karar bekleniyor</span></div>' +
+      '<div><i class="fa-solid fa-calendar-check"></i><span>1 Ocak 2027 · Yeni ücret geçerli</span></div></div>' +
+      '<p class="not">' + d.bundanSonra + '</p>' +
+      '<div class="dugmeler"><a class="dg ana"><i class="fa-solid fa-book-open"></i>Tam metni oku</a><a class="dg ikinci" aria-label="Dinle"><i class="fa-solid fa-headphones"></i>' + d.dinle + '</a></div>' +
+      '<a class="sonraki"><span class="gr" style="background-image:' + G(d.ilgili[0].g) + '"></span><span><small>Sıradaki haber</small><b>' + d.ilgili[0].baslik + '</b></span><i class="fa-solid fa-chevron-right"></i></a>' }
+  ];
+  $('hk').innerHTML = kartlar.map(function(k){ return '<section class="kart ' + k.cls + '">' + k.html + '</section>'; }).join('');
+  $('cizgiler').innerHTML = kartlar.map(function(){ return '<span><i></i></span>'; }).join('');
+  var el = [].slice.call(document.querySelectorAll('.kart')), cz = [].slice.call($('cizgiler').children);
+  var q = new URLSearchParams(location.search), sira = Math.min(el.length - 1, Math.max(0, (+q.get('kart') || 1) - 1));
+  var koyuTema = document.documentElement.getAttribute('data-tema') === 'koyu';
+  function goster(i){
+    sira = Math.max(0, Math.min(el.length - 1, i));
+    el.forEach(function(k, j){ k.classList.toggle('etkin', j === sira); });
+    cz.forEach(function(c, j){ c.className = j < sira ? 'bitti' : (j === sira ? 'simdi' : ''); var ii = c.firstChild; ii.style.animation = 'none'; ii.offsetWidth; ii.style.animation = ''; });
+    var u = kartlar[sira].ust; if (u === 'tema') u = koyuTema ? 'acik' : 'koyu';
+    document.body.classList.toggle('ust-koyu', u === 'koyu');
+    document.body.setAttribute('data-durum', u === 'koyu' ? 'koyu' : 'acik');
+    document.body.setAttribute('data-ec', u === 'koyu' ? '' : 'acik');
+    $('ust-alt').textContent = d.kat + ' · ' + (sira + 1) + ' / ' + el.length;
+  }
+  $('ileri').onclick = function(){ goster(sira + 1); };
+  $('geri').onclick = function(){ goster(sira - 1); };
+  cz.forEach(function(c){ c.firstChild.addEventListener('animationend', function(){ if (sira < el.length - 1) goster(sira + 1); }); });
+  /* basılı tut: duraklat */
+  ['ileri', 'geri'].forEach(function(id){
+    $(id).addEventListener('pointerdown', function(){ document.body.classList.add('durdu'); });
+    ['pointerup', 'pointerleave', 'pointercancel'].forEach(function(t){ $(id).addEventListener(t, function(){ document.body.classList.remove('durdu'); }); });
+  });
+  if (q.get('dur') === '1' || document.documentElement.classList.contains('tam')) document.body.classList.add('durdu');
+  goster(sira);
+})();
+</script>
+</body>
+</html>

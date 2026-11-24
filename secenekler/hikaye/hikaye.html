@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Hikâye görüntüleyici</title>
+<link rel="stylesheet" href="../_ortak/cerceve.css">
+<link rel="stylesheet" href="../_ortak/marka.css">
+<script src="../_ortak/icerik.js"></script>
+<script src="../_ortak/icerik-ek.js"></script>
+<script src="../_ortak/cerceve.js"></script>
+<style>
+/* Hikâye görüntüleyici (TEK YAZAR: lider). Eski Dada Haber uygulamasındaki kategori hikâyelerinin yeni tasarım dilindeki hali.
+   Yapı: Instagram/BBC hikâye kalıbı. Kategorinin günün haberleri tek tek kart; üstte ilerleme çizgileri; sağa dokun ileri, sola geri,
+   basılı tut dur, aşağı çek kapat; kategori bitince sıradaki kategori. Her iki temada koyu (tam ekran medya). Durumlar: ?durum=yukleniyor · ?durum=bos */
+html,body{background:#000}
+.hy{position:absolute;inset:0;overflow:hidden;background:#000;transition:transform .25s ease,border-radius .25s ease}
+.hy.cek{transition:none}
+.kart{position:absolute;inset:0;background-size:cover;background-position:center;display:flex;flex-direction:column;justify-content:flex-end}
+.kart::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.55) 0,rgba(0,0,0,0) 22%,rgba(0,0,0,0) 45%,rgba(0,0,0,.88) 100%)}
+.kart.gorselsiz{background:radial-gradient(120% 70% at 100% 0%,rgba(254,204,23,.35),transparent 60%),#121212}
+.ic{position:relative;padding:0 var(--kenar) calc(var(--alt-guvenli) + 20px);color:#fff}
+.eyb{display:inline-flex;align-items:center;gap:var(--ikon-bosluk);font-size:12px;font-weight:var(--y-kalin);letter-spacing:.12em;text-transform:uppercase;color:var(--marka)}
+.ic h1{margin-top:12px;font-size:30px;line-height:1.12;font-weight:var(--y-kalin);letter-spacing:-.02em;text-wrap:pretty}
+.bilgi{margin-top:12px;display:flex;align-items:center;gap:14px;font-size:13px;color:rgba(255,255,255,.78);white-space:nowrap}
+.bilgi span{display:inline-flex;align-items:center;gap:6px}
+.bilgi i{color:var(--marka);font-size:11px}
+.oku{margin-top:20px;display:flex;gap:10px}
+.oku a,.oku button{height:52px;border-radius:var(--k-kontrol);display:inline-flex;align-items:center;justify-content:center;gap:var(--ikon-bosluk);font-size:15px;font-weight:var(--y-kalin)}
+.oku .ana{flex:1;background:var(--marka);color:#121212}
+.oku .ik{width:52px;background:rgba(255,255,255,.14);color:#fff;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+/* üst */
+.ust{position:absolute;left:0;right:0;top:0;padding:calc(var(--ust-guvenli) + 2px) 8px 0 var(--kenar);z-index:5;color:#fff}
+.cizgiler{display:flex;gap:4px}
+.cizgiler span{flex:1;height:3px;border-radius:var(--k-cubuk);background:rgba(255,255,255,.32);overflow:hidden}
+.cizgiler span i{display:block;height:100%;width:0;background:#fff;border-radius:var(--k-cubuk)}
+.kim{margin-top:10px;display:flex;align-items:center;gap:10px}
+.kim .av{width:36px;height:36px;border-radius:var(--k-daire);display:grid;place-items:center;background:var(--marka);color:#121212;font-size:14px;flex:none}
+.kim b{font-size:15px;font-weight:var(--y-kalin)}
+.kim small{display:block;font-size:12px;color:rgba(255,255,255,.72)}
+.kim .sag{margin-left:auto;display:flex}
+.kim .sag button{width:44px;height:44px;display:grid;place-items:center;color:#fff;font-size:18px}
+/* dokunma alanları */
+.dok{position:absolute;top:120px;bottom:170px;z-index:4}
+.dok.geri{left:0;width:33%} .dok.ileri{right:0;width:67%}
+/* sıradaki kategori geçişi */
+.gecis{position:absolute;inset:0;z-index:6;display:grid;place-items:center;background:#000;color:#fff;opacity:0;pointer-events:none;transition:opacity .25s}
+.gecis.ac{opacity:1}
+.gecis div{text-align:center}
+.gecis .av{width:72px;height:72px;margin:0 auto 12px;border-radius:var(--k-daire);background-size:cover;background-position:center;outline:2.5px solid var(--marka);outline-offset:3px}
+.gecis b{font-size:18px;font-weight:var(--y-kalin)}
+.gecis small{display:block;margin-top:4px;color:rgba(255,255,255,.66);font-size:13px}
+/* durum: yükleniyor */
+.isk{position:absolute;inset:0;background:#141416}
+.isk .p{position:absolute;left:var(--kenar);right:var(--kenar);border-radius:var(--k-ic);background:linear-gradient(90deg,#1F1F22 0,#2B2B30 40%,#1F1F22 80%);background-size:300% 100%;animation:isik 1.4s linear infinite}
+@keyframes isik{from{background-position:100% 0}to{background-position:-100% 0}}
+.donen{position:absolute;left:50%;top:44%;width:40px;height:40px;margin-left:-20px;border-radius:var(--k-daire);border:3px solid rgba(255,255,255,.18);border-top-color:var(--marka);animation:don 1s linear infinite}
+@keyframes don{to{transform:rotate(360deg)}}
+/* durum: bugün hikâye yok */
+.bos{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:0 32px;color:#fff;background:#121212}
+.bos .i{width:72px;height:72px;border-radius:var(--k-daire);display:grid;place-items:center;font-size:26px;background:rgba(255,255,255,.08);color:var(--marka)}
+.bos h1{margin-top:18px;font-size:24px;font-weight:var(--y-kalin);letter-spacing:-.015em}
+.bos p{margin-top:8px;font-size:15px;color:rgba(255,255,255,.72);line-height:1.45}
+.bos .sir{margin-top:26px;width:100%;height:56px;border-radius:var(--k-kontrol);background:var(--marka);color:#121212;display:flex;align-items:center;gap:12px;padding:0 8px 0 8px;font-size:15px;font-weight:var(--y-kalin)}
+.bos .sir .av{width:40px;height:40px;border-radius:var(--k-daire);background-size:cover;background-position:center;flex:none}
+.bos .sir i{margin-left:auto;margin-right:10px}
+.bos .geri-d{margin-top:10px;height:48px;width:100%;border-radius:var(--k-kontrol);background:rgba(255,255,255,.1);color:#fff;font-size:15px;font-weight:var(--y-kalin)}
+@media (prefers-reduced-motion:reduce){.isk .p,.donen{animation:none}}
+</style>
+</head>
+<body data-durum="acik" data-ec="acik">
+<div class="hy" id="hy">
+  <div id="kartlar"></div>
+  <div class="ust" id="ust">
+    <div class="cizgiler" id="cizgiler"></div>
+    <div class="kim"><span class="av" id="kimIkon"></span><div><b id="kimAd"></b><small id="kimAlt"></small></div>
+      <div class="sag"><button type="button" id="dur" aria-label="Duraklat"><i class="fa-solid fa-pause"></i></button><button type="button" id="kapat" aria-label="Kapat"><i class="fa-solid fa-xmark"></i></button></div></div>
+  </div>
+  <button class="dok geri" id="dGeri" type="button" aria-label="Önceki haber"></button>
+  <button class="dok ileri" id="dIleri" type="button" aria-label="Sonraki haber"></button>
+  <div class="gecis" id="gecis"><div><div class="av" id="gAv"></div><b id="gAd"></b><small>Sıradaki kategori</small></div></div>
+</div>
+<script>
+(function(){
+  var D = window.D, Q = new URLSearchParams(location.search);
+  var H = D.hikayeler, ki = Math.max(0, H.findIndex(function(h){ return h.kod === Q.get('kat'); }));
+  var hi = 0, t0 = 0, gecen = 0, durdu = false, SURE = 6000, raf;
+  var hy = document.getElementById('hy');
+  function kapat(){ var g = Q.get('geri'); if (g) location.href = '../' + decodeURIComponent(g); else history.back(); }
+  document.getElementById('kapat').onclick = kapat;
+  function izle(kod){ try { var a = JSON.parse(sessionStorage.getItem('dada-hikaye-izlenen') || '[]'); if (a.indexOf(kod) < 0) a.push(kod); sessionStorage.setItem('dada-hikaye-izlenen', JSON.stringify(a)); } catch(e){} }
+
+  /* Durumlar */
+  var durum = Q.get('durum');
+  if (durum === 'yukleniyor'){
+    hy.innerHTML = '<div class="isk"><div class="p" style="top:62px;height:3px"></div><div class="p" style="top:78px;width:42%;height:36px;border-radius:var(--k-daire)"></div>' +
+      '<div class="donen"></div><div class="p" style="bottom:200px;width:30%;height:12px"></div><div class="p" style="bottom:150px;height:26px"></div><div class="p" style="bottom:118px;width:70%;height:26px"></div><div class="p" style="bottom:48px;height:52px;border-radius:var(--k-kontrol)"></div></div>';
+    return;
+  }
+  if (durum === 'bos'){
+    var k = H[ki], s = H[(ki + 1) % H.length];
+    hy.innerHTML = '<div class="bos"><span class="i"><i class="fa-solid ' + k.ikon + '"></i></span><h1>Bugün ' + k.kat + ' hikâyesi yok</h1>' +
+      '<p>Yeni haberler geldikçe ' + k.kat + ' hikâyesi burada belirir.</p>' +
+      '<a class="sir" href="?kat=' + s.kod + '"><span class="av" style="background-image:' + G(s.g) + '"></span>Sıradaki: ' + s.kat + '<i class="fa-solid fa-chevron-right"></i></a>' +
+      '<button class="geri-d" type="button" id="bosKapat">Ana sayfaya dön</button></div>';
+    document.getElementById('bosKapat').onclick = kapat;
+    return;
+  }
+
+  function ciz(){
+    var k = H[ki], h = k.haberler[hi];
+    document.getElementById('kartlar').innerHTML = '<article class="kart' + (h.g ? '' : ' gorselsiz') + '"' + (h.g ? ' style="background-image:' + G(h.g) + '"' : '') + '><div class="ic">' +
+      '<span class="eyb"><i class="fa-solid ' + k.ikon + '"></i>' + k.kat + '</span><h1>' + h.baslik + '</h1>' +
+      '<div class="bilgi"><span><i class="fa-solid fa-user"></i>' + h.yazar + '</span><span><i class="fa-solid fa-clock"></i>' + h.sure + '</span></div>' +
+      '<div class="oku"><a class="ana" href="../detay/hd-b.html"><i class="fa-solid fa-book-open"></i>Haberi oku</a><button class="ik" type="button" aria-label="Kaydet"><i class="fa-solid fa-bookmark"></i></button><button class="ik" type="button" aria-label="Paylaş"><i class="fa-solid fa-share-nodes"></i></button></div></div></article>';
+    document.getElementById('cizgiler').innerHTML = k.haberler.map(function(_, i){ return '<span><i style="width:' + (i < hi ? 100 : 0) + '%"></i></span>'; }).join('');
+    document.getElementById('kimIkon').innerHTML = '<i class="fa-solid ' + k.ikon + '"></i>';
+    document.getElementById('kimAd').textContent = k.kat;
+    document.getElementById('kimAlt').textContent = 'Bugün · ' + (hi + 1) + '/' + k.haberler.length;
+    gecen = 0; t0 = performance.now();
+  }
+  function ileri(){
+    var k = H[ki];
+    if (hi < k.haberler.length - 1){ hi++; ciz(); return; }
+    izle(k.kod);
+    if (ki < H.length - 1){
+      var s = H[ki + 1], g = document.getElementById('gecis');
+      document.getElementById('gAv').style.backgroundImage = G(s.g); document.getElementById('gAd').textContent = s.kat;
+      g.classList.add('ac'); durdu = true;
+      setTimeout(function(){ ki++; hi = 0; ciz(); g.classList.remove('ac'); durdu = false; }, 650);
+    } else kapat();
+  }
+  function geri(){ if (hi > 0){ hi--; ciz(); } else if (ki > 0){ ki--; hi = H[ki].haberler.length - 1; ciz(); } else { gecen = 0; t0 = performance.now(); } }
+  function don(t){
+    if (!durdu){ var p = Math.min(1, (gecen + t - t0) / SURE); var c = document.querySelectorAll('#cizgiler i')[hi]; if (c) c.style.width = (p * 100) + '%'; if (p >= 1){ ileri(); } }
+    raf = requestAnimationFrame(don);
+  }
+  function duraklat(v){ if (v && !durdu){ gecen += performance.now() - t0; durdu = true; } else if (!v && durdu){ t0 = performance.now(); durdu = false; }
+    document.querySelector('#dur i').className = 'fa-solid ' + (durdu ? 'fa-play' : 'fa-pause'); }
+  document.getElementById('dur').onclick = function(){ duraklat(!durdu); };
+  /* dokun: ileri/geri; basılı tut: dur; aşağı çek: kapat */
+  var bas = null, uzun = null, y0 = 0, cekiyor = false;
+  ['dGeri','dIleri'].forEach(function(id){
+    var el = document.getElementById(id);
+    el.addEventListener('pointerdown', function(e){ bas = { id: id, t: Date.now() }; y0 = e.clientY; cekiyor = false; uzun = setTimeout(function(){ duraklat(true); }, 220); el.setPointerCapture(e.pointerId); });
+    el.addEventListener('pointermove', function(e){ if (!bas) return; var dy = e.clientY - y0; if (dy > 12){ cekiyor = true; clearTimeout(uzun); duraklat(true); hy.classList.add('cek'); hy.style.transform = 'translateY(' + dy + 'px) scale(' + Math.max(.86, 1 - dy / 1600) + ')'; hy.style.borderRadius = 'var(--k-buyuk)'; } });
+    el.addEventListener('pointerup', function(e){
+      clearTimeout(uzun); var dy = e.clientY - y0, kisa = Date.now() - bas.t < 220;
+      hy.classList.remove('cek');
+      if (cekiyor){ if (dy > 140){ hy.style.transform = 'translateY(110%)'; setTimeout(kapat, 220); } else { hy.style.transform = ''; hy.style.borderRadius = ''; duraklat(false); } }
+      else if (kisa){ duraklat(false); (bas.id === 'dIleri' ? ileri : geri)(); }
+      else duraklat(false);
+      bas = null;
+    });
+  });
+  addEventListener('keydown', function(e){ if (e.key === 'ArrowRight') ileri(); if (e.key === 'ArrowLeft') geri(); if (e.key === 'Escape') kapat(); });
+  ciz(); raf = requestAnimationFrame(don);
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) SURE = 9000;
+  if (Q.get('dur') === '1') duraklat(true);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>G1 · Yüzen cam kapsül</title>
+<link rel="stylesheet" href="../_ortak/cerceve.css">
+<link rel="stylesheet" href="../_ortak/marka.css">
+<link rel="stylesheet" href="liste.css">
+<script src="../_ortak/icerik.js"></script>
+<script src="../_ortak/cerceve.js"></script>
+<style>
+/* G1 · iOS 26 yüzen sekme çubuğu (HIG Tab bars; Apple News, Apple Music).
+   Kapsül + ayrı arama dairesi; üstünde mini oynatıcı aksesuarı. Aşağı kaydırınca çubuk küçülür (yalnız seçili sekme), aksesuar aynı satıra geçer. */
+:root{--cam:rgba(249,249,247,.84);--cam-c:rgba(18,18,18,.07);--tint:#7A620B;--pasif:#55555B;--aktif-z:rgba(18,18,18,.06)}
+html[data-tema="koyu"]{--cam:rgba(40,40,44,.82);--cam-c:rgba(255,255,255,.09);--tint:#FECC17;--pasif:#AEAEB4;--aktif-z:rgba(255,255,255,.1)}
+.g1{position:absolute;left:12px;right:12px;bottom:calc(var(--alt-guvenli) - 12px);z-index:80;height:118px;pointer-events:none}
+.cam{background:var(--cam);border:1px solid var(--cam-c);-webkit-backdrop-filter:blur(22px) saturate(1.8);backdrop-filter:blur(22px) saturate(1.8);
+  box-shadow:0 12px 32px rgba(0,0,0,.14),0 1px 1px rgba(0,0,0,.04);pointer-events:auto}
+/* aksesuar: mini oynatıcı */
+.aks{position:absolute;left:0;right:0;bottom:70px;height:48px;border-radius:var(--k-buyuk);display:flex;align-items:center;gap:10px;padding:0 6px 0 6px;
+  transition:left .38s cubic-bezier(.3,.7,.2,1),right .38s cubic-bezier(.3,.7,.2,1),bottom .38s cubic-bezier(.3,.7,.2,1)}
+.aks .yuz{width:36px;height:36px;border-radius:var(--k-daire);flex:none}
+.aks .t{min-width:0;flex:1;line-height:1.15}
+.aks .t b{display:block;font-size:13.5px;font-weight:var(--y-kalin);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.aks .t small{display:block;font-size:11.5px;color:var(--pasif);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.aks button{width:40px;height:40px;border-radius:var(--k-daire);display:grid;place-items:center;font-size:15px;color:var(--metin)}
+/* çubuk */
+.cubuk{position:absolute;left:0;bottom:0;height:62px;right:72px;border-radius:var(--k-buyuk);display:flex;padding:5px;
+  transition:right .38s cubic-bezier(.3,.7,.2,1)}
+.cubuk a{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-radius:var(--k-kart);color:var(--pasif);
+  font-size:10.5px;font-weight:var(--y-kalin);letter-spacing:-.01em;white-space:nowrap;transition:opacity .2s,flex .38s}
+.cubuk a i{font-size:19px;height:22px;display:grid;place-items:center}
+.cubuk a.etkin{background:var(--aktif-z);color:var(--tint)}
+.ara{position:absolute;right:0;bottom:0;width:62px;height:62px;border-radius:var(--k-daire);display:grid;place-items:center;font-size:19px;color:var(--metin)}
+/* küçülmüş hal */
+.kucuk .cubuk{right:calc(100% - 62px)}
+.kucuk .cubuk a:not(.etkin){flex:0;opacity:0;pointer-events:none;width:0;padding:0}
+.kucuk .cubuk a.etkin span{display:none}
+.kucuk .aks{left:72px;right:72px;bottom:7px}
+.kucuk .aks button+button{display:none}
+.kucuk .aks{height:62px;border-radius:var(--k-buyuk);bottom:0;padding:0 8px}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"><div id="icerik"></div></div>
+<nav class="g1" id="g1" aria-label="Alt gezinme">
+  <div class="aks cam" role="group" aria-label="Spiker oynatıcı">
+    <span class="yuz gr" data-g="spiker-kare"></span>
+    <span class="t"><b>16.00 Bülteni</b><small>Dada Spiker · 1/5</small></span>
+    <button type="button" aria-label="Oynat"><i class="fa-solid fa-play"></i></button>
+    <button type="button" aria-label="Sonraki"><i class="fa-solid fa-forward"></i></button>
+  </div>
+  <div class="cubuk cam">
+    <a class="etkin" data-sekme><i class="fa-solid fa-house"></i><span>Bugün</span></a>
+    <a data-sekme><i class="fa-solid fa-bolt"></i><span>Son Dakika</span></a>
+    <a data-sekme><i class="fa-solid fa-mobile-screen-button"></i><span>Akış</span></a>
+    <a data-sekme><i class="fa-solid fa-headphones"></i><span>Dinle</span></a>
+  </div>
+  <a class="ara cam" aria-label="Ara"><i class="fa-solid fa-magnifying-glass"></i></a>
+</nav>
+<script src="liste.js"></script>
+<script>
+document.querySelectorAll('[data-sekme]').forEach(function(a){ a.addEventListener('click',function(){ document.querySelectorAll('[data-sekme]').forEach(function(b){ b.classList.toggle('etkin', b===a); }); }); });
+var e=document.getElementById('ekran'), n=document.getElementById('g1'), son=0;
+e.addEventListener('scroll',function(){ var y=e.scrollTop; if(y>son+6 && y>80) n.classList.add('kucuk'); else if(y<son-6) n.classList.remove('kucuk'); son=y; },{passive:true});
+if(new URLSearchParams(location.search).get('kucuk')==='1') n.classList.add('kucuk');
+</script>
+</body>
+</html>

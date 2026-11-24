@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>G2 · Yerleşik çubuk ve mini oynatıcı</title>
+<link rel="stylesheet" href="../_ortak/cerceve.css">
+<link rel="stylesheet" href="../_ortak/marka.css">
+<link rel="stylesheet" href="liste.css">
+<script src="../_ortak/icerik.js"></script>
+<script src="../_ortak/cerceve.js"></script>
+<style>
+/* G2 · Spotify / NYT: kenardan kenara yerleşik çubuk, içerik altta solarak biter; üstünde koyu mini oynatıcı kartı.
+   Seçili sekme: dolu siyah ikon + kalın etiket; gösterge yok, sadelik. 5 sekme. */
+.g2{position:absolute;left:0;right:0;bottom:0;z-index:80;padding:0 8px calc(var(--alt-guvenli) - 6px);
+  background:linear-gradient(to top,var(--zemin) 62%,color-mix(in srgb,var(--zemin) 0%,transparent))}
+.mini{margin:0 0 8px;height:58px;border-radius:var(--k-kontrol);background:#1A1A1D;color:#fff;display:flex;align-items:center;gap:10px;padding:0 8px;position:relative;overflow:hidden;
+  box-shadow:0 8px 24px rgba(0,0,0,.18)}
+html[data-tema="koyu"] .mini{background:#2A2A2E}
+.mini .yuz{width:42px;height:42px;border-radius:var(--k-ic);flex:none}
+.mini .t{flex:1;min-width:0;line-height:1.2}
+.mini .t b{display:block;font-size:14px;font-weight:var(--y-kalin);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mini .t small{font-size:12px;color:rgba(255,255,255,.66)}
+.mini .t small i{color:#FECC17;font-size:7px;margin-right:6px;vertical-align:2px}
+.mini button{width:44px;height:44px;display:grid;place-items:center;font-size:18px;color:#fff}
+.mini .ilerleme{position:absolute;left:8px;right:8px;bottom:0;height:2px;background:rgba(255,255,255,.18)}
+.mini .ilerleme::after{content:"";position:absolute;left:0;top:0;bottom:0;width:34%;background:#FECC17}
+.cubuk{display:flex;height:56px}
+.cubuk a{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;font-size:10.5px;font-weight:var(--y-orta);color:var(--metin-3);white-space:nowrap}
+.cubuk a i{font-size:21px}
+.cubuk a.etkin{color:var(--metin);font-weight:var(--y-kalin)}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"><div id="icerik"></div></div>
+<nav class="g2" aria-label="Alt gezinme">
+  <div class="mini" role="group" aria-label="Spiker oynatıcı">
+    <span class="yuz gr" data-g="spiker-kare"></span>
+    <span class="t"><b>Asgari ücret komisyonu 4 Aralık'ta toplanıyor</b><small><i class="fa-solid fa-circle"></i>Dada Spiker · 16.00 Bülteni</small></span>
+    <button type="button" aria-label="Kaydet"><i class="fa-solid fa-plus"></i></button>
+    <button type="button" aria-label="Duraklat"><i class="fa-solid fa-pause"></i></button>
+    <span class="ilerleme"></span>
+  </div>
+  <div class="cubuk">
+    <a class="etkin" data-sekme><i class="fa-solid fa-house"></i>Bugün</a>
+    <a data-sekme><i class="fa-solid fa-bolt"></i>Son Dakika</a>
+    <a data-sekme><i class="fa-solid fa-mobile-screen-button"></i>Akış</a>
+    <a data-sekme><i class="fa-solid fa-headphones"></i>Dinle</a>
+    <a data-sekme><i class="fa-solid fa-circle-user"></i>Sen</a>
+  </div>
+</nav>
+<script src="liste.js"></script>
+<script>document.querySelectorAll('[data-sekme]').forEach(function(a){ a.addEventListener('click',function(){ document.querySelectorAll('[data-sekme]').forEach(function(b){ b.classList.toggle('etkin', b===a); }); }); });</script>
+</body>
+</html>

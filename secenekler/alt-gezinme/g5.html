@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>G5 · Koyu ada</title>
+<link rel="stylesheet" href="../_ortak/cerceve.css">
+<link rel="stylesheet" href="../_ortak/marka.css">
+<link rel="stylesheet" href="liste.css">
+<script src="../_ortak/icerik.js"></script>
+<script src="../_ortak/cerceve.js"></script>
+<style>
+/* G5 · Material 3 Expressive esnek gezinme çubuğu (yatay öğe: ikon + etiket yan yana): her iki temada koyu yüzen ada,
+   pasif sekmeler yalnız ikon, seçili sekme sarı hapa genişler ve etiketini gösterir. Marka imzası olarak koyu + sarı. */
+.g5{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(var(--alt-guvenli) - 8px);z-index:80;height:64px;padding:8px;border-radius:var(--k-buyuk);
+  background:#121212;display:flex;gap:4px;box-shadow:0 14px 34px rgba(0,0,0,.28),inset 0 0 0 1px rgba(255,255,255,.06)}
+html[data-tema="koyu"] .g5{background:#1F1F22;box-shadow:0 14px 34px rgba(0,0,0,.6),inset 0 0 0 1px rgba(255,255,255,.08)}
+.g5 a{height:48px;min-width:48px;padding:0 14px;border-radius:var(--k-kart);display:flex;align-items:center;justify-content:center;gap:8px;color:rgba(255,255,255,.62);
+  font-size:14px;font-weight:var(--y-kalin);white-space:nowrap;transition:background .3s,color .3s,padding .3s}
+.g5 a i{font-size:18px}
+.g5 a span{max-width:0;overflow:hidden;transition:max-width .35s cubic-bezier(.3,.7,.2,1)}
+.g5 a.etkin{background:#FECC17;color:#121212;padding:0 18px}
+.g5 a.etkin span{max-width:120px}
+.g5 .rozet{width:7px;height:7px;border-radius:var(--k-daire);background:#FF5A6E;margin:-14px 0 0 -10px}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"><div id="icerik"></div></div>
+<nav class="g5" aria-label="Alt gezinme">
+  <a class="etkin" data-sekme aria-label="Bugün"><i class="fa-solid fa-house"></i><span>Bugün</span></a>
+  <a data-sekme aria-label="Son Dakika"><i class="fa-solid fa-bolt"></i><span>Son Dakika</span><em class="rozet"></em></a>
+  <a data-sekme aria-label="Akış"><i class="fa-solid fa-mobile-screen-button"></i><span>Akış</span></a>
+  <a data-sekme aria-label="Dinle"><i class="fa-solid fa-headphones"></i><span>Dinle</span></a>
+  <a data-sekme aria-label="Ara"><i class="fa-solid fa-magnifying-glass"></i><span>Ara</span></a>
+</nav>
+<script src="liste.js"></script>
+<script>document.querySelectorAll('[data-sekme]').forEach(function(a){ a.addEventListener('click',function(){ document.querySelectorAll('[data-sekme]').forEach(function(b){ b.classList.toggle('etkin', b===a); }); }); });</script>
+</body>
+</html>

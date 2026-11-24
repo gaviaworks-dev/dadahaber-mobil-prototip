@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>HD-D · Dinle öncelikli</title>
+<link rel="stylesheet" href="../_ortak/cerceve.css">
+<link rel="stylesheet" href="../_ortak/marka.css">
+<script src="../_ortak/icerik.js"></script>
+<script src="../_ortak/icerik-ek.js"></script>
+<script src="../_ortak/cerceve.js"></script>
+<style>
+/* HD-D · Dinle öncelikli (Speechify: okunan cümle vurgusu · NYT: haberi dinle · Spotify: mini oynatıcı).
+   Üstte koyu oynatıcı kartı; aşağı kaydırınca altta yüzen mini oynatıcıya dönüşür. */
+:root{--kart:#141414;--kart-2:#232323}
+html[data-tema="koyu"]{--kart:#1C1C20;--kart-2:#2A2A30}
+.ust{position:sticky;top:0;z-index:40;padding:var(--ust-guvenli) 12px 8px;display:flex;align-items:center;gap:8px;
+  background:color-mix(in srgb,var(--zemin) 90%,transparent);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px)}
+.ust .bos{flex:1}
+.yd{width:44px;height:44px;border-radius:var(--k-daire);display:grid;place-items:center;font-size:17px;color:var(--metin);background:var(--zemin-2)}
+
+/* Oynatıcı kartı */
+.oyn{margin:4px var(--kenar) 0;border-radius:var(--k-buyuk);background:var(--kart);color:#fff;padding:20px 18px 18px;position:relative;overflow:hidden;isolation:isolate}
+.oyn::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(90% 70% at 100% 0%,rgba(254,204,23,.28),transparent 62%)}
+.oyn-ust{display:flex;align-items:center;gap:14px}
+.yuz{width:64px;height:64px;border-radius:var(--k-daire);flex:none;box-shadow:0 0 0 3px var(--kart),0 0 0 5px var(--marka)}
+.oyn-k{min-width:0;flex:1}
+.oyn-k small{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:var(--y-kalin);color:var(--marka);letter-spacing:.02em;white-space:nowrap}
+.oyn-k b{display:block;margin-top:4px;font-size:16px;line-height:1.25;font-weight:var(--y-kalin);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.hiz{height:36px;min-width:52px;padding:0 10px;border-radius:var(--k-kontrol);background:var(--kart-2);color:#fff;font-size:13px;font-weight:var(--y-kalin);flex:none}
+.dalga{margin-top:20px;height:44px;display:flex;align-items:center;gap:3px}
+.dalga i{flex:1;border-radius:var(--k-cubuk);background:rgba(255,255,255,.22);transition:background .3s}
+.dalga i.dolu{background:var(--marka)}
+.zaman{display:flex;justify-content:space-between;margin-top:8px;font-size:12px;color:rgba(255,255,255,.6)}
+.kontrol{margin-top:14px;display:flex;align-items:center;justify-content:center;gap:28px}
+.kontrol .k{width:48px;height:48px;border-radius:var(--k-daire);display:grid;place-items:center;color:#fff;font-size:20px;position:relative}
+.kontrol .k em{position:absolute;font-style:normal;font-size:9px;font-weight:var(--y-kalin);top:50%;left:50%;transform:translate(-50%,-38%)}
+.oynat{width:68px;height:68px;border-radius:var(--k-daire);background:var(--marka);color:#121212;display:grid;place-items:center;font-size:24px;box-shadow:0 10px 24px rgba(254,204,23,.35)}
+
+/* Metin */
+.metin{padding:26px var(--kenar) 0}
+.eyb{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:var(--y-kalin);letter-spacing:.12em;text-transform:uppercase;color:var(--marka-metin)}
+.metin h1{margin-top:10px;font-size:27px;line-height:1.14;letter-spacing:-.025em;font-weight:var(--y-kalin)}
+.kunye{margin-top:14px;display:flex;align-items:center;gap:10px;min-width:0;font-size:13px;color:var(--metin-3);white-space:nowrap}
+.av{width:32px;height:32px;border-radius:var(--k-daire);background:var(--marka-25);color:var(--marka-metin);display:grid;place-items:center;font-weight:var(--y-kalin);font-size:13px;flex:none}
+.kunye b{color:var(--metin);font-weight:var(--y-kalin)}
+.kunye span{overflow:hidden;text-overflow:ellipsis}
+.okuma{margin-top:22px;font-size:17.5px;line-height:1.62;color:var(--metin)}
+.okuma p{margin-bottom:18px}
+.okuma p.spot{font-size:19px;line-height:1.5;font-weight:var(--y-orta)}
+.okuma h2{font-size:20px;line-height:1.25;font-weight:var(--y-kalin);letter-spacing:-.015em;margin:28px 0 12px}
+.cm{border-radius:var(--k-ic);transition:background .3s,color .3s;-webkit-box-decoration-break:clone;box-decoration-break:clone;padding:1px 2px;margin:0 -2px}
+.cm.okundu{color:var(--metin-3)}
+.cm.okunan{background:var(--marka-25);color:var(--metin);box-shadow:0 0 0 2px var(--marka-25)}
+figure{margin:6px 0 22px}
+figure .gr{aspect-ratio:16/10;border-radius:var(--k-kart)}
+figcaption{margin-top:8px;font-size:12.5px;color:var(--metin-3);line-height:1.4}
+.blok{margin-top:30px;padding-top:22px;border-top:1px solid var(--cizgi)}
+.blok h3{font-size:13px;font-weight:var(--y-kalin);letter-spacing:.1em;text-transform:uppercase;color:var(--metin-3);margin-bottom:12px}
+.kay{display:flex;align-items:center;gap:12px;padding:10px 0;min-width:0}
+.kay i{width:36px;height:36px;border-radius:var(--k-kontrol);background:var(--zemin-2);display:grid;place-items:center;color:var(--metin-2);font-size:14px;flex:none}
+.kay div{min-width:0}
+.kay b{display:block;font-size:14.5px;font-weight:var(--y-kalin);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kay small{display:block;font-size:12.5px;color:var(--metin-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.etk{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:0 calc(-1 * var(--kenar));padding:0 var(--kenar)}
+.etk::-webkit-scrollbar{display:none}
+.etk a{flex:none;height:40px;padding:0 14px;border-radius:var(--k-kontrol);border:1px solid var(--cizgi);display:inline-flex;align-items:center;font-size:14px;font-weight:var(--y-kalin);white-space:nowrap}
+.ilg{display:grid;grid-template-columns:72px minmax(0,1fr) 44px;gap:12px;align-items:center;padding:10px 0}
+.ilg .gr{width:72px;height:72px;border-radius:var(--k-kart)}
+.ilg b{font-size:15px;line-height:1.3;font-weight:var(--y-kalin);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ilg small{display:block;margin-top:4px;font-size:12px;color:var(--metin-3)}
+.ilg .dn{width:44px;height:44px;border-radius:var(--k-daire);background:var(--zemin-2);display:grid;place-items:center;color:var(--metin)}
+.pay{height:120px}
+
+/* Mini oynatıcı */
+.mini{position:absolute;left:12px;right:12px;bottom:calc(var(--alt-guvenli) - 6px);z-index:60;height:64px;border-radius:var(--k-buyuk);background:var(--kart);color:#fff;
+  display:flex;align-items:center;gap:12px;padding:0 8px 0 10px;box-shadow:0 14px 34px rgba(0,0,0,.3);overflow:hidden;
+  transform:translateY(140%);transition:transform .38s cubic-bezier(.3,.7,.2,1)}
+.mini.goster{transform:none}
+.mini .yuz{width:44px;height:44px;box-shadow:0 0 0 2px var(--marka)}
+.mini .t{min-width:0;flex:1;line-height:1.2}
+.mini .t b{display:block;font-size:13.5px;font-weight:var(--y-kalin);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mini .t small{font-size:11.5px;color:rgba(255,255,255,.6);white-space:nowrap}
+.mini .oynat{width:48px;height:48px;font-size:17px;box-shadow:none;flex:none}
+.mini .cz{position:absolute;left:24px;right:24px;bottom:0;height:3px;border-radius:var(--k-cubuk);background:rgba(255,255,255,.14)}
+.mini .cz span{display:block;height:100%;width:0;background:var(--marka);border-radius:var(--k-cubuk);transition:width .4s}
+html.tam .mini{position:relative;left:auto;right:auto;margin:0 12px 40px;transform:none}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran">
+  <header class="ust">
+    <button class="yd" type="button" aria-label="Geri"><i class="fa-solid fa-chevron-left"></i></button>
+    <span class="bos"></span>
+    <button class="yd" type="button" aria-label="Kaydet"><i class="fa-solid fa-bookmark"></i></button>
+    <button class="yd" type="button" aria-label="Paylaş"><i class="fa-solid fa-arrow-up-from-bracket"></i></button>
+  </header>
+
+  <section class="oyn" id="oyn" aria-label="Haberi dinle">
+    <div class="oyn-ust">
+      <span class="yuz gr" data-g="spiker-kare"></span>
+      <div class="oyn-k"><small><i class="fa-solid fa-headphones"></i>Dada Spiker okuyor</small><b id="oyn-baslik"></b></div>
+      <button class="hiz" type="button" id="hiz" aria-label="Okuma hızı">1x</button>
+    </div>
+    <div class="dalga" id="dalga" aria-hidden="true"></div>
+    <div class="zaman tnum"><span id="gecen">0:00</span><span id="toplam">4:00</span></div>
+    <div class="kontrol">
+      <button class="k" type="button" id="geri15" aria-label="15 saniye geri"><i class="fa-solid fa-rotate-left"></i><em>15</em></button>
+      <button class="oynat" type="button" id="oynat" aria-label="Oynat"><i class="fa-solid fa-play"></i></button>
+      <button class="k" type="button" id="ileri15" aria-label="15 saniye ileri"><i class="fa-solid fa-rotate-right"></i><em>15</em></button>
+    </div>
+  </section>
+
+  <article class="metin" id="metin"></article>
+  <div class="pay"></div>
+</div>
+
+<div class="mini" id="mini" role="group" aria-label="Mini oynatıcı">
+  <span class="yuz gr" data-g="spiker-kare"></span>
+  <span class="t"><b id="mini-baslik"></b><small id="mini-zaman" class="tnum">Dada Spiker · 0:00 / 4:00</small></span>
+  <button class="oynat" type="button" id="mini-oynat" aria-label="Oynat"><i class="fa-solid fa-play"></i></button>
+  <span class="cz"><span id="mini-cz"></span></span>
+</div>
+
+<script>
+(function(){
+  var d = D.detay, $ = function(id){ return document.getElementById(id); };
+  $('oyn-baslik').textContent = d.baslik;
+  $('mini-baslik').textContent = d.baslik;
+  /* dalga: sabit yükseklikler */
+  var dh = ''; for (var i = 0; i < 46; i++){ var y = 22 + Math.round(Math.abs(Math.sin(i * 1.7) * 60 + Math.cos(i * .6) * 18)); dh += '<i style="height:' + Math.min(100, y) + '%"></i>'; }
+  $('dalga').innerHTML = dh;
+
+  /* metin: cümlelere bölünür */
+  var cumle = 0;
+  function bol(t){ return t.split(/(?<=[.?!])\s+/).map(function(c){ return '<span class="cm" data-i="' + (cumle++) + '">' + c + '</span>'; }).join(' '); }
+  var h = '<span class="eyb"><i class="fa-solid ' + d.ikon + '"></i>' + d.yol.join(' · ') + '</span>';
+  h += '<h1>' + d.baslik + '</h1>';
+  h += '<div class="kunye"><span class="av">' + d.yazar.charAt(0) + '</span><span><b>' + d.yazar + '</b> · ' + d.saat + ' · ' + d.sure + ' okuma · ' + d.izlenme + '</span></div>';
+  h += '<div class="okuma"><p class="spot">' + bol(d.spot) + '</p>';
+  d.govde.forEach(function(b){
+    if (b.p) h += '<p>' + bol(b.p) + '</p>';
+    else if (b.h) h += '<h2>' + bol(b.h) + '</h2>';
+    else if (b.gorsel) h += '<figure><div class="gr" style="background-image:' + G(b.gorsel) + '"></div><figcaption>' + b.altyazi + '</figcaption></figure>';
+  });
+  h += '</div>';
+  h += '<section class="blok"><h3>Kaynaklar</h3>' + d.kaynaklar.map(function(k){ return '<div class="kay"><i class="fa-solid fa-building-columns"></i><div><b>' + k.kurum + '</b><small>' + k.aciklama + '</small></div></div>'; }).join('') + '</section>';
+  h += '<section class="blok"><h3>Etiketler</h3><div class="etk">' + d.etiketler.map(function(e){ return '<a>' + e + '</a>'; }).join('') + '</div></section>';
+  h += '<section class="blok"><h3>Sıradaki</h3>' + d.ilgili.map(function(x){ return '<a class="ilg"><span class="gr" style="background-image:' + G(x.g) + '"></span><span><b>' + x.baslik + '</b><small>' + x.kat + ' · ' + x.sure + '</small></span><span class="dn" aria-label="Dinle"><i class="fa-solid fa-headphones"></i></span></a>'; }).join('') + '</section>';
+  $('metin').innerHTML = h;
+
+  /* oynatıcı: cümle cümle ilerler (prototip zamanlayıcısı; üründe ses dosyası) */
+  var cm = [].slice.call(document.querySelectorAll('.cm')), N = cm.length, TOPLAM = 240;
+  var sira = 2, calisiyor = false, hizlar = [1, 1.25, 1.5, .75], hk = 0, zam = null;
+  function sn(x){ x = Math.round(x); return Math.floor(x / 60) + ':' + ('0' + (x % 60)).slice(-2); }
+  function ciz(kaydir){
+    cm.forEach(function(c, i){ c.classList.toggle('okundu', i < sira); c.classList.toggle('okunan', i === sira); });
+    var oran = sira / N, gecen = oran * TOPLAM;
+    $('gecen').textContent = sn(gecen);
+    $('mini-zaman').textContent = 'Dada Spiker · ' + sn(gecen) + ' / ' + sn(TOPLAM);
+    $('mini-cz').style.width = (oran * 100) + '%';
+    var bar = [].slice.call($('dalga').children), dolu = Math.round(oran * bar.length);
+    bar.forEach(function(b, i){ b.classList.toggle('dolu', i < dolu); });
+    var ik = calisiyor ? 'fa-pause' : 'fa-play';
+    $('oynat').innerHTML = '<i class="fa-solid ' + ik + '"></i>'; $('mini-oynat').innerHTML = '<i class="fa-solid ' + ik + '"></i>';
+    $('oynat').setAttribute('aria-label', calisiyor ? 'Duraklat' : 'Oynat');
+    if (kaydir && cm[sira]){
+      var e = $('ekran'), r = cm[sira].getBoundingClientRect();
+      if (r.top < 140 || r.bottom > 844 - 120) e.scrollBy({ top: r.top - 300, behavior: 'smooth' });
+    }
+  }
+  function adim(){ if (sira < N - 1){ sira++; ciz(true); } else { durdur(); } }
+  function baslat(){ calisiyor = true; clearInterval(zam); zam = setInterval(adim, 2600 / hizlar[hk]); ciz(true); }
+  function durdur(){ calisiyor = false; clearInterval(zam); ciz(false); }
+  function degistir(){ calisiyor ? durdur() : baslat(); }
+  $('oynat').onclick = degistir; $('mini-oynat').onclick = degistir;
+  $('geri15').onclick = function(){ sira = Math.max(0, sira - 2); ciz(true); };
+  $('ileri15').onclick = function(){ sira = Math.min(N - 1, sira + 2); ciz(true); };
+  $('hiz').onclick = function(){ hk = (hk + 1) % hizlar.length; this.textContent = hizlar[hk] + 'x'; if (calisiyor) baslat(); };
+  cm.forEach(function(c, i){ c.onclick = function(){ sira = i; ciz(false); }; });
+  ciz(false);
+
+  /* oynatıcı kartı ekrandan çıkınca mini oynatıcı */
+  if (!document.documentElement.classList.contains('tam') && 'IntersectionObserver' in window){
+    new IntersectionObserver(function(en){ $('mini').classList.toggle('goster', !en[0].isIntersecting); }, { root: $('ekran'), threshold: 0 }).observe($('oyn'));
+  }
+  if (new URLSearchParams(location.search).get('mini') === '1'){ $('ekran').scrollTop = 560; $('mini').classList.add('goster'); }
+})();
+</script>
+</body>
+</html>

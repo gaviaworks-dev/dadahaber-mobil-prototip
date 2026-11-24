@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>G3 · Gösterge hapı</title>
+<link rel="stylesheet" href="../_ortak/cerceve.css">
+<link rel="stylesheet" href="../_ortak/marka.css">
+<link rel="stylesheet" href="liste.css">
+<script src="../_ortak/icerik.js"></script>
+<script src="../_ortak/cerceve.js"></script>
+<style>
+/* G3 · Material 3 gezinme çubuğu (Google News Android): renkli yüzey, seçili sekmede ikonun arkasında 56×32 gösterge hapı, rozet.
+   Marka: hap #FECC17, yüzey sıcak açık sarı tonu. 4 sekme. */
+:root{--yuzey-g3:#FFFFFF;--hap:#FECC17}
+html[data-tema="koyu"]{--yuzey-g3:#1A1A1D}
+.g3{position:absolute;left:0;right:0;bottom:0;z-index:80;background:var(--yuzey-g3);padding:10px 4px calc(var(--alt-guvenli) - 4px);display:flex}
+.g3 a{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:5px;font-size:12px;font-weight:var(--y-orta);color:var(--metin-2);white-space:nowrap}
+.g3 .hap{position:relative;width:60px;height:34px;border-radius:var(--k-kart);display:grid;place-items:center;font-size:19px;transition:background .25s}
+.g3 a.etkin{color:var(--metin);font-weight:var(--y-kalin)}
+.g3 a.etkin .hap{background:var(--hap);color:#121212}
+.g3 .rozet{position:absolute;top:-2px;left:34px;min-width:18px;height:18px;padding:0 5px;border-radius:var(--k-ic);background:var(--anlik);color:#fff;font-size:10.5px;font-weight:var(--y-kalin);display:grid;place-items:center;border:2px solid var(--yuzey-g3)}
+.g3 .nokta{position:absolute;top:4px;left:36px;width:8px;height:8px;border-radius:var(--k-daire);background:var(--anlik);border:2px solid var(--yuzey-g3)}
+.g3{border-top:1px solid var(--cizgi)}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"><div id="icerik"></div></div>
+<nav class="g3" aria-label="Alt gezinme">
+  <a class="etkin" data-sekme><span class="hap"><i class="fa-solid fa-house"></i></span>Bugün</a>
+  <a data-sekme><span class="hap"><i class="fa-solid fa-bolt"></i><span class="rozet">6</span></span>Son Dakika</a>
+  <a data-sekme><span class="hap"><i class="fa-solid fa-layer-group"></i></span>Günün 5'i</a>
+  <a data-sekme><span class="hap"><i class="fa-solid fa-mobile-screen-button"></i><span class="nokta"></span></span>Akış</a>
+  <a data-sekme><span class="hap"><i class="fa-solid fa-circle-user"></i></span>Sen</a>
+</nav>
+<script src="liste.js"></script>
+<script>document.querySelectorAll('[data-sekme]').forEach(function(a){ a.addEventListener('click',function(){ document.querySelectorAll('[data-sekme]').forEach(function(b){ b.classList.toggle('etkin', b===a); }); }); });</script>
+</body>
+</html>

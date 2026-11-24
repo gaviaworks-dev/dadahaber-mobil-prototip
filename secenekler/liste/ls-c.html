@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>LS-C · Zaman çizelgesi</title>
+<link rel="stylesheet" href="../_ortak/cerceve.css">
+<link rel="stylesheet" href="../_ortak/marka.css">
+<script src="../_ortak/icerik.js"></script>
+<script src="../_ortak/icerik-ek.js"></script>
+<script src="../_ortak/cerceve.js"></script>
+<style>
+/* LS-C · Zaman çizelgesi (Tiimo liste ↔ çizelge, Reuters): sarı marka başlığı, saat sütunu + dikey çizgi; saat dilimleri; Liste/Çizelge anahtarı çalışır.
+   Alt gezinme: G2 yerleşik çubuk + koyu mini oynatıcı. */
+.bas{background:var(--marka);color:#121212;padding:calc(var(--ust-guvenli) + 2px) var(--kenar) 16px;position:relative}
+.bas-ust{display:flex;align-items:center;height:44px;margin:0 -10px}
+.bas-ust a,.bas-ust button{width:44px;height:44px;display:grid;place-items:center;font-size:18px;color:#121212}
+.bas-ust .sag{margin-left:auto;display:flex}
+.bas h1{font-size:34px;line-height:1;font-weight:var(--y-kalin);letter-spacing:-.03em;margin-top:6px;display:flex;align-items:center;gap:12px}
+.bas h1 i{font-size:22px}
+.bas .durum{margin-top:10px;display:flex;align-items:center;gap:10px;font-size:13.5px;font-weight:var(--y-kalin);white-space:nowrap}
+.bas .durum .nab{display:inline-flex;align-items:center;gap:8px;background:#121212;color:#FECC17;height:28px;padding:0 10px;border-radius:var(--k-kart);font-size:12px;font-weight:var(--y-kalin)}
+.bas .durum .nab i{font-size:7px}
+.anahtar{margin-top:14px;display:flex;background:rgba(18,18,18,.1);border-radius:var(--k-kart);padding:4px;height:44px}
+.anahtar button{flex:1;border-radius:var(--k-kontrol);font-size:14px;font-weight:var(--y-kalin);color:#121212;display:flex;align-items:center;justify-content:center;gap:8px}
+.anahtar button.etkin{background:#121212;color:#FECC17}
+
+.cipler{padding:14px var(--kenar) 6px;gap:8px}
+.cip{height:36px;padding:0 14px;border-radius:var(--k-kontrol);background:var(--zemin-2);font-size:14px;font-weight:var(--y-orta);color:var(--metin-2);display:inline-flex;align-items:center;white-space:nowrap}
+.cip.etkin{background:var(--metin);color:var(--zemin);font-weight:var(--y-kalin)}
+.cipler::after{content:"";flex:0 0 8px}
+
+/* Çizelge */
+.cizelge{padding:4px var(--kenar) 0}
+.gun{display:flex;align-items:baseline;justify-content:space-between;padding:16px 0 4px;font-size:15px;font-weight:var(--y-kalin)}
+.gun small{font-size:12.5px;font-weight:var(--y-orta);color:var(--metin-3)}
+.dilim{display:grid;grid-template-columns:52px minmax(0,1fr);margin-top:10px}
+.dilim .s{font-size:12px;font-weight:var(--y-kalin);color:var(--metin-3);padding-top:2px}
+.dilim .s span{display:inline-block;background:var(--zemin-2);border-radius:var(--k-ic);padding:3px 6px}
+.olay{display:grid;grid-template-columns:52px minmax(0,1fr);position:relative}
+.olay .saat{font-size:14px;font-weight:var(--y-kalin);padding-top:15px;font-variant-numeric:tabular-nums}
+.olay .cizgi{position:absolute;left:44px;top:0;bottom:0;width:2px;background:var(--cizgi)}
+.olay .nokta{position:absolute;left:39px;top:19px;width:12px;height:12px;border-radius:var(--k-daire);background:var(--zemin);border:2.5px solid var(--metin-3)}
+.olay.vurgu .nokta{border-color:var(--anlik);background:var(--anlik);box-shadow:0 0 0 4px color-mix(in srgb,var(--anlik) 20%,transparent)}
+.olay.ilk .nokta{border-color:#121212;background:var(--marka)}
+html[data-tema="koyu"] .olay.ilk .nokta{border-color:var(--marka)}
+.olay a{display:grid;grid-template-columns:minmax(0,1fr) 68px;gap:12px;padding:12px 0 14px 12px;border-bottom:1px solid var(--cizgi)}
+.olay a.yazi{grid-template-columns:minmax(0,1fr)}
+.olay .k{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:var(--y-kalin);color:var(--marka-metin);white-space:nowrap;overflow:hidden;text-transform:uppercase;letter-spacing:.06em}
+.olay .k .tur{color:var(--anlik)}
+.olay h3{font-size:16px;line-height:1.3;font-weight:var(--y-kalin);margin-top:4px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.olay .m{margin-top:6px;font-size:12.5px;color:var(--metin-3);white-space:nowrap;display:flex;gap:12px}
+.olay .m i{font-size:10.5px;margin-right:5px}
+.olay .gr{width:68px;height:68px;border-radius:var(--k-kontrol);margin-top:4px}
+/* Liste kipi */
+.liste-kip .olay{display:block}
+.liste-kip .olay .saat,.liste-kip .olay .cizgi,.liste-kip .olay .nokta,.liste-kip .dilim .s{display:none}
+.liste-kip .olay a{padding-left:0}
+.liste-kip .dilim{display:none}
+.isk{display:grid;grid-template-columns:52px minmax(0,1fr);padding:14px 0}
+.isk div{padding-left:12px}
+.isk i{display:block;border-radius:var(--k-ic);background:linear-gradient(90deg,var(--zemin-2) 30%,var(--yuzey-2) 50%,var(--zemin-2) 70%);background-size:300% 100%;animation:pari 1.4s linear infinite}
+.isk .a{height:12px;width:30%}.isk .b{height:16px;margin-top:10px}.isk .c{height:16px;width:65%;margin-top:8px}.isk .t{height:14px;width:36px;margin-top:2px}
+@keyframes pari{from{background-position:100% 0}to{background-position:-100% 0}}
+.pay{height:210px}
+
+/* G2 · yerleşik çubuk + mini oynatıcı (secenekler/alt-gezinme/g2.html) */
+.g2{position:absolute;left:0;right:0;bottom:0;z-index:80;padding:0 8px calc(var(--alt-guvenli) - 6px);background:linear-gradient(to top,var(--zemin) 62%,color-mix(in srgb,var(--zemin) 0%,transparent))}
+.mini{margin:0 0 8px;height:58px;border-radius:var(--k-kontrol);background:#1A1A1D;color:#fff;display:flex;align-items:center;gap:10px;padding:0 8px;position:relative;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.18)}
+html[data-tema="koyu"] .mini{background:#2A2A2E}
+.mini .yuz{width:42px;height:42px;border-radius:var(--k-ic);flex:none}
+.mini .t{flex:1;min-width:0;line-height:1.2}
+.mini .t b{display:block;font-size:14px;font-weight:var(--y-kalin);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mini .t small{font-size:12px;color:rgba(255,255,255,.66);white-space:nowrap}
+.mini .t small i{color:#FECC17;font-size:7px;margin-right:6px;vertical-align:2px}
+.mini button{width:44px;height:44px;display:grid;place-items:center;font-size:18px;color:#fff}
+.mini .ilerleme{position:absolute;left:8px;right:8px;bottom:0;height:2px;background:rgba(255,255,255,.18)}
+.mini .ilerleme::after{content:"";position:absolute;left:0;top:0;bottom:0;width:34%;background:#FECC17}
+.cubuk{display:flex;height:56px}
+.cubuk a{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;font-size:10.5px;font-weight:var(--y-orta);color:var(--metin-3);white-space:nowrap}
+.cubuk a i{font-size:21px}
+.cubuk a.etkin{color:var(--metin);font-weight:var(--y-kalin)}
+</style>
+</head>
+<body data-durum="koyu">
+<div class="ekran" id="ekran">
+  <header class="bas">
+    <div class="bas-ust"><a aria-label="Geri"><i class="fa-solid fa-chevron-left"></i></a><span class="sag"><button type="button" aria-label="Takip et"><i class="fa-solid fa-bell"></i></button><button type="button" aria-label="Ara"><i class="fa-solid fa-magnifying-glass"></i></button></span></div>
+    <h1><i class="fa-solid fa-newspaper"></i><span id="baslik"></span></h1>
+    <div class="durum"><span class="nab"><i class="fa-solid fa-circle"></i>CANLI AKIŞ</span><span id="say"></span></div>
+    <div class="anahtar" role="group" aria-label="Görünüm"><button type="button" class="etkin" data-k="cizelge"><i class="fa-solid fa-timeline"></i>Çizelge</button><button type="button" data-k="liste"><i class="fa-solid fa-list"></i>Liste</button></div>
+  </header>
+  <nav class="cipler ks" id="cipler" aria-label="Alt konular"></nav>
+  <div class="cizelge" id="cizelge"></div>
+  <div class="pay"></div>
+</div>
+<nav class="g2" aria-label="Alt gezinme">
+  <div class="mini"><span class="yuz gr" data-g="spiker-kare"></span><span class="t"><b>Asgari ücret komisyonu 4 Aralık'ta toplanıyor</b><small><i class="fa-solid fa-circle"></i>Dada Spiker · 16.00 Bülteni</small></span><button type="button" aria-label="Kaydet"><i class="fa-solid fa-plus"></i></button><button type="button" aria-label="Duraklat"><i class="fa-solid fa-pause"></i></button><span class="ilerleme"></span></div>
+  <div class="cubuk">
+    <a class="etkin"><i class="fa-solid fa-house"></i>Bugün</a>
+    <a><i class="fa-solid fa-bolt"></i>Son Dakika</a>
+    <a><i class="fa-solid fa-mobile-screen-button"></i>Akış</a>
+    <a><i class="fa-solid fa-headphones"></i>Dinle</a>
+    <a><i class="fa-solid fa-circle-user"></i>Sen</a>
+  </div>
+</nav>
+<script>
+(function(){
+  var L = D.liste;
+  document.getElementById('baslik').textContent = L.bolum;
+  document.getElementById('say').textContent = 'Son haber 16.05 · bugün ' + L.toplam + ' haber';
+  document.getElementById('cipler').innerHTML = L.altKonular.map(function(k,i){ return '<a class="cip' + (i===0?' etkin':'') + '">' + k + '</a>'; }).join('');
+  var o = '<div class="gun"><span>Bugün</span><small>23 Kasım Pazartesi</small></div>', dilim = '';
+  L.haberler.forEach(function(h,i){
+    var d = h.saat.split('.')[0] + '.00';
+    if (d !== dilim){ dilim = d; o += '<div class="dilim"><span class="s"><span>' + d + '</span></span><span></span></div>'; }
+    var vur = h.tur === 'Canlı' || h.tur === 'Son Dakika';
+    o += '<div class="olay' + (i===0?' ilk':'') + (vur?' vurgu':'') + '"><span class="saat">' + h.saat + '</span><span class="cizgi"></span><span class="nokta"></span>' +
+      '<a class="' + (h.g?'':'yazi') + '"><div><span class="k">' + (h.tur ? '<span class="' + (vur?'tur':'') + '">' + h.tur + '</span>·' : '') + h.alt + '</span><h3>' + h.baslik + '</h3><span class="m"><span><i class="fa-solid fa-clock"></i>' + h.sure + '</span><span><i class="fa-solid fa-eye"></i>' + h.izlenme + '</span><span>' + h.yazar + '</span></span></div>' +
+      (h.g ? '<div class="gr" style="background-image:' + G(h.g) + '"></div>' : '') + '</a></div>';
+  });
+  o += '<div class="isk"><i class="t"></i><div><i class="a"></i><i class="b"></i><i class="c"></i></div></div><div class="isk"><i class="t"></i><div><i class="a"></i><i class="b"></i><i class="c"></i></div></div>';
+  document.getElementById('cizelge').innerHTML = o;
+  document.querySelectorAll('.anahtar button').forEach(function(b){ b.addEventListener('click', function(){
+    document.querySelectorAll('.anahtar button').forEach(function(x){ x.classList.toggle('etkin', x===b); });
+    document.getElementById('cizelge').classList.toggle('liste-kip', b.dataset.k === 'liste');
+  }); });
+  document.querySelectorAll('.cip').forEach(function(c){ c.addEventListener('click',function(){ document.querySelectorAll('.cip').forEach(function(x){ x.classList.toggle('etkin', x===c); }); }); });
+  if (new URLSearchParams(location.search).get('kip') === 'liste') document.querySelector('[data-k="liste"]').click();
+})();
+</script>
+</body>
+</html>

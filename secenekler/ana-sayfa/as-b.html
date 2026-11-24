@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>AS-B · Kaydırılan akış sekmeleri</title>
+<link rel="stylesheet" href="../_ortak/cerceve.css">
+<link rel="stylesheet" href="../_ortak/marka.css">
+<link rel="stylesheet" href="../_ortak/hikaye.css">
+<script src="../_ortak/icerik.js"></script>
+<script src="../_ortak/cerceve.js"></script>
+<script src="../_ortak/icerik-ek.js"></script>
+<script src="../_ortak/hikaye.js"></script>
+<style>
+/* AS-B · Kaydırılan akış sekmeleri. Yapı: Threads (akışlar arası yatay kaydırma, sıra ve açılış sekmesi), Google News, SmartNews, Bluesky (sabitle-sırala).
+   Karakter: akış. Gri zemin üstünde kenarlıksız beyaz kartlar, tek kart türü, sekme çizgisi parmağı izler. Alt gezinme: G3 (gösterge hapı). */
+:root{--b-zemin:#F2F2EF;--b-kart:#FFFFFF}
+html[data-tema="koyu"]{--b-zemin:#0B0B0C;--b-kart:#18181B}
+html,body{background:var(--b-zemin)}
+.bas{position:absolute;left:0;right:0;top:0;z-index:60;background:var(--b-zemin);padding-top:var(--ust-guvenli)}
+.bas-ust{height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 8px 0 var(--kenar)}
+.bas-ust .logo{height:25px}
+.bas-ust .sag{display:flex}
+.ikon-d{width:44px;height:44px;border-radius:var(--k-daire);display:grid;place-items:center;font-size:18px;color:var(--metin);position:relative}
+.ikon-d .n{position:absolute;top:10px;right:11px;width:8px;height:8px;border-radius:var(--k-daire);background:var(--anlik);border:2px solid var(--b-zemin)}
+.sekme-s{position:relative;display:flex;align-items:center;border-bottom:1px solid var(--cizgi)}
+.sekmeler{flex:1;min-width:0;display:flex;overflow-x:auto;scrollbar-width:none;padding:0 var(--kenar);gap:22px;position:relative;
+  -webkit-mask-image:linear-gradient(90deg,#000 88%,transparent);mask-image:linear-gradient(90deg,#000 88%,transparent)}
+.sekmeler::-webkit-scrollbar{display:none}
+.sekmeler button{flex:none;height:44px;font-size:15.5px;font-weight:var(--y-kalin);color:var(--metin-3);white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+.sekmeler button.etkin{color:var(--metin);font-weight:var(--y-kalin)}
+.sekmeler button .cn{width:7px;height:7px;border-radius:var(--k-daire);background:var(--anlik)}
+.cizgi{position:absolute;bottom:-1px;height:3px;border-radius:var(--k-cubuk) var(--k-cubuk) 0 0;background:var(--marka);transition:transform .2s ease,width .2s ease;left:0}
+.duzenle{flex:none;width:48px;height:44px;display:grid;place-items:center;font-size:16px;color:var(--metin)}
+.sayfalar{position:absolute;left:0;right:0;top:calc(var(--ust-guvenli) + 97px);bottom:0;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain}
+.sayfalar::-webkit-scrollbar{display:none}
+.sayfa{flex:0 0 100%;height:100%;overflow-y:auto;scroll-snap-align:start;scrollbar-width:none;padding:12px 0 calc(96px + var(--alt-guvenli))}
+.sayfa::-webkit-scrollbar{display:none}
+/* tek kart türü */
+.kart{display:block;margin:0 12px 12px;background:var(--b-kart);border-radius:var(--k-buyuk);overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.kart .gr{aspect-ratio:16/10}
+.kart .ic{padding:14px 16px 6px}
+.kart .ust-s{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:var(--y-kalin);color:var(--marka-metin);white-space:nowrap}
+.kart .ust-s span{color:var(--metin-3);font-weight:var(--y-orta)}
+.kart .ust-s .tur{margin-left:auto;font-size:11.5px;font-weight:var(--y-kalin);color:var(--metin-2);background:var(--zemin-2);padding:4px 8px;border-radius:var(--k-ic);display:inline-flex;gap:5px;align-items:center}
+.kart h3{margin-top:7px;font-size:19px;line-height:1.24;font-weight:var(--y-kalin);letter-spacing:-.018em}
+.kart .alt{display:flex;align-items:center;gap:8px;padding:8px 4px 8px 16px;font-size:12.5px;color:var(--metin-3);white-space:nowrap}
+.kart .av{width:26px;height:26px;border-radius:var(--k-daire);background:var(--marka-25);color:var(--marka-metin);display:grid;place-items:center;font-size:11px;font-weight:var(--y-kalin);flex:none}
+.kart .alt b{color:var(--metin-2);font-weight:var(--y-kalin);overflow:hidden;text-overflow:ellipsis}
+.kart .alt .ay{width:3px;height:3px;border-radius:var(--k-daire);background:currentColor;opacity:.6;flex:none}
+.kart .alt .ey{margin-left:auto;display:flex}
+.kart .alt .ey button{width:44px;height:44px;display:grid;place-items:center;font-size:15px;color:var(--metin-2)}
+/* kişiselleştirme kartı */
+.kisi{margin:0 12px 12px;padding:18px 16px 16px;border-radius:var(--k-buyuk);background:var(--b-kart);border:1px solid var(--cizgi)}
+.kisi h3{font-size:18px;font-weight:var(--y-kalin);letter-spacing:-.015em}
+.kisi p{margin-top:4px;font-size:13.5px;color:var(--metin-3)}
+.kisi .cp{gap:8px;padding:14px 0 0;margin:0 -16px;padding-left:16px;padding-right:16px;scroll-padding-inline:16px}
+.kisi .cp button{height:40px;padding:0 14px;border-radius:var(--k-buyuk);background:var(--zemin-2);font-size:14px;font-weight:var(--y-kalin);display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.kisi .cp button i{font-size:11px;color:var(--marka-metin)}
+.kisi .d{display:flex;gap:8px;margin-top:14px}
+.kisi .d a{flex:1;height:46px;border-radius:var(--k-buyuk);display:grid;place-items:center;font-size:14.5px;font-weight:var(--y-kalin)}
+.kisi .d .k{background:var(--metin);color:var(--zemin)}
+.kisi .d .c{background:var(--zemin-2)}
+/* akış rayı */
+.akis{margin:0 0 12px;padding:16px 0 18px;background:var(--b-kart);border-radius:var(--k-buyuk);margin-left:12px;margin-right:12px}
+.akis h4{padding:0 16px 12px;font-size:16px;font-weight:var(--y-kalin);display:flex;justify-content:space-between}
+.akis h4 span{font-size:13px;color:var(--metin-3);font-weight:var(--y-orta)}
+.akis .ks{gap:8px;padding:0 16px;scroll-padding-inline:16px}
+.akis .ks a{width:108px;height:180px;border-radius:var(--k-kart);background-size:cover;background-position:center;position:relative;overflow:hidden;color:#fff;padding:8px;display:flex;align-items:flex-end}
+.akis .ks a::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.75),transparent 60%)}
+.akis .ks b{position:relative;z-index:1;font-size:12px;line-height:1.2;font-weight:var(--y-kalin);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.akis .ks .s{position:absolute;top:7px;left:7px;z-index:1;font-size:10.5px;font-weight:var(--y-kalin);background:rgba(0,0,0,.5);padding:3px 6px;border-radius:var(--k-ic)}
+.bitti{text-align:center;padding:18px 16px 8px;font-size:13.5px;color:var(--metin-3)}
+.bitti i{display:block;font-size:20px;color:var(--marka-metin);margin-bottom:8px}
+/* son dakika sayfası: zaman çizgisi */
+.zc{list-style:none;margin:4px 12px;background:var(--b-kart);border-radius:var(--k-buyuk);padding:8px 16px}
+.zc li a{display:grid;grid-template-columns:50px 14px minmax(0,1fr);gap:8px;padding:12px 0;position:relative}
+.zc time{font-size:14px;font-weight:var(--y-kalin);font-variant-numeric:tabular-nums}
+.zc .nk{position:relative}
+.zc .nk::before{content:"";position:absolute;left:6px;top:-12px;bottom:-12px;width:2px;background:var(--cizgi)}
+.zc .nk::after{content:"";position:absolute;left:2px;top:4px;width:10px;height:10px;border-radius:var(--k-daire);background:var(--b-kart);border:2px solid var(--marka)}
+.zc li:first-child .nk::after{background:var(--anlik);border-color:var(--anlik)}
+.zc p{font-size:15.5px;line-height:1.3;font-weight:var(--y-kalin)}
+.zc small{display:block;margin-top:3px;font-size:12px;color:var(--metin-3)}
+/* takip: boş hal */
+.bos{margin:4px 12px;padding:28px 20px 22px;background:var(--b-kart);border-radius:var(--k-buyuk);text-align:center}
+.bos .i{width:64px;height:64px;margin:0 auto 14px;border-radius:var(--k-daire);background:var(--marka-25);color:var(--marka-metin);display:grid;place-items:center;font-size:24px}
+.bos h3{font-size:19px;font-weight:var(--y-kalin)}
+.bos p{margin-top:6px;font-size:14px;color:var(--metin-3);line-height:1.45}
+.bos ul{list-style:none;margin-top:16px;text-align:left}
+.bos li{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--cizgi);font-size:15px;font-weight:var(--y-kalin)}
+.bos li i{width:34px;height:34px;border-radius:var(--k-kontrol);background:var(--zemin-2);display:grid;place-items:center;font-size:14px}
+.bos li button{margin-left:auto;height:36px;padding:0 14px;border-radius:var(--k-kart);background:var(--metin);color:var(--zemin);font-size:13px;font-weight:var(--y-kalin)}
+.bos small{display:block;margin-top:14px;font-size:12px;color:var(--metin-3)}
+/* bölüm şeritleri */
+.serit{margin:0 12px 12px;padding:12px 16px;border-radius:var(--k-kart);background:var(--b-kart);display:flex;align-items:center;gap:12px;white-space:nowrap;font-size:14px}
+.serit b{font-size:18px;font-weight:var(--y-kalin);font-variant-numeric:tabular-nums}
+.serit .ck{font-size:11px;font-weight:var(--y-kalin);color:#fff;background:var(--anlik);padding:4px 7px;border-radius:var(--k-ic)}
+.serit .sag{margin-left:auto;color:var(--metin-3);font-size:13px}
+.serit .y{color:var(--azalis);font-weight:var(--y-kalin)}
+/* sekmeleri düzenle alt sayfası */
+.perde{position:absolute;inset:0;z-index:120;background:rgba(0,0,0,.36);opacity:0;pointer-events:none;transition:opacity .25s}
+.alts{position:absolute;left:0;right:0;bottom:0;z-index:130;background:var(--zemin);border-radius:var(--k-buyuk) var(--k-buyuk) 0 0;padding:8px 0 calc(var(--alt-guvenli) + 8px);transform:translateY(105%);transition:transform .3s cubic-bezier(.3,.7,.2,1);max-height:78%;display:flex;flex-direction:column}
+.acik .perde{opacity:1;pointer-events:auto}.acik .alts{transform:none}
+.alts .tut{width:38px;height:5px;border-radius:var(--k-cubuk);background:var(--cizgi);margin:0 auto 10px}
+.alts header{display:flex;align-items:center;padding:4px 8px 10px 20px}
+.alts header h3{font-size:19px;font-weight:var(--y-kalin)}
+.alts header button{margin-left:auto;width:44px;height:44px;display:grid;place-items:center;font-size:16px;border-radius:var(--k-daire);background:var(--zemin-2)}
+.alts p{padding:0 20px 8px;font-size:13.5px;color:var(--metin-3)}
+.alts ul{list-style:none;overflow-y:auto;padding:0 20px}
+.alts li{display:flex;align-items:center;gap:12px;height:52px;border-top:1px solid var(--cizgi);font-size:15.5px;font-weight:var(--y-kalin)}
+.alts li .tk{color:var(--metin-3);font-size:14px}
+.alts li .ac{font-size:11px;font-weight:var(--y-kalin);background:var(--marka);color:#121212;padding:3px 8px;border-radius:var(--k-ic)}
+.alts li .sw{margin-left:auto;width:46px;height:28px;border-radius:var(--k-kart);background:var(--marka);position:relative}
+.alts li .sw::after{content:"";position:absolute;right:3px;top:3px;width:22px;height:22px;border-radius:var(--k-daire);background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+/* ===== Alt gezinme G3 (Material 3, Google News) ===== */
+.g3{position:absolute;left:0;right:0;bottom:0;z-index:80;background:var(--yuzey-g3);padding:10px 4px calc(var(--alt-guvenli) - 4px);display:flex}
+:root{--yuzey-g3:#FFFFFF}html[data-tema="koyu"]{--yuzey-g3:#1A1A1D}
+.g3 a{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:5px;font-size:12px;font-weight:var(--y-orta);color:var(--metin-2);white-space:nowrap}
+.g3 .hap{position:relative;width:60px;height:34px;border-radius:var(--k-kart);display:grid;place-items:center;font-size:19px}
+.g3 a.etkin{color:var(--metin);font-weight:var(--y-kalin)}
+.g3 a.etkin .hap{background:var(--marka);color:#121212}
+.g3 .nokta{position:absolute;top:4px;left:36px;width:8px;height:8px;border-radius:var(--k-daire);background:var(--anlik);border:2px solid var(--yuzey-g3)}
+html.tam,html.tam body{height:auto}
+html.tam .sayfalar{position:relative;top:auto;height:auto;padding-top:calc(var(--ust-guvenli) + 97px)}
+html.tam .sayfa{height:auto;overflow:visible;flex:0 0 390px;width:390px}
+html.tam .sayfalar{overflow:hidden}
+html.tam .g3{position:fixed}
+.g3{border-top:1px solid var(--cizgi)}
+</style>
+</head>
+<body>
+<header class="bas">
+  <div class="bas-ust"><span class="logo" role="img" aria-label="Dada Haber"></span><div class="sag"><a class="ikon-d" aria-label="Ara"><i class="fa-solid fa-magnifying-glass"></i></a><a class="ikon-d" aria-label="Bildirimler"><i class="fa-solid fa-bell"></i><span class="n"></span></a></div></div>
+  <div class="sekme-s"><div class="sekmeler" id="sekmeler" role="tablist"></div><button class="duzenle" id="duzenleAc" type="button" aria-label="Sekmeleri düzenle"><i class="fa-solid fa-sliders"></i></button></div>
+</header>
+<main class="sayfalar" id="sayfalar"></main>
+<div id="sheet"><div class="perde" id="perde"></div>
+  <section class="alts" role="dialog" aria-label="Sekmeleri düzenle"><div class="tut"></div>
+    <header><h3>Sekmeleri Düzenle</h3><button type="button" id="duzenleKapat" aria-label="Kapat"><i class="fa-solid fa-xmark"></i></button></header>
+    <p>Sırayı sürükleyerek değiştir. Uygulama işaretli sekmeyle açılır.</p>
+    <ul id="duzenleListe"></ul>
+  </section>
+</div>
+<nav class="g3" aria-label="Alt gezinme">
+  <a class="etkin" data-sekme><span class="hap"><i class="fa-solid fa-house"></i></span>Ana Sayfa</a>
+  <a data-sekme><span class="hap"><i class="fa-solid fa-compass"></i></span>Keşfet</a>
+  <a data-sekme><span class="hap"><i class="fa-solid fa-mobile-screen-button"></i><span class="nokta"></span></span>Akış</a>
+  <a data-sekme><span class="hap"><i class="fa-solid fa-bookmark"></i></span>Kayıtlar</a>
+  <a data-sekme><span class="hap"><i class="fa-solid fa-circle-user"></i></span>Hesabım</a>
+</nav>
+<script>
+(function(){
+  var D = window.D, $ = function(i){ return document.getElementById(i); };
+  var ay = '<span class="ay"></span>';
+  function ini(ad){ return ad.split(' ').map(function(s){ return s[0]; }).join('').slice(0,2); }
+  function kart(h, kat, tur){
+    return '<a class="kart"><div class="gr" style="background-image:' + G(h.g) + '"></div><div class="ic"><div class="ust-s">' + kat + '<span>· 23 Kas</span>' +
+      (tur ? '<span class="tur"><i class="fa-solid fa-' + (tur==='Video'?'play':'headphones') + '"></i>' + tur + '</span>' : '') + '</div><h3>' + h.baslik + '</h3></div>' +
+      '<div class="alt"><span class="av">' + ini(h.yazar) + '</span><b>' + h.yazar + '</b>' + ay + h.sure + ay + h.izlenme +
+      '<span class="ey"><button type="button" aria-label="Kaydet"><i class="fa-solid fa-bookmark"></i></button><button type="button" aria-label="Paylaş"><i class="fa-solid fa-share-nodes"></i></button></span></div></a>';
+  }
+  var akis = '<div class="akis"><h4>Akış<span>Bugün ' + D.akis.toplam + ' video</span></h4><div class="ks">' +
+    D.akis.liste.map(function(v){ return '<a style="background-image:' + G(v.g) + '"><span class="s">' + v.sure + '</span><b>' + v.baslik + '</b></a>'; }).join('') + '</div></div>';
+  var sekmeler = [{ad:'Senin İçin'},{ad:'Son Dakika',canli:1},{ad:'Takip'}].concat(D.bolumler.map(function(b){ return {ad:b.ad, b:b}; }));
+  var sayfalar = sekmeler.map(function(s, i){
+    var h = '';
+    if (i === 0) {
+      h += '<div class="hk-b-yer" data-hikaye-serit></div>';
+      h += '<div class="kisi"><h3>Akışını kendin kur</h3><p>Konu seç, Senin İçin sana göre dolsun.</p><div class="cp ks">' +
+        D.uye.takip.map(function(t){ return '<button type="button"><i class="fa-solid fa-plus"></i>' + t + '</button>'; }).join('') + '</div>' +
+        '<div class="d"><a class="k">Konu seç</a><a class="c">Şimdi değil</a></div></div>';
+      D.manset.forEach(function(m, j){
+        h += kart(m, m.kat, j===0 ? 'Video' : (j===3 ? 'Dinle' : ''));
+        if (j === 1) h += akis;
+      });
+      D.bolumler.slice(0,4).forEach(function(b){ h += kart(b.haberler[0], b.ad); });
+      h += '<div class="bitti"><i class="fa-solid fa-circle-check"></i>Senin İçin\'deki bugünkü haberlerin hepsini gördün.</div>';
+    } else if (i === 1) {
+      h += '<ol class="zc">' + D.sonDakika.map(function(s){ return '<li><a><time>' + s.saat + '</time><span class="nk"></span><div><p>' + s.baslik + '</p><small>' + s.kat + ' · ' + s.sure + '</small></div></a></li>'; }).join('') + '</ol>';
+    } else if (i === 2) {
+      h += '<div class="bos"><div class="i"><i class="fa-solid fa-star"></i></div><h3>Henüz bir şey takip etmiyorsun</h3><p>Takip ettiğin konu, kişi ve takımların haberleri burada toplanır.</p><ul>' +
+        [['fa-futbol','Galatasaray'],['fa-chart-line','Faiz'],['fa-city','İstanbul'],['fa-shield-halved','Savunma Sanayii']].map(function(t){ return '<li><i class="fa-solid ' + t[0] + '"></i>' + t[1] + '<button type="button">Takip et</button></li>'; }).join('') +
+        '</ul><small>Takiplerin cihazında tutulur; üye olunca hesabına taşınır.</small></div>';
+    } else {
+      var b = s.b;
+      if (b.ad === 'Spor') h += '<div class="serit"><span class="ck">CANLI</span><b>' + D.mac.evKod + ' ' + D.mac.skor + ' ' + D.mac.depKod + '</b><span class="sag">' + D.mac.dakika + ' · Süper Lig</span></div>';
+      if (b.ad === 'Finans') h += '<div class="serit"><span>Dolar</span><b>' + D.piyasa.liste[0].deger + '</b><span>Euro</span><b>' + D.piyasa.liste[1].deger + '</b><span class="sag">' + D.piyasa.guncelleme + '</span></div>';
+      b.haberler.forEach(function(x){ h += kart(x, b.ad); });
+    }
+    return '<section class="sayfa" role="tabpanel">' + h + '</section>';
+  });
+  $('sayfalar').innerHTML = sayfalar.join('');
+  $('sekmeler').innerHTML = sekmeler.map(function(s,i){ return '<button type="button" role="tab"' + (i===0?' class="etkin"':'') + '>' + (s.canli?'<span class="cn"></span>':'') + s.ad + '</button>'; }).join('') + '<span class="cizgi" id="cizgi"></span>';
+  var tabs = [].slice.call($('sekmeler').querySelectorAll('button')), sp = $('sayfalar'), cz = $('cizgi'), etkin = 0;
+  function isaretle(i){
+    etkin = i; tabs.forEach(function(t,j){ t.classList.toggle('etkin', j===i); });
+    var t = tabs[i]; cz.style.width = t.offsetWidth + 'px'; cz.style.transform = 'translateX(' + t.offsetLeft + 'px)';
+    var sk = $('sekmeler'); var hedef = t.offsetLeft - 16; if (t.offsetLeft + t.offsetWidth > sk.scrollLeft + sk.clientWidth - 40 || t.offsetLeft < sk.scrollLeft) sk.scrollTo({left: hedef, behavior:'smooth'});
+  }
+  tabs.forEach(function(t,i){ t.addEventListener('click', function(){ sp.scrollTo({left: i * sp.clientWidth, behavior:'smooth'}); isaretle(i); }); });
+  sp.addEventListener('scroll', function(){ var i = Math.round(sp.scrollLeft / sp.clientWidth); if (i !== etkin) isaretle(i); }, {passive:true});
+  requestAnimationFrame(function(){ isaretle(0); });
+  var q = new URLSearchParams(location.search), n = parseInt(q.get('sekme') || '0', 10);
+  if (n) setTimeout(function(){ sp.scrollLeft = n * sp.clientWidth; isaretle(n); }, 60);
+  $('duzenleListe').innerHTML = sekmeler.map(function(s,i){ return '<li><i class="fa-solid fa-grip-lines tk"></i>' + s.ad + (i===0?' <span class="ac">Açılış</span>':'') + '<span class="sw" aria-hidden="true"></span></li>'; }).join('');
+  function sheet(a){ $('sheet').classList.toggle('acik', a); }
+  $('duzenleAc').onclick = function(){ sheet(true); }; $('duzenleKapat').onclick = $('perde').onclick = function(){ sheet(false); };
+  if (q.get('duzenle') === '1') sheet(true);
+  document.querySelectorAll('[data-sekme]').forEach(function(a){ a.addEventListener('click', function(){ document.querySelectorAll('[data-sekme]').forEach(function(b){ b.classList.toggle('etkin', b===a); }); }); });
+})();
+</script>
+</body>
+</html>

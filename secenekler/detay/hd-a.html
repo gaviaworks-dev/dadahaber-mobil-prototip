@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>HD-A · Kapak ve sakin okuma</title>
+<link rel="stylesheet" href="../_ortak/cerceve.css">
+<link rel="stylesheet" href="../_ortak/marka.css">
+<script src="../_ortak/icerik.js"></script>
+<script src="../_ortak/icerik-ek.js"></script>
+<script src="../_ortak/cerceve.js"></script>
+<style>
+/* HD-A · Kapak ve sakin okuma. Tam ekrana yakın görsel kapak, üstünde yalnız başlık ve imza; aşağısı tek sütun sakin metin.
+   Üst çubuk kapak üstünde saydam (cam daireler), kapak geçilince düz zemine döner ve küçük başlığı gösterir. Altta her zaman koyu yüzen okuma çubuğu. */
+:root{--mb:17.5px}
+.ust{position:absolute;left:0;right:0;top:0;z-index:70;height:calc(var(--ust-guvenli) + 52px);padding:var(--ust-guvenli) 12px 0;display:flex;align-items:center;gap:8px;transition:background .25s,border-color .25s}
+.ust .d{width:44px;height:44px;border-radius:var(--k-daire);display:grid;place-items:center;font-size:16px;color:#fff;background:rgba(18,18,18,.38);border:1px solid rgba(255,255,255,.18);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:background .25s,color .25s,border-color .25s;flex:none}
+.ust .bt{flex:1;min-width:0;font-size:15px;font-weight:var(--y-kalin);text-align:center;opacity:0;transition:opacity .25s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--metin)}
+.ust .ilerleme{position:absolute;left:0;bottom:-1px;height:2px;width:0;background:var(--marka)}
+.ust.dolu{background:color-mix(in srgb,var(--zemin) 94%,transparent);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-bottom:1px solid var(--cizgi)}
+.ust.dolu .d{background:transparent;border-color:transparent;color:var(--metin)}
+.ust.dolu .bt{opacity:1}
+
+.kapak{position:relative;height:600px;display:flex;flex-direction:column;justify-content:flex-end;padding:0 20px 26px;color:#fff;isolation:isolate}
+.kapak::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,rgba(10,10,10,.94) 8%,rgba(10,10,10,.55) 44%,rgba(10,10,10,.05) 72%,rgba(10,10,10,.35))}
+.kapak .kat{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:var(--y-kalin);color:var(--marka);letter-spacing:.02em}
+.kapak h1{margin-top:12px;font-size:31px;line-height:1.1;letter-spacing:-.028em;font-weight:var(--y-kalin)}
+.imza{margin-top:18px;display:flex;align-items:center;gap:10px;min-width:0}
+.av{width:36px;height:36px;border-radius:var(--k-daire);display:grid;place-items:center;font-weight:var(--y-kalin);font-size:14px;line-height:1;flex:none;background:var(--marka);color:#121212}
+.imza .t{min-width:0;line-height:1.25}
+.imza b{display:block;font-size:14.5px;font-weight:var(--y-kalin);white-space:nowrap}
+.imza small{display:block;font-size:12.5px;color:rgba(255,255,255,.72);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.oynat{position:absolute;right:16px;top:calc(var(--ust-guvenli) + 64px);display:flex;align-items:center;gap:10px;height:44px;padding:0 16px 0 6px;border-radius:var(--k-buyuk);background:rgba(255,255,255,.16);
+  border:1px solid rgba(255,255,255,.25);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);font-size:13.5px;font-weight:var(--y-kalin);color:#fff}
+.oynat i{width:32px;height:32px;border-radius:var(--k-daire);background:#fff;color:#121212;display:grid;place-items:center;font-size:11px;padding-left:2px}
+.altyazi{padding:10px 20px 0;font-size:12px;color:var(--metin-3)}
+
+.metin{padding:22px 20px 0;font-size:var(--mb);line-height:1.62}
+.spot{font-size:calc(var(--mb) + 2px);line-height:1.5;font-weight:var(--y-orta);letter-spacing:-.01em;color:var(--metin)}
+.zaman{margin-top:16px;display:flex;gap:14px;font-size:13px;color:var(--metin-3);white-space:nowrap}
+.zaman span{display:inline-flex;align-items:center;gap:6px}
+.zaman i{font-size:11px}
+
+.ozet{margin:28px 0 6px;padding-top:20px;border-top:2px solid var(--metin)}
+.ozet-bas{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.ozet-bas h2{font-size:13px;font-weight:var(--y-kalin);letter-spacing:.1em;text-transform:uppercase}
+.ai{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:var(--y-orta);color:var(--metin-3);white-space:nowrap}
+.ozet ul{list-style:none;margin-top:14px;display:grid;gap:12px}
+.ozet li{position:relative;padding-left:22px;font-size:16.5px;line-height:1.5;font-weight:var(--y-orta)}
+.ozet li::before{content:"";position:absolute;left:2px;top:9px;width:8px;height:8px;border-radius:var(--k-cubuk);background:var(--marka)}
+.uc-not{margin-top:22px;display:grid;gap:0;border-top:1px solid var(--cizgi)}
+.uc-not div{padding:14px 0;border-bottom:1px solid var(--cizgi)}
+.uc-not b{display:block;font-size:13px;font-weight:var(--y-kalin);color:var(--marka-metin);margin-bottom:4px}
+.uc-not p{font-size:15.5px;line-height:1.55;color:var(--metin-2)}
+
+.govde{margin-top:30px}
+.govde p{margin-bottom:20px;color:var(--metin)}
+.govde h2{font-size:21px;line-height:1.25;letter-spacing:-.015em;font-weight:var(--y-kalin);margin:30px 0 12px}
+.govde figure{margin:28px -20px}
+.govde figure .gr{height:240px}
+.govde figcaption{padding:10px 20px 0;font-size:12.5px;line-height:1.45;color:var(--metin-3)}
+
+.bolum{margin-top:36px}
+.bolum>h2{font-size:13px;font-weight:var(--y-kalin);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+.kaynak{display:flex;gap:12px;padding:12px 0;border-top:1px solid var(--cizgi);font-size:14px;line-height:1.4}
+.kaynak i{width:20px;color:var(--metin-3);font-size:13px;margin-top:3px}
+.kaynak b{display:block;font-weight:var(--y-kalin)}
+.kaynak span{color:var(--metin-3);font-size:13px}
+.etiket{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:0 -20px;padding:0 20px}
+.etiket::-webkit-scrollbar{display:none}
+.etiket a{flex:none;height:38px;padding:0 14px;display:inline-flex;align-items:center;border-radius:var(--k-kart);border:1px solid var(--cizgi);font-size:14px;font-weight:var(--y-orta);white-space:nowrap}
+.yorum{display:block;padding:16px;border-radius:var(--k-kart);background:var(--zemin-2)}
+.yorum .ust-s{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--metin-3)}
+.yorum .ust-s b{color:var(--metin);font-size:14px}
+.yorum .av{width:30px;height:30px;font-size:12px;background:var(--marka-25);color:var(--marka-metin)}
+.yorum p{margin-top:10px;font-size:15px;line-height:1.5}
+.yorum .tum{margin-top:12px;display:flex;align-items:center;justify-content:space-between;font-size:14px;font-weight:var(--y-kalin);min-height:44px}
+.ilgili a{display:grid;grid-template-columns:minmax(0,1fr) 76px;gap:14px;align-items:center;padding:14px 0;border-top:1px solid var(--cizgi)}
+.ilgili h3{font-size:15.5px;line-height:1.3;font-weight:var(--y-kalin);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.ilgili small{display:block;margin-top:6px;font-size:12.5px;color:var(--metin-3)}
+.ilgili .gr{width:76px;height:76px;border-radius:var(--k-kontrol)}
+.son{height:150px}
+
+/* Yüzen okuma çubuğu: her iki temada koyu */
+.okuma{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(var(--alt-guvenli) - 6px);z-index:80;display:flex;align-items:center;gap:2px;padding:6px;border-radius:var(--k-buyuk);
+  background:#141414;box-shadow:0 14px 34px rgba(0,0,0,.3),inset 0 0 0 1px rgba(255,255,255,.07);transition:transform .3s,opacity .3s}
+.okuma button{height:48px;min-width:48px;border-radius:var(--k-buyuk);display:grid;place-items:center;color:#fff;font-size:17px}
+.okuma .dinle{white-space:nowrap;display:flex;align-items:center;gap:10px;padding:0 18px 0 6px;background:var(--marka);color:#121212;font-size:14.5px;font-weight:var(--y-kalin)}
+.okuma .dinle i{width:36px;height:36px;border-radius:var(--k-daire);background:#121212;color:var(--marka);display:grid;place-items:center;font-size:12px;padding-left:2px}
+.okuma .aa{font-size:15px;font-weight:var(--y-kalin);letter-spacing:-.02em}
+.okuma.gizli{transform:translate(-50%,120px);opacity:0}
+
+/* Yazı ayarı alt sayfası */
+.perde{position:absolute;inset:0;z-index:90;background:rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:opacity .25s}
+.sayfa{position:absolute;left:0;right:0;bottom:0;z-index:91;background:var(--yuzey);border-radius:var(--k-buyuk) var(--k-buyuk) 0 0;padding:10px 20px calc(var(--alt-guvenli) + 10px);transform:translateY(105%);transition:transform .3s cubic-bezier(.3,.7,.2,1)}
+.sayfa .tut{width:36px;height:5px;border-radius:var(--k-cubuk);background:var(--cizgi);margin:0 auto 14px}
+.sayfa h2{font-size:18px;font-weight:var(--y-kalin)}
+.boy{margin-top:16px;display:flex;align-items:center;gap:14px}
+.boy span{font-weight:var(--y-kalin)}
+.boy input{flex:1;accent-color:#121212;height:44px}
+html[data-tema="koyu"] .boy input{accent-color:var(--marka)}
+.acik .perde{opacity:1;pointer-events:auto}
+.acik .sayfa{transform:none}
+</style>
+</head>
+<body data-durum="acik">
+<div class="ekran" id="e">
+  <header class="kapak gr" id="kapak">
+    <button class="oynat" type="button"><i class="fa-solid fa-play"></i><span id="vid"></span></button>
+    <span class="kat"><i class="fa-solid fa-newspaper"></i><span id="yol"></span></span>
+    <h1 id="bas"></h1>
+    <div class="imza"><span class="av" id="av"></span><span class="t"><b id="yazar"></b><small id="unvan"></small></span></div>
+  </header>
+  <p class="altyazi" id="altyazi"></p>
+  <article class="metin">
+    <p class="spot" id="spot"></p>
+    <div class="zaman" id="zaman"></div>
+    <section class="ozet">
+      <div class="ozet-bas"><h2>Dada Özet</h2><span class="ai"><i class="fa-solid fa-wand-magic-sparkles"></i>Yapay zekâ ile özetlendi</span></div>
+      <ul id="ozet"></ul>
+      <div class="uc-not" id="ucnot"></div>
+    </section>
+    <div class="govde" id="govde"></div>
+    <section class="bolum"><h2>Kaynaklar</h2><div id="kaynak"></div></section>
+    <section class="bolum"><h2>Etiketler</h2><div class="etiket" id="etiket"></div></section>
+    <section class="bolum"><h2 id="yorumbas"></h2><a class="yorum" id="yorum"></a></section>
+    <section class="bolum ilgili"><h2>Sıradaki Okumalar</h2><div id="ilgili"></div></section>
+    <div class="son"></div>
+  </article>
+</div>
+<div class="ust" id="ust">
+  <button class="d" type="button" aria-label="Geri"><i class="fa-solid fa-chevron-left"></i></button>
+  <span class="bt" id="ustbas"></span>
+  <button class="d" type="button" aria-label="Kaydet"><i class="fa-solid fa-bookmark"></i></button>
+  <button class="d" type="button" aria-label="Paylaş"><i class="fa-solid fa-arrow-up-from-bracket"></i></button>
+  <span class="ilerleme" id="ilerleme"></span>
+</div>
+<nav class="okuma" id="okuma" aria-label="Okuma çubuğu">
+  <button class="dinle" type="button"><i class="fa-solid fa-play"></i><span id="dinle"></span></button>
+  <button type="button" aria-label="Kaydet"><i class="fa-solid fa-bookmark"></i></button>
+  <button type="button" aria-label="Paylaş"><i class="fa-solid fa-share-nodes"></i></button>
+  <button class="aa" type="button" aria-label="Yazı boyutu" id="aa">Aa</button>
+</nav>
+<div class="perde" id="perde"></div>
+<div class="sayfa" role="dialog" aria-label="Yazı ayarı">
+  <div class="tut"></div>
+  <h2>Yazı Boyutu</h2>
+  <div class="boy"><span style="font-size:14px">A</span><input id="boy" type="range" min="15" max="22" step="0.5" value="17.5" aria-label="Yazı boyutu"><span style="font-size:22px">A</span></div>
+</div>
+<script>
+(function(){
+  var d = D.detay, $ = function(i){ return document.getElementById(i); };
+  $('kapak').style.backgroundImage = G(d.g);
+  $('vid').textContent = 'Video · ' + d.video;
+  $('yol').textContent = d.yol.join(' · ');
+  $('bas').textContent = d.baslik; $('ustbas').textContent = d.baslik;
+  $('av').textContent = d.yazar.charAt(0);
+  $('yazar').textContent = d.yazar; $('unvan').textContent = d.unvan + ' · ' + d.tarih;
+  $('altyazi').textContent = d.altyazi;
+  $('spot').textContent = d.spot;
+  $('zaman').innerHTML = '<span><i class="fa-solid fa-clock"></i>' + d.saat + '</span><span><i class="fa-solid fa-rotate"></i>' + d.guncelleme + ' Güncellendi</span><span><i class="fa-solid fa-book-open"></i>' + d.sure + ' Okuma</span>';
+  $('ozet').innerHTML = d.ozet.map(function(m){ return '<li>' + m + '</li>'; }).join('');
+  $('ucnot').innerHTML = [['Neden önemli?', d.nedenOnemli], ['Bana etkisi', d.banaEtkisi], ['Bundan sonra', d.bundanSonra]].map(function(x){ return '<div><b>' + x[0] + '</b><p>' + x[1] + '</p></div>'; }).join('');
+  $('govde').innerHTML = d.govde.map(function(b){
+    if (b.p) return '<p>' + b.p + '</p>';
+    if (b.h) return '<h2>' + b.h + '</h2>';
+    return '<figure><div class="gr" style="background-image:' + G(b.gorsel) + '"></div><figcaption>' + b.altyazi + '</figcaption></figure>';
+  }).join('');
+  $('kaynak').innerHTML = d.kaynaklar.map(function(k){ return '<div class="kaynak"><i class="fa-solid fa-building-columns"></i><div><b>' + k.kurum + '</b><span>' + k.aciklama + '</span></div></div>'; }).join('');
+  $('etiket').innerHTML = d.etiketler.map(function(t){ return '<a>' + t + '</a>'; }).join('');
+  var y = d.yorumlar[0];
+  $('yorumbas').textContent = 'Yorumlar · ' + d.yorumSayisi;
+  $('yorum').innerHTML = '<div class="ust-s"><span class="av">' + y.ad.charAt(0) + '</span><b>' + y.ad + '</b>' + y.zaman + '</div><p>' + y.metin + '</p><span class="tum">Bütün yorumları oku<i class="fa-solid fa-chevron-right"></i></span>';
+  $('ilgili').innerHTML = d.ilgili.map(function(x){ return '<a><div><h3>' + x.baslik + '</h3><small>' + x.kat + ' · ' + x.sure + '</small></div><div class="gr" style="background-image:' + G(x.g) + '"></div></a>'; }).join('');
+  $('dinle').textContent = 'Dinle · ' + d.dinle;
+
+  var e = $('e'), ust = $('ust'), ok = $('okuma'), son = 0;
+  e.addEventListener('scroll', function(){
+    var t = e.scrollTop, dolu = t > 600 - 120;
+    ust.classList.toggle('dolu', dolu);
+    document.body.setAttribute('data-durum', dolu ? '' : 'acik');
+    $('ilerleme').style.width = Math.min(100, t / (e.scrollHeight - e.clientHeight) * 100) + '%';
+    if (t > son + 8 && t > 700) ok.classList.add('gizli'); else if (t < son - 8) ok.classList.remove('gizli');
+    son = t;
+  }, {passive:true});
+  $('aa').addEventListener('click', function(){ document.body.classList.add('acik'); });
+  $('perde').addEventListener('click', function(){ document.body.classList.remove('acik'); });
+  $('boy').addEventListener('input', function(){ document.documentElement.style.setProperty('--mb', this.value + 'px'); });
+  if (new URLSearchParams(location.search).get('aa') === '1') document.body.classList.add('acik');
+})();
+</script>
+</body>
+</html>

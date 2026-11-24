@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>LS-E · Görsel ızgara</title>
+<link rel="stylesheet" href="../_ortak/cerceve.css">
+<link rel="stylesheet" href="../_ortak/marka.css">
+<script src="../_ortak/icerik.js"></script>
+<script src="../_ortak/icerik-ek.js"></script>
+<script src="../_ortak/cerceve.js"></script>
+<style>
+/* LS-E · Görsel ızgara (yapı: Le Monde "İzle", Guardian esnek görsel oranı, Economist dikey raylar).
+   İki sütunlu, farklı yükseklikte kutular; görseli olmayan habere tipografik kutu. Alt gezinme: G4 ortada Spiker. */
+:root{--z:#FFFFFF;--kutu-yazi:#FECC17;--kutu-koyu:#121212}
+html[data-tema="koyu"]{--z:#0B0B0C}
+html,body,.ekran{background:var(--z)}
+/* Başlık: büyük, sola yaslı, sağda süzgeç */
+.bas{padding:calc(var(--ust-guvenli) + 2px) var(--kenar) 0;display:flex;align-items:center;gap:8px}
+.dg{width:44px;height:44px;border-radius:var(--k-kart);display:grid;place-items:center;font-size:16px;color:var(--metin);background:var(--zemin-2);flex:none}
+.bas .bos{flex:1}
+.bas h1{font-size:44px;line-height:.95;font-weight:var(--y-kalin);letter-spacing:-.04em;padding:14px var(--kenar) 0}
+.bas-alt{padding:8px var(--kenar) 0;font-size:13.5px;color:var(--metin-3);white-space:nowrap;display:flex;align-items:center;gap:8px}
+.bas-alt i{color:var(--marka-metin);font-size:12px}
+/* Alt konu: alt çizgili metin sekmeleri, yapışkan */
+.sekme{position:sticky;top:var(--ust-guvenli);z-index:20;margin-top:14px;background:color-mix(in srgb,var(--z) 90%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.dc-zemin{position:absolute;top:0;left:0;right:0;height:var(--ust-guvenli);z-index:85;background:color-mix(in srgb,var(--z) 90%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+html.tam .dc-zemin{display:none}
+.sekme .ks{gap:22px;padding:0 var(--kenar);border-bottom:1px solid var(--cizgi)}
+.sekme a{position:relative;height:46px;display:inline-flex;align-items:center;font-size:15px;font-weight:var(--y-kalin);color:var(--metin-3);white-space:nowrap}
+.sekme a.etkin{color:var(--metin);font-weight:var(--y-kalin)}
+.sekme a.etkin::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:3px;border-radius:var(--k-cubuk);background:var(--marka)}
+/* Izgara: iki sütun, sütun içinde akış (masonry) */
+.izgara{columns:2;column-gap:10px;padding:14px var(--kenar) 0}
+.kutu{break-inside:avoid;display:block;margin-bottom:10px;border-radius:var(--k-kart);overflow:hidden;position:relative;color:#fff;background-color:#1C1C1F;background-size:cover;background-position:center}
+.kutu::before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.78),rgba(0,0,0,0) 58%)}
+.kutu .ic{position:absolute;left:12px;right:12px;bottom:12px}
+.kutu.uzun{aspect-ratio:3/4.4}
+.kutu.kare{aspect-ratio:1/1}
+.kutu.orta{aspect-ratio:4/5}
+.kutu .ust{position:absolute;top:10px;left:10px;right:10px;display:flex;justify-content:space-between;align-items:flex-start;gap:6px}
+.kutu .tur{height:24px;padding:0 9px;border-radius:var(--k-kontrol);background:rgba(255,255,255,.92);color:#121212;font-size:11px;font-weight:var(--y-kalin);display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.kutu .tur.canli{background:var(--anlik);color:#fff}
+.kutu .tur.canli i{font-size:5px}
+.kutu .kay{width:32px;height:32px;border-radius:var(--k-kontrol);background:rgba(0,0,0,.38);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);display:grid;place-items:center;font-size:12px;color:#fff}
+.kutu h2{font-size:15px;line-height:1.22;font-weight:var(--y-kalin);letter-spacing:-.01em;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.kutu.uzun h2{font-size:17px}
+.kutu .m{margin-top:6px;font-size:11.5px;font-weight:var(--y-orta);color:rgba(255,255,255,.78);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* Görselsiz haber: tipografik kutu */
+.kutu.yazi{background:var(--kutu-koyu);aspect-ratio:auto;padding:14px 12px 12px}
+.kutu.yazi::before{display:none}
+.kutu.yazi .ust{position:static;margin-bottom:28px}
+.kutu.yazi .ic{position:static}
+.kutu.yazi h2{font-size:19px;line-height:1.15;color:#fff;-webkit-line-clamp:6}
+.kutu.yazi .alti{display:block;width:34px;height:4px;border-radius:var(--k-cubuk);background:var(--marka);margin-bottom:12px}
+.kutu.sari{background:var(--marka);color:#121212}
+.kutu.sari h2{color:#121212}
+.kutu.sari .m{color:rgba(18,18,18,.7)}
+.kutu.sari .tur{background:#121212;color:#FECC17}
+.kutu.sari .alti{background:#121212}
+html[data-tema="koyu"] .kutu.yazi:not(.sari){background:#1E1E22}
+/* İskelet */
+.isk{break-inside:avoid;margin-bottom:10px;border-radius:var(--k-kart);background:var(--zemin-2);
+  background-image:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);background-size:200% 100%;background-repeat:no-repeat;animation:parilti 1.4s linear infinite}
+html[data-tema="koyu"] .isk{background-image:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent)}
+@keyframes parilti{from{background-position:150% 0}to{background-position:-50% 0}}
+.pay{height:150px}
+/* Alt gezinme G4 · ortada Spiker */
+.g4{position:absolute;left:0;right:0;bottom:0;z-index:80;height:calc(64px + var(--alt-guvenli) - 6px);background:var(--z);border-top:1px solid var(--cizgi);
+  display:grid;grid-template-columns:1fr 1fr 92px 1fr 1fr;padding:0 6px calc(var(--alt-guvenli) - 6px)}
+.g4 a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;font-size:10.5px;font-weight:var(--y-orta);color:var(--metin-3);white-space:nowrap;position:relative}
+.g4 a i{font-size:20px}
+.g4 a.etkin{color:var(--metin);font-weight:var(--y-kalin)}
+.g4 a.etkin::after{content:"";position:absolute;bottom:4px;width:18px;height:3px;border-radius:var(--k-cubuk);background:var(--marka)}
+.spk{position:relative;align-self:start;justify-self:center;margin-top:-26px;width:72px;height:72px;border-radius:var(--k-daire);background:var(--marka);display:grid;place-items:center;border:5px solid var(--z);box-shadow:0 6px 18px rgba(254,204,23,.45)}
+.spk .yuz{width:50px;height:50px;border-radius:var(--k-daire);border:2px solid #121212}
+.spk .oyn{position:absolute;right:-2px;bottom:-2px;width:24px;height:24px;border-radius:var(--k-daire);background:#121212;color:#FECC17;display:grid;place-items:center;font-size:9px;border:2px solid var(--z)}
+.spk::before{content:"";position:absolute;inset:-5px;border-radius:var(--k-daire);border:2px solid var(--marka);animation:halka 2s ease-out infinite}
+@keyframes halka{from{transform:scale(1);opacity:.8}to{transform:scale(1.35);opacity:0}}
+.spk-e{position:absolute;bottom:calc(var(--alt-guvenli) - 2px);left:50%;transform:translateX(-50%);font-size:10.5px;font-weight:var(--y-kalin);color:var(--metin);white-space:nowrap}
+html.tam .g4{position:absolute}
+html.tam .sekme{position:relative}
+</style>
+</head>
+<body>
+<div class="dc-zemin" aria-hidden="true"></div>
+<div class="ekran" id="ekran">
+  <header>
+    <div class="bas">
+      <a class="dg" aria-label="Geri"><i class="fa-solid fa-chevron-left"></i></a>
+      <span class="bos"></span>
+      <a class="dg" aria-label="Süz"><i class="fa-solid fa-sliders"></i></a>
+      <a class="dg" aria-label="Bölümü takip et"><i class="fa-solid fa-bell"></i></a>
+    </div>
+  </header>
+  <div class="bas" style="padding:0;display:block"><h1>Gündem</h1></div>
+  <p class="bas-alt"><i class="fa-solid fa-newspaper"></i><span id="sayi"></span></p>
+  <nav class="sekme" aria-label="Alt konular"><div class="ks" id="konular"></div></nav>
+  <div class="izgara" id="izgara"></div>
+  <div class="pay"></div>
+</div>
+<nav class="g4" aria-label="Alt gezinme">
+  <a class="etkin" data-sekme><i class="fa-solid fa-house"></i>Bugün</a>
+  <a data-sekme><i class="fa-solid fa-bolt"></i>Son Dakika</a>
+  <button class="spk" type="button" aria-label="Spiker: 16.00 Bülteni"><span class="yuz gr" data-g="spiker-kare"></span><span class="oyn"><i class="fa-solid fa-play"></i></span></button>
+  <a data-sekme><i class="fa-solid fa-mobile-screen-button"></i>Akış</a>
+  <a data-sekme><i class="fa-solid fa-circle-user"></i>Sen</a>
+  <span class="spk-e">Spiker</span>
+</nav>
+<script>
+(function(){
+  var L = D.liste;
+  document.getElementById('sayi').textContent = L.toplam + " haber · son güncelleme " + L.haberler[0].saat;
+  document.getElementById('konular').innerHTML = L.altKonular.map(function(k,i){ return '<a class="' + (i===0?'etkin':'') + '">' + k + '</a>'; }).join('');
+  /* Kutu biçimi sırayla: görselli uzun / kare / orta, görselsiz yazı kutusu */
+  var bicim = ['uzun','kare','orta','kare','uzun','orta','kare','orta','uzun','kare','orta','kare','uzun','orta'];
+  var sariSira = 0;
+  var out = L.haberler.map(function(x,i){
+    var tur = x.tur ? '<span class="tur' + (x.tur==='Canlı'?' canli':'') + '">' + (x.tur==='Canlı'?'<i class="fa-solid fa-circle"></i>':'') + x.tur + '</span>' : '<span></span>';
+    var ust = '<span class="ust">' + tur + '<span class="kay" role="button" aria-label="Kaydet"><i class="fa-solid fa-bookmark"></i></span></span>';
+    var m = '<div class="m">' + x.alt + ' · ' + x.saat + ' · ' + x.sure + '</div>';
+    if (!x.g) {
+      var s = (sariSira++ % 2 === 0) ? ' sari' : '';
+      return '<a class="kutu yazi' + s + '">' + ust + '<span class="alti"></span><div class="ic"><h2>' + x.baslik + '</h2>' + m + '</div></a>';
+    }
+    return '<a class="kutu ' + bicim[i] + '" data-g="' + x.g + '">' + ust + '<div class="ic"><h2>' + x.baslik + '</h2>' + m + '</div></a>';
+  }).join('');
+  out += '<div class="isk" style="height:180px" aria-hidden="true"></div><div class="isk" style="height:230px" aria-hidden="true"></div>';
+  document.getElementById('izgara').innerHTML = out;
+  document.querySelectorAll('#konular a').forEach(function(a){ a.addEventListener('click',function(){ document.querySelectorAll('#konular a').forEach(function(x){ x.classList.toggle('etkin', x===a); }); }); });
+  document.querySelectorAll('.kay').forEach(function(k){ k.addEventListener('click',function(e){ e.preventDefault(); k.style.background = k.style.background ? '' : '#FECC17'; k.style.color = k.style.color ? '' : '#121212'; }); });
+  document.querySelectorAll('[data-sekme]').forEach(function(a){ a.addEventListener('click',function(){ document.querySelectorAll('[data-sekme]').forEach(function(b){ b.classList.toggle('etkin', b===a); }); }); });
+})();
+</script>
+</body>
+</html>

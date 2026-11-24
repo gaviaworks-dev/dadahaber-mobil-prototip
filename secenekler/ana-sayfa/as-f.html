@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>AS-F · Kişisel pano</title>
+<link rel="stylesheet" href="../_ortak/cerceve.css">
+<link rel="stylesheet" href="../_ortak/marka.css">
+<link rel="stylesheet" href="../_ortak/hikaye.css">
+<script src="../_ortak/icerik.js"></script>
+<script src="../_ortak/cerceve.js"></script>
+<script src="../_ortak/icerik-ek.js"></script>
+<script src="../_ortak/hikaye.js"></script>
+<style>
+/* AS-F · Kişisel pano. Yapı: Headspace (Today), Airbnb (yaşayan pano), Apple Sports (skor), Tiimo (widget = uygulama içi kutu).
+   Uygulama dili: ana ekran widget'ları gibi kare ve geniş kutular (22px köşe), her kutu kendi zemini; altında büyük görselli haber rayı ve sade satırlar.
+   Alt gezinme: G5 (koyu ada). Marka: Gilroy, #FECC17 (Günün 5'i kutusu ve seçili sekme). */
+:root{--arka:#F3F2EF;--kutu:#FFFFFF;--soluk:#86868B;--ayrac:#E7E6E2}
+html[data-tema="koyu"]{--arka:#000000;--kutu:#1C1C1E;--soluk:#8E8E93;--ayrac:#2C2C2E}
+html,body{background:var(--arka)}
+.bas{padding:calc(var(--ust-guvenli) + 8px) var(--kenar) 0;display:flex;align-items:flex-start;gap:12px}
+.bas .t{flex:1;min-width:0}
+.bas small{display:block;font-size:13px;font-weight:var(--y-kalin);color:var(--soluk);letter-spacing:.01em}
+.bas h1{margin-top:2px;font-size:32px;line-height:1.05;font-weight:var(--y-kalin);letter-spacing:-.03em}
+.bas .logo{height:22px;margin-top:4px}
+.bas .giris{height:40px;padding:0 14px;border-radius:var(--k-buyuk);background:var(--kutu);display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:var(--y-kalin);white-space:nowrap;box-shadow:0 1px 2px rgba(0,0,0,.06)}
+.ust-s{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.ust-s .zil{width:44px;height:44px;display:grid;place-items:center;font-size:18px}
+
+/* Widget ızgarası */
+.izg{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px var(--kenar) 0}
+.w{position:relative;border-radius:var(--k-buyuk);padding:14px;overflow:hidden;min-height:165px;display:flex;flex-direction:column;background:var(--kutu)}
+.w.gen{grid-column:1/-1;min-height:0}
+.w .wb{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:var(--y-kalin);white-space:nowrap}
+.w .wb i{font-size:12px}
+/* hava: koyu kar gökyüzü */
+.w.hava{color:#fff;background:linear-gradient(170deg,#4E5D72 0%,#2D3746 70%,#232A35 100%)}
+.w.hava .d{margin-top:2px;font-size:50px;line-height:1;font-weight:var(--y-ince);letter-spacing:-.04em}
+.w.hava .alt{margin-top:auto}
+.w.hava .alt i{font-size:18px;display:block;margin-bottom:6px}
+.w.hava .alt b{display:block;font-size:13px;font-weight:var(--y-kalin)}
+.w.hava .alt span{font-size:12px;opacity:.8;white-space:nowrap}
+/* namaz */
+.w.namaz .wb{color:var(--marka-metin)}
+.w.namaz .v{margin-top:auto;font-size:13px;font-weight:var(--y-kalin);color:var(--soluk)}
+.w.namaz .s{font-size:34px;line-height:1;font-weight:var(--y-kalin);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.w.namaz .bar{margin-top:12px;height:6px;border-radius:var(--k-cubuk);background:var(--ayrac);overflow:hidden}
+.w.namaz .bar i{display:block;height:100%;width:74%;background:var(--marka);border-radius:var(--k-cubuk)}
+.w.namaz .kal{margin-top:6px;font-size:12px;font-weight:var(--y-kalin);color:var(--soluk);white-space:nowrap}
+/* maç: Apple Sports sadeliği */
+.w.mac{color:#fff;background:#121212}
+html[data-tema="koyu"] .w.mac{background:#1C1C1E}
+.w.mac .ust{display:flex;align-items:center;justify-content:space-between;font-size:12.5px;font-weight:var(--y-kalin);color:rgba(255,255,255,.6)}
+.w.mac .ust .cn{display:inline-flex;align-items:center;gap:6px;color:#FF5A6E}
+.w.mac .sat{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:4px;margin-top:12px}
+.w.mac .tk{display:flex;align-items:center;gap:8px;min-width:0}
+.w.mac .tk.sag{flex-direction:row-reverse;text-align:right}
+.w.mac .ar{width:32px;height:32px;border-radius:var(--k-daire);display:grid;place-items:center;font-size:11px;font-weight:var(--y-kalin);flex:none}
+.w.mac .tk b{font-size:13.5px;font-weight:var(--y-kalin);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.w.mac .sk{font-size:30px;font-weight:var(--y-kalin);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.w.mac .dk{text-align:center;font-size:12.5px;font-weight:var(--y-kalin);color:#FF5A6E;margin-top:2px}
+/* Günün 5'i: marka sarısı */
+.w.g5{background:var(--marka);color:#121212}
+.w.g5 .wb{justify-content:space-between}
+.w.g5 h3{margin-top:10px;font-size:19px;line-height:1.1;font-weight:var(--y-kalin);letter-spacing:-.02em}
+.w.g5 .seg{display:flex;gap:4px;margin-top:auto}
+.w.g5 .seg i{flex:1;height:5px;border-radius:var(--k-cubuk);background:rgba(18,18,18,.16)}
+.w.g5 .ilk{margin-top:8px;font-size:12px;font-weight:var(--y-kalin);opacity:.75;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+/* Spiker */
+.w.spk{color:#fff;background:#121212 center/cover no-repeat;justify-content:flex-end}
+.w.spk::before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.85),rgba(0,0,0,.1) 60%)}
+.w.spk>*{position:relative}
+.w.spk .canli{position:absolute;top:14px;left:14px;display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 8px;border-radius:var(--k-ic);background:#C8102E;font-size:10.5px;font-weight:var(--y-kalin);letter-spacing:.04em}
+.w.spk b{font-size:15px;font-weight:var(--y-kalin)}
+.w.spk small{font-size:12px;opacity:.8}
+.w.spk .oyn{position:absolute;right:12px;bottom:12px;width:44px;height:44px;border-radius:var(--k-daire);background:var(--marka);color:#121212;display:grid;place-items:center;font-size:15px}
+/* piyasa geniş */
+.w.piy .ic{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+.w.piy .ic div{min-width:0}
+.w.piy small{display:block;font-size:11.5px;font-weight:var(--y-kalin);color:var(--soluk);white-space:nowrap}
+.w.piy b{display:block;font-size:15px;font-weight:var(--y-kalin);font-variant-numeric:tabular-nums;white-space:nowrap;letter-spacing:-.02em;margin-top:2px}
+.w.piy em{font-style:normal;font-size:11.5px;font-weight:var(--y-kalin);font-variant-numeric:tabular-nums}
+.w.piy em.y{color:var(--artis)} .w.piy em.d{color:var(--azalis)}
+.w.piy .wb span{margin-left:auto;font-size:12px;font-weight:var(--y-orta);color:var(--soluk)}
+/* misafir çağrısı */
+.w.cagri{border:1.5px dashed var(--ayrac);background:transparent;min-height:0;flex-direction:row;align-items:center;gap:12px}
+.w.cagri .ik{width:44px;height:44px;border-radius:var(--k-kart);background:var(--kutu);display:grid;place-items:center;font-size:18px;color:var(--marka-metin);flex:none}
+.w.cagri b{display:block;font-size:14.5px;font-weight:var(--y-kalin)}
+.w.cagri small{font-size:12.5px;color:var(--soluk)}
+.w.cagri .ekle{margin-left:auto;height:40px;padding:0 14px;border-radius:var(--k-buyuk);background:var(--metin);color:var(--arka);font-size:13.5px;font-weight:var(--y-kalin);display:inline-flex;align-items:center;white-space:nowrap}
+.duzen{display:flex;justify-content:center;padding:14px 0 4px}
+.duzen a{height:44px;padding:0 16px;display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:var(--y-kalin);color:var(--soluk)}
+
+/* Haberler */
+.bb{display:flex;align-items:baseline;justify-content:space-between;padding:26px var(--kenar) 12px}
+.bb h2{font-size:24px;font-weight:var(--y-kalin);letter-spacing:-.025em}
+.bb a{font-size:14px;font-weight:var(--y-kalin);color:var(--soluk);min-height:32px;display:inline-flex;align-items:center}
+.ray{display:flex;gap:12px;overflow-x:auto;scrollbar-width:none;scroll-snap-type:x mandatory;scroll-padding:0 var(--kenar);padding:0 var(--kenar)}
+.ray::-webkit-scrollbar{display:none}
+.ray::after{content:"";flex:0 0 4px}
+.hk{flex:0 0 300px;scroll-snap-align:start}
+.hk .g{height:200px;border-radius:var(--k-buyuk);position:relative}
+.hk .g .md{position:absolute;left:12px;bottom:12px;display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border-radius:var(--k-kontrol);background:rgba(0,0,0,.55);color:#fff;font-size:12px;font-weight:var(--y-kalin);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.hk .k{margin-top:10px;font-size:12.5px;font-weight:var(--y-kalin);color:var(--marka-metin)}
+.hk h3{margin-top:3px;font-size:17px;line-height:1.25;font-weight:var(--y-kalin);letter-spacing:-.015em;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.hk .m{margin-top:6px;font-size:12.5px;color:var(--soluk);white-space:nowrap}
+/* bölüm kutusu: başlık + 2 satır */
+.blm{margin:12px var(--kenar) 0;background:var(--kutu);border-radius:var(--k-buyuk);padding:6px 14px}
+.blm .ba{display:flex;align-items:center;justify-content:space-between;min-height:44px}
+.blm .ba b{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:var(--y-kalin)}
+.blm .ba b i{font-size:13px;color:var(--marka-metin)}
+.blm .ba span{font-size:13px;color:var(--soluk)}
+.hs{display:grid;grid-template-columns:56px minmax(0,1fr);gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--ayrac)}
+.hs .g{width:56px;height:56px;border-radius:var(--k-kart)}
+.hs h3{font-size:14.5px;line-height:1.3;font-weight:var(--y-kalin);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.hs .m{margin-top:3px;font-size:12px;color:var(--soluk);white-space:nowrap}
+
+/* G5 · koyu ada (alt-gezinme/g5.html'den) */
+.g5n{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(var(--alt-guvenli) - 8px);z-index:80;height:64px;padding:8px;border-radius:var(--k-buyuk);
+  background:#121212;display:flex;gap:4px;box-shadow:0 14px 34px rgba(0,0,0,.28),inset 0 0 0 1px rgba(255,255,255,.06)}
+html[data-tema="koyu"] .g5n{background:#2A2A2D;box-shadow:0 14px 34px rgba(0,0,0,.6),inset 0 0 0 1px rgba(255,255,255,.08)}
+.g5n a{height:48px;min-width:48px;padding:0 14px;border-radius:var(--k-kart);display:flex;align-items:center;justify-content:center;gap:8px;color:rgba(255,255,255,.62);font-size:14px;font-weight:var(--y-kalin);white-space:nowrap;transition:background .3s,color .3s,padding .3s}
+.g5n a i{font-size:18px}
+.g5n a span{max-width:0;overflow:hidden;transition:max-width .35s cubic-bezier(.3,.7,.2,1)}
+.g5n a.etkin{background:#FECC17;color:#121212;padding:0 18px}
+.g5n a.etkin span{max-width:120px}
+.pay{height:140px}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran">
+  <header class="bas">
+    <div class="t">
+      <div class="ust-s"><span class="logo" role="img" aria-label="Dada Haber"></span></div>
+      <small>Pazartesi, 23 Kasım · 16.05</small>
+      <h1>İyi günler</h1>
+    </div>
+    <div style="display:flex;align-items:center;gap:4px;margin-top:-2px">
+      <a class="zil" style="width:44px;height:44px;display:grid;place-items:center;font-size:18px" aria-label="Bildirimler"><i class="fa-solid fa-bell"></i></a>
+      <a class="giris"><i class="fa-solid fa-circle-user"></i>Giriş</a>
+    </div>
+  </header>
+  <div data-hikaye-serit></div>
+  <section class="izg" id="izg" aria-label="Panom"></section>
+  <div class="duzen"><a><i class="fa-solid fa-sliders"></i>Panoyu düzenle</a></div>
+  <div class="bb"><h2>Gündemde</h2><a>Tümü</a></div>
+  <div class="ray" id="ray"></div>
+  <div class="bb"><h2>Bölümler</h2><a>Sırala</a></div>
+  <div id="blm"></div>
+  <div class="pay"></div>
+</div>
+<nav class="g5n" aria-label="Alt gezinme">
+  <a class="etkin" data-sekme aria-label="Pano"><i class="fa-solid fa-table-cells-large"></i><span>Pano</span></a>
+  <a data-sekme aria-label="Haberler"><i class="fa-solid fa-newspaper"></i><span>Haberler</span></a>
+  <a data-sekme aria-label="Akış"><i class="fa-solid fa-mobile-screen-button"></i><span>Akış</span></a>
+  <a data-sekme aria-label="Dinle"><i class="fa-solid fa-headphones"></i><span>Dinle</span></a>
+  <a data-sekme aria-label="Ara"><i class="fa-solid fa-magnifying-glass"></i><span>Ara</span></a>
+</nav>
+<script>
+(function(){
+  var D = window.D, $ = function(i){ return document.getElementById(i); };
+  var hv = D.hava, nz = D.namaz, mc = D.mac, g5 = D.gunun5, sp = D.spiker;
+  var w = '';
+  w += '<a class="w hava"><span class="wb">' + hv.sehir + ' <i class="fa-solid fa-location-arrow" style="font-size:10px"></i></span><span class="d">' + hv.derece + '°</span>' +
+       '<span class="alt"><i class="fa-solid ' + hv.ikon + '"></i><b>' + hv.durum + '</b><span>Y:' + hv.yuksek + '° D:' + hv.dusuk + '° · his ' + hv.hissedilen + '°</span></span></a>';
+  w += '<a class="w namaz"><span class="wb"><i class="fa-solid fa-mosque"></i>Namaz · ' + nz.sehir + '</span><span class="v">Sıradaki · ' + nz.siradaki + '</span><span class="s">' + nz.saat + '</span>' +
+       '<span class="bar"><i></i></span><span class="kal">' + nz.kalan.replace(':', ' sa ') + ' dk kaldı</span></a>';
+  w += '<a class="w gen mac"><div class="ust"><span class="cn"><span class="canli-nokta"></span>Canlı</span><span>' + mc.lig + '</span><span><i class="fa-solid fa-thumbtack"></i></span></div>' +
+       '<div class="sat"><span class="tk"><span class="ar" style="background:#A90432;color:#FDB912">' + mc.evKod + '</span><b>' + mc.ev + '</b></span><span><span class="sk">' + mc.skor + '</span><div class="dk">' + mc.dakika + '</div></span>' +
+       '<span class="tk sag"><span class="ar" style="background:#0B1F4B;color:#FFED00">' + mc.depKod + '</span><b>' + mc.dep + '</b></span></div></a>';
+  w += '<a class="w g5"><span class="wb"><span>Günün 5\'i</span><span>' + g5.baski + '</span></span><h3>Bugün için<br>5 haber</h3><span class="ilk">' + g5.liste[0].baslik + '</span>' +
+       '<span class="seg"><i></i><i></i><i></i><i></i><i></i></span></a>';
+  w += '<a class="w spk" style="background-image:' + G(sp.gorsel) + '"><span class="canli"><span class="canli-nokta" style="background:#fff;width:6px;height:6px"></span>YAYINDA</span><b>Dada Spiker</b><small>' + sp.bulten + ' · ' + sp.sure + '</small><span class="oyn"><i class="fa-solid fa-play"></i></span></a>';
+  w += '<a class="w gen piy"><span class="wb"><i class="fa-solid fa-chart-line" style="color:var(--marka-metin)"></i>Piyasalar<span>' + D.piyasa.guncelleme + ' · satış</span></span><div class="ic">' +
+       D.piyasa.liste.map(function(p){ return '<div><small>' + p.ad + '</small><b>' + p.deger + '</b><em class="' + p.yon + '">' + (p.yon === 'y' ? '▲' : '▼') + ' %' + p.degisim + '</em></div>'; }).join('') + '</div></a>';
+  w += '<div class="w gen cagri"><span class="ik"><i class="fa-solid fa-futbol"></i></span><div><b>Takımını ekle</b><small>Skoru ve haberleri panona gelsin</small></div><a class="ekle">Seç</a></div>';
+  $('izg').innerHTML = w;
+
+  $('ray').innerHTML = D.manset.map(function(x){
+    return '<a class="hk"><div class="g gr" style="background-image:' + G(x.g) + '">' + (x.medya ? '<span class="md"><i class="fa-solid fa-play"></i>' + x.medya[0] + '</span>' : '') + '</div>' +
+      '<div class="k">' + x.kat + '</div><h3>' + x.baslik + '</h3><div class="m">' + x.yazar + ' · ' + x.sure + ' · ' + x.izlenme + '</div></a>';
+  }).join('');
+
+  $('blm').innerHTML = D.bolumler.map(function(b){
+    return '<section class="blm"><a class="ba"><b><i class="fa-solid ' + b.ikon + '"></i>' + b.ad + '</b><span><i class="fa-solid fa-chevron-right"></i></span></a>' +
+      b.haberler.slice(0,2).map(function(x){ return '<a class="hs"><div class="g gr" style="background-image:' + G(x.g) + '"></div><div><h3>' + x.baslik + '</h3><div class="m">' + x.yazar + ' · ' + x.sure + '</div></div></a>'; }).join('') + '</section>';
+  }).join('');
+
+  document.querySelectorAll('[data-sekme]').forEach(function(a){ a.addEventListener('click',function(){ document.querySelectorAll('[data-sekme]').forEach(function(b){ b.classList.toggle('etkin', b===a); }); }); });
+})();
+</script>
+</body>
+</html>

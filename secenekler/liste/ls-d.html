@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>LS-D · Olay kümeleri</title>
+<link rel="stylesheet" href="../_ortak/cerceve.css">
+<link rel="stylesheet" href="../_ortak/marka.css">
+<script src="../_ortak/icerik.js"></script>
+<script src="../_ortak/icerik-ek.js"></script>
+<script src="../_ortak/cerceve.js"></script>
+<style>
+/* LS-D · Olay kümeleri (yapı: Ground News haber kümesi, Haberler.com haber dosyaları, Reuters olay işareti).
+   Liste haberleri değil olayları gösterir: her kart bir olay; içinde saatli gelişmeler. Alt gezinme: G5 koyu ada. */
+:root{--kart:#FFFFFF;--kart-c:rgba(18,18,18,.06);--zem:#F3F2EE;--cizgi-o:#E5E5E8;--nokta:#121212}
+html[data-tema="koyu"]{--kart:#1A1A1D;--kart-c:rgba(255,255,255,.06);--zem:#0E0E10;--cizgi-o:#2E2E33;--nokta:#FECC17}
+html,body{background:var(--zem)}
+.ekran{background:var(--zem)}
+/* Başlık çubuğu */
+.ust{position:sticky;top:0;z-index:20;padding:var(--ust-guvenli) 8px 0;background:color-mix(in srgb,var(--zem) 88%,transparent);
+  -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px)}
+.ust-s{height:48px;display:flex;align-items:center;gap:4px}
+.dg{width:44px;height:44px;border-radius:var(--k-daire);display:grid;place-items:center;font-size:17px;color:var(--metin)}
+.ust-s .ad{flex:1;text-align:center;font-size:16px;font-weight:var(--y-kalin);letter-spacing:-.01em}
+/* Bölüm kimliği */
+.kim{padding:6px var(--kenar) 14px}
+.kim h1{font-size:34px;line-height:1;font-weight:var(--y-kalin);letter-spacing:-.03em}
+.kim p{margin-top:8px;font-size:13.5px;color:var(--metin-3);display:flex;gap:10px;align-items:center;white-space:nowrap}
+.kim p b{color:var(--metin);font-weight:var(--y-kalin)}
+.kim p .ay{width:3px;height:3px;border-radius:var(--k-daire);background:var(--metin-3)}
+/* Görünüm anahtarı + alt konu */
+.anahtar{margin:0 var(--kenar) 12px;height:44px;border-radius:var(--k-kart);background:var(--kart);border:1px solid var(--kart-c);display:grid;grid-template-columns:1fr 1fr;padding:4px;position:relative}
+.anahtar button{position:relative;z-index:1;font-size:13.5px;font-weight:var(--y-kalin);color:var(--metin-3);display:flex;align-items:center;justify-content:center;gap:8px}
+.anahtar button.etkin{color:#121212}
+.anahtar::before{content:"";position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);border-radius:var(--k-kontrol);background:var(--marka);transition:transform .3s}
+.anahtar.ikinci::before{transform:translateX(100%)}
+.konular{gap:8px;padding:0 var(--kenar) 16px}
+.konular a{height:36px;padding:0 14px;border-radius:var(--k-kart);display:inline-flex;align-items:center;font-size:13.5px;font-weight:var(--y-kalin);color:var(--metin-2);border:1px solid var(--cizgi-o);white-space:nowrap}
+.konular a.etkin{background:var(--metin);border-color:var(--metin);color:var(--zem)}
+/* Olay kartı */
+.olaylar{display:grid;gap:14px;padding:0 var(--kenar)}
+.olay{display:block;background:var(--kart);border:1px solid var(--kart-c);border-radius:var(--k-buyuk);overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.03)}
+.olay-bas{position:relative;height:132px;background-size:cover;background-position:center;background-color:#2A2A2E;display:flex;align-items:flex-end;padding:14px 16px;color:#fff}
+.olay-bas::before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(10,10,12,.82),rgba(10,10,12,.1) 70%)}
+.olay-bas>*{position:relative}
+.olay-bas .usb{position:absolute;top:12px;left:12px;display:flex;gap:6px}
+.etk{height:26px;padding:0 10px;border-radius:var(--k-kontrol);display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:var(--y-kalin);background:rgba(255,255,255,.92);color:#121212;white-space:nowrap}
+.etk.canli{background:var(--anlik);color:#fff}
+.etk.canli i{font-size:6px}
+.olay-bas h2{font-size:21px;line-height:1.12;font-weight:var(--y-kalin);letter-spacing:-.02em}
+.olay-bas small{display:block;margin-top:4px;font-size:12.5px;font-weight:var(--y-orta);color:rgba(255,255,255,.78);white-space:nowrap}
+.olay.yazi .olay-bas{height:auto;padding-top:46px;background:#121212}
+html[data-tema="koyu"] .olay.yazi .olay-bas{background:#26262A}
+.olay.yazi .olay-bas::before{background:radial-gradient(120% 120% at 100% 0%,rgba(254,204,23,.28),transparent 60%)}
+/* Gelişmeler */
+.gel{list-style:none;padding:6px 16px 4px}
+.gel li{position:relative;display:grid;grid-template-columns:46px 1fr;gap:10px;padding:10px 0}
+.gel li+li{border-top:1px solid var(--cizgi-o)}
+.gel time{font-size:13px;font-weight:var(--y-kalin);color:var(--metin);font-variant-numeric:tabular-nums;padding-top:1px}
+.gel li:first-child time{color:var(--marka-metin)}
+.gel h3{font-size:15px;line-height:1.3;font-weight:var(--y-kalin);letter-spacing:-.005em;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.gel .m{margin-top:4px;font-size:12px;color:var(--metin-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.olay-alt{display:flex;align-items:center;gap:8px;padding:6px 8px 8px 16px}
+.olay-alt .say{flex:1;font-size:12.5px;font-weight:var(--y-kalin);color:var(--metin-3);white-space:nowrap;display:flex;align-items:center;gap:8px}
+.olay-alt .say i{color:var(--marka-metin);font-size:11px}
+.takip{height:44px;padding:0 16px;border-radius:var(--k-buyuk);background:var(--zem);font-size:13.5px;font-weight:var(--y-kalin);display:inline-flex;align-items:center;gap:8px;color:var(--metin)}
+.takip.acik{background:var(--marka);color:#121212}
+/* Yükleniyor iskeleti */
+.isk{background:var(--kart);border:1px solid var(--kart-c);border-radius:var(--k-buyuk);overflow:hidden}
+.isk .b{height:96px;background:var(--zemin-2)}
+.isk .s{height:12px;border-radius:var(--k-ic);background:var(--zemin-2);margin:14px 16px 0}
+.isk .s.k{width:55%;margin-bottom:16px}
+.isk .b,.isk .s{background-image:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);background-size:200% 100%;background-repeat:no-repeat;animation:parilti 1.4s linear infinite}
+html[data-tema="koyu"] .isk .b,html[data-tema="koyu"] .isk .s{background-image:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent)}
+@keyframes parilti{from{background-position:150% 0}to{background-position:-50% 0}}
+.pay{height:140px}
+/* Alt gezinme G5 · koyu ada */
+.g5{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(var(--alt-guvenli) - 8px);z-index:80;height:64px;padding:8px;border-radius:var(--k-buyuk);
+  background:#121212;display:flex;gap:4px;box-shadow:0 14px 34px rgba(0,0,0,.28),inset 0 0 0 1px rgba(255,255,255,.06)}
+html[data-tema="koyu"] .g5{background:#1F1F22;box-shadow:0 14px 34px rgba(0,0,0,.6),inset 0 0 0 1px rgba(255,255,255,.08)}
+.g5 a{height:48px;min-width:48px;padding:0 14px;border-radius:var(--k-kart);display:flex;align-items:center;justify-content:center;gap:8px;color:rgba(255,255,255,.62);font-size:14px;font-weight:var(--y-kalin);white-space:nowrap}
+.g5 a i{font-size:18px}
+.g5 a span{max-width:0;overflow:hidden}
+.g5 a.etkin{background:#FECC17;color:#121212;padding:0 18px}
+.g5 a.etkin span{max-width:120px}
+html.tam .g5{position:absolute} html.tam .ust{position:relative}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran">
+  <header class="ust">
+    <div class="ust-s">
+      <a class="dg" aria-label="Geri"><i class="fa-solid fa-chevron-left"></i></a>
+      <span class="ad">Gündem</span>
+      <a class="dg" aria-label="Bölümü takip et"><i class="fa-solid fa-bell"></i></a>
+    </div>
+  </header>
+  <section class="kim">
+    <h1>Gündem</h1>
+    <p><b id="olay-say">5 olay</b><span class="ay"></span><span id="haber-say"></span><span class="ay"></span><span>Son gelişme 16.05</span></p>
+  </section>
+  <div class="anahtar" id="anahtar" role="tablist">
+    <button class="etkin" role="tab"><i class="fa-solid fa-layer-group"></i>Olaylar</button>
+    <button role="tab"><i class="fa-solid fa-list"></i>Tüm haberler</button>
+  </div>
+  <nav class="konular ks" id="konular" aria-label="Alt konular"></nav>
+  <div class="olaylar" id="olaylar"></div>
+  <div class="pay"></div>
+</div>
+<nav class="g5" aria-label="Alt gezinme">
+  <a class="etkin" data-sekme aria-label="Bugün"><i class="fa-solid fa-house"></i><span>Bugün</span></a>
+  <a data-sekme aria-label="Son Dakika"><i class="fa-solid fa-bolt"></i><span>Son Dakika</span></a>
+  <a data-sekme aria-label="Akış"><i class="fa-solid fa-mobile-screen-button"></i><span>Akış</span></a>
+  <a data-sekme aria-label="Dinle"><i class="fa-solid fa-headphones"></i><span>Dinle</span></a>
+  <a data-sekme aria-label="Ara"><i class="fa-solid fa-magnifying-glass"></i><span>Ara</span></a>
+</nav>
+<script>
+(function(){
+  var L = D.liste, H = L.haberler;
+  function h(i){ return H[i]; }
+  /* Olaylar: D.liste haberleri konuya göre gruplanır (yeni haber yok) */
+  var OLAY = [
+    { ad: "Kar ve ulaşım", g: "kar-istanbul", canli: false, i: [0, 7, 9, 6] },
+    { ad: "Asgari ücret ve bütçe", g: "asgari", canli: true, i: [1, 3, 4] },
+    { ad: "Eğitimde bu hafta", g: "yks", i: [2, 13] },
+    { ad: "Afet ve çevre", g: "konteyner", i: [10, 8, 11] },
+    { ad: "Yeni yargı paketi", yazi: true, i: [5] }
+  ];
+  document.getElementById('haber-say').textContent = L.toplam + " haber";
+  document.getElementById('konular').innerHTML = L.altKonular.map(function(k,i){ return '<a class="' + (i===0?'etkin':'') + '">' + k + '</a>'; }).join('');
+  var out = '';
+  OLAY.forEach(function(o){
+    var ilk = h(o.i[0]);
+    out += '<article class="olay' + (o.yazi?' yazi':'') + '"><a class="olay-bas' + (o.g?' gr':'') + '"' + (o.g?' data-g="' + o.g + '"':'') + '>' +
+      '<span class="usb">' + (o.canli ? '<span class="etk canli"><i class="fa-solid fa-circle"></i>Canlı</span>' : '') + (ilk.tur && !o.canli ? '<span class="etk">' + ilk.tur + '</span>' : '') + '</span>' +
+      '<span><h2>' + o.ad + '</h2><small>' + o.i.length + ' gelişme · son ' + ilk.saat + '</small></span></a>' +
+      '<ol class="gel">' + o.i.slice(0,3).map(function(j){ var x=h(j); return '<li><time>' + x.saat + '</time><div><h3>' + x.baslik + '</h3><div class="m">' + x.alt + ' · ' + x.yazar + ' · ' + x.sure + '</div></div></li>'; }).join('') + '</ol>' +
+      '<div class="olay-alt"><span class="say"><i class="fa-solid fa-clock-rotate-left"></i>' + (o.i.length>3 ? (o.i.length-3) + ' gelişme daha' : 'Olay dosyasını aç') + '</span><button class="takip" type="button"><i class="fa-solid fa-plus"></i>Takip et</button></div></article>';
+  });
+  out += '<div class="isk" aria-hidden="true"><div class="b"></div><div class="s"></div><div class="s k"></div></div>';
+  document.getElementById('olaylar').innerHTML = out;
+  document.getElementById('olay-say').textContent = OLAY.length + " olay";
+  document.querySelectorAll('.takip').forEach(function(b){ b.addEventListener('click',function(){ var a=b.classList.toggle('acik'); b.innerHTML = a ? '<i class="fa-solid fa-check"></i>Takipte' : '<i class="fa-solid fa-plus"></i>Takip et'; }); });
+  var an = document.getElementById('anahtar');
+  an.querySelectorAll('button').forEach(function(b,i){ b.addEventListener('click',function(){ an.querySelectorAll('button').forEach(function(x){ x.classList.toggle('etkin', x===b); }); an.classList.toggle('ikinci', i===1); }); });
+  document.querySelectorAll('#konular a').forEach(function(a){ a.addEventListener('click',function(){ document.querySelectorAll('#konular a').forEach(function(x){ x.classList.toggle('etkin', x===a); }); }); });
+  document.querySelectorAll('[data-sekme]').forEach(function(a){ a.addEventListener('click',function(){ document.querySelectorAll('[data-sekme]').forEach(function(b){ b.classList.toggle('etkin', b===a); }); }); });
+})();
+</script>
+</body>
+</html>
