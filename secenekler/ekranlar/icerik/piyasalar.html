@@ -4,10 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=390,initial-scale=1">
 <title>Piyasalar</title>
-<!-- Dada Haber Mobil · PİYASALAR (E-345–E-357). Liste kökünden: büyük başlık, sekmeler (Piyasa Ekranı · Döviz · Altın · Borsa · Kripto Para · Faiz Oranları · Akaryakıt), tablolar kap içinde yatay kayar.
-     Sorgu: ?sekme=ekran|doviz|altin|borsa|kripto|faiz|akaryakit · ?durum=cevirici (Döviz/Kripto çevirici alt sayfası açık) | yukleniyor | yenileniyor (&hal=cekiliyor|birak|bitti) | bos (Borsa aramasında sonuç yok) | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0)
-     Veri: güncelleme saati ve vitrin D.piyasa; tablolar public piyasa-ekrani.html, doviz.html, altin.html, borsa.html, kripto-para.html, faiz-oranlari.html, akaryakit-fiyatlari.html (değerler D ile aynı);
-     haberler public piyasa-ekrani.html listesi + sözlük saatleri. Ayrıntısı olan satırlar (BIST 100, Dolar, Euro, Gram altın) enstrüman ekranını açar. -->
+<!-- Dada Haber Mobil · PİYASALAR (E-345–E-357 + borsa/kripto/hesaplayıcı halleri). Liste kökünden: büyük başlık, sekmeler (Piyasa Ekranı · Döviz · Altın · Borsa · Kripto Para · Faiz Oranları · Akaryakıt);
+     her sekme doğrudan açılır ve public sayfasının bütün içeriğini taşır: tablo (kap içinde yatay kayar), hesaplayıcı alt sayfası, sekmenin haberleri, yatırım uyarısı.
+     Borsa: endeks kartları → enstrüman, Günün Hareketlileri (artan · düşen · hacim, 5'er), 50 hisselik aramalı ve sıralanabilir tablo; her hisse satırı hisse.html'i açar.
+     Kripto: 50 kripto, aramalı ve sıralanabilir; satır enstruman.html?kod=btc… açar (kripto Borsa İstanbul payı değil; hisse ekranının takip/alarm kalıbı enstrümanda da var).
+     Satırın tamamı dokunulabilir: Piyasa Ekranı, Döviz, Altın, Kripto satırları enstrüman, hisse satırları hisse ekranını açar. Sektör süzgeci yok (public borsa.html'de yok).
+     Sorgu: ?sekme=ekran|doviz|altin|borsa|kripto|faiz|akaryakit · &sira=artan|azalan|hacim (Borsa, Kripto) · &ara=<metin> (Borsa, Kripto arama dolu) · &tum=1 (uzun liste açık; varsayılan ilk 20 satır + "hepsini göster")
+            ?durum=cevirici (sekmenin hesaplayıcı alt sayfası: Döviz/Kripto çevirici, Altın hesaplayıcı, Kredi hesaplayıcı, Yakıt maliyeti) | yukleniyor | yenileniyor (&hal=cekiliyor|birak|bitti)
+            | bos (aramada sonuç yok; sekme yoksa Borsa) | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0)
+     Veri: piyasa-veri.js (window.PV; public sayfalar + sözlük, kaynakları orada); güncelleme saati D.piyasa. -->
 <link rel="stylesheet" href="../../_ortak/cerceve.css">
 <link rel="stylesheet" href="../../_ortak/marka.css">
 <link rel="stylesheet" href="../../kit/kit.css">
@@ -15,155 +20,137 @@
 <script src="../../_ortak/cerceve.js"></script>
 <script src="../../_ortak/icerik-ek.js"></script>
 <script src="../../kit/kit.js"></script>
+<script src="piyasa-veri.js"></script>
+<style>
+/* hesaplayıcı alanlarının arası (kit alanı tek başına) */
+.x-hesap > * + *{margin-top:var(--b-12)}
+</style>
 </head>
 <body>
 <div class="ekran" id="ekran"></div>
 <script>
 (function(){
-  var Q = K.q, DUR = K.durum, HAL = Q.get('hal'), e = document.getElementById('ekran'), TAM = document.documentElement.classList.contains('tam');
-  var P = D.piyasa;
+  var Q = K.q, DUR = K.durum, HAL = Q.get('hal'), e = document.getElementById('ekran');
+  var P = D.piyasa, V = window.PV;
   var SK = [['ekran', 'Piyasa Ekranı'], ['doviz', 'Döviz'], ['altin', 'Altın'], ['borsa', 'Borsa'], ['kripto', 'Kripto Para'], ['faiz', 'Faiz Oranları'], ['akaryakit', 'Akaryakıt']];
-  var sec = Q.get('sekme') || 'ekran';
-  if (DUR === 'bos') sec = 'borsa';
+  var sec = Q.get('sekme') || (DUR === 'bos' ? 'borsa' : 'ekran');
   var si = Math.max(0, SK.map(function(x){ return x[0]; }).indexOf(sec));
+  sec = SK[si][0];
+  /* arama ve sıralama (Borsa, Kripto) */
+  var ARA = DUR === 'bos' ? 'XYZ' : (Q.get('ara') || ''), SIRA = Q.get('sira') || '', TUM = Q.get('tum') === '1', ILK = 20;
+
   function yon(v, y){ return '<span class="k-yon ' + y + '">' + (y === 'y' ? '▲' : y === 'd' ? '▼' : '') + (y ? ' ' : '') + v + '</span>'; }
   function ad(a, alt){ return '<b>' + a + '</b>' + (alt ? K.meta([alt]) : ''); }
-  /* ayrıntı ekranı olan enstrümanlar (D.piyasa.liste) */
-  var DETAY = { 'BIST 100': '', 'USD': 'kod=dolar', 'EUR': 'kod=euro', 'Gram Altın': 'kod=gram-altin' };
-  function tablo(o){ var h = K.tablo(o); return h; }
-
-  /* kaynak: public piyasa-ekrani.html (Bütün Piyasalar ve süzgeç tabloları); [ad, alt, son, değişim, yön, gün içi, piyasa, Tümü'de] */
-  var EKR = [
-    ['BIST 100', 'Endeks', '10.248,62', '%0,43', 'd', '10.214,35 – 10.318,90', 'Borsa', 1], ['BIST 30', 'Endeks', '11.204,35', '%0,51', 'd', '11.163,20 – 11.291,04', 'Borsa', 1],
-    ['BIST Banka', 'Endeks', '14.876,90', '%1,12', 'd', '14.812,30 – 15.061,74', 'Borsa'], ['BIST Sınai', 'Endeks', '12.038,47', '%0,18', 'y', '11.968,25 – 12.071,90', 'Borsa'],
-    ['THYAO', 'Türk Hava Yolları', '312,75', '%0,79', 'd', '308,99 – 315,56', 'Borsa'], ['ASELS', 'Aselsan', '87,90', '%1,27', 'y', '86,66 – 88,82', 'Borsa'],
-    ['USD', 'ABD Doları', '34,5448', '%0,12', 'y', '34,4012 – 34,5620', 'Döviz', 1], ['EUR', 'Euro', '36,2180', '%0,21', 'y', '36,0410 – 36,2390', 'Döviz', 1],
-    ['GBP', 'İngiliz Sterlini', '43,1150', '%0,08', 'y', '42,9104 – 43,1530', 'Döviz', 1], ['CHF', 'İsviçre Frangı', '39,0040', '%0,05', 'd', '38,8650 – 39,0610', 'Döviz'],
-    ['JPY', 'Japon Yeni (100)', '22,5320', '%0,31', 'd', '22,4400 – 22,6105', 'Döviz'], ['SAR', 'Suudi Arabistan Riyali', '9,2105', '%0,11', 'y', '9,1690 – 9,2140', 'Döviz'],
-    ['Gram Altın', 'TL', '2.968,40', '%0,64', 'y', '2.941,20 – 2.972,80', 'Altın', 1], ['Çeyrek Altın', 'TL', '4.905,00', '%0,58', 'y', '4.772,00 – 4.918,00', 'Altın'],
-    ['Cumhuriyet Altını', 'TL', '20.150,00', '%0,55', 'y', '19.610,00 – 20.210,00', 'Altın'], ['22 Ayar Bilezik', 'TL · gram', '2.745,10', '%0,61', 'y', '2.668,00 – 2.751,30', 'Altın'],
-    ['Ons Altın', 'Dolar', '2.674,15', '%0,38', 'y', '2.655,10 – 2.681,90', 'Altın', 1], ['Gümüş', 'TL · gram', '34,12', '%0,27', 'y', '33,71 – 34,26', 'Altın', 1],
-    ['BTC', 'Bitcoin · dolar', '98.412', '%2,04', 'y', '96.120 – 98.890', 'Kripto', 1], ['ETH', 'Ethereum · dolar', '3.412,50', '%1,36', 'y', '3.348,20 – 3.436,80', 'Kripto', 1],
-    ['BNB', 'BNB · dolar', '642,30', '%0,84', 'y', '634,10 – 646,90', 'Kripto'], ['SOL', 'Solana · dolar', '238,15', '%3,12', 'y', '229,40 – 240,70', 'Kripto'],
-    ['XRP', 'XRP · dolar', '1,4120', '%1,86', 'd', '1,3980 – 1,4510', 'Kripto'], ['AVAX', 'Avalanche · dolar', '42,76', '%1,58', 'y', '41,80 – 43,15', 'Kripto'],
-    ['Brent', 'Petrol · dolar/varil', '74,82', '%1,12', 'd', '74,40 – 75,96', 'Emtia', 1], ['WTI', 'Petrol · dolar/varil', '71,24', '%1,06', 'd', '70,85 – 72,30', 'Emtia'],
-    ['Doğal Gaz', 'TTF · euro/MWh', '42,18', '%0,64', 'd', '41,90 – 43,05', 'Emtia', 1], ['Gümüş (ons)', 'Dolar', '30,72', '%0,31', 'y', '30,51 – 30,84', 'Emtia'],
-    ['Bakır', 'Dolar/libre', '4,1820', '%0,42', 'y', '4,1510 – 4,1960', 'Emtia'], ['Buğday', 'Dolar/buşel', '5,62', '%0,35', 'd', '5,58 – 5,69', 'Emtia']
-  ];
-  /* kaynak: public piyasa-ekrani.html "Piyasa Saatleri" */
-  var SAAT = [['Borsa İstanbul', '10.00–18.00', 1], ['Serbest döviz', '7/24', 1], ['Kapalıçarşı', '09.00–19.00', 1], ['Avrupa', '11.00–19.30', 1], ['New York', '17.30–00.00', 0], ['Kripto', '7/24', 1]];
-  /* kaynak: public piyasa-ekrani.html haberleri + sözlük saatleri; görsel yalnız konusu tutan haberlerde (D: faiz, borsa; altın külçesi) */
-  var HAB = [
-    { alt: 'Döviz', baslik: 'Dolar/TL güne yatay başladı, gözler enflasyon verisinde', yazar: 'Elif Aras', sure: '2 dk', izlenme: '18,4 B', saat: '15.00' },
-    { alt: 'Faiz', baslik: 'Merkez Bankası politika faizini yüzde 42,5\'te sabit tuttu', yazar: 'Elif Aras', sure: '3 dk', izlenme: '27,5 B', saat: '14.00', g: 'faiz' },
-    { alt: 'Emtia', baslik: 'Brent petrolde talep endişesi fiyatları geriletti', yazar: 'Tolga Bayram', sure: '2 dk', izlenme: '9,2 B', saat: '10.50' },
-    { alt: 'Piyasalar', baslik: 'Enflasyon verisi öncesi piyasalarda temkinli seyir', yazar: 'Elif Aras', sure: '4 dk', izlenme: '19,6 B', saat: '10.00' },
-    { alt: 'Altın', baslik: 'Ons altında Fed tutanakları sonrası sınırlı alım', yazar: 'Can Demir', sure: '4 dk', izlenme: '9,2 B', saat: '09.35', g: 'altin' },
-    { alt: 'Borsa', baslik: 'Borsa İstanbul öğleden önce bankacılık hisseleriyle geriledi', yazar: 'Can Demir', sure: '3 dk', izlenme: '13,7 B', saat: '08.00', g: 'borsa' },
-    { alt: 'Kripto', baslik: 'Bitcoin 98 bin dolar sınırında hacim arttı', yazar: 'Can Demir', sure: '2 dk', izlenme: '11,9 B', saat: '22 Kas' },
-    { alt: 'Gümüş', baslik: 'Gümüş fiyatlarında sanayi talebi etkisi', yazar: 'Nazlı Öztürk', sure: '3 dk', izlenme: '6,1 B', saat: '22 Kas' }
-  ];
-  HAB.forEach(function(h){ h.ikon = 'fa-chart-column'; });
-  /* kaynak: public doviz.html */
-  var DVZ = [['USD', 'ABD Doları', '34,4980', '34,5448', '%0,12', 'y'], ['EUR', 'Euro', '36,1504', '36,2180', '%0,21', 'y'], ['GBP', 'İngiliz Sterlini', '43,0210', '43,1150', '%0,08', 'y'],
-    ['CHF', 'İsviçre Frangı', '38,9120', '39,0040', '%0,05', 'd'], ['JPY', 'Japon Yeni (100)', '22,4810', '22,5320', '%0,31', 'd'], ['SAR', 'Suudi Arabistan Riyali', '9,1902', '9,2105', '%0,11', 'y'],
-    ['CNY', 'Çin Yuanı', '4,7581', '4,7702', '%0,06', 'y'], ['RUB', 'Rus Rublesi', '0,3384', '0,3412', '%0,44', 'd']];
-  /* kaynak: public altin.html */
-  var ALT = [['Gram Altın', '24 ayar · gram', '2.962,10', '2.968,40', '%0,64', 'y'], ['Çeyrek Altın', '1,75 gram · 22 ayar', '4.812,00', '4.905,00', '%0,58', 'y'], ['Yarım Altın', '3,50 gram · 22 ayar', '9.624,00', '9.810,00', '%0,58', 'y'],
-    ['Tam Altın', '7,00 gram · 22 ayar', '19.190,00', '19.560,00', '%0,57', 'y'], ['Cumhuriyet Altını', '7,22 gram · 22 ayar', '19.780,00', '20.150,00', '%0,55', 'y'], ['22 Ayar Bilezik', 'gram', '2.690,40', '2.745,10', '%0,61', 'y'],
-    ['Ons Altın', 'dolar · 31,1 gram', '2.673,40', '2.674,15', '%0,38', 'y'], ['Gümüş', 'gram', '33,98', '34,12', '%0,27', 'y']];
-  /* kaynak: public borsa.html (endeksler; En aktif listesinin ilk 15 hissesi) */
-  var END = [['BIST 100', '10.248,62', '%0,43', 'd'], ['BIST 30', '11.204,35', '%0,51', 'd'], ['BIST Banka', '14.876,90', '%1,12', 'd'], ['BIST Sınai', '12.038,47', '%0,18', 'y']];
-  var HIS = [['THYAO', 'Türk Hava Yolları', '312,75', '%0,79', 'd', '8,42 mr'], ['GARAN', 'Garanti BBVA', '128,40', '%1,38', 'd', '6,92 mr'], ['AKBNK', 'Akbank', '62,15', '%1,04', 'd', '5,28 mr'],
-    ['ASELS', 'Aselsan', '87,90', '%1,27', 'y', '4,96 mr'], ['YKBNK', 'Yapı Kredi', '31,84', '%0,94', 'd', '4,12 mr'], ['KCHOL', 'Koç Holding', '178,20', '%0,22', 'd', '3,87 mr'],
-    ['TUPRS', 'Tüpraş', '154,60', '%0,52', 'y', '3,54 mr'], ['SISE', 'Şişecam', '42,36', '%0,38', 'y', '2,98 mr'], ['EREGL', 'Ereğli Demir Çelik', '27,12', '%0,66', 'd', '2,76 mr'],
-    ['BIMAS', 'BİM Mağazalar', '521,50', '%0,29', 'y', '2,41 mr'], ['ISCTR', 'İş Bankası', '14,86', '%1,07', 'y', '7,72 mr'], ['SAHOL', 'Sabancı Holding', '92,40', '%3,44', 'y', '1,30 mr'],
-    ['FROTO', 'Ford Otosan', '1.012,00', '%0,54', 'y', '4,28 mr'], ['TOASO', 'Tofaş', '228,60', '%2,54', 'y', '3,92 mr'], ['PGSUS', 'Pegasus', '246,10', '%1,98', 'y', '7,21 mr']];
-  /* kaynak: public kripto-para.html (piyasa değerine göre ilk 12) */
-  var KRP = [['BTC', 'Bitcoin', '98.412', '3.399.623', '%2,04', 'y'], ['ETH', 'Ethereum', '3.412,50', '117.884', '%1,36', 'y'], ['USDT', 'Tether', '1,0002', '34,55', '%0,01', 'y'],
-    ['BNB', 'BNB', '642,30', '22.188', '%0,84', 'y'], ['SOL', 'Solana', '238,15', '8.227', '%3,12', 'y'], ['XRP', 'XRP', '1,4120', '48,78', '%1,86', 'd'], ['USDC', 'USD Coin', '1,0000', '34,54', '%0,00', ''],
-    ['ADA', 'Cardano', '0,9815', '33,91', '%0,72', 'd'], ['DOGE', 'Dogecoin', '0,3884', '13,42', '%2,41', 'd'], ['AVAX', 'Avalanche', '42,76', '1.477', '%1,58', 'y'], ['TRX', 'TRON', '0,2081', '7,19', '%2,62', 'y'], ['LINK', 'Chainlink', '18,42', '636', '%5,48', 'y']];
-  /* kaynak: public faiz-oranlari.html */
-  var FZ1 = [['TCMB politika faizi', '1 hafta repo', '%42,50', '%42,50', '23 Kas 2026'], ['TCMB gecelik borç verme', '', '%46,00', '%46,00', '23 Kas 2026'], ['TCMB gecelik borçlanma', '', '%41,00', '%41,00', '23 Kas 2026'],
-    ['Fed politika faizi', 'üst sınır', '%4,50', '%4,75', '7 Kas 2026'], ['ECB mevduat faizi', '', '%2,00', '%2,25', '30 Eki 2026']];
-  var FZ2 = [['32 güne kadar', '%44,20', '%44,55', '−0,35 puan'], ['92 güne kadar', '%43,10', '%43,30', '−0,20 puan'], ['181 güne kadar', '%40,40', '%40,45', '−0,05 puan'], ['1 yıla kadar', '%35,80', '%35,80', '0,00 puan']];
-  var FZ3 = [['İhtiyaç kredisi', '%3,59', '%3,64', '−0,05 puan'], ['Taşıt kredisi', '%3,19', '%3,22', '−0,03 puan'], ['Konut kredisi', '%2,89', '%2,95', '−0,06 puan'], ['Ticari kredi', '%3,05', '%3,08', '−0,03 puan']];
-  /* kaynak: public akaryakit-fiyatlari.html */
-  var YKT = [['İstanbul (Avrupa)', '43,18', '44,72', '27,42'], ['İstanbul (Anadolu)', '43,05', '44,60', '27,31'], ['Ankara', '44,01', '45,63', '27,88'], ['İzmir', '44,26', '45,90', '28,04'], ['Antalya', '44,52', '46,14', '27,59'],
-    ['Bursa', '44,08', '45,71', '27,95'], ['Adana', '44,37', '46,02', '27,66'], ['Konya', '44,19', '45,83', '27,72'], ['Gaziantep', '44,61', '46,25', '27,81'], ['Trabzon', '44,73', '46,38', '28,12']];
-
   function not(m){ return '<p class="k-grup-n">' + m + '</p>'; }
-  function hrefDetay(a){ return DETAY[a] != null ? K.u('ekranlar/icerik/enstruman.html', DETAY[a]) : ''; }
-  function satirHref(liste){ return liste.map(function(r){ return hrefDetay(r[0]); }); }
-  function cevirBtn(){ return K.btn({ metin: 'Çevirici', ikon: 'fa-calculator', tur: 'sade', tam: true, attr: 'data-cevir' }); }
+  /* tablo + satır adresleri: satırın tamamı dokunulabilir (kit [data-href]) */
+  function tablo(o, hrefs){ var h = K.tablo(o), i = h.indexOf('<tbody>'), n = 0;
+    return h.slice(0, i) + h.slice(i).replace(/<tr/g, function(m){ var u = hrefs && hrefs[n++]; return u ? '<tr data-href="' + u + '"' : m; }); }
+  function py(x, h){ return (h ? '<a class="k-py" href="' + h + '">' : '<div class="k-py">') + '<small>' + x[0] + '</small><b>' + x[1] + '</b><em class="' + x[3] + '">' + (x[3] === 'y' ? '▲' : x[3] === 'd' ? '▼' : '') + ' ' + x[2] + '</em>' + (h ? '</a>' : '</div>'); }
+  function hesapBtn(k){ return '<div style="padding-top:var(--b-16)">' + K.btn({ metin: V.HESAP[k].baslik.charAt(0).toUpperCase() + V.HESAP[k].baslik.slice(1), ikon: 'fa-calculator', tur: 'sade', tam: true, attr: 'data-hesap="' + k + '"' }) + '</div>'; }
+  var BASLIK = { ekran: 'Piyasa Haberleri', doviz: 'Döviz Haberleri', altin: 'Altın Haberleri', borsa: 'Borsa Haberleri', kripto: 'Kripto Para Haberleri', faiz: 'Faiz Haberleri', akaryakit: 'Akaryakıt Haberleri' };
+  function haberler(k){
+    return '<section class="k-bl">' + K.bb({ baslik: BASLIK[k], ikon: 'fa-newspaper', sayi: V.HABER_SAYI[k], baglanti: { metin: 'Tümü', href: K.git('liste', 'bolum=finans') } }) +
+      '<div class="k-satirlar">' + V.HABER[k].slice(0, 5).map(function(h){ return K.satir(h); }).join('') + '</div>' +
+      '<div class="k-ic" style="padding-top:var(--b-16)">' + K.serit({ ikon: 'fa-circle-info', metin: 'Yatırım uyarısı', alt: 'Fiyat, oran ve yorumlar yatırım danışmanlığı değildir; veriler 15 dakika gecikmeli ve bilgilendirme amaçlıdır.' }) + '</div></section>';
+  }
+  /* uzun liste ilk 20 satırla açılır; haberler gömülmesin (public 50 satırı tek sayfada gösterir) */
+  function tumBtn(n, ne){ return '<div style="padding-top:var(--b-12)">' + K.btn({ metin: n + ' ' + ne + ' hepsini göster', ikon: 'fa-chevron-down', tur: 'sade', tam: true, attr: 'data-tum' }) + '</div>'; }
+  function trUst(s){ return String(s).toLocaleUpperCase('tr'); }
+
+  /* ---------- Borsa ---------- */
+  function hisseler(){
+    var q = trUst(ARA.trim()), L = V.HIS.filter(function(r){ return !q || trUst(r[0]).indexOf(q) > -1 || trUst(r[1]).indexOf(q) > -1; });
+    if (SIRA === 'artan') L.sort(function(a, b){ return V.isaretli(b[3], b[4]) - V.isaretli(a[3], a[4]); });
+    if (SIRA === 'azalan') L.sort(function(a, b){ return V.isaretli(a[3], a[4]) - V.isaretli(b[3], b[4]); });
+    if (SIRA === 'hacim') L.sort(function(a, b){ return V.sayi(b[5]) - V.sayi(a[5]); });
+    return L;
+  }
+  function hisseTablo(){
+    var L = hisseler(), say = document.querySelector('[data-say]');
+    if (say) say.textContent = L.length + ' / 592 hisse';
+    if (!L.length) return K.bos({ ikon: 'fa-magnifying-glass', baslik: 'Aramana uyan hisse bulunamadı', aciklama: 'Kodu ya da şirket adını kontrol et.', eylem: { metin: 'Aramayı temizle', tur: 'sade', attr: 'data-temizle' } });
+    var kes = !ARA && !TUM && L.length > ILK, n = L.length; if (kes) L = L.slice(0, ILK);
+    return '<div class="k-ic" style="padding-top:var(--b-12)">' + tablo({ cls: 'sol', sutunlar: ['Hisse', 'Son', 'Değişim', 'Hacim (TL)', 'Gün içi en düşük – en yüksek'],
+      satirlar: L.map(function(r){ return [ad(r[0], r[1]), r[2], yon(r[3], r[4]), r[5], r[6] + ' – ' + r[7]]; }) }, L.map(function(r){ return V.href(r[0]); })) +
+      (kes ? tumBtn(n, 'hissenin') : '') + not((ARA ? '"' + ARA + '" araması · ' : 'En çok işlem gören 50 hisse · ötekiler için ara · ') + '15 dakika gecikmeli · 23 Kasım 2026, ' + P.guncelleme) + '</div>';
+  }
+  var HRK = ['Artan', 'Düşen', 'Hacim'];
+  function hareketli(i){
+    var L = V.HIS.slice();
+    if (i === 0) L = L.filter(function(r){ return r[4] === 'y'; }).sort(function(a, b){ return V.sayi(b[3]) - V.sayi(a[3]); });
+    if (i === 1) L = L.filter(function(r){ return r[4] === 'd'; }).sort(function(a, b){ return V.sayi(b[3]) - V.sayi(a[3]); });
+    if (i === 2) L.sort(function(a, b){ return V.sayi(b[5]) - V.sayi(a[5]); });
+    return L.slice(0, 5).map(function(r){ return py([r[0], r[2], r[3], r[4]], V.href(r[0])); }).join('');
+  }
+  var SIRALAR = ['', 'artan', 'azalan', 'hacim'];
+  function borsa(){
+    return '<section class="k-bl sik">' + K.bb({ baslik: 'Endeksler', ikon: 'fa-chart-column', not: 'Borsa İstanbul' }) +
+        '<div class="k-ray s10">' + V.END.map(function(x){ return py([x[0], x[1], x[2], x[3]], V.href(x[0])); }).join('') + '</div></section>' +
+      '<section class="k-bl">' + K.bb({ baslik: 'Günün Hareketlileri', ikon: 'fa-chart-column', not: 'İlk 50 hisse içinden' }) +
+        '<div class="k-ic" data-hrk>' + K.segment(HRK, 0) + '</div><div class="k-ray s10" id="x-hrk" style="padding-top:var(--b-12)">' + hareketli(0) + '</div></section>' +
+      '<section class="k-bl">' + K.bb({ baslik: 'Hisseler', ikon: 'fa-chart-column', not: '<span data-say>' + hisseler().length + ' / 592 hisse</span>' }) +
+        '<div class="k-ic" data-ara>' + K.ara({ yer: 'Hisse kodu ya da şirket', ses: false, deger: ARA }) + '</div>' +
+        '<div style="padding-top:var(--b-12)">' + K.cipler(['En aktif', 'Artan', 'Azalan', 'Hacim'], Math.max(0, SIRALAR.indexOf(SIRA)), { cls: 'x-sira' }) + '</div>' +
+        '<div id="x-liste">' + hisseTablo() + '</div></section>' + haberler('borsa');
+  }
+  /* ---------- Kripto ---------- */
+  function kriptolar(){
+    var q = trUst(ARA.trim()), L = V.KRP.filter(function(r){ return !q || trUst(r[0]).indexOf(q) > -1 || trUst(r[1]).indexOf(q) > -1; });
+    if (SIRA === 'artan') L.sort(function(a, b){ return V.isaretli(b[4], b[5]) - V.isaretli(a[4], a[5]); });
+    if (SIRA === 'azalan') L.sort(function(a, b){ return V.isaretli(a[4], a[5]) - V.isaretli(b[4], b[5]); });
+    return L;
+  }
+  function kriptoTablo(){
+    var L = kriptolar(), say = document.querySelector('[data-say]');
+    if (say) say.textContent = L.length + ' / 12.480 kripto';
+    if (!L.length) return K.bos({ ikon: 'fa-magnifying-glass', baslik: 'Aramana uyan kripto bulunamadı', aciklama: 'Kodu ya da adı kontrol et.', eylem: { metin: 'Aramayı temizle', tur: 'sade', attr: 'data-temizle' } });
+    var kes = !ARA && !TUM && L.length > ILK, n = L.length; if (kes) L = L.slice(0, ILK);
+    return '<div class="k-ic" style="padding-top:var(--b-12)">' + tablo({ cls: 'sol', sutunlar: ['Kripto', 'Fiyat ($)', 'Fiyat (TL)', '24 saat', 'Gün içi en düşük – en yüksek ($)'],
+      satirlar: L.map(function(r){ return [ad(r[0], r[1]), r[2], r[3], yon(r[4], r[5]), r[6] + ' – ' + r[7]]; }) }, L.map(function(r){ return V.href(r[0]); })) +
+      (kes ? tumBtn(n, 'kriptonun') : '') + not((ARA ? '"' + ARA + '" araması · ' : 'Piyasa değerine göre ilk 50 · ') + 'borsalar ortalaması · 23 Kasım 2026, ' + P.guncelleme) + '</div>';
+  }
+  var KSIRA = ['', 'artan', 'azalan'];
+  function kripto(){
+    return '<section class="k-bl sik">' + K.bb({ baslik: 'Kripto Para', ikon: 'fa-chart-column', not: '<span data-say>' + kriptolar().length + ' / 12.480 kripto</span>' }) +
+        '<div class="k-ic" data-ara>' + K.ara({ yer: 'Kripto kodu ya da adı', ses: false, deger: ARA }) + '</div>' +
+        '<div style="padding-top:var(--b-12)">' + K.cipler(['Piyasa değeri', 'Artan', 'Azalan'], Math.max(0, KSIRA.indexOf(SIRA)), { cls: 'x-sira' }) + '</div>' +
+        '<div id="x-liste">' + kriptoTablo() + '</div><div class="k-ic">' + hesapBtn('kripto') + '</div></section>' + haberler('kripto');
+  }
+  /* ---------- Piyasa Ekranı ---------- */
   function piyasaEkrani(suz){
-    var L = EKR.filter(function(r){ return suz ? r[6] === suz : r[7]; });
-    return '<div data-tablo="ekran">' + tablo({ cls: 'sol', sutunlar: ['Enstrüman', 'Son', 'Değişim', 'Gün içi'], satirlar: L.map(function(r){ return [ad(r[0], r[1]), r[2], yon(r[3], r[4]), r[5]]; }) }) + '</div>';
+    var L = V.EKR.filter(function(r){ return suz ? r[6] === suz : r[7]; });
+    return '<div data-tablo="ekran">' + tablo({ cls: 'sol', sutunlar: ['Enstrüman', 'Son', 'Değişim', 'Gün içi'], satirlar: L.map(function(r){ return [ad(r[0], r[1]), r[2], yon(r[3], r[4]), r[5]]; }) },
+      L.map(function(r){ return V.href(r[0]); })) + '</div>';
   }
-  var HREF = [];
   function icerik(k){
-    var s = '';
-    if (k === 'ekran') {
-      HREF = satirHref(EKR.filter(function(r){ return r[7]; }));
-      s = '<section class="k-bl sik">' + K.bb({ baslik: 'Bütün Piyasalar', ikon: 'fa-chart-column', not: 'Canlı · ' + P.guncelleme }) + K.cipler(['Tümü', 'Döviz', 'Altın', 'Borsa', 'Kripto', 'Emtia'], 0, { cls: 'x-suz' }) +
+    if (k === 'ekran') return '<section class="k-bl sik">' + K.bb({ baslik: 'Bütün Piyasalar', ikon: 'fa-chart-column', not: 'Canlı · ' + P.guncelleme }) + K.cipler(['Tümü', 'Döviz', 'Altın', 'Borsa', 'Kripto', 'Emtia'], 0, { cls: 'x-suz' }) +
         '<div class="k-ic" style="padding-top:var(--b-12)">' + piyasaEkrani() + '</div></section>' +
-        '<section class="k-bl">' + K.bb({ baslik: 'Piyasa Saatleri', ikon: 'fa-clock' }) + '<div class="k-ic">' + tablo({ cls: 'sol', sutunlar: ['Piyasa', 'Saat', 'Durum'], satirlar: SAAT.map(function(r){ return [r[0], r[1], K.etiket(r[2] ? 'Açık' : 'Kapalı', { tur: r[2] ? 'yesil' : 'kirmizi' })]; }) }) +
-        not('Saatler Türkiye saatiyle · veriler 15 dakika gecikmeli · kripto anlık') + '</div></section>' +
-        '<section class="k-bl">' + K.bb({ baslik: 'Piyasa Haberleri', ikon: 'fa-newspaper', sayi: 342 }) + '<div class="k-satirlar">' + HAB.map(function(h){ return K.satir(h); }).join('') + '</div>' +
-        '<div class="k-ic" style="padding-top:var(--b-16)">' + K.serit({ ikon: 'fa-circle-info', metin: 'Yatırım uyarısı', alt: 'Fiyat, oran ve yorumlar yatırım danışmanlığı değildir; veriler 15 dakika gecikmeli ve bilgilendirme amaçlıdır.' }) + '</div></section>';
-    }
-    if (k === 'doviz') {
-      HREF = satirHref(DVZ);
-      s = '<section class="k-bl sik">' + K.bb({ baslik: 'Döviz Kurları', ikon: 'fa-chart-column', not: 'Serbest piyasa' }) + '<div class="k-ic">' +
-        tablo({ cls: 'sol', sutunlar: ['Döviz', 'Alış', 'Satış', 'Değişim'], satirlar: DVZ.map(function(r){ return [ad(r[0], r[1]), r[2], r[3], yon(r[4], r[5])]; }) }) +
-        '<div style="padding-top:var(--b-16)">' + cevirBtn() + '</div>' + not('Serbest piyasa kurları · 15 dakika gecikmeli · 23 Kasım 2026, ' + P.guncelleme) + '</div></section>';
-    }
-    if (k === 'altin') {
-      HREF = satirHref(ALT);
-      s = '<section class="k-bl sik">' + K.bb({ baslik: 'Altın Fiyatları', ikon: 'fa-chart-column', not: 'Kapalıçarşı' }) + '<div class="k-ic">' +
-        tablo({ cls: 'sol', sutunlar: ['Tür', 'Alış', 'Satış', 'Değişim'], satirlar: ALT.map(function(r){ return [ad(r[0], r[1]), r[2], r[3], yon(r[4], r[5])]; }) }) +
-        not('Serbest piyasa fiyatları, TL · 15 dakika gecikmeli · 23 Kasım 2026, ' + P.guncelleme) + '</div></section>';
-    }
-    if (k === 'borsa') {
-      var bos = DUR === 'bos';
-      HREF = bos ? [] : HIS.map(function(){ return ''; });
-      s = '<section class="k-bl sik">' + K.bb({ baslik: 'Endeksler', ikon: 'fa-chart-column', not: 'Borsa İstanbul' }) + '<div class="k-ray s10">' +
-        END.map(function(x){ var h = hrefDetay(x[0]); return (h ? '<a class="k-py" href="' + h + '">' : '<div class="k-py">') + '<small>' + x[0] + '</small><b>' + x[1] + '</b><em class="' + x[3] + '">' + (x[3] === 'y' ? '▲' : '▼') + ' ' + x[2] + '</em>' + (h ? '</a>' : '</div>'); }).join('') + '</div></section>' +
-        '<section class="k-bl sik">' + K.bb({ baslik: 'Hisseler', ikon: 'fa-chart-column', not: bos ? '0 / 592 hisse' : '15 / 592 hisse' }) +
-        '<div class="k-ic">' + K.ara({ yer: 'Hisse kodu ya da adı', ses: false, deger: bos ? 'XYZ' : '' }) + '</div>' +
-        '<div style="padding-top:var(--b-12)">' + K.cipler(['En aktif', 'Artan', 'Azalan', 'Hacim'], 0) + '</div>' +
-        (bos ? K.bos({ ikon: 'fa-magnifying-glass', baslik: 'Aramana uyan hisse bulunamadı', aciklama: 'Kodu ya da adı kontrol et.', eylem: { metin: 'Aramayı temizle', tur: 'sade', attr: 'data-temizle' } })
-          : '<div class="k-ic" style="padding-top:var(--b-12)">' + tablo({ cls: 'sol', sutunlar: ['Hisse', 'Son', 'Değişim', 'Hacim (TL)'], satirlar: HIS.map(function(r){ return [ad(r[0], r[1]), r[2], yon(r[3], r[4]), r[5]]; }) }) +
-            not('En çok işlem gören hisseler · 15 dakika gecikmeli · 23 Kasım 2026, ' + P.guncelleme) + '</div>') + '</section>';
-    }
-    if (k === 'kripto') {
-      HREF = KRP.map(function(){ return ''; });
-      s = '<section class="k-bl sik">' + K.bb({ baslik: 'Kripto Para', ikon: 'fa-chart-column', not: '7/24 piyasa' }) + '<div class="k-ic">' +
-        tablo({ cls: 'sol', sutunlar: ['Kripto', 'Fiyat ($)', 'Fiyat (TL)', '24 saat'], satirlar: KRP.map(function(r){ return [ad(r[0], r[1]), r[2], r[3], yon(r[4], r[5])]; }) }) +
-        '<div style="padding-top:var(--b-16)">' + cevirBtn() + '</div>' + not('Piyasa değerine göre ilk 12 · borsalar ortalaması · 23 Kasım 2026, ' + P.guncelleme) + '</div></section>';
-    }
-    if (k === 'faiz') {
-      HREF = [];
-      s = '<section class="k-bl sik">' + K.bb({ baslik: 'Politika Faizleri', ikon: 'fa-building-columns' }) + '<div class="k-ic">' +
-        tablo({ cls: 'sol', sutunlar: ['Faiz', 'Oran', 'Önceki', 'Karar'], satirlar: FZ1.map(function(r){ return [ad(r[0], r[1]), r[2], r[3], r[4]]; }) }) + '</div></section>' +
-        '<section class="k-bl">' + K.bb({ baslik: 'Mevduat', ikon: 'fa-building-columns', not: 'Yıllık, ortalama' }) + '<div class="k-ic">' +
-        tablo({ cls: 'sol', sutunlar: ['Vade', 'Oran', 'Önceki hafta', 'Değişim'], satirlar: FZ2 }) + '</div></section>' +
-        '<section class="k-bl">' + K.bb({ baslik: 'Kredi', ikon: 'fa-building-columns', not: 'Aylık, ortalama' }) + '<div class="k-ic">' +
-        tablo({ cls: 'sol', sutunlar: ['Kredi', 'Oran', 'Önceki hafta', 'Değişim'], satirlar: FZ3 }) +
-        not('Banka ortalamaları, 15 Kasım 2026 haftası · TCMB kararı 23 Kasım\'daki olağanüstü PPK toplantısında alındı') + '</div></section>';
-    }
-    if (k === 'akaryakit') {
-      HREF = [];
-      s = '<section class="k-bl sik">' + K.bb({ baslik: 'Pompa Fiyatları', ikon: 'fa-gas-pump' }) + '<div class="k-ic">' +
+      '<section class="k-bl">' + K.bb({ baslik: 'Piyasa Saatleri', ikon: 'fa-clock' }) + '<div class="k-ic">' + K.tablo({ cls: 'sol', sutunlar: ['Piyasa', 'Saat', 'Durum'], satirlar: V.SAAT.map(function(r){ return [r[0], r[1], K.etiket(r[2] ? 'Açık' : 'Kapalı', { tur: r[2] ? 'yesil' : 'kirmizi' })]; }) }) +
+        not('Saatler Türkiye saatiyle · veriler 15 dakika gecikmeli · kripto anlık') + '</div></section>' + haberler('ekran');
+    if (k === 'doviz') return '<section class="k-bl sik">' + K.bb({ baslik: 'Döviz Kurları', ikon: 'fa-chart-column', not: 'Serbest piyasa' }) + '<div class="k-ic">' +
+        tablo({ cls: 'sol', sutunlar: ['Döviz', 'Alış', 'Satış', 'Değişim', 'Gün içi en düşük – en yüksek'], satirlar: V.DVZ.map(function(r){ return [ad(r[0], r[1]), r[2], r[3], yon(r[4], r[5]), r[6] + ' – ' + r[7]]; }) },
+          V.DVZ.map(function(r){ return V.href(r[0]); })) + hesapBtn('doviz') + not('Serbest piyasa kurları · 15 dakika gecikmeli · 23 Kasım 2026, ' + P.guncelleme) + '</div></section>' +
+      '<section class="k-bl">' + K.bb({ baslik: 'Bu Hafta Takvimde', ikon: 'fa-calendar-day', baglanti: { metin: 'Takvim', href: K.git('takvim', 'tur=ekonomik') } }) + '<div class="k-ic">' +
+        K.tablo({ cls: 'sol', sutunlar: ['Zaman', 'Olay', 'Önem'], satirlar: V.TAKVIM.map(function(r){ return [ad(r[1], r[0]), ad(r[3], r[2] + ' · ' + r[4]), K.etiket(r[5], { tur: r[5] === 'Yüksek' ? 'kirmizi' : '' })]; }) }) +
+        not('Kuru etkileyebilecek veri ve kararlar · Türkiye saatiyle') + '</div></section>' + haberler('doviz');
+    if (k === 'altin') return '<section class="k-bl sik">' + K.bb({ baslik: 'Altın Fiyatları', ikon: 'fa-chart-column', not: 'Kapalıçarşı' }) + '<div class="k-ic">' +
+        tablo({ cls: 'sol', sutunlar: ['Tür', 'Alış', 'Satış', 'Değişim', 'Gün içi en düşük – en yüksek'], satirlar: V.ALT.map(function(r){ return [ad(r[0], r[1]), r[2], r[3], yon(r[4], r[5]), r[6] + ' – ' + r[7]]; }) },
+          V.ALT.map(function(r){ return V.href(r[0]); })) + hesapBtn('altin') + not('Serbest piyasa fiyatları, TL · 15 dakika gecikmeli · 23 Kasım 2026, ' + P.guncelleme) + '</div></section>' + haberler('altin');
+    if (k === 'borsa') return borsa();
+    if (k === 'kripto') return kripto();
+    if (k === 'faiz') return '<section class="k-bl sik">' + K.bb({ baslik: 'Politika Faizleri', ikon: 'fa-building-columns' }) + '<div class="k-ic">' +
+        K.tablo({ cls: 'sol', sutunlar: ['Faiz', 'Oran', 'Önceki', 'Karar'], satirlar: V.FZ1.map(function(r){ return [ad(r[0], r[1]), r[2], r[3], r[4]]; }) }) + '</div></section>' +
+      '<section class="k-bl">' + K.bb({ baslik: 'Mevduat', ikon: 'fa-building-columns', not: 'Yıllık, ortalama' }) + '<div class="k-ic">' +
+        K.tablo({ cls: 'sol', sutunlar: ['Vade', 'Oran', 'Önceki hafta', 'Değişim'], satirlar: V.FZ2.map(function(r){ return [r[0], r[1], r[2], yon(r[3], r[4])]; }) }) + '</div></section>' +
+      '<section class="k-bl">' + K.bb({ baslik: 'Kredi', ikon: 'fa-building-columns', not: 'Aylık, ortalama' }) + '<div class="k-ic">' +
+        K.tablo({ cls: 'sol', sutunlar: ['Kredi', 'Oran', 'Önceki hafta', 'Değişim'], satirlar: V.FZ3.map(function(r){ return [r[0], r[1], r[2], yon(r[3], r[4])]; }) }) + hesapBtn('faiz') +
+        not('Banka ortalamaları, 15 Kasım 2026 haftası · TCMB kararı 23 Kasım\'daki olağanüstü PPK toplantısında alındı') + '</div></section>' + haberler('faiz');
+    if (k === 'akaryakit') return '<section class="k-bl sik">' + K.bb({ baslik: 'Pompa Fiyatları', ikon: 'fa-gas-pump' }) + '<div class="k-ic">' +
         K.btn({ metin: 'İstanbul (Avrupa)', ikon: 'fa-location-dot', sagIkon: 'fa-chevron-down', tur: 'sade', tam: true, attr: 'data-sayfa="sehir"' }) +
-        '<div style="padding-top:var(--b-12)">' + tablo({ cls: 'sol', vurgu: 0, sutunlar: ['İl', 'Benzin', 'Motorin', 'LPG'], satirlar: YKT }) + '</div>' +
-        not('Pompa fiyatı, TL/litre · 23 Kasım 2026, 06.00 itibarıyla · dağıtım şirketine göre değişebilir') + '</div></section>';
-    }
-    return s;
+        '<div style="padding-top:var(--b-12)">' + K.tablo({ cls: 'sol', vurgu: 0, sutunlar: ['İl', 'Benzin', 'Motorin', 'LPG'], satirlar: V.YKT }) + '</div>' + hesapBtn('akaryakit') +
+        not('Pompa fiyatı, TL/litre · 23 Kasım 2026, 06.00 itibarıyla · dağıtım şirketine göre değişebilir') + '</div></section>' + haberler('akaryakit');
+    return '';
   }
-  /* satırın tamamı dokunulabilir: ayrıntısı olan satırlar enstrüman ekranını açar */
-  function bagla(kap){ var tb = kap.querySelector('.k-tablo tbody'); if (!tb) return;
-    [].forEach.call(tb.querySelectorAll('tr'), function(tr, i){ if (HREF[i]) tr.setAttribute('data-href', HREF[i]); }); }
 
   var bas = '<div class="k-bbas"><h1>Piyasalar</h1><p>Güncelleme ' + P.guncelleme + ' · 15 dk gecikmeli · satış</p></div>';
   /* alt çizgili sekmeler: yazı 16'dan başlar (kit .k-sekmeler iç boşluğu); denetimde tam genişlik sayılır */
@@ -173,9 +160,8 @@
   else if (DUZ) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: DUR === 'cevrimdisi' ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') }) + '<div class="k-son"></div>';
   else e.innerHTML = '<div class="k-ust-bosluk"></div>' + (DUR === 'yenileniyor' ? K.yenile(['cekiliyor', 'birak', 'bitti'].indexOf(HAL) > -1 ? HAL : 'yenileniyor') : '') + bas + sek +
     (DUR === 'cevrimdisi' ? '<div class="k-ic" style="padding-top:var(--b-16)">' + K.serit({ tur: 'uyari', ikon: 'fa-plug-circle-xmark', metin: 'Çevrimdışısın', alt: 'Son veri ' + P.guncelleme + '; bağlantı gelince yenilenir.' }) + '</div>' : '') +
-    '<div id="sekme">' + icerik(SK[si][0]) + '</div><div class="k-son"></div>';
+    '<div id="sekme">' + icerik(sec) + '</div><div class="k-son"></div>';
   var kap = document.getElementById('sekme');
-  if (kap) bagla(kap);
   /* seçili sekme görünür yere kayar */
   var ss = e.querySelector('.k-sekmeler [aria-selected="true"]');
   if (ss && si > 2) ss.parentNode.scrollLeft = ss.offsetLeft - ss.parentNode.offsetLeft;
@@ -184,29 +170,38 @@
   K.altCubuk('ana');
   K.oynatici();
 
+  function adres(){ var q = new URLSearchParams(location.search); q.set('sekme', sec); q.delete('durum');
+    if (SIRA) q.set('sira', SIRA); else q.delete('sira'); if (ARA) q.set('ara', ARA); else q.delete('ara'); history.replaceState(null, '', '?' + q.toString()); }
+  function listeYenile(){ var l = document.getElementById('x-liste'); if (l) l.innerHTML = sec === 'kripto' ? kriptoTablo() : hisseTablo(); }
+
   /* sekme yerinde değişir; adres güncellenir (geri ile kaybolmaz) */
   document.addEventListener('click', function(ev){
     var b = ev.target.closest('.k-sekmeler button');
-    if (b && kap) { var i = [].indexOf.call(b.parentNode.children, b); kap.innerHTML = icerik(SK[i][0]); bagla(kap);
-      var q = new URLSearchParams(location.search); q.set('sekme', SK[i][0]); q.delete('durum'); history.replaceState(null, '', '?' + q.toString()); }
+    if (b && kap) { sec = SK[[].indexOf.call(b.parentNode.children, b)][0]; SIRA = ''; ARA = ''; TUM = false; kap.innerHTML = icerik(sec); adres(); }
     var c = ev.target.closest('.x-suz .k-cip');
-    if (c && kap) { var j = [].indexOf.call(c.parentNode.children, c), S = [null, 'Döviz', 'Altın', 'Borsa', 'Kripto', 'Emtia'][j], t = kap.querySelector('[data-tablo="ekran"]');
-      HREF = satirHref(EKR.filter(function(r){ return S ? r[6] === S : r[7]; })); t.outerHTML = piyasaEkrani(S); bagla(kap); }
-    if (ev.target.closest('[data-temizle]')) { var q2 = new URLSearchParams(location.search); q2.delete('durum'); q2.set('sekme', 'borsa'); location.search = q2.toString(); }
-    if (ev.target.closest('[data-cevir]')) cevirici(document.querySelector('.k-sekmeler [aria-selected="true"]').textContent === 'Kripto Para');
+    if (c && kap) { var S = [null, 'Döviz', 'Altın', 'Borsa', 'Kripto', 'Emtia'][[].indexOf.call(c.parentNode.children, c)]; kap.querySelector('[data-tablo="ekran"]').outerHTML = piyasaEkrani(S); }
+    var sr = ev.target.closest('.x-sira .k-cip');
+    if (sr) { SIRA = (sec === 'kripto' ? KSIRA : SIRALAR)[[].indexOf.call(sr.parentNode.children, sr)]; listeYenile(); adres(); }
+    var hk = ev.target.closest('[data-hrk] .k-segment button');
+    if (hk) document.getElementById('x-hrk').innerHTML = hareketli([].indexOf.call(hk.parentNode.children, hk));
+    if (ev.target.closest('[data-temizle], [data-ara] .temizle')) { ARA = ''; var inp = document.querySelector('[data-ara] input'); if (inp) inp.value = ''; var t0 = document.querySelector('[data-ara] .temizle'); if (t0) t0.remove(); listeYenile(); adres(); }
+    if (ev.target.closest('[data-tum]')) { TUM = true; listeYenile(); var q1 = new URLSearchParams(location.search); q1.set('tum', '1'); history.replaceState(null, '', '?' + q1.toString()); }
+    var hs = ev.target.closest('[data-hesap]');
+    if (hs) hesap(hs.getAttribute('data-hesap'));
   });
+  /* arama yazdıkça süzer (kod ya da ad) */
+  document.addEventListener('input', function(ev){ if (!ev.target.closest('[data-ara]')) return; ARA = ev.target.value; listeYenile(); adres(); });
 
-  /* çevirici alt sayfası (E-352): tutar + iki birim; sistem sayısal klavyesi açılır (çizilmez) */
-  function cevirici(kripto){
-    var a = kripto ? ['0,05', 'BTC', '169.981,14', '1 BTC = 3.399.623 TRY · 98.412 $ üzerinden'] : ['1.000', 'USD', '34.544,80', '1 USD = 34,5448 TRY · satış kuru'];
-    var alan = function(et, d, b, odak){ return K.alan({ etiket: et, deger: d, odak: odak, sag: K.etiket(b) }).replace('<input ', '<input inputmode="decimal" ').replace('class="k-alan-e"', 'class="k-alan-e k-dk44"'); };
-    K.sayfa({ baslik: kripto ? 'Kripto çevirici' : 'Döviz çevirici', alt: kripto ? 'Borsalar ortalaması · ' + P.guncelleme : 'Satış kuru · 15 dk gecikmeli',
-      icerik: alan('Tutar', a[0], a[1], true) +
-        '<div style="display:flex;justify-content:center;padding:var(--b-8) 0">' + K.ikonBtn({ ikon: 'fa-right-left', etiket: 'Birimleri değiştir', tur: 'dolu' }) + '</div>' +
-        alan('Karşılığı', a[2], 'TRY') + '<div style="padding-top:var(--b-16)">' + K.serit({ ikon: 'fa-calculator', metin: a[3] }) + '</div>' +
-        '<p class="k-grup-n">Tutara dokununca telefonun sayısal klavyesi açılır.</p>' });
+  /* hesaplayıcı alt sayfası (E-352 ve sekme hesaplayıcıları): public sayfadaki örnek değerlerle; sistem sayısal klavyesi açılır (çizilmez) */
+  function hesap(k){
+    var h = V.HESAP[k];
+    var alan = function(a){ return K.alan({ etiket: a[0], deger: a[1], odak: !!a[3], sag: K.etiket(a[2]) }).replace('<input ', '<input inputmode="decimal" ').replace('class="k-alan-e"', 'class="k-alan-e k-dk44"'); };
+    var al = h.alanlar.map(alan);
+    if (h.degis) al.splice(1, 0, '<div style="display:flex;justify-content:center">' + K.ikonBtn({ ikon: 'fa-right-left', etiket: 'Birimleri değiştir', tur: 'dolu' }) + '</div>');
+    K.sayfa({ baslik: h.baslik, alt: h.alt, icerik: '<div class="x-hesap">' + al.join('') + '</div><div style="padding-top:var(--b-16)">' + K.serit({ ikon: 'fa-calculator', metin: h.not }) + '</div>' +
+      '<p class="k-grup-n">Tutara dokununca telefonun sayısal klavyesi açılır.</p>' });
   }
-  if (DUR === 'cevirici') cevirici(sec === 'kripto');
+  if (DUR === 'cevirici') hesap(V.HESAP[sec] ? sec : 'doviz');
 
   if (DUR === 'cevrimdisi' && !DUZ) {
     var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });

@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Hisse</title>
+<!-- Dada Haber Mobil · HİSSE DETAYI (Borsa İstanbul payı; yeni satırlar). Detay kökünden, enstrüman detayıyla aynı kalıp: büyük başlık (kod + şirket), son fiyat + değişim, hacim,
+     Takip et · Fiyat alarmı, gün içi aralık çubuğu, "Geçmiş veri yok" şeridi (public'te hisse için seri, grafik, piyasa değeri yok; uydurulmaz), bugün tablosu, künye, endeksler,
+     öteki çok işlem gören hisseler, Borsa haberleri (hisseye özel haber verisi yok; dürüst not).
+     Sorgu: ?kod=THYAO (varsayılan; public borsa.html "En Aktif" tablosundaki 50 hisseden biri, büyük/küçük harf fark etmez)
+            ?durum=alarm (fiyat alarmı alt sayfası; misafirde giriş paneli) | yukleniyor | bos (ilgili haber yok) | hata (&hata=zaman-asimi) | bulunamadi (bilinmeyen kod da) | cevrimdisi (&onbellek=0) · ?uye=0 misafir
+     Veri: piyasa-veri.js (PV.HIS: kod, şirket, son, değişim, yön, hacim, gün içi en düşük ve en yüksek; public borsa.html) + D.piyasa.guncelleme. -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<script src="piyasa-veri.js"></script>
+<style>
+/* KİT ADAYI: büyük değer bloğu — kit tipografi ölçeğindeki "52 / ince" büyük rakamın bileşeni yok (sıcaklık, kalan süre, enstrüman değeri) */
+.x-deger{display:flex;align-items:baseline;gap:var(--b-12);flex-wrap:wrap}
+.x-deger .s{font-size:52px;line-height:1;font-weight:var(--y-ince);letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.x-deger .k-yon{font-size:16px;font-weight:var(--y-kalin)}
+/* KİT ADAYI: gün içi aralık çubuğu — en düşük ile en yüksek arasında son fiyatın yeri (public .sw-ar); kitte yok, .k-ilerleme ölçüsüyle (enstruman.html ile aynı) */
+.x-aralik{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:var(--b-12);font-size:13px;color:var(--metin-3);font-variant-numeric:tabular-nums;white-space:nowrap}
+.x-aralik .c{position:relative;height:4px;border-radius:var(--k-cubuk);background:var(--cizgi)}
+.x-aralik .c i{position:absolute;top:50%;left:var(--p);width:12px;height:12px;border-radius:var(--k-daire);background:var(--metin);transform:translate(-50%,-50%);border:2px solid var(--zemin)}
+/* KİT ADAYI: iki eşit eylem düğmesi (Takip et · Fiyat alarmı); kitte tek tam genişlik düğme var */
+.x-eylem{display:grid;grid-template-columns:1fr 1fr;gap:var(--b-8);padding-top:var(--b-16)}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var Q = K.q, DUR = K.durum, e = document.getElementById('ekran'), V = window.PV, P = D.piyasa;
+  function yon(v, y){ return '<span class="k-yon ' + y + '">' + (y === 'y' ? '▲' : y === 'd' ? '▼' : '') + (y ? ' ' : '') + v + '</span>'; }
+  function not(m){ return '<p class="k-grup-n">' + m + '</p>'; }
+  function py(x, h){ return '<a class="k-py" href="' + h + '"><small>' + x[0] + '</small><b>' + x[1] + '</b><em class="' + x[3] + '">' + (x[3] === 'y' ? '▲' : x[3] === 'd' ? '▼' : '') + ' ' + x[2] + '</em></a>'; }
+  var kod = (Q.get('kod') || 'THYAO').toUpperCase(), r = V.hisse(kod);
+  /* r: [kod, şirket, son, değişim, yön, hacim, gün içi en düşük, en yüksek] */
+  var H = r ? { kod: r[0], ad: r[1], son: r[2], deg: r[3], yon: r[4], hacim: r[5], gun: [r[6], r[7]], sira: V.HIS.indexOf(r) + 1 } : null;
+
+  /* gün içi aralık çubuğu: son fiyatın en düşük–en yüksek arasındaki yeri */
+  function aralik(gun, son){ var lo = V.sayi(gun[0]), hi = V.sayi(gun[1]), p = hi > lo ? Math.round((V.sayi(son) - lo) / (hi - lo) * 100) : 50;
+    return '<div class="x-aralik" role="img" aria-label="Gün içi aralık ' + gun[0] + ' – ' + gun[1] + ', son ' + son + '"><span>' + gun[0] + '</span><span class="c"><i style="--p:' + Math.max(0, Math.min(100, p)) + '%"></i></span><span>' + gun[1] + '</span></div>'; }
+  /* Takip et · Fiyat alarmı: üyede düğme kendisi (kit data-takip) ve alarm alt sayfası; misafirde giriş paneli */
+  function eylem(){
+    return '<div class="x-eylem">' + (K.uye ? K.btn({ metin: 'Takip et', ikon: 'fa-plus', tur: 'birincil', tam: true, secili: false, attr: 'data-takip' }) : K.btn({ metin: 'Takip et', ikon: 'fa-plus', tur: 'birincil', tam: true, attr: 'data-sayfa="tetik" data-eylem="takip"' })) +
+      K.btn({ metin: 'Fiyat alarmı', ikon: 'fa-bell', tur: 'sade', tam: true, attr: 'data-alarm' }) + '</div>';
+  }
+  function sayfa(){
+    var ote = V.HIS.filter(function(x){ return x[0] !== H.kod; }).slice(0, 8);
+    return '<div class="k-bbas"><h1>' + H.kod + '</h1><p>' + H.ad + ' · Borsa İstanbul · TL</p></div>' +
+      '<div class="k-ic"><div class="x-deger"><span class="s">' + H.son + '</span>' + yon(H.deg, H.yon) + '</div>' + K.meta(['Hacim ' + H.hacim + ' TL', P.guncelleme + ' · 15 dk gecikmeli']) + eylem() + '</div>' +
+      '<section class="k-bl sik">' + K.bb({ baslik: 'Gün İçi', ikon: 'fa-clock', not: 'en düşük – en yüksek' }) + '<div class="k-ic">' + aralik(H.gun, H.son) +
+        '<div style="padding-top:var(--b-16)">' + K.serit({ ikon: 'fa-chart-column', metin: 'Geçmiş veri yok', alt: 'Bu hisse için grafik, geçmiş fiyat ve piyasa değeri yayımlanmıyor.' }) + '</div></div></section>' +
+      '<section class="k-bl">' + K.bb({ baslik: 'Bugün', ikon: 'fa-clock' }) + '<div class="k-ic">' +
+        K.tablo({ cls: 'sol', sutunlar: ['Bugün', 'Değer'], satirlar: [['Son', H.son], ['Değişim', yon(H.deg, H.yon)], ['En düşük', H.gun[0]], ['En yüksek', H.gun[1]], ['İşlem hacmi', H.hacim + ' TL']] }) + '</div></section>' +
+      '<section class="k-bl">' + K.bb({ baslik: 'Künye', ikon: 'fa-circle-info' }) + '<div class="k-ic">' +
+        K.tablo({ cls: 'sol', sutunlar: ['Bilgi', 'Değer'], satirlar: [['Kod', H.kod], ['Şirket', H.ad], ['Piyasa', 'Borsa İstanbul Pay Piyasası'], ['En aktif sırası', H.sira + ' / 592'], ['İşlem saatleri', '10.00–18.00'], ['Veri gecikmesi', '15 dakika']] }) + '</div></section>' +
+      '<section class="k-bl">' + K.bb({ baslik: 'Endeksler', ikon: 'fa-chart-column', not: 'Borsa İstanbul' }) + '<div class="k-ray s10">' + V.END.map(function(x){ return py([x[0], x[1], x[2], x[3]], V.href(x[0])); }).join('') + '</div></section>' +
+      '<section class="k-bl">' + K.bb({ baslik: 'Öteki Hisseler', ikon: 'fa-chart-column', baglanti: { metin: 'Borsa', href: K.u('ekranlar/icerik/piyasalar.html', 'sekme=borsa') } }) +
+        '<div class="k-ray s10">' + ote.map(function(x){ return py([x[0], x[2], x[3], x[4]], V.href(x[0])); }).join('') + '</div></section>' +
+      '<section class="k-bl">' + K.bb({ baslik: 'Borsa Haberleri', ikon: 'fa-newspaper', sayi: DUR === 'bos' ? null : V.HABER_SAYI.borsa }) +
+        (DUR === 'bos' ? K.bos({ ikon: 'fa-newspaper', baslik: 'Bu hisseyle ilgili haber yok', aciklama: 'Yeni haber gelince burada görünür.', eylem: { metin: 'Borsa', ikon: 'fa-chart-column', tur: 'sade', href: K.u('ekranlar/icerik/piyasalar.html', 'sekme=borsa') } })
+          : '<div class="k-ic">' + not(H.kod + ' için ayrı haber yok; Borsa İstanbul gündemi gösteriliyor.') + '</div><div class="k-satirlar">' + V.HABER.borsa.slice(0, 5).map(function(h){ return K.satir(h); }).join('') + '</div>') +
+        '<div class="k-ic">' + not('Fiyat ve yorumlar yatırım danışmanlığı değildir; veriler 15 dakika gecikmeli ve bilgilendirme amaçlıdır.') + '</div></section>';
+  }
+
+  var BUL = DUR === 'bulunamadi' || !H;
+  var DUZ = DUR === 'hata' || BUL || (DUR === 'cevrimdisi' && Q.get('onbellek') === '0');
+  if (DUR === 'yukleniyor') e.innerHTML = '<div class="k-ust-bosluk"></div><div class="k-ic" style="padding-top:var(--b-8)">' + K.iskelet('metin', 3) +
+    '<div style="padding-top:var(--b-24)"><i class="k-isk kontrol" style="width:100%;height:48px"></i></div><div style="padding-top:var(--b-24)">' + K.iskelet('metin', 10) + '</div></div><div class="k-son"></div>';
+  else if (DUZ) e.innerHTML = '<div class="k-ust-bosluk"></div>' + (BUL ? K.bos({ ikon: 'fa-magnifying-glass', baslik: 'Hisse bulunamadı', aciklama: '"' + kod + '" kodlu bir hisse yok ya da işlem görmüyor. Kodu Borsa listesinde ara.', eylem: { metin: 'Borsa', ikon: 'fa-chart-column', tur: 'birincil', href: K.u('ekranlar/icerik/piyasalar.html', 'sekme=borsa') } })
+    : K.hata({ tur: DUR === 'cevrimdisi' ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') })) + '<div class="k-son"></div>';
+  else e.innerHTML = '<div class="k-ust-bosluk"></div>' + sayfa() + '<div class="k-son"></div>';
+
+  K.ustCubuk({ geri: true, baslik: BUL ? 'Hisse' : H.kod, buyuk: !DUZ && DUR !== 'yukleniyor', eylemler: DUZ ? [] : ['paylas'] });
+  K.altCubuk('ana');
+  K.oynatici();
+
+  /* fiyat alarmı: üyede hedef fiyat alt sayfası (gün içi en yüksek önerilir), misafirde giriş paneli (kit tetik paneliyle aynı yapı) */
+  function alarm(){
+    if (!K.uye) return K.sayfa({ kapat: false, icerik: '<div class="k-bos" style="padding:var(--b-8) 0 var(--b-4)"><span class="ik">' + K.I('fa-bell') + '</span><h2>Fiyat alarmı için giriş yap</h2><p>Hedef fiyata gelince bildirim gönderelim; alarmların her cihazında seninle olsun.</p></div>',
+      eylemler: ['<div style="display:grid;gap:var(--b-8)">' + K.btn({ metin: 'Giriş yap', ikon: 'fa-right-to-bracket', tur: 'birincil', boy: 'buyuk', tam: true, href: K.git('giris') }) + K.btn({ metin: 'Üye ol', tur: 'sade', boy: 'buyuk', tam: true, href: K.git('uyeOl') }) + K.btn({ metin: 'Şimdi değil', tur: 'metin', tam: true, attr: 'data-kapat' }) + '</div>'] });
+    return K.sayfa({ baslik: 'Fiyat alarmı', alt: H.kod + ' · son ' + H.son + ' TL', icerik: K.segment(['Üstüne çıkınca', 'Altına inince'], 0) +
+        '<div style="padding-top:var(--b-16)">' + K.alan({ etiket: 'Hedef fiyat', deger: H.gun[1], odak: true, sag: K.etiket('TL') }).replace('<input ', '<input inputmode="decimal" ').replace('class="k-alan-e"', 'class="k-alan-e k-dk44"') + '</div>' +
+        '<div style="padding-top:var(--b-16)">' + K.serit({ ikon: 'fa-bell', metin: 'Hedefe gelince bildirim gelir', alt: 'Veriler 15 dakika gecikmeli; alarm da gecikmeli çalışır.' }) + '</div>',
+      eylemler: [{ metin: 'Alarmı kur', ikon: 'fa-bell', tur: 'birincil', attr: 'data-kapat data-toast="Alarm kuruldu · ' + H.kod + ' ' + H.gun[1] + ' TL"' }] });
+  }
+  document.addEventListener('click', function(ev){ if (ev.target.closest('[data-alarm]')) alarm(); });
+  if (DUR === 'alarm' && !DUZ) alarm();
+
+  if (DUR === 'cevrimdisi' && !DUZ) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'hal', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>
