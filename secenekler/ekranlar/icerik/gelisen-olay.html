@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Gelişen Olay · Asgari ücret</title>
+<!-- Dada Haber Mobil · GELİŞEN OLAY (E-338–E-344). Liste kökündeki "Gelişen Olaylar" kartından (K.olay, LS-D) açılır; kartın ilk olayı "Asgari ücret ve bütçe".
+     Liste kalıbı: görselli başlık + içerik paneli; Takip et → Son gelişmeler (kartın 3 haberi, D.liste) → Kısaca → Kronoloji → Bütün haberler.
+     Sorgu: ?uye=0 misafir (Takip et → giriş tetik paneli) · ?durum=yukleniyor | yenileniyor (&hal=cekiliyor|birak|bitti) | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0) | bulunamadi
+     Veri: olay adı ve haberleri K.OLAYLAR[0] + D.liste (kit, liste kökü); Kısaca ve Kronoloji public konu.html ("Asgari Ücret Süreci: Kronoloji", güncellendi 23 Kasım 2026, 14.40);
+     bütün haberler public konu.html listesi + saatler sözlükten (araclar/ornek_veri.json). -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var Q = K.q, DUR = K.durum, HAL = Q.get('hal'), e = document.getElementById('ekran');
+  var O = K.OLAYLAR[0], L = D.liste.haberler;
+  /* kaynak: public konu.html · Kısaca */
+  var KISA = ['Asgari Ücret Tespit Komisyonu ilk toplantısını 4 Aralık\'ta yapacak.', 'İşçi tarafı enflasyon artı refah payı, işveren tarafı maliyet desteği istiyor.',
+    'Karar yıl sonuna kadar bekleniyor; yeni ücret 1 Ocak 2027\'den itibaren geçerli olacak.', 'Asgari ücret desteğinin 2027\'de de süreceği bütçe teklifinde yer aldı.'];
+  /* kaynak: public konu.html · Kronoloji (eskiden yeniye; son madde planlanan toplantı) */
+  var KRON = [
+    ['15 Temmuz 2026', 'Ara zam talebi', 'İşçi konfederasyonları yılın ikinci yarısı için ara zam talep etti; talep karşılanmadı.'],
+    ['3 Eylül 2026', 'Orta Vadeli Program', 'Program, ücret artışlarında hedeflenen enflasyonun esas alınacağını yazdı.'],
+    ['3 Ekim 2026', 'Eylül enflasyonu', 'Yıllık enflasyon yüzde 33,3 olarak açıklandı; tartışma yeniden alevlendi.'],
+    ['16 Ekim 2026', '2027 bütçe teklifi Meclis\'te', 'Teklifte asgari ücret desteğinin 2027\'de de süreceği yer aldı.'],
+    ['3 Kasım 2026', 'Ekim enflasyonu', 'Yıllık enflasyon yüzde 32,1\'e geriledi; işçi tarafı refah payı istedi.'],
+    ['18 Kasım 2026', 'Tarafların ilk açıklamaları', 'İşveren tarafı maliyet artışına, işçi tarafı gıda ve kira yüküne dikkat çekti.'],
+    ['22 Kasım 2026', 'Toplantı tarihi açıklandı', 'Bakanlık, komisyonun ilk toplantısının 4 Aralık\'ta yapılacağını duyurdu.'],
+    ['4 Aralık 2026 · planlanan', 'İlk toplantı', 'Komisyonun yıl sonuna kadar en az dört kez toplanması bekleniyor; yeni ücret 1 Ocak 2027\'den itibaren geçerli olacak.']
+  ];
+  /* kaynak: public konu.html · Asgari Ücret 2027 Haberleri (37 haber) + sözlük saatleri; ilk haber D.detay'ın haberi (görsel asgari) */
+  var X = [
+    { alt: 'Gündem', baslik: 'Asgari ücret görüşmelerinde ilk toplantı 4 Aralık\'ta yapılacak', yazar: 'Hakan Uysal', sure: '3 dk', izlenme: '24,6 B', saat: '14.05', g: 'asgari' },
+    { alt: 'Gündem', baslik: 'İşçi konfederasyonları ortak talep metni için toplanıyor', yazar: 'Hakan Uysal', sure: '4 dk', izlenme: '5,8 B', saat: '06.30' },
+    { alt: 'Gündem', baslik: 'Asgari ücretle geçinen hanelerde kira payı yüzde 40\'ı aştı', yazar: 'Ayşe Yıldız', sure: '3 dk', izlenme: '9,7 B', saat: '22 Kas' },
+    { alt: 'Gündem', baslik: 'İşveren temsilcileri küçük işletmeler için destek önerdi', yazar: 'Sibel Arslan', sure: '2 dk', izlenme: '11,1 B', saat: '22 Kas' },
+    { alt: 'Gündem', baslik: 'Ekim enflasyonu yüzde 32,1: ücret pazarlığına etkisi', yazar: 'Ayşe Yıldız', sure: '5 dk', izlenme: '4,4 B', saat: '22 Kas' },
+    { alt: 'Gündem', baslik: 'Komisyon nasıl çalışır? Üyeler ve oylama usulü', yazar: 'Ayşe Yıldız', sure: '6 dk', izlenme: '3,0 B', saat: '21 Kas' },
+    { alt: 'Gündem', baslik: 'Geçen yılın asgari ücret kararı nasıl alınmıştı?', yazar: 'Hakan Uysal', sure: '4 dk', izlenme: '8,3 B', saat: '21 Kas' }
+  ];
+  X.forEach(function(h){ h.ikon = 'fa-newspaper'; });
+
+  var takip = K.uye ? K.btn({ metin: 'Takip et', ikon: 'fa-plus', tur: 'birincil', tam: true, secili: false, attr: 'data-takip' })
+    : K.btn({ metin: 'Takip et', ikon: 'fa-plus', tur: 'birincil', tam: true, attr: 'data-sayfa="tetik" data-eylem="takip"' });
+  var bas = '<header class="k-kapak" style="background-image:' + G(O.g) + '">' + (O.canli ? '<div style="margin-bottom:var(--b-12)">' + K.canli() + '</div>' : '') +
+    '<h1>' + O.ad + '</h1><p>Gelişen olay · komisyon süreci, taraflar ve takvim</p></header>';
+  var govde = '<div class="k-ic" style="padding-top:var(--b-16)">' + K.meta(['Güncellendi 14.40', O.i.length + ' yeni gelişme', '37 haber']) + '<div style="margin-top:var(--b-16)">' + takip + '</div></div>' +
+    '<section class="k-bl sik">' + K.bb({ baslik: 'Son Gelişmeler', canli: O.canli, sayi: O.i.length }) + '<div class="k-satirlar">' + O.i.map(function(k){ return K.satir(L[k], { ikon: 'fa-newspaper' }); }).join('') + '</div></section>' +
+    '<section class="k-bl">' + K.bb({ baslik: 'Kısaca', ikon: 'fa-list-check' }) + '<div class="k-ic">' + K.madde(KISA) + '</div></section>' +
+    '<section class="k-bl">' + K.bb({ baslik: 'Kronoloji', ikon: 'fa-folder-open', not: '8 adım' }) + '<div class="k-ic">' +
+      K.adimlar(KRON.map(function(k){ return [k[0], k[1] + '. ' + k[2]]; })) + '</div></section>' +
+    '<section class="k-bl">' + K.bb({ baslik: 'Bütün Haberler', ikon: 'fa-newspaper', sayi: 37 }) + '<div class="k-satirlar">' + X.map(function(h){ return K.satir(h); }).join('') + '</div></section>';
+
+  var DUZ = DUR === 'hata' || DUR === 'bulunamadi' || (DUR === 'cevrimdisi' && Q.get('onbellek') === '0');
+  if (DUR === 'yukleniyor') e.innerHTML = K.iskelet('liste') + '<div class="k-son"></div>';
+  else if (DUZ) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: DUR === 'bulunamadi' ? 'bulunamadi' : DUR === 'cevrimdisi' ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') }) + '<div class="k-son"></div>';
+  else e.innerHTML = (DUR === 'yenileniyor' ? '<div class="k-ust-bosluk"></div>' + K.yenile(['cekiliyor', 'birak', 'bitti'].indexOf(HAL) > -1 ? HAL : 'yenileniyor') : '') +
+    bas + '<div class="k-yaprak">' + govde + '<div class="k-son"></div></div>';
+
+  if (DUZ) K.ustCubuk({ geri: true, baslik: DUR === 'bulunamadi' ? 'Gelişen olay' : O.ad });
+  else K.ustCubuk({ tur: 'foto', geri: true, baslik: O.ad, gorsel: O.g, eylemler: ['paylas'], dar: DUR === 'yenileniyor' });
+  K.altCubuk('bolum');
+  K.oynatici();
+
+  if (DUR === 'cevrimdisi' && !DUZ) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'hal', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

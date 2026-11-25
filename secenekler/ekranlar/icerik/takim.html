@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Galatasaray</title>
+<!-- Dada Haber Mobil · TAKIM SAYFASI (E-392–E-398). Liste kökünden: görselli başlık (takımın stadı) + içerik paneli; Takip et, sıra · puan · galibiyet, canlı maç,
+     fikstür (son ve sıradaki maçlar), puan durumu (ilk 5, takımın satırı vurgulu), takım haberleri.
+     Sorgu: ?uye=0 misafir (Takip et → giriş tetik paneli) · ?durum=yukleniyor | yenileniyor (&hal=cekiliyor|birak|bitti) | daha-fazla (&hal=son|hata) | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0) | bulunamadi
+     Veri: public galatasaray.html (künye, son maçlar, sıradaki maçlar, haberler) + sözlük (puan_tablosu, haber saatleri). Canlı maç D.mac (K.mac). Görsel: superlig (Ali Sami Yen Spor Kompleksi). -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var Q = K.q, DUR = K.durum, HAL = Q.get('hal'), e = document.getElementById('ekran'), TAM = document.documentElement.classList.contains('tam');
+  var TK = { ad: 'Galatasaray', kod: 'GS', ust: 'Süper Lig · 1905 · İstanbul', g: 'superlig', toplam: 148 };
+  var TAKIPTE = D.uye.takip.indexOf(TK.ad) > -1;
+  /* kaynak: public galatasaray.html "Son Maçlar" ve "Fikstür" · [lig, sağ ayraç, dk/saat, ev, skor, dep, kazanan] */
+  var SON = [['Şampiyonlar Ligi · 4. hafta', 'Maç sonu', 'MS', 'Galatasaray', '2 – 0', 'Club Brugge', 'ev'],
+             ['Süper Lig · 13. hafta', 'Maç sonu', 'MS', 'Kayserispor', '0 – 3', 'Galatasaray', 'dep'],
+             ['Süper Lig · 12. hafta', 'Maç sonu', 'MS', 'Galatasaray', '2 – 0', 'Antalyaspor', 'ev']];
+  var SIRA = [['Şampiyonlar Ligi', 'Salı 24 Kasım', '20.45', 'Galatasaray', '–', 'Atlético Madrid'],
+              ['Süper Lig', 'Pazar 29 Kasım', '19.00', 'Başakşehir', '–', 'Galatasaray'],
+              ['Süper Lig', 'Cumartesi 5 Aralık', '20.00', 'Galatasaray', '–', 'Konyaspor']];
+  /* kaynak: sözlük puan_tablosu ilk 5 */
+  var P5 = [{ ad: 'Galatasaray', kod: 'GS', G: 10, B: 2, M: 1, A: 33, Y: 10 }, { ad: 'Fenerbahçe', kod: 'FB', G: 9, B: 3, M: 1, A: 30, Y: 11 }, { ad: 'Beşiktaş', kod: 'BJK', G: 7, B: 4, M: 2, A: 25, Y: 13 },
+            { ad: 'Trabzonspor', kod: 'TS', G: 7, B: 3, M: 3, A: 21, Y: 13 }, { ad: 'Başakşehir', kod: 'BAŞ', G: 6, B: 4, M: 3, A: 19, Y: 14 }];
+  /* kaynak: public galatasaray.html haberleri + sözlük saatleri (bugün saat, öncesi tarih); derbi antrenmanı haberine antrenman görseli */
+  var X = [
+    { alt: 'Derbi', baslik: 'Galatasaray derbi öncesi son antrenmanını yaptı', yazar: 'Burak Tan', sure: '3 dk', izlenme: '14,2 B', saat: '15.10', g: 'antrenman' },
+    { alt: 'Transfer', baslik: 'Galatasaray sol bek transferini KAP\'a bildirdi', yazar: 'Murat Tekin', sure: '2 dk', izlenme: '8,1 B', saat: '15.05' },
+    { alt: 'Şampiyonlar Ligi', baslik: 'Atlético Madrid maçının biletleri satışa çıktı', yazar: 'Burak Tan', sure: '4 dk', izlenme: '9,6 B', saat: '06.55' },
+    { alt: 'Sağlık', baslik: 'İki oyuncunun sakatlık durumu açıklandı', yazar: 'Burak Tan', sure: '3 dk', izlenme: '6,7 B', saat: '22 Kas' },
+    { alt: 'Altyapı', baslik: 'U19 takımı UEFA Gençlik Ligi\'nde son 16 turunda', yazar: 'Murat Tekin', sure: '5 dk', izlenme: '5,9 B', saat: '22 Kas' },
+    { alt: 'Kadın futbolu', baslik: 'Kadın takımı ligde ilk yarıyı lider bitirdi', yazar: 'Murat Tekin', sure: '2 dk', izlenme: '4,8 B', saat: '22 Kas' },
+    { alt: 'Basketbol', baslik: 'Galatasaray basketbolda Tofaş maçına hazırlanıyor', yazar: 'Emre Sönmez', sure: '4 dk', izlenme: '2,9 B', saat: '21 Kas' },
+    { alt: 'Kulüp', baslik: 'Galatasaray olağan genel kurul tarihini açıkladı', yazar: 'Burak Tan', sure: '3 dk', izlenme: '3,6 B', saat: '21 Kas' }
+  ];
+  X.forEach(function(h){ h.ikon = 'fa-futbol'; });
+
+  var takip = K.uye ? K.btn({ metin: TAKIPTE ? 'Takipte' : 'Takip et', ikon: TAKIPTE ? 'fa-check' : 'fa-plus', tur: 'birincil', tam: true, secili: TAKIPTE, attr: 'data-takip' })
+    : K.btn({ metin: 'Takip et', ikon: 'fa-plus', tur: 'birincil', tam: true, attr: 'data-sayfa="tetik" data-eylem="takip"' });
+  var bas = '<header class="k-kapak" style="background-image:' + G(TK.g) + '"><h1>' + TK.ad + '</h1><p>' + TK.ust + '</p></header>';
+  function ayrac(a, b){ return '<div class="k-ayrac"><span>' + a + '</span><span>' + b + '</span></div>'; }
+  var fikstur = SON.map(function(m){ return ayrac(m[0], m[1]) + K.skor({ dk: m[2], ev: m[3], skor: m[4], dep: m[5], kazanan: m[6] }); }).join('') +
+    SIRA.map(function(m){ return ayrac(m[0], m[1]) + K.skor({ dk: m[2], ev: m[3], skor: m[4], dep: m[5] }); }).join('');
+  var liste = X.map(function(h){ return K.satir(h); }).join('');
+  if (DUR === 'daha-fazla') liste += (HAL === 'son' || HAL === 'hata' ? '' : K.iskelet('satir', 1)) + K.dahaFazla(HAL === 'son' || HAL === 'hata' ? HAL : 'yukleniyor');
+  var govde = '<div class="k-ic" style="padding-top:var(--b-16)">' + takip + '</div>' +
+    K.istat([['1.', 'Sıra'], ['32', 'Puan'], ['10', 'Galibiyet']]) +
+    '<section class="k-bl sik">' + K.bb({ baslik: 'Canlı Maç', canli: true, baglanti: { metin: 'Canlı Skor', href: K.git('canliSkor') } }) + '<div class="k-ic">' + K.mac() + '</div></section>' +
+    '<section class="k-bl sik">' + K.bb({ baslik: 'Fikstür', ikon: 'fa-calendar-day', baglanti: { metin: 'Tümü', href: K.u('ekranlar/icerik/fikstur.html') } }) + '<div class="k-ic">' + fikstur + '</div></section>' +
+    '<section class="k-bl sik">' + K.bb({ baslik: 'Puan Durumu', ikon: 'fa-ranking-star', baglanti: { metin: 'Tümü', href: K.git('puanDurumu') } }) + '<div class="k-ic" data-puan>' + K.puanTablosu(P5, TK.kod) + '<p class="k-not">' + K.I('fa-circle-info') + '<span>Süper Lig, 13 hafta sonunda · ilk 5</span></p></div></section>' +
+    '<section class="k-bl sik">' + K.bb({ baslik: 'Haberler', ikon: 'fa-futbol', sayi: TK.toplam, not: 'En yeni' }) + '<div class="k-satirlar">' + liste + '</div></section>';
+
+  var DUZ = DUR === 'hata' || DUR === 'bulunamadi' || (DUR === 'cevrimdisi' && Q.get('onbellek') === '0');
+  if (DUR === 'yukleniyor') e.innerHTML = K.iskelet('liste') + '<div class="k-son"></div>';
+  else if (DUZ) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: DUR === 'bulunamadi' ? 'bulunamadi' : DUR === 'cevrimdisi' ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') }) + '<div class="k-son"></div>';
+  else e.innerHTML = (DUR === 'yenileniyor' ? '<div class="k-ust-bosluk"></div>' + K.yenile(['cekiliyor', 'birak', 'bitti'].indexOf(HAL) > -1 ? HAL : 'yenileniyor') : '') +
+    bas + '<div class="k-yaprak">' + govde + '<div class="k-son"></div></div>';
+
+  if (DUZ) K.ustCubuk({ geri: true, baslik: DUR === 'bulunamadi' ? 'Takım' : TK.ad });
+  else K.ustCubuk({ tur: 'foto', geri: true, baslik: TK.ad, gorsel: TK.g, eylemler: ['paylas'], dar: DUR === 'yenileniyor' });
+  K.altCubuk('bolum');
+  K.oynatici();
+
+  /* puan tablosunda satır → puan durumu */
+  e.querySelectorAll('[data-puan] tbody tr').forEach(function(tr){ tr.setAttribute('data-href', K.git('puanDurumu')); tr.style.cursor = 'pointer'; });
+  if (DUR === 'daha-fazla' && !TAM) e.scrollTop = e.scrollHeight;
+  if (DUR === 'cevrimdisi' && !DUZ) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'hal', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Hava Durumu</title>
+<!-- Dada Haber Mobil · HAVA DURUMU (E-363–E-367). Görselli başlık (karlı İstanbul) + içerik paneli: şehir seçici, şimdi, saatlik tablo, 7 gün (yatay kayar), kaynak.
+     Ana sayfadaki kompakt kutu (K25, K30: yalnız Bugün | Yarın) buraya açılır; tam ekranda bütün tahmin gösterilir.
+     Sorgu: ?durum=konum-yok (konum izni kapalı: şehri elle seç / Ayarlar) | yukleniyor | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0)
+     Veri: şimdiki hal D.hava; saatlik ve 6 günlük tahmin sözlük hava.saatlik / hava.gunler (public hava-durumu.html ile aynı). D.hava.gunler yalnız ilk 4 günü taşır. -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* KİT ADAYI: büyük değer bloğu — kit tipografi ölçeğindeki "52 / ince" büyük rakamın bileşeni yok (sıcaklık, kalan süre, enstrüman değeri) */
+.x-deger{display:flex;align-items:center;gap:var(--b-16)}
+.x-deger .ik{width:64px;height:64px;border-radius:var(--k-daire);display:grid;place-items:center;flex:none;background:var(--marka-25);color:var(--marka-metin);font-size:26px}
+.x-deger .s{display:block;font-size:52px;line-height:1;font-weight:var(--y-ince);letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.x-deger b{display:block;margin-top:var(--b-4);font-size:17px}
+/* KİT ADAYI: hava gün kartı — .k-py ölçüsünde; ikon + en yüksek/en düşük, durum tek satır (kısaltılır) */
+.x-gun{width:132px}
+.x-gun b{display:flex;align-items:center;gap:var(--ikon-bosluk)}
+.x-gun b i{font-size:15px;color:var(--marka-metin)}
+.x-gun em{font-weight:var(--y-orta);color:var(--metin-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var Q = K.q, DUR = K.durum, e = document.getElementById('ekran');
+  var H = D.hava;
+  /* kaynak: sözlük hava.gunler (6 gün; public hava-durumu.html'deki 7 sütunun Bugün dışındakiler) ve hava.saatlik */
+  var GUN = [['Sal', 24, 'Kar', 'fa-snowflake', 1, -3], ['Çar', 25, 'Karla karışık yağmur', 'fa-cloud-showers-heavy', 4, 0], ['Per', 26, 'Bulutlu', 'fa-cloud', 6, 1],
+    ['Cum', 27, 'Parçalı bulutlu', 'fa-cloud-sun', 8, 3], ['Cmt', 28, 'Güneşli', 'fa-sun', 10, 4], ['Paz', 29, 'Parçalı bulutlu', 'fa-cloud-sun', 11, 5]];
+  var SAAT = [['16.00', 'Yoğun kar', 1, -4, 95, 32], ['17.00', 'Yoğun kar', 1, -4, 95, 34], ['18.00', 'Kar', 0, -5, 90, 34], ['19.00', 'Kar', 0, -5, 85, 30],
+    ['20.00', 'Kar', -1, -6, 80, 28], ['21.00', 'Hafif kar', -1, -6, 70, 26], ['22.00', 'Hafif kar', -2, -6, 60, 24], ['23.00', 'Bulutlu', -2, -6, 40, 22]];
+  var NEM = 91, RUZ = '32 km/sa KD';
+  function d(n){ return String(n).replace('-', '−') + '°'; }
+  function gun(x, bugun){ return '<div class="k-py x-gun"><small>' + (bugun ? 'Bugün' : x[0] + ' ' + x[1]) + '</small><b>' + K.I(x[3]) + d(x[4]) + ' / ' + d(x[5]) + '</b><em>' + x[2] + '</em></div>'; }
+
+  var sehir = '<div class="k-ic" style="padding-top:var(--b-16)">' + K.btn({ metin: H.sehir, ikon: 'fa-location-dot', sagIkon: 'fa-chevron-down', tur: 'sade', tam: true, attr: DUR === 'konum-yok' ? 'data-sehir' : 'data-sayfa="sehir"' }) + '</div>';
+  var simdi = '<section class="k-bl sik"><div class="k-ic"><div class="x-deger"><span class="ik">' + K.I(H.ikon) + '</span><span><span class="s">' + d(H.derece) + '</span><b>' + H.durum + '</b></span></div>' +
+    K.meta(['Hissedilen ' + d(H.hissedilen), 'Nem %' + NEM, 'Rüzgâr ' + RUZ]) + K.meta(['Bugün en yüksek ' + d(H.yuksek), 'en düşük ' + d(H.dusuk)]) + '</div></section>';
+  var saatlik = '<section class="k-bl">' + K.bb({ baslik: 'Saatlik', ikon: 'fa-clock', not: 'Bugün' }) + '<div class="k-ic">' +
+    K.tablo({ cls: 'sol', vurgu: 0, sutunlar: ['Saat', 'Durum', 'Sıcaklık', 'Hissedilen', 'Yağış', 'Rüzgâr'], satirlar: SAAT.map(function(r){ return [r[0], r[1], d(r[2]), d(r[3]), '%' + r[4], r[5] + ' km/sa']; }) }) + '</div></section>';
+  var yedi = '<section class="k-bl">' + K.bb({ baslik: '7 Gün', ikon: 'fa-calendar-day' }) + '<div class="k-ray s10">' + gun(['', '', H.durum, H.ikon, H.yuksek, H.dusuk], true) + GUN.map(function(x){ return gun(x); }).join('') + '</div>' +
+    '<div class="k-ic"><p class="k-grup-n">Meteoroloji Genel Müdürlüğü tahmini · 23 Kasım 2026, 14.00</p></div></section>';
+
+  var bas = '<header class="k-kapak" style="background-image:' + G('kar-istanbul') + '"><h1>Hava Durumu</h1><p>' + H.sehir + ' · ' + D.simdi.tarih.replace(' 2026', '') + ' ' + D.simdi.gun + '</p></header>';
+  var govde = DUR === 'konum-yok'
+    ? K.bos({ ikon: 'fa-location-dot', baslik: 'Konum izni kapalı', aciklama: 'Şehrini elle seç ya da izni telefonun ayarlarından aç.', eylem: { metin: 'Şehir seç', ikon: 'fa-location-dot', attr: 'data-sehir' }, ikinci: { metin: 'Ayarlar\'a git' } })
+    : sehir + simdi + saatlik + yedi;
+
+  var DUZ = DUR === 'hata' || (DUR === 'cevrimdisi' && Q.get('onbellek') === '0');
+  if (DUR === 'yukleniyor') e.innerHTML = K.iskelet('liste') + '<div class="k-son"></div>';
+  else if (DUZ) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: DUR === 'cevrimdisi' ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') }) + '<div class="k-son"></div>';
+  else e.innerHTML = bas + '<div class="k-yaprak">' + govde + '<div class="k-son"></div></div>';
+
+  if (DUZ) K.ustCubuk({ geri: true, baslik: 'Hava Durumu' });
+  else K.ustCubuk({ tur: 'foto', geri: true, baslik: 'Hava Durumu', gorsel: 'kar-istanbul' });
+  K.altCubuk('ana');
+  K.oynatici();
+
+  /* konum izni kapalıyken şehir seç alt sayfası "Konumumu kullan" satırını kapalı gösterir */
+  document.addEventListener('click', function(ev){ if (ev.target.closest('[data-sehir]')) { ev.preventDefault(); K.sayfa('sehir', { red: true }); } });
+  if (DUR === 'cevrimdisi' && !DUZ) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'hal', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

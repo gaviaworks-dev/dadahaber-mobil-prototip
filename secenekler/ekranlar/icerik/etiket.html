@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Etiket · Asgari Ücret</title>
+<!-- Dada Haber Mobil · ETİKET (E-321–E-329). Liste kökünden: görselli başlık (etiketin öne çıkan haberinin görseli) + içerik paneli, Takip et, etiketli haberler.
+     Sorgu: ?uye=0 misafir (Takip et → giriş tetik paneli) · ?durum=yukleniyor | yenileniyor (&hal=cekiliyor|birak|bitti) | daha-fazla (&hal=son|hata) | bos | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0) | bulunamadi
+     Veri: public etiket.html "Asgari Ücret" (64 haber; başlık, alt konu, yazar, süre, okunma) + saatler sözlükten (araclar/ornek_veri.json). Görsel yalnız D'de görseli olan haberlerde. -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var Q = K.q, DUR = K.durum, HAL = Q.get('hal'), e = document.getElementById('ekran'), TAM = document.documentElement.classList.contains('tam');
+  var ET = { ad: 'Asgari Ücret', ust: 'Çalışma Hayatı', toplam: 64, g: 'asgari' };
+  /* kaynak: public etiket.html (liste) + sözlük saatleri; ilk haber D.detay'ın haberi (14.05, görsel asgari), kira payı haberi D.liste'de (carsi) */
+  var X = [
+    { alt: 'Çalışma Hayatı', baslik: 'Asgari ücret tespit komisyonu ilk toplantısını 4 Aralık\'ta yapacak', yazar: 'Hakan Uysal', sure: '3 dk', izlenme: '24,6 B', saat: '14.05', g: 'asgari' },
+    { alt: 'Kişisel Finans', baslik: 'Asgari ücretlinin kira payı son iki yılda nasıl değişti', yazar: 'Ayşe Yıldız', sure: '5 dk', izlenme: '19,6 B', saat: '15.40', g: 'carsi' },
+    { alt: 'Siyaset', baslik: 'Asgari ücrete ara zam talebi Meclis gündeminde', yazar: 'Ayşe Yıldız', sure: '4 dk', izlenme: '14,3 B', saat: '08.20' },
+    { alt: 'Staj', baslik: 'Stajyer ücretlerinde asgari ücrete bağlı yeni hesaplama', yazar: 'Hakan Uysal', sure: '3 dk', izlenme: '7,5 B', saat: '22 Kas' },
+    { alt: 'Çalışma Hayatı', baslik: 'İşveren tarafı asgari ücret teklifinde verimlilik vurgusu yaptı', yazar: 'Hakan Uysal', sure: '3 dk', izlenme: '9,1 B', saat: '22 Kas' },
+    { alt: 'Kadın ve Çalışma Hayatı', baslik: 'Asgari ücretle çalışan kadınların oranı yükseldi', yazar: 'Sibel Arslan', sure: '4 dk', izlenme: '8,2 B', saat: '22 Kas' },
+    { alt: 'Türkiye Ekonomisi', baslik: 'Asgari ücret artışının enflasyona etkisine ilişkin üç tahmin', yazar: 'Ayşe Yıldız', sure: '5 dk', izlenme: '10,4 B', saat: '22 Kas' },
+    { alt: 'Çalışma Hayatı', baslik: 'İşçi konfederasyonları asgari ücret için ortak talep metni açıkladı', yazar: 'Hakan Uysal', sure: '3 dk', izlenme: '11,7 B', saat: '22 Kas' },
+    { alt: 'Kişisel Finans', baslik: 'Asgari ücret desteği küçük işletmelere nasıl yansıyacak', yazar: 'Sibel Arslan', sure: '4 dk', izlenme: '6,9 B', saat: '21 Kas' },
+    { alt: 'Toplum', baslik: 'Asgari ücretle geçinen ailelerin kış bütçesi', yazar: 'Sibel Arslan', sure: '6 dk', izlenme: '16,8 B', saat: '21 Kas' },
+    { alt: 'Türkiye Ekonomisi', baslik: 'Asgari ücretin on yıllık seyri tek grafikte', yazar: 'Mehmet Koçak', sure: '2 dk', izlenme: '16,2 B', saat: '21 Kas' },
+    { alt: 'Avrupa', baslik: 'AB ülkelerinde asgari ücretin satın alma gücüyle karşılaştırması', yazar: 'Mehmet Koçak', sure: '5 dk', izlenme: '5,8 B', saat: '21 Kas' }
+  ];
+  X.forEach(function(h){ h.ikon = 'fa-newspaper'; }); /* hepsi Gündem bölümünde (sözlük) */
+
+  /* Takip et: üyede düğme kendisi (kit data-takip, kısa bildirim); misafirde giriş tetik paneli (C30 varsayımı onaylanmadı) */
+  var takip = K.uye ? K.btn({ metin: 'Takip et', ikon: 'fa-plus', tur: 'birincil', tam: true, secili: false, attr: 'data-takip' })
+    : K.btn({ metin: 'Takip et', ikon: 'fa-plus', tur: 'birincil', tam: true, attr: 'data-sayfa="tetik" data-eylem="takip"' });
+  var bas = '<header class="k-kapak" style="background-image:' + G(ET.g) + '"><h1>' + ET.ad + '</h1><p>Etiket · ' + ET.ust + '</p></header>';
+  var liste = X.map(function(h){ return K.satir(h); }).join('');
+  if (DUR === 'daha-fazla') liste += (HAL === 'son' || HAL === 'hata' ? '' : K.iskelet('satir', 1)) + K.dahaFazla(HAL === 'son' || HAL === 'hata' ? HAL : 'yukleniyor');
+  var govde = DUR === 'bos'
+    ? K.bos({ ikon: 'fa-hashtag', baslik: 'Bu etikette henüz haber yok', aciklama: 'Takip edersen bu etiketle yeni haber yayımlandığında ana sayfanda öne çıkar.', eylem: K.uye ? { metin: 'Takip et', ikon: 'fa-plus', attr: 'data-takip' } : { metin: 'Takip et', ikon: 'fa-plus', attr: 'data-sayfa="tetik" data-eylem="takip"' } })
+    : '<div class="k-ic" style="padding-top:var(--b-16)">' + takip + '</div>' +
+      '<section class="k-bl sik">' + K.bb({ baslik: 'Haberler', ikon: 'fa-hashtag', sayi: ET.toplam, not: 'En yeni' }) + '<div class="k-satirlar">' + liste + '</div></section>';
+
+  var DUZ = DUR === 'hata' || DUR === 'bulunamadi' || (DUR === 'cevrimdisi' && Q.get('onbellek') === '0');
+  if (DUR === 'yukleniyor') e.innerHTML = K.iskelet('liste') + '<div class="k-son"></div>';
+  else if (DUZ) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: DUR === 'bulunamadi' ? 'bulunamadi' : DUR === 'cevrimdisi' ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') }) + '<div class="k-son"></div>';
+  else e.innerHTML = (DUR === 'yenileniyor' ? '<div class="k-ust-bosluk"></div>' + K.yenile(['cekiliyor', 'birak', 'bitti'].indexOf(HAL) > -1 ? HAL : 'yenileniyor') : '') +
+    bas + '<div class="k-yaprak">' + govde + '<div class="k-son"></div></div>';
+
+  if (DUZ) K.ustCubuk({ geri: true, baslik: DUR === 'bulunamadi' ? 'Etiket' : ET.ad });
+  else K.ustCubuk({ tur: 'foto', geri: true, baslik: ET.ad, gorsel: ET.g, eylemler: ['sirala', 'paylas'], dar: DUR === 'yenileniyor' });
+  K.altCubuk('bolum');
+  K.oynatici();
+
+  if (DUR === 'daha-fazla' && !TAM) e.scrollTop = e.scrollHeight;
+  if (DUR === 'cevrimdisi' && !DUZ) {
+    /* önbellekteki son liste + kalıcı çevrimdışı bandı */
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  /* Yeniden dene: düğmede gösterge, sonra hal kalkar */
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'hal', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Kurum · Merkez Bankası</title>
+<!-- Dada Haber Mobil · KİŞİ / KURUM (E-330–E-337). Etiket ekranının kalıbı: görselli başlık (kurum binası) + içerik paneli, Takip et, kurumla ilgili haberler.
+     Sorgu: ?uye=0 misafir (Takip et → giriş tetik paneli) · ?durum=yukleniyor | yenileniyor (&hal=cekiliyor|birak|bitti) | daha-fazla (&hal=son|hata) | bos | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0) | bulunamadi
+     Veri: public kisi.html "Türkiye Cumhuriyet Merkez Bankası" (Kurum · Faiz Oranları, 212 haber; liste) + saatler sözlükten (araclar/ornek_veri.json).
+     Görsel: faiz (TCMB şube binası, KAYNAK.txt); listede yalnız D'de görseli olan faiz kararı haberinde. -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var Q = K.q, DUR = K.durum, HAL = Q.get('hal'), e = document.getElementById('ekran'), TAM = document.documentElement.classList.contains('tam');
+  var ET = { ad: 'Türkiye Cumhuriyet Merkez Bankası', kisa: 'Merkez Bankası', ust: 'Faiz Oranları', toplam: 212, g: 'faiz' };
+  /* kaynak: public kisi.html (liste) + sözlük saatleri; ilk haber D.bolumler Finans'taki faiz kararı (14.00, görsel faiz) */
+  var X = [
+    { alt: 'Faiz Oranları', baslik: 'Merkez Bankası politika faizini yüzde 42,5 seviyesinde sabit tuttu', yazar: 'Elif Aras', sure: '3 dk', izlenme: '27,5 B', saat: '14.00', g: 'faiz' },
+    { alt: 'Enflasyon', baslik: 'Kasım ayı piyasa katılımcıları anketinde yıl sonu beklentisi geriledi', yazar: 'Elif Aras', sure: '3 dk', izlenme: '9,4 B', saat: '07.40' },
+    { alt: 'Türkiye Ekonomisi', baslik: 'Merkez Bankası brüt rezervleri 158 milyar dolara yükseldi', yazar: 'Can Demir', sure: '2 dk', izlenme: '13,2 B', saat: '07.15' },
+    { alt: 'Döviz', baslik: 'Kur korumalı mevduat bakiyesi bir haftada 40 milyar lira azaldı', yazar: 'Elif Aras', sure: '3 dk', izlenme: '8,7 B', saat: '22 Kas' },
+    { alt: 'Bankacılık', baslik: 'Kredi büyüme sınırlarında yeni düzenleme yürürlüğe girdi', yazar: 'Nazlı Öztürk', sure: '4 dk', izlenme: '11,0 B', saat: '22 Kas' },
+    { alt: 'Faiz Oranları', baslik: 'Para Politikası Kurulu toplantı özeti yayımlandı', yazar: 'Can Demir', sure: '5 dk', izlenme: '7,1 B', saat: '22 Kas' },
+    { alt: 'Enflasyon', baslik: 'Merkez Bankası Başkanı bütçe sunumunda enflasyon hedefini açıkladı', yazar: 'Can Demir', sure: '4 dk', izlenme: '18,4 B', saat: '22 Kas' },
+    { alt: 'Bankacılık', baslik: 'Kredi kartı azami faiz oranları aralık ayı için ilan edildi', yazar: 'Nazlı Öztürk', sure: '2 dk', izlenme: '16,5 B', saat: '22 Kas' },
+    { alt: 'Enflasyon', baslik: 'Finansal İstikrar Raporu\'nda hane halkı borçluluğuna dikkat çekildi', yazar: 'Can Demir', sure: '4 dk', izlenme: '5,6 B', saat: '21 Kas' },
+    { alt: 'Türkiye Ekonomisi', baslik: 'Cari işlemler dengesi eylülde fazla verdi', yazar: 'Elif Aras', sure: '3 dk', izlenme: '9,8 B', saat: '21 Kas' },
+    { alt: 'Kişisel Finans', baslik: 'Zorunlu karşılık oranlarındaki değişiklik mevduata nasıl yansır', yazar: 'Nazlı Öztürk', sure: '4 dk', izlenme: '10,2 B', saat: '21 Kas' },
+    { alt: 'Döviz', baslik: 'Haftalık menkul kıymet verilerinde yabancı girişi sürdü', yazar: 'Nazlı Öztürk', sure: '3 dk', izlenme: '6,3 B', saat: '21 Kas' }
+  ];
+  X.forEach(function(h){ h.ikon = 'fa-chart-column'; }); /* hepsi Finans bölümünde (sözlük) */
+
+  /* Takip et: üyede düğme kendisi (kit data-takip, kısa bildirim); misafirde giriş tetik paneli (C30 varsayımı onaylanmadı) */
+  var takip = K.uye ? K.btn({ metin: 'Takip et', ikon: 'fa-plus', tur: 'birincil', tam: true, secili: false, attr: 'data-takip' })
+    : K.btn({ metin: 'Takip et', ikon: 'fa-plus', tur: 'birincil', tam: true, attr: 'data-sayfa="tetik" data-eylem="takip"' });
+  var bas = '<header class="k-kapak" style="background-image:' + G(ET.g) + '"><h1>' + ET.kisa + '</h1><p>Kurum · ' + ET.ad + '</p></header>';
+  var liste = X.map(function(h){ return K.satir(h); }).join('');
+  if (DUR === 'daha-fazla') liste += (HAL === 'son' || HAL === 'hata' ? '' : K.iskelet('satir', 1)) + K.dahaFazla(HAL === 'son' || HAL === 'hata' ? HAL : 'yukleniyor');
+  var govde = DUR === 'bos'
+    ? K.bos({ ikon: 'fa-building-columns', baslik: 'Bu kurumla ilgili henüz haber yok', aciklama: 'Takip edersen kurumla ilgili yeni haber yayımlandığında ana sayfanda öne çıkar.', eylem: K.uye ? { metin: 'Takip et', ikon: 'fa-plus', attr: 'data-takip' } : { metin: 'Takip et', ikon: 'fa-plus', attr: 'data-sayfa="tetik" data-eylem="takip"' } })
+    : '<div class="k-ic" style="padding-top:var(--b-16)">' + takip + '</div>' +
+      '<section class="k-bl sik">' + K.bb({ baslik: 'Haberler', ikon: 'fa-building-columns', sayi: ET.toplam, not: 'En yeni' }) + '<div class="k-satirlar">' + liste + '</div></section>';
+
+  var DUZ = DUR === 'hata' || DUR === 'bulunamadi' || (DUR === 'cevrimdisi' && Q.get('onbellek') === '0');
+  if (DUR === 'yukleniyor') e.innerHTML = K.iskelet('liste') + '<div class="k-son"></div>';
+  else if (DUZ) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: DUR === 'bulunamadi' ? 'bulunamadi' : DUR === 'cevrimdisi' ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') }) + '<div class="k-son"></div>';
+  else e.innerHTML = (DUR === 'yenileniyor' ? '<div class="k-ust-bosluk"></div>' + K.yenile(['cekiliyor', 'birak', 'bitti'].indexOf(HAL) > -1 ? HAL : 'yenileniyor') : '') +
+    bas + '<div class="k-yaprak">' + govde + '<div class="k-son"></div></div>';
+
+  if (DUZ) K.ustCubuk({ geri: true, baslik: DUR === 'bulunamadi' ? 'Kurum' : ET.kisa });
+  else K.ustCubuk({ tur: 'foto', geri: true, baslik: ET.kisa, gorsel: ET.g, eylemler: ['sirala', 'paylas'], dar: DUR === 'yenileniyor' });
+  K.altCubuk('bolum');
+  K.oynatici();
+
+  if (DUR === 'daha-fazla' && !TAM) e.scrollTop = e.scrollHeight;
+  if (DUR === 'cevrimdisi' && !DUZ) {
+    /* önbellekteki son liste + kalıcı çevrimdışı bandı */
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  /* Yeniden dene: düğmede gösterge, sonra hal kalkar */
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'hal', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

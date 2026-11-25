@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Yazar · Aylin Sezer</title>
+<!-- Dada Haber Mobil · YAZAR PROFİLİ (E-313–E-320). Liste kökünden: profil başlığı (baş harf dairesi; public sitede yazar portresi yok, K26), sayaçlar, Takip et, yazılar (yeni önce).
+     Sorgu: ?uye=0 misafir (Takip et → giriş tetik paneli) · ?durum=yukleniyor | daha-fazla (&hal=son|hata) | bos | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0) | bulunamadi
+     Veri: public yazar.html (Aylin Sezer · Köşe Yazarı · 312 yazı · 48,2 B takipçi · 2014) + yazıları sözlükten (araclar/ornek_veri.json, yazar = Aylin Sezer, yeni önce).
+     Sözlükte Aylin Sezer'e yazılan "Faiz sabit kaldı ama kredi faizleri neden düşmüyor" alınmadı: D.koseYazilari bu yazıyı Elif Aras'a veriyor (çelişki, lidere bildirildi). -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var Q = K.q, DUR = K.durum, HAL = Q.get('hal'), e = document.getElementById('ekran'), TAM = document.documentElement.classList.contains('tam');
+  var Y = { ad: 'Aylin Sezer', unvan: 'Köşe Yazarı', yazi: '312', takipci: '48,2 B', bas: '2014' };
+  /* kaynak: sözlük haberler (yazar = Aylin Sezer); kütüphane yazısı D.koseYazilari[0] (görsel yks) */
+  var X = [
+    { alt: 'Finans', baslik: 'Faiz kararı sonrası kredi kartı borçlusu ne yapmalı', sure: '4 dk', izlenme: '9,6 B', saat: '15.30' },
+    { alt: 'Enflasyon', baslik: 'Kira artışında yüzde 25 sınırı kalkınca', sure: '2 dk', izlenme: '8,1 B', saat: '13.05' },
+    { alt: 'Enflasyon', baslik: 'Kira sözleşmesi yenilenirken pazarlık nasıl yapılır', sure: '2 dk', izlenme: '8,1 B', saat: '11.30' },
+    { alt: 'Köşe Yazısı', baslik: 'Kütüphanelerin gece de açık kalması bir lütuf değil, ihtiyaç', sure: '5 dk', izlenme: '14,9 B', saat: '07.00', g: 'yks' },
+    { alt: 'Çalışma Hayatı', baslik: 'Komisyon masasında konuşulmayan kalemler', sure: '3 dk', izlenme: '6,7 B', saat: '06.55' },
+    { alt: 'Türkiye Ekonomisi', baslik: '2027 bütçesinde vergi gelirlerinin yükü kimde', sure: '5 dk', izlenme: '5,9 B', saat: '22 Kas' },
+    { alt: 'Altın', baslik: 'Altında rekor sonrası küçük yatırımcının sorusu', sure: '2 dk', izlenme: '4,8 B', saat: '22 Kas' },
+    { alt: 'Kişisel Finans', baslik: 'Bayram ikramiyesi ve en düşük emekli aylığı hesabı', sure: '3 dk', izlenme: '3,6 B', saat: '22 Kas' },
+    { alt: 'Kişisel Finans', baslik: 'Mevduat faizi düşerken birikimi korumanın yolları', sure: '3 dk', izlenme: '14,2 B', saat: '21 Kas' },
+    { alt: 'Gayrimenkul', baslik: 'Konut kredisinde vade uzadıkça ne değişiyor', sure: '4 dk', izlenme: '2,9 B', saat: '21 Kas' },
+    { alt: 'Toplum', baslik: 'Şehirde yürünebilir bir akşam neden bu kadar zor?', sure: '5 dk', izlenme: '9,3 B', saat: '21 Kas' }
+  ];
+  X.forEach(function(h){ h.ikon = 'fa-quote-left'; h.tur = 'Görüş'; });
+
+  var takip = K.uye ? K.btn({ metin: 'Takip et', ikon: 'fa-plus', tur: 'birincil', tam: true, secili: false, attr: 'data-takip' })
+    : K.btn({ metin: 'Takip et', ikon: 'fa-plus', tur: 'birincil', tam: true, attr: 'data-sayfa="tetik" data-eylem="takip"' });
+  var profil = '<div class="k-profil">' + K.avatar(Y.ad, 'l', 'koyu', true) + '<div class="t"><h1>' + Y.ad + '</h1><small>' + K.I('fa-feather-pointed') + Y.unvan + '</small></div></div>';
+  var liste = X.map(function(h){ return K.satir(h, { href: K.git('kose') }); }).join('');
+  if (DUR === 'daha-fazla') liste += (HAL === 'son' || HAL === 'hata' ? '' : K.iskelet('satir', 1)) + K.dahaFazla(HAL === 'son' || HAL === 'hata' ? HAL : 'yukleniyor');
+
+  var DUZ = DUR === 'hata' || DUR === 'bulunamadi' || (DUR === 'cevrimdisi' && Q.get('onbellek') === '0');
+  var o = '<div class="k-ust-bosluk"></div>';
+  if (DUR === 'yukleniyor') o += '<div class="k-profil"><i class="k-isk daire" style="width:64px;height:64px"></i><div class="k-isk-grup t"><i class="k-isk" style="width:70%;height:24px"></i><i class="k-isk" style="width:40%;height:13px"></i></div></div>' +
+    '<div class="k-ic" style="padding-top:var(--b-16)"><i class="k-isk kontrol" style="width:100%;height:72px"></i></div><div class="k-satirlar">' + K.iskelet('satir', 4) + '</div>';
+  else if (DUZ) o += K.hata({ tur: DUR === 'bulunamadi' ? 'bulunamadi' : DUR === 'cevrimdisi' ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') });
+  else o += profil + (DUR === 'bos' ? '' : K.istat([[Y.yazi, 'Yazı'], [Y.takipci, 'Takipçi'], [Y.bas, 'Yazmaya başladı']])) +
+    '<div class="k-ic" style="padding-top:var(--b-16)">' + takip + '</div>' +
+    (DUR === 'bos' ? K.bos({ ikon: 'fa-feather-pointed', baslik: 'Henüz yazısı yok', aciklama: 'Takip edersen ilk yazısı yayımlandığında ana sayfanda öne çıkar.' })
+      : '<section class="k-bl sik">' + K.bb({ baslik: 'Yazıları', ikon: 'fa-quote-left', sayi: Y.yazi, not: 'En yeni' }) + '<div class="k-satirlar">' + liste + '</div></section>');
+  e.innerHTML = o + '<div class="k-son"></div>';
+
+  K.ustCubuk({ geri: true, baslik: DUZ && DUR === 'bulunamadi' ? 'Yazar' : Y.ad, buyuk: !DUZ, eylemler: DUZ ? [] : ['paylas'] });
+  K.altCubuk('bolum');
+  K.oynatici();
+
+  if (DUR === 'daha-fazla' && !TAM) e.scrollTop = e.scrollHeight;
+  if (DUR === 'cevrimdisi' && !DUZ) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'hal', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

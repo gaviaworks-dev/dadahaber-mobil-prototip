@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Enstrüman</title>
+<!-- Dada Haber Mobil · ENSTRÜMAN DETAYI (E-358–E-362). Detay kökünden: büyük başlık, değer + değişim, sade grafik (yalnız gerçek kapanışlar), gün içi, geçmiş fiyatlar, künye, bağlı enstrümanlar, ilgili haberler.
+     Sorgu: ?kod=xu100 (varsayılan, BIST 100) | dolar | euro | gram-altin (geçmiş verisi yok: grafik yerine dürüst "Geçmiş veri yok" şeridi)
+            ?durum=yukleniyor | hata (&hata=zaman-asimi) | bulunamadi | cevrimdisi (&onbellek=0)
+     Veri: BIST 100 public enstruman-detay.html (gün içi, son 8 işlem günü kapanışları, künye, bağlı enstrümanlar, haberler + sözlük saatleri);
+     Dolar, Euro, Gram altın D.piyasa.liste + sözlük piyasa.araclar (alış, gün içi). Uydurma seri yok. -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* KİT ADAYI: büyük değer bloğu — kit tipografi ölçeğindeki "52 / ince" büyük rakamın bileşeni yok (sıcaklık, kalan süre, enstrüman değeri) */
+.x-deger{display:flex;align-items:baseline;gap:var(--b-12);flex-wrap:wrap}
+.x-deger .s{font-size:52px;line-height:1;font-weight:var(--y-ince);letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.x-deger .k-yon{font-size:16px;font-weight:var(--y-kalin)}
+/* KİT ADAYI: sade çizgi grafiği — kitte grafik yok; yalnız gerçek kapanışlar, eksen yok, uç noktalar etiketli */
+.x-grafik{display:block;width:100%;height:140px;color:var(--azalis)}
+.x-grafik.y{color:var(--artis)}
+.x-grafik-e{display:flex;justify-content:space-between;margin-top:var(--b-8);font-size:12.5px;color:var(--metin-3);font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var Q = K.q, DUR = K.durum, e = document.getElementById('ekran');
+  var PL = D.piyasa.liste;
+  function yon(v, y){ return '<span class="k-yon ' + y + '">' + (y === 'y' ? '▲' : '▼') + ' ' + v + '</span>'; }
+  function not(m){ return '<p class="k-grup-n">' + m + '</p>'; }
+  function py(x, h){ return (h ? '<a class="k-py" href="' + h + '">' : '<div class="k-py">') + '<small>' + x[0] + '</small><b>' + x[1] + '</b><em class="' + x[3] + '">' + (x[3] === 'y' ? '▲' : '▼') + ' ' + x[2] + '</em>' + (h ? '</a>' : '</div>'); }
+  var EN = K.u('ekranlar/icerik/enstruman.html');
+
+  /* kaynak: public enstruman-detay.html (BIST 100) */
+  var XU = { ad: 'BIST 100', alt: 'XU100 · Borsa İstanbul · TL', son: '10.248,62', deg: '%0,43', yon: 'd', onceki: '10.292,87',
+    gun: [['Açılış', '10.301,14'], ['En düşük', '10.214,35'], ['En yüksek', '10.318,90'], ['Hacim', '98,4 mr TL'], ['Önceki kapanış', '10.292,87']],
+    /* son 8 işlem günü (eskiden yeniye) + bugün */
+    kap: [['12 Kas', '10.158,24', '10.131,92', '10.236,08', '90,4 mr'], ['13 Kas', '10.167,39', '10.120,44', '10.203,70', '86,1 mr'], ['14 Kas', '10.281,27', '10.142,60', '10.294,81', '112,6 mr'],
+      ['17 Kas', '10.194,92', '10.170,06', '10.301,53', '101,3 mr'], ['18 Kas', '10.216,34', '10.140,77', '10.230,15', '88,9 mr'], ['19 Kas', '10.180,58', '10.154,31', '10.262,40', '91,5 mr'],
+      ['20 Kas', '10.229,45', '10.150,20', '10.241,88', '96,8 mr'], ['21 Kas', '10.292,87', '10.198,40', '10.305,12', '104,2 mr']],
+    kunye: [['Kod', 'XU100'], ['Piyasa', 'Borsa İstanbul Pay Piyasası'], ['Hisse sayısı', '100'], ['Baz tarih ve değer', '2 Ocak 1986 · 1'], ['52 haftalık aralık', '8.912,40 – 10.884,27'],
+      ['Yıl başından bu yana', '%4,12'], ['İşlem saatleri', '10.00–18.00'], ['Veri gecikmesi', '15 dakika']],
+    bagli: [['BIST 30', '11.204,35', '%0,51', 'd'], ['BIST Banka', '14.876,90', '%1,12', 'd'], ['BIST Sınai', '12.038,47', '%0,18', 'y'], ['Dolar', PL[0].deger, '%' + PL[0].degisim, PL[0].yon, 'kod=dolar']],
+    haber: [
+      { alt: 'Bilanço', baslik: 'Borsa şirketlerinin dokuz aylık kârı yüzde 18 geriledi', yazar: 'Nazlı Öztürk', sure: '5 dk', izlenme: '8,8 B', saat: '15.35', g: 'borsa' },
+      { alt: 'Teknik', baslik: 'BIST 100\'de 10.000 puan seviyesi neden izleniyor', yazar: 'Tolga Bayram', sure: '2 dk', izlenme: '6,9 B', saat: '12.30' },
+      { alt: 'Borsa', baslik: 'Borsa İstanbul öğleden önce bankacılık hisseleriyle geriledi', yazar: 'Can Demir', sure: '3 dk', izlenme: '13,7 B', saat: '08.00', g: 'borsa' },
+      { alt: 'Yabancı', baslik: 'Yabancı yatırımcılar geçen hafta 142 milyon dolarlık hisse aldı', yazar: 'Elif Aras', sure: '3 dk', izlenme: '7,7 B', saat: '07.05' },
+      { alt: 'Bankacılık', baslik: 'Bankacılık endeksi faiz kararı sonrası yön arıyor', yazar: 'Nazlı Öztürk', sure: '3 dk', izlenme: '5,8 B', saat: '22 Kas' },
+      { alt: 'SPK', baslik: 'Sermaye Piyasası Kurulu açığa satış kurallarını güncelledi', yazar: 'Tolga Bayram', sure: '4 dk', izlenme: '4,9 B', saat: '22 Kas' }
+    ] };
+  /* kaynak: D.piyasa.liste + sözlük piyasa.araclar (alış, gün içi); haberler public piyasa-ekrani.html */
+  var DVZ = { alt: 'Döviz', baslik: 'Dolar/TL güne yatay başladı, gözler enflasyon verisinde', yazar: 'Elif Aras', sure: '2 dk', izlenme: '18,4 B', saat: '15.00' };
+  var ALT = { alt: 'Altın', baslik: 'Ons altında Fed tutanakları sonrası sınırlı alım', yazar: 'Can Demir', sure: '4 dk', izlenme: '9,2 B', saat: '09.35', g: 'altin' };
+  var DIGER = {
+    dolar: { p: PL[0], ad: 'Dolar', alt: 'USD/TL · serbest piyasa · satış', alis: '34,4980', gun: ['34,4012', '34,5620'], haber: [DVZ] },
+    euro: { p: PL[1], ad: 'Euro', alt: 'EUR/TL · serbest piyasa · satış', alis: '36,1504', gun: ['36,0410', '36,2390'], haber: [DVZ] },
+    'gram-altin': { p: PL[2], ad: 'Gram altın', alt: 'XAU/gr · Kapalıçarşı · satış', alis: '2.962,10', gun: ['2.941,20', '2.972,80'], haber: [ALT] }
+  };
+  [XU.haber, DVZ, ALT].forEach(function(x){ [].concat(x).forEach(function(h){ h.ikon = 'fa-chart-column'; }); });
+  var kod = Q.get('kod') || 'xu100', O = DIGER[kod];
+
+  /* sade grafik: 9 gerçek kapanış (son 8 işlem günü + bugün), min–maks aralığına ölçeklenir */
+  function grafik(){
+    var v = XU.kap.map(function(x){ return x[1]; }).concat([XU.son]).map(function(s){ return parseFloat(s.replace(/\./g, '').replace(',', '.')); });
+    var mn = Math.min.apply(0, v), mx = Math.max.apply(0, v), W = 358, H = 140, p = 8;
+    var pt = v.map(function(x, i){ return [(i / (v.length - 1)) * (W - 2 * p) + p, H - p - (x - mn) / (mx - mn) * (H - 2 * p)]; });
+    var son = pt[pt.length - 1], y = v[v.length - 1] >= v[0] ? 'y' : 'd';
+    return '<svg class="x-grafik ' + y + '" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" role="img" aria-label="BIST 100 son 8 işlem günü kapanışları, ' + XU.kap[0][1] + ' ile ' + XU.son + ' arası">' +
+      '<polyline fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke" points="' + pt.map(function(q){ return q[0].toFixed(1) + ',' + q[1].toFixed(1); }).join(' ') + '"/>' +
+      '<circle cx="' + son[0].toFixed(1) + '" cy="' + son[1].toFixed(1) + '" r="4" fill="currentColor"/></svg>' +
+      '<div class="x-grafik-e"><span>' + XU.kap[0][0] + ' · ' + XU.kap[0][1] + '</span><span>Bugün · ' + XU.son + '</span></div>';
+  }
+  function gecmis(){
+    var r = [], L = XU.kap;
+    for (var i = L.length - 1; i >= 0; i--) {
+      var a = parseFloat(L[i][1].replace(/\./g, '').replace(',', '.')), b = i > 0 ? parseFloat(L[i - 1][1].replace(/\./g, '').replace(',', '.')) : null;
+      r.push([L[i][0], L[i][1], b == null ? '–' : yon('%' + Math.abs((a - b) / b * 100).toFixed(2).replace('.', ','), a >= b ? 'y' : 'd'), L[i][2], L[i][3], L[i][4]]);
+    }
+    return r;
+  }
+
+  function sayfaXU(){
+    return '<div class="k-bbas"><h1>' + XU.ad + '</h1><p>' + XU.alt + '</p></div>' +
+      '<div class="k-ic"><div class="x-deger"><span class="s">' + XU.son + '</span>' + yon(XU.deg, XU.yon) + '</div>' + K.meta(['Önceki kapanış ' + XU.onceki, D.piyasa.guncelleme + ' · 15 dk gecikmeli']) + '</div>' +
+      '<section class="k-bl sik">' + K.bb({ baslik: 'Son 8 İşlem Günü', ikon: 'fa-chart-column', not: 'kapanış' }) + '<div class="k-ic">' + grafik() + '</div></section>' +
+      '<section class="k-bl">' + K.bb({ baslik: 'Gün İçi', ikon: 'fa-clock' }) + '<div class="k-ic">' + K.tablo({ cls: 'sol', sutunlar: ['Bugün', 'Değer'], satirlar: XU.gun }) + '</div></section>' +
+      '<section class="k-bl">' + K.bb({ baslik: 'Geçmiş Fiyatlar', ikon: 'fa-calendar-day' }) + '<div class="k-ic">' +
+        K.tablo({ cls: 'sol', sutunlar: ['Tarih', 'Kapanış', 'Değişim', 'En düşük', 'En yüksek', 'Hacim (TL)'], satirlar: gecmis() }) + '</div></section>' +
+      '<section class="k-bl">' + K.bb({ baslik: 'Künye', ikon: 'fa-circle-info' }) + '<div class="k-ic">' + K.tablo({ cls: 'sol', sutunlar: ['Bilgi', 'Değer'], satirlar: XU.kunye }) + '</div></section>' +
+      '<section class="k-bl">' + K.bb({ baslik: 'Bağlı Enstrümanlar', ikon: 'fa-chart-column' }) + '<div class="k-ray s10">' + XU.bagli.map(function(x){ return py(x, x[4] ? K.u('ekranlar/icerik/enstruman.html', x[4]) : ''); }).join('') + '</div></section>' +
+      '<section class="k-bl">' + K.bb({ baslik: 'BIST 100 Gündemi', ikon: 'fa-newspaper', sayi: 132 }) + '<div class="k-satirlar">' + XU.haber.map(function(h){ return K.satir(h); }).join('') + '</div>' +
+      '<div class="k-ic">' + not('Fiyat ve yorumlar yatırım danışmanlığı değildir; veriler bilgilendirme amaçlıdır.') + '</div></section>';
+  }
+  function sayfaDiger(){
+    var p = O.p, ob = Object.keys(DIGER).filter(function(k){ return k !== kod; });
+    return '<div class="k-bbas"><h1>' + O.ad + '</h1><p>' + O.alt + '</p></div>' +
+      '<div class="k-ic"><div class="x-deger"><span class="s">' + p.deger + '</span>' + yon('%' + p.degisim, p.yon) + '</div>' + K.meta(['Alış ' + O.alis, D.piyasa.guncelleme + ' · 15 dk gecikmeli']) +
+      '<div style="padding-top:var(--b-16)">' + K.serit({ ikon: 'fa-chart-column', metin: 'Geçmiş veri yok', alt: 'Bu enstrüman için grafik ve geçmiş fiyat yayımlanmıyor.' }) + '</div></div>' +
+      '<section class="k-bl">' + K.bb({ baslik: 'Gün İçi', ikon: 'fa-clock' }) + '<div class="k-ic">' + K.tablo({ cls: 'sol', sutunlar: ['Bugün', 'Değer'], satirlar: [['Alış', O.alis], ['Satış', p.deger], ['En düşük', O.gun[0]], ['En yüksek', O.gun[1]]] }) + '</div></section>' +
+      '<section class="k-bl">' + K.bb({ baslik: 'Bağlı Enstrümanlar', ikon: 'fa-chart-column' }) + '<div class="k-ray s10">' +
+        [py([PL[3].ad, PL[3].deger, '%' + PL[3].degisim, PL[3].yon], EN)].concat(ob.map(function(k){ var q = DIGER[k].p; return py([q.ad, q.deger, '%' + q.degisim, q.yon], K.u('ekranlar/icerik/enstruman.html', 'kod=' + k)); })).join('') + '</div></section>' +
+      '<section class="k-bl">' + K.bb({ baslik: 'İlgili Haberler', ikon: 'fa-newspaper' }) + '<div class="k-satirlar">' + O.haber.map(function(h){ return K.satir(h); }).join('') + '</div></section>';
+  }
+
+  var ad = O ? O.ad : XU.ad;
+  var DUZ = DUR === 'hata' || DUR === 'bulunamadi' || (DUR === 'cevrimdisi' && Q.get('onbellek') === '0');
+  if (DUR === 'yukleniyor') e.innerHTML = '<div class="k-ust-bosluk"></div><div class="k-ic" style="padding-top:var(--b-8)">' + K.iskelet('metin', 3) +
+    '<div style="padding-top:var(--b-24)"><i class="k-isk kontrol" style="width:100%;height:140px"></i></div><div style="padding-top:var(--b-24)">' + K.iskelet('metin', 8) + '</div></div><div class="k-son"></div>';
+  else if (DUZ) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: DUR === 'bulunamadi' ? 'bulunamadi' : DUR === 'cevrimdisi' ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') }) + '<div class="k-son"></div>';
+  else e.innerHTML = '<div class="k-ust-bosluk"></div>' + (O ? sayfaDiger() : sayfaXU()) + '<div class="k-son"></div>';
+
+  K.ustCubuk({ geri: true, baslik: DUR === 'bulunamadi' ? 'Enstrüman' : ad, buyuk: !DUZ && DUR !== 'yukleniyor', eylemler: DUZ ? [] : ['paylas'] });
+  K.altCubuk('ana');
+  K.oynatici();
+
+  if (DUR === 'cevrimdisi' && !DUZ) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'hal', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

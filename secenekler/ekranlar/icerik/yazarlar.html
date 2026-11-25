@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Yazarlar</title>
+<!-- Dada Haber Mobil · KÖŞE YAZARLARI / YAZAR DİZİNİ (E-307–E-312). Büyük başlık + Köşe Yazıları rayı (K26 kartı) + süzgeç şeridi (alan) + yazar satırları (baş harf dairesi, ad, unvan, son yazı, Takip et).
+     Sorgu: ?uye=0 misafir (Takip et → giriş tetik paneli) · ?durum=yukleniyor | yenileniyor (&hal=cekiliyor|birak|bitti) | bos ("Takip ettiklerim" süzgeci boş) | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0)
+     Veri: sözlük (araclar/ornek_veri.json) yazarlar + her yazarın en yeni haberi; Köşe Yazıları rayı D.koseYazilari. Örnek üye Ece hiçbir yazarı takip etmiyor (D.uye.takip). -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var Q = K.q, DUR = K.durum, HAL = Q.get('hal'), e = document.getElementById('ekran');
+  /* kaynak: sözlük yazarlar (36; ad, unvan, alan; public yazarlar.html dizin sırası) + son yazı = sözlükte yazarın en yeni haberi/yazısı */
+  var Y = [
+    ["Mehmet Koçak", "Gündem Editörü", "Gündem", "81 ilde toplu taşıma ücretlerinin karşılaştırması"],
+    ["Elif Aras", "Finans Editörü", "Finans", "Kredi büyümesindeki yavaşlama reel sektöre nasıl yansıyor"],
+    ["Mert Yalın", "Savunma Editörü", "Savunma", "Yerli zırhlı muharebe aracı çöl koşullarında test edildi"],
+    ["Can Demir", "Piyasa Muhabiri", "Finans", "TMO buğday alım fiyatlarına ilişkin değerlendirme yaptı"],
+    ["Zeynep Ak", "Dünya Editörü", "Dünya", "AB dışişleri bakanları Brüksel'de genişleme gündemini ele aldı"],
+    ["Burak Tan", "Spor Editörü", "Spor", "Galatasaray derbi öncesi son antrenmanını yaptı"],
+    ["Deniz Kara", "Kadın Editörü", "Kadın", "Koruma kararlarının uygulanmasına ilişkin yeni genelge yayımlandı"],
+    ["Selin Koç", "Kampüs Editörü", "Kampüs", "Kariyer Kapısı'nda 3 bin kontenjanlı staj programı açıldı"],
+    ["Ayşe Yıldız", "Haber Müdürü", "Gündem", "LGS için örnek soru kitapçığı yayımlandı"],
+    ["Ozan Er", "Keşfet Editörü", "Keşfet", "Senfoni orkestraları kış sezonu programlarını açıkladı"],
+    ["Hakan Uysal", "Çalışma Hayatı Muhabiri", "Gündem", "Palandöken'de kayak sezonu 12 Aralık'ta açılıyor"],
+    ["Nazlı Öztürk", "Kişisel Finans Muhabiri", "Finans", "Borsa şirketlerinin dokuz aylık kârı yüzde 18 geriledi"],
+    ["Kaan Yücel", "Diplomasi Muhabiri", "Dünya", "Türkiye ile Japonya arasında ekonomik ortaklık görüşmeleri sürüyor"],
+    ["Sibel Arslan", "Saha Muhabiri", "Gündem", "İstanbul Valiliği: okullar 24 Kasım'da da tatil"],
+    ["Murat Tekin", "Futbol Yorumcusu", "Spor", "Beşiktaş Türk Telekom'u 84-80 geçti"],
+    ["Gülşen Ateş", "Sağlık Muhabiri", "Kadın", "Kars'ta peynir atölyesi kuran üç kadın ürünlerini Avrupa'ya gönderiyor"],
+    ["Tolga Bayram", "Enerji Muhabiri", "Finans", "Kasım enflasyon verisi 3 Aralık'ta açıklanacak"],
+    ["İrem Su", "Bilim ve Çevre Muhabiri", "Keşfet", "Restore edilen tarihî tiyatro binası yeniden perde açtı"],
+    ["Aylin Sezer", "Köşe Yazarı", "Köşe", "Faiz kararı sonrası kredi kartı borçlusu ne yapmalı"],
+    ["Leyla Sarıgül", "Köşe Yazarı", "Köşe", "Kırsalda kadın emeğinin görünmeyen hesabı"],
+    ["Pınar Okyay", "Köşe Yazarı", "Köşe", "Sığınma evlerine dair rakamların söyledikleri"],
+    ["Gizem Aktaş", "Futbol Muhabiri", "Spor", "Fenerbahçe Beko tek mağlubiyetle liderliğini sürdürüyor"],
+    ["Emre Sönmez", "Spor Muhabiri", "Spor", "Fenerbahçe Beko çift maç haftasını iki galibiyetle kapattı"],
+    ["Hande Polat", "Avrupa Muhabiri", "Dünya", "Hindistan'da eyalet seçimlerinin sonuçları açıklandı"],
+    ["Merve Çınar", "Dünya Muhabiri", "Dünya", "Almanya'da çifte vatandaşlık başvuruları yılın ilk dokuz ayında ikiye katlandı"],
+    ["Burcu Yaman", "Kadın Muhabiri", "Kadın", "Okul kantinlerinde satılabilecek ürünlerin yeni listesi açıklandı"],
+    ["Seda Uslu", "Yaşam Muhabiri", "Kadın", "Yargıtay, koruma kararının ihlalinde verilen cezayı onadı"],
+    ["Tarık Bulut", "Savunma Muhabiri", "Savunma", "Mayına karşı korumalı araçların yeni partisi teslim edildi"],
+    ["Onur Kaya", "Güvenlik Muhabiri", "Savunma", "İnsansız deniz aracı Ege'de seyir testlerini tamamladı"],
+    ["Arda Kılınç", "Savunma Sanayii Muhabiri", "Savunma", "Savunma sanayiinde 2027 yatırım programı açıklandı"],
+    ["Ece Demirel", "Eğitim Muhabiri", "Kampüs", "ÖSYM, 2027 sınav takviminin tamamını yayımladı"],
+    ["Aslı Gür", "Kampüs Muhabiri", "Kampüs", "Kış dönemi kulüp tanıtım haftası 1 Aralık'ta başlıyor"],
+    ["Sevgi Tarhan", "Kariyer Muhabiri", "Kampüs", "Genç işsizlik oranı ekim ayında yüzde 15,6 oldu"],
+    ["Nilay Ersoy", "Kültür Muhabiri", "Keşfet", "Set çalışanları için haftalık çalışma süresi sınırı görüşülüyor"],
+    ["Kerem Aksoy", "Doğrulama Editörü", "Keşfet", "Kış lastiği zorunluluğu kaldırılmadı"],
+    ["Füsun Erdem", "Köşe Yazarı", "Köşe", "Kreş bir lüks değil, altyapıdır"]
+  ];
+  var ALAN = ['Köşe', 'Gündem', 'Finans', 'Spor', 'Dünya', 'Kadın', 'Savunma', 'Kampüs', 'Keşfet'];
+  var C = [{ metin: 'Tümü', sayi: Y.length }, { metin: 'Takip ettiklerim', sayi: 0 }].concat(ALAN.map(function(a){ return { metin: a === 'Köşe' ? 'Köşe yazarları' : a, sayi: Y.filter(function(y){ return y[2] === a; }).length }; }));
+  var sec = DUR === 'bos' ? 1 : 0;
+  function satir(y){ var s = K.yazarSatir({ ad: y[0], unvan: y[1], baslik: y[3] });
+    return K.uye ? s : s.replace('data-takip', 'data-sayfa="tetik" data-eylem="takip"'); } /* misafir: Takip et → giriş tetik paneli */
+  function liste(i){ var L = i === 0 ? Y : i === 1 ? [] : Y.filter(function(y){ return y[2] === ALAN[i - 2]; });
+    return L.length ? '<div class="k-satirlar">' + L.map(satir).join('') + '</div>'
+      : K.bos({ ikon: 'fa-feather-pointed', baslik: 'Bu süzgeçte yazar yok', aciklama: 'Henüz bir yazarı takip etmiyorsun. Yazar profilinde Takip et\'e dokun; yeni yazısı burada öne çıksın.', eylem: { metin: 'Bütün yazarlar', tur: 'sade', attr: 'data-tumu' } }); }
+  var isk = ''; for (var j = 0; j < 6; j++) isk += '<div class="k-yazar-satir"><i class="k-isk daire" style="width:44px;height:44px"></i><div class="k-isk-grup"><i class="k-isk" style="width:50%;height:15px"></i><i class="k-isk" style="width:35%;height:11px"></i><i class="k-isk" style="width:90%;height:13px"></i></div><i class="k-isk kontrol" style="width:96px;height:40px"></i></div>';
+
+  var DUZ = DUR === 'hata' || (DUR === 'cevrimdisi' && Q.get('onbellek') === '0');
+  var o = '<div class="k-ust-bosluk"></div>' + (DUR === 'yenileniyor' ? K.yenile(['cekiliyor', 'birak', 'bitti'].indexOf(HAL) > -1 ? HAL : 'yenileniyor') : '');
+  if (DUZ) o += K.hata({ tur: DUR === 'cevrimdisi' ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') });
+  else {
+    o += '<div class="k-bbas"><h1>Yazarlar</h1><p>Köşe yazarlarımız, editörlerimiz ve muhabirlerimiz</p></div>';
+    if (DUR === 'yukleniyor') o += '<section class="k-bl sik">' + K.iskelet('ray') + '</section><div class="k-satirlar" role="status" aria-label="Yükleniyor">' + isk + '</div>';
+    else o += '<section class="k-bl sik">' + K.bb({ baslik: 'Köşe Yazıları', ikon: 'fa-quote-left' }) + K.ray(D.koseYazilari.map(K.kose).join('')) + '</section>' +
+      '<section class="k-bl">' + K.bb({ baslik: 'Yazar Dizini', ikon: 'fa-feather-pointed', sayi: Y.length }) + '<div class="k-cip-satiri">' + K.cipler(C, sec) + '</div><div id="dizin">' + liste(sec) + '</div></section>';
+  }
+  e.innerHTML = o + '<div class="k-son"></div>';
+
+  K.ustCubuk({ geri: true, baslik: 'Yazarlar', buyuk: !DUZ, eylemler: DUZ ? [] : ['ara'] });
+  K.altCubuk('bolum');
+  K.oynatici();
+
+  /* süzgeç: çip seçimi listeyi yerinde değiştirir */
+  var d = document.getElementById('dizin');
+  document.addEventListener('click', function(ev){
+    var c = ev.target.closest('.k-cip-satiri .k-cip'); if (c && d) { var i = [].indexOf.call(c.parentNode.children, c); d.innerHTML = liste(i); }
+    if (ev.target.closest('[data-tumu]') && d) { var r = document.querySelectorAll('.k-cip-satiri .k-cip'); r.forEach(function(x, k){ x.setAttribute('aria-pressed', k === 0); }); d.innerHTML = liste(0); }
+  });
+  if (DUR === 'cevrimdisi' && !DUZ) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'hal', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>
