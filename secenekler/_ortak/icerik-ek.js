@@ -61,7 +61,10 @@
     yorumSayisi: 4,
     yorumlar: [
       { ad: "Filiz Acar", rozet: "Düzenli okur", zaman: "2 saat önce", metin: "Geçen yıl da ilk toplantıdan rakam çıkmamıştı; asıl tartışma üçüncü toplantıda başlıyor. Takvimi baştan net yazmanız iyi olmuş.", begeni: 12 },
-      { ad: "Dada Haber Editör", rozet: "Editör", zaman: "1 saat önce", metin: "Teşekkürler. Komisyonun her toplantısından sonra bu haberi güncelleyeceğiz; güncellemeler başlığın altındaki saatte görünür.", begeni: 4 }
+      { ad: "Dada Haber Editör", rozet: "Editör", zaman: "1 saat önce", metin: "Teşekkürler. Komisyonun her toplantısından sonra bu haberi güncelleyeceğiz; güncellemeler başlığın altındaki saatte görünür.", begeni: 4 },
+      /* public haber-detay.html yorumlarının kalanı */
+      { ad: "Barış Karaca", rozet: "Okur", zaman: "3 saat önce", metin: "Asgari ücrete bağlı ödemelerin listesi ayrı bir haber olarak verilebilir mi? Hangi yardımların etkileneceğini merak ediyorum.", begeni: 8 },
+      { ad: "Seda Yıldız", rozet: "Düzenli okur", zaman: "5 saat önce", metin: "Bana etkisi bölümü kısa ve net olmuş, özellikle ocak bordrosu bilgisi işime yaradı.", begeni: 5 }
     ],
     ilgili: [
       { kat: "Gündem", baslik: "Asgari ücret desteği 2027 bütçesinde yer aldı", sure: "3 dk", g: "asgari" },
