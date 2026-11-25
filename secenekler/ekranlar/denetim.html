@@ -28,7 +28,7 @@ pre{white-space:pre-wrap}
   /* K32: dolu görünmeyen (çizgi/çerçeve) ikonlar */
   var IKON_YASAK = ['fa-table-cells-large', 'fa-table-cells', 'fa-table-list', 'fa-border-all', 'fa-text-height', 'fa-square', 'fa-square-full'];
   /* kenar ölçümünden muaf: bilerek tam genişlik olanlar (alt gezinme, sayfalı hero, durum çubuğu) */
-  var KENAR_MUAF = '.ac,.ac *,.hero-ray,.hero-ray *,[data-tam-genis],[data-tam-genis] *';
+  var KENAR_MUAF = '.ac,.ac *,.hero-ray,.hero-ray *,.k-sekmeler,[data-tam-genis],[data-tam-genis] *';
   var sonuc = [], i = 0, fr = document.createElement('iframe'); document.body.appendChild(fr);
   function u(x, tema){ var s = x.indexOf('?') < 0 ? '?' : '&'; return '../' + x + s + 'tam=1' + (tema === 'koyu' ? '&tema=koyu' : ''); }
   function gorunur(el, w){ var cs = w.getComputedStyle(el), r = el.getBoundingClientRect(); return cs.visibility !== 'hidden' && cs.display !== 'none' && +cs.opacity !== 0 && r.width > 0 && r.height > 0; }
@@ -36,11 +36,12 @@ pre{white-space:pre-wrap}
   function kirpan(el, w, d){ for (var p = el.parentElement; p && p !== d.body; p = p.parentElement){ var o = w.getComputedStyle(p).overflowX; if (o === 'auto' || o === 'scroll' || o === 'hidden' || o === 'clip') return p; } return null; }
   function katman(el, w, d){ for (var p = el; p && p !== d.body; p = p.parentElement){ var ps = w.getComputedStyle(p).position; if (ps === 'absolute' || ps === 'fixed' || ps === 'sticky') return p; } return d.body; }
   /* metnin kendi kutusu (iç dolgu hariç) */
-  function metinKutu(el, d){ var rg = d.createRange(), L = 1e9, Rr = -1e9, T = 1e9, B = -1e9; for (var n = el.firstChild; n; n = n.nextSibling){ if (n.nodeType !== 3 || !n.textContent.trim()) continue; rg.selectNodeContents(n); var q = rg.getBoundingClientRect(); if (!q.width) continue; L = Math.min(L, q.left); Rr = Math.max(Rr, q.right); T = Math.min(T, q.top); B = Math.max(B, q.bottom); } return L < 1e9 ? { left: L, right: Rr, top: T, bottom: B, height: B - T } : null; }
+  function metinKutu(el, d){ var w0 = d.defaultView, kes = w0 && w0.getComputedStyle(el).overflowX !== 'visible', er = el.getBoundingClientRect(); var k0 = metinKutu0(el, d); if (k0 && kes){ k0.left = Math.max(k0.left, er.left); k0.right = Math.min(k0.right, er.right); } return k0; }
+  function metinKutu0(el, d){ var rg = d.createRange(), L = 1e9, Rr = -1e9, T = 1e9, B = -1e9; for (var n = el.firstChild; n; n = n.nextSibling){ if (n.nodeType !== 3 || !n.textContent.trim()) continue; rg.selectNodeContents(n); var q = rg.getBoundingClientRect(); if (!q.width) continue; L = Math.min(L, q.left); Rr = Math.max(Rr, q.right); T = Math.min(T, q.top); B = Math.max(B, q.bottom); } return L < 1e9 ? { left: L, right: Rr, top: T, bottom: B, height: B - T } : null; }
   /* görünmez dokunma alanı: ::after mutlak konumlu ve öğeden büyükse etkili alan odur (kit .dk44) */
   function etkiliAlan(el, w, r){ var a = w.getComputedStyle(el, '::after'), W = r.width, Hh = r.height; if (a.content && a.content !== 'none' && a.position === 'absolute'){ W = Math.max(W, parseFloat(a.width) || 0); Hh = Math.max(Hh, parseFloat(a.height) || 0); } return { w: W, h: Hh }; }
   function yazili(el){ for (var n = el.firstChild; n; n = n.nextSibling) if (n.nodeType === 3 && n.textContent.trim().length > 1) return true; return false; }
-  function etkin(el){ return el.matches('a,button,[role=button],[role=tab],input:not([type=hidden]),select,textarea,summary,label[for]'); }
+  function etkin(el){ return el.matches('a,button,[role=button],[role=tab],input:not([type=hidden]),select,textarea,summary'); }
   function olc(d, w){
     var H = { tasma: [], kenar: [], dokun: [], binme: [], kirilma: [], ikon: [] }, root = d.documentElement, all = [].slice.call(d.body.querySelectorAll('*'));
     var DIS = '.durum,.durum *,.ec,[data-denetim-yok],[data-denetim-yok] *';

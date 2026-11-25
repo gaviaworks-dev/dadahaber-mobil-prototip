@@ -26,8 +26,8 @@ html[data-tema="koyu"]{--k-koyu:var(--yuzey-2);--k-dolgu:var(--marka);--k-cam-z:
 
 /* ================= 1 · Temel ================= */
 /* dokunma alanı ≥44×44 (K34): görünüşü küçük denetime ortalanmış görünmez alan */
-.k-dk44,.k-toast button,.k-cip,.k-btn.kucuk,.k-ikon.kucuk,.k-ikon.av,.k-mo .kapat,.k-yorum-a button,.k-gorunum button,.k-kay,.k-oneri .sil,.k-cekmece .k-mc a,.k-mf-bag a,.k-ara .temizle,.k-sekmeler button,.k-gun{position:relative}
-.k-dk44::after,.k-toast button::after,.k-cip::after,.k-btn.kucuk::after,.k-ikon.kucuk::after,.k-ikon.av::after,.k-mo .kapat::after,.k-yorum-a button::after,.k-gorunum button::after,.k-kay::after,.k-oneri .sil::after,.k-cekmece .k-mc a::after,.k-mf-bag a::after,.k-ara .temizle::after,.k-gun::after{content:"";position:absolute;left:50%;top:50%;width:max(100%,44px);height:max(100%,44px);transform:translate(-50%,-50%)}
+.k-dk44,.k-toast button,.k-segment.ince button,.k-cip,.k-btn.kucuk,.k-ikon.kucuk,.k-ikon.av,.k-mo .kapat,.k-yorum-a button,.k-gorunum button,.k-kay,.k-oneri .sil,.k-cekmece .k-mc a,.k-mf-bag a,.k-ara .temizle,.k-sekmeler button,.k-gun{position:relative}
+.k-dk44::after,.k-toast button::after,.k-segment.ince button::after,.k-cip::after,.k-btn.kucuk::after,.k-ikon.kucuk::after,.k-ikon.av::after,.k-mo .kapat::after,.k-yorum-a button::after,.k-gorunum button::after,.k-kay::after,.k-oneri .sil::after,.k-cekmece .k-mc a::after,.k-mf-bag a::after,.k-ara .temizle::after,.k-gun::after{content:"";position:absolute;left:50%;top:50%;width:max(100%,44px);height:max(100%,44px);transform:translate(-50%,-50%)}
 .k-son{height:calc(var(--k-ac-h) + 20px)}                     /* sayfa sonu: alt çubuk kadar (K33) */
 body:has(.k-mo.acik) .k-son{height:calc(var(--k-ac-h) + 86px)} /* mini oynatıcı açıkken onun kadar daha */
 .k-son.yalin{height:calc(var(--alt-guvenli) + 24px)}           /* alt çubuksuz ekran */
