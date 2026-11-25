@@ -18,15 +18,15 @@ Kaynaklar: `CLAUDE.md` (çalışma sırası 4), `docs/ekran-envanteri.md` (ilk t
 
 | Bölüm | Satır | Ekran satırı | Hal satırı (tür: durum) | Dosya (yeni) | Kök dosyasında satır | ✓ |
 |---|---|---|---|---|---|---|
-| İçerik | 406 | 105 | 301 | 52 | 57 | 18 |
-| Durumlar | 20 | 0 | 20 | 6 | 0 | 0 |
-| Giriş | 34 | 13 | 21 | 9 | 0 | 0 |
-| Hesap | 79 | 42 | 37 | 21 | 0 | 0 |
-| Sistem | 64 | 48 | 16 | 17 | 0 | 0 |
-| **Toplam** | **603** | **208** | **395** | **105** | **57** | **18** |
+| İçerik | 482 | 129 | 353 | 63 | 59 | 482 |
+| Durumlar | 20 | 0 | 20 | 6 | 0 | 20 |
+| Giriş | 34 | 13 | 21 | 9 | 0 | 34 |
+| Hesap | 79 | 42 | 37 | 21 | 0 | 79 |
+| Sistem | 64 | 47 | 17 | 17 | 0 | 64 |
+| **Toplam** | **679** | **231** | **448** | **116** | **59** | **679** |
 
 Kök dosyaları (4): `hibrit/akis.html`, `hibrit/detay.html`, `hibrit/kok.html`, `hibrit/liste.html`. Kök dosyasındaki işaretsiz satırlar (yeni haller) yayılımda tek bir takım üyesine verilir; o süre boyunca kök dosyalarının tek yazarı odur (K34).
-Sistem bölümündeki 2 "aday" satırı (Canlı Etkinlik, widget) kapsam kararı bekler; onaylanmadan yayılıma girmez.
+Sistem bölümündeki 2 "aday" satırı (Canlı Etkinlik, widget) kapsam kararı bekler; sayıma dahil değildir. Güncelleme 2026-11-25: 6 dalga bitti, 679 satırın hepsi üretildi ve ölçüldü (6. dalga K41 ile eklenen 75 satır dahil).
 
 ## 1 · İçerik
 
