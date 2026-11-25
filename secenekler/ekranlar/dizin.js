@@ -58,7 +58,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Ana sayfa (kök)",
 "dosya": "hibrit/kok.html?durum=canli&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-008",
@@ -66,7 +66,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Ana sayfa (kök)",
 "dosya": "hibrit/kok.html?durum=yukleniyor&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-009",
@@ -74,7 +74,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Ana sayfa (kök)",
 "dosya": "hibrit/kok.html?durum=yenileniyor&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-010",
@@ -82,7 +82,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Ana sayfa (kök)",
 "dosya": "hibrit/kok.html?durum=hata&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-011",
@@ -90,7 +90,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Ana sayfa (kök)",
 "dosya": "hibrit/kok.html?durum=cevrimdisi&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-012",
@@ -98,7 +98,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Ana sayfa (kök)",
 "dosya": "hibrit/kok.html?durum=blok-hata&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-013",
@@ -210,7 +210,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Bölümler ve liste (kök)",
 "dosya": "hibrit/liste.html?bolum=spor&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-027",
@@ -218,7 +218,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Bölümler ve liste (kök)",
 "dosya": "hibrit/liste.html?bolum=finans&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-028",
@@ -226,7 +226,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Bölümler ve liste (kök)",
 "dosya": "hibrit/liste.html?bolum=kadin&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-029",
@@ -234,7 +234,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Bölümler ve liste (kök)",
 "dosya": "hibrit/liste.html?bolum=savunma&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-030",
@@ -242,7 +242,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Bölümler ve liste (kök)",
 "dosya": "hibrit/liste.html?bolum=dunya&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-031",
@@ -250,7 +250,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Bölümler ve liste (kök)",
 "dosya": "hibrit/liste.html?bolum=kampus&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-032",
@@ -258,7 +258,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Bölümler ve liste (kök)",
 "dosya": "hibrit/liste.html?konu=siyaset&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-033",
@@ -266,7 +266,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Bölümler ve liste (kök)",
 "dosya": "hibrit/liste.html?konu=sehirler&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-034",
@@ -274,7 +274,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Bölümler ve liste (kök)",
 "dosya": "hibrit/liste.html?tur=analiz&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-035",
@@ -282,7 +282,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Bölümler ve liste (kök)",
 "dosya": "hibrit/liste.html?bolum=kesfet&konu=teknoloji&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-036",
@@ -290,7 +290,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Bölümler ve liste (kök)",
 "dosya": "hibrit/liste.html?durum=yukleniyor&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-037",
@@ -298,7 +298,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Bölümler ve liste (kök)",
 "dosya": "hibrit/liste.html?durum=yenileniyor&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-038",
@@ -306,7 +306,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Bölümler ve liste (kök)",
 "dosya": "hibrit/liste.html?durum=daha-fazla&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-039",
@@ -314,7 +314,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Bölümler ve liste (kök)",
 "dosya": "hibrit/liste.html?durum=bos&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-040",
@@ -322,7 +322,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Bölümler ve liste (kök)",
 "dosya": "hibrit/liste.html?durum=hata&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-041",
@@ -330,7 +330,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Bölümler ve liste (kök)",
 "dosya": "hibrit/liste.html?durum=cevrimdisi&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-042",
@@ -402,7 +402,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Haber detayı (kök) ve türleri",
 "dosya": "hibrit/detay.html?kapak=0&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-051",
@@ -410,7 +410,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Haber detayı (kök) ve türleri",
 "dosya": "hibrit/detay.html?durum=duzeltme&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-052",
@@ -418,7 +418,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Haber detayı (kök) ve türleri",
 "dosya": "hibrit/detay.html?durum=gorsel&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-053",
@@ -426,7 +426,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Haber detayı (kök) ve türleri",
 "dosya": "hibrit/detay.html?durum=cevrimdisi-kayitli&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-054",
@@ -434,7 +434,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Haber detayı (kök) ve türleri",
 "dosya": "hibrit/detay.html?durum=yukleniyor&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-055",
@@ -442,7 +442,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Haber detayı (kök) ve türleri",
 "dosya": "hibrit/detay.html?durum=hata&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-056",
@@ -450,7 +450,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Haber detayı (kök) ve türleri",
 "dosya": "hibrit/detay.html?durum=bulunamadi&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-057",
@@ -458,7 +458,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Haber detayı (kök) ve türleri",
 "dosya": "hibrit/detay.html?durum=cevrimdisi&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-058",
@@ -1122,7 +1122,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Akış (kök)",
 "dosya": "hibrit/akis.html?ses=1&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-141",
@@ -1130,7 +1130,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Akış (kök)",
 "dosya": "hibrit/akis.html?dur=1&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-142",
@@ -1138,7 +1138,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Akış (kök)",
 "dosya": "hibrit/akis.html?altyazi=1&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-143",
@@ -1146,7 +1146,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Akış (kök)",
 "dosya": "hibrit/akis.html?durum=mobil-veri&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-144",
@@ -1154,7 +1154,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Akış (kök)",
 "dosya": "hibrit/akis.html?durum=bitti&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-145",
@@ -1162,7 +1162,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Akış (kök)",
 "dosya": "hibrit/akis.html?durum=yukleniyor&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-146",
@@ -1170,7 +1170,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Akış (kök)",
 "dosya": "hibrit/akis.html?durum=daha-fazla&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-147",
@@ -1178,7 +1178,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Akış (kök)",
 "dosya": "hibrit/akis.html?durum=hata&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-148",
@@ -1186,7 +1186,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Akış (kök)",
 "dosya": "hibrit/akis.html?durum=cevrimdisi&hb=4&kok=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-149",
@@ -3430,7 +3430,7 @@ window.DIZIN = [
 "tur": "giriş",
 "alt": "Açılış ve tanıtım",
 "dosya": "ekranlar/giris/acilis.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-428",
@@ -3454,7 +3454,7 @@ window.DIZIN = [
 "tur": "giriş",
 "alt": "Açılış ve tanıtım",
 "dosya": "ekranlar/giris/tanitim.html?adim=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-431",

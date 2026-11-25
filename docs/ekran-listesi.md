@@ -42,12 +42,12 @@ Her içerik ekranı, alt ekranı ve o ekrana ait haller. Liste ve detayların y�
 | E-004 | Ana sayfa · menü çekmecesi · misafir | sistem | Ana sayfa | açılır menü | Ana sayfa | Hesap kartı yerine "Merhaba" + Giriş Yap · Üye Ol | `hibrit/kok.html?menu=1&uye=0` | ✓ |
 | E-005 | Ana sayfa · Spiker çalıyor | durum | Ana sayfa | sitede alt mini çubuk | Ana sayfa | Mini oynatıcı alt çubuğun üstünde; sayfa sonu boşluğu oynatıcı kadar artar (K33) | `hibrit/kok.html?calan=1` | ✓ |
 | E-006 | Ana sayfa · başka baskı saati | durum | Ana sayfa | — | Ana sayfa | Baskı rozeti saate göre: Sabah / Öğleden Sonra / Akşam Baskısı | `hibrit/kok.html?saat=08.30` | ✓ |
-| E-007 | Ana sayfa · canlı anlatım sürerken | durum | Ana sayfa | `index.html` (canlı kartı) | Ana sayfa | Son Dakika şeridinin yanında canlı anlatım girişi (Dakika Dakika) | `hibrit/kok.html?durum=canli` |   |
-| E-008 | Ana sayfa · yükleniyor | durum | Ana sayfa | `durumlar.html` (iskelet) | Ana sayfa | Hero, hikâye daireleri ve bölüm blokları iskelet; açılıştan sonra ilk görünüm | `hibrit/kok.html?durum=yukleniyor` |   |
-| E-009 | Ana sayfa · aşağı çekip yenileme | durum | Ana sayfa | — | Ana sayfa | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `hibrit/kok.html?durum=yenileniyor` |   |
-| E-010 | Ana sayfa · hata | durum | Ana sayfa | `500.html` | Ana sayfa | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `hibrit/kok.html?durum=hata` |   |
-| E-011 | Ana sayfa · çevrimdışı | durum | Ana sayfa | `cevrimdisi.html` | Ana sayfa | Önbellekteki son ana sayfa + "Çevrimdışısın · Kaydedilenler" bandı; hikâye ve Akış soluk | `hibrit/kok.html?durum=cevrimdisi` |   |
-| E-012 | Ana sayfa · blok yüklenemedi | durum | Ana sayfa | — | Ana sayfa | Tek blok (ör. Piyasalar) satır içi hata kutusu + Yeniden dene; sayfanın geri kalanı çalışır | `hibrit/kok.html?durum=blok-hata` |   |
+| E-007 | Ana sayfa · canlı anlatım sürerken | durum | Ana sayfa | `index.html` (canlı kartı) | Ana sayfa | Son Dakika şeridinin yanında canlı anlatım girişi (Dakika Dakika) | `hibrit/kok.html?durum=canli` | ✓ |
+| E-008 | Ana sayfa · yükleniyor | durum | Ana sayfa | `durumlar.html` (iskelet) | Ana sayfa | Hero, hikâye daireleri ve bölüm blokları iskelet; açılıştan sonra ilk görünüm | `hibrit/kok.html?durum=yukleniyor` | ✓ |
+| E-009 | Ana sayfa · aşağı çekip yenileme | durum | Ana sayfa | — | Ana sayfa | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `hibrit/kok.html?durum=yenileniyor` | ✓ |
+| E-010 | Ana sayfa · hata | durum | Ana sayfa | `500.html` | Ana sayfa | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `hibrit/kok.html?durum=hata` | ✓ |
+| E-011 | Ana sayfa · çevrimdışı | durum | Ana sayfa | `cevrimdisi.html` | Ana sayfa | Önbellekteki son ana sayfa + "Çevrimdışısın · Kaydedilenler" bandı; hikâye ve Akış soluk | `hibrit/kok.html?durum=cevrimdisi` | ✓ |
+| E-012 | Ana sayfa · blok yüklenemedi | durum | Ana sayfa | — | Ana sayfa | Tek blok (ör. Piyasalar) satır içi hata kutusu + Yeniden dene; sayfanın geri kalanı çalışır | `hibrit/kok.html?durum=blok-hata` | ✓ |
 
 ### Hikâye (ana sayfa şeridi)
 
@@ -71,22 +71,22 @@ Her içerik ekranı, alt ekranı ve o ekrana ait haller. Liste ve detayların y�
 | E-023 | Bölüm listesi · Gündem | içerik | Liste | `gundem.html` | Liste | Görselli başlık (200px), alt konu sekmeleri, Liste ↔ Çizelge; K21, K27 | `hibrit/liste.html` | ✓ |
 | E-024 | Bölüm listesi · çizelge görünümü | içerik | Liste | — | Liste | Saat sırası, gün ayracı (LS-C) | `hibrit/liste.html?kip=cizelge` | ✓ |
 | E-025 | Bölüm listesi · daralan başlık | durum | Liste | — | Liste | Kaydırınca görselli üst çubuk (K30) | `hibrit/liste.html?dar=1` | ✓ |
-| E-026 | Bölüm listesi · Spor | içerik | Liste | `spor.html` | Liste | Spor: canlı maç ve puan durumu şeridi | `hibrit/liste.html?bolum=spor` |   |
-| E-027 | Bölüm listesi · Finans | içerik | Liste | `finans.html` | Liste | Finans: piyasalar şeridi | `hibrit/liste.html?bolum=finans` |   |
-| E-028 | Bölüm listesi · Kadın | içerik | Liste | `kadin.html` | Liste | aynı kalıp, bölümün alt konuları | `hibrit/liste.html?bolum=kadin` |   |
-| E-029 | Bölüm listesi · Savunma | içerik | Liste | `savunma.html` | Liste | aynı kalıp, bölümün alt konuları | `hibrit/liste.html?bolum=savunma` |   |
-| E-030 | Bölüm listesi · Dünya | içerik | Liste | `dunya.html` | Liste | aynı kalıp, bölümün alt konuları | `hibrit/liste.html?bolum=dunya` |   |
-| E-031 | Bölüm listesi · Kampüs | içerik | Liste | `kampus.html` | Liste | aynı kalıp, bölümün alt konuları | `hibrit/liste.html?bolum=kampus` |   |
-| E-032 | Bölüm listesi · alt konu seçili | içerik | Liste | alt sayfalar (`siyaset.html` …) | Liste | Alt konu sekmesi seçili (tek katman, DADAHABER-10); branş, lig, takım, Transfer, Millî Takım da burada | `hibrit/liste.html?konu=siyaset` |   |
-| E-033 | Bölüm listesi · Şehirler | içerik | Liste | `sehirler.html`, `istanbul.html` … | Liste | Yerel haberler; şehir seç alt sayfasıyla (E-551) | `hibrit/liste.html?konu=sehirler` |   |
-| E-034 | Bölüm listesi · tür süzgeci (Analiz, Görüş) | içerik | Liste | `?tur=analiz` yönlendirmeleri | Liste | Tür kategori değil; kart etiketi ve süzgeç (DADAHABER-10 §3) | `hibrit/liste.html?tur=analiz` |   |
-| E-035 | Keşfet konu listesi (Teknoloji, Sağlık, Kültür …) | içerik | Liste | `teknoloji.html`, `saglik.html` … | Liste | Keşfet sütunlarındaki konular aynı liste kalıbında | `hibrit/liste.html?bolum=kesfet&konu=teknoloji` |   |
-| E-036 | Bölüm listesi · yükleniyor | durum | Liste | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `hibrit/liste.html?durum=yukleniyor` |   |
-| E-037 | Bölüm listesi · aşağı çekip yenileme | durum | Liste | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `hibrit/liste.html?durum=yenileniyor` |   |
-| E-038 | Bölüm listesi · sayfa sonu yükleme | durum | Liste | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `hibrit/liste.html?durum=daha-fazla` |   |
-| E-039 | Bölüm listesi · boş | durum | Liste | `durumlar.html` (boş) | Liste | Bu alt konuda bugün haber yok; Tümü'ne dön | `hibrit/liste.html?durum=bos` |   |
-| E-040 | Bölüm listesi · hata | durum | Liste | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `hibrit/liste.html?durum=hata` |   |
-| E-041 | Bölüm listesi · çevrimdışı | durum | Liste | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `hibrit/liste.html?durum=cevrimdisi` |   |
+| E-026 | Bölüm listesi · Spor | içerik | Liste | `spor.html` | Liste | Spor: canlı maç ve puan durumu şeridi | `hibrit/liste.html?bolum=spor` | ✓ |
+| E-027 | Bölüm listesi · Finans | içerik | Liste | `finans.html` | Liste | Finans: piyasalar şeridi | `hibrit/liste.html?bolum=finans` | ✓ |
+| E-028 | Bölüm listesi · Kadın | içerik | Liste | `kadin.html` | Liste | aynı kalıp, bölümün alt konuları | `hibrit/liste.html?bolum=kadin` | ✓ |
+| E-029 | Bölüm listesi · Savunma | içerik | Liste | `savunma.html` | Liste | aynı kalıp, bölümün alt konuları | `hibrit/liste.html?bolum=savunma` | ✓ |
+| E-030 | Bölüm listesi · Dünya | içerik | Liste | `dunya.html` | Liste | aynı kalıp, bölümün alt konuları | `hibrit/liste.html?bolum=dunya` | ✓ |
+| E-031 | Bölüm listesi · Kampüs | içerik | Liste | `kampus.html` | Liste | aynı kalıp, bölümün alt konuları | `hibrit/liste.html?bolum=kampus` | ✓ |
+| E-032 | Bölüm listesi · alt konu seçili | içerik | Liste | alt sayfalar (`siyaset.html` …) | Liste | Alt konu sekmesi seçili (tek katman, DADAHABER-10); branş, lig, takım, Transfer, Millî Takım da burada | `hibrit/liste.html?konu=siyaset` | ✓ |
+| E-033 | Bölüm listesi · Şehirler | içerik | Liste | `sehirler.html`, `istanbul.html` … | Liste | Yerel haberler; şehir seç alt sayfasıyla (E-551) | `hibrit/liste.html?konu=sehirler` | ✓ |
+| E-034 | Bölüm listesi · tür süzgeci (Analiz, Görüş) | içerik | Liste | `?tur=analiz` yönlendirmeleri | Liste | Tür kategori değil; kart etiketi ve süzgeç (DADAHABER-10 §3) | `hibrit/liste.html?tur=analiz` | ✓ |
+| E-035 | Keşfet konu listesi (Teknoloji, Sağlık, Kültür …) | içerik | Liste | `teknoloji.html`, `saglik.html` … | Liste | Keşfet sütunlarındaki konular aynı liste kalıbında | `hibrit/liste.html?bolum=kesfet&konu=teknoloji` | ✓ |
+| E-036 | Bölüm listesi · yükleniyor | durum | Liste | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `hibrit/liste.html?durum=yukleniyor` | ✓ |
+| E-037 | Bölüm listesi · aşağı çekip yenileme | durum | Liste | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `hibrit/liste.html?durum=yenileniyor` | ✓ |
+| E-038 | Bölüm listesi · sayfa sonu yükleme | durum | Liste | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `hibrit/liste.html?durum=daha-fazla` | ✓ |
+| E-039 | Bölüm listesi · boş | durum | Liste | `durumlar.html` (boş) | Liste | Bu alt konuda bugün haber yok; Tümü'ne dön | `hibrit/liste.html?durum=bos` | ✓ |
+| E-040 | Bölüm listesi · hata | durum | Liste | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `hibrit/liste.html?durum=hata` | ✓ |
+| E-041 | Bölüm listesi · çevrimdışı | durum | Liste | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `hibrit/liste.html?durum=cevrimdisi` | ✓ |
 
 ### Haber detayı (kök) ve türleri
 
@@ -100,14 +100,14 @@ Her içerik ekranı, alt ekranı ve o ekrana ait haller. Liste ve detayların y�
 | E-047 | Hikâye modu | içerik | Detay | — | Hikâye modu | 6 kart; X ya da "Metne dön" kalınan yere; paylaş yok (K16, K24) | `hibrit/detay.html?mod=hikaye` | ✓ |
 | E-048 | Hikâye modu · son kart | durum | Detay | — | Hikâye modu | "Metne dön" ve Dinle | `hibrit/detay.html?mod=hikaye&kart=6` | ✓ |
 | E-049 | Hikâye modu · duraklatıldı | durum | Detay | — | Hikâye modu | Basılı tut: ilerleme durur | `hibrit/detay.html?mod=hikaye&dur=1` | ✓ |
-| E-050 | Haber detayı · kapaksız | durum | Detay | `haber-detay.html` (görselsiz) | Detay | Görsel yoksa düz üst çubuk, panel binmesi yok | `hibrit/detay.html?kapak=0` |   |
-| E-051 | Haber detayı · güncellendi / düzeltme notu | durum | Detay | `duzeltme-politikasi.html` (kayıt) | Detay | Bilgi satırında "Güncellendi" + saat; metin sonunda düzeltme notu | `hibrit/detay.html?durum=duzeltme` |   |
-| E-052 | Haber detayı · kapak tam ekran | durum | Detay | görüntüleyici (dh-gal) | Detay | Kapağa dokununca ortak görüntüleyici; altyazı, kaydırarak kapat | `hibrit/detay.html?durum=gorsel` |   |
-| E-053 | Haber detayı · çevrimdışı (indirilmiş) | durum | Detay | — | Detay | Kaydedilip indirilmiş haber okunur; "Çevrimdışı okuyorsun" bandı; yorumlar kapalı | `hibrit/detay.html?durum=cevrimdisi-kayitli` |   |
-| E-054 | Haber detayı · yükleniyor | durum | Detay | `durumlar.html` (iskelet) | Detay | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `hibrit/detay.html?durum=yukleniyor` |   |
-| E-055 | Haber detayı · hata | durum | Detay | `500.html` | Detay | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `hibrit/detay.html?durum=hata` |   |
-| E-056 | Haber detayı · bulunamadı | durum | Detay | `404.html`, `410.html` | Detay | İçerik kaldırıldı ya da bulunamadı; bölüme dön, arama | `hibrit/detay.html?durum=bulunamadi` |   |
-| E-057 | Haber detayı · çevrimdışı | durum | Detay | `cevrimdisi.html` | Detay | İndirilmemiş haber: kabuk + "Bağlantı yok" + Yeniden dene | `hibrit/detay.html?durum=cevrimdisi` |   |
+| E-050 | Haber detayı · kapaksız | durum | Detay | `haber-detay.html` (görselsiz) | Detay | Görsel yoksa düz üst çubuk, panel binmesi yok | `hibrit/detay.html?kapak=0` | ✓ |
+| E-051 | Haber detayı · güncellendi / düzeltme notu | durum | Detay | `duzeltme-politikasi.html` (kayıt) | Detay | Bilgi satırında "Güncellendi" + saat; metin sonunda düzeltme notu | `hibrit/detay.html?durum=duzeltme` | ✓ |
+| E-052 | Haber detayı · kapak tam ekran | durum | Detay | görüntüleyici (dh-gal) | Detay | Kapağa dokununca ortak görüntüleyici; altyazı, kaydırarak kapat | `hibrit/detay.html?durum=gorsel` | ✓ |
+| E-053 | Haber detayı · çevrimdışı (indirilmiş) | durum | Detay | — | Detay | Kaydedilip indirilmiş haber okunur; "Çevrimdışı okuyorsun" bandı; yorumlar kapalı | `hibrit/detay.html?durum=cevrimdisi-kayitli` | ✓ |
+| E-054 | Haber detayı · yükleniyor | durum | Detay | `durumlar.html` (iskelet) | Detay | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `hibrit/detay.html?durum=yukleniyor` | ✓ |
+| E-055 | Haber detayı · hata | durum | Detay | `500.html` | Detay | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `hibrit/detay.html?durum=hata` | ✓ |
+| E-056 | Haber detayı · bulunamadı | durum | Detay | `404.html`, `410.html` | Detay | İçerik kaldırıldı ya da bulunamadı; bölüme dön, arama | `hibrit/detay.html?durum=bulunamadi` | ✓ |
+| E-057 | Haber detayı · çevrimdışı | durum | Detay | `cevrimdisi.html` | Detay | İndirilmemiş haber: kabuk + "Bağlantı yok" + Yeniden dene | `hibrit/detay.html?durum=cevrimdisi` | ✓ |
 | E-058 | Yorumlar (tümü) · üye | içerik | Detay | `haber-detay.html` (yorumlar) | Detay | Özet kartı, süzgeç çipleri (Tümü · En çok beğenilen · Editör yanıtları), Beğen · Yanıtla · Bildir (K31) | `ekranlar/icerik/yorumlar.html` |   |
 | E-059 | Yorumlar (tümü) · misafir | içerik | Detay | `haber-detay.html` | Detay | "Yorum yapmak için giriş yap"; Beğen ve Yanıtla tetik paneli açar | `ekranlar/icerik/yorumlar.html?uye=0` |   |
 | E-060 | Yorumlar · yorum yaz | sistem | Detay | `haber-detay.html` (yorum alanı) | Detay | Alt sayfa, klavye açık; kurallar notu; gönderiliyor | `ekranlar/icerik/yorumlar.html?durum=yaz` |   |
@@ -210,15 +210,15 @@ Her içerik ekranı, alt ekranı ve o ekrana ait haller. Liste ve detayların y�
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
 | E-139 | Akış · sessiz açılış | içerik | Akış | `akis.html` | Akış | Tam ekran dikey 9:16; yukarı kaydır sıradaki; başlık habere götürür (K23) | `hibrit/akis.html` | ✓ |
-| E-140 | Akış · sesli | durum | Akış | — | Akış | Ses açık; Spiker duraklar (tek oynatıcı kuralı) | `hibrit/akis.html?ses=1` |   |
-| E-141 | Akış · duraklatıldı | durum | Akış | — | Akış | Dokununca durur; oynat simgesi | `hibrit/akis.html?dur=1` |   |
-| E-142 | Akış · altyazı açık | durum | Akış | — | Akış | Sessizken altyazı | `hibrit/akis.html?altyazi=1` |   |
-| E-143 | Akış · mobil veri | durum | Akış | — | Akış | Mobil veride otomatik oynatma kapalı; kapak + dokun oynat | `hibrit/akis.html?durum=mobil-veri` |   |
-| E-144 | Akış · günün akışı bitti | durum | Akış | `akis.html` (C14: sonu olan akış) | Akış | Son kart: "Günün akışı bitti"; Video Haber'e geç | `hibrit/akis.html?durum=bitti` |   |
-| E-145 | Akış · yükleniyor | durum | Akış | `durumlar.html` (iskelet) | Akış | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `hibrit/akis.html?durum=yukleniyor` |   |
-| E-146 | Akış · sayfa sonu yükleme | durum | Akış | — (sitede sayfalama) | Akış | "Sıradaki videolar yükleniyor" (akış sonunda) | `hibrit/akis.html?durum=daha-fazla` |   |
-| E-147 | Akış · hata | durum | Akış | `500.html` | Akış | Video oynatılamadı; sıradakine geç | `hibrit/akis.html?durum=hata` |   |
-| E-148 | Akış · çevrimdışı | durum | Akış | `cevrimdisi.html` | Akış | Akış çevrimdışı çalışmaz; Kaydedilenler'e git | `hibrit/akis.html?durum=cevrimdisi` |   |
+| E-140 | Akış · sesli | durum | Akış | — | Akış | Ses açık; Spiker duraklar (tek oynatıcı kuralı) | `hibrit/akis.html?ses=1` | ✓ |
+| E-141 | Akış · duraklatıldı | durum | Akış | — | Akış | Dokununca durur; oynat simgesi | `hibrit/akis.html?dur=1` | ✓ |
+| E-142 | Akış · altyazı açık | durum | Akış | — | Akış | Sessizken altyazı | `hibrit/akis.html?altyazi=1` | ✓ |
+| E-143 | Akış · mobil veri | durum | Akış | — | Akış | Mobil veride otomatik oynatma kapalı; kapak + dokun oynat | `hibrit/akis.html?durum=mobil-veri` | ✓ |
+| E-144 | Akış · günün akışı bitti | durum | Akış | `akis.html` (C14: sonu olan akış) | Akış | Son kart: "Günün akışı bitti"; Video Haber'e geç | `hibrit/akis.html?durum=bitti` | ✓ |
+| E-145 | Akış · yükleniyor | durum | Akış | `durumlar.html` (iskelet) | Akış | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `hibrit/akis.html?durum=yukleniyor` | ✓ |
+| E-146 | Akış · sayfa sonu yükleme | durum | Akış | — (sitede sayfalama) | Akış | "Sıradaki videolar yükleniyor" (akış sonunda) | `hibrit/akis.html?durum=daha-fazla` | ✓ |
+| E-147 | Akış · hata | durum | Akış | `500.html` | Akış | Video oynatılamadı; sıradakine geç | `hibrit/akis.html?durum=hata` | ✓ |
+| E-148 | Akış · çevrimdışı | durum | Akış | `cevrimdisi.html` | Akış | Akış çevrimdışı çalışmaz; Kaydedilenler'e git | `hibrit/akis.html?durum=cevrimdisi` | ✓ |
 
 ### Foto Fokus ve İnfografik
 
@@ -570,10 +570,10 @@ Açılış, tanıtım, izin, kişiselleştirme, giriş ve üyelik akışı.
 
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
-| E-427 | Açılış (splash) · soğuk açılış | giriş | Açılış | — | — | iOS durağan görüntü; Android 12+ sistem açılışı (simge + zemin); yapılıyor | `ekranlar/giris/acilis.html` |   |
+| E-427 | Açılış (splash) · soğuk açılış | giriş | Açılış | — | — | iOS durağan görüntü; Android 12+ sistem açılışı (simge + zemin); yapılıyor | `ekranlar/giris/acilis.html` | ✓ |
 | E-428 | Açılış · bağlantı yok | durum | Açılış | — | — | Doğrudan çevrimdışı okumaya (Kaydedilenler) | `ekranlar/giris/acilis.html?durum=cevrimdisi` |   |
 | E-429 | Açılış · güncelleme zorunlu | durum | Açılış | — | — | Açılıştan güncelleme ekranına geçiş (E-416) | `ekranlar/giris/acilis.html?durum=guncelleme` |   |
-| E-430 | Tanıtım · adım n | giriş | Tanıtım | `karsilama.html` (tercih seçimi) | — | Değer ekranları, her adımda Atla; yapılıyor | `ekranlar/giris/tanitim.html?adim=1` (adım 1–4) |   |
+| E-430 | Tanıtım · adım n | giriş | Tanıtım | `karsilama.html` (tercih seçimi) | — | Değer ekranları, her adımda Atla; yapılıyor | `ekranlar/giris/tanitim.html?adim=1` (adım 1–4) | ✓ |
 
 ### İzin ve kişiselleştirme
 
