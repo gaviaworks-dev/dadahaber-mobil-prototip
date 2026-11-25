@@ -59,9 +59,10 @@ header.buyuk p{margin-top:var(--b-8);font-size:14px;color:rgba(255,255,255,.8);w
 .one-ray .ks>a{width:300px;display:block}
 .one-ray .gr{aspect-ratio:16/10;border-radius:var(--k-kontrol)}
 .one-ray h2{margin-top:6px;font-size:19px;line-height:1.22;font-weight:var(--y-kalin);letter-spacing:-.015em}
-/* üst satır: tür · kategori etiketi (.kat-et) · saat; ayraç .nk (K35) */
+/* üst satır: tür · kategori etiketi (kit .k-kat) · saat (fa-calendar-day, K52); ayraç .nk (K35) */
 .mt{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:var(--y-kalin);color:var(--marka-metin);white-space:nowrap;overflow:hidden}
-.mt .s{color:var(--metin-3);font-weight:var(--y-orta)}
+.mt .s{display:inline-flex;align-items:center;gap:var(--b-4);color:var(--metin-3);font-weight:var(--y-orta)} /* K52: saat ikonlu (kit .k-ustsatir .s gibi) */
+.mt .s i{font-size:11px;color:var(--metin-3)}
 .mt .tr{color:var(--metin-3)}
 .mt .nk{color:var(--metin-3);font-weight:var(--y-orta)}
 .mt .tur{color:var(--anlik);display:inline-flex;align-items:center;gap:var(--ikon-bosluk)}
@@ -483,8 +484,8 @@ body:not(.cizelge) .cizelge-kip{display:none}
   function mt(h, saatsiz){
     var t = h.tur && h.tur !== h.alt ? h.tur : '', p = [];
     if (t === 'Canlı') p.push(H.canli()); else if (t === 'Son Dakika') p.push('<span class="tur"><span class="canli-nokta"></span>' + t + '</span>'); else if (t) p.push('<span class="tr">' + t + '</span>');
-    p.push(H.katEt(h.alt, L.ikon));
-    if (!saatsiz) p.push('<span class="s">' + h.saat + '</span>');
+    p.push(K.katEt(h.alt, L.ikon)); /* K52: il adında konum ikonu kitten */
+    if (!saatsiz) p.push('<span class="s">' + K.I('fa-calendar-day') + h.saat + '</span>');
     return '<span class="mt">' + p.join('<span class="nk">·</span>') + '</span>';
   }
   function ab(h){ return '<div class="ab">' + H.meta([h.yazar, h.sure, h.izlenme]) + '</div>'; } /* K51: kartta kaydet yok (detayda, uzun basma menüsünde ve Kaydedilenler'de) */

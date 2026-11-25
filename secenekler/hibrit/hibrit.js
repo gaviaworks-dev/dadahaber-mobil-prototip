@@ -61,7 +61,8 @@
   H.vid = function(s){ return '<i class="fa-solid fa-play"></i>' + s; };
   /* kategori ikonu (bölüm adından) ve tek kategori etiketi (K35) */
   H.ikon = function(kat){ var b = bul(kat); return b ? b.ikon : 'fa-newspaper'; };
-  H.katEt = function(metin, ikon, cls){ return '<span class="kat-et' + (cls ? ' ' + cls : '') + '"><i class="fa-solid ' + ikon + '"></i>' + metin + '</span>'; };
+  /* K52: kit yüklüyse kitteki etiket (il adında fa-location-dot); kitsiz eski ana.html için yerel */
+  H.katEt = function(metin, ikon, cls){ if (window.K && K.katEt) return K.katEt(metin, ikon).replace('class="k-kat', 'class="k-kat' + (cls ? ' ' + cls : '')); return '<span class="kat-et' + (cls ? ' ' + cls : '') + '"><i class="fa-solid ' + ikon + '"></i>' + metin + '</span>'; };
   H.canli = function(m){ return '<span class="canli-et"><span class="canli-nokta"></span>' + (m || 'Canlı') + '</span>'; };
 
   /* ---------- Ana sayfa blokları ---------- */
