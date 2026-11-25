@@ -7,7 +7,11 @@
   if (q.get('tema') === 'koyu') document.documentElement.setAttribute('data-tema','koyu');
   /* ?tam=1 → yalnızca denetim için: ekran kaydırma kabı açılır, sayfanın tamamı ekran görüntüsüne girer */
   if (q.get('tam') === '1') document.documentElement.classList.add('tam');
-  window.G = function(ad){ return "url('../../assets/gorsel/haber/" + ad + ".jpg')"; };
+  /* varlık yolu bu betiğin yerinden çözülür: sayfa hangi klasör derinliğinde olursa olsun görsel ve logo doğru yüklenir (secenekler/ekranlar/<grup>/ dahil) */
+  var VARLIK = (document.currentScript && document.currentScript.src) ? new URL('../../assets/', document.currentScript.src).href : '../../assets/';
+  window.VARLIK = VARLIK;
+  window.G = function(ad){ return "url('" + VARLIK + "gorsel/haber/" + ad + ".jpg')"; };
+  document.documentElement.style.setProperty('--logo', "url('" + VARLIK + "gorsel/logo/dada.svg')");
   document.addEventListener('DOMContentLoaded', function(){
     var dc = document.createElement('div');
     dc.className = 'dc';
