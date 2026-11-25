@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>Ekran denetimi</title>
 <!-- Dada Haber Mobil · EKRAN DENETİMİ (TEK YAZAR: lider). Bütün ekranları (dizin.js) 390×844 çerçevede, açık ve koyu temada ölçer:
-     1 taşma (yatay) · 2 kenar 16px · 3 dokunma alanı ≥44×44 · 4 binme (aynı katmandaki dokunulabilir/yazı öğeleri) · 5 satıra kırılan bilgi (meta satırı) · 6 ikon kuralı K32.
+     1 taşma (yatay) · 2 kenar 16px · 3 dokunma alanı ≥44×44 · 4 binme (aynı katmandaki dokunulabilir/yazı öğeleri) · 5 satıra kırılan bilgi (meta satırı) · 6 ikon kuralı K32 · 7 bilgi satırı (K48): kesilen öğe (kap dışında kalan, üç noktayla kısalan; yana kayan kap hariç) ve bilgi satırına binen öğe 0 · 8 görselsiz liste satırı (K48) · 9 kategori yanında saati olmayan liste satırı (K44/K48).
      ?sec=E-001,E-002 yalnız seçilenler · ?dosya=ekranlar/icerik/video,ekranlar/icerik/galeri dosya önekiyle · ?tema=acik|koyu yalnız bir tema · ?grup=icerik. Sonuç sayfada tablo + #json (headless --dump-dom ile okunur). -->
 <style>
 body{font:13px/1.4 -apple-system,system-ui,sans-serif;margin:16px;color:#111}
@@ -43,7 +43,7 @@ pre{white-space:pre-wrap}
   function yazili(el){ for (var n = el.firstChild; n; n = n.nextSibling) if (n.nodeType === 3 && n.textContent.trim().length > 1) return true; return false; }
   function etkin(el){ return el.matches('a,button,[role=button],[role=tab],input:not([type=hidden]),select,textarea,summary'); }
   function olc(d, w){
-    var H = { tasma: [], kenar: [], dokun: [], binme: [], kirilma: [], ikon: [] }, root = d.documentElement, all = [].slice.call(d.body.querySelectorAll('*'));
+    var H = { tasma: [], kenar: [], dokun: [], binme: [], kirilma: [], ikon: [], bilgi: [], gorselsiz: [], saatsiz: [] }, root = d.documentElement, all = [].slice.call(d.body.querySelectorAll('*'));
     var DIS = '.durum,.durum *,.ec,[data-denetim-yok],[data-denetim-yok] *';
     all.forEach(function(el){
       if (el.matches(DIS) || gizliAta(el, w)) return;
@@ -66,6 +66,30 @@ pre{white-space:pre-wrap}
         if (mk2 && fs <= 13.5 && (metin.indexOf('·') > -1 || /(^|\s)(meta|m|bil|kunye|zaman)(\s|$)/.test(el.className)) && mk2.height > lh * 1.6 && cs.whiteSpace !== 'nowrap') H.kirilma.push(ad(el) + ' "' + metin.slice(0, 30) + '"'); }
       /* 6 ikon */
       if (el.tagName === 'I' && /\bfa-/.test(el.className)){ if (/\bfa-regular\b|\bfar\b/.test(el.className) || IKON_YASAK.some(function(x){ return el.classList.contains(x); })) H.ikon.push(el.className); }
+    });
+    /* 7 bilgi satırı (K48): kesilmez, binilmez; sığmazsa kendisi yana kayar */
+    [].forEach.call(d.querySelectorAll('.k-meta,.k-ustsatir,.meta,.k-ab'), function(m){
+      if (m.matches(DIS) || gizliAta(m, w) || !gorunur(m, w) || m.closest('[aria-hidden="true"],.k-iskelet')) return;
+      var mr = m.getBoundingClientRect(); if (mr.left >= 389 || mr.right <= 1) return;
+      var ms = w.getComputedStyle(m), kayar = ms.overflowX === 'auto' || ms.overflowX === 'scroll';
+      if (!kayar && m.scrollWidth > m.clientWidth + 1 && (ms.overflowX === 'hidden' || ms.overflowX === 'clip')) H.bilgi.push('kesik ' + ad(m));
+      [].forEach.call(m.querySelectorAll('*'), function(c){ if (!gorunur(c, w)) return; var cc = w.getComputedStyle(c);
+        if (cc.textOverflow === 'ellipsis' && c.scrollWidth > c.clientWidth + 1) H.bilgi.push('üç nokta ' + ad(c)); });
+      /* atası kesiyorsa (yana kayan ray hariç) */
+      for (var p = m.parentElement; p && p !== d.body; p = p.parentElement){ var pc = w.getComputedStyle(p); if (pc.overflowX === 'auto' || pc.overflowX === 'scroll') break;
+        if (pc.overflowX === 'hidden' || pc.overflowX === 'clip'){ var pr = p.getBoundingClientRect(); if (!kayar && (m.scrollWidth > m.clientWidth + 1 ? mr.right : Math.min(mr.right, mr.left + m.scrollWidth)) > pr.right + 1) H.bilgi.push('atası kesiyor ' + ad(m)); break; } }
+      /* satırdaki öteki öğeler bilgi satırına binmesin */
+      var sat = m.closest('a,li,article,.k-satir,.k-kose-satir') || m.parentElement;
+      [].forEach.call(sat.querySelectorAll('button,.k-indir,.k-kay,.k-onay,img,.k-etiket,.k-rozet'), function(o){
+        if (m.contains(o) || o.contains(m) || !gorunur(o, w)) return; var or = o.getBoundingClientRect();
+        var x = Math.min(mr.right, or.right) - Math.max(mr.left, or.left), y = Math.min(mr.bottom, or.bottom) - Math.max(mr.top, or.top);
+        if (x > 1 && y > 1) H.bilgi.push('binme ' + ad(m) + ' ↔ ' + ad(o)); });
+    });
+    /* 8 görselsiz liste satırı · 9 saatsiz liste satırı (haber satırı K.satir, çizelge, Son Dakika çizelgesi; köşe satırında yazar görseli) */
+    [].forEach.call(d.querySelectorAll('.k-satir,.k-cz>a,.k-sd-satir,.k-kose-satir,.oc>a'), function(r){
+      if (r.matches(DIS) || gizliAta(r, w) || r.closest('.k-iskelet,[aria-hidden="true"]')) return;
+      var gor = r.querySelector('.gr,.k-avatar'); if (!gor || r.matches('.yazi') || r.querySelector(':scope > a.yazi')) H.gorselsiz.push(ad(r));
+      if (r.matches('.k-satir:not(.kisa)') && !r.querySelector('.k-ustsatir .s')) H.saatsiz.push(ad(r));
     });
     /* 4 binme: aynı katmandaki dokunulabilir öğeler ve yazılı yapraklar birbirine binmesin */
     var adaylar = all.filter(function(el){ return !el.matches(DIS) && !gizliAta(el, w) && (etkin(el) || yazili(el)) && gorunur(el, w) && !kirpan(el, w, d); })
