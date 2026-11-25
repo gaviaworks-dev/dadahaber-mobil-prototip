@@ -66,6 +66,7 @@ Tarih: 2026-11-25 · Depo: `dadahaber-mobil-prototip` · Canlı: `secenekler/ekr
 
 - **Kit:** `K.satir` satırda kaydet çizmez (Kaydedilenler bağlamı `{ kaydedildi: true }` istisna); `K.gorsel(h)` tek görsel eşlemesi (haberin görseli → başlık → konu sözcüğü → alt konu → bölüm); `K.saatBul(başlık)` ortak veriden saat; `K.sdSatir` görsel sağda + ikonlu bilgi; `.k-meta` yana kayar; `.k-ab` küçük düğmeleri görünürde dar, dokunma alanı 44.
 - **Ölçüm betiği** (`ekranlar/denetim.html`) kalıcı kontroller: 7 bilgi satırı (kesik/binen), 8 görselsiz liste satırı, 9 saatsiz liste satırı.
-- **Varsayım (onaylanmadı):** dört köşe yazısının okuma süresi sözlükte yok → sözlükteki köşe yazılarının süre ortancası 4 dk.
-- **Kaynak çelişkileri** (ekran dosyalarında notlu): Günün 5'i baskısı 07.00 ama ilk üç haberin sözlük saati sonrası; üç haberin başlığı sözlükte farklı (faiz kararı, barajlar, kitap fuarı); Farklı Bakışlar'daki "Geçen hafta" ibareleri sözlük ve arşivle çelişiyordu, kaldırıldı.
+- **Okuma süresi (K49):** prototipte dört köşe yazısına 4 dk yazıldı (Beyar onayı). **Gerçek sistemde okuma süresi metinden hesaplanır** (kelime sayısına göre; panel elle girmez).
+- **Kaynak çelişkileri (K49): site esastır.** Günün 5'i saatleri ve üç haberin saati siteye göre düzeltildi (başlıklar zaten sitedeki gibiydi). Farklı Bakışlar'daki "Geçen hafta" ibareleri kaldırıldı (sözlük ve sitenin arşivi bu dosyaları 23 Kasım tarihli gösteriyor; sitenin "Önceki dosyalar" kutusu kendi içinde çelişkili).
+- **Alt konu süzgeci (K49):** çip seçilince yalnız o konunun haberleri; 19 alt başlığa sitenin konu sayfasından 3–4 haber. Ölçüm betiği kontrol 10 ve bağlantı betiğindeki "konu" bulgusu bunu korur.
 - **Kit adayı:** saat seçici alt sayfası (bildirim tercihleri, yerel).
