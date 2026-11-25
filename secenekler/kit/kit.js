@@ -11,7 +11,7 @@
      K.ustCubuk({tur:'duz'|'foto'|'ara', geri, baslik, buyuk, logo, eylemler:[…|'ara'|'paylas'|'kaydet'|'menu'|'hesap'|'daha'|'ayarlar'|'sirala'], gorsel, esik, ilerleme, ara:{…}, ekran, yer})
      (Beyar: üst çubuklarda zil YOK; bildirimlere çekmecenin hesap kartından ve Hesabım'dan gidilir)
      K.altCubuk(etkin, {koyu, rozet:{hesap:3}, yer})     etkin ∈ ana · bolum · akis · dinle · hesap
-     K.oynatici({yer})  K.spikerBaslat()                  Spiker mini oynatıcısı; sessionStorage "dada-spiker" (hibrit.js ile aynı)
+     K.oynatici({yer})  K.spikerBaslat()  K.spikerDurdur()  K.goruntuleyici({g, altyazi, sira, toplam})                  Spiker mini oynatıcısı; sessionStorage "dada-spiker" (hibrit.js ile aynı)
      K.okuma({yer})                                       detayın yüzen okuma çubuğu
      K.cekmece({yer, acik})                               sağdan menü çekmecesi (üye/misafir); [data-menu] açar
      K.yapis(el, ekran)                                   hikâye şeridi yapışınca küçülür
@@ -480,6 +480,20 @@
     mo.querySelector('.t small .y').textContent = 'Dada Spiker · ' + D.spiker.bulten + ' · ' + (i + 1) + ' / 3';
     mo.querySelector('.il i').style.width = (g / TOPLAM * 100).toFixed(1) + '%';
     mo.querySelector('[data-mo-oynat] i').className = 'fa-solid ' + (s.dur != null ? 'fa-play' : 'fa-pause'); }
+  /* tek oynatıcı kuralı: başka ses başlayınca Spiker duraklar (Akış sesi, video, podcast) */
+  K.spikerDurdur = function(){ var s = oku(); if (s && s.dur == null){ yaz({ bas: s.bas, dur: Date.now() - s.bas }); guncelle(); return true; } return false; };
+  /* tam ekran görsel görüntüleyici (kapak, galeri karesi): K.goruntuleyici({ g, altyazi, sira, toplam, yer }) → öğe; × ya da aşağı kaydır kapatır, dokununca bilgiler gizlenir */
+  K.goruntuleyici = function(o){ o = o || {};
+    var v = K.el('<div class="k-goruntuleyici" role="dialog" aria-label="Görsel"><div class="u">' + K.ikonBtn({ ikon: 'fa-xmark', etiket: 'Kapat', tur: 'cam', attr: 'data-gor-kapat' }) +
+      '<span class="k-sayac">' + (o.sira || 1) + ' / ' + (o.toplam || 1) + '</span>' + K.ikonBtn({ ikon: 'fa-share-nodes', etiket: 'Paylaş', tur: 'cam', attr: 'data-sayfa="paylas"' }) + '</div>' +
+      '<div class="gr" style="background-image:' + G(o.g) + '"></div><div class="alt">' + (o.altyazi || '') + '<small>Kapatmak için aşağı kaydır</small></div></div>');
+    (o.yer || document.body).appendChild(v); document.body.setAttribute('data-durum', 'acik');
+    var y0 = null;
+    v.addEventListener('pointerdown', function(ev){ y0 = ev.clientY; });
+    v.addEventListener('pointerup', function(ev){ if (y0 != null && ev.clientY - y0 > 80) v.remove(); y0 = null; });
+    v.addEventListener('click', function(ev){ if (ev.target.closest('[data-gor-kapat]')) v.remove(); else if (!ev.target.closest('.u,.alt')) v.classList.toggle('is-yakin'); });
+    return v;
+  };
   K.spikerBaslat = function(){ var s = oku(); if (!s) yaz({ bas: Date.now(), dur: null }); else if (s.dur != null) yaz({ bas: Date.now() - s.dur, dur: null }); guncelle(); };
   K.oynatici = function(o){ o = o || {};
     if (o.yerinde) return '<div class="k-mo yerinde' + (o.dur ? ' dur' : '') + (o.hata ? ' hata' : '') + '"><span class="yuz"' + bg(D.spiker.gorsel) + '></span><span class="t"><b>' + D.spiker.sirada[0] + '</b><small>' + (o.hata ? I('fa-triangle-exclamation') + 'Ses yüklenemedi' : '<span class="k-dalga"><i></i><i></i><i></i></span>Dada Spiker · ' + D.spiker.bulten + ' · 1 / 3') + '</small></span>' +
