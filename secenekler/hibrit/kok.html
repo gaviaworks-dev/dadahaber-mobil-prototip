@@ -110,10 +110,10 @@
 .kk .u{display:flex;align-items:center;gap:var(--ikon-bosluk);font-size:12.5px;font-weight:var(--y-kalin);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .kk .u i{font-size:12px;color:var(--marka-metin)}
 .hv2{display:flex;align-items:stretch;gap:10px;min-width:0}
-.hv2>span:not(.ay){min-width:0}
+.hv2>span:not(.bol){min-width:0}
 .hv2 small{display:block;font-size:11.5px;color:var(--metin-3);white-space:nowrap}
 .hv2 b{display:block;margin-top:1px;font-size:15px;font-variant-numeric:tabular-nums;white-space:nowrap}
-.hv2 .ay{width:1px;background:var(--cizgi);flex:none}
+.hv2 .bol{width:1px;align-self:stretch;background:var(--cizgi);flex:none}
 .py{gap:10px;padding:0 var(--kenar)}
 .py>a{flex:none;width:150px;padding:12px 14px;border-radius:var(--k-kart);background:var(--kart);scroll-snap-align:start}
 .py small{display:block;font-size:12.5px;color:var(--metin-3);white-space:nowrap}
@@ -191,9 +191,9 @@
   function havaNamaz(){
     var h = D.hava, y = h.gunler[0], n = D.namaz;
     return '<div class="yy2"><a class="kk"><span class="u"><i class="fa-solid ' + h.ikon + '"></i>' + h.durum + '</span>' +
-        '<span class="hv2"><span><small>' + h.sehir + ' · Bugün</small><b>' + h.derece + '°</b></span><span class="ay"></span><span><small>Yarın</small><b>' + y.y + '° / ' + y.d + '°</b></span></span></a>' +
+        '<span class="hv2"><span><small>' + h.sehir + ' · Bugün</small><b>' + h.derece + '°</b></span><span class="bol"></span><span><small>Yarın</small><b>' + y.y + '° / ' + y.d + '°</b></span></span></a>' +
       '<a class="kk"><span class="u"><i class="fa-solid fa-mosque"></i>' + n.siradaki + ' ezanı</span>' +
-        '<span class="hv2"><span><small>' + n.sehir + '</small><b>' + n.saat + '</b></span><span class="ay"></span><span><small>Kalan</small><b>' + n.kalan.replace(':', ' sa ') + ' dk</b></span></span></a></div>';
+        '<span class="hv2"><span><small>' + n.sehir + '</small><b>' + n.saat + '</b></span><span class="bol"></span><span><small>Kalan</small><b>' + n.kalan.replace(':', ' sa ') + ' dk</b></span></span></a></div>';
   }
   function piyasa(){
     var p = D.piyasa;
