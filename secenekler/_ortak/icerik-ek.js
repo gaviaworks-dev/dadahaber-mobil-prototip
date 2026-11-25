@@ -15,7 +15,7 @@
       { saat: "15.45", alt: "Eğitim", baslik: "LGS için örnek soru kitapçığı yayımlandı", yazar: "Ayşe Yıldız", sure: "4 dk", izlenme: "7,9 B", g: "yks" },
       { saat: "15.42", alt: "Siyaset", baslik: "Bütçe görüşmelerinde muhalefet grupları adına ilk konuşmalar tamamlandı", yazar: "Ayşe Yıldız", sure: "2 dk", izlenme: "7,5 B", g: "tbmm", tur: "Canlı" },
       { saat: "15.40", alt: "Kişisel Finans", baslik: "Asgari ücretlinin kira payı son iki yılda nasıl değişti", yazar: "Ayşe Yıldız", sure: "5 dk", izlenme: "19,6 B", g: "carsi" },
-      { saat: "15.25", alt: "Gündem Analizi", baslik: "Yeni yargı paketi neleri değiştirecek, madde madde açıklama", yazar: "Sibel Arslan", sure: "3 dk", izlenme: "11,1 B", tur: "Analiz" },
+      { saat: "15.25", alt: "Gündem Analizi", baslik: "Yeni yargı paketi neleri değiştirecek, madde madde açıklama", yazar: "Sibel Arslan", sure: "3 dk", izlenme: "11,1 B", tur: "Analiz" , g: "tbmm" },
       { saat: "15.20", alt: "Araştırma", baslik: "81 ilde toplu taşıma ücretlerinin karşılaştırması", yazar: "Mehmet Koçak", sure: "4 dk", izlenme: "7,9 B", g: "metro", tur: "Araştırma" },
       { saat: "15.20", alt: "Türkiye", baslik: "Havalimanlarında kar nedeniyle 46 iç hat seferi iptal edildi", yazar: "Ayşe Yıldız", sure: "1 dk", izlenme: "1,9 B", g: "kar-sokak" },
       { saat: "15.10", alt: "Çevre", baslik: "İstanbul barajlarında doluluk oranı yüzde 38'e geriledi", yazar: "Ayşe Yıldız", sure: "3 dk", izlenme: "11,7 B" },
