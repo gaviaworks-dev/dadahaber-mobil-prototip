@@ -1,2 +1,2 @@
 
-dadahaber-beyaz.png: Dada Haber logosu, beyaz (public dadahaber-prototip assets/gorsel/logo/logo-white.png; Beyar: açılışta beyaz Dada Haber logosu). 2026-11-25.
+Marka logosu uygulamanın her yerinde yalnızca yeni "dada" logosudur (dada.svg sarı, dada-beyaz.svg beyaz, dada-koyu.svg koyu); eski "dadahaber" yazılı logo kullanılmaz (K35, 2026-11-25).
