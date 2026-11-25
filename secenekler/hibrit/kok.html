@@ -122,7 +122,8 @@
 .mf .mf-bag a{flex:none;min-height:44px;padding:0 12px;border-radius:var(--k-ic);background:var(--zemin-2);display:inline-flex;align-items:center;font-size:13px;color:var(--metin-2);white-space:nowrap}
 /* ---------- zebra bantlar ---------- */
 .bant{padding:26px 0}
-.bant.ton{background:var(--zemin-2);--kart:var(--yuzey)}
+.bant.ton{background:var(--zemin-2);--kart:var(--yuzey);--k-yuzey:var(--yuzey)}
+.kbs>:last-child{border-bottom:0}
 .bant.hk-b{padding:4px 0 10px}
 .bant .bb{margin-bottom:10px}
 .bant .kt-tek{margin:0 var(--kenar)}
@@ -183,16 +184,6 @@
 .py em.y{color:var(--artis)}
 .py em.d{color:var(--azalis)}
 .bant .pd-ray{padding:0 var(--kenar);margin-top:0}
-.kz{gap:12px;padding:0 var(--kenar)}
-.kz>a{flex:none;width:250px;height:340px;scroll-snap-align:start;border-radius:var(--k-kart);overflow:hidden;background:var(--marka);color:var(--siyah);display:flex;flex-direction:column;position:relative}
-.kz .gr{height:50%;flex:none}
-.kz .av{position:absolute;left:16px;top:calc(50% - 26px);width:52px;height:52px;border-radius:var(--k-daire);background:var(--siyah);color:var(--marka);display:grid;place-items:center;font-size:17px;font-weight:var(--y-kalin);outline:4px solid var(--marka)}
-.kz .ic{flex:1;min-height:0;display:flex;flex-direction:column;padding:34px 16px 16px;position:relative}
-.kz .tr{position:absolute;right:16px;top:14px;font-size:22px;opacity:.25}
-.kz h4{font-size:18px;line-height:1.22;letter-spacing:-.015em;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-.kz .yz{margin-top:auto;display:block;min-width:0}
-.kz .yz b{display:block;font-size:14px;white-space:nowrap}
-.kz .yz small{display:block;font-size:12.5px;color:rgba(18,18,18,.68);white-space:nowrap}
 /* takım: üye → canlı maç kutusu; misafir → giriş çağrısı */
 .tk-et{display:flex;align-items:center;gap:var(--ikon-bosluk);padding:0 var(--kenar);margin:18px 0 10px;font-size:13px;font-weight:var(--y-kalin);white-space:nowrap}
 .tk-et i{color:var(--marka-metin);font-size:12px}
@@ -215,7 +206,7 @@
   var B = H.B, AY = H.AY, d = H.detay(), Q = new URLSearchParams(location.search), DUR = K.durum;
   document.title = 'Kök · Ana sayfa · ' + (H.uye ? 'Üye' : 'Misafir');
   function bul(ad){ return D.bolumler.filter(function(b){ return b.ad === ad; })[0]; }
-  function meta(h){ return H.meta([h.yazar, h.sure]); }
+  function meta(h){ return H.meta([h.yazar, h.sure, h.izlenme]); } /* K44: ikonlu süre ve görüntülenme */
   function bas(b, ek){ return '<div class="bb"><h2><span class="bi"><i class="fa-solid ' + b.ikon + '"></i></span>' + b.ad + '</h2><a href="' + H.liste() + '">' + (ek || 'Tümü') + '<i class="fa-solid fa-chevron-right"></i></a></div>'; }
 
   /* Hero: manşet slaytları + karşılama ve baskı */
@@ -236,15 +227,14 @@
   /* A: yana kayan büyük kartlar */
   function A(ad){
     var b = bul(ad);
-    return bas(b) + '<div class="ka ks">' + b.haberler.slice(0, 6).map(function(h){
-      return '<a href="' + d + '"><div class="gr" style="background-image:' + G(h.g) + '">' + (h.medya ? '<span class="md"><i class="fa-solid fa-play"></i>' + h.medya + '</span>' : '') + '</div>' +
-        '<h3>' + h.baslik + '</h3>' + meta(h) + '</a>'; }).join('') + '</div>';
+    /* K44: büyük kart kitten (K.kartA): üst satırda kategori, süre sağda ikonlu; altta yazar ve görüntülenme */
+    return bas(b) + '<div class="ka ks">' + b.haberler.slice(0, 6).map(function(h){ return K.kartA(Object.assign({ kat: b.ad }, h), { ikon: b.ikon, href: d }); }).join('') + '</div>';
   }
   /* B: alt alta liste */
   function Bl(ad){
     var b = bul(ad);
-    return bas(b) + '<ul class="kb">' + b.haberler.slice(0, 4).map(function(h){
-      return '<li><a href="' + d + '"><div><h3>' + h.baslik + '</h3>' + meta(h) + '</div><div class="gr" style="background-image:' + G(h.g) + '"></div></a></li>'; }).join('') + '</ul>';
+    /* K44: liste satırı kitten (K.satir): görsel solda, yanında kategori, altında başlık, ikonlu bilgi satırı ve Kaydet */
+    return bas(b) + '<div class="k-satirlar kbs">' + b.haberler.slice(0, 4).map(function(h){ return K.satir(Object.assign({ kat: b.ad }, h), { ikon: b.ikon, href: d }); }).join('') + '</div>';
   }
   /* Diğer Bölümler: bölüm başına tek satır (B kalıbı) */
   function diger(adlar){
@@ -283,10 +273,9 @@
   function blokHata(){ return '<div class="bb"><h2><span class="bi"><i class="fa-solid fa-chart-column"></i></span>Piyasalar</h2></div><div class="k-ic">' + K.blokHata('Piyasalar yüklenemedi') + '</div>'; }
   function podcast(){ return '<div class="bb"><h2><span class="bi"><i class="fa-solid fa-podcast"></i></span>Podcast</h2><a>Tümü<i class="fa-solid fa-chevron-right"></i></a></div><div class="pd-ray ks">' +
     D.podcast.map(function(p){ return '<a><span class="gr" style="background-image:' + G(p.g) + '"><i class="fa-solid fa-play"></i></span><span><small>' + p.seri + '</small><b class="iki">' + p.baslik + '</b><em>' + p.no + ' · ' + p.sure + '</em></span></a>'; }).join('') + '</div>'; }
-  /* Köşe Yazıları (K26): marka sarısı kart, görsel kartın üst yarısı, yazar baş harfi görselin kenarına biner */
-  function kose(){ return '<div class="bb"><h2><span class="bi"><i class="fa-solid fa-feather-pointed"></i></span>Köşe Yazıları</h2><a>Yazarlar<i class="fa-solid fa-chevron-right"></i></a></div><div class="kz ks">' +
-    D.koseYazilari.map(function(k){ return '<a><span class="gr" style="background-image:' + G(k.g) + '"></span><span class="av">' + k.ad.split(' ').map(function(x){ return x.charAt(0); }).join('') + '</span>' +
-      '<span class="ic"><i class="fa-solid fa-quote-left tr" aria-hidden="true"></i><h4>' + k.baslik + '</h4><span class="yz"><b>' + k.ad + '</b><small>' + k.unvan + '</small></span></span></a>'; }).join('') + '</div>'; }
+  /* Köşe Yazıları (K44; K26'nın sarı kartı yerine): köşe satırı kitten (K.koseSatir): solda yazar, yanında ad · unvan, altında başlık, ikonlu bilgi, Kaydet */
+  function kose(){ return '<div class="bb"><h2><span class="bi"><i class="fa-solid fa-feather-pointed"></i></span>Köşe Yazıları</h2><a href="' + K.git('yazarlar') + '">Yazarlar<i class="fa-solid fa-chevron-right"></i></a></div><div class="k-satirlar kbs">' +
+    D.koseYazilari.map(function(k){ return K.koseSatir(k); }).join('') + '</div>'; }
   function akis(){ return B.akis().replace('<section class="bl">', '').replace(/<\/section>$/, '').replace('>Akış</h2>', '>Akış<small>· kısa videolar</small></h2>'); }
 
   /* Sayfa sırası (panelden yönetilecek; K22). Her satır bir bant; bantlar sırayla düz / tonlu. */
