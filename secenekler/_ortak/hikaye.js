@@ -3,6 +3,17 @@
    Görüldü bilgisi: D.hikayeler[].goruldu + bu oturumda izlenenler (sessionStorage; erişilemezse yok sayılır). */
 (function(){
   function izlenen(){ try { return JSON.parse(sessionStorage.getItem('dada-hikaye-izlenen') || '[]'); } catch(e){ return []; } }
+  /* K39: ana sayfa şeridinin İLK dairesi Spiker. Yayında: yüz + kırmızı CANLI halkası, altında "Spiker". Yayın yok (?spiker=0): sönük halka, altında sıradaki bülten saati.
+     Dokununca Spiker ekranı açılır (hikâye değil). Yalnız data-spiker taşıyan şeritte. */
+  function spikerDaire(tema){
+    var Q = new URLSearchParams(location.search), canli = Q.get('spiker') !== '0', D = window.D;
+    var u = new URL((window.VARLIK ? new URL('../secenekler/', window.VARLIK).href : '../') + 'ekranlar/icerik/spiker.html' + (canli ? '' : '?spiker=0'));
+    if (tema) u.searchParams.set('tema', tema); if (Q.get('uye') === '0') u.searchParams.set('uye', '0');
+    var sonraki = (window.H && H.baski) ? H.baski().sonraki : '19.00';
+    return '<a class="hk-o spk' + (canli ? ' canli' : ' sonuk') + '" href="' + u.href + '" aria-label="' + (canli ? 'Dada Spiker yayında' : 'Dada Spiker, sıradaki bülten ' + sonraki) + '">' +
+      '<span class="hk-f" style="background-image:' + G(D.spiker.gorsel) + '">' + (canli ? '<b class="hk-cn">CANLI</b>' : '<i class="fa-solid fa-radio"></i>') + '</span>' +
+      '<span class="hk-a">' + (canli ? 'Spiker' : sonraki) + '</span></a>';
+  }
   function bas(){
     var D = window.D; if (!D || !D.hikayeler) return;
     var iz = izlenen();
@@ -11,7 +22,7 @@
       .concat(D.hikayeler.filter(function(h){ return h.goruldu || iz.indexOf(h.kod) >= 0; }));
     document.querySelectorAll('[data-hikaye-serit]').forEach(function(el){
       var tema = new URLSearchParams(location.search).get('tema');
-      el.innerHTML = '<nav class="hk' + (el.getAttribute('data-zemin') === 'koyu' ? ' koyu' : '') + '" aria-label="Kategori hikâyeleri">' +
+      el.innerHTML = '<nav class="hk' + (el.getAttribute('data-zemin') === 'koyu' ? ' koyu' : '') + '" aria-label="Kategori hikâyeleri">' + (el.hasAttribute('data-spiker') ? spikerDaire(tema) : '') +
         sirali.map(function(h){
           var gor = h.goruldu || iz.indexOf(h.kod) >= 0;
           var href = '../hikaye/hikaye.html?kat=' + h.kod + (tema ? '&tema=' + tema : '') + '&geri=' + geri;

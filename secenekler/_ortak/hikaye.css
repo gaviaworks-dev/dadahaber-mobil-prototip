@@ -19,3 +19,10 @@
 .hk.koyu .hk-o.gor .hk-a{color:rgba(255,255,255,.66)}
 .hk.koyu .hk-o.gor .hk-f{outline-color:rgba(255,255,255,.45)}
 @media (prefers-reduced-motion:reduce){.hk-o:active .hk-f{transform:none}}
+/* K39 · Spiker dairesi (şeridin ilki): yayında kırmızı CANLI halkası ve rozet; yayın yokken sönük halka, altında sıradaki bülten saati */
+.hk-o.spk .hk-f{outline-color:var(--anlik)}
+.hk-o.spk .hk-cn{position:absolute;left:50%;bottom:-8px;transform:translateX(-50%);padding:0 var(--b-4);border-radius:var(--k-ic);background:var(--anlik);color:#fff;font-size:9.5px;font-weight:var(--y-kalin);letter-spacing:.06em;line-height:16px;box-shadow:0 0 0 2px var(--hk-zemin,var(--zemin))}
+.hk-o.spk .hk-a{font-weight:var(--y-kalin)}
+.hk-o.spk.sonuk .hk-f{outline-color:var(--cizgi);outline-width:1.5px;filter:grayscale(.6)}
+.hk-o.spk.sonuk .hk-f i{background:var(--zemin-2);color:var(--metin-3)}
+.hk-o.spk.sonuk .hk-a{color:var(--metin-3);font-variant-numeric:tabular-nums}
