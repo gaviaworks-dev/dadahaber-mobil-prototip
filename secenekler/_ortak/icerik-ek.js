@@ -81,12 +81,13 @@
     return { kod: KOD[b.ad], kat: b.ad, ikon: b.ikon, g: h[0].g, haberler: h, goruldu: (b.ad === "Kampüs" || b.ad === "Keşfet") };
   });
   /* Köşe yazıları (public yazarlar.html "Yazarlar" vitrini ve kose-yazisi.html; ad, unvan ve başlık aynen). */
+  /* g: yazının konusuna uygun haber görseli (yazar portresi yok; public sitede de baş harf) */
   D.koseYazilari = [
-    { ad: "Aylin Sezer", unvan: "Köşe Yazarı", baslik: "Kütüphanelerin gece de açık kalması bir lütuf değil, ihtiyaç", sure: "5 dk" },
-    { ad: "Elif Aras", unvan: "Finans Editörü", baslik: "Faiz sabit kaldı ama kredi faizleri neden düşmüyor" },
-    { ad: "Mert Yalın", unvan: "Savunma Editörü", baslik: "Hava savunmasında ikinci teslimatın anlamı" },
-    { ad: "Zeynep Ak", unvan: "Dünya Editörü", baslik: "Brüksel'de göç pazarlığı yine ertelendi" },
-    { ad: "Deniz Kara", unvan: "Kadın Editörü", baslik: "Yeni eylem planında eksik kalan başlıklar" }
+    { ad: "Aylin Sezer", unvan: "Köşe Yazarı", baslik: "Kütüphanelerin gece de açık kalması bir lütuf değil, ihtiyaç", sure: "5 dk", g: "yks" },
+    { ad: "Elif Aras", unvan: "Finans Editörü", baslik: "Faiz sabit kaldı ama kredi faizleri neden düşmüyor", g: "faiz" },
+    { ad: "Mert Yalın", unvan: "Savunma Editörü", baslik: "Hava savunmasında ikinci teslimatın anlamı", g: "kaan" },
+    { ad: "Zeynep Ak", unvan: "Dünya Editörü", baslik: "Brüksel'de göç pazarlığı yine ertelendi", g: "ab-goc" },
+    { ad: "Deniz Kara", unvan: "Kadın Editörü", baslik: "Yeni eylem planında eksik kalan başlıklar", g: "kadin-girisim" }
   ];
 
   /* Bugün Senin İçin: örnek üyenin (D.uye) takipleriyle eşleşen günün haberleri. Yeni haber yok; D.bolumler'den seçilir. */
