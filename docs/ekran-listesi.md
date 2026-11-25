@@ -511,6 +511,86 @@ Her içerik ekranı, alt ekranı ve o ekrana ait haller. Liste ve detayların y�
 | E-405 | Maç detayı · bulunamadı | durum | Spor | `404.html`, `410.html` | Detay | İçerik kaldırıldı ya da bulunamadı; bölüme dön, arama | `ekranlar/icerik/mac-detay.html?durum=bulunamadi` | ✓ |
 | E-406 | Maç detayı · çevrimdışı | durum | Spor | `cevrimdisi.html` | Detay | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/mac-detay.html?durum=cevrimdisi` | ✓ |
 
+### Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)
+
+Sitede üretilmiş, kapsam kararı bekleyen (B-24, B-25, B-26, B-12) bölümler Beyar kararıyla uygulamaya alındı.
+
+| ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
+|---|---|---|---|---|---|---|---|---|
+| E-607 | Afet ve Acil Durum · üye | içerik | Servis | `afet-acil-durum.html` | Liste | Son 24 saatin en büyük depremi + AFAD açıklaması, afet uyarıları anahtarı, Son Depremler, Acil Durum Telefonları, Son Duyurular, Hazırlık Rehberi + toplanma alanı, haberler (K41) | `ekranlar/icerik/afet.html` | ✓ |
+| E-608 | Afet ve Acil Durum · misafir | içerik | Servis | `afet-acil-durum.html` | Liste | Afet uyarıları satırı giriş alt sayfasını açar | `ekranlar/icerik/afet.html?uye=0` | ✓ |
+| E-609 | Afet ve Acil Durum · yükleniyor | durum | Servis | `durumlar.html` (iskelet) | Liste | İskelet; başlık çubuğu ve alt çubuk yerinde | `ekranlar/icerik/afet.html?durum=yukleniyor` | ✓ |
+| E-610 | Afet ve Acil Durum · boş | durum | Servis | — | Liste | Son 24 saatte deprem kaydı yok; telefonlar, duyurular ve rehber yerinde | `ekranlar/icerik/afet.html?durum=bos` | ✓ |
+| E-611 | Afet ve Acil Durum · hata | durum | Servis | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene | `ekranlar/icerik/afet.html?durum=hata` | ✓ |
+| E-612 | Afet ve Acil Durum · çevrimdışı | durum | Servis | `cevrimdisi.html` | Liste | Önbellekten + bant; önbellek yoksa "Bağlantı yok", acil telefonlar yine görünür | `ekranlar/icerik/afet.html?durum=cevrimdisi` | ✓ |
+| E-613 | Trafik ve Ulaşım | içerik | Servis | `trafik-ulasim.html` | Liste | Yol Durumu (şehir çipleri + "Başka il" alt sayfası), Önemli Telefonlar, Duyurular, haberler (K41) | `ekranlar/icerik/trafik.html` | ✓ |
+| E-614 | Trafik ve Ulaşım · yükleniyor | durum | Servis | `durumlar.html` (iskelet) | Liste | İskelet | `ekranlar/icerik/trafik.html?durum=yukleniyor` | ✓ |
+| E-615 | Trafik ve Ulaşım · boş | durum | Servis | — | Liste | Seçilen ilde yol verisi yok; Bütün güzergâhlar | `ekranlar/icerik/trafik.html?durum=bos` | ✓ |
+| E-616 | Trafik ve Ulaşım · hata | durum | Servis | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene | `ekranlar/icerik/trafik.html?durum=hata` | ✓ |
+| E-617 | Trafik ve Ulaşım · çevrimdışı | durum | Servis | `cevrimdisi.html` | Liste | Önbellekten + bant; önbellek yoksa "Bağlantı yok", telefonlar görünür | `ekranlar/icerik/trafik.html?durum=cevrimdisi` | ✓ |
+| E-618 | Ekonomi Araçları | içerik | Servis | `ekonomi-araclari.html` | Liste | Altı araç satırı, Piyasalar şeridi, haberler, yatırım uyarısı (K41) | `ekranlar/icerik/ekonomi-araclari.html` | ✓ |
+| E-619 | Ekonomi Araçları · yükleniyor | durum | Servis | `durumlar.html` (iskelet) | Liste | İskelet | `ekranlar/icerik/ekonomi-araclari.html?durum=yukleniyor` | ✓ |
+| E-620 | Ekonomi Araçları · boş | durum | Servis | — | Liste | Bu bölümde haber yok; araçlar yerinde | `ekranlar/icerik/ekonomi-araclari.html?durum=bos` | ✓ |
+| E-621 | Ekonomi Araçları · hata | durum | Servis | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene | `ekranlar/icerik/ekonomi-araclari.html?durum=hata` | ✓ |
+| E-622 | Ekonomi Araçları · çevrimdışı | durum | Servis | `cevrimdisi.html` | Liste | Son kurlarla bant; önbellek yoksa "Bağlantı yok" | `ekranlar/icerik/ekonomi-araclari.html?durum=cevrimdisi` | ✓ |
+| E-623 | Ekonomi aracı · Döviz Çevirici | içerik | Servis | `doviz.html` | — | Para birimi seçici, tutar, yön değiştir, sonuç kartı, kur tablosu | `ekranlar/icerik/ekonomi-araci.html?arac=doviz` | ✓ |
+| E-624 | Ekonomi aracı · Kredi Hesaplayıcı | içerik | Servis | `faiz-oranlari.html` | — | Kredi türü, tutar, vade, faiz; taksit + döküm; oran tablosu | `ekranlar/icerik/ekonomi-araci.html?arac=kredi` | ✓ |
+| E-625 | Ekonomi aracı · Enflasyon Hesaplayıcı | içerik | Servis | `ekonomi-araclari.html` | — | Tutar, başlangıç seçici; bugünkü karşılık; TÜFE tablosu | `ekranlar/icerik/ekonomi-araci.html?arac=enflasyon` | ✓ |
+| E-626 | Ekonomi aracı · Maaş Hesaplayıcı | içerik | Servis | `ekonomi-araclari.html` | — | Brüt; net + kesinti dökümü | `ekranlar/icerik/ekonomi-araci.html?arac=maas` | ✓ |
+| E-627 | Ekonomi aracı · Altın Hesaplayıcı | içerik | Servis | `altin.html` | — | Tür seçici, miktar, yön değiştir; fiyat tablosu | `ekranlar/icerik/ekonomi-araci.html?arac=altin` | ✓ |
+| E-628 | Ekonomi aracı · Yakıt Maliyeti | içerik | Servis | `akaryakit-fiyatlari.html` | — | Mesafe, tüketim, yakıt, il seçici; pompa fiyatları | `ekranlar/icerik/ekonomi-araci.html?arac=yakit` | ✓ |
+| E-629 | Ekonomi aracı · yükleniyor | durum | Servis | `durumlar.html` (iskelet) | — | İskelet; araç çipleri yerinde | `ekranlar/icerik/ekonomi-araci.html?arac=kredi&durum=yukleniyor` | ✓ |
+| E-630 | Ekonomi aracı · boş | durum | Servis | — | — | Alanlar boş; sonuç kartı "—" | `ekranlar/icerik/ekonomi-araci.html?arac=maas&durum=bos` | ✓ |
+| E-631 | Ekonomi aracı · geçersiz giriş | durum | Servis | — | — | Alan hatası (sıfır); sonuç bekliyor | `ekranlar/icerik/ekonomi-araci.html?arac=doviz&durum=gecersiz` | ✓ |
+| E-632 | Ekonomi aracı · hata | durum | Servis | `500.html` | — | Sunucu hatası ya da zaman aşımı; Yeniden dene | `ekranlar/icerik/ekonomi-araci.html?arac=kredi&durum=hata` | ✓ |
+| E-633 | Ekonomi aracı · çevrimdışı | durum | Servis | `cevrimdisi.html` | — | Son kurlarla hesaplar + bant; önbellek yoksa "Bağlantı yok" | `ekranlar/icerik/ekonomi-araci.html?arac=altin&durum=cevrimdisi` | ✓ |
+| E-634 | Ekonomi aracı · bulunamadı | durum | Servis | `404.html` | — | Tanınmayan araç | `ekranlar/icerik/ekonomi-araci.html?durum=bulunamadi` | ✓ |
+| E-635 | Resmî İlanlar · üye | içerik | Servis | `resmi-ilanlar.html` | Liste | Tür çipleri, sırala menüsü, görselsiz ilan satırları (kurum · son gün, kaydet), daha fazla yükleme (K41) | `ekranlar/icerik/resmi-ilanlar.html` | ✓ |
+| E-636 | Resmî İlanlar · misafir | içerik | Servis | `resmi-ilanlar.html` | Liste | Kaydet "Bu cihazda" | `ekranlar/icerik/resmi-ilanlar.html?uye=0` | ✓ |
+| E-637 | Resmî İlanlar · tür süzgeci | durum | Servis | `resmi-ilanlar.html?secim=` | Liste | Seçili tür, sayı güncel (ihale, satış, kiralama, personel) | `ekranlar/icerik/resmi-ilanlar.html?tur=personel` | ✓ |
+| E-638 | Resmî İlanlar · yükleniyor | durum | Servis | `durumlar.html` (iskelet) | Liste | İskelet | `ekranlar/icerik/resmi-ilanlar.html?durum=yukleniyor` | ✓ |
+| E-639 | Resmî İlanlar · boş | durum | Servis | — | Liste | Seçilen türde yayında ilan yok; Bütün ilanlar | `ekranlar/icerik/resmi-ilanlar.html?durum=bos` | ✓ |
+| E-640 | Resmî İlanlar · hata | durum | Servis | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene | `ekranlar/icerik/resmi-ilanlar.html?durum=hata` | ✓ |
+| E-641 | Resmî İlanlar · çevrimdışı | durum | Servis | `cevrimdisi.html` | Liste | Önbellekten + bant; önbellek yoksa "Bağlantı yok" | `ekranlar/icerik/resmi-ilanlar.html?durum=cevrimdisi` | ✓ |
+| E-642 | Resmî ilan detayı · üye | içerik | Servis | `resmi-ilan-detay.html` | Detay | Tür, başlık, özet, son teklif şeridi, İlan Künyesi, metin, Kaynaklar, Aynı Kurumun İlanları; kaydet + paylaş | `ekranlar/icerik/resmi-ilan.html` | ✓ |
+| E-643 | Resmî ilan detayı · misafir | içerik | Servis | `resmi-ilan-detay.html` | Detay | Kaydet "Cihazına kaydedildi" alt sayfası + giriş | `ekranlar/icerik/resmi-ilan.html?uye=0` | ✓ |
+| E-644 | Resmî ilan detayı · yükleniyor | durum | Servis | `durumlar.html` (iskelet) | Detay | İskelet | `ekranlar/icerik/resmi-ilan.html?durum=yukleniyor` | ✓ |
+| E-645 | Resmî ilan detayı · boş | durum | Servis | — | Detay | Aynı kurumun başka ilanı yok | `ekranlar/icerik/resmi-ilan.html?durum=bos` | ✓ |
+| E-646 | Resmî ilan detayı · hata | durum | Servis | `500.html` | Detay | Sunucu hatası ya da zaman aşımı; Yeniden dene | `ekranlar/icerik/resmi-ilan.html?durum=hata` | ✓ |
+| E-647 | Resmî ilan detayı · çevrimdışı | durum | Servis | `cevrimdisi.html` | Detay | Önbellekten + bant; önbellek yoksa "Bağlantı yok" | `ekranlar/icerik/resmi-ilan.html?durum=cevrimdisi` | ✓ |
+| E-648 | Resmî ilan detayı · bulunamadı | durum | Servis | `404.html`, `410.html` | Detay | İlan kalktı ya da bağlantı bozuk; Resmî İlanlar'a dön | `ekranlar/icerik/resmi-ilan.html?durum=bulunamadi` | ✓ |
+| E-649 | Hamilelik | içerik | Kadın özel | `hamilelik.html` | — | Üye: Senin haftan kartı (20. hafta, doğum tarihi, ilerleme), Haftalar (2–40, kayar), hafta kartı (boy, ağırlık, trimester, gün + 3 akordeon), sağlık uyarısı, Hamilelik Haberleri (K41) | `ekranlar/icerik/hamilelik.html` | ✓ |
+| E-650 | Hamilelik · misafir | içerik | Kadın özel | `hamilelik.html` | — | Hesaplayıcı örnek sonuçla; "Takibi kaydetmek için giriş yap", tarih kaydedilmez | `ekranlar/icerik/hamilelik.html?uye=0` | ✓ |
+| E-651 | Hamilelik · tarih yok (boş) | durum | Kadın özel | `hamilelik.html` | — | Boş hesaplayıcı; Hesapla → sonuç → Haftamı kaydet | `ekranlar/icerik/hamilelik.html?durum=bos` | ✓ |
+| E-652 | Hamilelik · tarihi değiştir alt sayfası | sistem | Kadın özel | `hamilelik.html` (hesaplayıcı) | — | Son adet tarihi, döngü süresi; Vazgeç · Kaydet | `ekranlar/icerik/hamilelik.html?hesap=1` | ✓ |
+| E-653 | Hamilelik · yükleniyor | durum | Kadın özel | `durumlar.html` (iskelet) | — | İskelet; başlık ve alt çubuk yerinde | `ekranlar/icerik/hamilelik.html?durum=yukleniyor` | ✓ |
+| E-654 | Hamilelik · hata | durum | Kadın özel | `500.html` | — | Sunucu hatası ya da zaman aşımı (&hata=zaman-asimi); Yeniden dene | `ekranlar/icerik/hamilelik.html?durum=hata` | ✓ |
+| E-655 | Hamilelik · çevrimdışı | durum | Kadın özel | `cevrimdisi.html` | — | Son içerik + "Çevrimdışısın" bandı; &onbellek=0 tam ekran | `ekranlar/icerik/hamilelik.html?durum=cevrimdisi` | ✓ |
+| E-656 | Hamilelik haftası (20. hafta) | içerik | Kadın özel | `hamilelik-hafta.html` | Detay | Yazılı detay; haftalar şeridi, sağlık uyarısı, sayılar, akordeonlar, Kaynaklar, Konuları Takip Et, İlgili Haberler; okuma çubuğu Dinle · Paylaş · Aa | `ekranlar/icerik/hamilelik-hafta.html?hafta=20` | ✓ |
+| E-657 | Hamilelik haftası · misafir | içerik | Kadın özel | `hamilelik-hafta.html` | Detay | Konu takibi → tetik paneli | `ekranlar/icerik/hamilelik-hafta.html?hafta=20&uye=0` | ✓ |
+| E-658 | Hamilelik haftası · rehber yok | durum | Kadın özel | — | Detay | "Rehber henüz yayımlanmadı"; Hamilelik'e dön | `ekranlar/icerik/hamilelik-hafta.html?durum=bos` | ✓ |
+| E-659 | Hamilelik haftası · bulunamadı | durum | Kadın özel | `404.html` | Detay | Bulunamadı (hafta 1–40 dışı); arama, bölüm çipleri | `ekranlar/icerik/hamilelik-hafta.html?durum=bulunamadi` | ✓ |
+| E-660 | Hamilelik haftası · yükleniyor | durum | Kadın özel | `durumlar.html` (iskelet) | Detay | İskelet; okuma çubuğu pasif | `ekranlar/icerik/hamilelik-hafta.html?durum=yukleniyor` | ✓ |
+| E-661 | Hamilelik haftası · hata | durum | Kadın özel | `500.html` | Detay | Sunucu hatası ya da zaman aşımı; Yeniden dene | `ekranlar/icerik/hamilelik-hafta.html?durum=hata` | ✓ |
+| E-662 | Hamilelik haftası · çevrimdışı | durum | Kadın özel | `cevrimdisi.html` | Detay | Önbellekteki rehber + bant; &onbellek=0 tam ekran | `ekranlar/icerik/hamilelik-hafta.html?durum=cevrimdisi` | ✓ |
+| E-663 | Astroloji | içerik | Kadın özel | `astroloji.html` | — | 12 burç ızgarası (üyenin burcu "Burcun"), Koç Burcu Bugün (4 akordeon), Astroloji Haberleri (K41) | `ekranlar/icerik/astroloji.html` | ✓ |
+| E-664 | Astroloji · misafir | içerik | Kadın özel | `astroloji.html` | — | Işaretsiz ızgara + "Burcunu kaydet · Giriş yap" | `ekranlar/icerik/astroloji.html?uye=0` | ✓ |
+| E-665 | Astroloji · burç seçilmemiş | durum | Kadın özel | — | — | Günlük yorum yerine "Burcunu seç" | `ekranlar/icerik/astroloji.html?durum=bos` | ✓ |
+| E-666 | Astroloji · yükleniyor | durum | Kadın özel | `durumlar.html` (iskelet) | — | Izgara ve metin iskeleti | `ekranlar/icerik/astroloji.html?durum=yukleniyor` | ✓ |
+| E-667 | Astroloji · hata | durum | Kadın özel | `500.html` | — | Sunucu hatası ya da zaman aşımı; Yeniden dene | `ekranlar/icerik/astroloji.html?durum=hata` | ✓ |
+| E-668 | Astroloji · çevrimdışı | durum | Kadın özel | `cevrimdisi.html` | — | Son içerik + bant; &onbellek=0 tam ekran | `ekranlar/icerik/astroloji.html?durum=cevrimdisi` | ✓ |
+| E-669 | Burç detayı (Koç) | içerik | Kadın özel | `burc.html` | Detay | "Burcun / Burcum yap", element · nitelik · gezegen · sembol, Bugün (4 akordeon), Öteki Burçlar, İlgili Haberler; okuma çubuğu Dinle · Paylaş · Aa | `ekranlar/icerik/burc.html?burc=koc` | ✓ |
+| E-670 | Burç detayı · misafir | içerik | Kadın özel | `burc.html` | Detay | Burcum yap ve konu takibi → tetik paneli | `ekranlar/icerik/burc.html?burc=koc&uye=0` | ✓ |
+| E-671 | Burç detayı · rehber yok | durum | Kadın özel | — | Detay | "Rehber henüz yayımlanmadı", Öteki Burçlar | `ekranlar/icerik/burc.html?durum=bos` | ✓ |
+| E-672 | Burç detayı · bulunamadı | durum | Kadın özel | `404.html` | Detay | Tanınmayan burç; arama, bölüm çipleri | `ekranlar/icerik/burc.html?durum=bulunamadi` | ✓ |
+| E-673 | Burç detayı · yükleniyor | durum | Kadın özel | `durumlar.html` (iskelet) | Detay | İskelet; okuma çubuğu pasif | `ekranlar/icerik/burc.html?durum=yukleniyor` | ✓ |
+| E-674 | Burç detayı · hata | durum | Kadın özel | `500.html` | Detay | Sunucu hatası ya da zaman aşımı; Yeniden dene | `ekranlar/icerik/burc.html?durum=hata` | ✓ |
+| E-675 | Burç detayı · çevrimdışı | durum | Kadın özel | `cevrimdisi.html` | Detay | Önbellekteki rehber + bant; &onbellek=0 tam ekran | `ekranlar/icerik/burc.html?durum=cevrimdisi` | ✓ |
+| E-676 | Dada Ailesi | içerik | Kurumsal | footer "Dada Ailesi" | — | Dada Haber (bu uygulama), Gastro, Fit, Diet, Gourmet; satır dış siteyi açar; B-12 notu (K41) | `ekranlar/icerik/dada-ailesi.html` | ✓ |
+| E-677 | Dada Ailesi · yükleniyor | durum | Kurumsal | `durumlar.html` (iskelet) | — | Satır iskeleti | `ekranlar/icerik/dada-ailesi.html?durum=yukleniyor` | ✓ |
+| E-678 | Dada Ailesi · hata | durum | Kurumsal | `500.html` | — | Sunucu hatası ya da zaman aşımı; Yeniden dene | `ekranlar/icerik/dada-ailesi.html?durum=hata` | ✓ |
+| E-679 | Dada Ailesi · çevrimdışı | durum | Kurumsal | `cevrimdisi.html` | — | Liste + bant; dokununca "Bağlantı yok" | `ekranlar/icerik/dada-ailesi.html?durum=cevrimdisi` | ✓ |
+
 ## 2 · Durumlar
 
 Ekrandan bağımsız tam ekran hata ve uygulama durumları (tek hata şablonu) ile bütün listelerde aynı çalışan yenileme ve sayfa sonu halleri. Ekrana özgü haller İçerik ve Hesap bölümlerinde, ekranının altındadır.
@@ -838,6 +918,13 @@ Alt sayfalar, onay pencereleri, kısa bildirimler, menüler, sesli arama, açıl
 |---|---|---|---|---|---|---|---|---|
 | E-602 | Canlı Etkinlik / Dynamic Island · maç skoru | sistem | OS · aday | `mac-detay.html` | — | Kilit ekranında skor; karar bekliyor | `ekranlar/sistem/kilit-ekrani.html?durum=canli-etkinlik` |   |
 | E-603 | Ana ekran widget'ları | sistem | OS · aday | — | — | Son Dakika, Günün 5'i, piyasa, namaz; karar bekliyor | `ekranlar/sistem/widget.html` |   |
+
+### Dil seçici (K41 · 6. dalga)
+
+| ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
+|---|---|---|---|---|---|---|---|---|
+| E-680 | Dil seç alt sayfası | sistem | Alt sayfa | dil penceresi (pn-dil), `hesabim-tercihler.html` | — | Ayarlar üstünde; Türkçe seçili; English, العربية, Deutsch "yakında"; B-07 notu (K41) | `ekranlar/sistem/dil-sec.html` | ✓ |
+| E-681 | Dil seç · dil sürümü yok | durum | Alt sayfa | `durumlar.html` (Yalnızca Türkçe) | — | "English sürümü yakında" şeridi; Türkçe kalır; Hazır olunca haber ver | `ekranlar/sistem/dil-sec.html?durum=yakinda` | ✓ |
 
 ## 6 · Public siteyle karşılaştırma
 

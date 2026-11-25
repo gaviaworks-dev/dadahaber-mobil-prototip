@@ -3275,6 +3275,590 @@ window.DIZIN = [
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/mac-detay.html?durum=cevrimdisi",
 "ok": true
+},
+{
+"id": "E-607",
+"ad": "Afet ve Acil Durum · üye",
+"tur": "içerik",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/afet.html",
+"ok": true
+},
+{
+"id": "E-608",
+"ad": "Afet ve Acil Durum · misafir",
+"tur": "içerik",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/afet.html?uye=0",
+"ok": true
+},
+{
+"id": "E-609",
+"ad": "Afet ve Acil Durum · yükleniyor",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/afet.html?durum=yukleniyor",
+"ok": true
+},
+{
+"id": "E-610",
+"ad": "Afet ve Acil Durum · boş",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/afet.html?durum=bos",
+"ok": true
+},
+{
+"id": "E-611",
+"ad": "Afet ve Acil Durum · hata",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/afet.html?durum=hata",
+"ok": true
+},
+{
+"id": "E-612",
+"ad": "Afet ve Acil Durum · çevrimdışı",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/afet.html?durum=cevrimdisi",
+"ok": true
+},
+{
+"id": "E-613",
+"ad": "Trafik ve Ulaşım",
+"tur": "içerik",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/trafik.html",
+"ok": true
+},
+{
+"id": "E-614",
+"ad": "Trafik ve Ulaşım · yükleniyor",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/trafik.html?durum=yukleniyor",
+"ok": true
+},
+{
+"id": "E-615",
+"ad": "Trafik ve Ulaşım · boş",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/trafik.html?durum=bos",
+"ok": true
+},
+{
+"id": "E-616",
+"ad": "Trafik ve Ulaşım · hata",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/trafik.html?durum=hata",
+"ok": true
+},
+{
+"id": "E-617",
+"ad": "Trafik ve Ulaşım · çevrimdışı",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/trafik.html?durum=cevrimdisi",
+"ok": true
+},
+{
+"id": "E-618",
+"ad": "Ekonomi Araçları",
+"tur": "içerik",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/ekonomi-araclari.html",
+"ok": true
+},
+{
+"id": "E-619",
+"ad": "Ekonomi Araçları · yükleniyor",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/ekonomi-araclari.html?durum=yukleniyor",
+"ok": true
+},
+{
+"id": "E-620",
+"ad": "Ekonomi Araçları · boş",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/ekonomi-araclari.html?durum=bos",
+"ok": true
+},
+{
+"id": "E-621",
+"ad": "Ekonomi Araçları · hata",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/ekonomi-araclari.html?durum=hata",
+"ok": true
+},
+{
+"id": "E-622",
+"ad": "Ekonomi Araçları · çevrimdışı",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/ekonomi-araclari.html?durum=cevrimdisi",
+"ok": true
+},
+{
+"id": "E-623",
+"ad": "Ekonomi aracı · Döviz Çevirici",
+"tur": "içerik",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/ekonomi-araci.html?arac=doviz",
+"ok": true
+},
+{
+"id": "E-624",
+"ad": "Ekonomi aracı · Kredi Hesaplayıcı",
+"tur": "içerik",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/ekonomi-araci.html?arac=kredi",
+"ok": true
+},
+{
+"id": "E-625",
+"ad": "Ekonomi aracı · Enflasyon Hesaplayıcı",
+"tur": "içerik",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/ekonomi-araci.html?arac=enflasyon",
+"ok": true
+},
+{
+"id": "E-626",
+"ad": "Ekonomi aracı · Maaş Hesaplayıcı",
+"tur": "içerik",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/ekonomi-araci.html?arac=maas",
+"ok": true
+},
+{
+"id": "E-627",
+"ad": "Ekonomi aracı · Altın Hesaplayıcı",
+"tur": "içerik",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/ekonomi-araci.html?arac=altin",
+"ok": true
+},
+{
+"id": "E-628",
+"ad": "Ekonomi aracı · Yakıt Maliyeti",
+"tur": "içerik",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/ekonomi-araci.html?arac=yakit",
+"ok": true
+},
+{
+"id": "E-629",
+"ad": "Ekonomi aracı · yükleniyor",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/ekonomi-araci.html?arac=kredi&durum=yukleniyor",
+"ok": true
+},
+{
+"id": "E-630",
+"ad": "Ekonomi aracı · boş",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/ekonomi-araci.html?arac=maas&durum=bos",
+"ok": true
+},
+{
+"id": "E-631",
+"ad": "Ekonomi aracı · geçersiz giriş",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/ekonomi-araci.html?arac=doviz&durum=gecersiz",
+"ok": true
+},
+{
+"id": "E-632",
+"ad": "Ekonomi aracı · hata",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/ekonomi-araci.html?arac=kredi&durum=hata",
+"ok": true
+},
+{
+"id": "E-633",
+"ad": "Ekonomi aracı · çevrimdışı",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/ekonomi-araci.html?arac=altin&durum=cevrimdisi",
+"ok": true
+},
+{
+"id": "E-634",
+"ad": "Ekonomi aracı · bulunamadı",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/ekonomi-araci.html?durum=bulunamadi",
+"ok": true
+},
+{
+"id": "E-635",
+"ad": "Resmî İlanlar · üye",
+"tur": "içerik",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/resmi-ilanlar.html",
+"ok": true
+},
+{
+"id": "E-636",
+"ad": "Resmî İlanlar · misafir",
+"tur": "içerik",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/resmi-ilanlar.html?uye=0",
+"ok": true
+},
+{
+"id": "E-637",
+"ad": "Resmî İlanlar · tür süzgeci",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/resmi-ilanlar.html?tur=personel",
+"ok": true
+},
+{
+"id": "E-638",
+"ad": "Resmî İlanlar · yükleniyor",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/resmi-ilanlar.html?durum=yukleniyor",
+"ok": true
+},
+{
+"id": "E-639",
+"ad": "Resmî İlanlar · boş",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/resmi-ilanlar.html?durum=bos",
+"ok": true
+},
+{
+"id": "E-640",
+"ad": "Resmî İlanlar · hata",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/resmi-ilanlar.html?durum=hata",
+"ok": true
+},
+{
+"id": "E-641",
+"ad": "Resmî İlanlar · çevrimdışı",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/resmi-ilanlar.html?durum=cevrimdisi",
+"ok": true
+},
+{
+"id": "E-642",
+"ad": "Resmî ilan detayı · üye",
+"tur": "içerik",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/resmi-ilan.html",
+"ok": true
+},
+{
+"id": "E-643",
+"ad": "Resmî ilan detayı · misafir",
+"tur": "içerik",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/resmi-ilan.html?uye=0",
+"ok": true
+},
+{
+"id": "E-644",
+"ad": "Resmî ilan detayı · yükleniyor",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/resmi-ilan.html?durum=yukleniyor",
+"ok": true
+},
+{
+"id": "E-645",
+"ad": "Resmî ilan detayı · boş",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/resmi-ilan.html?durum=bos",
+"ok": true
+},
+{
+"id": "E-646",
+"ad": "Resmî ilan detayı · hata",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/resmi-ilan.html?durum=hata",
+"ok": true
+},
+{
+"id": "E-647",
+"ad": "Resmî ilan detayı · çevrimdışı",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/resmi-ilan.html?durum=cevrimdisi",
+"ok": true
+},
+{
+"id": "E-648",
+"ad": "Resmî ilan detayı · bulunamadı",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/resmi-ilan.html?durum=bulunamadi",
+"ok": true
+},
+{
+"id": "E-649",
+"ad": "Hamilelik",
+"tur": "içerik",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/hamilelik.html",
+"ok": true
+},
+{
+"id": "E-650",
+"ad": "Hamilelik · misafir",
+"tur": "içerik",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/hamilelik.html?uye=0",
+"ok": true
+},
+{
+"id": "E-651",
+"ad": "Hamilelik · tarih yok (boş)",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/hamilelik.html?durum=bos",
+"ok": true
+},
+{
+"id": "E-652",
+"ad": "Hamilelik · tarihi değiştir alt sayfası",
+"tur": "sistem",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/hamilelik.html?hesap=1",
+"ok": true
+},
+{
+"id": "E-653",
+"ad": "Hamilelik · yükleniyor",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/hamilelik.html?durum=yukleniyor",
+"ok": true
+},
+{
+"id": "E-654",
+"ad": "Hamilelik · hata",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/hamilelik.html?durum=hata",
+"ok": true
+},
+{
+"id": "E-655",
+"ad": "Hamilelik · çevrimdışı",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/hamilelik.html?durum=cevrimdisi",
+"ok": true
+},
+{
+"id": "E-656",
+"ad": "Hamilelik haftası (20. hafta)",
+"tur": "içerik",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/hamilelik-hafta.html?hafta=20",
+"ok": true
+},
+{
+"id": "E-657",
+"ad": "Hamilelik haftası · misafir",
+"tur": "içerik",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/hamilelik-hafta.html?hafta=20&uye=0",
+"ok": true
+},
+{
+"id": "E-658",
+"ad": "Hamilelik haftası · rehber yok",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/hamilelik-hafta.html?durum=bos",
+"ok": true
+},
+{
+"id": "E-659",
+"ad": "Hamilelik haftası · bulunamadı",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/hamilelik-hafta.html?durum=bulunamadi",
+"ok": true
+},
+{
+"id": "E-660",
+"ad": "Hamilelik haftası · yükleniyor",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/hamilelik-hafta.html?durum=yukleniyor",
+"ok": true
+},
+{
+"id": "E-661",
+"ad": "Hamilelik haftası · hata",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/hamilelik-hafta.html?durum=hata",
+"ok": true
+},
+{
+"id": "E-662",
+"ad": "Hamilelik haftası · çevrimdışı",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/hamilelik-hafta.html?durum=cevrimdisi",
+"ok": true
+},
+{
+"id": "E-663",
+"ad": "Astroloji",
+"tur": "içerik",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/astroloji.html",
+"ok": true
+},
+{
+"id": "E-664",
+"ad": "Astroloji · misafir",
+"tur": "içerik",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/astroloji.html?uye=0",
+"ok": true
+},
+{
+"id": "E-665",
+"ad": "Astroloji · burç seçilmemiş",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/astroloji.html?durum=bos",
+"ok": true
+},
+{
+"id": "E-666",
+"ad": "Astroloji · yükleniyor",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/astroloji.html?durum=yukleniyor",
+"ok": true
+},
+{
+"id": "E-667",
+"ad": "Astroloji · hata",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/astroloji.html?durum=hata",
+"ok": true
+},
+{
+"id": "E-668",
+"ad": "Astroloji · çevrimdışı",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/astroloji.html?durum=cevrimdisi",
+"ok": true
+},
+{
+"id": "E-669",
+"ad": "Burç detayı (Koç)",
+"tur": "içerik",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/burc.html?burc=koc",
+"ok": true
+},
+{
+"id": "E-670",
+"ad": "Burç detayı · misafir",
+"tur": "içerik",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/burc.html?burc=koc&uye=0",
+"ok": true
+},
+{
+"id": "E-671",
+"ad": "Burç detayı · rehber yok",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/burc.html?durum=bos",
+"ok": true
+},
+{
+"id": "E-672",
+"ad": "Burç detayı · bulunamadı",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/burc.html?durum=bulunamadi",
+"ok": true
+},
+{
+"id": "E-673",
+"ad": "Burç detayı · yükleniyor",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/burc.html?durum=yukleniyor",
+"ok": true
+},
+{
+"id": "E-674",
+"ad": "Burç detayı · hata",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/burc.html?durum=hata",
+"ok": true
+},
+{
+"id": "E-675",
+"ad": "Burç detayı · çevrimdışı",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/burc.html?durum=cevrimdisi",
+"ok": true
+},
+{
+"id": "E-676",
+"ad": "Dada Ailesi",
+"tur": "içerik",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/dada-ailesi.html",
+"ok": true
+},
+{
+"id": "E-677",
+"ad": "Dada Ailesi · yükleniyor",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/dada-ailesi.html?durum=yukleniyor",
+"ok": true
+},
+{
+"id": "E-678",
+"ad": "Dada Ailesi · hata",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/dada-ailesi.html?durum=hata",
+"ok": true
+},
+{
+"id": "E-679",
+"ad": "Dada Ailesi · çevrimdışı",
+"tur": "durum",
+"alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
+"dosya": "ekranlar/icerik/dada-ailesi.html?durum=cevrimdisi",
+"ok": true
 }
 ]
 },
@@ -4858,6 +5442,22 @@ window.DIZIN = [
 "tur": "sistem",
 "alt": "İşletim sistemi yüzeyleri",
 "dosya": "ekranlar/sistem/kilit-ekrani.html?durum=medya",
+"ok": true
+},
+{
+"id": "E-680",
+"ad": "Dil seç alt sayfası",
+"tur": "sistem",
+"alt": "Dil seçici (K41 · 6. dalga)",
+"dosya": "ekranlar/sistem/dil-sec.html",
+"ok": true
+},
+{
+"id": "E-681",
+"ad": "Dil seç · dil sürümü yok",
+"tur": "durum",
+"alt": "Dil seçici (K41 · 6. dalga)",
+"dosya": "ekranlar/sistem/dil-sec.html?durum=yakinda",
 "ok": true
 }
 ]
