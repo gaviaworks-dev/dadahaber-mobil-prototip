@@ -109,3 +109,12 @@ Yayılımda lider ekran yazmaz, dağıtır ve denetler. Bir dosyanın tek yazar�
 - Deponun herkese açık ya da kapalı olması.
 - Yazı tipi: public sitedeki Gilroy mi, sistem yazı tipi mi (seçtirilecek).
 - Alt gezinmede hangi sekmelerin olacağı (ana sayfa alternatifleriyle birlikte seçtirilecek).
+
+## Yayılım kuralı
+
+Bu depodaki HTML Flutter'a aktarılmaz; atılacak koddur, amacı tasarımı karara bağlamaktır (Beyar, 25 Kasım).
+- HTML'de çizilir: kök ekranlar, UI kit, tam ekran listesi ve yalnızca düzeni birbirinden farklı olan ekranlar.
+- HTML'de çizilmez: aynı ekranın halleri (yükleniyor, boş, hata, çevrimdışı, misafir…); ekran listesinde satır olarak yazılır, kitteki bileşenle tarif edilir, Flutter'da kit widget'larından gelir.
+- Yayılımdan önce Beyar'a sayıyla söylenir ("şu kadar ekran çizilecek, şu kadarı yalnız listede kalacak") ve onay alınır.
+- Sitede üretilmiş her sayfa kapsamdadır; açık karar kodu (B-xx) onu dışarıda bırakmaz. Ekran listesi sitenin sayfa envanteriyle satır satır eşlenir.
+- Kit yayılım sırasında değişirse önceki dalgalar betikle yeniden ölçülür.
