@@ -29,6 +29,10 @@
 .bl-d .bl-i{padding:0 0 var(--b-16) calc(var(--dokun) - var(--b-4) + var(--b-12))}
 .bl-d .k-grup-b{margin-top:var(--b-8)}
 .bl-d:not([open]) .bl-i{display:none}
+/* alt başlıklar tek satır, yana kayar (K43) */
+.bl-i .k-cip-izgara{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-right:calc(-1 * var(--kenar));padding-right:var(--kenar);scroll-snap-type:x proximity}
+.bl-i .k-cip-izgara::-webkit-scrollbar{display:none}
+.bl-i .k-cip-izgara .k-cip{flex:none;scroll-snap-align:start}
 </style>
 </head>
 <body>
