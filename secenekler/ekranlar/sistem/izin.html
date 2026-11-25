@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>İzin</title>
+<!-- Dada Haber Mobil · İZİN HALLERİ (E-596–E-599). Tam ekran izin şablonu (kit K.izin): değer önce, izin sonra; reddedildiyse neden gerekli + Ayarlar yolu.
+     Sorgu: ?tur=bildirim E-596 bildirim izni reddedildi: ne kaçırılır (Son Dakika, takımının maçı, günün baskıları) + Ayarlar'a git · Şimdi değil
+            ?tur=konum E-597 konum izni reddedildi (C35): hava ve namaz için neden + Ayarlar'a git · Şehri elle seç (→ şehir seç alt sayfası)
+            ?tur=mikrofon E-598 mikrofon izni reddedildi: sesle arama + Ayarlar'a git · Yazarak ara
+            ?tur=konum&durum=istek E-599 konum izni ön açıklama: Hava ve namaz için; Konumu kullan (→ sistem izin kutusu) · Şehri kendim seçeyim · ?tur yoksa bildirim · ?tema=koyu
+     Reddedilmiş hallerde "neden gerekli" listesi ön açıklamadaki listenin aynısıdır (kitin iki çıktısı birleştirildi).
+     Platform notu: iOS'ta reddedilen izin uygulamadan yeniden istenemez, yalnız Ayarlar'dan açılır; Android'de iki kez reddedilince aynı durum. "Ayarlar'a git" uygulamanın sistem ayar sayfasını açar.
+     Konum iki platformda "Uygulamayı kullanırken" istenir; iOS'ta "Tam konum" kapalı olsa da şehir düzeyinde yeterli. Veri: D.hava, D.namaz, D.mac (kit). -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), TUR = K.q.get('tur') || 'bildirim', ISTEK = K.durum === 'istek';
+  if (['bildirim', 'konum', 'mikrofon'].indexOf(TUR) < 0) TUR = 'bildirim';
+
+  if (ISTEK) e.innerHTML = K.izin({ tur: TUR });
+  else {
+    e.innerHTML = K.izin({ tur: TUR, red: true });
+    /* neden gerekli: ön açıklamadaki liste reddedilmiş hale eklenir */
+    var ul = K.el(K.izin({ tur: TUR })).querySelector('ul');
+    e.querySelector('.k-izin > p').insertAdjacentElement('afterend', ul);
+  }
+  /* eylemler (prototip) */
+  e.addEventListener('click', function(ev){ var b = ev.target.closest('.k-btn'); if (!b) return; var m = b.textContent.trim();
+    if (m === 'Ayarlar\'a git') K.toast('Telefonun Ayarlar uygulaması açılır', { ikon: 'fa-gear' });
+    else if (m === 'Şehri elle seç' || m === 'Şehri kendim seçeyim') location.href = K.u('ekranlar/sistem/sehir-sec.html', TUR === 'konum' && !ISTEK ? 'durum=konum-yok' : '');
+    else if (m === 'Yazarak ara') location.href = K.git('arama');
+    else if (m === 'Konumu kullan') {
+      document.body.insertAdjacentHTML('beforeend', '<div class="k-perde acik"></div><div class="k-sistem" role="alertdialog" aria-label="Konum izni"><div class="t"><b>"Dada Haber" konumunuzu kullansın mı?</b><p>Hava durumu ve namaz vakti bulunduğun şehre göre gösterilir.</p></div><div class="a"><button type="button" data-k>İzin Verme</button><button type="button" data-k>Kullanırken İzin Ver</button></div></div>');
+    }
+    else if (m === 'Şimdi değil') location.href = K.git('ana'); });
+  document.addEventListener('click', function(ev){ if (ev.target.closest('[data-k]')) location.href = ev.target.textContent === 'İzin Verme' ? K.u('ekranlar/sistem/izin.html', 'tur=konum') : K.git('havaDurumu'); });
+})();
+</script>
+</body>
+</html>

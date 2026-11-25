@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Şehir seç</title>
+<!-- Dada Haber Mobil · ŞEHİR SEÇ ALT SAYFASI (E-551–E-552). Geçici katman: Hava Durumu ekranının (şehir düğmesi, hava ve namaz kutuları) üstünde.
+     Sorgu: (yok) E-551 arama alanı, Konumumu kullan, şehir listesi (seçili İstanbul), "81 il · Bütün iller"
+            ?durum=konum-yok E-552 konum izni reddedildi: Konumumu kullan satırı pasif + "Ayarlar'dan aç" (C35) · ?tema=koyu
+     Platform notu: geri hareketi/sistem geri tuşu ve tutamaktan aşağı çekme alt sayfayı kapatır.
+     Veri: kaynak public universiteler.html şehir seçici penceresi (citySelectModal): İstanbul, Ankara, İzmir, Bursa, Antalya, Berlin · 81 il · Bütün iller; hava/namaz D.hava, D.namaz. -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), DUR = K.durum, H = D.hava;
+  /* kaynak: dadahaber-prototip/universiteler.html şehir seçici */
+  var SEHIR = ['İstanbul', 'Ankara', 'İzmir', 'Bursa', 'Antalya', 'Berlin'];
+
+  /* arka plan: Hava Durumu ekranı (kapak + şehir düğmesi + kutular), kit parçalarıyla */
+  e.innerHTML = '<header class="k-kapak" style="background-image:' + G('kar-istanbul') + '"><h1>Hava Durumu</h1><p>' + H.sehir + ' · ' + D.simdi.tarih.replace(' 2026', '') + ' ' + D.simdi.gun + '</p></header>' +
+    '<div class="k-yaprak"><div class="k-ic" style="padding-top:var(--b-16)">' + K.btn({ metin: H.sehir, ikon: 'fa-location-dot', sagIkon: 'fa-chevron-down', tur: 'sade', tam: true, attr: 'data-sehir-ac' }) +
+    '<div style="display:grid;gap:var(--b-12);margin-top:var(--b-16)">' + K.hava() + K.namaz() + '</div></div><div class="k-son"></div></div>';
+  K.ustCubuk({ tur: 'foto', geri: true, baslik: 'Hava Durumu', gorsel: 'kar-istanbul' });
+  K.altCubuk('ana');
+  K.oynatici();
+
+  function ac(statik){
+    var s = K.sayfa('sehir', { red: DUR === 'konum-yok', acik: statik });
+    /* kitteki tek şehir satırının yerine public seçicideki liste + bütün iller bağlantısı */
+    var i = s.el.querySelector('.k-sayfa-i'), ilk = i.querySelector('.k-secim');
+    ilk.insertAdjacentHTML('afterend', SEHIR.slice(1).map(function(x){ return K.secim('sh', x, { satir: true }); }).join('') +
+      '<a class="k-bag" href="#" style="width:100%;justify-content:space-between;color:var(--metin)">81 il · Bütün iller' + K.I('fa-chevron-right') + '</a>');
+    if (DUR === 'konum-yok') { var k = i.querySelector('.k-ayar'); if (k) k.setAttribute('data-ayarlar', ''); }
+    i.addEventListener('change', function(ev){ if (ev.target.name !== 'sh') return; var ad = ev.target.closest('.k-secim').textContent.trim();
+      setTimeout(function(){ s.kapat(); K.toast('Şehir: ' + ad, { ikon: 'fa-location-dot', alt: 'Hava ve namaz vakti güncellendi' }); }, 250); });
+    return s; }
+  ac(true);
+  document.addEventListener('click', function(ev){
+    if (ev.target.closest('[data-sehir-ac]')) { ev.preventDefault(); ac(false); }
+    if (ev.target.closest('[data-ayarlar]')) { ev.preventDefault(); K.toast('Telefonun Ayarlar uygulaması açılır', { ikon: 'fa-gear' }); }
+    if (ev.target.closest('.k-sayfa .k-bag')) ev.preventDefault(); });
+})();
+</script>
+</body>
+</html>

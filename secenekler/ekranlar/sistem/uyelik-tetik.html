@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Üyelik tetik paneli</title>
+<!-- Dada Haber Mobil · ÜYELİK TETİK PANELİ (E-556–E-557). Misafir, üyelik isteyen bir eyleme dokununca alttan açılır (akış A3, A9): Giriş yap · Üye ol · Şimdi değil.
+     Bu ekran her zaman misafir halidir (üyede panel açılmaz; eylem doğrudan yapılır).
+     Sorgu: (yok) E-556 Kaydet için (haber detayının üstünde) · ?eylem=yorum E-557 "Yorum yazmak için giriş yap" (Yorumlar ekranının üstünde)
+            ?eylem=takip (detay) · ?eylem=begen (Yorumlar) · ?tema=koyu
+     Platform notu: Android'de geri tuşu paneli kapatır ("Şimdi değil" ile aynı). Veri: D.detay, D.detay.yorumlar; metinler kit (K.sayfa('tetik')). -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  K.uye = false; /* panel yalnız misafirde açılır */
+  var e = document.getElementById('ekran'), EY = K.q.get('eylem') || 'kaydet';
+  if (['kaydet', 'takip', 'yorum', 'begen'].indexOf(EY) < 0) EY = 'kaydet';
+
+  /* arka plan A: haber detayı kökü (açılış hali) */
+  function arkaDetay(){ var d = D.detay;
+    e.innerHTML = '<header class="k-kapak detay" style="background-image:' + G(d.g) + '"><button class="k-oynat-d" type="button">' + K.I('fa-play') + 'Video · ' + d.video + '</button>' + K.katEt(d.yol.join(' · '), d.ikon, { foto: true }) +
+      '<h1>' + d.baslik + '</h1><div class="k-imza">' + K.avatar(d.yazar) + '<span class="t"><b>' + d.yazar + '</b><small>' + d.unvan + '</small></span></div></header>' +
+      '<div class="k-yaprak"><div class="k-ic" style="padding-top:var(--b-24)">' + K.zamanSatir() + '<p class="k-spot" style="margin-top:var(--b-12)">' + d.spot + '</p>' +
+      '<div style="margin-top:var(--b-16)">' + K.segment([{ metin: '15 sn', alt: '3 madde' }, { metin: '1 dk', alt: 'Özet' }, { metin: 'Tam metin', alt: d.sure }], 0) + '</div>' + K.madde(d.ozet) + '</div><div class="k-son okuma"></div></div>';
+    K.ustCubuk({ tur: 'foto', geri: true, eylemler: ['kaydet'] });
+    K.okuma(); }
+  /* arka plan B: Yorumlar ekranı (misafir) */
+  function arkaYorumlar(){
+    e.innerHTML = '<div class="k-ust-bosluk"></div><div class="k-ic">' + K.yorumlar() + '</div><div class="k-son yalin"></div>';
+    K.ustCubuk({ geri: true, baslik: 'Yorumlar', eylemler: ['sirala'] }); }
+
+  if (EY === 'yorum' || EY === 'begen') arkaYorumlar(); else arkaDetay();
+  K.oynatici();
+  K.sayfa('tetik', { eylem: EY, acik: true });
+})();
+</script>
+</body>
+</html>

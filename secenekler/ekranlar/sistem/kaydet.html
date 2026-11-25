@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Kaydet</title>
+<!-- Dada Haber Mobil · KAYDET ALT SAYFASI (E-542–E-544). Geçici katman: haber detayının üstünde (sağ üstteki Kaydet basılı, K28), perdeyle karartılmış.
+     Sorgu: (yok) E-542 üye: klasör seç (Kaydedilenler varsayılan, Okunacaklar), Yeni klasör, "Çevrimdışı indir" anahtarı, Kaydet
+            ?durum=yeni-klasor E-543 yeni klasör: Klasör adı alanı odakta, telefon klavyesi açık (alt sayfa klavyenin üstüne çıkar)
+            ?uye=0 E-544 misafir: "Cihazına kaydedildi" + "Giriş yap, her cihazda" (C30 varsayımı) · ?tema=koyu
+     Klavye işletim sisteminin yüzeyidir (Dada görünümü değil); iOS düzeni çizildi, Android'de Gboard kendi görünümünde. Klavye açıkken alt sayfanın alt güvenli alan boşluğu düşer.
+     Veri: D.detay; klasör adları kitten (Kaydedilenler, Okunacaklar). -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* KİT ADAYI: telefon klavyesi (.os-klavye) — "klavye açık" halleri (yeni klasör, yorum yaz, arama) için işletim sistemi yüzeyi; kitte yok. Nötr sistem görünümü, Dada rengi taşımaz; dokunulabilir öğe değildir (aria-hidden). */
+.os-klavye{position:absolute;left:0;right:0;bottom:0;z-index:95;padding:var(--b-8) var(--b-4) calc(var(--alt-guvenli) + var(--b-4));background:#D1D3D9;font-family:-apple-system,"SF Pro Text",BlinkMacSystemFont,"Helvetica Neue",sans-serif;color:#000;display:grid;gap:var(--b-12)}
+.os-klavye .sr{display:flex;justify-content:center;gap:var(--b-4)}
+.os-klavye .sr span{flex:1;max-width:34px;height:42px;border-radius:var(--k-ic);background:#fff;border-bottom:1px solid rgba(0,0,0,.28);display:grid;place-items:center;font-size:22px;font-weight:var(--y-ince)}
+.os-klavye .sr span.g{flex:1.4;max-width:46px;background:#ABB0BA;font-size:15px}
+.os-klavye .sr span.bos{flex:5;max-width:none;font-size:15px}
+.os-klavye .sr span.bitti{flex:2.2;max-width:none;background:#0A84FF;color:#fff;font-size:15px}
+html[data-tema="koyu"] .os-klavye{background:#2B2B2D;color:#fff}
+html[data-tema="koyu"] .os-klavye .sr span{background:#6B6B6E;border-bottom-color:rgba(0,0,0,.5)}
+html[data-tema="koyu"] .os-klavye .sr span.g{background:#464649}
+html[data-tema="koyu"] .os-klavye .sr span.bitti{background:#0A84FF}
+/* klavye açıkken alt sayfa klavyenin üstüne oturur */
+.k-sayfa.klavye-ustu{bottom:var(--klavye-h)}
+.k-sayfa.klavye-ustu .k-sayfa-a{padding-bottom:var(--b-12)}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), DUR = K.durum;
+
+  /* arka plan: haber detayı kökü (açılış hali), kit parçalarıyla */
+  function arkaDetay(){ var d = D.detay;
+    e.innerHTML = '<header class="k-kapak detay" style="background-image:' + G(d.g) + '"><button class="k-oynat-d" type="button">' + K.I('fa-play') + 'Video · ' + d.video + '</button>' + K.katEt(d.yol.join(' · '), d.ikon, { foto: true }) +
+      '<h1>' + d.baslik + '</h1><div class="k-imza">' + K.avatar(d.yazar) + '<span class="t"><b>' + d.yazar + '</b><small>' + d.unvan + '</small></span></div></header>' +
+      '<div class="k-yaprak"><div class="k-ic" style="padding-top:var(--b-24)">' + K.zamanSatir() + '<p class="k-spot" style="margin-top:var(--b-12)">' + d.spot + '</p>' +
+      '<div style="margin-top:var(--b-16)">' + K.segment([{ metin: '15 sn', alt: '3 madde' }, { metin: '1 dk', alt: 'Özet' }, { metin: 'Tam metin', alt: d.sure }], 0) + '</div>' + K.madde(d.ozet) + '</div><div class="k-son okuma"></div></div>';
+    var u = K.ustCubuk({ tur: 'foto', geri: true, eylemler: ['kaydet'] });
+    var k = u.querySelector('[data-kaydet]'); if (k) k.setAttribute('aria-pressed', 'true'); /* kaydet basıldı → alt sayfa açıldı */
+    K.okuma(); }
+
+  arkaDetay();
+  K.oynatici();
+
+  if (DUR === 'yeni-klasor' && K.uye) {
+    var s = K.sayfa('yeni-klasor', { acik: true });
+    var R = [['q', 'w', 'e', 'r', 't', 'y', 'u', 'ı', 'o', 'p', 'ğ', 'ü'], ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ş', 'i'], ['⇧', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'ö', 'ç', '⌫']];
+    var kl = K.el('<div class="os-klavye" aria-hidden="true">' + R.map(function(r){ return '<div class="sr">' + r.map(function(x){ return '<span' + (x === '⇧' || x === '⌫' ? ' class="g"' : '') + '>' + x + '</span>'; }).join('') + '</div>'; }).join('') +
+      '<div class="sr"><span class="g">123</span><span class="g">🌐</span><span class="bos">boşluk</span><span class="bitti">Bitti</span></div></div>');
+    document.body.appendChild(kl);
+    document.documentElement.style.setProperty('--klavye-h', kl.offsetHeight + 'px');
+    s.el.classList.add('klavye-ustu');
+    var g = s.el.querySelector('input'); if (g) g.focus({ preventScroll: true });
+  } else {
+    K.sayfa('kaydet', { acik: true });
+  }
+})();
+</script>
+</body>
+</html>

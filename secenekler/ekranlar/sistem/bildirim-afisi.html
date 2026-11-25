@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Uygulama içi bildirim</title>
+<!-- Dada Haber Mobil · UYGULAMA İÇİ BİLDİRİM AFİŞİ (E-582–E-583). Uygulama açıkken gelen bildirim üstten iner (kit K.afis): dokun → detay, yukarı it → kapat, 5 sn sonra kendiliğinden kalkar.
+     Bu ekranda incelenebilsin diye kalıcı gösterilir; kapatılırsa "Yeniden göster" ile döner. Arka plan: ana sayfa.
+     Sorgu: (yok) E-582 Son Dakika (görselli) · ?tur=canli E-583 takip edilen canlı anlatımda yeni gelişme (dokun → canlı anlatım) · ?tema=koyu
+     Platform notu: uygulama ön plandayken işletim sisteminin bildirimi gösterilmez, yerine bu afiş çıkar (iOS ve Android'de aynı); arka plandayken sistem bildirimi gelir (bkz. bildirimden-acilis.html).
+     Veri: D.sonDakika[0] (İstanbul Valiliği, görsel kar-istanbul); canlı: ekranlar/icerik/canli-anlatim.html "Marmara'da yoğun kar yağışı" anlatımının 16.05 girişi (kaynak public dakika-dakika.html). -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), CANLI = K.q.get('tur') === 'canli', M = D.manset[0];
+  /* arka plan: ana sayfa kökü (hero, hikâye şeridi, Son Dakika), kit parçalarıyla */
+  e.innerHTML = '<div class="k-kubbe"><span class="k-hilal"></span><div class="k-hero" style="background-image:' + G(M.g) + '">' + K.katEt(M.kat, M.ikon, { foto: true, ek: M.sure }) + '<h2>' + M.baslik + '</h2><span class="k-yz">' + K.avatar(M.yazar) + M.yazar + '</span>' + K.noktalar(5, 0, true) + '<span class="k-sayac foto">1 / 5</span></div></div>' +
+    K.hikayeSerit() + '<section class="k-bant ton">' + K.bb({ baslik: 'Son Dakika', canli: true, baglanti: { metin: 'Tümü', href: K.git('sonDakika') } }) + K.ray(D.sonDakika.slice(0, 4).map(function(s, i){ return K.sd(s, i === 0); }).join(''), 's10') + '</section><div class="k-son"></div>';
+  K.ustCubuk({ tur: 'foto', logo: true, eylemler: ['ara', 'hesap', 'menu'] });
+  K.altCubuk('ana');
+  K.oynatici();
+
+  /* kaynak: canli-anlatim.html (public dakika-dakika.html) 16.05 girişi */
+  function afis(){ return K.afis(CANLI ? { tur: 'canli', baslik: 'İstanbul Valiliği: okullar yarın da tatil', g: 'kar-istanbul', sure: 864e5 } : { sure: 864e5 }); }
+  var a = afis();
+  /* kapatılınca (yukarı itme) yeniden gösterme düğmesi */
+  var y = K.el('<div style="position:absolute;left:0;right:0;top:calc(var(--ust-guvenli) + var(--b-8));z-index:96;display:none;justify-content:center">' + K.btn({ metin: 'Yeniden göster', ikon: 'fa-rotate-right', boy: 'kucuk', tur: 'sade' }) + '</div>');
+  document.body.appendChild(y);
+  new MutationObserver(function(){ var acik = document.querySelector('.k-afis.acik'); y.style.display = acik ? 'none' : 'flex'; }).observe(document.body, { subtree: true, attributes: true, attributeFilter: ['class'] });
+  y.addEventListener('click', function(){ a = afis(); });
+})();
+</script>
+</body>
+</html>

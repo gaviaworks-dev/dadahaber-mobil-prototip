@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Onay penceresi</title>
+<!-- Dada Haber Mobil · ONAY PENCERELERİ (E-565–E-572). Ortada pencere (kit K.pencere), çağrıldığı ekranın üstünde, perdeyle karartılmış.
+     Sorgu: ?tur=cikis E-565 Çıkış yap (Ayarlar üstünde; cihazdaki indirilenler kalır notu)
+            ?tur=hesap-sil E-566 Hesabı sil son onay (Hesabı sil ekranı üstünde; geri alınamaz, kırmızı düğme)
+            ?tur=indirilenleri-sil E-567 İndirilenleri sil (Veri ve depolama üstünde; kazanılacak alan: 4 haber · 8,5 MB)
+            ?tur=gecmisi-temizle E-568 Geçmişi temizle (Geçmiş üstünde; Tümü ya da seçili sekme)
+            ?tur=klasor-sil E-569 Klasörü sil (Okunacaklar klasörü üstünde; içindekiler Kaydedilenler'de kalır)
+            ?tur=takibi-birak E-570 Takibi bırak (Takip ettiklerim üstünde; konu adı)
+            ?tur=taslak E-571 Yazdığın yorum silinsin mi (Yorum yaz alt sayfası kapatılırken; alt sayfa pencerenin altında)
+            ?tur=oturum E-572 Oturumun sona erdi (ana sayfa üstünde; Yeniden giriş yap · Misafir olarak devam et) · ?tur yoksa cikis · ?tema=koyu
+     Platform notu: Android'de geri tuşu pencereyi "Vazgeç" gibi kapatır; oturum penceresi kapatılamaz değil, "Misafir olarak devam et" seçilebilir.
+     Veri: D.uye, D.liste.haberler; indirilen haber sayısı ve boyutu ekranlar/hesap/kaydedilenler.html'deki indirilenlerle aynı (2,4 + 2,1 + 1,8 + 2,2 MB; boyutlar o ekranda da varsayım);
+     taslak metni örnek olarak D.detay.yorumlar[0]'ın ilk cümlesi (varsayım: yeni metin uydurulmadı). -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* katman sırası: alt sayfanın üstünde açılan pencere (E-571) alt sayfayı da karartır */
+.k-perde.ust{z-index:92}
+.k-perde.ust+.k-pencere{z-index:93}
+/* pencere içindeki seçim (Geçmişi temizle): sola hizalı */
+.k-pencere .sc{margin-top:var(--b-16);text-align:left}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), TUR = K.q.get('tur') || 'cikis', L = D.liste.haberler;
+  var KIT = { cikis: 'cikis', 'hesap-sil': 'hesap-sil', 'indirilenleri-sil': 'indirilen-sil', 'gecmisi-temizle': 'gecmis', 'klasor-sil': 'klasor-sil', 'takibi-birak': 'takip-birak', taslak: 'yorum-sil', oturum: 'oturum' };
+  if (!KIT[TUR]) TUR = 'cikis';
+  var ust = '<div class="k-ust-bosluk"></div>', son = '<div class="k-son yalin"></div>';
+
+  /* arka planlar (kit parçalarıyla) */
+  function ayarlar(){
+    e.innerHTML = ust + K.grup('Hesap', [{ ikon: 'fa-user', baslik: 'Profil', alt: D.uye.ad }, { ikon: 'fa-bell', baslik: 'Bildirim tercihleri' }, { ikon: 'fa-envelope', baslik: 'Bülten' }]) +
+      K.grup('Görünüm', [{ ikon: 'fa-circle-half-stroke', baslik: 'Tema', sag: 'deger', deger: 'Sistem' }, { ikon: 'fa-font', baslik: 'Yazı boyutu', sag: 'deger', deger: 'Orta' }]) +
+      K.grup('Veri ve depolama', [{ ikon: 'fa-circle-down', baslik: 'İndirilenler', sag: 'deger', deger: '8,5 MB' }]) +
+      K.grup('', [{ ikon: 'fa-right-from-bracket', baslik: 'Çıkış yap', sag: 'yok', notr: true }, { ikon: 'fa-trash-can', baslik: 'Hesabı sil', sag: 'yok', tehlike: true }]) + son;
+    K.ustCubuk({ geri: true, baslik: 'Ayarlar' }); }
+  function hesapSil(){
+    e.innerHTML = ust + '<div class="k-ic" style="padding-top:var(--b-16)"><p class="k-spot">Hesabını silersen aşağıdakiler kalıcı olarak silinir:</p>' +
+      K.madde(['Kaydettiğin haberler ve klasörlerin', 'Takip ettiğin konular, takımlar ve yazarlar', 'Yazdığın yorumlar ve okuma serin (' + D.uye.seri + ' gün)']) +
+      '<div style="margin-top:var(--b-16)">' + K.onay('Hesabımın kalıcı olarak silineceğini anladım.', { secili: true }) + '</div>' +
+      '<div style="margin-top:var(--b-24)">' + K.btn({ metin: 'Hesabımı sil', tur: 'tehlike', boy: 'buyuk', tam: true }) + '</div></div>' + son;
+    K.ustCubuk({ geri: true, baslik: 'Hesabı sil' }); }
+  function depolama(){
+    e.innerHTML = ust + K.grup('Otomatik indir', [{ ikon: 'fa-circle-down', baslik: 'Günün 5\'ini kendiliğinden indir', sag: 'anahtar', on: true }, { ikon: 'fa-circle-play', baslik: 'Mobil veride video', sag: 'deger', deger: 'Dokununca' }]) +
+      K.grup('İndirilenler', [{ ikon: 'fa-newspaper', baslik: 'Çevrimdışı haberler', alt: '4 haber', sag: 'deger', deger: '8,5 MB' }, { ikon: 'fa-trash-can', baslik: 'İndirilenleri sil', sag: 'yok', tehlike: true }], 'Haberler Kaydedilenler\'de kalır; yalnız çevrimdışı kopyalar silinir.') +
+      K.grup('', [{ ikon: 'fa-database', baslik: 'Önbelleği temizle', sag: 'ok' }]) + son;
+    K.ustCubuk({ geri: true, baslik: 'Veri ve depolama' }); }
+  function gecmis(){
+    e.innerHTML = ust + K.sekmeler(['Okuduklarım', 'İzlediklerim', 'Dinlediklerim'], 0) + '<div class="k-satirlar">' + L.slice(0, 5).map(function(h){ return K.satir(h); }).join('') + '</div>' + son;
+    K.ustCubuk({ geri: true, baslik: 'Geçmiş', eylemler: [{ ikon: 'fa-trash-can', etiket: 'Geçmişi temizle' }] }); }
+  function klasor(){
+    e.innerHTML = ust + '<div class="k-satirlar">' + [L[1], L[2], L[4]].map(function(h){ return K.satir(h, { kaydedildi: true }); }).join('') + '</div>' + son;
+    K.ustCubuk({ geri: true, baslik: 'Okunacaklar', eylemler: ['daha'] }); }
+  function takip(){
+    e.innerHTML = ust + K.grup('Konular ve takımlar', D.uye.takip.map(function(t, i){ return { ikon: i === 0 ? 'fa-futbol' : 'fa-heart', baslik: t, alt: 'Takipte', sag: 'ok' }; })) + son;
+    K.ustCubuk({ geri: true, baslik: 'Takip ettiklerim' }); }
+  function detay(){ var d = D.detay;
+    e.innerHTML = '<header class="k-kapak detay" style="background-image:' + G(d.g) + '"><button class="k-oynat-d" type="button">' + K.I('fa-play') + 'Video · ' + d.video + '</button>' + K.katEt(d.yol.join(' · '), d.ikon, { foto: true }) +
+      '<h1>' + d.baslik + '</h1><div class="k-imza">' + K.avatar(d.yazar) + '<span class="t"><b>' + d.yazar + '</b><small>' + d.unvan + '</small></span></div></header>' +
+      '<div class="k-yaprak"><div class="k-ic" style="padding-top:var(--b-24)">' + K.zamanSatir() + '<p class="k-spot" style="margin-top:var(--b-12)">' + d.spot + '</p></div><div class="k-son okuma"></div></div>';
+    K.ustCubuk({ tur: 'foto', geri: true, eylemler: ['kaydet'] });
+    K.okuma(); }
+  function ana(){ var M = D.manset[0];
+    e.innerHTML = '<div class="k-kubbe"><span class="k-hilal"></span><div class="k-hero" style="background-image:' + G(M.g) + '">' + K.katEt(M.kat, M.ikon, { foto: true, ek: M.sure }) + '<h2>' + M.baslik + '</h2><span class="k-yz">' + K.avatar(M.yazar) + M.yazar + '</span>' + K.noktalar(5, 0, true) + '<span class="k-sayac foto">1 / 5</span></div></div>' +
+      K.hikayeSerit() + '<section class="k-bant ton">' + K.bb({ baslik: 'Son Dakika', canli: true, baglanti: { metin: 'Tümü', href: K.git('sonDakika') } }) + K.ray(D.sonDakika.slice(0, 4).map(function(s, i){ return K.sd(s, i === 0); }).join(''), 's10') + '</section><div class="k-son"></div>';
+    K.ustCubuk({ tur: 'foto', logo: true, eylemler: ['ara', 'hesap', 'menu'] });
+    K.altCubuk('ana'); }
+
+  ({ cikis: ayarlar, 'hesap-sil': hesapSil, 'indirilenleri-sil': depolama, 'gecmisi-temizle': gecmis, 'klasor-sil': klasor, 'takibi-birak': takip, taslak: detay, oturum: ana })[TUR]();
+  K.oynatici();
+
+  var ek = { acik: true };
+  if (TUR === 'indirilenleri-sil') ek.metin = '4 haber · 8,5 MB yer açılır. Haberler Kaydedilenler\'de kalır; yalnız çevrimdışı kopyaları silinir.';
+  if (TUR === 'gecmisi-temizle') { ek.metin = 'Seçtiğin listedeki haberler geçmişten kalkar.'; ek.icerik = '<div class="sc">' + K.secim('gt', 'Tümü', { satir: true, secili: true, alt: 'Okuduklarım, izlediklerim, dinlediklerim' }) + K.secim('gt', 'Yalnız Okuduklarım', { satir: true }) + '</div>'; }
+  if (TUR === 'taslak') {
+    /* yorum yazarken kapat'a basıldı: alt sayfa açık, pencere üstünde */
+    K.sayfa({ baslik: 'Yorum yaz', alt: D.detay.baslik, icerik: K.metinAlan({ deger: D.detay.yorumlar[0].metin.split(';')[0], sinir: 1000 }) + '<p class="k-not">' + K.I('fa-circle-info') + 'Yorumlar denetim sonrası yayınlanır.</p>',
+      eylemler: [{ metin: 'Gönder', ikon: 'fa-paper-plane', tur: 'birincil' }], acik: true });
+  }
+  var p = K.pencere(KIT[TUR], ek);
+  if (TUR === 'taslak') p.perde.classList.add('ust');
+})();
+</script>
+</body>
+</html>

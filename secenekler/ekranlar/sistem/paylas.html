@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Paylaş</title>
+<!-- Dada Haber Mobil · PAYLAŞ ALT SAYFASI (E-540–E-541). Geçici katman: haber detayının (kök, kit parçalarıyla) üstünde, perdeyle karartılmış.
+     Sorgu: (yok) E-540 paylaş alt sayfası: haber önizlemesi, Bağlantıyı kopyala (sarı, → "Bağlantı kopyalandı" kısa bildirimi), Paylaşım kartı, Mesaj, E-posta, Diğer
+            ?durum=kart E-541 paylaşım kartı: hikâye biçiminde (9:16) haber kartı önizlemesi + Kartı paylaş · ?uye=0 · ?tema=koyu
+     Platform notu: "Diğer" telefonun kendi paylaşım sayfasını açar; iOS'ta paylaşım sayfası (UIActivityViewController, alttan, kişi önerileri üstte),
+     Android'de sistem paylaşım panosu (Sharesheet, doğrudan paylaşım hedefleri). Uygulamanın kendi alt sayfası iki platformda aynı; geri hareketi/sistem geri tuşu alt sayfayı kapatır.
+     Veri: D.detay (asgari ücret haberi). Varsayım (onaylanmadı): Mesaj ve E-posta kısayolları uygulamanın kendi sayfasında; ötekiler sistem sayfasında. -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), DUR = K.durum;
+
+  /* arka plan: haber detayı kökü (açılış hali), kit parçalarıyla */
+  function arkaDetay(){ var d = D.detay;
+    e.innerHTML = '<header class="k-kapak detay" style="background-image:' + G(d.g) + '"><button class="k-oynat-d" type="button">' + K.I('fa-play') + 'Video · ' + d.video + '</button>' + K.katEt(d.yol.join(' · '), d.ikon, { foto: true }) +
+      '<h1>' + d.baslik + '</h1><div class="k-imza">' + K.avatar(d.yazar) + '<span class="t"><b>' + d.yazar + '</b><small>' + d.unvan + '</small></span></div></header>' +
+      '<div class="k-yaprak"><div class="k-ic" style="padding-top:var(--b-24)">' + K.zamanSatir() + '<p class="k-spot" style="margin-top:var(--b-12)">' + d.spot + '</p>' +
+      '<div style="margin-top:var(--b-16)">' + K.segment([{ metin: '15 sn', alt: '3 madde' }, { metin: '1 dk', alt: 'Özet' }, { metin: 'Tam metin', alt: d.sure }], 0) + '</div>' + K.madde(d.ozet) + '</div><div class="k-son okuma"></div></div>';
+    K.ustCubuk({ tur: 'foto', geri: true, eylemler: ['kaydet'] });
+    K.okuma(); }
+
+  arkaDetay();
+  K.oynatici();
+
+  if (DUR === 'kart') K.sayfa('kart', { acik: true });
+  else {
+    var s = K.sayfa('paylas', { acik: true });
+    /* Paylaşım kartı → E-541 */
+    [].forEach.call(s.el.querySelectorAll('.k-paylas button'), function(b){ if (/Paylaşım kartı/.test(b.textContent)) b.setAttribute('data-href', K.u('ekranlar/sistem/paylas.html', 'durum=kart')); });
+  }
+})();
+</script>
+</body>
+</html>

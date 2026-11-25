@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Sesli arama</title>
+<!-- Dada Haber Mobil · SESLİ ARAMA (E-558–E-564). Arama ekranında mikrofona dokununca alttan açılan sayfa (kit K.ses halleri); arama ekranı arkada, perdeyle karartılmış.
+     Sorgu: (yok) E-558 hazır: mikrofon düğmesi, "Dinliyorum" ipucu
+            ?durum=izin E-559 mikrofon izni isteniyor: ön açıklama (Devam) → &adim=sistem işletim sisteminin izin kutusu (iOS çizimi; Android 13+ kendi biçiminde)
+            ?durum=kaydediyor E-560 seviye çubukları (canlı), canlı metin, süre; düğme Durdur · üst çubuktaki mikrofon sarı
+            ?durum=duraklatildi E-561 dalga durur; İptal · Devam · Gönder
+            ?durum=gonderiliyor E-562 metin sabit, gösterge → arama sonuçlarına geçer (3 sn; denetim kipinde geçmez)
+            ?durum=hata E-563 anlaşılamadı: Tekrar dene · Yazarak ara
+            ?durum=izin-yok E-564 mikrofon izni reddedildi: Ayarlar'a git · Yazarak ara · ?tema=koyu
+     Veri: arama ekranının son aramaları ve gündemdekileri (ekranlar/icerik/arama.html ile aynı), canlı metin kitten ("asgari ücret toplantısı ne zaman"). -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* KİT ADAYI (düzeltme, arama.html ile aynı): üst çubuktaki arama alanının girdisi 41 px kalıyor; girdi 44 px dokunma alanı alır */
+.k-ub.ara .k-ara input{height:44px}
+/* işletim sistemi izin kutusu alt sayfanın da üstünde */
+.k-perde.os{z-index:96}
+.k-sistem.os{z-index:97}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), DUR = K.durum, TAM = document.documentElement.classList.contains('tam');
+  var HAL = { '': 'hazir', izin: 'izin', kaydediyor: 'kayit', duraklatildi: 'dur', gonderiliyor: 'gonder', hata: 'hata', 'izin-yok': 'red' }[DUR] || 'hazir';
+  var YOL = 'ekranlar/sistem/sesli-arama.html';
+
+  /* arka plan: arama ekranı (son aramalar, gündemdekiler) */
+  var SON = ['deprem', 'asgari ücret', D.uye.takip[0], D.uye.takip[2]];
+  var GUNDEM = ['Kar Yağışı', 'Bütçe 2027', D.detay.etiketler[0], 'Deprem', 'Gümrük Birliği'];
+  e.innerHTML = '<div class="k-ust-bosluk"></div><section class="k-bl sik">' + K.bb({ baslik: 'Son Aramalar', ikon: 'fa-clock-rotate-left' }) + '<div class="k-ic">' + SON.map(function(x){ return K.oneri({ tur: 'son', metin: x }); }).join('') + '</div></section>' +
+    '<section class="k-bl sik">' + K.bb({ baslik: 'Gündemdekiler', ikon: 'fa-arrow-trend-up' }) + '<div class="k-ic">' + GUNDEM.map(function(x){ return K.oneri({ tur: 'gundem', metin: x }); }).join('') + '</div></section><div class="k-son yalin"></div>';
+  K.ustCubuk({ tur: 'ara', geri: true, ara: { ses: HAL === 'kayit' ? 'on' : true } });
+
+  var s = K.sayfa('ses', { hal: HAL, acik: true }), ses = s.el;
+  function git(d, ek){ location.href = K.u(YOL, (d ? 'durum=' + d : '') + (ek ? '&' + ek : '')); }
+  function osKutu(){
+    document.body.insertAdjacentHTML('beforeend', '<div class="k-perde acik os"></div><div class="k-sistem os" role="alertdialog" aria-label="Mikrofon izni"><div class="t"><b>"Dada Haber" Mikrofona Erişmek İstiyor</b><p>Sesli aramada söylediğini yazıya çevirmek için mikrofonu kullanırız.</p></div><div class="a"><button type="button" data-os="red">İzin Verme</button><button type="button" data-os="izin">İzin Ver</button></div></div>'); }
+  if (HAL === 'izin' && K.q.get('adim') === 'sistem') osKutu();
+
+  /* hal geçişleri (prototip): düğmeler sonraki hale götürür */
+  ses.addEventListener('click', function(ev){ var b = ev.target.closest('button'); if (!b) return; var m = b.textContent.trim();
+    if (b.classList.contains('mik')) { git(HAL === 'kayit' ? 'duraklatildi' : HAL === 'red' ? 'izin-yok' : 'kaydediyor'); return; }
+    if (m === 'Devam' && HAL === 'izin') { osKutu(); return; }
+    if (m === 'Devam' || m === 'Tekrar dene') git('kaydediyor');
+    else if (m === 'Gönder') git('gonderiliyor');
+    else if (m === 'Ayarlar\'a git') K.toast('Telefonun Ayarlar uygulaması açılır', { ikon: 'fa-gear' });
+    else if (m === 'Yazarak ara' || m === 'İptal') { ev.stopPropagation(); location.href = K.git('arama'); } });
+  document.addEventListener('click', function(ev){ var o = ev.target.closest('[data-os]'); if (o) git(o.getAttribute('data-os') === 'izin' ? 'kaydediyor' : 'izin-yok'); });
+  /* kaydediyor: süre ilerler */
+  if (HAL === 'kayit') { var su = ses.querySelector('.sure'), t = 4; setInterval(function(){ t++; su.textContent = '0:' + (t < 10 ? '0' : '') + t; }, 1000); }
+  /* gönderiliyor → arama sonuçları */
+  if (HAL === 'gonder' && !TAM) setTimeout(function(){ location.href = K.git('aramaSonuc'); }, 3000);
+})();
+</script>
+</body>
+</html>

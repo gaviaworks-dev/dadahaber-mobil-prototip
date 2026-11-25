@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Derin bağlantı</title>
+<!-- Dada Haber Mobil · DERİN BAĞLANTI (E-592–E-595). Akış sayfa açılınca oynar: 1) mesajlaşma uygulamasında paylaşılmış site adresi (dokun ya da 1,2 sn) → 2) uygulama açılır, adresin karşılığı itilir.
+     Son hal (varsayılan görüntü; denetim kipinde doğrudan): açılan ekran; altında ana sayfa durur (uygulama kapalıyken açıldı, görev yığını kurulur). Geri → ana sayfa.
+     Sorgu: (yok) E-592 haber: dadahaber.com/gundem/asgari-ucret-… → haber detayı
+            ?tur=liste E-593 bölüm / yazar / etiket: dadahaber.com/gundem/turkiye/ (DADAHABER-10'da kaldırılan alt kırılım) → kalıcı yönlendirmeyle hedef liste (Gündem), kullanıcıya ara ekran gösterilmez
+            ?durum=giris E-594 giriş gerekli: dadahaber.com/hesabim/kaydedilenler misafirde → Giriş yap (hedef notuyla); giriş → Kaydedilenler'e döner
+            ?durum=bulunamadi E-595 uygulamada yok / bulunamadı: dadahaber.com/uygulama (uygulamada karşılığı yok) → Web'de aç · Ana sayfaya dön
+            &adim=1 yalnız paylaşılan bağlantı · ?uye=0 · ?tema=koyu
+     Adresler DADAHABER-01 site haritasının rota önerileridir (karar bekliyor, B-06); prototipte bağlantılar hedefe çevrilir (DADAHABER-10 §6).
+     Platform notu: iOS'ta evrensel bağlantı (Universal Link) açılınca durum çubuğunda "◀ Mesajlar" dönüş işareti çıkar; Android'de uygulama bağlantısı (App Link) doğrulanmamışsa "Şununla aç" seçimi sorulabilir.
+     Mesajlaşma yüzeyi işletim sistemi/üçüncü taraf uygulamasıdır (Dada görünümü değil). Veri: D.detay, D.liste. -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* KİT ADAYI: işletim sistemi yüzeyi · mesajlaşma (.os-msj) — paylaşılan bağlantının açıldığı yer; sistem yazı tipi ve renkleri, Dada görünümü taşımaz */
+.os-msj{position:absolute;inset:0;z-index:89;display:flex;flex-direction:column;background:#fff;color:#000;font-family:-apple-system,"SF Pro Text","SF Pro Display",BlinkMacSystemFont,"Helvetica Neue",sans-serif;-webkit-font-smoothing:antialiased;transition:opacity .25s}
+html[data-tema="koyu"] .os-msj{background:#000;color:#fff}
+.os-msj .ub{flex:none;display:grid;justify-items:center;gap:var(--b-4);padding:calc(var(--ust-guvenli) + var(--b-4)) var(--kenar) var(--b-8);border-bottom:1px solid rgba(60,60,67,.18);background:rgba(249,249,249,.94)}
+html[data-tema="koyu"] .os-msj .ub{background:rgba(22,22,24,.94);border-bottom-color:rgba(255,255,255,.12)}
+.os-msj .ub .av{width:44px;height:44px;border-radius:var(--k-daire);display:grid;place-items:center;background:linear-gradient(#A5ABB7,#848A96);color:#fff;font-size:20px}
+.os-msj .ub small{font-size:12px}
+.os-msj .ak{flex:1;padding:var(--b-16) var(--kenar);display:flex;flex-direction:column;gap:var(--b-8)}
+.os-msj .zm{align-self:center;font-size:12px;color:#8A8A8E}
+.os-msj .onz{align-self:flex-start;width:78%;border-radius:var(--k-kart);overflow:hidden;background:#E9E9EB;color:inherit;text-decoration:none;transition:transform .15s}
+.os-msj .onz:active{transform:scale(.97)}
+html[data-tema="koyu"] .os-msj .onz{background:#26252A}
+.os-msj .onz .gr{aspect-ratio:1.91/1;background:#999 center/cover no-repeat}
+.os-msj .onz span{display:block;padding:var(--b-8) var(--b-12) var(--b-12)}
+.os-msj .onz b{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:15px;line-height:1.3}
+.os-msj .onz small{display:block;margin-top:var(--b-4);font-size:13px;color:#8A8A8E;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.os-msj .gir{flex:none;display:flex;align-items:center;gap:var(--b-8);padding:var(--b-8) var(--b-12) calc(var(--alt-guvenli) + var(--b-4))}
+.os-msj .gir span{flex:1;height:36px;border-radius:var(--k-kart);border:1px solid rgba(60,60,67,.29);display:flex;align-items:center;padding:0 var(--b-12);font-size:16px;color:#8A8A8E}
+/* itilen ekran (gezinme geçişi): sağdan gelir, geri ile sağa gider; altındaki ana sayfa yerinde kalır */
+.itme{position:absolute;inset:0;z-index:85;overflow:hidden;background:var(--zemin);box-shadow:var(--golge-md);transition:transform .32s var(--k-egri)}
+.itme.dis{transform:translateX(100%)}
+.gizli{opacity:0;pointer-events:none}
+.giris-f{display:grid;gap:var(--b-16);padding-top:var(--b-16)}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var DUR = K.durum, TUR = K.q.get('tur'), ADIM = K.q.get('adim'), TAM = document.documentElement.classList.contains('tam');
+  var GIRIS = DUR === 'giris', YOK = DUR === 'bulunamadi', LISTE = !GIRIS && !YOK && TUR === 'liste', d = D.detay, L = D.liste;
+  if (GIRIS) K.uye = false; /* hesap adresi misafirde açıldı */
+  var e = document.getElementById('ekran'), M = D.manset[0];
+
+  /* alttaki ekran: ana sayfa (uygulama kapalıyken bağlantıdan açıldı) */
+  e.innerHTML = '<div class="k-kubbe"><span class="k-hilal"></span><div class="k-hero" style="background-image:' + G(M.g) + '">' + K.katEt(M.kat, M.ikon, { foto: true, ek: M.sure }) + '<h2>' + M.baslik + '</h2><span class="k-yz">' + K.avatar(M.yazar) + M.yazar + '</span>' + K.noktalar(5, 0, true) + '<span class="k-sayac foto">1 / 5</span></div></div>' +
+    K.hikayeSerit() + '<section class="k-bant ton">' + K.bb({ baslik: 'Son Dakika', canli: true, baglanti: { metin: 'Tümü', href: K.git('sonDakika') } }) + K.ray(D.sonDakika.slice(0, 4).map(function(s, i){ return K.sd(s, i === 0); }).join(''), 's10') + '</section><div class="k-son"></div>';
+  K.ustCubuk({ tur: 'foto', logo: true, eylemler: ['ara', 'hesap', 'menu'] });
+  K.altCubuk('ana');
+  K.oynatici();
+
+  /* açılan ekran (itilen katman) */
+  var it = K.el('<div class="itme"><div class="ekran"></div></div>'); document.body.appendChild(it);
+  var ie = it.querySelector('.ekran'), FOTO = true;
+  if (GIRIS) { FOTO = false;
+    ie.innerHTML = '<div class="k-ust-bosluk"></div><div class="k-ic giris-f">' + K.serit({ tur: 'uyari', ikon: 'fa-bookmark', metin: 'Kaydedilenler için giriş yap', alt: 'Giriş yapınca açmak istediğin sayfaya döneceksin.' }) +
+      K.alan({ etiket: 'E-posta', tur: 'email', yer: 'E-posta adresin', ikon: 'fa-envelope', oto: 'email' }) + K.alan({ etiket: 'Şifre', tur: 'password', yer: 'Şifren', ikon: 'fa-lock', oto: 'current-password' }) +
+      K.btn({ metin: 'Giriş yap', ikon: 'fa-right-to-bracket', tur: 'birincil', boy: 'buyuk', tam: true, href: K.u(K.YOL.kaydedilenler, 'uye=1') }) +
+      '<div style="display:flex;justify-content:space-between">' + K.btn({ metin: 'Şifremi unuttum', tur: 'metin' }) + K.btn({ metin: 'Üye ol', tur: 'metin', href: K.git('uyeOl') }) + '</div></div><div class="k-son yalin"></div>';
+    K.ustCubuk({ geri: true, baslik: 'Giriş yap', yer: it });
+  } else if (YOK) { FOTO = false;
+    ie.innerHTML = '<div class="k-ust-bosluk"></div><div style="padding-top:var(--b-40)">' + K.bos(Object.assign({}, K.HATA.web, { hata: true, ikon: 'fa-link-slash', baslik: 'Bu sayfa uygulamada açılamıyor', aciklama: 'Bağlantı uygulamada karşılığı olmayan bir sayfaya gidiyor. Web sitemizde açabilirsin.' })) + '</div>';
+    K.ustCubuk({ geri: true, yer: it });
+  } else if (LISTE) {
+    ie.innerHTML = '<header class="k-kapak" style="background-image:' + G('tbmm') + '"><h1>' + L.bolum + '</h1><p>' + L.aciklama + '</p></header><div class="k-yaprak"><div class="k-cip-satiri">' + K.cipler(L.altKonular, 0) + K.gorunum() + '</div>' +
+      '<div class="k-satirlar">' + L.haberler.slice(0, 6).map(function(h){ return K.satir(h); }).join('') + '</div><div class="k-son"></div></div>';
+    K.ustCubuk({ tur: 'foto', geri: true, baslik: L.bolum, eylemler: ['ara', 'paylas'], gorsel: 'tbmm', yer: it });
+    K.altCubuk('bolum', { yer: it });
+  } else {
+    ie.innerHTML = '<header class="k-kapak detay" style="background-image:' + G(d.g) + '"><button class="k-oynat-d" type="button">' + K.I('fa-play') + 'Video · ' + d.video + '</button>' + K.katEt(d.yol.join(' · '), d.ikon, { foto: true }) +
+      '<h1>' + d.baslik + '</h1><div class="k-imza">' + K.avatar(d.yazar) + '<span class="t"><b>' + d.yazar + '</b><small>' + d.unvan + '</small></span></div></header>' +
+      '<div class="k-yaprak"><div class="k-ic" style="padding-top:var(--b-24)">' + K.zamanSatir() + '<p class="k-spot" style="margin-top:var(--b-12)">' + d.spot + '</p>' +
+      '<div style="margin-top:var(--b-16)">' + K.segment([{ metin: '15 sn', alt: '3 madde' }, { metin: '1 dk', alt: 'Özet' }, { metin: 'Tam metin', alt: d.sure }], 0) + '</div>' + K.madde(d.ozet) + '</div><div class="k-son okuma"></div></div>';
+    K.ustCubuk({ tur: 'foto', geri: true, eylemler: ['kaydet'], yer: it });
+    K.okuma({ yer: it });
+  }
+  function ustDurum(){ if (!FOTO && !it.classList.contains('dis')) document.body.removeAttribute('data-durum'); else document.body.setAttribute('data-durum', 'acik'); }
+  it.addEventListener('click', function(ev){ var g = ev.target.closest('[data-geri]'); if (!g) return; ev.preventDefault(); ev.stopPropagation(); it.classList.add('dis'); ustDurum(); }, true);
+
+  /* paylaşılan bağlantı (mesajlaşma uygulaması) */
+  var ADR = GIRIS ? 'dadahaber.com/hesabim/kaydedilenler' : YOK ? 'dadahaber.com/uygulama' : LISTE ? 'dadahaber.com/gundem/turkiye/' : 'dadahaber.com/gundem/asgari-ucret-gorusmelerinde-ilk-toplanti-4-aralikta-yapilacak';
+  var onz = LISTE || GIRIS || YOK
+    ? '<a class="onz" href="#" data-ac><span><b>' + (LISTE ? 'Türkiye · Dada Haber' : GIRIS ? 'Kaydedilenler · Dada Haber' : 'Dada Haber uygulaması') + '</b><small>' + ADR + '</small></span></a>'
+    : '<a class="onz" href="#" data-ac><div class="gr" style="background-image:' + G(d.g) + '"></div><span><b>' + d.baslik + '</b><small>' + ADR.split('/')[0] + '</small></span></a>';
+  var msj = K.el('<div class="os-msj" role="region" aria-label="Mesajlar"><div class="ub"><span class="av">' + K.I('fa-user') + '</span><small>Mesajlar</small></div><div class="ak"><span class="zm">Bugün 16.03</span>' +
+    onz + '</div><div class="gir"><span>Mesaj</span></div></div>');
+
+  function son(){ msj.remove(); it.classList.remove('dis'); ustDurum(); }
+  if (TAM && !ADIM) { son(); return; }
+  document.body.appendChild(msj); it.classList.add('dis'); document.body.removeAttribute('data-durum');
+  if (ADIM === '1') { msj.querySelector('[data-ac]').addEventListener('click', function(ev){ ev.preventDefault(); location.href = K.u('ekranlar/sistem/derin-baglanti.html', location.search.replace(/^\?/, '').replace(/&?adim=1/, '')); }); return; }
+  var bitti = false;
+  function ilerle(){ if (bitti) return; bitti = true; msj.classList.add('gizli'); setTimeout(function(){ msj.remove(); }, 250); it.classList.remove('dis'); ustDurum(); }
+  msj.querySelector('[data-ac]').addEventListener('click', function(ev){ ev.preventDefault(); ilerle(); });
+  setTimeout(ilerle, 1200);
+})();
+</script>
+</body>
+</html>

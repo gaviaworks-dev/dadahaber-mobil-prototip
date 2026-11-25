@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Bildir</title>
+<!-- Dada Haber Mobil · BİLDİR ALT SAYFASI (E-553–E-555). Geçici katman.
+     Sorgu: (yok) E-553 yorumu bildir: Yorumlar ekranının üstünde; sebep seç (hakaret, spam, yanlış bilgi, kişisel bilgi, diğer) + Gönder
+            ?tur=haber E-554 haberde hata bildir: haber detayının üstünde; hatayı ve doğrusunu yaz (500 karakter), düzeltme talebi; düzeltme politikasına bağlantı
+            ?durum=tamam E-555 gönderildi: alt sayfa kapandı, teşekkür kısa bildirimi (&tur=haber → düzeltme talebi metni) · ?tema=koyu
+     Misafir de bildirebilir (varsayım, onaylanmadı: public sitede yorum bildirme girişsiz). Platform notu: Android'de geri tuşu alt sayfayı kapatır.
+     Veri: D.detay, D.detay.yorumlar (public haber-detay.html yorumları). -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), DUR = K.durum, HABER = K.q.get('tur') === 'haber';
+
+  /* arka plan A: haber detayı kökü (açılış hali) */
+  function arkaDetay(){ var d = D.detay;
+    e.innerHTML = '<header class="k-kapak detay" style="background-image:' + G(d.g) + '"><button class="k-oynat-d" type="button">' + K.I('fa-play') + 'Video · ' + d.video + '</button>' + K.katEt(d.yol.join(' · '), d.ikon, { foto: true }) +
+      '<h1>' + d.baslik + '</h1><div class="k-imza">' + K.avatar(d.yazar) + '<span class="t"><b>' + d.yazar + '</b><small>' + d.unvan + '</small></span></div></header>' +
+      '<div class="k-yaprak"><div class="k-ic" style="padding-top:var(--b-24)">' + K.zamanSatir() + '<p class="k-spot" style="margin-top:var(--b-12)">' + d.spot + '</p>' +
+      '<div style="margin-top:var(--b-16)">' + K.segment([{ metin: '15 sn', alt: '3 madde' }, { metin: '1 dk', alt: 'Özet' }, { metin: 'Tam metin', alt: d.sure }], 0) + '</div>' + K.madde(d.ozet) + '</div><div class="k-son okuma"></div></div>';
+    K.ustCubuk({ tur: 'foto', geri: true, eylemler: ['kaydet'] });
+    K.okuma(); }
+  /* arka plan B: Yorumlar ekranı */
+  function arkaYorumlar(){
+    e.innerHTML = '<div class="k-ust-bosluk"></div><div class="k-ic">' + K.yorumlar() + '</div><div class="k-son yalin"></div>';
+    K.ustCubuk({ geri: true, baslik: 'Yorumlar', eylemler: ['sirala'] }); }
+
+  if (HABER) arkaDetay(); else arkaYorumlar();
+  K.oynatici();
+
+  if (DUR === 'tamam') {
+    K.toast(HABER ? 'Düzeltme talebin alındı' : 'Bildirimin alındı · Teşekkürler', { tur: 'basari', alt: HABER ? 'Editörlerimiz inceleyip gerekirse haberi düzeltir' : 'Yorumu moderatörlerimiz inceler', sure: 0 });
+  } else {
+    var s = K.sayfa('bildir', { haber: HABER, acik: true });
+    if (HABER) s.el.querySelector('.k-sayfa-i').insertAdjacentHTML('beforeend', '<p class="k-not">' + K.I('fa-circle-info') + 'Düzeltmeler haberin sonunda düzeltme notuyla gösterilir.</p><a class="k-bag" href="' + K.git('yasal') + '">Düzeltme politikası' + K.I('fa-chevron-right') + '</a>');
+    /* Gönder → gönderildi hali */
+    var g = s.el.querySelector('.k-sayfa-a .k-btn'); g.removeAttribute('data-toast'); g.removeAttribute('data-kapat');
+    g.setAttribute('data-href', K.u('ekranlar/sistem/bildir.html', 'durum=tamam' + (HABER ? '&tur=haber' : '')));
+  }
+})();
+</script>
+</body>
+</html>

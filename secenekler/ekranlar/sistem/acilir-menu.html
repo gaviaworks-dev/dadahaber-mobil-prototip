@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Açılır menü</title>
+<!-- Dada Haber Mobil · AÇILIR MENÜLER (E-584–E-586). Dokunulan düğmenin altında açılır (kit K.menu); dışına dokununca kapanır, seçili öğe işaretli, silme kırmızı.
+     Sorgu: (yok) E-584 sıralama: Kaydedilenler'in üst çubuğundaki Sırala → En yeni · En eski · En çok beğenilen (Arama ve Yorumlar'da aynı menü)
+            ?tur=klasor E-585 klasör ⋯: Okunacaklar klasöründe → Yeniden adlandır · Çevrimdışı indir · Klasörü sil
+            ?tur=yorum E-586 yorum ⋯: Yorumlar'da ilk yorumun ⋯ düğmesi → Bildir · Kopyala · (Sil pasif); &kendi=1 kendi yorumunda Kopyala · Sil · ?tema=koyu
+     Platform notu: iOS'ta bağlam menüsü (UIMenu), Android'de açılır menü (popup) görünümüne yakın; uygulamanın kendi menüsü iki platformda aynı.
+     Veri: D.liste.haberler (kaydedilenler örneği), D.detay.yorumlar. -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), TUR = K.q.get('tur') || 'siralama', L = D.liste.haberler, ust = '<div class="k-ust-bosluk"></div>';
+  var konum = { top: 'calc(var(--k-ub-h) + var(--b-4))', right: 'var(--b-8)' };
+
+  if (TUR === 'yorum') {
+    e.innerHTML = ust + '<div class="k-ic">' + K.yorumlar() + '</div><div class="k-son yalin"></div>';
+    K.ustCubuk({ geri: true, baslik: 'Yorumlar', eylemler: ['sirala'] });
+    K.oynatici();
+    var h = e.querySelector('.k-yorum [data-menu-ac]');
+    var og = K.q.get('kendi') === '1' ? [{ metin: 'Kopyala', ikon: 'fa-copy' }, { ayrac: true }, { metin: 'Sil', ikon: 'fa-trash-can', tehlike: true }] : K.MENU.yorum;
+    if (h) { h.setAttribute('aria-expanded', 'true'); K.menu({ ogeler: og, hedef: h, acik: true }); }
+  } else if (TUR === 'klasor') {
+    e.innerHTML = ust + '<div class="k-satirlar">' + [L[1], L[2], L[4]].map(function(x){ return K.satir(x, { kaydedildi: true }); }).join('') + '</div><div class="k-son"></div>';
+    K.ustCubuk({ geri: true, baslik: 'Okunacaklar', eylemler: ['sirala', 'daha'] });
+    K.altCubuk('hesap'); K.oynatici();
+    K.menu('klasor', { acik: true, konum: konum });
+  } else {
+    e.innerHTML = ust + '<div class="k-ic" style="padding-top:var(--b-8)"></div>' + K.cipler([{ metin: 'Tümü', sayi: 9 }, { metin: 'Okunacaklar', ikon: 'fa-folder-open', sayi: 3 }, { metin: 'İndirilenler', ikon: 'fa-circle-down', sayi: 4 }], 0) +
+      '<div class="k-satirlar">' + L.slice(0, 5).map(function(x){ return K.satir(x, { kaydedildi: true }); }).join('') + '</div><div class="k-son"></div>';
+    K.ustCubuk({ geri: true, baslik: 'Kaydedilenler', eylemler: ['sirala', 'daha'] });
+    K.altCubuk('hesap'); K.oynatici();
+    K.menu('siralama', { acik: true, konum: konum });
+  }
+  /* seçim: sıralamada işaret taşınır */
+  document.addEventListener('click', function(ev){ var o = ev.target.closest('.k-menu-o[role="menuitemradio"]'); if (!o) return; o.parentNode.querySelectorAll('[role="menuitemradio"]').forEach(function(x){ x.setAttribute('aria-checked', x === o); }); });
+})();
+</script>
+</body>
+</html>

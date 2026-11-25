@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Bildirimden açılış</title>
+<!-- Dada Haber Mobil · BİLDİRİMDEN AÇILIŞ (E-589–E-591). Akış sayfa açılınca oynar: 1) kilit ekranında sistem bildirimi (dokun ya da 1,1 sn) → 2) uygulama açılır → 3) açılan ekran.
+     Son hal (varsayılan görüntü; denetim kipinde doğrudan): açılan ekran, altında "geri" ile dönülecek ekran durur. Geri düğmesi açılan ekranı sağa kaydırıp alttakini gösterir.
+     Sorgu: (yok) E-589 uygulama kapalı: kısa açılış (beyaz "dada", K35) → doğrudan haber detayı; geri → ana sayfa
+            ?durum=sicak E-590 uygulama açık (arka planda): açılış yok; kullanıcının bulunduğu ekran (Gündem listesi) görünür, detay üstüne itilir; geri → Gündem listesi
+            ?durum=kaldirildi E-591 içerik kaldırıldı: açılış → hata şablonu (Bu haber yayından kaldırıldı) + Ana sayfaya dön; geri → ana sayfa
+            &adim=1 yalnız sistem bildirimi · &adim=2 yalnız ara adım (açılış ya da bulunulan ekran) · ?uye=0 · ?tema=koyu
+     Platform notu: iOS'ta bildirime dokununca kilit açılır (Face ID), sonra uygulama açılır; Android'de bildirim alanından dokununca doğrudan açılır (kilitliyse kilit açma istenir).
+     Android'de sistem geri tuşu da açılan ekranı kapatıp alttakine döner; uygulama kapalıyken açıldıysa alttaki ekran ana sayfadır (görev yığını kurulur).
+     Bildirim kartı: kilit-ekrani.html ile aynı işletim sistemi yüzeyi (KİT ADAYI). Veri: D.detay (bildirim 14.05, başlık + spot), D.sonDakika[3] (kaldırılan haber örneği; varsayım: kaldırma senaryosu örnektir). -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* KİT ADAYI: işletim sistemi yüzeyi (kilit ekranı + sistem bildirimi) — kilit-ekrani.html ile aynı */
+.os{position:absolute;inset:0;z-index:89;overflow:hidden;display:flex;flex-direction:column;background:linear-gradient(165deg,#56637A 0%,#2A3242 48%,#11151D 100%);color:#fff;font-family:-apple-system,"SF Pro Text","SF Pro Display",BlinkMacSystemFont,"Helvetica Neue",sans-serif;-webkit-font-smoothing:antialiased;transition:opacity .25s}
+body.os-acik .dc{color:#fff}
+body.os-acik .dc .dc-saat{visibility:hidden}
+.os-saat{flex:none;padding-top:calc(var(--ust-guvenli) + var(--b-8));text-align:center}
+.os-saat .kl{font-size:15px;opacity:.9}
+.os-saat small{display:block;margin-top:var(--b-4);font-size:19px;font-weight:var(--y-orta)}
+.os-saat b{display:block;font-size:96px;line-height:1;font-weight:var(--y-ince);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.os-alt{margin-top:auto;padding:0 var(--b-8) calc(var(--alt-guvenli) + var(--b-24))}
+.os-bil{display:grid;grid-template-columns:38px minmax(0,1fr) auto;gap:var(--b-12);align-items:start;padding:var(--b-12);border-radius:var(--k-kart);background:rgba(246,246,248,.78);-webkit-backdrop-filter:blur(24px) saturate(1.4);backdrop-filter:blur(24px) saturate(1.4);color:#000;transition:transform .15s}
+.os-bil:active{transform:scale(.97)}
+html[data-tema="koyu"] .os-bil{background:rgba(32,32,36,.74);color:#fff}
+.os-bil .ik{width:38px;height:38px;border-radius:var(--k-ic);background:var(--marka) center/78% no-repeat}
+.os-bil .t{min-width:0}
+.os-bil .t b{display:block;font-size:15px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.os-bil .t p{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;font-size:15px;line-height:1.3}
+.os-bil .s{display:grid;justify-items:end;gap:var(--b-4)}
+.os-bil .s small{font-size:13px;opacity:.6;white-space:nowrap}
+.os-bil .s .gr{width:40px;height:40px;border-radius:var(--k-ic);background:#999 center/cover no-repeat}
+/* kısa açılış (giris/acilis.html ile aynı görünüm: açıkta sarı, koyuda siyah zemin, beyaz "dada") */
+.acl{position:absolute;inset:0;z-index:88;display:grid;place-items:center;background:var(--marka);transition:opacity .25s}
+html[data-tema="koyu"] .acl{background:var(--siyah)}
+.acl span{width:168px;aspect-ratio:2942/991;background:center/contain no-repeat}
+/* itilen ekran (gezinme geçişi): sağdan gelir, geri ile sağa gider; altındaki ekran yerinde kalır */
+.itme{position:absolute;inset:0;z-index:85;overflow:hidden;background:var(--zemin);box-shadow:var(--golge-md);transition:transform .32s var(--k-egri)}
+.itme.dis{transform:translateX(100%)}
+.gizli{opacity:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), DUR = K.durum || 'soguk', ADIM = K.q.get('adim'), TAM = document.documentElement.classList.contains('tam');
+  var SICAK = DUR === 'sicak', KALDI = DUR === 'kaldirildi', d = D.detay, L = D.liste;
+  var IKON = "url('" + window.VARLIK + "gorsel/logo/dada-beyaz.svg')";
+
+  /* alttaki ekran: soğuk açılışta ana sayfa (görev yığını kurulur), sıcakta kullanıcının bulunduğu Gündem listesi */
+  if (SICAK) {
+    e.innerHTML = '<header class="k-kapak" style="background-image:' + G('tbmm') + '"><h1>' + L.bolum + '</h1><p>' + L.aciklama + '</p></header><div class="k-yaprak"><div class="k-cip-satiri">' + K.cipler(L.altKonular, 0) + K.gorunum() + '</div>' +
+      '<div class="k-satirlar">' + L.haberler.slice(0, 6).map(function(h){ return K.satir(h); }).join('') + '</div><div class="k-son"></div></div>';
+    K.ustCubuk({ tur: 'foto', geri: true, baslik: L.bolum, eylemler: ['ara', 'paylas'], gorsel: 'tbmm' });
+    K.altCubuk('bolum');
+  } else { var M = D.manset[0];
+    e.innerHTML = '<div class="k-kubbe"><span class="k-hilal"></span><div class="k-hero" style="background-image:' + G(M.g) + '">' + K.katEt(M.kat, M.ikon, { foto: true, ek: M.sure }) + '<h2>' + M.baslik + '</h2><span class="k-yz">' + K.avatar(M.yazar) + M.yazar + '</span>' + K.noktalar(5, 0, true) + '<span class="k-sayac foto">1 / 5</span></div></div>' +
+      K.hikayeSerit() + '<section class="k-bant ton">' + K.bb({ baslik: 'Son Dakika', canli: true, baglanti: { metin: 'Tümü', href: K.git('sonDakika') } }) + K.ray(D.sonDakika.slice(0, 4).map(function(s, i){ return K.sd(s, i === 0); }).join(''), 's10') + '</section><div class="k-son"></div>';
+    K.ustCubuk({ tur: 'foto', logo: true, eylemler: ['ara', 'hesap', 'menu'] });
+    K.altCubuk('ana');
+  }
+  K.oynatici();
+
+  /* açılan ekran (itilen katman) */
+  var it = K.el('<div class="itme"><div class="ekran"></div></div>');
+  document.body.appendChild(it);
+  var ie = it.querySelector('.ekran');
+  if (KALDI) {
+    var h = Object.assign({}, K.HATA.kaldirildi, { hata: true, eylem: { metin: 'Ana sayfaya dön', ikon: 'fa-house', href: 'ana' }, ikinci: { metin: 'Bölüme dön', href: 'liste' } });
+    ie.innerHTML = '<div class="k-ust-bosluk"></div><div style="padding-top:var(--b-40)">' + K.bos(h) + '</div>';
+    K.ustCubuk({ geri: true, yer: it });
+  } else {
+    ie.innerHTML = '<header class="k-kapak detay" style="background-image:' + G(d.g) + '"><button class="k-oynat-d" type="button">' + K.I('fa-play') + 'Video · ' + d.video + '</button>' + K.katEt(d.yol.join(' · '), d.ikon, { foto: true }) +
+      '<h1>' + d.baslik + '</h1><div class="k-imza">' + K.avatar(d.yazar) + '<span class="t"><b>' + d.yazar + '</b><small>' + d.unvan + '</small></span></div></header>' +
+      '<div class="k-yaprak"><div class="k-ic" style="padding-top:var(--b-24)">' + K.zamanSatir() + '<p class="k-spot" style="margin-top:var(--b-12)">' + d.spot + '</p>' +
+      '<div style="margin-top:var(--b-16)">' + K.segment([{ metin: '15 sn', alt: '3 madde' }, { metin: '1 dk', alt: 'Özet' }, { metin: 'Tam metin', alt: d.sure }], 0) + '</div>' + K.madde(d.ozet) + '</div><div class="k-son okuma"></div></div>';
+    K.ustCubuk({ tur: 'foto', geri: true, eylemler: ['kaydet'], yer: it });
+    K.okuma({ yer: it });
+  }
+  /* durum çubuğu: fotoğraf üstünde beyaz; hata şablonunda (düz zemin) temanın rengi */
+  function ustDurum(){ if (KALDI && !it.classList.contains('dis')) document.body.removeAttribute('data-durum'); else document.body.setAttribute('data-durum', 'acik'); }
+
+  /* geri: açılan ekran sağa kayar, alttaki görünür */
+  it.addEventListener('click', function(ev){ var g = ev.target.closest('[data-geri]'); if (!g) return; ev.preventDefault(); ev.stopPropagation(); it.classList.add('dis'); ustDurum(); }, true);
+
+  /* sistem bildirimi ve açılış katmanları */
+  var bil = KALDI ? { saat: D.sonDakika[3].saat, b: D.sonDakika[3].baslik, m: 'Son Dakika · ' + D.sonDakika[3].kat, g: 'koy-yolu' } : { saat: d.saat, b: d.baslik, m: d.spot, g: d.g };
+  var os = K.el('<div class="os" role="region" aria-label="Kilit ekranı"><div class="os-saat"><span class="kl">' + K.I('fa-lock') + '</span><small>' + D.simdi.gun + ' ' + D.simdi.tarih.replace(' 2026', '') + '</small><b>' + D.simdi.saat + '</b></div>' +
+    '<div class="os-alt"><a class="os-bil" href="#" data-ac><span class="ik" style="background-image:' + IKON + '" role="img" aria-label="Dada Haber"></span><span class="t"><b>' + bil.b + '</b><p>' + bil.m + '</p></span><span class="s"><small>' + bil.saat + '</small><span class="gr" style="background-image:' + G(bil.g) + '"></span></span></a></div></div>');
+  var acl = K.el('<div class="acl" aria-hidden="true"><span style="background-image:' + IKON + '"></span></div>');
+
+  function son(){ os.remove(); acl.remove(); document.body.classList.remove('os-acik'); it.classList.remove('dis'); ustDurum(); }
+  /* 2. adım: soğukta kısa açılış, sıcakta kullanıcının bulunduğu ekran (açılan ekran henüz dışarıda) */
+  function adim2(){ document.body.classList.remove('os-acik'); it.classList.add('dis'); ustDurum();
+    if (!SICAK) { document.body.appendChild(acl); document.body.removeAttribute('data-durum'); }
+    if (os.parentNode) { os.classList.add('gizli'); setTimeout(function(){ os.remove(); }, 250); } }
+
+  if (TAM && !ADIM) { son(); return; }
+  if (ADIM === '2') { adim2(); return; }
+  document.body.appendChild(os); document.body.classList.add('os-acik'); it.classList.add('dis');
+  var sonraki = K.u('ekranlar/sistem/bildirimden-acilis.html', (DUR !== 'soguk' ? 'durum=' + DUR + '&' : '') + 'adim=2');
+  if (ADIM === '1') { os.querySelector('[data-ac]').addEventListener('click', function(ev){ ev.preventDefault(); location.href = sonraki; }); return; }
+  /* akış: bildirim → (açılış | bulunulan ekran) → açılan ekran */
+  var bitti = false;
+  function ilerle(){ if (bitti) return; bitti = true; adim2();
+    setTimeout(function(){ if (acl.parentNode) { acl.classList.add('gizli'); setTimeout(function(){ acl.remove(); }, 250); } it.classList.remove('dis'); ustDurum(); }, SICAK ? 300 : 550); }
+  os.querySelector('[data-ac]').addEventListener('click', function(ev){ ev.preventDefault(); ilerle(); });
+  setTimeout(ilerle, 1100);
+})();
+</script>
+</body>
+</html>

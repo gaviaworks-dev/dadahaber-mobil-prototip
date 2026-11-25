@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Kilit ekranı</title>
+<!-- Dada Haber Mobil · KİLİT EKRANI (E-600–E-601). İşletim sisteminin yüzeyi: Dada görünümü taşımaz (nötr duvar kâğıdı, sistem yazı tipi, sistem malzemesi); yalnız uygulama simgesi ve içerik bizden.
+     Sorgu: (yok) E-600 bildirim görünümü: en yeni bildirim (simge · başlık tek satır "…" + metin en çok 3 satır · saat + görsel; panel kuralı) ve arkasında gruplanmış iki bildirim
+            &hal=acik grup açık (3 bildirim alt alta, "Daha az göster") · &hal=buyuk uzun basınca açılan bildirim: 2:1 görsel (panelin bildirim görseli oranı), başlık, tam metin
+            ?durum=medya E-601 medya denetimi: kapak, başlık, kaynak, ilerleme, 15 sn geri · oynat/duraklat · 15 sn ileri · &tur=spiker (varsayılan) | dinle | podcast · ?tema=koyu (sistem görünümü koyu)
+     Bildirime dokununca bildirimden açılış akışı (bildirimden-acilis.html). E-602 (Canlı Etkinlik) aday, burada yok.
+     iOS / Android farkı:
+       - iOS: saat ve tarih üstte büyük; bildirimler altta yığın (aynı uygulamanınkiler gruplanır, dokununca açılır); medya "Şimdi Çalıyor" kartı kilit ekranında, ±15 sn düğmeleri uygulama atlama aralığı bildirince görünür; uzun basınca zengin bildirim (görsel) açılır.
+       - Android: bildirimler saatin altında liste (uygulama başlığı satırı, aşağı ok ile genişler; "büyük resim" biçiminde 2:1 görsel genişleyince görünür); medya denetimi bildirim alanında medya kartı (kapak kartın zemini olur, oynat/duraklat + özel eylemler: 15 sn geri/ileri).
+       - İki platformda içerik aynı: başlık, metin, görsel, saat. Bildirim metinleri panelden (bildirim metni; boşsa haber başlığı ve spot).
+     Veri: 1) İstanbul Valiliği 16.05 (metin: ekranlar/icerik/canli-anlatim.html, kaynak public dakika-dakika.html; görsel kar-istanbul) 2) D.detay (14.05, spot) 3) D.sonDakika[5] faiz (14.00, metin D.ozet[1]); medya D.spiker, D.detay, D.podcast[0]. -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* KİT ADAYI: işletim sistemi yüzeyi (.os, .os-bil, .os-medya) — kilit ekranı, sistem bildirimi ve medya denetimi; bildirimden-acilis.html ile ortak. Dada değerleri yalnız köşe/boşluk/ağırlık jetonu olarak; renk ve yazı sistemin. */
+.os{position:absolute;inset:0;z-index:89;overflow:hidden;display:flex;flex-direction:column;background:linear-gradient(165deg,#56637A 0%,#2A3242 48%,#11151D 100%);color:#fff;font-family:-apple-system,"SF Pro Text","SF Pro Display",BlinkMacSystemFont,"Helvetica Neue",sans-serif;-webkit-font-smoothing:antialiased}
+body.os-acik .dc{color:#fff}
+body.os-acik .dc .dc-saat{visibility:hidden} /* kilit ekranında saat ortada büyük */
+.os-saat{flex:none;padding-top:calc(var(--ust-guvenli) + var(--b-8));text-align:center}
+.os-saat .kl{font-size:15px;opacity:.9}
+.os-saat small{display:block;margin-top:var(--b-4);font-size:19px;font-weight:var(--y-orta)}
+.os-saat b{display:block;font-size:96px;line-height:1;font-weight:var(--y-ince);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.os-alt{margin-top:auto;padding:0 var(--b-8) calc(var(--alt-guvenli) + var(--b-24));display:grid;gap:var(--b-8)}
+.os-bil{position:relative;z-index:2;display:grid;grid-template-columns:38px minmax(0,1fr) auto;gap:var(--b-12);align-items:start;min-height:var(--dokun);padding:var(--b-12);border-radius:var(--k-kart);background:rgba(246,246,248,.78);-webkit-backdrop-filter:blur(24px) saturate(1.4);backdrop-filter:blur(24px) saturate(1.4);color:#000;text-decoration:none}
+html[data-tema="koyu"] .os-bil{background:rgba(32,32,36,.74);color:#fff}
+.os-bil .ik{width:38px;height:38px;border-radius:var(--k-ic);background:var(--marka) center/78% no-repeat}
+.os-bil .t{min-width:0}
+.os-bil .t b{display:block;font-size:15px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.os-bil .t p{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;font-size:15px;line-height:1.3}
+.os-bil .s{display:grid;justify-items:end;gap:var(--b-4)}
+.os-bil .s small{font-size:13px;opacity:.6;white-space:nowrap}
+.os-bil .s .gr{width:40px;height:40px;border-radius:var(--k-ic);background:#999 center/cover no-repeat}
+/* grup: arkadaki iki bildirim kenarı görünür */
+.os-yigin{position:relative;padding-bottom:var(--b-16)}
+.os-yigin i{position:absolute;left:var(--b-12);right:var(--b-12);bottom:var(--b-8);height:24px;border-bottom-left-radius:var(--k-kart);border-bottom-right-radius:var(--k-kart);background:rgba(246,246,248,.5);z-index:1}
+.os-yigin i+i{left:var(--b-24);right:var(--b-24);bottom:0;background:rgba(246,246,248,.32);z-index:0}
+html[data-tema="koyu"] .os-yigin i{background:rgba(32,32,36,.55)}
+html[data-tema="koyu"] .os-yigin i+i{background:rgba(32,32,36,.35)}
+.os-grup-b{display:flex;align-items:center;justify-content:space-between;padding:0 var(--b-8)}
+.os-grup-b b{font-size:20px;font-weight:var(--y-kalin)}
+.os-grup-b button{min-height:var(--dokun);padding:0 var(--b-12);border-radius:var(--k-kart);background:rgba(246,246,248,.32);font-size:13px;color:#fff;font-weight:var(--y-orta)}
+/* uzun basınca açılan zengin bildirim */
+.os-buyuk{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;justify-content:center;padding:0 var(--b-8);background:rgba(0,0,0,.3);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px)}
+.os-buyuk .kart{border-radius:var(--k-kart);overflow:hidden;background:rgba(246,246,248,.92);color:#000}
+html[data-tema="koyu"] .os-buyuk .kart{background:rgba(36,36,40,.94);color:#fff}
+.os-buyuk .gr{aspect-ratio:2/1;background:#999 center/cover no-repeat}
+.os-buyuk .os-bil{background:transparent;-webkit-backdrop-filter:none;backdrop-filter:none}
+.os-buyuk .os-bil .t p{-webkit-line-clamp:6}
+/* medya denetimi (Şimdi Çalıyor) */
+.os-medya{padding:var(--b-16);border-radius:var(--k-kart);background:rgba(246,246,248,.22);-webkit-backdrop-filter:blur(30px) saturate(1.4);backdrop-filter:blur(30px) saturate(1.4);color:#fff}
+.os-medya .u{display:grid;grid-template-columns:56px minmax(0,1fr) auto;gap:var(--b-12);align-items:center}
+.os-medya .kp{width:56px;height:56px;border-radius:var(--k-ic);background:#999 center/cover no-repeat}
+.os-medya .u b{display:block;font-size:15px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.os-medya .u small{display:flex;align-items:center;gap:var(--ikon-bosluk);font-size:13px;opacity:.7;white-space:nowrap;overflow:hidden}
+.os-medya .ui{width:28px;height:28px;border-radius:var(--k-ic);background:var(--marka) center/78% no-repeat}
+.os-medya .il{margin-top:var(--b-16);height:4px;border-radius:var(--k-cubuk);background:rgba(255,255,255,.25);overflow:hidden}
+.os-medya .il i{display:block;height:100%;width:29%;background:#fff}
+.os-medya .sr{display:flex;justify-content:space-between;margin-top:var(--b-4);font-size:12px;opacity:.7;font-variant-numeric:tabular-nums}
+.os-medya .dn{display:flex;justify-content:center;align-items:center;gap:var(--b-32);margin-top:var(--b-8)}
+.os-medya .dn button{position:relative;width:var(--dokun);height:var(--dokun);display:grid;place-items:center;font-size:24px;color:#fff}
+.os-medya .dn button.ana{width:56px;height:56px;font-size:32px}
+.os-medya .dn button b{position:absolute;top:50%;left:50%;transform:translate(-50%,-38%);font-size:9px;font-weight:var(--y-kalin)}
+</style>
+</head>
+<body>
+<script>
+(function(){
+  var DUR = K.durum, HAL = K.q.get('hal'), TUR = K.q.get('tur') || 'spiker', d = D.detay, S = D.spiker, P = D.podcast[0];
+  var IKON = "url('" + window.VARLIK + "gorsel/logo/dada-beyaz.svg')"; /* uygulama simgesi: sarı zemin + beyaz "dada" (açılışla aynı, K35) */
+  var AC = K.u('ekranlar/sistem/bildirimden-acilis.html');
+  /* bildirimler (kaynaklar üst yorumda) */
+  var B = [
+    { saat: 'şimdi', b: 'İstanbul Valiliği: okullar 24 Kasım\'da da tatil', m: 'İstanbul Valiliği, kar yağışının yarın öğle saatlerine kadar sürmesinin beklenmesi nedeniyle okul öncesi, ilk ve ortaöğretim kurumlarında eğitime 24 Kasım\'da da ara verildiğini açıkladı.', g: 'kar-istanbul' },
+    { saat: d.saat, b: d.baslik, m: d.spot, g: d.g },
+    { saat: D.sonDakika[5].saat, b: D.sonDakika[5].baslik, m: D.ozet[1].maddeler[1], g: 'faiz' }
+  ];
+  function bil(x, ek){ return '<a class="os-bil" href="' + AC + '"' + (ek || '') + '><span class="ik" style="background-image:' + IKON + '" role="img" aria-label="Dada Haber"></span><span class="t"><b>' + x.b + '</b><p>' + x.m + '</p></span><span class="s"><small>' + x.saat + '</small><span class="gr" style="background-image:' + G(x.g) + '"></span></span></a>'; }
+
+  var alt = '';
+  if (DUR === 'medya') {
+    var M = { spiker: { g: S.gorsel, b: S.sirada[0], k: K.I('fa-radio') + 'Dada Spiker · ' + S.bulten, gec: '0:52', kal: '−2:08' },
+      dinle: { g: d.g, b: d.baslik, k: K.I('fa-headphones') + 'Dinle · Dada Haber', gec: '1:10', kal: '−2:50' },
+      podcast: { g: P.g, b: P.baslik, k: K.I('fa-podcast') + P.seri + ' · ' + P.no, gec: '12:40', kal: '−35:32' } }[TUR] || null;
+    if (!M) { TUR = 'spiker'; M = { g: S.gorsel, b: S.sirada[0], k: K.I('fa-radio') + 'Dada Spiker · ' + S.bulten, gec: '0:52', kal: '−2:08' }; }
+    alt = '<div class="os-medya" role="group" aria-label="Şimdi çalıyor"><div class="u"><span class="kp" style="background-image:' + G(M.g) + '"></span><span style="min-width:0"><b>' + M.b + '</b><small>' + M.k + '</small></span><span class="ui" style="background-image:' + IKON + '" role="img" aria-label="Dada Haber"></span></div>' +
+      '<div class="il"><i></i></div><div class="sr"><span>' + M.gec + '</span><span>' + M.kal + '</span></div>' +
+      '<div class="dn"><button type="button" aria-label="15 sn geri">' + K.I('fa-rotate-left') + '<b>15</b></button><button type="button" class="ana" aria-label="Duraklat">' + K.I('fa-pause') + '</button><button type="button" aria-label="15 sn ileri">' + K.I('fa-rotate-right') + '<b>15</b></button></div></div>';
+  } else if (HAL === 'acik') {
+    alt = '<div class="os-grup-b"><b>Dada Haber</b><button type="button" data-hal="">Daha az göster</button></div>' + B.map(function(x){ return bil(x); }).join('');
+  } else {
+    alt = '<div class="os-yigin">' + bil(B[0]) + '<i></i><i></i></div>';
+  }
+  var os = '<div class="os" role="region" aria-label="Kilit ekranı"><div class="os-saat"><span class="kl">' + K.I('fa-lock') + '</span><small>' + D.simdi.gun + ' ' + D.simdi.tarih.replace(' 2026', '') + '</small><b>' + D.simdi.saat + '</b></div><div class="os-alt">' + alt + '</div>' +
+    (HAL === 'buyuk' && DUR !== 'medya' ? '<div class="os-buyuk"><div class="kart"><div class="gr" style="background-image:' + G(B[0].g) + '"></div>' + bil({ saat: B[0].saat, b: B[0].b, m: B[0].m, g: B[0].g }).replace('<span class="s"><small>şimdi</small><span class="gr" style="background-image:' + G(B[0].g) + '"></span></span>', '<span class="s"><small>şimdi</small></span>') + '</div></div>' : '') + '</div>';
+  document.body.insertAdjacentHTML('afterbegin', os);
+  document.body.classList.add('os-acik');
+  /* yığına dokununca grup açılır; "Daha az göster" kapatır; oynat/duraklat */
+  document.addEventListener('click', function(ev){ var t = ev.target;
+    var y = t.closest('.os-yigin .os-bil'); if (y) { ev.preventDefault(); location.href = K.u('ekranlar/sistem/kilit-ekrani.html', 'hal=acik'); return; }
+    if (t.closest('[data-hal]')) { location.href = K.u('ekranlar/sistem/kilit-ekrani.html'); return; }
+    var a = t.closest('.os-medya .ana'); if (a) { var p = !!a.querySelector('.fa-pause'); a.innerHTML = K.I(p ? 'fa-play' : 'fa-pause'); a.setAttribute('aria-label', p ? 'Oynat' : 'Duraklat'); } });
+})();
+</script>
+</body>
+</html>

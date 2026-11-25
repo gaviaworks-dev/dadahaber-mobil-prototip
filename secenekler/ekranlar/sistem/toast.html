@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Kısa bildirim</title>
+<!-- Dada Haber Mobil · KISA BİLDİRİMLER (E-573–E-581). Alt çubuğun (mini oynatıcı açıksa onun) üstünde, tek satır; geri al 4 sn (geri sayım çizgisi), öteki 3 sn.
+     Bu ekranda bildirim incelenebilsin diye kalıcı gösterilir (geri sayım çizgisi döngüde). Arka plan: Gündem listesi (alt çubuklu); yorum bildirimi haber detayında (okuma çubuğunun üstünde).
+     Sorgu: ?tur=kaydedildi E-573 Kaydedildi · Okunacaklar (klasör adı; misafirde "Bu cihazda") · Geri al (varsayılan)
+            ?tur=kaldirildi E-574 Kaydedilenlerden çıkarıldı · Geri al
+            ?tur=kopyalandi E-575 Bağlantı kopyalandı
+            ?tur=takip E-576 Takip ediliyor · Bildirim aç
+            ?tur=indirildi E-577 Çevrimdışı okumaya indirildi
+            ?tur=cevrimdisi E-578 Çevrimdışısın: kalıcı ince bant, alt çubuğun üstünde · Kaydedilenler
+            ?tur=baglandi E-579 Bağlantı geri geldi: bant yeşile döner (uygulamada 3 sn sonra kaybolur; burada incelenmek için kalır)
+            ?tur=yorum E-580 Yorumun gönderildi · Denetimden sonra yayınlanır
+            ?tur=hata E-581 İşlem yapılamadı · Yeniden dene · ?uye=0 · ?tema=koyu
+     Veri: D.liste (Gündem), D.detay, D.uye.takip. -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), TUR = K.q.get('tur') || 'kaydedildi', L = D.liste, TAM = document.documentElement.classList.contains('tam');
+
+  /* arka plan A: liste kökü (Gündem), kit parçalarıyla; o.kayitli = kaydet düğmesi basılı satır */
+  function arkaListe(o){ o = o || {};
+    e.innerHTML = '<header class="k-kapak" style="background-image:' + G('tbmm') + '"><h1>' + L.bolum + '</h1><p>' + L.aciklama + '</p></header><div class="k-yaprak"><div class="k-cip-satiri">' + K.cipler(L.altKonular, 0) + K.gorunum() + '</div>' +
+      '<div class="k-satirlar">' + L.haberler.slice(0, 6).map(function(h, i){ return K.satir(h, { kaydedildi: o.kayitli === i, indir: o.indir === i ? 'indirildi' : null }); }).join('') + '</div><div class="k-son"></div></div>';
+    K.ustCubuk({ tur: 'foto', geri: true, baslik: L.bolum, eylemler: ['ara', 'paylas'], gorsel: 'tbmm' });
+    K.altCubuk('bolum'); }
+  /* arka plan B: haber detayı (yorumlar bölümüne inilmiş) */
+  function arkaDetay(){ var d = D.detay;
+    e.innerHTML = '<div class="k-ust-bosluk"></div><div class="k-ic" style="padding-top:var(--b-16)">' + K.yorumlar({ sinir: 2 }) + '</div><div class="k-son okuma"></div>';
+    K.ustCubuk({ geri: true, baslik: d.baslik, eylemler: ['kaydet'], golgeli: true });
+    K.okuma(); }
+
+  var TT = {
+    kaydedildi: ['Kaydedildi', { ikon: 'fa-bookmark', geriAl: true, alt: K.uye ? 'Okunacaklar' : 'Bu cihazda', eylem: 'Geri al' }, { kayitli: 0 }],
+    kaldirildi: ['Kaydedilenlerden çıkarıldı', { ikon: 'fa-bookmark', geriAl: true }, {}],
+    kopyalandi: ['Bağlantı kopyalandı', { ikon: 'fa-link' }, {}],
+    takip: ['Takip ediliyor', { ikon: 'fa-heart', alt: D.uye.takip[1] + ' · ana sayfanda öne çıkar', eylem: 'Bildirim aç' }, {}],
+    indirildi: ['Çevrimdışı okumaya indirildi', { tur: 'basari' }, { kayitli: 0, indir: 0 }],
+    cevrimdisi: ['Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler' }, {}],
+    baglandi: ['Bağlantı geri geldi', { bant: true, tur: 'basari' }, {}],
+    yorum: ['Yorumun gönderildi', { tur: 'basari', alt: 'Denetimden sonra yayınlanır' }, null],
+    hata: ['İşlem yapılamadı', { tur: 'hata', eylem: 'Yeniden dene' }, {}]
+  };
+  if (!TT[TUR]) TUR = 'kaydedildi';
+  var T = TT[TUR];
+
+  if (T[2]) arkaListe(T[2]); else arkaDetay();
+  K.oynatici();
+
+  function goster(){
+    var t = K.toast(T[0], Object.assign({ sure: 0 }, T[1], { sure: 0 }));
+    var b = t.querySelector('button'); if (b && T[1].bant) b.classList.add('k-dk44');
+    var il = t.querySelector('.il'); if (il) il.style.animation = 'k-azal 4s linear infinite'; /* geri al: 4 sn geri sayım (incelenebilsin diye döngüde) */
+    if (TUR === 'cevrimdisi' && b) b.addEventListener('click', function(){ location.href = K.git('kaydedilenler'); });
+    return t; }
+  goster();
+})();
+</script>
+</body>
+</html>

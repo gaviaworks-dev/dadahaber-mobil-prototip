@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Bağlam menüsü</title>
+<!-- Dada Haber Mobil · BAĞLAM MENÜSÜ (E-587–E-588). Kartta uzun basma (520 ms): zemin bulanıklaşır, kart kalkar, altında eylemler (kit K.baglam). Perdeye dokununca kapanır.
+     Sorgu: (yok) E-587 haber kartı (Gündem listesinin 2. satırı): önizleme + Kaydet · Paylaş · Dinle (K39: Dinle = fa-headphones, haberin sesli okunması)
+            ?tur=akis E-588 Akış videosu: Sesi aç · Altyazı (Habere git yok, K23) · ?tema=koyu
+     Haptik: iOS'ta uzun basmada hafif dokunsal titreşim (UIContextMenu), Android'de uzun basma titreşimi; tarayıcı prototipinde yok (kit sözleşmesi).
+     Platform notu: iOS'ta sistem bağlam menüsüne, Android'de uzun basma menüsüne karşılık gelir; görünüm iki platformda aynı.
+     Veri: D.liste.haberler[1], D.akis.liste[0]. -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), L = D.liste;
+  /* kit bağlam menüsünde Dinle fa-play + data-spiker; K39'a göre haberin sesli okunması fa-headphones + data-dinle (KİT ADAYI: kitte düzeltilmeli) */
+  function k39(c){ [].forEach.call(c.el.querySelectorAll('[data-spiker]'), function(b){ b.removeAttribute('data-spiker'); b.setAttribute('data-dinle', ''); var i = b.querySelector('.fa-play'); if (i) i.className = 'fa-solid fa-headphones'; }); return c; }
+
+  if (K.q.get('tur') === 'akis') {
+    var v = D.akis.liste[0];
+    e.innerHTML = K.akisTam(v);
+    K.altCubuk('akis', { koyu: true });
+    K.baglam({ h: { baslik: v.baslik, g: v.g, us: K.katEt(v.kat) }, tur: 'akis', acik: true });
+  } else {
+    e.innerHTML = '<header class="k-kapak" style="background-image:' + G('tbmm') + '"><h1>' + L.bolum + '</h1><p>' + L.aciklama + '</p></header><div class="k-yaprak"><div class="k-cip-satiri">' + K.cipler(L.altKonular, 0) + K.gorunum() + '</div>' +
+      '<div class="k-satirlar">' + L.haberler.slice(0, 6).map(function(h){ return K.satir(h); }).join('') + '</div><div class="k-son"></div></div>';
+    K.ustCubuk({ tur: 'foto', geri: true, baslik: L.bolum, eylemler: ['ara', 'paylas'], gorsel: 'tbmm' });
+    K.altCubuk('bolum');
+    K.oynatici();
+    k39(K.baglam({ kaynak: e.querySelectorAll('.k-satir')[1], acik: true }));
+  }
+  /* sonradan açılan bağlam menüleri de K39'a uyar */
+  new MutationObserver(function(m){ m.forEach(function(x){ [].forEach.call(x.addedNodes, function(n){ if (n.classList && n.classList.contains('k-baglam')) k39({ el: n }); }); }); }).observe(document.body, { childList: true });
+})();
+</script>
+</body>
+</html>
