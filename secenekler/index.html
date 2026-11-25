@@ -99,9 +99,10 @@ body.dort .ref{max-width:none}
 <script src="detay/notlar.js"></script>
 <script src="hikaye/notlar.js"></script>
 <script src="hibrit/notlar.js"></script>
+<script src="hibrit/kok-notlar.js"></script>
 <script>
-var SIRA = ['hibrit', 'ana-sayfa', 'hikaye', 'alt-gezinme', 'liste', 'detay'];
-var simdiK = 'hibrit', simdiE = 'ana';
+var SIRA = ['kok', 'hibrit', 'ana-sayfa', 'hikaye', 'alt-gezinme', 'liste', 'detay'];
+var simdiK = 'kok', simdiE = 'ana';
 function refAdlari(ref){
   var adlar = [];
   ref.forEach(function(r){
@@ -141,7 +142,7 @@ function ciz(k, ek){
 document.getElementById('sekmeler').innerHTML = SIRA.filter(function(k){ return SEC[k]; }).map(function(k){
   return '<a href="#' + k + '" data-k="' + k + '">' + SEC[k].ad + '<span>' + SEC[k].alt.length + '</span></a>';
 }).join('');
-function yol(){ var p = (location.hash || '').slice(1).split('/'), k = p[0]; ciz(SEC[k] ? k : 'hibrit', p[1]); }
+function yol(){ var p = (location.hash || '').slice(1).split('/'), k = p[0]; ciz(SEC[k] ? k : 'kok', p[1]); }
 addEventListener('hashchange', yol);
 /* dört hibrit yan yana: geniş ekranda tek satıra sığacak kadar küçült (Yan yana kipinde ve telefonda olağan düzen) */
 function dort(){ var w = document.documentElement.clientWidth; document.body.classList.toggle('dort', !!SEC[simdiK].ekranlar && !document.body.classList.contains('yan') && w > 860 && (SEC[simdiK].ekranlar ? 4 : 0) === 4); }
