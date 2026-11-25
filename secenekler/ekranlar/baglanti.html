@@ -73,7 +73,7 @@ pre{white-space:pre-wrap}
         yuzey++;
         if (h == null || h === '') { if (!davranisli(el) && !el.closest('[data-href]')) olu.push({ kaynak: k.id + ' ' + k.dosya, oge: ad(el), neden: 'href yok' }); return; }
         if (h === '#' || /^javascript:/i.test(h)) { if (!davranisli(el)) olu.push({ kaynak: k.id + ' ' + k.dosya, oge: ad(el), neden: 'href="' + h + '"' }); return; }
-        if (/^(mailto|tel|https?):/i.test(h)) return;
+        if (/^(mailto|tel):/i.test(h) || (/^https?:/i.test(h) && h.indexOf(KOK) !== 0)) return; /* dış adres; canlıda kendi sitemizin https bağlantıları denenir */
         var abs; try { abs = new URL(h, d.baseURI).href; } catch (e) { olu.push({ kaynak: k.id + ' ' + k.dosya, oge: ad(el), neden: 'geçersiz adres' }); return; }
         if (abs.split('#')[0] === d.baseURI.split('#')[0] && /#/.test(h)) return; /* sayfa içi çapa */
         /* adres secenekler/ altında bir dosyaya gitmeli (tanımsız K.git adı "secenekler/seri" gibi uzantısız yol üretir) */
