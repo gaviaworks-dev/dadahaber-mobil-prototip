@@ -6,10 +6,12 @@
 <title>Hibrit · Liste</title>
 <link rel="stylesheet" href="../_ortak/cerceve.css">
 <link rel="stylesheet" href="../_ortak/marka.css">
+<link rel="stylesheet" href="../kit/kit.css">
 <link rel="stylesheet" href="hibrit.css">
 <script src="../_ortak/icerik.js"></script>
 <script src="../_ortak/cerceve.js"></script>
 <script src="../_ortak/icerik-ek.js"></script>
+<script src="../kit/kit.js"></script>
 <script src="hibrit.js"></script>
 <style>
 /* Liste (K21: HB-3 "Bölümler önce" yapısı, dört hibritte aynı): görselli başlık (detay kapağının yarısı; üstünde bölüm adı ve açıklaması; Beyar: hikâye şeridi,
@@ -26,10 +28,10 @@ html[data-tema="koyu"]{--cam-z:rgba(14,14,16,.86)}
 .dar .cb .orta{opacity:1}
 .cb .sag{margin-left:auto;display:flex;gap:8px}
 /* görselli başlık: detay kapağının (400) yarısı */
-.buyuk{position:sticky;top:0;z-index:0;height:224px;display:flex;flex-direction:column;justify-content:flex-end;padding:0 var(--kenar) 40px;color:#fff;isolation:isolate;background-size:cover;background-position:center}
-.buyuk::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,rgba(10,10,10,.9) 0%,rgba(10,10,10,.45) 55%,rgba(10,10,10,.5) 100%)}
-.buyuk h1{font-size:34px;line-height:1;font-weight:var(--y-kalin);letter-spacing:-.03em}
-.buyuk p{margin-top:6px;font-size:14px;color:rgba(255,255,255,.8);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+header.buyuk{position:sticky;top:0;z-index:0;height:224px;display:flex;flex-direction:column;justify-content:flex-end;padding:0 var(--kenar) var(--b-40);color:#fff;isolation:isolate;background-size:cover;background-position:center}
+header.buyuk::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,rgba(10,10,10,.9) 0%,rgba(10,10,10,.45) 55%,rgba(10,10,10,.5) 100%)}
+header.buyuk h1{font-size:34px;line-height:1;font-weight:var(--y-kalin);letter-spacing:-.03em}
+header.buyuk p{margin-top:var(--b-8);font-size:14px;color:rgba(255,255,255,.8);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cb .dd{color:#fff}
 /* içerik paneli görselin üstüne biner, yukarı kaydırınca görselin üzerinden geçer (K28) */
 .yaprak{position:relative;z-index:1;margin-top:-24px;background:var(--zemin);border-radius:var(--k-kart) var(--k-kart) 0 0;border-top:3px solid var(--marka);padding-top:6px}
@@ -146,10 +148,167 @@ body:not(.cizelge) .cizelge-kip{display:none}
 </div>
 <script>
 (function(){
-  var L = D.liste, X = L.haberler, C = { one: 'ray', olay: 6, olayBicim: 'ray' }, AY = H.AY, d = H.detay();
+  var Q = new URLSearchParams(location.search), DUR = K.durum, KOD = Q.get('bolum'), KONU = Q.get('konu'), TUR = Q.get('tur');
+  /* ---------- öteki bölümler ve alt konular (yayılım 1. dalga) ----------
+     Kaynak: public sözlük dadahaber-prototip/araclar/ornek_veri.json › haberler (tarih 2026-11-23; bölüm, alt_konu, tür, saat, yazar, süre, görüntülenme aynen).
+     Görsel (g) yalnız aynı başlık window.D'de görselliyse (D.bolumler, D.manset, D.liste); öteki haberler görselsiz satır. t = sözlükte o gün o bölümdeki haber sayısı.
+     puan: sözlük › puan_tablosu.takimlar (ilk dört). Yeni veri uydurulmadı. */
+  var EK = {
+    spor: { t: 156, h: [
+      {"saat": "15.45", "alt": "Basketbol", "baslik": "Beşiktaş Türk Telekom'u 84-80 geçti", "yazar": "Murat Tekin", "sure": "2 dk", "izlenme": "4,8 B"},
+      {"saat": "15.45", "alt": "Basketbol", "baslik": "Fenerbahçe Beko tek mağlubiyetle liderliğini sürdürüyor", "yazar": "Gizem Aktaş", "sure": "3 dk", "izlenme": "3,6 B"},
+      {"saat": "15.40", "alt": "Beşiktaş", "baslik": "Beşiktaş'ın kaleci listesinde iki isim öne çıkıyor", "yazar": "Gizem Aktaş", "sure": "5 dk", "izlenme": "8,1 B"},
+      {"saat": "15.40", "alt": "Basketbol", "baslik": "Anadolu Efes THY Avrupa Ligi'nde Dörtlü Final biletini aldı", "yazar": "Emre Sönmez", "sure": "4 dk", "izlenme": "12,1 B"},
+      {"saat": "15.15", "alt": "Basketbol", "baslik": "Fenerbahçe Beko çift maç haftasında iki galibiyet aldı", "yazar": "Murat Tekin", "sure": "2 dk", "izlenme": "8,1 B"},
+      {"saat": "15.10", "alt": "Galatasaray", "baslik": "Galatasaray derbi öncesi son antrenmanını yaptı", "yazar": "Burak Tan", "sure": "3 dk", "izlenme": "14,2 B"},
+      {"saat": "15.05", "alt": "Galatasaray", "baslik": "Galatasaray sol bek transferini KAP'a bildirdi", "yazar": "Murat Tekin", "sure": "2 dk", "izlenme": "8,1 B"},
+      {"saat": "15.00", "alt": "E-Spor", "baslik": "Eternal Fire Avrupa elemelerinde ikinci tura geçti", "yazar": "Gizem Aktaş", "sure": "2 dk", "izlenme": "8,1 B"},
+      {"saat": "13.48", "alt": "Millî Takım", "baslik": "Millî takımın aday kadrosu açıklandı", "yazar": "Burak Tan", "sure": "2 dk", "izlenme": "18,2 B", "g": "milli"},
+      {"saat": "12.45", "alt": "Spor", "baslik": "Basketbolda Avrupa kupalarında üç galibiyet", "yazar": "Gizem Aktaş", "sure": "3 dk", "izlenme": "19,6 B", "g": "basket"},
+      {"saat": "07.40", "alt": "Spor", "baslik": "Süper Lig'de 14. hafta: derbi öncesi son durum", "yazar": "Burak Tan", "sure": "3 dk", "izlenme": "3,8 B", "g": "superlig"},
+      {"saat": "07.05", "alt": "Spor", "baslik": "Voleybol Kadın Millî Takımı finalde", "yazar": "Murat Tekin", "sure": "3 dk", "izlenme": "7,1 B", "g": "voleybol"}
+    ] },
+    finans: { t: 112, h: [
+      {"saat": "15.40", "alt": "Otomotiv", "baslik": "Yerli elektrikli otomobilin yeni modeli için ön sipariş başladı", "yazar": "Ozan Er", "sure": "6 dk", "izlenme": "7,4 B"},
+      {"saat": "15.35", "alt": "Borsa", "baslik": "Borsa şirketlerinin dokuz aylık kârı yüzde 18 geriledi", "yazar": "Nazlı Öztürk", "sure": "5 dk", "izlenme": "8,8 B", "g": "borsa"},
+      {"saat": "15.35", "alt": "Finans", "baslik": "Kredi büyümesindeki yavaşlama reel sektöre nasıl yansıyor", "yazar": "Elif Aras", "sure": "5 dk", "izlenme": "5,2 B", "tur": "Analiz"},
+      {"saat": "15.35", "alt": "Kripto Para", "baslik": "Ethereum'da ağ güncellemesi öncesi işlem ücretleri düştü", "yazar": "Elif Aras", "sure": "4 dk", "izlenme": "5,2 B"},
+      {"saat": "15.25", "alt": "Dünya Ekonomisi", "baslik": "Fed tutanakları faiz indiriminde temkinli bir çizgiye işaret etti", "yazar": "Elif Aras", "sure": "3 dk", "izlenme": "11,3 B"},
+      {"saat": "15.20", "alt": "Finans", "baslik": "Sabit faiz kararının ardından üç senaryo ve olası etkileri", "yazar": "Nazlı Öztürk", "sure": "2 dk", "izlenme": "5,8 B", "tur": "Analiz"},
+      {"saat": "15.15", "alt": "Tarım", "baslik": "TMO buğday alım fiyatlarına ilişkin değerlendirme yaptı", "yazar": "Can Demir", "sure": "4 dk", "izlenme": "14,6 B"},
+      {"saat": "15.10", "alt": "Çalışma Hayatı", "baslik": "Uzaktan çalışma için yeni yönetmelik taslağı hazırlandı", "yazar": "Can Demir", "sure": "2 dk", "izlenme": "3,8 B"},
+      {"saat": "15.05", "alt": "Tarım", "baslik": "Fındık ihracatında sezonun ilk üç ayı değerlendirildi", "yazar": "Elif Aras", "sure": "2 dk", "izlenme": "11,3 B"},
+      {"saat": "14.00", "alt": "Faiz Oranları", "baslik": "Merkez Bankası politika faizini yüzde 42,5'te sabit tuttu", "yazar": "Elif Aras", "sure": "3 dk", "izlenme": "27,5 B", "g": "faiz"},
+      {"saat": "12.00", "alt": "Finans", "baslik": "Rüzgâr enerjisinde yeni yatırım ihalesi", "yazar": "Can Demir", "sure": "2 dk", "izlenme": "19,6 B", "g": "ruzgar"},
+      {"saat": "10.25", "alt": "Finans", "baslik": "Altının gramı haftaya yükselişle başladı", "yazar": "Nazlı Öztürk", "sure": "3 dk", "izlenme": "3,8 B", "g": "altin"}
+    ] },
+    kadin: { t: 59, h: [
+      {"saat": "14.20", "alt": "Başarı Hikâyeleri", "baslik": "Kars'ta peynir atölyesi kuran üç kadın ürünlerini Avrupa'ya gönderiyor", "yazar": "Gülşen Ateş", "sure": "6 dk", "izlenme": "14,8 B"},
+      {"saat": "14.10", "alt": "Kadın Gündemi", "baslik": "25 Kasım öncesi illerde farkındalık programları başladı", "yazar": "Burcu Yaman", "sure": "4 dk", "izlenme": "16,0 B"},
+      {"saat": "14.05", "alt": "Kadın Hakları", "baslik": "Koruma kararlarının uygulanmasına ilişkin yeni genelge yayımlandı", "yazar": "Deniz Kara", "sure": "2 dk", "izlenme": "7,0 B"},
+      {"saat": "14.00", "alt": "Kadın ve Hukuk", "baslik": "Yargıtay, koruma kararının ihlalinde verilen cezayı onadı", "yazar": "Seda Uslu", "sure": "6 dk", "izlenme": "10,9 B"},
+      {"saat": "13.55", "alt": "Güzellik", "baslik": "Kozmetik ürünlerde yasaklı madde listesi güncellendi", "yazar": "Seda Uslu", "sure": "3 dk", "izlenme": "11,4 B"},
+      {"saat": "13.50", "alt": "Ev ve Yaşam", "baslik": "Kış aylarında ev içi enerji tasarrufu için uzmanlardan beş öneri", "yazar": "Gülşen Ateş", "sure": "4 dk", "izlenme": "9,1 B"},
+      {"saat": "13.50", "alt": "Kadın ve Çalışma Hayatı", "baslik": "Hizmet sektöründe uzaktan çalışan kadınların payı artıyor", "yazar": "Seda Uslu", "sure": "4 dk", "izlenme": "10,4 B"},
+      {"saat": "13.45", "alt": "Astroloji", "baslik": "Aralığın ilk dolunayı 24 Kasım'da", "yazar": "Deniz Kara", "sure": "3 dk", "izlenme": "3,6 B"},
+      {"saat": "13.40", "alt": "Kadın ve Hukuk", "baslik": "Boşanma davalarında arabuluculuk önerisine barolardan görüş geldi", "yazar": "Burcu Yaman", "sure": "4 dk", "izlenme": "10,1 B"},
+      {"saat": "13.35", "alt": "Anne ve Çocuk", "baslik": "Anne sütü bankası uygulamasına ilişkin bilim kurulu görüşü açıklandı", "yazar": "Gülşen Ateş", "sure": "3 dk", "izlenme": "11,0 B"},
+      {"saat": "13.15", "alt": "Kadın", "baslik": "Meme kanseri taramasında yaş sınırı 40'a indi", "yazar": "Deniz Kara", "sure": "3 dk", "izlenme": "8,4 B", "g": "tarama"},
+      {"saat": "12.10", "alt": "Kadın", "baslik": "Kadın girişimcilere sıfır faizli kredi desteği", "yazar": "Gülşen Ateş", "sure": "3 dk", "izlenme": "11,7 B", "g": "kadin-girisim"}
+    ] },
+    savunma: { t: 79, h: [
+      {"saat": "15.50", "alt": "Kara Sistemleri", "baslik": "Obüs sisteminin modernize sürümü atış testlerini tamamladı", "yazar": "Arda Kılınç", "sure": "4 dk", "izlenme": "12,0 B"},
+      {"saat": "15.35", "alt": "Kara Sistemleri", "baslik": "Yerli zırhlı muharebe aracı çöl koşullarında test edildi", "yazar": "Mert Yalın", "sure": "3 dk", "izlenme": "12,9 B"},
+      {"saat": "15.30", "alt": "Deniz Platformları", "baslik": "İnsansız deniz aracı Ege'de seyir testlerini tamamladı", "yazar": "Onur Kaya", "sure": "6 dk", "izlenme": "13,6 B"},
+      {"saat": "15.30", "alt": "Millî Projeler", "baslik": "Hürjet eğitim uçağında yer testlerinin ikinci aşaması başladı", "yazar": "Onur Kaya", "sure": "2 dk", "izlenme": "11,8 B"},
+      {"saat": "15.20", "alt": "Kara Sistemleri", "baslik": "Mayına karşı korumalı araçların yeni partisi teslim edildi", "yazar": "Tarık Bulut", "sure": "3 dk", "izlenme": "11,1 B"},
+      {"saat": "15.15", "alt": "Terörle Mücadele", "baslik": "Bakanlık: kırsaldaki örgüt mensubu sayısı son on yılın en düşük seviyesinde", "yazar": "Tarık Bulut", "sure": "3 dk", "izlenme": "10,6 B"},
+      {"saat": "15.10", "alt": "Millî Projeler", "baslik": "Millî muharip uçak projesinde motor entegrasyonu takvimi açıklandı", "yazar": "Tarık Bulut", "sure": "4 dk", "izlenme": "10,9 B"},
+      {"saat": "15.05", "alt": "İhracat ve Anlaşmalar", "baslik": "Savunma ve havacılık ihracatının ilk on ay verileri açıklandı", "yazar": "Mert Yalın", "sure": "5 dk", "izlenme": "13,5 B"},
+      {"saat": "14.50", "alt": "İHA ve SİHA", "baslik": "İnsansız savaş uçağının ikinci prototipi üretim hattına alındı", "yazar": "Onur Kaya", "sure": "2 dk", "izlenme": "12,0 B"},
+      {"saat": "14.50", "alt": "Millî Projeler", "baslik": "SSB verilerine göre savunma ve havacılık ihracatı ekimde yüzde 18 arttı", "yazar": "Arda Kılınç", "sure": "3 dk", "izlenme": "14,1 B"},
+      {"saat": "13.20", "alt": "Millî Projeler", "baslik": "KAAN'ın ikinci prototipi test uçuşunda", "yazar": "Mert Yalın", "sure": "2 dk", "izlenme": "14,9 B", "g": "kaan"},
+      {"saat": "07.40", "alt": "Savunma", "baslik": "Yeni insansız deniz aracı envantere girdi", "yazar": "Mert Yalın", "sure": "3 dk", "izlenme": "3,8 B", "g": "ida"}
+    ] },
+    dunya: { t: 63, h: [
+      {"saat": "16.05", "alt": "Dünya", "baslik": "AB dışişleri bakanları Brüksel'de genişleme gündemini ele aldı", "yazar": "Zeynep Ak", "sure": "3 dk", "izlenme": "6,9 B", "g": "bruksel"},
+      {"saat": "15.50", "alt": "Küresel Siyaset", "baslik": "G7 ülkeleri kritik mineraller için ortak tedarik planı hazırladı", "yazar": "Zeynep Ak", "sure": "5 dk", "izlenme": "3,7 B", "g": "maden"},
+      {"saat": "15.50", "alt": "Diplomasi", "baslik": "Türkiye ile Japonya arasında ekonomik ortaklık görüşmeleri sürüyor", "yazar": "Kaan Yücel", "sure": "6 dk", "izlenme": "6,7 B"},
+      {"saat": "15.45", "alt": "Asya Pasifik", "baslik": "Hindistan'da eyalet seçimlerinin sonuçları açıklandı", "yazar": "Hande Polat", "sure": "6 dk", "izlenme": "12,2 B"},
+      {"saat": "15.25", "alt": "Orta Doğu", "baslik": "Irak'ta yeni bütçe yasası mecliste kabul edildi", "yazar": "Hande Polat", "sure": "6 dk", "izlenme": "11,5 B"},
+      {"saat": "15.20", "alt": "Göç", "baslik": "Almanya'da çifte vatandaşlık başvuruları yılın ilk dokuz ayında ikiye katlandı", "yazar": "Merve Çınar", "sure": "2 dk", "izlenme": "11,1 B"},
+      {"saat": "15.05", "alt": "Kafkasya", "baslik": "Ermenistan'da yeni anayasa taslağı kamuoyuna sunuldu", "yazar": "Zeynep Ak", "sure": "2 dk", "izlenme": "4,6 B"},
+      {"saat": "14.30", "alt": "Balkanlar", "baslik": "Bosna-Hersek'te AB müzakere çerçevesi için ilk adım atıldı", "yazar": "Merve Çınar", "sure": "5 dk", "izlenme": "14,3 B"},
+      {"saat": "14.25", "alt": "Savaş ve Çatışmalar", "baslik": "Gazze'de ateşkesin ikinci aşaması için müzakereler başladı", "yazar": "Zeynep Ak", "sure": "6 dk", "izlenme": "7,4 B"},
+      {"saat": "14.10", "alt": "Afrika", "baslik": "Sahel ülkeleri ortak güvenlik gücü için takvim belirledi", "yazar": "Kaan Yücel", "sure": "5 dk", "izlenme": "9,2 B"},
+      {"saat": "14.10", "alt": "Asya Pasifik", "baslik": "ASEAN ülkeleri ortak dijital ödeme sistemi üzerinde anlaştı", "yazar": "Zeynep Ak", "sure": "4 dk", "izlenme": "5,5 B"},
+      {"saat": "13.25", "alt": "Avrupa", "baslik": "AB dışişleri bakanları göç paketini görüştü", "yazar": "Zeynep Ak", "sure": "3 dk", "izlenme": "23,1 B", "g": "ab-goc"}
+    ] },
+    kampus: { t: 58, h: [
+      {"saat": "15.45", "alt": "Eğitim ve Sınavlar", "baslik": "LGS için örnek soru kitapçığı yayımlandı", "yazar": "Ayşe Yıldız", "sure": "4 dk", "izlenme": "7,9 B", "g": "yks"},
+      {"saat": "15.40", "alt": "Öğrenci Toplulukları", "baslik": "Kış dönemi kulüp tanıtım haftası 1 Aralık'ta başlıyor", "yazar": "Aslı Gür", "sure": "4 dk", "izlenme": "13,1 B", "g": "kulup"},
+      {"saat": "15.35", "alt": "Gençlerin Gündemi", "baslik": "Genç işsizlik oranı ekim ayında yüzde 15,6 oldu", "yazar": "Sevgi Tarhan", "sure": "3 dk", "izlenme": "5,0 B"},
+      {"saat": "15.30", "alt": "Eğitim ve Sınavlar", "baslik": "ÖSYM, 2027 sınav takviminin tamamını yayımladı", "yazar": "Ece Demirel", "sure": "6 dk", "izlenme": "11,1 B", "g": "osym"},
+      {"saat": "15.25", "alt": "Üniversiteler", "baslik": "ODTÜ'de bahar dönemi ders kayıtları 2 Şubat'ta başlıyor", "yazar": "Ece Demirel", "sure": "3 dk", "izlenme": "12,9 B"},
+      {"saat": "15.05", "alt": "Eğitim ve Sınavlar", "baslik": "Liselerde birinci dönem ortak sınav tarihleri belli oldu", "yazar": "Ece Demirel", "sure": "4 dk", "izlenme": "12,3 B"},
+      {"saat": "14.55", "alt": "Eğitim ve Sınavlar", "baslik": "Üniversitelerde yabancı öğrenci sayısı 330 bini geçti", "yazar": "Ayşe Yıldız", "sure": "5 dk", "izlenme": "3,9 B", "g": "osym"},
+      {"saat": "14.40", "alt": "Kariyer", "baslik": "Ankara'da kariyer fuarı 3-4 Aralık'ta yapılacak", "yazar": "Sevgi Tarhan", "sure": "3 dk", "izlenme": "11,7 B"},
+      {"saat": "14.35", "alt": "YKS", "baslik": "2027 YKS başvuruları için ÖSYM takvimi açıkladı", "yazar": "Sevgi Tarhan", "sure": "3 dk", "izlenme": "3,0 B"},
+      {"saat": "14.25", "alt": "Gençlerin Gündemi", "baslik": "Gençlerin yarısı haberi ilk kez sosyal medyada görüyor", "yazar": "Sevgi Tarhan", "sure": "3 dk", "izlenme": "13,3 B"},
+      {"saat": "14.25", "alt": "Öğrenci Toplulukları", "baslik": "Ulusal münazara turnuvasının finali İzmir'de yapıldı", "yazar": "Ece Demirel", "sure": "3 dk", "izlenme": "8,5 B"},
+      {"saat": "14.10", "alt": "Staj", "baslik": "Kariyer Kapısı'nda 3 bin kontenjanlı staj programı açıldı", "yazar": "Selin Koç", "sure": "3 dk", "izlenme": "10,1 B"}
+    ] },
+    kesfet: { t: 194, h: [
+      {"saat": "15.45", "alt": "Tiyatro", "baslik": "Restore edilen tarihî tiyatro binası yeniden perde açtı", "yazar": "İrem Su", "sure": "6 dk", "izlenme": "7,7 B", "g": "akm"},
+      {"saat": "15.40", "alt": "Gastronomi", "baslik": "Geleneksel ekşi maya ekmek atölyeleri kentlerde yaygınlaşıyor", "yazar": "Ozan Er", "sure": "5 dk", "izlenme": "9,5 B", "g": "eksimaya"},
+      {"saat": "15.40", "alt": "Dizi", "baslik": "Set çalışanları için haftalık çalışma süresi sınırı görüşülüyor", "yazar": "Nilay Ersoy", "sure": "3 dk", "izlenme": "8,6 B"},
+      {"saat": "15.40", "alt": "Müzik", "baslik": "Konservatuvarlara başvurular bu yıl yüzde 17 arttı", "yazar": "İrem Su", "sure": "4 dk", "izlenme": "12,3 B"},
+      {"saat": "15.35", "alt": "Bana Etkisi", "baslik": "Kiracıysan kasımda neler değişti? Altı başlıkta özet", "yazar": "Ozan Er", "sure": "2 dk", "izlenme": "14,8 B"},
+      {"saat": "15.35", "alt": "Yapay Zekâ", "baslik": "Kamu hizmetlerinde yapay zekâ kullanımına ilişkin etik ilkeler yayımlandı", "yazar": "Kerem Aksoy", "sure": "6 dk", "izlenme": "11,5 B"},
+      {"saat": "15.25", "alt": "Bana Etkisi", "baslik": "Asgari ücret görüşmeleri bordroya ne zaman yansır?", "yazar": "Nilay Ersoy", "sure": "5 dk", "izlenme": "8,8 B"},
+      {"saat": "15.20", "alt": "Tiyatro", "baslik": "Özel tiyatrolara yönelik destek başvuruları sonuçlandı", "yazar": "Kerem Aksoy", "sure": "4 dk", "izlenme": "13,0 B"},
+      {"saat": "15.15", "alt": "Dada Doğrula", "baslik": "Kar altındaki köprü görüntüsünün bu hafta çekildiği iddiası", "yazar": "İrem Su", "sure": "4 dk", "izlenme": "14,3 B"},
+      {"saat": "15.15", "alt": "Dizi", "baslik": "Yeni sezonda yayına giren tarihî dizi çekimleri Kapadokya'da sürüyor", "yazar": "Kerem Aksoy", "sure": "5 dk", "izlenme": "3,3 B"},
+      {"saat": "15.15", "alt": "Sinema", "baslik": "İlk filmini çeken yönetmenler için senaryo atölyesi başvuruları başladı", "yazar": "Ozan Er", "sure": "5 dk", "izlenme": "10,2 B"},
+      {"saat": "15.05", "alt": "Bilim", "baslik": "Antarktika seferinden dönen ekip buzul örneklerini incelemeye başladı", "yazar": "Nilay Ersoy", "sure": "3 dk", "izlenme": "13,8 B"}
+    ] },
+    siyaset: { t: 10, h: [
+      {"saat": "15.42", "alt": "Siyaset", "baslik": "Bütçe görüşmelerinde muhalefet grupları adına ilk konuşmalar tamamlandı", "yazar": "Ayşe Yıldız", "sure": "2 dk", "izlenme": "7,5 B", "g": "tbmm"},
+      {"saat": "14.10", "alt": "Siyaset", "baslik": "YSK seçmen kütüklerinin güncelleme takvimini duyurdu", "yazar": "Mehmet Koçak", "sure": "3 dk", "izlenme": "4,8 B"},
+      {"saat": "13.35", "alt": "Siyaset", "baslik": "2027 bütçe açığının millî gelire oranı yüzde 3,1 olarak öngörüldü", "yazar": "Sibel Arslan", "sure": "2 dk", "izlenme": "5,2 B"},
+      {"saat": "10.35", "alt": "Siyaset", "baslik": "Seçim kanunu değişikliği teklifi komisyonda kabul edildi", "yazar": "Mehmet Koçak", "sure": "4 dk", "izlenme": "5,3 B"},
+      {"saat": "10.25", "alt": "Siyaset", "baslik": "TBMM Genel Kurulu bütçe görüşmelerine başladı", "yazar": "Ayşe Yıldız", "sure": "3 dk", "izlenme": "11,7 B"},
+      {"saat": "10.05", "alt": "Siyaset", "baslik": "Plan ve Bütçe Komisyonu bakanlık bütçelerini görüşüyor", "yazar": "Hakan Uysal", "sure": "5 dk", "izlenme": "12,6 B"},
+      {"saat": "08.20", "alt": "Siyaset", "baslik": "Asgari ücrete ara zam talebi Meclis gündeminde", "yazar": "Ayşe Yıldız", "sure": "4 dk", "izlenme": "14,3 B"}
+    ] },
+    sehirler: { t: 24, h: [
+      {"saat": "16.05", "alt": "İstanbul", "baslik": "İstanbul Valiliği: okullar 24 Kasım'da da tatil", "yazar": "Sibel Arslan", "sure": "1 dk", "izlenme": "52,1 B", "g": "kar-istanbul"},
+      {"saat": "15.00", "alt": "İzmir", "baslik": "İzmir Körfezi'nde dip çamuru temizliği yeni etaba geçti", "yazar": "Ayşe Yıldız", "sure": "3 dk", "izlenme": "11,7 B", "g": "balikci"},
+      {"saat": "14.55", "alt": "Şehirler", "baslik": "Palandöken'de kayak sezonu 12 Aralık'ta açılıyor", "yazar": "Hakan Uysal", "sure": "3 dk", "izlenme": "6,7 B", "g": "ankara-kar"},
+      {"saat": "14.30", "alt": "İstanbul", "baslik": "İstanbul'da raylı sistemde gece seferleri hafta içine yayılıyor", "yazar": "Mehmet Koçak", "sure": "3 dk", "izlenme": "12,6 B"},
+      {"saat": "14.15", "alt": "İstanbul", "baslik": "Boğaz'da yoğun sis nedeniyle gemi trafiği geçici olarak durduruldu", "yazar": "Ayşe Yıldız", "sure": "4 dk", "izlenme": "7,9 B"},
+      {"saat": "12.05", "alt": "Yerel Haberler", "baslik": "Trabzon'da heyelan riski olan mahallede tahliye tamamlandı", "yazar": "Hakan Uysal", "sure": "3 dk", "izlenme": "4,8 B"},
+      {"saat": "10.15", "alt": "Ankara", "baslik": "Başkentte hava kalitesi ölçümlerinde kış dönemi uyarısı yapıldı", "yazar": "Hakan Uysal", "sure": "3 dk", "izlenme": "6,7 B"},
+      {"saat": "09.50", "alt": "İzmir", "baslik": "İzmir'de vapur seferleri kış tarifesine geçti", "yazar": "Mehmet Koçak", "sure": "4 dk", "izlenme": "9,4 B"},
+      {"saat": "09.05", "alt": "Şehirler", "baslik": "Erzurum ve Kars'ta kar yağışı bekleniyor", "yazar": "Hakan Uysal", "sure": "2 dk", "izlenme": "8,1 B"},
+      {"saat": "08.30", "alt": "İzmir", "baslik": "İzmir Limanı'nda konteyner elleçleme ekimde arttı", "yazar": "Ayşe Yıldız", "sure": "5 dk", "izlenme": "8,1 B"}
+    ] },
+    teknoloji: { t: 13, h: [
+      {"saat": "14.15", "alt": "Teknoloji", "baslik": "Akıllı kent projelerinde trafik verisi belediyeler arasında paylaşılacak", "yazar": "Kerem Aksoy", "sure": "6 dk", "izlenme": "6,0 B"},
+      {"saat": "13.40", "alt": "Teknoloji", "baslik": "Yapay zekâ ile üretilen içerikte etiketleme rehberi taslağı görüşe açıldı", "yazar": "Ozan Er", "sure": "4 dk", "izlenme": "9,8 B"},
+      {"saat": "13.30", "alt": "Teknoloji", "baslik": "Konut çatılarında güneş paneli kurulumunda başvuru süreci sadeleşti", "yazar": "Kerem Aksoy", "sure": "4 dk", "izlenme": "11,3 B"},
+      {"saat": "13.05", "alt": "Teknoloji", "baslik": "E-devlet kapısına yeni kimlik doğrulama yöntemi ekleniyor", "yazar": "Ozan Er", "sure": "6 dk", "izlenme": "6,4 B"},
+      {"saat": "09.55", "alt": "Teknoloji", "baslik": "Fiber altyapıya erişen hane sayısı yılın ilk dokuz ayında yüzde 14 arttı", "yazar": "Kerem Aksoy", "sure": "5 dk", "izlenme": "7,8 B"},
+      {"saat": "09.45", "alt": "Teknoloji", "baslik": "5G ihalesinin ikinci aşaması için şartname taslağı yayımlandı", "yazar": "Kerem Aksoy", "sure": "2 dk", "izlenme": "2,5 B"},
+      {"saat": "09.30", "alt": "Teknoloji", "baslik": "Dört günlük çalışma haftası pilot uygulamasının ilk sonuçları paylaşıldı", "yazar": "Ozan Er", "sure": "3 dk", "izlenme": "12,7 B"},
+      {"saat": "08.55", "alt": "Teknoloji", "baslik": "Yerli yarı iletken tesisinde deneme üretimi başladı", "yazar": "İrem Su", "sure": "3 dk", "izlenme": "13,1 B"},
+      {"saat": "07.40", "alt": "Teknoloji", "baslik": "Sürücüsüz servis aracı teknopark içinde test sürüşlerine başladı", "yazar": "İrem Su", "sure": "2 dk", "izlenme": "4,6 B"}
+    ] },
+    analiz: { t: 4, h: [
+      {"saat": "15.25", "alt": "Gündem", "baslik": "Yeni yargı paketi neleri değiştirecek, madde madde açıklama", "yazar": "Sibel Arslan", "sure": "3 dk", "izlenme": "11,1 B", "tur": "Analiz"},
+      {"saat": "13.10", "alt": "Gündem", "baslik": "Asgari ücret görüşmelerinde hangi veriler masada", "yazar": "Hakan Uysal", "sure": "3 dk", "izlenme": "6,7 B", "tur": "Analiz"},
+      {"saat": "12.10", "alt": "Gündem", "baslik": "Bütçe görüşmeleri nasıl işliyor, süreç ve takvim", "yazar": "Sibel Arslan", "sure": "4 dk", "izlenme": "5,6 B", "tur": "Analiz"},
+      {"saat": "10.15", "alt": "Gündem", "baslik": "Kentsel dönüşümde yasal süreç nasıl işliyor", "yazar": "Mehmet Koçak", "sure": "5 dk", "izlenme": "11,7 B", "tur": "Analiz"}
+    ] },
+    puan: [{"ad": "Galatasaray", "kod": "GS", "G": 10, "B": 2, "M": 1, "A": 33, "Y": 10}, {"ad": "Fenerbahçe", "kod": "FB", "G": 9, "B": 3, "M": 1, "A": 30, "Y": 11}, {"ad": "Beşiktaş", "kod": "BJK", "G": 7, "B": 4, "M": 2, "A": 25, "Y": 13}, {"ad": "Trabzonspor", "kod": "TS", "G": 7, "B": 3, "M": 3, "A": 21, "Y": 13}]
+  };
+  var BOL = { spor: 'Spor', finans: 'Finans', kadin: 'Kadın', savunma: 'Savunma', dunya: 'Dünya', kampus: 'Kampüs', kesfet: 'Keşfet' };
+  var L = D.liste;
+  if (BOL[KOD] && EK[KOD]) {
+    var bb0 = K.bolum(BOL[KOD]), ilkG = EK[KOD].h.filter(function(h){ return h.g; })[0];
+    L = { bolum: bb0.ad, ikon: bb0.ikon, aciklama: bb0.baslik !== bb0.ad ? bb0.baslik : (K.ALT[bb0.ad] || []).slice(0, 4).join(', '), altKonular: ['Tümü'].concat(K.ALT[bb0.ad] || []), toplam: EK[KOD].t, haberler: EK[KOD].h, g: ilkG ? ilkG.g : bb0.haberler[0].g };
+  }
+  var GUNDEM = L === D.liste, X = L.haberler, SECILI = 0, ALT = null;
+  /* alt konu seçili (tek katman, DADAHABER-10) ve tür süzgeci (tür kategori değil; DADAHABER-10 §3) */
+  var KONUAD = { siyaset: 'Siyaset', sehirler: 'Yerel', teknoloji: 'Teknoloji' };
+  if (KONU && EK[KONU] && KONUAD[KONU]) { X = EK[KONU].h; SECILI = Math.max(0, L.altKonular.indexOf(KONUAD[KONU])); ALT = { ad: KONU === 'sehirler' ? 'Şehirler' : KONUAD[KONU], t: EK[KONU].t }; }
+  else if (TUR === 'analiz' && GUNDEM) { X = EK.analiz.h; ALT = { ad: 'Analiz', t: EK.analiz.t, tur: true }; }
+  if (DUR === 'bos') SECILI = Math.max(0, L.altKonular.indexOf('Hukuk'));
+  var C = { one: 'ray', olay: GUNDEM && !ALT ? 6 : -1, olayBicim: 'ray' }, AY = H.AY, d = H.detay(), XG = D.liste.haberler;
+  var GOR = L.g || 'tbmm';
   document.title = H.cfg.kod + ' · ' + H.cfg.ad + ' · Liste';
   document.getElementById('orta').textContent = L.bolum;
-  document.querySelector('.cb').style.setProperty('--ust-g', G('tbmm'));
+  document.querySelector('.cb').style.setProperty('--ust-g', G(GOR));
   document.getElementById('geri').href = H.ana();
   /* üst satır (K35): tür (Canlı kapsül, Son Dakika kırmızı) · kategori etiketi · saat; tür alt konuyla aynıysa gösterilmez */
   function mt(h, saatsiz){
@@ -170,40 +329,49 @@ body:not(.cizelge) .cizelge-kip{display:none}
   function olay(o, j){
     var tkp = C.takip && j === 0;
     return '<article class="olay"><a class="olay-b" href="' + d + '" style="background-image:' + G(o.g) + '"><span class="us">' + (o.canli ? H.canli() : '') + (tkp ? '<span class="e tkp"><i class="fa-solid fa-check"></i>Takipte</span>' : '') + '</span>' +
-      '<span><h3>' + o.ad + '</h3><small>' + o.i.length + ' gelişme · son ' + X[o.i[0]].saat + '</small></span></a>' +
-      '<ol class="gel">' + o.i.slice(0, 2).map(function(k){ var x = X[k]; return '<li><time>' + x.saat + '</time><h4 class="iki">' + x.baslik + '</h4></li>'; }).join('') + '</ol>' +
-      '<div class="olay-a"><span><i class="fa-solid fa-folder-open"></i>Olay dosyası</span><button type="button" data-takip class="' + (tkp ? 'acik' : '') + '">' + (tkp ? '<i class="fa-solid fa-check"></i>Takipte' : '<i class="fa-solid fa-plus"></i>Takip et') + '</button></div></article>';
+      '<span><h3>' + o.ad + '</h3><small>' + o.i.length + ' gelişme · son ' + XG[o.i[0]].saat + '</small></span></a>' +
+      '<ol class="gel">' + o.i.slice(0, 2).map(function(k){ var x = XG[k]; return '<li><time>' + x.saat + '</time><h4 class="iki">' + x.baslik + '</h4></li>'; }).join('') + '</ol>' +
+      '<div class="olay-a"><span><i class="fa-solid fa-folder-open"></i>Olay dosyası</span><button type="button" data-olay-takip class="' + (tkp ? 'acik' : '') + '">' + (tkp ? '<i class="fa-solid fa-check"></i>Takipte' : '<i class="fa-solid fa-plus"></i>Takip et') + '</button></div></article>';
   }
   var olaylar = C.takip ? OLAY : [OLAY[1], OLAY[0], OLAY[2]];
   var go = '<section class="go liste-kip"><div class="bb"><h2><span class="bi"><i class="fa-solid fa-folder-open"></i></span>Gelişen Olaylar</h2><a>' + (C.takip ? 'Takip ettiklerin önce' : '5 olay') + '<i class="fa-solid fa-chevron-right"></i></a></div>' +
     (C.olayBicim === 'ray' ? '<div class="ol-r ks">' + olaylar.map(olay).join('') + '</div>'
                            : '<div class="ol-d">' + olaylar.slice(0, 2).map(olay).join('') + '</div><div class="go-t"><a>Bütün olaylar · 5<i class="fa-solid fa-chevron-right"></i></a></div>') + '</section>';
 
-  /* öne çıkanlar */
+  /* öne çıkanlar (alt konu ya da tür süzgecinde yok: yalnız o konunun haberleri) */
   var one = '', kul = [];
-  if (C.one === 'uclu') {
+  if (ALT) kul = [];
+  else if (C.one === 'uclu') {
     var b = X[0], m = [X[1], X[3]]; kul = [0, 1, 3];
     one = '<section class="one liste-kip"><a class="bk" href="' + d + '"><div class="gr" style="background-image:' + G(b.g) + '"></div><div class="mtk">' + mt(b) + '</div><h2>' + b.baslik + '</h2>' + ab(b) + '</a>' +
       '<div class="ik">' + m.map(function(h){ return '<a href="' + d + '"><div class="gr" style="background-image:' + G(h.g) + '"></div><div class="mtk">' + mt(h) + '</div><h3 class="uc">' + h.baslik + '</h3></a>'; }).join('') + '</div></section>';
   } else {
-    kul = [0, 1, 3, 2, 4];
+    kul = GUNDEM ? [0, 1, 3, 2, 4] : X.map(function(h, i){ return h.g ? i : -1; }).filter(function(i){ return i >= 0; }).slice(0, 5);
     one = '<section class="one-ray liste-kip"><div class="ks" data-ms>' + kul.map(function(k){ var h = X[k]; return '<a href="' + d + '"><div class="gr" style="background-image:' + G(h.g) + '"></div><div class="mtk">' + mt(h) + '</div><h2 class="uc">' + h.baslik + '</h2></a>'; }).join('') + '</div>' +
       '<div class="sayac" data-sayac>' + kul.map(function(_, i){ return '<span' + (i === 0 ? ' class="on"' : '') + '></span>'; }).join('') + '</div></section>';
   }
+  /* bölüme özgü şerit: Spor canlı maç + puan durumu, Finans piyasalar (kit bileşenleri) */
+  var serit = '';
+  if (!ALT && L.bolum === 'Spor') serit = '<section class="k-bl liste-kip">' + K.bb({ baslik: 'Süper Lig', ikon: 'fa-futbol', baglanti: { metin: 'Puan durumu', href: K.git('puanDurumu') } }) +
+    '<div class="k-ic">' + K.mac() + '<div style="margin-top:var(--b-12)">' + K.puanTablosu(EK.puan, D.mac.evKod) + '</div></div></section>';
+  if (!ALT && L.bolum === 'Finans') serit = '<section class="k-bl liste-kip">' + K.piyasa() + '</section>';
 
   /* satırlar (öne çıkanlar dışındakiler) */
   var kalan = X.filter(function(_, i){ return kul.indexOf(i) < 0; });
   function sat(h){ return '<a class="sat' + (h.g ? '' : ' yazi') + '" href="' + d + '"><div>' + mt(h) + '<h3 class="uc">' + h.baslik + '</h3>' + ab(h) + '</div>' + (h.g ? '<div class="gr" style="background-image:' + G(h.g) + '"></div>' : '') + '</a>'; }
-  var sira = typeof C.olay === 'number' ? C.olay : -1, satirlar = '<div class="ls liste-kip"><div class="grup"><span>Son 1 saat</span><span>' + L.toplam + ' haber</span></div>';
+  var sira = typeof C.olay === 'number' ? C.olay : -1, satirlar = '<div class="ls liste-kip"><div class="grup"><span>' + (ALT ? ALT.ad : 'Son 1 saat') + '</span><span>' + (ALT ? ALT.t : L.toplam) + ' haber</span></div>';
   kalan.forEach(function(h, i){
     if (i === sira) satirlar += '</div>' + go + '<div class="ls liste-kip">';
-    if (h.saat <= '15.00' && satirlar.indexOf('Daha önce') < 0) satirlar += '<div class="grup"><span>Daha önce</span><span>15.00 ve öncesi</span></div>';
+    if (!ALT && h.saat <= '15.00' && satirlar.indexOf('Daha önce') < 0) satirlar += '<div class="grup"><span>Daha önce</span><span>15.00 ve öncesi</span></div>';
     satirlar += sat(h);
   });
-  satirlar += '<div class="isk"><div><i class="a"></i><i class="b"></i><i class="c"></i></div><i class="g"></i></div><div class="yuk"><i class="fa-solid fa-circle-notch"></i>Daha fazla haber yükleniyor</div></div>';
+  /* sayfa sonu: kökte kendi iskeleti; ?durum=daha-fazla (&hal=son|hata) kitin sayfa sonu hali */
+  var hal = Q.get('hal');
+  if (DUR === 'daha-fazla') satirlar += (hal === 'son' || hal === 'hata' ? '' : K.iskelet('satir', 1)) + K.dahaFazla(hal === 'son' || hal === 'hata' ? hal : 'yukleniyor') + '</div>';
+  else satirlar += '<div class="isk"><div><i class="a"></i><i class="b"></i><i class="c"></i></div><i class="g"></i></div><div class="yuk"><i class="fa-solid fa-circle-notch"></i>Daha fazla haber yükleniyor</div></div>';
 
   /* çizelge */
-  var cz = '<div class="cz cizelge-kip"><div class="gun"><span>Bugün</span><small>23 Kasım Pazartesi · ' + L.toplam + ' haber</small></div>', dl = '';
+  var cz = '<div class="cz cizelge-kip"><div class="gun"><span>Bugün</span><small>23 Kasım Pazartesi · ' + (ALT ? ALT.t : L.toplam) + ' haber</small></div>', dl = '';
   X.forEach(function(h, i){
     var s = h.saat.split('.')[0] + '.00', v = h.tur === 'Canlı' || h.tur === 'Son Dakika';
     if (s !== dl){ dl = s; cz += '<div class="dl"><span><b>' + s + '</b></span><span></span></div>'; }
@@ -212,16 +380,26 @@ body:not(.cizelge) .cizelge-kip{display:none}
   });
   cz += '</div>';
 
-  var bas = '<header class="buyuk" style="background-image:' + G('tbmm') + '"><h1>' + L.bolum + '</h1><p>' + L.aciklama + '</p></header>';
-  var cr = '<nav class="cr" aria-label="Alt konular ve görünüm"><div class="ks">' + L.altKonular.map(function(k, i){ return '<a class="cp' + (i === 0 ? ' etkin' : '') + '">' + k + '</a>'; }).join('') + '</div>' +
+  var bas = '<header class="buyuk" style="background-image:' + G(GOR) + '"><h1>' + L.bolum + '</h1><p>' + L.aciklama + '</p></header>';
+  var cr = '<nav class="cr" aria-label="Alt konular ve görünüm"><div class="ks">' + L.altKonular.map(function(k, i){ return '<a class="cp' + (i === SECILI ? ' etkin' : '') + '">' + k + '</a>'; }).join('') + '</div>' +
     '<div class="gc" role="group" aria-label="Görünüm"><button type="button" data-kip="liste" aria-pressed="true" aria-label="Liste"><i class="fa-solid fa-newspaper"></i></button><button type="button" data-kip="cizelge" aria-pressed="false" aria-label="Çizelge"><i class="fa-solid fa-clock"></i></button></div></nav>';
+  /* tür süzgeci (kit çipleri, tek seçim) ve şehir seç (kit alt sayfası, E-551) */
+  var ek = '';
+  if (ALT && ALT.tur) ek = '<div class="k-ray s8" data-tek style="padding-top:var(--b-12)" aria-label="Tür">' + ['Bütün türler', 'Analiz', 'Uzman Görüşü', 'Araştırma'].map(function(t){ return K.cip(t, { secili: t === 'Analiz' }); }).join('') + '</div>';
+  if (KONU === 'sehirler' && ALT) ek = '<div class="k-ic" style="padding-top:var(--b-12)">' + K.btn({ metin: 'Bütün şehirler', ikon: 'fa-location-dot', sagIkon: 'fa-chevron-down', tur: 'sade', attr: 'data-sayfa="sehir"' }) + '</div>';
 
   var o = '';
-  o += bas + '<div class="yaprak">' + cr;
-  if (C.olay === 'bas') o += go + one; else o += one;
-  o += satirlar + cz + '<div class="son"></div></div>';
+  o += bas + '<div class="yaprak">' + cr + ek;
+  if (DUR === 'bos') o += K.bos('liste', { eylem: { metin: 'Tümü\'ne dön', tur: 'sade', href: K.u('hibrit/liste.html', KOD ? 'bolum=' + KOD : '') } }) + '<div class="son"></div></div>';
+  else {
+    if (C.olay === 'bas') o += go + one; else o += one;
+    o += serit + satirlar + cz + '<div class="son"></div></div>';
+  }
   var e = document.getElementById('ekran');
   e.innerHTML = o;
+  /* seçili alt konu çipi görünür yere kayar */
+  var ce = e.querySelector('.cr .cp.etkin');
+  if (ce && SECILI > 0) ce.parentNode.scrollLeft = ce.offsetLeft - parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--kenar'));
 
   function kip(k){
     document.body.classList.toggle('cizelge', k === 'cizelge');
@@ -231,17 +409,37 @@ body:not(.cizelge) .cizelge-kip{display:none}
     var b = ev.target.closest('[data-kip]'); if (b) kip(b.dataset.kip);
     var k = ev.target.closest('.kay'); if (k) { ev.preventDefault(); var kon = k.classList.toggle('on'); k.setAttribute('aria-pressed', kon); return; }
     var c = ev.target.closest('.cp'); if (c) document.querySelectorAll('.cp').forEach(function(x){ x.classList.toggle('etkin', x === c); });
-    var t = ev.target.closest('[data-takip]'); if (t) { var a = t.classList.toggle('acik'); t.innerHTML = a ? '<i class="fa-solid fa-check"></i>Takipte' : '<i class="fa-solid fa-plus"></i>Takip et'; }
+    var t = ev.target.closest('[data-olay-takip]'); if (t) { var a = t.classList.toggle('acik'); t.innerHTML = a ? '<i class="fa-solid fa-check"></i>Takipte' : '<i class="fa-solid fa-plus"></i>Takip et'; }
   });
-  function dar(){ var v = e.scrollTop > 130; document.body.classList.toggle('dar', v); document.body.setAttribute('data-durum', 'acik'); }
+  /* düz üst çubuklu haller (hata, çevrimdışı önbelleksiz): durum çubuğu koyu yazı; yenilenirken üst çubuk görselli ve açık */
+  var DUZ = DUR === 'hata' || (DUR === 'cevrimdisi' && Q.get('onbellek') === '0');
+  function dar(){ var v = e.scrollTop > 130 || DUR === 'yenileniyor'; document.body.classList.toggle('dar', v); if (DUZ) document.body.removeAttribute('data-durum'); else document.body.setAttribute('data-durum', 'acik'); }
   e.addEventListener('scroll', dar, { passive: true }); dar();
-  var Q = new URLSearchParams(location.search);
   if (Q.get('kip') === 'cizelge') kip('cizelge');
   if (Q.get('kay')) { e.scrollTop = +Q.get('kay'); dar(); }
   if (Q.get('dar') === '1') { document.body.classList.add('anlik'); e.scrollTop = 300; dar(); }
   H.altCubuk('bolum');
   H.oynatici();
   H.raylar();
+
+  /* ---------- haller (yayılım 1. dalga; yalnız kit bileşenleri; kabuk yerinde) ---------- */
+  if (DUR === 'yukleniyor') e.innerHTML = K.iskelet('liste') + '<div class="son"></div>';
+  if (DUR === 'yenileniyor') e.insertAdjacentHTML('afterbegin', '<div class="k-ust-bosluk"></div>' + K.yenile(['cekiliyor', 'birak', 'bitti'].indexOf(hal) > -1 ? hal : 'yenileniyor'));
+  if (DUR === 'daha-fazla' && !document.documentElement.classList.contains('tam')) e.scrollTop = e.scrollHeight;
+  if (DUZ) {
+    document.querySelector('.cb').style.display = 'none';
+    e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: DUR === 'cevrimdisi' ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') }) + '<div class="son"></div>';
+    K.ustCubuk({ geri: H.ana(), baslik: L.bolum, eylemler: ['ara', 'paylas'] });
+  } else if (DUR === 'cevrimdisi') {
+    /* önbellekteki son liste + kalıcı çevrimdışı bandı (alt çubuğun ya da mini oynatıcının üstünde) */
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44'); /* kitin bant düğmesi 36: görünmez 44 alan */
+    bt.style.bottom = document.querySelector('.mo.acik') ? 'calc(var(--ac-h) + 74px)' : '';
+  }
+  /* Yeniden dene: düğmede gösterge, sonra hal kalkar */
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'hal', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
 })();
 </script>
 </body>

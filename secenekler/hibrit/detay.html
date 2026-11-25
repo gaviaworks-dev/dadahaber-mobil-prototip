@@ -6,11 +6,13 @@
 <title>Hibrit · Detay</title>
 <link rel="stylesheet" href="../_ortak/cerceve.css">
 <link rel="stylesheet" href="../_ortak/marka.css">
+<link rel="stylesheet" href="../kit/kit.css">
 <link rel="stylesheet" href="hibrit.css">
 <link rel="stylesheet" href="hikaye-modu.css">
 <script src="../_ortak/icerik.js"></script>
 <script src="../_ortak/cerceve.js"></script>
 <script src="../_ortak/icerik-ek.js"></script>
+<script src="../kit/kit.js"></script>
 <script src="hibrit.js"></script>
 <script src="hikaye-modu.js"></script>
 <style>
@@ -233,7 +235,10 @@ html[data-tema="koyu"] .boy input{accent-color:var(--marka)}
 <script>
 (function(){
   var d = D.detay, $ = function(i){ return document.getElementById(i); }, Q = new URLSearchParams(location.search);
-  var KAPAK = 400;
+  var KAPAK = 400, DUR = K.durum, KAPAKSIZ = Q.get('kapak') === '0';
+  /* düz üst çubuklu haller: kapaksız haber, hata, bulunamadı, çevrimdışı (indirilmemiş) */
+  var TAM_HATA = { hata: Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu', bulunamadi: Q.get('hata') === 'kaldirildi' ? 'kaldirildi' : 'bulunamadi', cevrimdisi: 'cevrimdisi' }[DUR];
+  var DUZ = KAPAKSIZ || !!TAM_HATA;
   document.title = 'Detay · ' + H.cfg.kod;
   $('geri').href = H.liste();
   $('ustbas').textContent = d.baslik;
@@ -282,7 +287,7 @@ html[data-tema="koyu"] .boy input{accent-color:var(--marka)}
   /* yorumlar (K31): Dada Gastro detay-v2 yorum yapısının aynısı; yıldız yerine haberde okur özeti */
   function yrm(y){
     return '<article class="rv"><div class="rv-h"><span class="av">' + y.ad.charAt(0) + '</span><div class="rv-w"><b>' + y.ad + '</b><span class="rv-m"><i class="fa-solid fa-award"></i>' + y.rozet + '<span class="nk">·</span>' + y.zaman + '</span></div></div>' +
-      '<p>' + y.metin + '</p><div class="rv-a"><button type="button" data-begen><i class="fa-solid fa-thumbs-up"></i><span>Beğen</span><b class="tnum">' + y.begeni + '</b></button>' +
+      '<p>' + y.metin + '</p><div class="rv-a"><button type="button" data-bgn><i class="fa-solid fa-thumbs-up"></i><span>Beğen</span><b class="tnum">' + y.begeni + '</b></button>' +
       '<button type="button"><i class="fa-solid fa-flag"></i><span>Bildir</span></button><button type="button"><i class="fa-solid fa-comment"></i><span>Yanıtla</span></button></div>';
   }
   /* sıradaki haberin yazarı sözlükten (D.liste); yeni veri yok */
@@ -303,7 +308,21 @@ html[data-tema="koyu"] .boy input{accent-color:var(--marka)}
   var alt = '<div class="ortak-alt"><section class="blk rvs" id="yorumlar"><div class="bb"><h2><span class="bi"><i class="fa-solid fa-comment"></i></span>Yorumlar<small>· ' + Y.length + '</small></h2></div>' + ozet + yaz + suz + yorumlar +
     '<a class="tum-y">Bütün yorumları oku<i class="fa-solid fa-chevron-right"></i></a></section>' +
     '<section class="blk ilgili"><div class="bb"><h2><span class="bi"><i class="fa-solid fa-newspaper"></i></span>Sıradaki Haberler</h2></div>' + d.ilgili.map(function(x){ return '<a href="' + H.detay() + '"><div><h3>' + x.baslik + '</h3>' + H.meta([yazari(x.baslik), x.sure]) + '</div><div class="gr" style="background-image:' + G(x.g) + '"></div></a>'; }).join('') + '</section></div>';
-  $('e').innerHTML = kapak + '<div class="yaprak">' + basAlt + seg + p0 + p1 + p2 + bolumler + kyn + alt + '<div class="dip"></div></div>';
+  /* kapaksız (E-050): düz üst çubuk, başlık zeminde, panel binmesi yok (kit .k-bbas, .k-imza) */
+  if (KAPAKSIZ) {
+    kapak = '<div class="k-ust-bosluk"></div><div class="k-bbas">' + K.katEt(d.yol.join(' · '), d.ikon) + '<h1 style="margin-top:var(--b-12)">' + d.baslik + '</h1>' +
+      '<div class="k-imza">' + K.avatar(d.yazar) + '<span class="t"><b>' + d.yazar + '</b><small>' + d.unvan + '</small></span></div></div>';
+    p2 = p2.replace(/<p class="altyazi">.*?<\/p>/, '');
+  }
+  /* düzeltme notu (E-051): metnin sonunda, saatiyle. Metin public düzeltme politikasından (duzeltme-politikasi.html › Son düzeltmeler, asgari ücret komisyonu kaydı) */
+  /* not her okuma derinliğinde metnin hemen ardından görünür */
+  if (DUR === 'duzeltme') p2 += '<div class="k-ic" style="margin-top:var(--b-24)">' + K.serit({ ikon: 'fa-rotate', metin: 'Düzeltme · ' + d.guncelleme, alt: 'İşveren temsilcisinin unvanı düzeltildi.' }) + '</div>';
+  /* çevrimdışı okunan indirilmiş haber (E-053): bant + yorumlar kapalı */
+  if (DUR === 'cevrimdisi-kayitli') {
+    basAlt = basAlt.replace('<div class="bas-alt">', '<div class="bas-alt"><div style="margin-bottom:var(--b-16)">' + K.serit({ tur: 'koyu', ikon: 'fa-plug-circle-xmark', metin: 'Çevrimdışı okuyorsun', alt: 'İndirdiğin haber · yorumlar bağlantı gelince açılır' }) + '</div>');
+    alt = alt.replace(/(<section class="blk rvs" id="yorumlar"><div class="bb">.*?<\/div>).*?(<\/section><section class="blk ilgili">)/, '$1' + K.serit({ ikon: 'fa-comment', metin: 'Yorumlar kapalı', alt: 'Bağlantı gelince okuyup yazabilirsin' }) + '$2');
+  }
+  $('e').innerHTML = kapak + (KAPAKSIZ ? '<div>' : '<div class="yaprak">') + basAlt + seg + p0 + p1 + p2 + bolumler + kyn + alt + '<div class="dip"></div></div>';
   $('okuma').innerHTML = '<button class="dinle" type="button"><i class="fa-solid fa-play"></i>Dinle · ' + d.dinle + '</button>' +
     '<button class="hmd" type="button" ' + HMD + ' aria-label="Hikâye modunda oku"><i class="fa-solid fa-layer-group"></i></button>' +
     '<button class="yr" type="button" id="yrd" aria-label="Yorumlar, ' + d.yorumSayisi + '"><i class="fa-solid fa-comment"></i><small>' + d.yorumSayisi + '</small></button><button type="button" aria-label="Paylaş"><i class="fa-solid fa-share-nodes"></i></button><button class="aa" type="button" aria-label="Yazı boyutu" id="aa">Aa</button>';
@@ -332,7 +351,7 @@ html[data-tema="koyu"] .boy input{accent-color:var(--marka)}
 
   document.addEventListener('click', function(ev){
     var t;
-    if ((t = ev.target.closest('[data-begen]'))) { var on = t.classList.toggle('on'), n = t.querySelector('span'); n.textContent = +n.textContent + (on ? 1 : -1); }
+    if ((t = ev.target.closest('[data-bgn]'))) { var on = t.classList.toggle('on'), n = t.querySelector('b'); n.textContent = +n.textContent + (on ? 1 : -1); }
     if (ev.target.closest('[' + HMD + ']')) HikayeModu.ac();
     if ((t = ev.target.closest('[data-tkp]'))) { var on = t.classList.toggle('on'); t.firstChild.className = 'fa-solid ' + (on ? 'fa-check' : 'fa-plus'); }
     if ((t = ev.target.closest('.seg button'))) derinlik(+t.dataset.d);
@@ -343,7 +362,7 @@ html[data-tema="koyu"] .boy input{accent-color:var(--marka)}
   function kaydir(){
     var t = e.scrollTop, dolu = t > KAPAK - 120;
     ust.classList.toggle('dolu', dolu);
-    if (!document.body.classList.contains('hm-acik')) document.body.setAttribute('data-durum', 'acik');
+    if (!document.body.classList.contains('hm-acik')) { if (DUZ || DUR === 'yukleniyor') document.body.removeAttribute('data-durum'); else document.body.setAttribute('data-durum', 'acik'); }
     $('il').style.width = Math.min(100, t / Math.max(1, e.scrollHeight - e.clientHeight) * 100) + '%';
     if (t > son + 8 && t > KAPAK + 100) ok.classList.add('gizli'); else if (t < son - 8) ok.classList.remove('gizli');
     son = t;
@@ -362,6 +381,46 @@ html[data-tema="koyu"] .boy input{accent-color:var(--marka)}
   if (Q.get('boy')) { document.documentElement.style.setProperty('--mb', Q.get('boy') + 'px'); $('boy').value = Q.get('boy'); }
   if (Q.get('aa') === '1') document.body.classList.add('aa-acik');
   if (Q.get('mod') === 'hikaye') HikayeModu.ac(+Q.get('kart') || 1);
+
+  /* ---------- haller (yayılım 1. dalga; yalnız kit bileşenleri) ----------
+     ?kapak=0 · ?durum=duzeltme|gorsel|cevrimdisi-kayitli|yukleniyor|hata (&hata=zaman-asimi)|bulunamadi (&hata=kaldirildi)|cevrimdisi */
+  if (DUZ) {
+    $('ust').style.display = 'none';
+    var ey = KAPAKSIZ ? [{ ikon: 'fa-bookmark', etiket: 'Kaydet', secili: false, attr: 'data-kaydet-d' }] : [];
+    K.ustCubuk({ geri: H.liste(), baslik: KAPAKSIZ ? d.baslik : '', buyuk: KAPAKSIZ, ilerleme: KAPAKSIZ, eylemler: ey });
+    document.body.removeAttribute('data-durum');
+    if (KAPAKSIZ) segK.style.top = 'var(--k-ub-h)';
+  }
+  if (TAM_HATA) {
+    ok.style.display = 'none';
+    e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: TAM_HATA });
+  }
+  if (DUR === 'cevrimdisi-kayitli') {
+    $('kaydet').setAttribute('aria-pressed', 'true'); $('kaydet').classList.add('on');
+    [e.querySelector('.oynat'), $('yrd')].forEach(function(x){ if (x) x.classList.add('is-pasif'); });
+  }
+  if (DUR === 'yukleniyor') {
+    e.innerHTML = K.iskelet('detay') + '<div class="dip"></div>';
+    ok.classList.add('is-pasif'); document.body.removeAttribute('data-durum');
+  }
+  /* kapak tam ekran (E-052): kapağa dokununca ortak görüntüleyici (kit .k-goruntuleyici); × ya da aşağı kaydır kapatır */
+  function gorsel(){
+    var v = K.el('<div class="k-goruntuleyici" role="dialog" aria-label="Kapak görseli"><div class="u">' + K.ikonBtn({ ikon: 'fa-xmark', etiket: 'Kapat', tur: 'cam', attr: 'data-gor-kapat' }) +
+      '<span class="k-sayac">1 / 1</span>' + K.ikonBtn({ ikon: 'fa-share-nodes', etiket: 'Paylaş', tur: 'cam', attr: 'data-sayfa="paylas"' }) + '</div>' +
+      '<div class="gr" style="background-image:' + G(d.g) + '"></div><div class="alt">' + d.altyazi + '<small>Kapatmak için aşağı kaydır</small></div></div>');
+    document.body.appendChild(v); document.body.setAttribute('data-durum', 'acik');
+    var y0 = null;
+    v.addEventListener('pointerdown', function(ev){ y0 = ev.clientY; });
+    v.addEventListener('pointerup', function(ev){ if (y0 != null && ev.clientY - y0 > 80) v.remove(); y0 = null; });
+    v.addEventListener('click', function(ev){ if (ev.target.closest('[data-gor-kapat]')) v.remove(); else if (!ev.target.closest('.u,.alt')) v.classList.toggle('is-yakin'); });
+  }
+  var kp = $('kapak');
+  if (kp) kp.addEventListener('click', function(ev){ if (!ev.target.closest('.oynat')) gorsel(); });
+  if (DUR === 'gorsel') gorsel();
+  document.addEventListener('click', function(ev){ var t = ev.target.closest('[data-kaydet-d]'); if (t) t.setAttribute('aria-pressed', t.getAttribute('aria-pressed') !== 'true');
+    var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
 })();
 </script>
 </body>

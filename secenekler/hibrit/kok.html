@@ -6,11 +6,13 @@
 <title>Kök · Ana sayfa</title>
 <link rel="stylesheet" href="../_ortak/cerceve.css">
 <link rel="stylesheet" href="../_ortak/marka.css">
+<link rel="stylesheet" href="../kit/kit.css">
 <link rel="stylesheet" href="../_ortak/hikaye.css">
 <link rel="stylesheet" href="hibrit.css">
 <script src="../_ortak/icerik.js"></script>
 <script src="../_ortak/cerceve.js"></script>
 <script src="../_ortak/icerik-ek.js"></script>
+<script src="../kit/kit.js"></script>
 <script src="hibrit.js"></script>
 <style>
 /* KÖK ANA SAYFA (K22): HB-4 "Kişisel önce" tabanı, Yasin Bey'in kurallarıyla tek sayfa.
@@ -210,7 +212,7 @@
 <nav class="menu" id="menu" aria-label="Menü"></nav>
 <script>
 (function(){
-  var B = H.B, AY = H.AY, d = H.detay(), Q = new URLSearchParams(location.search);
+  var B = H.B, AY = H.AY, d = H.detay(), Q = new URLSearchParams(location.search), DUR = K.durum;
   document.title = 'Kök · Ana sayfa · ' + (H.uye ? 'Üye' : 'Misafir');
   function bul(ad){ return D.bolumler.filter(function(b){ return b.ad === ad; })[0]; }
   function meta(h){ return H.meta([h.yazar, h.sure]); }
@@ -273,7 +275,12 @@
     return '<div class="bb"><h2><span class="bi"><i class="fa-solid fa-chart-column"></i></span>Piyasalar</h2><span class="not">' + p.guncelleme + ' · 15 dk gecikmeli</span></div><div class="py ks">' +
       p.liste.map(function(x){ return '<a><small>' + x.ad + '</small><b>' + x.deger + '</b><em class="' + x.yon + '">' + (x.yon === 'y' ? '▲' : '▼') + ' %' + x.degisim + '</em></a>'; }).join('') + '</div>';
   }
-  function sd(){ return B.sd('ray').replace('<section class="bl sik">', '').replace(/<\/section>$/, ''); }
+  function sd(){ return B.sd('ray').replace('<section class="bl sik">', '').replace(/<\/section>$/, '') + (DUR === 'canli' ? canliGiris() : ''); }
+  /* canlı anlatım sürerken (E-007): Son Dakika şeridinin altında Dakika Dakika girişi (kit .k-ky.canli; kart zemini banda göre). Haber: D.liste'deki canlı haber */
+  function canliGiris(){ var c = D.liste.haberler.filter(function(h){ return h.tur === 'Canlı'; })[0];
+    return '<div style="margin-top:var(--b-12)"><a class="k-ky canli" style="--k-yuzey:var(--kart)" href="' + K.git('canliAnlatim') + '"><span class="ik">' + K.I('fa-tower-broadcast') + '</span><span class="t"><small>Dakika Dakika · ' + c.saat + '</small><b>' + c.baslik + '</b></span>' + K.canli() + '</a></div>'; }
+  /* tek blok yüklenemedi (E-012): satır içi hata kutusu, sayfanın geri kalanı çalışır */
+  function blokHata(){ return '<div class="bb"><h2><span class="bi"><i class="fa-solid fa-chart-column"></i></span>Piyasalar</h2></div><div class="k-ic">' + K.blokHata('Piyasalar yüklenemedi') + '</div>'; }
   function podcast(){ return '<div class="bb"><h2><span class="bi"><i class="fa-solid fa-podcast"></i></span>Podcast</h2><a>Tümü<i class="fa-solid fa-chevron-right"></i></a></div><div class="pd-ray ks">' +
     D.podcast.map(function(p){ return '<a><span class="gr" style="background-image:' + G(p.g) + '"><i class="fa-solid fa-play"></i></span><span><small>' + p.seri + '</small><b class="iki">' + p.baslik + '</b><em>' + p.no + ' · ' + p.sure + '</em></span></a>'; }).join('') + '</div>'; }
   /* Köşe Yazıları (K26): marka sarısı kart, görsel kartın üst yarısı, yazar baş harfi görselin kenarına biner */
@@ -292,7 +299,7 @@
     ['Spor', function(){ return A('Spor'); }],
     ['spiker', function(){ return B.spiker('serit').replace('kt-tek sik', 'kt-tek'); }],
     ['Finans', function(){ return Bl('Finans'); }],
-    ['piyasa', piyasa],
+    ['piyasa', function(){ return DUR === 'blok-hata' ? blokHata() : piyasa(); }],
     ['Savunma', function(){ return A('Savunma'); }],
     ['namaz', namaz],
     ['akis', akis],
@@ -339,7 +346,7 @@
   var ustk = document.getElementById('ustk'), hk = e.querySelector('.hk-b');
   function gorsel(){ var i = Math.round(hr.scrollLeft / hr.clientWidth); ustk.style.setProperty('--ust-g', G(D.manset[i].g)); }
   hr.addEventListener('scroll', gorsel, { passive: true }); gorsel();
-  function kay(){ var v = e.scrollTop > 380; document.body.setAttribute('data-durum', 'acik'); ustk.classList.toggle('acik', v); hk.classList.toggle('yapisik', e.scrollTop >= e.querySelector('.hero-k').offsetHeight - ustk.offsetHeight - 1); }
+  function kay(){ var v = e.scrollTop > 380; document.body.setAttribute('data-durum', 'acik'); ustk.classList.toggle('acik', v || DUR === 'yenileniyor'); hk.classList.toggle('yapisik', e.scrollTop >= e.querySelector('.hero-k').offsetHeight - ustk.offsetHeight - 1); }
   e.addEventListener('scroll', kay, { passive: true });
   H.altCubuk('ana');
   H.oynatici();
@@ -347,6 +354,41 @@
   if (Q.get('kay')) e.scrollTop = +Q.get('kay');
   kay();
   if (Q.get('menu') === '1') document.body.classList.add('menu-acik');
+
+  /* ---------- haller (yayılım 1. dalga; yalnız kit bileşenleri; alt çubuk ve menü yerinde) ----------
+     ?durum=canli (yukarıda) · yukleniyor · yenileniyor (&hal=cekiliyor|birak|bitti) · hata (&hata=zaman-asimi) · cevrimdisi · blok-hata (yukarıda) */
+  function duz(){ e.removeEventListener('scroll', kay); ustk.classList.remove('acik'); document.body.removeAttribute('data-durum'); }
+  if (DUR === 'yukleniyor') {
+    duz();
+    /* hero iskeleti tonlu zeminde: parıltı yüzey tonunda kalsın diye kitin tonlu bant bağlamı (dolgusuz, saydam) */
+    e.innerHTML = '<div class="k-bant ton" style="padding:0;background:transparent">' + K.iskelet('hero') + '</div>' + '<section class="bant hk-b">' + K.iskelet('hikaye') + '</section>' +
+      '<section class="k-bant ton">' + K.iskelet('bolum') + '</section><section class="k-bant">' + K.iskelet('ray', 2) + '</section><section class="k-bant ton">' + K.iskelet('bolum') + '</section><div class="son"></div>';
+  }
+  if (DUR === 'yenileniyor') {
+    /* çekilen sayfa: görselli üst çubuk açık, altında yenileme göstergesi, içerik yerinde */
+    var hl = Q.get('hal');
+    e.insertAdjacentHTML('afterbegin', '<div class="k-ust-bosluk"></div>' + K.yenile(['cekiliyor', 'birak', 'bitti'].indexOf(hl) > -1 ? hl : 'yenileniyor'));
+    kay();
+  }
+  if (DUR === 'hata') {
+    duz();
+    /* ana sayfadayken "Ana sayfaya dön" yok: kit hata şablonu ikinci bağlantısız */
+    e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.bos(Object.assign({}, K.HATA[Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu'], { hata: true, ikinci: null })) + '<div class="son"></div>';
+    K.ustCubuk({ logo: true, eylemler: ['ara', 'hesap', 'menu'] });
+  }
+  if (DUR === 'cevrimdisi') {
+    /* önbellekteki son ana sayfa; hikâye ve Akış bağlantı ister: soluk */
+    [e.querySelector('.hk-b'), e.querySelector('[data-b="akis"]')].forEach(function(x){ if (x) x.classList.add('is-pasif'); });
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44'); /* kitin bant düğmesi 36: görünmez 44 alan */
+    bt.style.bottom = document.querySelector('.mo.acik') ? 'calc(var(--ac-h) + 74px)' : '';
+  }
+  /* Yeniden dene: düğmede gösterge; blokta yalnız blok yenilenir, sayfada hal kalkar */
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){
+      if (DUR === 'blok-hata') { e.querySelector('[data-b="piyasa"]').innerHTML = piyasa(); return; }
+      var q = new URLSearchParams(location.search); ['durum', 'hata', 'hal'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
 })();
 </script>
 <script src="../_ortak/hikaye.js"></script>

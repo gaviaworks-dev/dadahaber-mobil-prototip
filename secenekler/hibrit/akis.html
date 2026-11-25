@@ -6,10 +6,12 @@
 <title>Hibrit · Akış</title>
 <link rel="stylesheet" href="../_ortak/cerceve.css">
 <link rel="stylesheet" href="../_ortak/marka.css">
+<link rel="stylesheet" href="../kit/kit.css">
 <link rel="stylesheet" href="hibrit.css">
 <script src="../_ortak/icerik.js"></script>
 <script src="../_ortak/cerceve.js"></script>
 <script src="../_ortak/icerik-ek.js"></script>
+<script src="../kit/kit.js"></script>
 <script src="hibrit.js"></script>
 <style>
 /* Akış sekmesi = dikey kısa video akışı (AS-D destesi): tam ekran video, yukarı kaydırınca sıradaki video. Kartta kaydet ve paylaş yok (Beyar).
@@ -63,7 +65,41 @@ html.tam .ekran{scroll-snap-type:none}
       H.meta([H.vid(v.sure), v.izlenme], 'meta-a') +
       '</div><div class="oy"><i style="width:' + (i === 0 ? 38 : 0) + '%"></i></div></article>';
   }).join('') + '<section class="yuk" aria-label="Yükleniyor"><p>Sıradaki videolar yükleniyor</p><i class="a"></i><i class="b"></i><i class="c"></i></section>';
-  H.altCubuk('akis', true);
+  /* ---------- haller (yayılım 1. dalga; yalnız kit bileşenleri; kit Akış kartının katmanları kökün kartına eklenir) ----------
+     ?ses=1 · ?dur=1 · ?altyazi=1 · ?durum=mobil-veri|bitti|yukleniyor|daha-fazla|hata|cevrimdisi · ?calan=1 ile birlikte ?ses=1 Spiker'ın durduğunu gösterir */
+  var Q = new URLSearchParams(location.search), DUR = K.durum, e = document.getElementById('ekran'), ses = document.querySelector('.ust-a .ses');
+  var ilk = e.querySelector('.kart'), I = K.I, tam = document.documentElement.classList.contains('tam');
+  function ort(html){ var o = ilk.querySelector('.k-akis-ort'); if (o) o.remove(); if (html) ilk.insertAdjacentHTML('beforeend', '<div class="k-akis-ort">' + html + '</div>'); }
+  /* tek oynatıcı kuralı: Akış sesi açılınca Spiker duraklar (hibrit.js ve kit.js ile aynı oturum kaydı "dada-spiker") */
+  function spikerDuraklat(){ try { var s = JSON.parse(sessionStorage.getItem('dada-spiker') || 'null');
+    if (!s && Q.get('calan') === '1') s = { bas: Date.now() - 52000, dur: null };
+    if (s && s.dur == null) { sessionStorage.setItem('dada-spiker', JSON.stringify({ bas: s.bas, dur: Date.now() - s.bas })); return true; } } catch (x) {} return false; }
+  function sesAyarla(on){ ses.setAttribute('aria-label', on ? 'Sesi kapat' : 'Sesi aç'); ses.setAttribute('aria-pressed', on); ses.innerHTML = I(on ? 'fa-volume-high' : 'fa-volume-xmark');
+    if (on && spikerDuraklat()) K.toast('Dada Spiker duraklatıldı', { ikon: 'fa-headphones' }).style.bottom = ''; }
+  ses.addEventListener('click', function(){ sesAyarla(ses.getAttribute('aria-pressed') !== 'true'); });
+  /* dokununca durur / sürer (bağlantı ve düğmeler kendi işini yapar) */
+  e.addEventListener('click', function(ev){ var k = ev.target.closest('.kart'); if (!k || ev.target.closest('a,button') || DUR) return;
+    var o = k.querySelector('.k-akis-ort'); if (o) o.remove(); else k.insertAdjacentHTML('beforeend', '<div class="k-akis-ort"><span class="k-ikon cam">' + I('fa-play') + '</span></div>'); });
+  if (Q.get('ses') === '1') sesAyarla(true);
+  if (Q.get('dur') === '1') ort('<span class="k-ikon cam">' + I('fa-play') + '</span>');
+  if (Q.get('altyazi') === '1') ilk.querySelector('.kart-ic').insertAdjacentHTML('beforeend', '<p class="k-akis-alt">' + L[0].baslik + '</p>');
+  if (DUR === 'mobil-veri') { ort('<button type="button" class="k-ikon sari" aria-label="Oynat">' + I('fa-play') + '</button>Dokun, oynat<small>Mobil veride videolar kendiliğinden oynamaz.</small>'); ilk.querySelector('.oy i').style.width = '0'; }
+  if (DUR === 'hata') ort('<span class="k-ikon cam">' + I('fa-triangle-exclamation') + '</span>Video oynatılamadı<small>Yukarı kaydır, sıradakine geç.</small>');
+  if (DUR === 'bitti') { e.querySelector('.yuk').outerHTML = K.akisBitti().replace('<section class="k-akis-bitti"', '<section class="k-akis-bitti" style="scroll-snap-align:start"'); if (!tam) e.scrollTop = e.scrollHeight; }
+  if (DUR === 'daha-fazla' && !tam) e.scrollTop = e.scrollHeight;
+  if (DUR === 'yukleniyor') e.innerHTML = K.iskelet('akis');
+  if (DUR === 'cevrimdisi') {
+    /* Akış çevrimdışı çalışmaz: düz kabuk, kit hata şablonu */
+    document.querySelector('.ust-a').style.display = 'none'; document.body.removeAttribute('data-durum');
+    e.style.background = 'var(--zemin)';
+    e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.bos({ hata: true, ikon: 'fa-plug-circle-xmark', baslik: 'Akış çevrimdışı çalışmaz', aciklama: 'Videolar için bağlantı gerekiyor. Bu arada indirdiğin haberleri okuyabilirsin.',
+      eylem: { metin: 'Kaydedilenlere git', ikon: 'fa-bookmark', href: 'kaydedilenler' }, ikinci: { metin: 'Yeniden dene', attr: 'data-yeniden' } });
+    K.ustCubuk({ baslik: 'Akış' });
+  }
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); q.delete('durum'); location.search = q.toString(); }, 1200); });
+  H.altCubuk('akis', DUR !== 'cevrimdisi');
 })();
 </script>
 </body>
