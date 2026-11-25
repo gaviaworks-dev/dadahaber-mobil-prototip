@@ -836,8 +836,8 @@ Alt sayfalar, onay pencereleri, kısa bildirimler, menüler, sesli arama, açıl
 
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
-| E-602 | Canlı Etkinlik / Dynamic Island · maç skoru | sistem | OS · aday | `mac-detay.html` | — | Kilit ekranında skor; karar bekliyor | `ekranlar/sistem/kilit-ekrani.html?durum=canli-etkinlik` | ✓ |
-| E-603 | Ana ekran widget'ları | sistem | OS · aday | — | — | Son Dakika, Günün 5'i, piyasa, namaz; karar bekliyor | `ekranlar/sistem/widget.html` | ✓ |
+| E-602 | Canlı Etkinlik / Dynamic Island · maç skoru | sistem | OS · aday | `mac-detay.html` | — | Kilit ekranında skor; karar bekliyor | `ekranlar/sistem/kilit-ekrani.html?durum=canli-etkinlik` |   |
+| E-603 | Ana ekran widget'ları | sistem | OS · aday | — | — | Son Dakika, Günün 5'i, piyasa, namaz; karar bekliyor | `ekranlar/sistem/widget.html` |   |
 
 ## 6 · Public siteyle karşılaştırma
 
