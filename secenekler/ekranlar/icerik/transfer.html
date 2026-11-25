@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Transfer</title>
+<!-- Dada Haber Mobil · TRANSFER (yeni; public transfer.html karşılığı). Liste kökünden: görselli banner (K43, K.banner), dönem şeridi ("Ara transfer dönemi 5 Ocak'ta açılıyor"),
+     yapışkan branş segmenti (Futbol · Basketbol · Voleybol · Avrupa), durum çipleri (Tümü · Resmî · Görüşme · Söylenti, sayılı; liste yerinde süzülür),
+     Son Hareketler (transfer satırı: kulüp kısaltması, hareket, kulüp, durum etiketi → haber), Transfer Haberleri (K44 satırı).
+     Sorgu: ?brans=futbol|basketbol|voleybol|avrupa · ?suz=tumu|resmi|gorusme|soylenti · ?uye=0 (fark yok)
+            ?durum=yukleniyor | yenileniyor (&hal=cekiliyor|birak|bitti) | bos (süzgeçte hareket yok) | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0)
+     Veri: spor.js (public transfer.html: 8 hareket ve haberler; basketbol, voleybol, avrupa-ligleri sayfalarının Transfer kutuları). Sitede oyuncu adı ve bonservis yok; satırda olmayan bilgi yazılmadı. -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<script src="spor.js"></script>
+<style>
+/* KİT ADAYI: lig başlığı (katlanır) — Maçkolik tarzı skor listesinde maçlar lige göre gruplanır; lig adına dokununca lig sayfası, sağdaki sayı + ok düğmesi grubu katlar (spor.js ligGrup) */
+.sp-lig{margin-top:var(--b-16)}
+.sp-lig-b{display:flex;align-items:center;gap:var(--b-8);min-height:56px;border-bottom:1px solid var(--cizgi)}
+.sp-lig-a{flex:1;min-width:0;display:flex;align-items:center;gap:var(--b-12);min-height:var(--dokun);color:inherit}
+.sp-lig-i{width:32px;height:32px;flex:none;border-radius:var(--k-ic);background:var(--k-yuzey);display:grid;place-items:center;font-size:14px;color:var(--marka-metin)}
+.sp-lig-t{min-width:0;display:flex;flex-direction:column;gap:var(--b-4)}
+.sp-lig-t b{font-size:15px;font-weight:var(--y-kalin);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp-lig-t small{font-size:12.5px;line-height:1.2;color:var(--metin-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp-lig-ac{flex:none;min-width:var(--dokun);height:var(--dokun);display:inline-flex;align-items:center;justify-content:flex-end;gap:var(--ikon-bosluk);font-size:13px;font-weight:var(--y-kalin);color:var(--metin-3);font-variant-numeric:tabular-nums}
+.sp-lig-ac i{font-size:12px;transition:transform .2s}
+.sp-lig.kapali .sp-lig-ac i{transform:rotate(-90deg)}
+.sp-lig.kapali .sp-lig-l{display:none}
+/* KİT ADAYI: transfer satırı — kulüp kısaltması (puan tablosundaki daire), hareket, kulüp, durum etiketi (Resmî · Görüşme · Söylenti); satırın tamamı habere gider */
+.sp-tr{display:flex;align-items:center;gap:var(--b-12);min-height:68px;padding:var(--b-12) 0;border-bottom:1px solid var(--cizgi);color:inherit}
+.sp-tr .ar{width:40px;height:40px;flex:none;border-radius:var(--k-daire);display:grid;place-items:center;font-size:11px;font-weight:var(--y-kalin);color:#fff;background:var(--k-koyu)}
+.sp-tr .t{flex:1;min-width:0;display:flex;flex-direction:column;gap:var(--b-4)}
+.sp-tr b{font-size:15px;font-weight:var(--y-kalin);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.sp-tr small{font-size:12.5px;color:var(--metin-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp-tr .k-etiket{flex:none}
+/* yapışkan denetim bandı (branş segmenti + gün sekmeleri) */
+.sp-yapis{position:sticky;top:var(--k-ub-h);z-index:60;background:var(--zemin)}
+.sp-sw{padding:var(--b-12) var(--kenar) 0}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var Q = K.q, DUR = K.durum, HAL = Q.get('hal'), e = document.getElementById('ekran'), S = SPOR;
+  var BR = ['futbol', 'basketbol', 'voleybol', 'avrupa'], BAD = ['Futbol', 'Basketbol', 'Voleybol', 'Avrupa'];
+  var b = BR.indexOf(Q.get('brans')) > -1 ? Q.get('brans') : 'futbol';
+  var SZ = ['tumu', 'resmi', 'gorusme', 'soylenti'], SAD = { resmi: 'Resmî', gorusme: 'Görüşme', soylenti: 'Söylenti' };
+  var suz = SZ.indexOf(Q.get('suz')) > -1 ? Q.get('suz') : 'tumu', BOS = DUR === 'bos';
+  if (BOS && suz === 'tumu') suz = 'soylenti';
+
+  function veri(){ return BOS ? [] : S.TRANSFER[b]; }
+  function suzgec(s){ return veri().filter(function(r){ return s === 'tumu' || r[3] === SAD[s]; }); }
+  function cipler(){ return K.cipler(SZ.map(function(s){ return { metin: s === 'tumu' ? 'Tümü' : SAD[s], sayi: suzgec(s).length, ikon: s === 'tumu' ? null : S.TDURUM[SAD[s]][0] }; }), SZ.indexOf(suz)); }
+  function liste(){ var l = suzgec(suz);
+    if (!l.length) return K.bos({ ikon: 'fa-right-left', baslik: 'Bu süzgeçte hareket yok', aciklama: 'Yeni bir transfer gelişmesi olunca burada görünür; takip ettiğin takımınki bildirimle gelir.', eylem: suz !== 'tumu' ? { metin: 'Bütün hareketler', tur: 'sade', attr: 'data-tumu' } : null });
+    return '<div class="k-ic">' + l.map(S.transfer).join('') + '</div>'; }
+
+  var bas = '<div class="k-bbas"><h1>Transfer</h1><p>Resmî transferler, görüşmeler ve kaynağı belirtilen söylentiler</p></div>';
+  /* kaynak: public transfer.html manşeti (Ara transfer dönemi 5 Ocak'ta açılıyor) */
+  var donem = '<div class="k-ic" style="padding-top:var(--b-16)">' + K.serit({ ikon: 'fa-calendar-day', metin: 'Ara transfer dönemi 5 Ocak\'ta açılıyor', alt: 'Transfer · ' + S.HABER.transfer[0].saat + ' · ' + S.HABER.transfer[0].yazar }) + '</div>';
+  var bant = '<div class="sp-yapis" style="margin-top:var(--b-8)"><div class="sp-sw" style="padding-bottom:var(--b-12)" data-brans>' + K.segment(BAD, BR.indexOf(b)) + '</div></div>';
+  var hareket = '<section class="k-bl sik">' + K.bb({ baslik: 'Son Hareketler', ikon: 'fa-right-left', not: 'En yeni' }) + '<div data-suz style="padding-bottom:var(--b-4)">' + cipler() + '</div><div data-liste>' + liste() + '</div></section>';
+  var haber = '<section class="k-bl">' + K.bb({ baslik: 'Transfer Haberleri', ikon: 'fa-newspaper', sayi: S.TOPLAM.transfer }) + S.haberler(S.HABER.transfer) + '</section>';
+
+  var DUZ = DUR === 'hata' || DUR === 'bulunamadi' || (DUR === 'cevrimdisi' && Q.get('onbellek') === '0');
+  if (DUR === 'yukleniyor') e.innerHTML = '<div class="k-ust-bosluk"></div>' + bas + bant + '<div class="k-ic" style="padding-top:var(--b-16)">' + K.iskelet('metin', 12) + '</div><div class="k-son"></div>';
+  else if (DUZ) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: DUR === 'bulunamadi' ? 'bulunamadi' : DUR === 'cevrimdisi' ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') }) + '<div class="k-son"></div>';
+  else e.innerHTML = '<div class="k-ust-bosluk"></div>' + (DUR === 'yenileniyor' ? K.yenile(['cekiliyor', 'birak', 'bitti'].indexOf(HAL) > -1 ? HAL : 'yenileniyor') : '') +
+    bas + donem + bant + hareket + haber + '<div class="k-son"></div>';
+
+  K.ustCubuk({ geri: true, baslik: 'Transfer', buyuk: !DUZ, eylemler: DUZ ? [] : ['paylas'] });
+  K.altCubuk('bolum');
+  K.oynatici();
+
+  function ciz(){ var c = e.querySelector('[data-suz]'), l = e.querySelector('[data-liste]'); if (c) c.innerHTML = cipler(); if (l) l.innerHTML = liste(); }
+  e.addEventListener('click', function(ev){ var x;
+    if ((x = ev.target.closest('[data-brans] .k-segment button'))) { b = BR[[].indexOf.call(x.parentNode.querySelectorAll('button'), x)]; suz = 'tumu'; ciz(); }
+    else if ((x = ev.target.closest('[data-suz] .k-cip'))) { suz = SZ[[].indexOf.call(x.parentNode.querySelectorAll('.k-cip'), x)]; var l = e.querySelector('[data-liste]'); if (l) l.innerHTML = liste(); }
+    else if (ev.target.closest('[data-tumu]')) { suz = 'tumu'; ciz(); } });
+  if (DUR === 'cevrimdisi' && !DUZ) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'hal', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

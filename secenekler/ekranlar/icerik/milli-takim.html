@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Millî Takım</title>
+<!-- Dada Haber Mobil · MİLLÎ TAKIM (yeni; public milli-takim.html karşılığı). Liste kökünden: görselli banner (K43, K.banner), Takip et (üye: yerinde; misafir: giriş tetik paneli),
+     branş çipleri (Tümü · Futbol · Basketbol, sayılı; fikstür yerinde süzülür), Millî Maçlar (gün ayraçlı; sağda branş ve organizasyon), Millî Takım Haberleri (K44 satırı).
+     Sorgu: ?suz=tumu|futbol|basketbol · ?uye=0 misafir
+            ?durum=yukleniyor | yenileniyor (&hal=cekiliyor|birak|bitti) | bos (yaklaşan millî maç yok) | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0)
+     Veri: spor.js (public milli-takim.html: 5 maç, kadın futbol futbola sayılır; haberler saatleri sözlükten). -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<script src="spor.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var Q = K.q, DUR = K.durum, HAL = Q.get('hal'), e = document.getElementById('ekran'), S = SPOR;
+  var SZ = ['tumu', 'futbol', 'basketbol'], suz = SZ.indexOf(Q.get('suz')) > -1 ? Q.get('suz') : 'tumu', BOS = DUR === 'bos';
+  /* kaynak: public milli-takim.html fikstür başlıkları (branş, organizasyon) */
+  var ORG = { 'milli-basket': 'Basketbol · Dünya Kupası elemeleri', 'milli-kadin': 'Kadın futbol · hazırlık', 'milli-futbol': 'Futbol · hazırlık' };
+  var MAC = BOS ? [] : S.sirala(S.M.filter(function(m){ return S.LIG[m.lig].milli; }));
+  function suzgec(s){ return MAC.filter(function(m){ return s === 'tumu' || m.b === s; }); }
+  function cipler(){ return K.cipler(SZ.map(function(s){ return { metin: s === 'tumu' ? 'Tümü' : S.BRANS[s].ad, ikon: s === 'tumu' ? null : S.BRANS[s].ikon, sayi: suzgec(s).length }; }), SZ.indexOf(suz)); }
+  function liste(){ var l = suzgec(suz);
+    if (!l.length) return K.bos({ ikon: 'fa-flag', baslik: 'Yaklaşan millî maç yok', aciklama: 'Millî takımların yeni maç programı açıklanınca burada görünür.' });
+    return '<div class="k-ic">' + S.gunListe(l, { sag: function(m){ return ORG[m.lig]; } }) + '</div>'; }
+
+  var bas = '<div class="k-bbas"><h1>Millî Takım</h1><p>A Millî Takım, kadın ve genç millî takımlar; futbol, basketbol ve voleybol</p></div>';
+  var takip = '<div class="k-ic" style="padding-top:var(--b-16)">' + (K.uye ? K.btn({ metin: 'Takip et', ikon: 'fa-plus', tur: 'birincil', tam: true, secili: false, attr: 'data-takip' })
+    : K.btn({ metin: 'Takip et', ikon: 'fa-plus', tur: 'birincil', tam: true, attr: 'data-sayfa="tetik" data-eylem="takip"' })) + '</div>';
+  var maclar = '<section class="k-bl sik">' + K.bb({ baslik: 'Millî Maçlar', ikon: 'fa-flag', sayi: MAC.length || null }) + '<div data-suz style="padding-bottom:var(--b-4)">' + cipler() + '</div><div data-liste>' + liste() + '</div></section>';
+  var haber = '<section class="k-bl">' + K.bb({ baslik: 'Millî Takım Haberleri', ikon: 'fa-newspaper', sayi: S.TOPLAM.milli }) + S.haberler(S.HABER.milli) + '</section>';
+
+  var DUZ = DUR === 'hata' || DUR === 'bulunamadi' || (DUR === 'cevrimdisi' && Q.get('onbellek') === '0');
+  if (DUR === 'yukleniyor') e.innerHTML = '<div class="k-ust-bosluk"></div>' + bas + '<div class="k-ic" style="padding-top:var(--b-16)">' + K.iskelet('metin', 12) + '</div><div class="k-son"></div>';
+  else if (DUZ) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: DUR === 'bulunamadi' ? 'bulunamadi' : DUR === 'cevrimdisi' ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') }) + '<div class="k-son"></div>';
+  else e.innerHTML = '<div class="k-ust-bosluk"></div>' + (DUR === 'yenileniyor' ? K.yenile(['cekiliyor', 'birak', 'bitti'].indexOf(HAL) > -1 ? HAL : 'yenileniyor') : '') +
+    bas + takip + maclar + haber + '<div class="k-son"></div>';
+
+  K.ustCubuk({ geri: true, baslik: 'Millî Takım', buyuk: !DUZ, eylemler: DUZ ? [] : ['paylas'] });
+  K.altCubuk('bolum');
+  K.oynatici();
+
+  e.addEventListener('click', function(ev){ var x = ev.target.closest('[data-suz] .k-cip'); if (!x) return; suz = SZ[[].indexOf.call(x.parentNode.querySelectorAll('.k-cip'), x)]; var l = e.querySelector('[data-liste]'); if (l) l.innerHTML = liste(); });
+  if (DUR === 'cevrimdisi' && !DUZ) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'hal', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

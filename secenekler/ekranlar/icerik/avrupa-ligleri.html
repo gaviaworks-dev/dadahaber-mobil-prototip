@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Avrupa Ligleri</title>
+<!-- Dada Haber Mobil · AVRUPA LİGLERİ (yeni; public avrupa-ligleri.html karşılığı). Liste kökünden: görselli banner (K43, K.banner), Ligler (ayar satırı: lig, hafta ve lider → lig sayfası),
+     Avrupa Kupaları (Şampiyonlar Ligi · Avrupa Ligi · Konferans Ligi → lig sayfası), Canlı ve Son Skorlar (lige göre gruplu, katlanır başlık), Şampiyonlar Ligi fikstürü (gün ayraçlı),
+     Transfer (Avrupa hareketleri → Transfer), Avrupa Futbolu haberleri (K44 satırı).
+     Sorgu: ?uye=0 (fark yok) · ?durum=yukleniyor | yenileniyor (&hal=cekiliyor|birak|bitti) | bos (bugün Avrupa liglerinde maç yok) | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0)
+     Veri: spor.js (public avrupa-ligleri.html: canlı ve son skorlar, puan durumları, ŞL 5. hafta fikstürü, transfer, haberler; Avrupa kupalarında Türk takımları takım sayfalarından). -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<script src="spor.js"></script>
+<style>
+/* KİT ADAYI: lig başlığı (katlanır) — Maçkolik tarzı skor listesinde maçlar lige göre gruplanır; lig adına dokununca lig sayfası, sağdaki sayı + ok düğmesi grubu katlar (spor.js ligGrup) */
+.sp-lig{margin-top:var(--b-16)}
+.sp-lig-b{display:flex;align-items:center;gap:var(--b-8);min-height:56px;border-bottom:1px solid var(--cizgi)}
+.sp-lig-a{flex:1;min-width:0;display:flex;align-items:center;gap:var(--b-12);min-height:var(--dokun);color:inherit}
+.sp-lig-i{width:32px;height:32px;flex:none;border-radius:var(--k-ic);background:var(--k-yuzey);display:grid;place-items:center;font-size:14px;color:var(--marka-metin)}
+.sp-lig-t{min-width:0;display:flex;flex-direction:column;gap:var(--b-4)}
+.sp-lig-t b{font-size:15px;font-weight:var(--y-kalin);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp-lig-t small{font-size:12.5px;line-height:1.2;color:var(--metin-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp-lig-ac{flex:none;min-width:var(--dokun);height:var(--dokun);display:inline-flex;align-items:center;justify-content:flex-end;gap:var(--ikon-bosluk);font-size:13px;font-weight:var(--y-kalin);color:var(--metin-3);font-variant-numeric:tabular-nums}
+.sp-lig-ac i{font-size:12px;transition:transform .2s}
+.sp-lig.kapali .sp-lig-ac i{transform:rotate(-90deg)}
+.sp-lig.kapali .sp-lig-l{display:none}
+/* KİT ADAYI: transfer satırı — kulüp kısaltması (puan tablosundaki daire), hareket, kulüp, durum etiketi (Resmî · Görüşme · Söylenti); satırın tamamı habere gider */
+.sp-tr{display:flex;align-items:center;gap:var(--b-12);min-height:68px;padding:var(--b-12) 0;border-bottom:1px solid var(--cizgi);color:inherit}
+.sp-tr .ar{width:40px;height:40px;flex:none;border-radius:var(--k-daire);display:grid;place-items:center;font-size:11px;font-weight:var(--y-kalin);color:#fff;background:var(--k-koyu)}
+.sp-tr .t{flex:1;min-width:0;display:flex;flex-direction:column;gap:var(--b-4)}
+.sp-tr b{font-size:15px;font-weight:var(--y-kalin);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.sp-tr small{font-size:12.5px;color:var(--metin-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp-tr .k-etiket{flex:none}
+/* yapışkan denetim bandı (branş segmenti + gün sekmeleri) */
+.sp-yapis{position:sticky;top:var(--k-ub-h);z-index:60;background:var(--zemin)}
+.sp-sw{padding:var(--b-12) var(--kenar) 0}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var Q = K.q, DUR = K.durum, HAL = Q.get('hal'), e = document.getElementById('ekran'), S = SPOR, BOS = DUR === 'bos';
+  var LIGLER = ['premier-lig', 'la-liga', 'serie-a', 'bundesliga'], KUPA = ['sampiyonlar-ligi', 'avrupa-ligi', 'konferans-ligi'];
+  function lider(k){ var r = S.LIG[k].tablo[0]; return 'Lider ' + r[0] + ' · ' + (3 * r[2] + r[3]) + ' puan'; }
+  function sonraki(k){ var m = S.sirala(S.M.filter(function(x){ return x.lig === k && x.hal === 'b'; }))[0]; var a = m ? m.ev + '–' + m.dep : ''; return a.length < 22 ? a + ' · ' + S.gunKisa(m.t) : a; }
+  function satir(k, alt){ return { ikon: S.ligIkon(k), baslik: S.LIG[k].ad, alt: alt, href: S.ligHref(k) }; }
+  /* kaynak: public avrupa-ligleri.html "Canlı Maçlar ve Son Skorlar" (4 maç) */
+  var SKOR = BOS ? [] : S.M.filter(function(m){ return (m.lig === 'serie-a' && m.t === S.BUGUN) || (m.lig === 'la-liga' && m.hafta === '14. hafta') || (m.lig === 'bundesliga' && m.hafta === '12. hafta') || (m.lig === 'premier-lig' && m.t === S.BUGUN); });
+  var SL = S.sirala(S.M.filter(function(m){ return m.lig === 'sampiyonlar-ligi' && m.hal === 'b'; }));
+
+  var bas = '<div class="k-bbas"><h1>Avrupa Ligleri</h1><p>Premier Lig, La Liga, Serie A, Bundesliga ve Avrupa kupaları</p></div>';
+  var ligler = '<div class="k-ic" style="padding-top:var(--b-16)">' + K.grup('Ligler', LIGLER.map(function(k){ return satir(k, lider(k)); })) +
+    K.grup('Avrupa Kupaları', KUPA.map(function(k){ return satir(k, sonraki(k)); })) + '</div>';
+  var cl = SKOR.filter(function(m){ return m.hal === 'c'; }).length;
+  var skor = '<section class="k-bl sik">' + K.bb({ baslik: 'Canlı ve Son Skorlar', canli: cl > 0, ikon: cl ? null : 'fa-futbol', sayi: SKOR.length || null, baglanti: { metin: 'Canlı Skor', href: K.u('ekranlar/icerik/canli-skor.html', 'spor=futbol') } }) +
+    '<div class="k-ic">' + (SKOR.length ? S.ligGruplari(SKOR) : K.bos({ ikon: 'fa-futbol', baslik: 'Bugün Avrupa liglerinde maç yok', aciklama: 'Şampiyonlar Ligi 5. hafta maçları aşağıda; başlayınca skorlar burada canlı akar.' })) + '</div></section>';
+  var fik = '<section class="k-bl sik">' + K.bb({ baslik: 'Şampiyonlar Ligi', ikon: 'fa-trophy', not: '5. hafta' }) + '<div class="k-ic">' + S.gunListe(SL, { sag: function(m, n){ return n + ' maç'; } }) + '</div></section>';
+  var tr = '<section class="k-bl sik">' + K.bb({ baslik: 'Transfer', ikon: 'fa-right-left', sayi: S.TRANSFER.avrupa.length, baglanti: { metin: 'Tümü', href: K.u('ekranlar/icerik/transfer.html', 'brans=avrupa') } }) + '<div class="k-ic">' + S.TRANSFER.avrupa.map(S.transfer).join('') + '</div></section>';
+  var haber = '<section class="k-bl">' + K.bb({ baslik: 'Avrupa Futbolu', ikon: 'fa-newspaper', sayi: S.TOPLAM.avrupa, not: 'En yeni' }) + S.haberler(S.HABER.avrupa) + '</section>';
+
+  var DUZ = DUR === 'hata' || DUR === 'bulunamadi' || (DUR === 'cevrimdisi' && Q.get('onbellek') === '0');
+  if (DUR === 'yukleniyor') e.innerHTML = '<div class="k-ust-bosluk"></div>' + bas + '<div class="k-ic" style="padding-top:var(--b-16)">' + K.iskelet('metin', 12) + '</div><div class="k-son"></div>';
+  else if (DUZ) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: DUR === 'bulunamadi' ? 'bulunamadi' : DUR === 'cevrimdisi' ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') }) + '<div class="k-son"></div>';
+  else e.innerHTML = '<div class="k-ust-bosluk"></div>' + (DUR === 'yenileniyor' ? K.yenile(['cekiliyor', 'birak', 'bitti'].indexOf(HAL) > -1 ? HAL : 'yenileniyor') : '') +
+    bas + ligler + skor + fik + tr + haber + '<div class="k-son"></div>';
+
+  K.ustCubuk({ geri: true, baslik: 'Avrupa Ligleri', buyuk: !DUZ, eylemler: DUZ ? [] : [{ ikon: 'fa-bolt', etiket: 'Canlı Skor', href: K.u('ekranlar/icerik/canli-skor.html', 'spor=futbol') }] });
+  K.altCubuk('bolum');
+  K.oynatici();
+
+  if (DUR === 'cevrimdisi' && !DUZ) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'hal', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

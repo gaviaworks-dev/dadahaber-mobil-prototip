@@ -5,9 +5,12 @@
 <meta name="viewport" content="width=390,initial-scale=1">
 <title>Galatasaray – Fenerbahçe</title>
 <!-- Dada Haber Mobil · MAÇ DETAYI (E-399–E-406). Detay kökünden (kendi düzeni, kit bileşenleri): düz üst çubuk, skor kutusu (kit maç kutusu, her iki temada koyu), künye satırı.
-     Canlı (varsayılan): Anlatım · İstatistik · Kadrolar sekmeleri (yerinde değişir, kaydırma değil; K18), maçla ilgili haberler.
-     Başlamadı (?durum=once): başlama saati, ilk 11, iki takımın son maçları. Bitti (?durum=bitti): sonuç, goller (özet), kadrolar, maç haberi bağlantısı.
-     Sorgu: ?durum=once | bitti | yukleniyor | yenileniyor (&hal=cekiliyor|birak|bitti) | hata (&hata=zaman-asimi) | bulunamadi | cevrimdisi (&onbellek=0) · ?sekme=anlatim|istatistik|kadrolar
+     Maç merkezi (Maçkolik tarzı yapı): yapışkan sekmeler (yerinde değişir, kaydırma değil; K18), altında maçla ilgili haberler (K44 satırı).
+     Canlı (varsayılan): Anlatım · İstatistik · Kadrolar · Puan Durumu · Rekabet. Bitti (?durum=bitti): Özet (goller, maç haberi) · Kadrolar · Puan Durumu · Rekabet.
+     Başlamadı (?durum=once): Kadrolar (ilk 11) · Rekabet · Puan Durumu. Puan Durumu: Süper Lig tablosu, iki takımın satırı vurgulu (maç öncesi, 13 hafta).
+     Rekabet: iki takımın son maçları (form); aralarındaki maçların listesi sitede yok → dürüst "veri yok" şeridi + public'teki "son 10 maç" haberi.
+     Sorgu: ?durum=once | bitti | yukleniyor | yenileniyor (&hal=cekiliyor|birak|bitti) | hata (&hata=zaman-asimi) | bulunamadi | cevrimdisi (&onbellek=0)
+            ?sekme=anlatim|istatistik|kadrolar|puan|rekabet|ozet
      Veri: public mac-detay.html (anlatım, istatistik, goller, ilk 11, haberler), galatasaray.html ve fenerbahce.html (son maçlar), sözlük (haber saatleri), D.mac.
      Varsayımlar (onaylanmadı): başlama saati 14.45 (public bildirim "Takip ettiğin Galatasaray maçı başladı · 14.45"); "bitti" halinde sonuç 2–1 (kitin K.mac bitti haliyle aynı; veride maç sonu yok),
      67. dakika istatistikleri bitti halinde gösterilmez. -->
@@ -18,6 +21,31 @@
 <script src="../../_ortak/cerceve.js"></script>
 <script src="../../_ortak/icerik-ek.js"></script>
 <script src="../../kit/kit.js"></script>
+<script src="spor.js"></script>
+<style>
+/* KİT ADAYI: lig başlığı (katlanır) — Maçkolik tarzı skor listesinde maçlar lige göre gruplanır; lig adına dokununca lig sayfası, sağdaki sayı + ok düğmesi grubu katlar (spor.js ligGrup) */
+.sp-lig{margin-top:var(--b-16)}
+.sp-lig-b{display:flex;align-items:center;gap:var(--b-8);min-height:56px;border-bottom:1px solid var(--cizgi)}
+.sp-lig-a{flex:1;min-width:0;display:flex;align-items:center;gap:var(--b-12);min-height:var(--dokun);color:inherit}
+.sp-lig-i{width:32px;height:32px;flex:none;border-radius:var(--k-ic);background:var(--k-yuzey);display:grid;place-items:center;font-size:14px;color:var(--marka-metin)}
+.sp-lig-t{min-width:0;display:flex;flex-direction:column;gap:var(--b-4)}
+.sp-lig-t b{font-size:15px;font-weight:var(--y-kalin);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp-lig-t small{font-size:12.5px;line-height:1.2;color:var(--metin-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp-lig-ac{flex:none;min-width:var(--dokun);height:var(--dokun);display:inline-flex;align-items:center;justify-content:flex-end;gap:var(--ikon-bosluk);font-size:13px;font-weight:var(--y-kalin);color:var(--metin-3);font-variant-numeric:tabular-nums}
+.sp-lig-ac i{font-size:12px;transition:transform .2s}
+.sp-lig.kapali .sp-lig-ac i{transform:rotate(-90deg)}
+.sp-lig.kapali .sp-lig-l{display:none}
+/* KİT ADAYI: transfer satırı — kulüp kısaltması (puan tablosundaki daire), hareket, kulüp, durum etiketi (Resmî · Görüşme · Söylenti); satırın tamamı habere gider */
+.sp-tr{display:flex;align-items:center;gap:var(--b-12);min-height:68px;padding:var(--b-12) 0;border-bottom:1px solid var(--cizgi);color:inherit}
+.sp-tr .ar{width:40px;height:40px;flex:none;border-radius:var(--k-daire);display:grid;place-items:center;font-size:11px;font-weight:var(--y-kalin);color:#fff;background:var(--k-koyu)}
+.sp-tr .t{flex:1;min-width:0;display:flex;flex-direction:column;gap:var(--b-4)}
+.sp-tr b{font-size:15px;font-weight:var(--y-kalin);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.sp-tr small{font-size:12.5px;color:var(--metin-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp-tr .k-etiket{flex:none}
+/* yapışkan denetim bandı (branş segmenti + gün sekmeleri) */
+.sp-yapis{position:sticky;top:var(--k-ub-h);z-index:60;background:var(--zemin)}
+.sp-sw{padding:var(--b-12) var(--kenar) 0}
+</style>
 </head>
 <body>
 <div class="ekran" id="ekran"></div>
@@ -51,13 +79,13 @@
   /* kaynak: public mac-detay.html "Maçla İlgili Haberler" + sözlük saatleri */
   var X = [
     { alt: 'Derbi', baslik: 'Galatasaray derbi öncesi son antrenmanını yaptı', yazar: 'Burak Tan', sure: '3 dk', izlenme: '14,2 B', saat: '15.10', g: 'antrenman' },
-    { alt: 'Derbi', baslik: 'Fenerbahçe derbiye üç değişiklikle çıktı', yazar: 'Burak Tan', sure: '4 dk', izlenme: '9,6 B', saat: '13.55' },
-    { alt: 'Hakem', baslik: 'Derbinin VAR hakemi açıklandı', yazar: 'Emre Sönmez', sure: '5 dk', izlenme: '5,9 B', saat: '11.55' },
-    { alt: 'Güvenlik', baslik: 'Derbi için stadyum çevresinde trafik düzenlemesi', yazar: 'Burak Tan', sure: '2 dk', izlenme: '4,8 B', saat: '22 Kas' },
-    { alt: 'İstatistik', baslik: 'İki takım arasındaki son 10 maçta 4 galibiyet, 3 beraberlik', yazar: 'Gizem Aktaş', sure: '3 dk', izlenme: '3,6 B', saat: '22 Kas' },
-    { alt: 'Taraftar', baslik: 'Derbi biletleri satışa çıktığı gün tükendi', yazar: 'Murat Tekin', sure: '4 dk', izlenme: '2,9 B', saat: '22 Kas' },
-    { alt: 'Süper Lig', baslik: 'Derbi sonucu zirve yarışını nasıl etkiler', yazar: 'Burak Tan', sure: '3 dk', izlenme: '14,2 B', saat: '21 Kas' },
-    { alt: 'Kadro', baslik: 'İki takım da ilk 11\'ini açıkladı', yazar: 'Gizem Aktaş', sure: '4 dk', izlenme: '9,6 B', saat: '21 Kas' }
+    { alt: 'Derbi', baslik: 'Fenerbahçe derbiye üç değişiklikle çıktı', yazar: 'Burak Tan', sure: '4 dk', izlenme: '9,6 B', saat: '13.55', g: 'antrenman' },
+    { alt: 'Hakem', baslik: 'Derbinin VAR hakemi açıklandı', yazar: 'Emre Sönmez', sure: '5 dk', izlenme: '5,9 B', saat: '11.55', g: 'superlig' },
+    { alt: 'Güvenlik', baslik: 'Derbi için stadyum çevresinde trafik düzenlemesi', yazar: 'Burak Tan', sure: '2 dk', izlenme: '4,8 B', saat: '22 Kas', g: 'superlig' },
+    { alt: 'İstatistik', baslik: 'İki takım arasındaki son 10 maçta 4 galibiyet, 3 beraberlik', yazar: 'Gizem Aktaş', sure: '3 dk', izlenme: '3,6 B', saat: '22 Kas', g: 'superlig' },
+    { alt: 'Taraftar', baslik: 'Derbi biletleri satışa çıktığı gün tükendi', yazar: 'Murat Tekin', sure: '4 dk', izlenme: '2,9 B', saat: '22 Kas', g: 'superlig' },
+    { alt: 'Süper Lig', baslik: 'Derbi sonucu zirve yarışını nasıl etkiler', yazar: 'Burak Tan', sure: '3 dk', izlenme: '14,2 B', saat: '21 Kas', g: 'superlig' },
+    { alt: 'Kadro', baslik: 'İki takım da ilk 11\'ini açıkladı', yazar: 'Gizem Aktaş', sure: '4 dk', izlenme: '9,6 B', saat: '21 Kas', g: 'antrenman' }
   ];
   X.forEach(function(h){ h.ikon = 'fa-futbol'; });
 
@@ -71,25 +99,23 @@
   var kutu = '<div class="k-ic" style="padding-top:var(--b-8)">' + K.mac({ hal: KIP === 'once' ? 'baslamadi' : KIP, saat: '14.45' }).replace(/ href="[^"]*"/, '') +
     K.meta(KIP === 'once' ? ['İstanbul', 'Hakem Cem Arıkan', 'Başlama 14.45'] : ['İstanbul', 'Hakem Cem Arıkan', '51.840 seyirci']) + '</div>';
 
-  var SEK = ['anlatim', 'istatistik', 'kadrolar'], sk = Math.max(0, SEK.indexOf(Q.get('sekme')));
-  var govde;
-  if (KIP === 'canli') {
-    var anl = ANL.map(function(a, i){ return K.canliGiris({ saat: a[0], baslik: a[1], metin: a[2], kilit: !!a[3], yeni: i === 0 }); }).join('');
-    var ist = '<div class="k-ayrac"><span>Goller</span><span>3</span></div>' + K.adimlar(GOL) +
-      '<div class="k-ayrac"><span>İstatistikler</span><span>67. dakika itibarıyla</span></div>' + K.tablo({ sutunlar: ['İstatistik', m.evKod, m.depKod], satirlar: IST });
-    var P = [anl, ist, kadrolar()];
-    govde = '<div class="k-segment-kap">' + K.segment(['Anlatım', 'İstatistik', 'Kadrolar'], sk) + '</div>' +
-      P.map(function(p, i){ return '<div class="k-ic" data-panel="' + i + '"' + (i === sk ? '' : ' hidden') + '>' + p + '</div>'; }).join('') +
-      haberler(X, { baslik: 'Maçla İlgili Haberler', ikon: 'fa-futbol', sayi: 42 });
-  } else if (KIP === 'once') {
-    govde = bolum({ baslik: 'İlk 11', ikon: 'fa-shirt' }, kadrolar()) +
-      bolum({ baslik: 'Son Maçlar', ikon: 'fa-flag-checkered' }, sonMaclar(m.ev) + sonMaclar(m.dep)) +
-      haberler(X.filter(function(h){ return !/çıktı$/.test(h.baslik); }), { baslik: 'Maç Öncesi', ikon: 'fa-futbol', sayi: 42 });
-  } else {
-    govde = bolum({ baslik: 'Goller', ikon: 'fa-futbol' }, K.adimlar(GOL)) +
-      haberler([X[6]], { baslik: 'Maç Haberi', ikon: 'fa-newspaper' }) +
-      bolum({ baslik: 'Kadrolar', ikon: 'fa-shirt' }, kadrolar());
-  }
+  /* sekmeler: maç haline göre (Maçkolik tarzı maç merkezi) */
+  var AD = { anlatim: 'Anlatım', istatistik: 'İstatistik', kadrolar: 'Kadrolar', puan: 'Puan Durumu', rekabet: 'Rekabet', ozet: 'Özet' };
+  var SEK = KIP === 'canli' ? ['anlatim', 'istatistik', 'kadrolar', 'puan', 'rekabet'] : KIP === 'bitti' ? ['ozet', 'kadrolar', 'puan', 'rekabet'] : ['kadrolar', 'rekabet', 'puan'];
+  var sk = Math.max(0, SEK.indexOf(Q.get('sekme')));
+  function puan(){ var t = SPOR.tablo('super-lig', m.evKod); t = t.replace(/<tr>(<td><span class="tk"><em>\d+<\/em><span class="ar">FB<\/span>)/, '<tr class="is-vurgu">$1');
+    return '<div data-tablo>' + t + '</div><p class="k-not">' + K.I('fa-circle-info') + '<span>Süper Lig, 13 hafta sonunda · maç öncesi durum; ' + (KIP === 'bitti' ? 'maç sonucu işlenince güncellenir' : 'maç bitince güncellenir') + '</span></p>'; }
+  function rekabet(){ return '<div style="padding-top:var(--b-16)">' + K.serit({ ikon: 'fa-circle-info', metin: 'Aralarındaki maçların listesi yok', alt: 'Karşılaşma geçmişi sitede tablo olarak yayımlanmıyor; özeti aşağıdaki haberde.' }) + '</div>' +
+    '<div class="k-satirlar" style="margin:0 calc(-1 * var(--kenar))">' + K.satir(X[4]) + '</div>' + sonMaclar(m.ev) + sonMaclar(m.dep); }
+  var anl = ANL.map(function(a, i){ return K.canliGiris({ saat: a[0], baslik: a[1], metin: a[2], kilit: !!a[3], yeni: i === 0 }); }).join('');
+  var ist = '<div class="k-ayrac"><span>Goller</span><span>3</span></div>' + K.adimlar(GOL) +
+    '<div class="k-ayrac"><span>İstatistikler</span><span>67. dakika itibarıyla</span></div>' + K.tablo({ sutunlar: ['İstatistik', m.evKod, m.depKod], satirlar: IST });
+  var ozet = '<div class="k-ayrac"><span>Goller</span><span>3</span></div>' + K.adimlar(GOL) + '<div class="k-ayrac"><span>Maç Haberi</span><span>' + X[6].saat + '</span></div>' +
+    '<div class="k-satirlar" style="margin:0 calc(-1 * var(--kenar))">' + K.satir(X[6]) + '</div>';
+  var PANEL = { anlatim: anl, istatistik: ist, kadrolar: kadrolar(), puan: puan(), rekabet: rekabet(), ozet: ozet };
+  var govde = '<div class="sp-yapis" style="margin-top:var(--b-12)">' + K.sekmeler(SEK.map(function(x){ return { metin: AD[x] }; }), sk) + '</div>' +
+    SEK.map(function(x, i){ return '<div class="k-ic" data-panel="' + i + '"' + (i === sk ? '' : ' hidden') + '>' + PANEL[x] + '</div>'; }).join('') +
+    (KIP === 'once' ? haberler(X.filter(function(h){ return !/çıktı$/.test(h.baslik); }), { baslik: 'Maç Öncesi', ikon: 'fa-futbol', sayi: 42 }) : haberler(X, { baslik: 'Maçla İlgili Haberler', ikon: 'fa-futbol', sayi: 42 }));
 
   var DUZ = DUR === 'hata' || DUR === 'bulunamadi' || (DUR === 'cevrimdisi' && Q.get('onbellek') === '0');
   if (DUR === 'yukleniyor') e.innerHTML = '<div class="k-ust-bosluk"></div><div class="k-ic" style="padding-top:var(--b-8)">' + K.iskelet('metin', 4) + '</div><div class="k-satirlar">' + K.iskelet('satir', 4) + '</div><div class="k-son"></div>';
@@ -101,7 +127,8 @@
   K.oynatici();
 
   /* sekmeler yerinde değişir (kaydırma değil) */
-  e.addEventListener('click', function(ev){ var b = ev.target.closest('.k-segment-kap .k-segment button'); if (!b) return;
+  SPOR.tabloBagla(e.querySelector('[data-tablo]'), 'super-lig');
+  e.addEventListener('click', function(ev){ var b = ev.target.closest('.sp-yapis .k-sekmeler button'); if (!b) return;
     var i = [].indexOf.call(b.parentNode.querySelectorAll('button'), b);
     e.querySelectorAll('[data-panel]').forEach(function(p){ p.hidden = +p.getAttribute('data-panel') !== i; }); });
   if (DUR === 'cevrimdisi' && !DUZ) {

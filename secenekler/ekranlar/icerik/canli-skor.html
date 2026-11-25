@@ -4,10 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=390,initial-scale=1">
 <title>Canlı Skor</title>
-<!-- Dada Haber Mobil · CANLI SKOR (E-373–E-378). Liste kökünden: büyük başlık, branş çipleri (tek seçim, süzer), Takımların (üye: takımın canlı maçı en üstte; misafir: Takımını seç · Giriş yap),
-     Canlı → Maç sonu → Başlayacak; her maçın üstünde lig ayracı (sol lig, sağ periyot), altında skor satırı.
-     Sorgu: ?uye=0 misafir · ?durum=yukleniyor | yenileniyor (&hal=cekiliyor|birak|bitti) | bos | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0)
-     Veri: public canli-skor.html "Canlı Maçlar ve Son Skorlar" (12 maç, 23 Kasım). Takımın maçı D.mac (K.mac). -->
+<!-- Dada Haber Mobil · CANLI SKOR · SPOR MERKEZİ (E-373–E-378 + yeni haller). Maçkolik tarzı yapı (yalnız yapı; görünüş kitten): görselli banner (K43, K.banner),
+     yapışkan bant = branş segmenti (Futbol · Basketbol · Voleybol · Diğer) + gün sekmeleri (Cum 20 … Dün · Bugün · Yarın … Paz 29), süzgeç çipleri (Tümü · Canlı · Biten · Başlayacak · Takip ettiklerim),
+     maçlar lige göre gruplu (katlanır lig başlığı: adına dokununca lig sayfası, sağdaki düğme katlar), dakika ve skor hücreleri; satır → maç detayı. Bugün + Futbol + Tümü'de üstte "Takımların"
+     (üye: takımın canlı maçı; misafir: Takımını seç · Giriş yap). Altta Maç Haberleri.
+     Sorgu: ?gun=dun|bugun|yarin|20…29 (Kasım günü) · ?spor=futbol|basketbol|voleybol|diger · ?suz=tumu|canli|biten|baslayacak|takip · ?uye=0 misafir
+            ?durum=yukleniyor | yenileniyor (&hal=cekiliyor|birak|bitti) | bos (şu an canlı maç yok; günün maçları) | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0)
+     Veri: spor.js (public canli-skor.html, fikstur.html, futbol/basketbol/voleybol/avrupa-ligleri/milli-takim sayfaları; haberler sözlük saatleriyle). Takımın maçı D.mac (K.mac).
+     Varsayım: bütün maç satırları örnek maç detayını açar (sitede tek maç detayı var: Galatasaray–Fenerbahçe). -->
 <link rel="stylesheet" href="../../_ortak/cerceve.css">
 <link rel="stylesheet" href="../../_ortak/marka.css">
 <link rel="stylesheet" href="../../kit/kit.css">
@@ -15,61 +19,95 @@
 <script src="../../_ortak/cerceve.js"></script>
 <script src="../../_ortak/icerik-ek.js"></script>
 <script src="../../kit/kit.js"></script>
+<script src="spor.js"></script>
+<style>
+/* KİT ADAYI: lig başlığı (katlanır) — Maçkolik tarzı skor listesinde maçlar lige göre gruplanır; lig adına dokununca lig sayfası, sağdaki sayı + ok düğmesi grubu katlar (spor.js ligGrup) */
+.sp-lig{margin-top:var(--b-16)}
+.sp-lig-b{display:flex;align-items:center;gap:var(--b-8);min-height:56px;border-bottom:1px solid var(--cizgi)}
+.sp-lig-a{flex:1;min-width:0;display:flex;align-items:center;gap:var(--b-12);min-height:var(--dokun);color:inherit}
+.sp-lig-i{width:32px;height:32px;flex:none;border-radius:var(--k-ic);background:var(--k-yuzey);display:grid;place-items:center;font-size:14px;color:var(--marka-metin)}
+.sp-lig-t{min-width:0;display:flex;flex-direction:column;gap:var(--b-4)}
+.sp-lig-t b{font-size:15px;font-weight:var(--y-kalin);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp-lig-t small{font-size:12.5px;line-height:1.2;color:var(--metin-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp-lig-ac{flex:none;min-width:var(--dokun);height:var(--dokun);display:inline-flex;align-items:center;justify-content:flex-end;gap:var(--ikon-bosluk);font-size:13px;font-weight:var(--y-kalin);color:var(--metin-3);font-variant-numeric:tabular-nums}
+.sp-lig-ac i{font-size:12px;transition:transform .2s}
+.sp-lig.kapali .sp-lig-ac i{transform:rotate(-90deg)}
+.sp-lig.kapali .sp-lig-l{display:none}
+/* KİT ADAYI: transfer satırı — kulüp kısaltması (puan tablosundaki daire), hareket, kulüp, durum etiketi (Resmî · Görüşme · Söylenti); satırın tamamı habere gider */
+.sp-tr{display:flex;align-items:center;gap:var(--b-12);min-height:68px;padding:var(--b-12) 0;border-bottom:1px solid var(--cizgi);color:inherit}
+.sp-tr .ar{width:40px;height:40px;flex:none;border-radius:var(--k-daire);display:grid;place-items:center;font-size:11px;font-weight:var(--y-kalin);color:#fff;background:var(--k-koyu)}
+.sp-tr .t{flex:1;min-width:0;display:flex;flex-direction:column;gap:var(--b-4)}
+.sp-tr b{font-size:15px;font-weight:var(--y-kalin);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.sp-tr small{font-size:12.5px;color:var(--metin-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp-tr .k-etiket{flex:none}
+/* yapışkan denetim bandı (branş segmenti + gün sekmeleri) */
+.sp-yapis{position:sticky;top:var(--k-ub-h);z-index:60;background:var(--zemin)}
+.sp-sw{padding:var(--b-12) var(--kenar) 0}
+</style>
 </head>
 <body>
 <div class="ekran" id="ekran"></div>
 <script>
 (function(){
-  var Q = K.q, DUR = K.durum, HAL = Q.get('hal'), e = document.getElementById('ekran'), TAM = document.documentElement.classList.contains('tam');
-  /* kaynak: public canli-skor.html (branş, lig, periyot, takımlar, skor) */
-  var M = [
-    { b: 'Futbol', lig: 'Futbol · Süper Lig', per: '67. dakika', dk: '67\'', ev: 'Galatasaray', dep: 'Fenerbahçe', skor: '2 – 1', hal: 'canli', takim: true },
-    { b: 'Basketbol', lig: 'Basketbol Süper Ligi', per: '4. çeyrek 6:12', dk: '4. Ç', ev: 'Anadolu Efes', dep: 'Fenerbahçe Beko', skor: '78 – 71', hal: 'canli' },
-    { b: 'Voleybol', lig: 'Voleybol · Sultanlar Ligi', per: '3. set', dk: '3. S', ev: 'Fenerbahçe Medicana', dep: 'Türk Hava Yolları', skor: '2 – 0', hal: 'canli' },
-    { b: 'Tenis', lig: 'Tenis · Davis Kupası', per: '3. set', dk: '3. S', ev: 'Jannik Sinner', dep: 'Francisco Cerúndolo', skor: '1 – 1', hal: 'canli' },
-    { b: 'E-Spor', lig: 'E-Spor · Valorant finali', per: '3. harita', dk: '3. H', ev: 'FUT Esports', dep: 'BBL Esports', skor: '1 – 1', hal: 'canli' },
-    { b: 'Futbol', lig: 'Futbol · Süper Lig', per: 'Maç sonu', dk: 'MS', ev: 'Trabzonspor', dep: 'Başakşehir', skor: '1 – 1', hal: 'ms' },
-    { b: 'Futbol', lig: 'Futbol · Süper Lig', per: 'Maç sonu', dk: 'MS', ev: 'Samsunspor', dep: 'Göztepe', skor: '2 – 0', hal: 'ms', kz: 'ev' },
-    { b: 'Basketbol', lig: 'Basketbol Süper Ligi', per: 'Maç sonu', dk: 'MS', ev: 'Beşiktaş', dep: 'Türk Telekom', skor: '84 – 80', hal: 'ms', kz: 'ev' },
-    { b: 'Basketbol', lig: 'Kadınlar Basketbol Süper Ligi', per: 'Maç sonu', dk: 'MS', ev: 'Fenerbahçe Opet', dep: 'ÇBK Mersin', skor: '76 – 69', hal: 'ms', kz: 'ev' },
-    { b: 'Tenis', lig: 'Tenis · Davis Kupası', per: 'Maç sonu', dk: 'MS', ev: 'Alexander Zverev', dep: 'Alex de Minaur', skor: '2 – 1', hal: 'ms', kz: 'ev' },
-    { b: 'Voleybol', lig: 'Voleybol · Sultanlar Ligi', per: 'Bugün', dk: '20.00', ev: 'VakıfBank', dep: 'Eczacıbaşı', skor: '–', hal: 'bas' },
-    { b: 'Futbol', lig: 'Futbol · Premier Lig', per: 'Bugün', dk: '23.00', ev: 'Liverpool', dep: 'Chelsea', skor: '–', hal: 'bas' }
-  ];
-  var BR = ['Tümü', 'Futbol', 'Basketbol', 'Voleybol', 'Tenis', 'E-Spor'];
-  var BOS = DUR === 'bos';
-  function say(b){ return M.filter(function(m){ return (b === 'Tümü' || m.b === b) && !(BOS && m.hal === 'canli'); }).length; }
-  /* takım adı iç span'da: uzun ad kitin skor satırında üç noktayla kısalır (kırpılan metin kenar ölçümüne girmez) */
-  function mac(m){ return '<div class="k-ayrac"><span>' + m.lig + '</span><span>' + m.per + '</span></div>' + K.skor({ dk: m.dk, ev: '<span>' + m.ev + '</span>', dep: '<span>' + m.dep + '</span>', skor: m.skor, canli: m.hal === 'canli', kazanan: m.kz }); }
-  function grup(bb, l){ return l.length ? '<section class="k-bl sik">' + K.bb(bb) + '<div class="k-ic">' + l.map(mac).join('') + '</div></section>' : ''; }
-  function liste(b){
-    var s = M.filter(function(m){ return b === 'Tümü' || m.b === b; }), o = '';
-    var tk = s.filter(function(m){ return m.takim; });
-    if (!BOS && (b === 'Tümü' || b === 'Futbol')) o += '<section class="k-bl sik">' + K.bb({ baslik: 'Takımların', ikon: 'fa-heart' }) + '<div class="k-ic">' +
-      (K.uye && tk.length ? K.mac() : K.cagri({ ikon: 'fa-futbol', baslik: 'Takımını seç', aciklama: 'Takımının maçları en üstte görünsün.', eylem: { metin: 'Giriş yap', href: K.git('giris') } })) + '</div></section>';
-    if (BOS) o += K.bos({ ikon: 'fa-futbol', baslik: 'Şu an canlı maç yok', aciklama: 'Günün maçları aşağıda; başlayınca skorlar burada canlı akar.' });
-    else { var cl = s.filter(function(m){ return m.hal === 'canli' && !(K.uye && m.takim); }); o += grup({ baslik: 'Canlı', canli: true, sayi: cl.length }, cl); }
-    o += grup({ baslik: 'Maç Sonu', ikon: 'fa-flag-checkered', sayi: s.filter(function(m){ return m.hal === 'ms'; }).length }, s.filter(function(m){ return m.hal === 'ms'; }));
-    o += grup({ baslik: 'Başlayacak', ikon: 'fa-clock', sayi: s.filter(function(m){ return m.hal === 'bas'; }).length }, s.filter(function(m){ return m.hal === 'bas'; }));
-    return o;
+  var Q = K.q, DUR = K.durum, HAL = Q.get('hal'), e = document.getElementById('ekran'), S = SPOR;
+  var GUNLER = []; for (var t = 20261120; t <= 20261129; t++) GUNLER.push(t);
+  var gq = Q.get('gun'), gun = gq === 'dun' ? S.BUGUN - 1 : gq === 'yarin' ? S.BUGUN + 1 : (+gq >= 20 && +gq <= 29 ? 20261100 + +gq : S.BUGUN);
+  var SP = ['futbol', 'basketbol', 'voleybol', 'diger'], spor = SP.indexOf(Q.get('spor')) > -1 ? Q.get('spor') : 'futbol';
+  var SZ = ['tumu', 'canli', 'biten', 'baslayacak', 'takip'], BOS = DUR === 'bos';
+  var suz = SZ.indexOf(Q.get('suz')) > -1 ? Q.get('suz') : BOS ? 'canli' : 'tumu';
+  if (BOS) gun = S.BUGUN;
+  var TAKIP = D.uye.takip;
+
+  function veri(){ return S.M.filter(function(m){ return !m.gizli && m.t === gun && m.b === spor && !(BOS && m.hal === 'c'); }); }
+  function takipte(m){ return TAKIP.some(function(a){ return m.ev.indexOf(a) === 0 || m.dep.indexOf(a) === 0; }); }
+  function suzgec(l, s){ return l.filter(function(m){ return s === 'tumu' || (s === 'canli' && m.hal === 'c') || (s === 'biten' && m.hal === 'm') || (s === 'baslayacak' && m.hal === 'b') || (s === 'takip' && takipte(m)); }); }
+  function cipler(){ var l = veri();
+    return K.cipler([{ metin: 'Tümü', sayi: l.length }, { metin: 'Canlı', sayi: suzgec(l, 'canli').length }, { metin: 'Biten', sayi: suzgec(l, 'biten').length },
+      { metin: 'Başlayacak', sayi: suzgec(l, 'baslayacak').length }, { metin: 'Takip ettiklerim', ikon: 'fa-heart', sayi: K.uye ? suzgec(l, 'takip').length : null }], SZ.indexOf(suz)); }
+  function bosMetin(){ var b = S.BRANS[spor].ad.toLocaleLowerCase('tr'), g = gun === S.BUGUN ? 'Bugün' : S.tarih(gun);
+    if (suz === 'canli') return ['Şu an canlı ' + b + ' maçı yok', 'Başlayınca skorlar burada canlı akar.'];
+    if (suz === 'biten') return ['Biten maç yok', g + ' henüz sonuçlanan ' + b + ' maçı yok.'];
+    if (suz === 'baslayacak') return ['Başlayacak maç kalmadı', g + ' için programdaki ' + b + ' maçları başladı ya da bitti.'];
+    if (suz === 'takip') return ['Takımının maçı yok', g + ' takip ettiğin takımların ' + b + ' maçı yok.'];
+    return [g + ' ' + b + ' maçı yok', 'Bu gün için programda maç görünmüyor. Başka bir gün seç.']; }
+  function liste(){
+    var l = veri(), x = suzgec(l, suz), o = '';
+    if (suz === 'takip' && !K.uye) return K.bos({ ikon: 'fa-heart', baslik: 'Takımlarının maçları burada', aciklama: 'Giriş yap, takımını seç; maçları bu süzgeçte toplansın.', eylem: { metin: 'Giriş yap', ikon: 'fa-right-to-bracket', href: K.git('giris') } });
+    if (suz === 'tumu' && spor === 'futbol' && gun === S.BUGUN) o += '<section class="k-bl sik">' + K.bb({ baslik: 'Takımların', ikon: 'fa-heart' }) + '<div class="k-ic">' +
+      (K.uye ? K.mac() : K.cagri({ ikon: 'fa-futbol', baslik: 'Takımını seç', aciklama: 'Takımının maçları en üstte görünsün.', eylem: { metin: 'Giriş yap', href: K.git('giris') } })) + '</div></section>';
+    if (!x.length) {
+      if (BOS && suz === 'canli') return K.bos({ ikon: 'fa-futbol', baslik: 'Şu an canlı maç yok', aciklama: 'Günün maçları aşağıda; başlayınca skorlar burada canlı akar.' }) +
+        '<section class="k-bl sik">' + K.bb({ baslik: 'Günün Maçları', ikon: 'fa-calendar-day', sayi: l.length }) + '<div class="k-ic">' + S.ligGruplari(l) + '</div></section>';
+      var bm = bosMetin();
+      return o + K.bos({ ikon: S.BRANS[spor].ikon, baslik: bm[0], aciklama: bm[1], eylem: suz === 'takip' ? { metin: 'Takımlarını yönet', tur: 'sade', href: K.u('ekranlar/icerik/takimlar.html') } : (suz !== 'tumu' ? { metin: 'Bütün maçlar', tur: 'sade', attr: 'data-tumu' } : null) });
+    }
+    return o + '<div class="k-ic">' + S.ligGruplari(x) + '</div>';
   }
-  var bas = '<div class="k-bbas"><h1>Canlı Skor</h1><p>Bugün · ' + D.simdi.tarih.replace(' 2026', '') + ' ' + D.simdi.gun + '</p></div>';
-  var cip = '<div data-brans>' + K.cipler(BR.map(function(b){ return { metin: b, sayi: say(b) }; }), 0) + '</div>';
+  var canliSay = S.M.filter(function(m){ return m.t === S.BUGUN && m.hal === 'c' && !BOS; }).length;
+  var bas = '<div class="k-bbas"><h1>Canlı Skor</h1><p>Bugün · ' + D.simdi.tarih.replace(' 2026', '') + ' ' + D.simdi.gun + (canliSay ? ' · ' + canliSay + ' canlı maç' : '') + '</p></div>';
+  var bant = '<div class="sp-yapis" data-bant><div class="sp-sw">' + K.segment(SP.map(function(s){ return S.BRANS[s].ad; }), SP.indexOf(spor)) + '</div>' +
+    K.sekmeler(GUNLER.map(function(t){ return { metin: S.gunKisa(t) }; }), GUNLER.indexOf(gun)) + '</div>';
+  var haber = '<section class="k-bl">' + K.bb({ baslik: 'Maç Haberleri', ikon: 'fa-newspaper', sayi: S.TOPLAM.canli }) + S.haberler(S.HABER.canli) + '</section>';
 
   var DUZ = DUR === 'hata' || DUR === 'bulunamadi' || (DUR === 'cevrimdisi' && Q.get('onbellek') === '0');
-  if (DUR === 'yukleniyor') e.innerHTML = '<div class="k-ust-bosluk"></div>' + bas + '<div class="k-ic" style="padding-top:var(--b-16)">' + K.iskelet('metin', 14) + '</div><div class="k-son"></div>';
+  if (DUR === 'yukleniyor') e.innerHTML = '<div class="k-ust-bosluk"></div>' + bas + bant + '<div class="k-ic" style="padding-top:var(--b-16)">' + K.iskelet('metin', 14) + '</div><div class="k-son"></div>';
   else if (DUZ) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: DUR === 'bulunamadi' ? 'bulunamadi' : DUR === 'cevrimdisi' ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') }) + '<div class="k-son"></div>';
   else e.innerHTML = '<div class="k-ust-bosluk"></div>' + (DUR === 'yenileniyor' ? K.yenile(['cekiliyor', 'birak', 'bitti'].indexOf(HAL) > -1 ? HAL : 'yenileniyor') : '') +
-    bas + cip + '<div data-liste>' + liste('Tümü') + '</div><div class="k-son"></div>';
+    bas + bant + '<div data-suz style="padding-top:var(--b-12)">' + cipler() + '</div><div data-liste>' + liste() + '</div>' + haber + '<div class="k-son"></div>';
 
   K.ustCubuk({ geri: true, baslik: 'Canlı Skor', buyuk: !DUZ, eylemler: DUZ ? [] : [{ ikon: 'fa-ranking-star', etiket: 'Puan durumu', href: K.git('puanDurumu') }] });
   K.altCubuk('bolum');
   K.oynatici();
 
-  /* branş çipi: liste yerinde süzülür */
-  var cp = e.querySelector('[data-brans]');
-  if (cp) cp.addEventListener('click', function(ev){ var c = ev.target.closest('.k-cip'); if (!c) return;
-    var i = [].indexOf.call(cp.querySelectorAll('.k-cip'), c); e.querySelector('[data-liste]').innerHTML = liste(BR[i]); });
+  function yenidenCiz(){ var c = e.querySelector('[data-suz]'), l = e.querySelector('[data-liste]'); if (c) c.innerHTML = cipler(); if (l) l.innerHTML = liste(); }
+  /* seçili gün sekmesi görünür yere kayar */
+  var sk = e.querySelector('[data-bant] .k-sekmeler');
+  if (sk) { var se = sk.querySelector('[aria-selected="true"]'); if (se) sk.scrollLeft = Math.max(0, se.offsetLeft - sk.offsetLeft - parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--kenar')) - 48); }
+  e.addEventListener('click', function(ev){ var b;
+    if ((b = ev.target.closest('[data-bant] .k-segment button'))) { spor = SP[[].indexOf.call(b.parentNode.querySelectorAll('button'), b)]; if (!BOS) suz = 'tumu'; yenidenCiz(); }
+    else if ((b = ev.target.closest('[data-bant] .k-sekmeler button'))) { gun = GUNLER[[].indexOf.call(b.parentNode.querySelectorAll('button'), b)]; yenidenCiz(); }
+    else if ((b = ev.target.closest('[data-suz] .k-cip'))) { suz = SZ[[].indexOf.call(b.parentNode.querySelectorAll('.k-cip'), b)]; var l = e.querySelector('[data-liste]'); if (l) l.innerHTML = liste(); }
+    else if (ev.target.closest('[data-tumu]')) { suz = 'tumu'; yenidenCiz(); } });
   if (DUR === 'cevrimdisi' && !DUZ) {
     var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
     bt.querySelector('button').classList.add('k-dk44');

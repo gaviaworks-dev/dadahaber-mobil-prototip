@@ -15,6 +15,7 @@
 <script src="../../_ortak/cerceve.js"></script>
 <script src="../../_ortak/icerik-ek.js"></script>
 <script src="../../kit/kit.js"></script>
+<script src="spor.js"></script>
 </head>
 <body>
 <div class="ekran" id="ekran"></div>
@@ -70,12 +71,12 @@
   else if (DUZ) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: DUR === 'bulunamadi' ? 'bulunamadi' : DUR === 'cevrimdisi' ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') }) + '<div class="k-son"></div>';
   else e.innerHTML = '<div class="k-ust-bosluk"></div>' + bas + cip + '<div data-tablo>' + tablo() + '</div><div class="k-son"></div>';
 
-  K.ustCubuk({ geri: true, baslik: 'Puan Durumu', buyuk: !DUZ, eylemler: DUZ ? [] : [{ ikon: 'fa-calendar-day', etiket: 'Fikstür', href: K.u('ekranlar/icerik/fikstur.html') }] });
+  K.ustCubuk({ geri: true, baslik: 'Puan Durumu', buyuk: !DUZ, eylemler: DUZ ? [] : [{ ikon: 'fa-calendar-day', etiket: 'Fikstür', href: K.u('ekranlar/icerik/fikstur.html') }, { ikon: 'fa-trophy', etiket: 'Lig sayfası', href: K.u('ekranlar/icerik/lig.html', 'lig=super-lig') }] });
   K.altCubuk('bolum');
   K.oynatici();
 
-  /* lig çipi ve Genel/İç/Dış segmenti: tablo yerinde değişir; satıra dokununca takım sayfası (yalnız Galatasaray örneği var) */
-  function bagla(){ e.querySelectorAll('[data-tablo] tbody tr').forEach(function(tr){ tr.setAttribute('data-href', K.u('ekranlar/icerik/takim.html')); tr.style.cursor = 'pointer'; }); }
+  /* lig çipi ve Genel/İç/Dış segmenti: tablo yerinde değişir; futbol tablolarında sayfası olan dört kulübün satırı takım sayfasını açar (spor.js) */
+  function bagla(){ if (['super', '1lig', 'premier'].indexOf(lig) > -1) SPOR.tabloBagla(e.querySelector('[data-tablo]'), 'super-lig'); }
   bagla();
   var cp = e.querySelector('[data-lig]');
   /* seçili lig çipi görünür yere kayar */
