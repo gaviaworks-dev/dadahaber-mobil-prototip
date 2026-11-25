@@ -39,6 +39,10 @@ Tarih: 2026-11-25 · Depo: `dadahaber-mobil-prototip` · Canlı: `secenekler/ekr
 | Görselsiz detay başlığı (`k-dbas`, `.dbas`) | icerik/video-detay, infografik-detay, resmi-ilan | **tekrar (3)** |
 | Veri kartı ve çubuk grafik (`k-veri-kart`, `k-grafik`, çubuk satırı) | icerik/infografik, infografik-detay, veri-ve-harita | **tekrar** |
 | Ses başlığı ve oynatma paneli (`k-ses-bas`, `k-ses-panel`) | icerik/haber-dinle-bulten, podcast-bolum | **tekrar** |
+| Sayfada açık hesaplayıcı kartı (`.x-arac`) ve iki sütunlu sayı ızgarası (`.k-istat.iki`) (K47) | icerik/piyasalar (konu kipi), hamilelik | **tekrar** |
+| Skor satırında arma yerleşimi; takımların alt alta dizildiği skor satırı önerisi (dar sütunda kazanan adı kısalıyor) (K47) | icerik/spor.js | öneri, kit onayı gerekir |
+| Transfer satırı (`.sp-tr`), katlanır lig başlığı (`.sp-lig`) | spor ekranları | **tekrar** |
+| Widget kabı (`.wg`) ve ana ekran yüzeyi (`.ae`) (K47) | sistem/widget | tekil |
 | Hesaplayıcı ve sonuç kartı (`.x-sonuc`, `.x-arac`) | icerik/ekonomi-araci, hamilelik | benzer, birleşmeli |
 | Alt eylem çubuğu (`.ks-alt`) / seçim eylem çubuğu | giris/konu-secimi; hesap/kaydedilenler | benzer, birleşmeli |
 | Metin tablosu / künye listesi | hesap/yasal; icerik/resmi-ilan | benzer |
@@ -49,3 +53,11 @@ Tarih: 2026-11-25 · Depo: `dadahaber-mobil-prototip` · Canlı: `secenekler/ekr
 **Veri boşlukları ve çelişkiler**: galerilerde yalnız kapak (öteki kareler yok); Dolar, Euro, altın geçmiş verisi yok (grafik yerine "Geçmiş veri yok"); yazar portreleri yok; konuya uygun fotoğrafı olmayan içerik yazı satırı olarak (1 video, 7 albüm ve benzeri); Hamilelik yalnız 20. hafta, Astroloji yalnız Koç rehberi; Resmî İlanlarda tek örnek detay. Kaynak çelişkileri olduğu gibi aktarıldı ve dosyada notlu: enflasyon %2,1 / %1,87, bir köşe yazısının yazarı (Aylin Sezer / Elif Aras), piyasa saati 14.30 / 14.20, uygulama sürümü 1.6 / 3.4.1, podcast programı ("Saha" / "Gündem Odası"), YKS tarihleri, TCMB karar günü, trafik veri saatinin "şimdi"den sonra olması.
 
 **Her ekranın veri kaynağı**: ekran dosyasının başındaki yorum ve içerideki `/* kaynak: … */` notları; ekran listesinde "Public karşılığı" sütunu; ortak veri `secenekler/_ortak/icerik.js` ve `icerik-ek.js` (`window.D`, public sözlükten). Ekranın halleri ve parametreleri `docs/ekran-listesi.md`'de, ölçüm betiği `secenekler/ekranlar/denetim.html`.
+
+## 4. Yasin Bey 2. tur (K47) notları
+
+- **Yeni kit bileşenleri:** `K.arma(takım, boy, kod)` takım logosu (panelden `logo`; yoksa takım renkli kalkan), `K.takimRenk`, takım kapağı (`.k-bbas[data-takim]` → `K.banner`; panelden `kapak`), `.k-bbas[data-g]` sayfa içi banner fotoğrafı, kaynak kartı dış bağlantı (`data-dis`). Panel için: takım kaydına logo (kare, saydam zemin) ve kapak (yatay, 390×224 görünür alan) alanı; kaynak kaydına adres.
+- **Takım renkleri** prototipte kulübün bilinen renklerinden yaklaşık alındı (kit.js `TAKIM_RENK`); gerçek armalar panelden gelecek.
+- **Alt sayfa eşlemesi tek yerde** (`K.altYol`): sitede özel bloklu alt sayfa kendi ekranına, düz konu sayfası bölüm listesine `?konu=` ile. Liste, özel sayfası olan konunun kodunu da tanır (konu sayfasındaki "Tümü").
+- **Bağlantı denetimi** `tasks/araclar/baglanti.sh` (sayfa `secenekler/ekranlar/baglanti.html`): ölü, kırık, alt başlık eşlemesine uymayan yüzey. Her yayından önce çalıştırılır.
+- **Açık:** Hamilelikte hesaplayıcı uygulamada en üstte, sitede yan sütunda (K41 tasarımı korundu). Kit bölüm başlığı (`K.bb`) uzun başlığı kesmiyor; banner alt satırı tek satırda kesiliyor (uzun site açıklamaları kısaltıldı). Bütün gelişen olayların listelendiği ekran yok. Piyasa adı → enstrüman kodu eşlemesi iki dosyada elle (kite alınmalı). Finans'ın sözlüğünde Döviz, Altın, Akaryakıt alt konulu haber yok: liste o konuda bölümün bütün haberlerini gösterir.
