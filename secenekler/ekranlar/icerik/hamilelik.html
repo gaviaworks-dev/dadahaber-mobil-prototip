@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Hamilelik</title>
+<!-- Dada Haber Mobil · HAMİLELİK (6. dalga, K41; site B-24). Menü çekmecesi › Servisler ve araçlar › Hamilelik'ten açılan itme ekranı (geri çubuğu; alt çubukta Bölümler, Kadın'ın alt konusu).
+     Sıra: büyük başlık → (üye) "Senin haftan" takip kartı / (misafir) hesaplayıcı + giriş çağrısı → Haftalar (2–40, yatay kayar; seçili haftan ortada) → Gebelikte 20. Hafta
+     (boy, ağırlık, trimester, gün; Bebeğin gelişimi · Annedeki değişiklikler · Bu hafta yapılacaklar) → sağlık uyarısı → Hamilelik Haberleri.
+     Sorgu: (yok) üye, kayıtlı tarihle takip kartı · ?uye=0 misafir: hesaplayıcı örnek sonuçla, "Takibi kaydetmek için giriş yap" (tarih kaydedilmez)
+            ?durum=bos üye, tarih girilmemiş: boş hesaplayıcı (Hesapla → sonuç → Haftamı kaydet) · ?hesap=1 "Tarihi değiştir" alt sayfası açık
+            ?durum=yukleniyor | hata (&hata=zaman-asimi) | cevrimdisi (son içerik + bant; &onbellek=0 tam ekran) · ?tema=koyu
+     Veri: public hamilelik.html (hafta seçici, 20. hafta kartı, hesaplayıcı örneği 6 Temmuz 2026 / 28 gün → 20. hafta, doğum 12 Nisan 2027, sağlık uyarısı, haber kartlarının etiketleri);
+           haberler ornek_veri.json (alt_konu Hamilelik: başlık, yazar, saat, süre, görüntülenme). Uygun haber görseli yok → yazılı satırlar.
+     Varsayımlar (onaylanmadı): üye örneğinde Ece'nin kayıtlı tarihi public hesaplayıcı örneği; ilerleme 20/40 hafta; seçili hafta çipi açılışta ortalanır. -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* KİT ADAYI: büyük değer bloğu — namaz-vakitleri.html'deki x-deger ile aynı (kitte "52 / ince" büyük rakam bileşeni yok) */
+.x-deger small{display:block;font-size:14px;color:var(--metin-3)}
+.x-deger .s{display:block;margin-top:var(--b-4);font-size:52px;line-height:1;font-weight:var(--y-ince);letter-spacing:-.04em;font-variant-numeric:tabular-nums;white-space:nowrap}
+.x-deger b{display:block;margin-top:var(--b-8);font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.x-deger .k-ilerleme{margin-top:var(--b-16)}
+.x-deger .uc{display:flex;justify-content:space-between;margin-top:var(--b-8);font-size:12.5px;color:var(--metin-3);font-variant-numeric:tabular-nums}
+.x-deger .k-btn-grup{margin-top:var(--b-16)}
+/* KİT ADAYI: araç kartı — hesaplayıcı gibi form bloklarını sayfa içinde ayıran kap (kitte k-grup-k yalnız satır taşıyor); --k-yuzey zemin, 16 köşe */
+.x-arac{padding:var(--b-16);border-radius:var(--k-kart);background:var(--k-yuzey)}
+.x-arac .k-girdi{background:var(--zemin)}
+.x-arac>p{margin-bottom:var(--b-16);font-size:14px;line-height:1.45;color:var(--metin-2)}
+.x-arac .k-btn{margin-top:var(--b-16)}
+.x-arac .k-serit{margin-top:var(--b-16);background:var(--zemin)}
+.x-arac .k-serit>i{color:var(--marka-metin)}
+.x-arac .k-not{margin-top:var(--b-12)}
+.k-istat.iki{grid-template-columns:repeat(2,1fr)}
+.x-hafta .k-akordeon:first-child{border-top:1px solid var(--cizgi)}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var Q = K.q, DUR = K.durum, e = document.getElementById('ekran'), I = K.I;
+  var BU = 'ekranlar/icerik/hamilelik.html', HF = function(n){ return K.u('ekranlar/icerik/hamilelik-hafta.html', { hafta: n }); };
+  /* kaynak: public hamilelik.html "Hafta Hafta Gebelik" (2–40, çift haftalar) */
+  var HAFTALAR = []; for (var n = 2; n <= 40; n += 2) HAFTALAR.push(n);
+  var SEN = 20;
+  /* kaynak: public hamilelik.html "Gebelikte 20. Hafta" kartı */
+  var H20 = { tri: 'İkinci trimester', istat: [['25 cm', 'Boy'], ['300 g', 'Ağırlık'], ['2.', 'Trimester'], ['140', 'Gün']],
+    ako: [['Bebeğin gelişimi', 'Bebeğin boyu baştan topuğa yaklaşık 25 santimetre, ağırlığı 300 gram civarında. Yutma hareketleri düzenli hale gelir, cildi koruyan beyaz tabaka oluşmaya başlar.'],
+      ['Annedeki değişiklikler', 'Rahim göbek hizasına ulaşır. Bebeğin hareketleri daha belirgin hissedilebilir; bel ağrısı ve bacak krampları bu dönemde sık görülür.'],
+      ['Bu hafta yapılacaklar', '18 ile 22. haftalar arasında yapılan ayrıntılı ultrason, bebeğin organ gelişimini değerlendirir. Randevunu kontrol et ve demir takviyesini doktorunun önerdiği şekilde sürdür.']] };
+  /* kaynak: public hamilelik.html hesaplayıcı örneği ve sağlık uyarısı */
+  var HES = { tarih: '6 Temmuz 2026', dongu: '28 gün', sonuc: '20. haftadasın', dogum: '12 Nisan 2027', not: 'Tahmini doğum tarihi 12 Nisan 2027. Kesin tarih için doktorunun ultrason ölçümü esas alınır.' };
+  var UYARI = 'Bu sayfadaki bilgiler genel bilgilendirme amaçlıdır; tanı ve tedavinin yerini tutmaz. Gebelik sürecindeki her soru ve şikâyet için doktoruna ya da ebene danış. Acil durumda 112\'yi ara.';
+  /* kaynak: ornek_veri.json haberler (alt_konu Hamilelik) · etiketler public hamilelik.html kartlarından */
+  var HABER = [['Sağlık', 'Gebelikte demir takviyesi için güncellenmiş rehber yayımlandı', 'Deniz Kara', '3 dk', '8,1 B', '08.10'],
+    ['Sağlık', 'Gebelikte grip aşısı için uygun dönem hangisi', 'Seda Uslu', '3 dk', '6,7 B', '11.25'],
+    ['Beslenme', 'Gebelikte günlük su ihtiyacı ne kadar', 'Burcu Yaman', '5 dk', '5,9 B', '12.10'],
+    ['Egzersiz', 'Gebelikte güvenli egzersiz için uzman önerileri', 'Deniz Kara', '2 dk', '4,8 B', '09.15'],
+    ['Doğum', 'Doğum öncesi eğitim sınıflarına kayıtlar açıldı', 'Deniz Kara', '3 dk', '4,8 B', 'Dün'],
+    ['Hak', 'Doğum izninde yeni düzenleme Meclis gündeminde', 'Gülşen Ateş', '3 dk', '3,6 B', 'Dün'],
+    ['Ruh sağlığı', 'Doğum sonrası depresyon belirtileri ve destek hatları', 'Seda Uslu', '3 dk', '14,2 B', '21 Kas'],
+    ['Bebek', 'Yenidoğan tarama testleri hangi günlerde yapılıyor', 'Deniz Kara', '4 dk', '9,6 B', '21 Kas']];
+
+  function hesaplayici(bos, sayfada){
+    var s = (sayfada ? '' : '<p>Son adet tarihinin ilk gününü gir; kaçıncı haftada olduğunu ve tahmini doğum tarihini gösterelim.</p>') +
+      K.alan({ etiket: 'Son adet tarihinin ilk günü', deger: bos ? '' : HES.tarih, yer: 'Gün Ay Yıl', ikon: 'fa-calendar-day', odak: !!bos && !sayfada }) +
+      K.alan({ etiket: 'Ortalama döngü süresi', deger: HES.dongu, ikon: 'fa-rotate' });
+    if (sayfada) return s;
+    s += K.btn({ metin: 'Hesapla', tur: bos ? 'birincil' : 'sade', boy: 'buyuk', tam: true, attr: 'data-hesapla' }) +
+      '<div data-sonuc' + (bos ? ' hidden' : '') + '>' + K.serit({ ikon: 'fa-baby', metin: HES.sonuc, alt: HES.not }) +
+      (K.uye ? K.btn({ metin: 'Haftamı kaydet', ikon: 'fa-bookmark', tur: 'birincil', boy: 'buyuk', tam: true, attr: 'data-hafta-kaydet' })
+        : K.btn({ metin: 'Takibi kaydetmek için giriş yap', ikon: 'fa-right-to-bracket', tur: 'birincil', boy: 'buyuk', tam: true, href: K.git('giris') }) +
+          '<p class="k-not">' + I('fa-circle-info') + '<span>Hesaplama telefonunda yapılır; giriş yapmadan tarih kaydedilmez.</span></p>') + '</div>';
+    return '<div class="x-arac">' + s + '</div>';
+  }
+
+  var bas = '<div class="k-ust-bosluk"></div><div class="k-bbas">' + K.katEt('Kadın', 'fa-person-dress', { ek: 'Hamilelik' }) +
+    '<h1 style="margin-top:var(--b-8)">Hamilelik</h1><p>Hafta hafta gebelik, sağlık ve doğum hazırlığı</p></div>';
+  var takip = '<section class="k-bl sik"><div class="k-ic"><div class="x-arac x-deger"><small>Gebelik takibin · ' + H20.tri + '</small><span class="s">' + SEN + '. hafta</span><b>Tahmini doğum ' + HES.dogum + '</b>' +
+    K.ilerleme(Math.round(SEN / 40 * 100)) + '<div class="uc"><span>1. hafta</span><span>' + (40 - SEN) + ' hafta kaldı</span><span>40. hafta</span></div>' +
+    '<div class="k-btn-grup">' + K.btn({ metin: 'Haftanın rehberi', ikon: 'fa-book-open', tur: 'birincil', href: HF(SEN) }) + K.btn({ metin: 'Tarihi değiştir', ikon: 'fa-pen', tur: 'sade', attr: 'data-hesap-ac' }) + '</div></div></div></section>';
+  var arac = '<section class="k-bl sik">' + K.bb({ baslik: 'Hafta Hesaplayıcı', ikon: 'fa-calculator' }) + '<div class="k-ic">' + hesaplayici(DUR === 'bos') + '</div></section>';
+  var cipler = '<section class="k-bl">' + K.bb({ baslik: 'Haftalar', ikon: 'fa-calendar-week', not: '1–40. hafta' }) +
+    '<div class="k-ray s8" data-haftalar>' + HAFTALAR.map(function(n){ return K.cip(n + '. hafta', { secili: n === SEN, attr: 'data-href="' + HF(n) + '"' }); }).join('') + '</div></section>';
+  var kart = '<section class="k-bl x-hafta">' + K.bb({ baslik: 'Gebelikte ' + SEN + '. Hafta', ikon: 'fa-baby', not: H20.tri }) +
+    K.istat(H20.istat).replace('class="k-istat"', 'class="k-istat iki" style="margin-top:0"').replace(/<a>/g, '<div>').replace(/<\/a>/g, '</div>') +
+    '<div class="k-ic" style="margin-top:var(--b-16)">' + H20.ako.map(function(x, i){ return K.akordeon(x[0], x[1], i === 0); }).join('') +
+    '<div style="margin-top:var(--b-16)">' + K.btn({ metin: SEN + '. haftanın rehberi', sagIkon: 'fa-chevron-right', tur: 'sade', boy: 'buyuk', tam: true, href: HF(SEN) }) + '</div></div></section>';
+  var uyari = '<section class="k-bl sik"><div class="k-ic">' + K.serit({ tur: 'uyari', ikon: 'fa-user-doctor', metin: 'Sağlık uyarısı', alt: UYARI }) + '</div></section>';
+  var haberler = '<section class="k-bl">' + K.bb({ baslik: 'Hamilelik Haberleri', ikon: 'fa-newspaper', sayi: 92, baglanti: { metin: 'Tümü', href: K.u('hibrit/liste.html', { bolum: 'kadin' }) } }) +
+    '<div class="k-satirlar">' + HABER.map(function(x){ return K.satir({ alt: x[0], ikon: 'fa-person-pregnant', baslik: x[1], yazar: x[2], sure: x[3], izlenme: x[4], saat: x[5] }); }).join('') + '</div></section>';
+
+  var govde = K.uye ? (DUR === 'bos' ? arac : takip) + cipler + kart : arac + cipler + kart;
+  var DUZ = DUR === 'hata' || (DUR === 'cevrimdisi' && Q.get('onbellek') === '0');
+  if (DUR === 'yukleniyor') e.innerHTML = bas + '<div class="k-ic" style="padding-top:var(--b-24)"><i class="k-isk kart" style="display:block;height:220px"></i></div>' +
+    '<div class="k-ic" style="padding-top:var(--b-32)">' + K.iskelet('metin', 6) + '</div><div class="k-satirlar" style="padding-top:var(--b-24)">' + K.iskelet('satir', 3) + '</div><div class="k-son"></div>';
+  else if (DUZ) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: DUR === 'cevrimdisi' ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') }) + '<div class="k-son"></div>';
+  else e.innerHTML = bas + govde + uyari + haberler + '<div class="k-son"></div>';
+
+  K.ustCubuk({ geri: true, baslik: 'Hamilelik', buyuk: !DUZ });
+  K.altCubuk('bolum');
+  K.oynatici();
+
+  /* seçili hafta çipi açılışta ortada */
+  var ray = e.querySelector('[data-haftalar]'), sc = ray && ray.querySelector('[aria-pressed="true"]');
+  if (ray && sc) ray.scrollLeft = sc.offsetLeft - (ray.clientWidth - sc.offsetWidth) / 2;
+
+  function hesapSayfa(statik){
+    var s = K.sayfa({ baslik: 'Tarihi değiştir', alt: 'Haftan ve doğum tarihin yeniden hesaplanır', icerik: hesaplayici(false, true) + '<p class="k-not">' + I('fa-circle-info') + '<span>Kesin tarih için doktorunun ultrason ölçümü esas alınır.</span></p>',
+      eylemler: [{ metin: 'Vazgeç', tur: 'sade', attr: 'data-kapat' }, { metin: 'Kaydet', tur: 'birincil', attr: 'data-kapat data-toast="Tarih kaydedildi · Haftan güncellendi"' }], acik: statik });
+    return s; }
+  if (Q.get('hesap') === '1' && K.uye && !DUZ && DUR !== 'yukleniyor') hesapSayfa(true);
+
+  document.addEventListener('click', function(ev){
+    if (ev.target.closest('[data-hesap-ac]')) { ev.preventDefault(); hesapSayfa(false); }
+    var h = ev.target.closest('[data-hesapla]');
+    if (h) { var k = h.closest('.x-arac'), inp = k.querySelector('input'); if (!inp.value) inp.value = HES.tarih; k.querySelector('[data-sonuc]').hidden = false; }
+    if (ev.target.closest('[data-hafta-kaydet]')) { K.toast('Haftan kaydedildi', { tur: 'basari', alt: 'Her hafta başında rehberini bildiririz' });
+      setTimeout(function(){ var q = new URLSearchParams(location.search); q.delete('durum'); location.search = q.toString(); }, 1200); }
+  });
+  if (DUR === 'cevrimdisi' && !DUZ) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

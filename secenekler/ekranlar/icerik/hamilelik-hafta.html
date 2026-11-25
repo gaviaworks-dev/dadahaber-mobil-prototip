@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Gebelikte 20. hafta</title>
+<!-- Dada Haber Mobil · HAMİLELİK HAFTA DETAYI (6. dalga, K41; site B-24). Hamilelik ekranındaki hafta çipinden ya da "Haftanın rehberi"nden açılır; yazılı detay (uygun görsel yok),
+     haber detayının dili: kategori etiketi, başlık, imza, bilgi satırı, açıklama → haftalar şeridi → sağlık uyarısı → boy · ağırlık · trimester · gün → üç akordeon → metin → Kaynaklar
+     → Konuları Takip Et → İlgili Haberler; altta okuma çubuğu (Dinle · Paylaş · Aa; yorum ve hikâye modu bu içerikte yok), sağ üstte Kaydet (K28).
+     Sorgu: ?hafta=n (1–40; yalnız 20. haftanın rehberi var, öteki haftalar "rehber henüz yayımlanmadı") · ?durum=bos (rehberi olmayan hafta, varsayılan 22) · ?durum=bulunamadi (ya da hafta 1–40 dışı)
+            ?durum=yukleniyor | hata (&hata=zaman-asimi) | cevrimdisi (önbellekteki rehber + bant; &onbellek=0 tam ekran) · ?uye=0 misafir (takip çipi giriş ister) · ?tema=koyu
+     Veri: public hamilelik-hafta.html (20. hafta: başlık, açıklama, Gülşen Ateş · Sağlık Muhabiri, 23 Kasım 2026 · 10.30, 5 dk, sayılar, akordeonlar, metin, kaynaklar, etiketler, ilgili haberler);
+           ornek_veri.json (gebelikte-20-hafta). Varsayım (onaylanmadı): öteki haftaların trimesteri 1–13 / 14–27 / 28–40 ile, gün sayısı hafta × 7 ile gösterilir. -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* yazılı detay başlığı: dada-dogrula.html incelemesindeki ölçü (detay kökü kapak başlığı 31) */
+.x-bas{padding-top:var(--b-8)}
+.x-bas h1{margin-top:var(--b-12);font-size:31px;line-height:1.1;font-weight:var(--y-kalin);letter-spacing:-.028em}
+.x-bas .k-zamansatir{margin-top:var(--b-16)}
+.x-bas .k-spot{margin-top:var(--b-16)}
+.k-istat.iki{grid-template-columns:repeat(2,1fr)}
+.x-ako{margin-top:var(--b-16)}
+.x-ako .k-akordeon:first-child{border-top:1px solid var(--cizgi)}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var Q = K.q, DUR = K.durum, e = document.getElementById('ekran'), I = K.I;
+  var ANA = K.u('ekranlar/icerik/hamilelik.html'), HF = function(n){ return K.u('ekranlar/icerik/hamilelik-hafta.html', { hafta: n }); };
+  var hq = Q.get('hafta'), N = hq == null ? (DUR === 'bos' ? 22 : 20) : parseInt(hq, 10);
+  var GECERSIZ = !(N >= 1 && N <= 40) || String(N) !== String(hq == null ? N : hq).trim();
+  var REHBER = N === 20 && DUR !== 'bos';
+  function tri(n){ return n <= 13 ? 'Birinci trimester' : n <= 27 ? 'İkinci trimester' : 'Üçüncü trimester'; }
+  function triNo(n){ return n <= 13 ? '1.' : n <= 27 ? '2.' : '3.'; }
+  /* kaynak: public hamilelik-hafta.html (20. hafta) */
+  var R = { baslik: 'Gebelikte 20. hafta', yazar: 'Gülşen Ateş', unvan: 'Sağlık Muhabiri', tarih: '23 Kasım 2026', saat: '10.30', sure: '5 dk',
+    spot: 'Gebeliğin yarısı tamamlandı. Bebeğin boyu yaklaşık 25 santimetre; bu hafta ayrıntılı ultrason, beslenme ve dikkat edilmesi gereken belirtiler öne çıkıyor.',
+    istat: [['25 cm', 'Boy'], ['300 g', 'Ağırlık'], ['2.', 'Trimester'], ['140', 'Gün']],
+    ako: [['Bebeğin gelişimi', 'Bebeğin boyu baştan topuğa yaklaşık 25 santimetre, ağırlığı 300 gram civarında. Yutma hareketleri düzenli hale gelir, cildi koruyan beyaz tabaka oluşmaya başlar.'],
+      ['Annedeki değişiklikler', 'Rahim göbek hizasına ulaşır. Bebeğin hareketleri daha belirgin hissedilebilir; bel ağrısı ve bacak krampları bu dönemde sık görülür.'],
+      ['Bu hafta yapılacaklar', '18 ile 22. haftalar arasında yapılan ayrıntılı ultrason, bebeğin organ gelişimini değerlendirir. Randevunu kontrol et ve demir takviyesini doktorunun önerdiği şekilde sürdür.']],
+    govde: '<p>Gebeliğin 20. haftası, toplam sürenin yarısının tamamlandığı haftadır. Bu dönemde bebeğin organları büyük ölçüde oluşmuştur; bundan sonraki haftalarda büyüme ve olgunlaşma öne çıkar.</p>' +
+      '<h2>Ayrıntılı ultrason neden önemli?</h2><p>Sağlık Bakanlığının gebelik izlem rehberine göre 18 ile 22. haftalar arasında ayrıntılı ultrason yapılması önerilir. Bu muayenede bebeğin kalbi, beyni, omurgası ve iç organları tek tek değerlendirilir; plasentanın yeri ve amniyon sıvısının miktarı da kontrol edilir.</p>' +
+      '<h2>Beslenme ve takviyeler</h2><p>Bu haftalarda demir ihtiyacı artar. Kırmızı et, kurubaklagil ve koyu yeşil yapraklı sebzeler demir açısından zengindir; C vitamini içeren besinler demirin emilimini kolaylaştırır. Takviye kullanımı ve dozu için doktorunun önerisine uy.</p>' +
+      '<h2>Ne zaman doktora başvurmalı?</h2><p>Vajinal kanama, şiddetli karın ağrısı, ani ve belirgin şişlik, şiddetli baş ağrısı ya da bebeğin hareketlerinde belirgin azalma fark edersen beklemeden doktoruna başvur ya da 112\'yi ara.</p>',
+    kaynak: [{ kurum: 'Sağlık Bakanlığı', aciklama: 'Doğum Öncesi Bakım Yönetim Rehberi · güncel sürüm' }, { kurum: 'Dünya Sağlık Örgütü', aciklama: 'Olumlu gebelik deneyimi için doğum öncesi bakım önerileri' }],
+    etiket: ['Hamilelik', 'Gebelik haftaları', 'Ultrason', 'Beslenme'],
+    ilgili: [['Sağlık', 'Gebelikte demir takviyesi için güncellenmiş rehber yayımlandı', 'Deniz Kara', '3 dk', '8,1 B', '08.10'], ['Beslenme', 'Gebelikte günlük su ihtiyacı ne kadar', 'Burcu Yaman', '5 dk', '5,9 B', '12.10'],
+      ['Egzersiz', 'Gebelikte güvenli egzersiz için uzman önerileri', 'Deniz Kara', '2 dk', '4,8 B', '09.15'], ['Doğum', 'Doğum öncesi eğitim sınıflarına kayıtlar açıldı', 'Deniz Kara', '3 dk', '4,8 B', 'Dün']] };
+  var UYARI = 'Bu sayfadaki bilgiler genel bilgilendirme amaçlıdır; tanı ve tedavinin yerini tutmaz. Gebelik sürecindeki her soru ve şikâyet için doktoruna ya da ebene danış. Acil durumda 112\'yi ara.';
+  var HAFTALAR = []; for (var n = 2; n <= 40; n += 2) HAFTALAR.push(n);
+  if (HAFTALAR.indexOf(N) < 0 && !GECERSIZ) { HAFTALAR.push(N); HAFTALAR.sort(function(a, b){ return a - b; }); }
+
+  function istat(l){ return K.istat(l).replace('class="k-istat"', 'class="k-istat iki" style="margin-top:var(--b-24)"').replace(/<a>/g, '<div>').replace(/<\/a>/g, '</div>'); }
+  var serit = '<section class="k-bl sik">' + K.bb({ baslik: 'Haftalar', ikon: 'fa-calendar-week', not: '1–40. hafta' }) +
+    '<div class="k-ray s8" data-haftalar>' + HAFTALAR.map(function(x){ return K.cip(x + '. hafta', { secili: x === N, attr: 'data-href="' + HF(x) + '"' }); }).join('') + '</div></section>';
+  var bas = REHBER
+    ? '<div class="k-ust-bosluk"></div><div class="k-ic x-bas">' + K.katEt('Hamilelik', 'fa-person-pregnant', { ek: tri(N) }) + '<h1>' + R.baslik + '</h1>' +
+      '<div class="k-imza">' + K.avatar(R.yazar, 'm') + '<span class="t"><b>' + R.yazar + '</b><small>' + R.unvan + '</small></span></div>' +
+      K.zamanSatir({ tarih: R.tarih, saat: R.saat, sure: R.sure }) + '<p class="k-spot">' + R.spot + '</p></div>'
+    : '<div class="k-ust-bosluk"></div><div class="k-ic x-bas">' + K.katEt('Hamilelik', 'fa-person-pregnant', { ek: tri(N) }) + '<h1>Gebelikte ' + N + '. hafta</h1></div>';
+  var uyari = '<div class="k-ic" style="margin-top:var(--b-24)">' + K.serit({ tur: 'uyari', ikon: 'fa-user-doctor', metin: 'Sağlık uyarısı', alt: UYARI }) + '</div>';
+  var rehber = istat(R.istat) + '<div class="k-ic x-ako">' + R.ako.map(function(x, i){ return K.akordeon(x[0], x[1], i === 0); }).join('') + '</div>' +
+    '<div class="k-ic k-govde" style="margin-top:var(--b-24)">' + R.govde + '</div>' +
+    '<section class="k-bl sik">' + K.kaynaklar(R.kaynak) + '</section>' +
+    '<section class="k-bl">' + K.bb({ baslik: 'Konuları Takip Et', ikon: 'fa-heart' }) + '<div class="k-ray s8" data-konular>' + R.etiket.map(function(t, i){ return K.cip(t, { ikon: 'fa-plus', secili: K.uye && i === 0 }); }).join('') + '</div></section>' +
+    '<section class="k-bl">' + K.bb({ baslik: 'İlgili Haberler', ikon: 'fa-newspaper' }) + '<div class="k-satirlar">' +
+      R.ilgili.map(function(x){ return K.satir({ alt: x[0], ikon: 'fa-person-pregnant', baslik: x[1], yazar: x[2], sure: x[3], izlenme: x[4], saat: x[5] }); }).join('') + '</div></section>';
+  var yok = istat([[triNo(N), 'Trimester'], [N * 7, 'Gün']]) +
+    K.bos({ ikon: 'fa-calendar-week', baslik: 'Bu haftanın rehberi henüz yayımlanmadı', aciklama: N + '. hafta rehberi yayımlanınca burada görünür; takip ediyorsan bildiririz.',
+      eylem: { metin: 'Hamilelik\'e dön', href: ANA }, ikinci: { metin: '20. haftanın rehberini oku', href: HF(20) } });
+
+  var hata = GECERSIZ || DUR === 'bulunamadi' ? 'bulunamadi' : DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? 'cevrimdisi' : '';
+  if (DUR === 'yukleniyor') e.innerHTML = '<div class="k-ust-bosluk"></div><div class="k-ic x-bas"><div class="k-isk-grup"><i class="k-isk" style="width:38%;height:14px"></i><i class="k-isk" style="height:30px"></i><i class="k-isk" style="width:64%;height:30px"></i></div>' +
+    '<div style="margin-top:var(--b-24)">' + K.iskelet('metin', 3) + '</div><div style="margin-top:var(--b-24)"><i class="k-isk kontrol" style="display:block;height:120px"></i></div><div style="margin-top:var(--b-24)">' + K.iskelet('metin', 6) + '</div></div><div class="k-son okuma"></div>';
+  else if (hata) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: hata }) + '<div class="k-son yalin"></div>';
+  else e.innerHTML = bas + serit + uyari + (REHBER ? rehber + '<div class="k-son okuma"></div>' : yok + '<div class="k-son yalin"></div>');
+  if (REHBER || hata) document.title = hata ? 'Hamilelik' : R.baslik; else document.title = 'Gebelikte ' + N + '. hafta';
+
+  K.ustCubuk({ geri: ANA, baslik: 'Hamilelik', eylemler: REHBER && !hata && DUR !== 'yukleniyor' ? ['kaydet'] : [] });
+  if (!hata && REHBER) {
+    var ok = K.okuma({ dinle: R.sure });
+    /* yorum ve hikâye modu bu içerikte yok: okuma çubuğunun Dinle · Paylaş · Aa hali */
+    ['.hmd', '[data-yorumlara]'].forEach(function(s){ var b = ok.querySelector(s); if (b) b.remove(); });
+    if (DUR === 'yukleniyor') ok.classList.add('is-pasif');
+  }
+  K.oynatici();
+
+  var ray = e.querySelector('[data-haftalar]'), sc = ray && ray.querySelector('[aria-pressed="true"]');
+  if (ray && sc) ray.scrollLeft = sc.offsetLeft - (ray.clientWidth - sc.offsetWidth) / 2;
+  /* misafir konu takibi: giriş ister (kit tetik alt sayfası) */
+  document.addEventListener('click', function(ev){ var c = ev.target.closest('[data-konular] .k-cip'); if (!c) return;
+    if (!K.uye) { ev.stopPropagation(); c.setAttribute('aria-pressed', 'false'); K.sayfa('tetik', { eylem: 'takip' }); return; }
+    setTimeout(function(){ var on = c.getAttribute('aria-pressed') === 'true'; c.innerHTML = I(on ? 'fa-check' : 'fa-plus') + c.textContent; if (on) K.toast('Takip ediliyor: ' + c.textContent, { ikon: 'fa-heart' }); }, 0); }, true);
+  e.querySelectorAll('[data-konular] .k-cip[aria-pressed="true"]').forEach(function(c){ c.innerHTML = I('fa-check') + c.textContent; });
+  if (DUR === 'cevrimdisi' && !hata) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

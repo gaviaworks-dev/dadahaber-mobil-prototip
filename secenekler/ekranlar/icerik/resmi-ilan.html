@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Resmî İlan</title>
+<!-- Dada Haber Mobil · RESMÎ İLAN DETAYI (6. dalga, satırlar E-? · lider numaralar). Resmî İlanlar listesinden açılan itme ekranı; kök: Detay (görselsiz başlık), alt çubuk yok.
+     Yapı: tür etiketi + başlık + özet + kurum · yayın tarihi · okunma → son teklif şeridi (kalan gün) → İlan Künyesi (künye listesi) → İlan Metni ve Katılım koşulları (detay gövdesi) →
+     Kaynaklar (kitin kaynak rayı) → Aynı Kurumun İlanları. Üst çubukta kaydet + paylaş.
+     Sorgu: ?durum=yukleniyor | bos (aynı kurumun başka ilanı yok) | hata (&hata=zaman-asimi) | cevrimdisi (önbellekten + bant; &onbellek=0 → önbellek yok) | bulunamadi (ilan kalktı ya da bağlantı bozuk)
+            ?uye=0 misafir: kaydet cihaza kaydeder (kitin "Cihazına kaydedildi" alt sayfası, giriş önerisi) · üye: kaydet + kısa bildirim (Kaydedilenler)
+     Veri: public resmi-ilan-detay.html (tek örnek ilan: KGM ihalesi; künye, metin, kaynaklar, aynı kurumun ilanları). Listedeki bütün ilanlar bu örneği açar (public ile aynı).
+     Kalan gün "şimdi"den (23 Kasım 2026 16.05) son teklif 9 Aralık 10.30'a hesaplandı. -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* KİT ADAYI: k-dbas — görselsiz detay başlığı (video-detay.html, infografik-detay.html ile aynı) */
+.dbas{padding:var(--b-16) var(--kenar) 0}
+.dbas h1{margin-top:var(--b-8);font-size:24px;line-height:1.18;font-weight:var(--y-kalin);letter-spacing:-.02em}
+.dbas .k-spot{margin-top:var(--b-16)}
+.dbas .k-meta{margin-top:var(--b-16)}
+.dbas .k-serit{margin-top:var(--b-16)}
+/* KİT ADAYI: künye listesi — etiket (küçük, soluk) üstte, değer (kalın) altta; iki sütunlu tablo telefonda uzun değerleri sıkıştırdığı için */
+.x-kunye{border-radius:var(--k-kontrol);background:var(--k-yuzey);padding:0 var(--b-16)}
+.x-kunye div{padding:var(--b-12) 0}
+.x-kunye div+div{border-top:1px solid var(--cizgi)}
+.x-kunye dt{font-size:12.5px;color:var(--metin-3)}
+.x-kunye dd{margin-top:var(--b-4);font-size:15px;line-height:1.35;font-weight:var(--y-kalin)}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var Q = K.q, DUR = K.durum, I = K.I, e = document.getElementById('ekran');
+
+  /* kaynak: public resmi-ilan-detay.html */
+  var IL = { tur: 'İhale', ikon: 'fa-gavel', kurum: 'Karayolları Genel Müdürlüğü', tarih: '23 Kasım 2026', okunma: '1,8 B',
+    baslik: 'Kuzey Marmara Otoyolu bağlantı yollarında bakım ve onarım işi ihale edilecek',
+    spot: "Karayolları 1. Bölge Müdürlüğü, bağlantı yollarındaki bakım ve onarım işini açık ihaleyle verecek. Teklifler 9 Aralık 2026 saat 10.30'a kadar elektronik ortamda alınıyor.",
+    son: '9 Aralık 2026, 10.30',
+    kunye: [['İlan türü', 'İhale · açık ihale usulü'], ['İdare', 'Karayolları 1. Bölge Müdürlüğü'], ['İhale kayıt numarası', '2026/1458721'], ['İşin yeri', 'İstanbul · Kuzey Marmara Otoyolu bağlantı yolları'],
+      ['İşin süresi', '365 takvim günü'], ['Son teklif', '9 Aralık 2026, 10.30'], ['Teklif yeri', 'Bölge Müdürlüğü ihale salonu · elektronik teklif'], ['Yayın tarihi', '23 Kasım 2026']],
+    metin: [['İlan Metni', ["Karayolları Genel Müdürlüğü 1. Bölge Müdürlüğü, Kuzey Marmara Otoyolu'na bağlanan yaklaşık 42 kilometrelik bağlantı yolunda üstyapı bakımı, derz ve çatlak onarımı ile yatay işaretleme işini açık ihale usulüyle ihale edecek. İhaleye ilişkin ayrıntılı bilgiler, ihale kayıt numarasıyla Elektronik Kamu Alımları Platformu üzerinden görülebiliyor.",
+        'İhale dokümanı platform üzerinden e-imza kullanılarak ücretsiz indirilebiliyor. İhaleye teklif verecek isteklilerin dokümanı bu yolla indirmesi zorunlu. Teklifler, son teklif tarihi ve saatine kadar elektronik ortamda veriliyor; teklif zarfları aynı gün ihale komisyonu tarafından açılacak.']],
+      ['Katılım koşulları', ['İhaleye yalnızca yerli istekliler katılabilecek. İstekliler; teklif mektubu, geçici teminat, iş deneyim belgesi ve ilgili meslek odası kayıt belgesini sunacak. Benzer iş olarak karayolu üstyapı bakım ve onarım işleri kabul edilecek. Ekonomik açıdan en avantajlı teklif yalnızca fiyat esasına göre belirlenecek.',
+        'İlan metninde yer almayan ayrıntılar için ihale dokümanı esas alınır. Bu sayfa ilanın özetidir; bağlayıcı metin idarenin yayımladığı ilan ve ihale dokümanıdır.']]],
+    kaynak: [{ kurum: 'Karayolları Genel Müdürlüğü', aciklama: '1. Bölge Müdürlüğü ihale ilanı · 23 Kasım 2026' }, { kurum: 'Elektronik Kamu Alımları Platformu', aciklama: 'İhale kayıt numarası 2026/1458721' }],
+    ayni: [['İhale', 'fa-gavel', 'Sakarya bağlantı yolunda köprü genleşme derzlerinin yenilenmesi işi', '16 Ara'], ['İhale', 'fa-gavel', 'Kış dönemi için yol tuzu alımı ihale edilecek', '2 Ara'],
+      ['Satış', 'fa-tag', 'Kullanım dışı iş makineleri açık artırmayla satılacak', '10 Ara'], ['Personel', 'fa-user-plus', 'Bölge müdürlüğüne 18 sürekli işçi alınacak', '8 Ara']] };
+  /* kalan süre: şimdi 23 Kasım 16.05 → son teklif 9 Aralık 10.30 */
+  var kalan = Math.floor((new Date(2026, 11, 9, 10, 30) - new Date(2026, 10, 23, 16, 5)) / 864e5);
+  var LISTE = K.u('ekranlar/icerik/resmi-ilanlar.html'), DETAY = K.u('ekranlar/icerik/resmi-ilan.html');
+
+  var HATA = DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? 'cevrimdisi' : '';
+  var bas = '<div class="k-ust-bosluk"></div><header class="dbas">' + K.katEt(IL.tur, IL.ikon) + '<h1>' + IL.baslik + '</h1><p class="k-spot">' + IL.spot + '</p>' +
+    K.meta([IL.kurum, IL.tarih, IL.okunma]) + K.serit({ tur: 'uyari', ikon: 'fa-hourglass-end', metin: 'Son teklif ' + IL.son, alt: kalan + ' gün kaldı · elektronik teklif' }) + '</header>';
+  var cevrim = DUR === 'cevrimdisi' ? '<div class="k-ic" style="padding-top:var(--b-16)">' + K.serit({ ikon: 'fa-plug-circle-xmark', metin: 'Çevrimdışı okuyorsun', alt: 'İlan son açtığın haliyle; değişiklikler bağlantı gelince gelir.' }) + '</div>' : '';
+  var kunye = '<section class="k-bl">' + K.bb({ baslik: 'İlan Künyesi', ikon: 'fa-list', not: 'İlan bilgileri' }) + '<div class="k-ic"><dl class="x-kunye">' +
+    IL.kunye.map(function(k){ return '<div><dt>' + k[0] + '</dt><dd>' + k[1] + '</dd></div>'; }).join('') + '</dl></div></section>';
+  var govde = '<div class="k-ic k-govde" style="padding-top:var(--b-8)">' + IL.metin.map(function(b){ return '<h2>' + b[0] + '</h2>' + b[1].map(function(m){ return '<p>' + m + '</p>'; }).join(''); }).join('') + '</div>';
+  var kaynak = '<section class="k-bl sik">' + K.kaynaklar(IL.kaynak) + '</section>';
+  var ayni = '<section class="k-bl">' + K.bb({ baslik: 'Aynı Kurumun İlanları', ikon: 'fa-building-columns', not: 'KGM' }) +
+    (DUR === 'bos' ? K.bos({ ikon: 'fa-building-columns', baslik: 'Bu kurumun başka ilanı yok', aciklama: 'Kurumun yeni ilanı gelince burada görünür.', eylem: { metin: 'Bütün ilanlar', tur: 'sade', href: LISTE } })
+      : '<div class="k-satirlar">' + IL.ayni.map(function(x){ return K.satir({ alt: x[0], ikon: x[1], baslik: x[2], yazar: 'KGM', sure: 'Son gün ' + x[3] }, { href: DETAY }); }).join('') + '</div>') + '</section>';
+  var bul = K.bos({ hata: true, ikon: 'fa-file-circle-xmark', baslik: 'Bu ilan bulunamadı', aciklama: 'İlanın süresi dolmuş, idare ilanı geri çekmiş ya da bağlantı değişmiş olabilir.', eylem: { metin: 'Resmî İlanlar', ikon: 'fa-file-contract', href: LISTE } });
+
+  if (DUR === 'yukleniyor') e.innerHTML = '<div class="k-ust-bosluk"></div><div class="k-ic" style="padding-top:var(--b-16)">' + K.iskelet('metin', 6) + '</div><div class="k-ic" style="padding-top:var(--b-32)">' + K.iskelet('metin', 10) + '</div><div class="k-son yalin"></div>';
+  else if (DUR === 'bulunamadi') e.innerHTML = '<div class="k-ust-bosluk"></div>' + bul + '<div class="k-son yalin"></div>';
+  else if (HATA) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: HATA }) + '<div class="k-son yalin"></div>';
+  else e.innerHTML = bas + cevrim + kunye + govde + kaynak + ayni + '<div class="k-son yalin"></div>';
+
+  /* kaydet: üye kısa bildirim (kit [data-kaydet]) · misafir cihaza kaydet alt sayfası (kit HAZIR.kaydet) */
+  var kaydet = K.uye ? 'kaydet' : { ikon: 'fa-bookmark', etiket: 'Kaydet', secili: false, attr: 'data-sayfa="kaydet"' };
+  var tam = !HATA && DUR !== 'bulunamadi';
+  K.ustCubuk({ geri: true, baslik: tam && DUR !== 'yukleniyor' ? 'Resmî İlan' : '', eylemler: tam ? [kaydet, 'paylas'] : [], esik: 120 });
+  if (!K.uye) document.addEventListener('click', function(ev){ var x = ev.target.closest('.k-ub [data-sayfa="kaydet"]'); if (x) x.setAttribute('aria-pressed', 'true'); });
+
+  if (DUR === 'cevrimdisi' && !HATA) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

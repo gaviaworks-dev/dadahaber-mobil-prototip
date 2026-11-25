@@ -30,6 +30,7 @@
     (!K.uye ? K.grup('', [{ ikon: 'fa-right-to-bracket', baslik: 'Giriş yap', alt: 'Ayarların her cihazda seninle olsun', href: K.git('giris') }]) : '') +
     K.grup('Görünüm', [{ ikon: 'fa-circle-half-stroke', baslik: 'Tema', sag: 'deger', deger: 'Sistem', href: K.git('gorunum') },
       { ikon: 'fa-font', baslik: 'Yazı boyutu', sag: 'deger', deger: 'Orta', href: K.git('gorunum') }]) +
+    K.grup('Dil ve Bölge', [{ ikon: 'fa-language', baslik: 'Dil', sag: 'deger', deger: 'Türkçe', href: K.git('dilSec') }]) +
     K.grup('Bildirimler', [{ ikon: 'fa-bell', baslik: 'Bildirim tercihleri', href: K.git('bildirimTercih') }].concat(K.uye ? [{ ikon: 'fa-envelope', baslik: 'Bültenler', sag: 'deger', deger: 3, href: u('bultenler') }] : [])) +
     K.grup('Veri ve Gizlilik', [{ ikon: 'fa-database', baslik: 'Veri ve depolama', sag: 'deger', deger: '54 MB', href: u('depolama') },
       { ikon: 'fa-user-shield', baslik: 'Gizlilik ve veriler', href: u('gizlilik') }].concat(K.uye ? [{ ikon: 'fa-lock', baslik: 'Güvenlik ve bağlı hesaplar', href: u('guvenlik') }] : [])) +

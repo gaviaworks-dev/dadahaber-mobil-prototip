@@ -1,0 +1,9 @@
+Dada ailesi (kardeş siteler) simgeleri · Dada Ailesi ekranı (secenekler/ekranlar/icerik/dada-ailesi.html).
+Kopyalandığı yer: dadahaber-prototip/assets/gorsel/aile/ (public sitenin footer "Dada Ailesi" bandı; salt okunur depodan kopya, 2026-11-25).
+Özgün kaynaklar (public KAYNAK.txt, indirme 2026-11-23):
+gastro.png   dadagastro.com/apple-touch-icon.png
+fit.svg      dadafit.com.tr/kanon/varlik/dadafit-isaret.svg
+diet.png     dadadiet.com/apple-touch-icon.png
+gourmet.png  dadagourmet.com/assets/gourmet-prototip/img/favicon.ico (içindeki en büyük 48px PNG; 48px'ten büyük gösterilmez)
+Dada Haber satırı public'teki haber.png'yi (eski v2 favicon "dada!") KULLANMAZ: K35 gereği yalnız yeni "dada" logosu (assets/gorsel/logo/).
+Site adları ve listesi teyit edilmedi (public B-12).

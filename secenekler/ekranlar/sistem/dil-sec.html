@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Dil</title>
+<!-- Dada Haber Mobil · DİL SEÇ ALT SAYFASI (6. dalga, K41; site B-07). Geçici katman: Ayarlar ekranının üstünde (menü çekmecesindeki "Dil: Türkçe" satırı da bunu açar).
+     Sorgu: (yok) Türkçe seçili; English, العربية, Deutsch "Seçili haberler · yakında"; altta sitedeki dil notu
+            ?durum=yakinda bir "yakında" dile dokunulmuş: sayfanın başında "dil sürümü yok" şeridi, seçim Türkçe'de kalır, "Hazır olunca haber ver" · ?tema=koyu
+     Platform notu: geri hareketi / sistem geri tuşu ve tutamaktan aşağı çekme alt sayfayı kapatır. Arapça satır sağdan sola yazılır (bdi dir=rtl).
+     Veri: public parcalar/footer.html "Dil" penceresi (pn-dil: Türkçe TR; English, العربية, Deutsch "Seçili haberler · yakında"; "Her haber her dilde yayımlanmaz…" notu),
+           public hesabim-tercihler.html "Dil ve Bölge" (Arayüz dili · Türkçe), durumlar.html "Yalnızca Türkçe". Arka plan Ayarlar (hesap/ayarlar.html) kit parçalarıyla.
+     Varsayım (onaylanmadı): Ayarlar'da "Dil ve Bölge" grubu (Dil · Şehir) Görünüm'den sonra; hesap/ayarlar.html'de bu satır henüz yok (lider ekler). EN pilotu B-07 kararına bağlı. -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), DUR = K.durum, I = K.I;
+  /* kaynak: public pn-dil penceresi */
+  var DIL = [['English', 'en'], ['<bdi dir="rtl" lang="ar">العربية</bdi>', 'ar'], ['Deutsch', 'de']];
+  var NOT = 'Her haber her dilde yayımlanmaz; karşılığı olmayan haberlerde Türkçe sürüm açılır ve bunu belirtiriz.';
+
+  /* arka plan: Ayarlar ekranı (kit parçalarıyla) */
+  e.innerHTML = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Ayarlar</h1>' + (K.uye ? '<p>ece.yilmaz@eposta.com</p>' : '<p>Giriş yapmadan da her ayarı bu telefon için değiştirebilirsin.</p>') + '</div>' +
+    K.grup('Görünüm', [{ ikon: 'fa-circle-half-stroke', baslik: 'Tema', sag: 'deger', deger: 'Sistem', href: K.git('gorunum') }, { ikon: 'fa-font', baslik: 'Yazı boyutu', sag: 'deger', deger: 'Orta', href: K.git('gorunum') }]) +
+    K.grup('Dil ve Bölge', [{ ikon: 'fa-language', baslik: 'Dil', sag: 'deger', deger: 'Türkçe', attr: 'data-dil-ac' }, { ikon: 'fa-location-dot', baslik: 'Şehir', sag: 'deger', deger: D.hava.sehir, href: K.u('ekranlar/sistem/sehir-sec.html') }]) +
+    K.grup('Bildirimler', [{ ikon: 'fa-bell', baslik: 'Bildirim tercihleri', href: K.git('bildirimTercih') }]) +
+    '<div class="k-son"></div>';
+  K.ustCubuk({ geri: true, baslik: 'Ayarlar', buyuk: true });
+  K.altCubuk('hesap');
+  K.oynatici();
+
+  function serit(ad){ return '<div data-yakinda-serit style="margin-bottom:var(--b-12)">' + K.serit({ tur: 'uyari', ikon: 'fa-language', metin: ad + ' sürümü yakında', alt: 'Seçili haberler editör denetiminden geçince bu dilde okunabilecek. Şimdilik uygulama Türkçe.' }) + '</div>'; }
+  function icerik(yakinda){
+    return (yakinda ? serit('English') : '') +
+      '<div class="k-grup-k" role="radiogroup" aria-label="Dil">' + K.ayar({ ikon: 'fa-language', baslik: 'Türkçe', alt: 'TR · Uygulama ve bütün haberler', sag: 'tik', secili: true }) +
+      DIL.map(function(d){ return K.ayar({ ikon: 'fa-language', baslik: d[0], alt: 'Seçili haberler · yakında', sag: 'yok', attr: 'data-yakinda="' + d[1] + '"' }); }).join('') + '</div>' +
+      '<p class="k-not">' + I('fa-circle-info') + '<span>' + NOT + '</span></p>'; }
+  function ac(statik, yakinda){
+    var s = K.sayfa({ baslik: 'Dil', alt: 'Uygulamanın ve haberlerin dili', icerik: icerik(yakinda), acik: statik,
+      eylemler: yakinda ? [{ metin: 'Hazır olunca haber ver', ikon: 'fa-bell', tur: 'sade', attr: 'data-haber-ver' }] : [] });
+    s.el.addEventListener('click', function(ev){
+      var y = ev.target.closest('[data-yakinda]');
+      if (y) { ev.preventDefault(); var ad = y.querySelector('.t b').textContent, i = s.el.querySelector('.k-sayfa-i'), eski = i.querySelector('[data-yakinda-serit]');
+        if (eski) eski.remove(); i.insertAdjacentHTML('afterbegin', serit(ad)); }
+      if (ev.target.closest('[data-haber-ver]')) { s.kapat(); K.toast('Haber vereceğiz', { ikon: 'fa-bell', alt: 'Dil sürümü açılınca bildirim gelir' }); }
+      if (ev.target.closest('.k-ayar[aria-checked]')) setTimeout(function(){ s.kapat(); }, 200);
+    });
+    return s; }
+  ac(true, DUR === 'yakinda');
+  document.addEventListener('click', function(ev){ if (ev.target.closest('[data-dil-ac]')) { ev.preventDefault(); ac(false, false); } });
+})();
+</script>
+</body>
+</html>

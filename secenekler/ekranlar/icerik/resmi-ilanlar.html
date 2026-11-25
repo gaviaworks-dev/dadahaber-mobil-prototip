@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Resmî İlanlar</title>
+<!-- Dada Haber Mobil · RESMÎ İLANLAR (6. dalga, satırlar E-? · lider numaralar). Çekmece menüsünden açılan ilan listesi; kök: Liste (büyük başlık), alt çubukta "Bölümler" seçili.
+     Yapı: büyük başlık → tür çipleri (Tümü · İhale · Satış · Kiralama · Personel) → "Yayındaki İlanlar · n" → yazısız satırlar (tür etiketi, başlık, kurum · son gün, kaydet) → daha fazla yükleme.
+     Sıralama üst çubuktan (public: En yeni · En çok okunan · En eski). Satıra dokununca resmi-ilan.html açılır. Görsel yok (public sayfadaki görseller konuyla ilgisiz).
+     Sorgu: ?tur=ihale|satis|kiralama|personel (çip seçili açılır) · ?durum=yukleniyor | bos (seçilen türde yayında ilan yok; Kiralama) | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0 → önbellek yok) · ?uye=0 misafir (kaydet cihaza)
+     Veri: public resmi-ilanlar.html (12 ilan: tür, başlık, kurum, son gün; 1.284 ilan yayında). -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var Q = K.q, DUR = K.durum, I = K.I, e = document.getElementById('ekran');
+
+  var TUR = [['', 'Tümü', ''], ['ihale', 'İhale', 'fa-gavel'], ['satis', 'Satış', 'fa-tag'], ['kiralama', 'Kiralama', 'fa-key'], ['personel', 'Personel', 'fa-user-plus']];
+  /* kaynak: public resmi-ilanlar.html ilan kartları — [tür, başlık, kurum, son gün] */
+  var IL = [['ihale', 'Kuzey Marmara Otoyolu bağlantı yollarında bakım ve onarım işi ihale edilecek', 'KGM', '9 Ara'],
+    ['personel', 'Devlet Su İşleri 120 sözleşmeli personel alacak', 'DSİ', '5 Ara'],
+    ['satis', "Çankaya'da üç parsel arsa açık artırmayla satılacak", 'Millî Emlak', '11 Ara'],
+    ['kiralama', "Alsancak'ta kamuya ait işyeri kiraya verilecek", 'Millî Emlak', '3 Ara'],
+    ['ihale', 'Hızlı tren hattında yolcu peronu yenileme işi ihale edilecek', 'TCDD', '8 Ara'],
+    ['satis', "Kayseri'de konut projesinde kalan daireler satışa çıkarıldı", 'TOKİ', '15 Ara'],
+    ['personel', 'SGK 60 sözleşmeli bilişim personeli alacak', 'SGK', '12 Ara'],
+    ['ihale', "Ankara'da 24 derslikli okul binası yapım işi ihale edilecek", 'MEB', '10 Ara'],
+    ['satis', '2.400 metreküp tomruk açık artırmayla satılacak', 'OGM', '2 Ara'],
+    ['kiralama', "Antalya Havalimanı'nda ticari alan kiralama ihalesi", 'DHMİ', '7 Ara'],
+    ['personel', 'İŞKUR 400 iş ve meslek danışmanı alımı için başvuru açtı', 'İŞKUR', '6 Ara'],
+    ['ihale', 'Kamu kurumları için toplu kırtasiye alımı ihalesi', 'DMO', '4 Ara']];
+  var TOPLAM = '1.284', DETAY = K.u('ekranlar/icerik/resmi-ilan.html');
+  function tb(k){ return TUR.filter(function(t){ return t[0] === k; })[0]; }
+  function satir(x){ var t = tb(x[0]);
+    return K.satir({ alt: t[1], ikon: t[2], baslik: x[1], yazar: x[2], sure: 'Son gün ' + x[3] }, { href: DETAY }).replace('<a class="k-satir', '<a data-tur="' + x[0] + '" class="k-satir'); }
+
+  var BOS = DUR === 'bos', SEC = BOS ? 'kiralama' : (Q.get('tur') || ''), si = Math.max(0, TUR.map(function(t){ return t[0]; }).indexOf(SEC));
+  var HATA = DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? 'cevrimdisi' : '';
+  var bas = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Resmî İlanlar</h1><p>Kamu kurumlarının ihale, satış, kiralama ve personel ilanları</p></div>';
+  var cipler = '<div class="k-ray s8" data-tek role="group">' + TUR.map(function(t, i){ return K.cip(t[1], { ikon: t[2], secili: i === si, attr: 'data-suz="' + t[0] + '"' }); }).join('') + '</div>';
+  var cevrim = DUR === 'cevrimdisi' ? '<div class="k-ic" style="padding-top:var(--b-12)">' + K.serit({ tur: 'uyari', ikon: 'fa-plug-circle-xmark', metin: 'Çevrimdışısın', alt: 'Son açtığın ilanlar görünüyor; bağlantı gelince yenilenir.' }) + '</div>' : '';
+  function bb(n){ return K.bb({ baslik: 'Yayındaki İlanlar', ikon: 'fa-file-contract', sayi: n }); }
+  var bosB = K.bos({ ikon: 'fa-key', baslik: 'Şu an yayında kiralama ilanı yok', aciklama: 'Yeni ilan gelince burada görünür. Son günü geçen ilanlar listeden kalkar.', eylem: { metin: 'Bütün ilanlar', tur: 'sade', attr: 'data-tum' } });
+  var liste = '<section class="k-bl sik"><div data-bb>' + bb(BOS ? 0 : SEC ? IL.filter(function(x){ return x[0] === SEC; }).length : TOPLAM) + '</div>' +
+    '<div data-liste' + (BOS ? ' hidden' : '') + '><div class="k-satirlar">' + IL.map(satir).join('') + '</div>' + K.dahaFazla('yukleniyor', 'ilan') + '</div>' +
+    '<div data-bos' + (BOS ? '' : ' hidden') + '>' + bosB + '</div></section>';
+
+  if (DUR === 'yukleniyor') e.innerHTML = bas + '<div style="padding-top:var(--b-4)">' + cipler + '</div><div class="k-satirlar" style="padding-top:var(--b-16)">' + K.iskelet('satir', 5).replace(/<i class="k-isk" style="width:88px;height:88px"><\/i>/g, '') + '</div><div class="k-son"></div>';
+  else if (HATA) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: HATA }) + '<div class="k-son"></div>';
+  else e.innerHTML = bas + cipler + cevrim + liste + '<div class="k-son"></div>';
+
+  var sc = e.querySelector('.k-ray .k-cip[aria-pressed="true"]'); if (sc && si > 2) sc.parentNode.scrollLeft = Math.max(0, sc.offsetLeft - sc.parentNode.offsetLeft + sc.offsetWidth - sc.parentNode.clientWidth + 16);
+  K.ustCubuk({ geri: true, baslik: 'Resmî İlanlar', buyuk: !HATA, eylemler: HATA ? [] : [{ ikon: 'fa-arrow-down-wide-short', etiket: 'Sırala', attr: 'data-sirala' }, 'paylas'] });
+  K.altCubuk('bolum');
+  K.oynatici();
+
+  /* tür süzgeci (yerinde); boşsa boş durum */
+  function suz(k){ var l = e.querySelector('[data-liste]'), b = e.querySelector('[data-bos]'), n = 0; if (!l) return;
+    e.querySelectorAll('[data-tur]').forEach(function(r){ var g = !k || r.getAttribute('data-tur') === k; r.hidden = !g; if (g) n++; });
+    l.hidden = !n; b.hidden = !!n; e.querySelector('[data-bb]').innerHTML = bb(k ? n : TOPLAM);
+    var q = new URLSearchParams(location.search); if (k) q.set('tur', k); else q.delete('tur'); q.delete('durum'); history.replaceState(null, '', '?' + q.toString()); }
+  if (SEC && !BOS) suz(SEC);
+  e.addEventListener('click', function(ev){ var t = ev.target, x;
+    if ((x = t.closest('[data-suz]'))) suz(x.getAttribute('data-suz'));
+    if (t.closest('[data-tum]')) { var c0 = e.querySelector('[data-suz=""]'); [].forEach.call(c0.parentNode.children, function(c){ c.setAttribute('aria-pressed', c === c0); }); suz(''); } });
+  /* sıralama: public seçenekleri */
+  var SIRA = ['En yeni', 'En çok okunan', 'En eski'], SI = 0;
+  document.addEventListener('click', function(ev){ var x = ev.target.closest('[data-sirala]'); if (!x) return; ev.preventDefault();
+    var m = K.menu({ hedef: x, ogeler: [{ baslik: 'Sırala' }].concat(SIRA.map(function(s, i){ return { metin: s, ikon: ['fa-clock', 'fa-eye', 'fa-clock-rotate-left'][i], secili: i === SI }; })) });
+    m.el.addEventListener('click', function(v){ var o = v.target.closest('.k-menu-o'); if (o) SI = [].indexOf.call(m.el.querySelectorAll('.k-menu-o'), o); }); });
+
+  if (DUR === 'cevrimdisi' && !HATA) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

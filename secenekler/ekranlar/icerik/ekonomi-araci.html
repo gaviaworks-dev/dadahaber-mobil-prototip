@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Ekonomi Aracı</title>
+<!-- Dada Haber Mobil · EKONOMİ ARACI (6. dalga, satırlar E-? · lider numaralar). Ekonomi Araçları dizininden açılan tek araç ekranı; itme ekranı (geri çubuğu, alt çubuk yok).
+     Yapı: büyük başlık → araç çipleri (araçlar arası geçiş) → form (kit alanları, seçiciler alt sayfada) → sonuç kartı (yazdıkça hesaplanır; döküm) → kaynak notu → kullanılan oranlar tablosu.
+     Sorgu: ?arac=doviz (varsayılan) | kredi | enflasyon | maas | altin | yakit · ?durum=yukleniyor | bos (alanlar boş, sonuç bekliyor) | gecersiz (alan hatası) | hata (&hata=zaman-asimi) |
+            cevrimdisi (son kurlarla hesaplar; &onbellek=0 → önbellek yok) | bulunamadi (tanınmayan araç; ?arac=<bilinmeyen> da aynı)
+     Veri ve formüller: araç adları/açıklamaları public ekonomi-araclari.html; varsayılan girdiler ve sonuçlar public sayfalardaki hesaplayıcılarla aynı:
+       Döviz doviz.html (satış kuru; USD ve EUR D.piyasa ile aynı) · Kredi faiz-oranlari.html (anüite: P·r / (1 − (1+r)^−n); aylık ortalama oranlar) ·
+       Enflasyon ekonomi-araclari.html (yıllık TÜFE zinciri; 2026'nın ocak–ekim payı sayfadaki 10.000 → 101.425,04 örneğinden türetildi) ·
+       Maaş ekonomi-araclari.html (50.000 → 39.932,50; SGK işçi %14, işsizlik %1, gelir vergisi ilk dilim %15, damga binde 7,59 yasal oranlar; asgari ücret istisnası 4.187,00 TL sayfadaki örnekten türetildi) ·
+       Altın altin.html (satış) · Yakıt akaryakit-fiyatlari.html (pompa fiyatı, il tablosu). -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* KİT ADAYI: sonuç kartı — hesaplayıcı sonucu (etiket, büyük ince rakam + birim, tek satır not, döküm satırları); kitte büyük değer ve döküm bileşeni yok */
+.x-sonuc{margin-top:var(--b-24);padding:var(--b-16);border-radius:var(--k-kart);background:var(--marka-25)}
+.x-sonuc>small{display:block;font-size:14px;color:var(--metin-2)}
+.x-sonuc .s{display:flex;align-items:baseline;gap:var(--b-8);margin-top:var(--b-4);white-space:nowrap;min-width:0}
+.x-sonuc .s b{min-width:0;overflow:hidden;text-overflow:ellipsis;font-size:40px;line-height:1.1;font-weight:var(--y-ince);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.x-sonuc .s em{flex:none;font-style:normal;font-size:15px;font-weight:var(--y-kalin);color:var(--metin-2)}
+.x-sonuc .n{margin-top:var(--b-8);font-size:12.5px;color:var(--metin-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.x-sonuc dl{margin-top:var(--b-12);border-top:1px solid var(--cizgi)}
+.x-sonuc dl div{display:flex;justify-content:space-between;gap:var(--b-12);padding:var(--b-8) 0;font-size:14px}
+.x-sonuc dl div+div{border-top:1px solid var(--cizgi)}
+.x-sonuc dt{min-width:0;color:var(--metin-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.x-sonuc dd{flex:none;font-weight:var(--y-kalin);font-variant-numeric:tabular-nums;white-space:nowrap}
+.x-sonuc.bos .s b{color:var(--metin-3)}
+/* form satırı aralığı ve ortadaki değiştir düğmesi (kit .k-alan+.k-alan aralığıyla aynı) */
+.x-f+.x-f{margin-top:var(--b-16)}
+.x-degis{display:flex;justify-content:center;padding-top:var(--b-8)}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var Q = K.q, DUR = K.durum, I = K.I, e = document.getElementById('ekran');
+
+  /* kaynak: public ekonomi-araclari.html "Araçlar" — [id, ad, açıklama, ikon] */
+  var ARAC = [['doviz', 'Döviz Çevirici', 'Güncel kurlarla sekiz para birimini liraya çevir.', 'fa-money-bill-transfer'],
+    ['kredi', 'Kredi Hesaplayıcı', 'Tutar, vade ve faiz oranıyla aylık taksiti hesapla.', 'fa-calculator'],
+    ['enflasyon', 'Enflasyon Hesaplayıcı', 'Bir tutarın bugünkü karşılığını TÜFE ile bul.', 'fa-arrow-trend-up'],
+    ['maas', 'Maaş Hesaplayıcı', 'Brüt maaştan nete, kesintileriyle birlikte hesapla.', 'fa-wallet'],
+    ['altin', 'Altın Hesaplayıcı', 'Gram, çeyrek ve cumhuriyet altınının TL karşılığı.', 'fa-coins'],
+    ['yakit', 'Yakıt Maliyeti', 'Mesafe ve tüketimle yol maliyetini hesapla.', 'fa-gas-pump']];
+  /* kaynak: public doviz.html kur tablosu — [kod, ad, alış, satış, birim çarpanı]; USD ve EUR satışı D.piyasa ile aynı */
+  var KUR = [['USD', 'ABD Doları', '34,4980', '34,5448', 1], ['EUR', 'Euro', '36,1504', '36,2180', 1], ['GBP', 'İngiliz Sterlini', '43,0210', '43,1150', 1], ['CHF', 'İsviçre Frangı', '38,9120', '39,0040', 1],
+    ['JPY', 'Japon Yeni (100)', '22,4810', '22,5320', 100], ['SAR', 'Suudi Arabistan Riyali', '9,1902', '9,2105', 1], ['CNY', 'Çin Yuanı', '4,7581', '4,7702', 1], ['RUB', 'Rus Rublesi', '0,3384', '0,3412', 1]];
+  /* kaynak: public faiz-oranlari.html "Kredi (aylık, ortalama)" — [tür, oran, önceki hafta, değişim] */
+  var KRD = [['İhtiyaç', '3,59', '%3,64', '−0,05 puan'], ['Taşıt', '3,19', '%3,22', '−0,03 puan'], ['Konut', '2,89', '%2,95', '−0,06 puan'], ['Ticari', '3,05', '%3,08', '−0,03 puan']];
+  var VADE = [12, 24, 36, 48];
+  /* kaynak: public ekonomi-araclari.html "Enflasyon Hesaplayıcı" TÜFE tablosu — [yıl, yıllık, aylık ortalama] */
+  var TUFE = [[2020, '14,60', '1,14'], [2021, '36,08', '2,60'], [2022, '64,27', '4,22'], [2023, '64,77', '4,25'], [2024, '44,38', '3,11'], [2025, '30,89', '2,27']];
+  /* kaynak: public altin.html — [tür, açıklama, alış, satış, birim] (ons dolar cinsinden olduğu için dışarıda) */
+  var ALT = [['Gram Altın', '24 ayar', '2.962,10', '2.968,40', 'gram'], ['Çeyrek Altın', '1,75 gram · 22 ayar', '4.812,00', '4.905,00', 'adet'], ['Yarım Altın', '3,50 gram · 22 ayar', '9.624,00', '9.810,00', 'adet'],
+    ['Tam Altın', '7,00 gram · 22 ayar', '19.190,00', '19.560,00', 'adet'], ['Cumhuriyet Altını', '7,22 gram · 22 ayar', '19.780,00', '20.150,00', 'adet'], ['22 Ayar Bilezik', 'gram', '2.690,40', '2.745,10', 'gram'], ['Gümüş', 'gram', '33,98', '34,12', 'gram']];
+  /* kaynak: public akaryakit-fiyatlari.html — [il, benzin, motorin, LPG] TL/litre, 23 Kasım 2026 06.00 */
+  var YKT = [['İstanbul (Avrupa)', '43,18', '44,72', '27,42'], ['İstanbul (Anadolu)', '43,05', '44,60', '27,31'], ['Ankara', '44,01', '45,63', '27,88'], ['İzmir', '44,26', '45,90', '28,04'], ['Antalya', '44,52', '46,14', '27,59'],
+    ['Bursa', '44,08', '45,71', '27,95'], ['Adana', '44,37', '46,02', '27,66'], ['Konya', '44,19', '45,83', '27,72'], ['Gaziantep', '44,61', '46,25', '27,81'], ['Trabzon', '44,73', '46,38', '28,12']];
+  var YAKIT = ['Benzin', 'Motorin', 'LPG'];
+
+  function p(s){ s = String(s == null ? '' : s).trim(); if (!s) return NaN; return parseFloat(s.replace(/\./g, '').replace(',', '.')); }
+  function f(n, d){ d = d == null ? 2 : d; return n.toLocaleString('tr-TR', { minimumFractionDigits: d, maximumFractionDigits: d }); }
+  function idx(L, v){ return Math.max(0, L.map(function(x){ return x[0]; }).indexOf(v)); }
+
+  var id = Q.get('arac') || 'doviz', ai = ARAC.map(function(a){ return a[0]; }).indexOf(id), A = ARAC[ai];
+  var BUL = DUR === 'bulunamadi' || ai < 0, BOS = DUR === 'bos', GEC = DUR === 'gecersiz';
+  var HATA = BUL ? 'bulunamadi' : DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? 'cevrimdisi' : '';
+
+  /* durum: seçimler */
+  var S = { kur: 0, ters: false, krd: 0, vade: 24, bas: 2020, alt: 0, yakit: 0, il: 0 };
+
+  /* alan: kit k-alan; sayısal klavye; birim sağda etiket */
+  function alan(et, ad, d, birim, o){ o = o || {};
+    var h = K.alan({ etiket: et, deger: BOS && !o.pasif ? '' : (GEC && o.ilk ? '0' : d), yer: o.yer || '0', sag: birim ? K.etiket(birim) : '', pasif: o.pasif, yardim: o.yardim,
+      hata: GEC && o.ilk ? 'Sıfırdan büyük bir değer yaz.' : '' }).replace('<input ', '<input data-hs="' + ad + '" inputmode="decimal" ');
+    return '<div class="x-f">' + h + '</div>'; }
+  function secici(et, metin, ad, ikon){ return '<div class="x-f"><span class="k-alan-e">' + et + '</span>' + K.btn({ metin: metin, ikon: ikon, sagIkon: 'fa-chevron-down', tur: 'sade', tam: true, attr: 'data-sec="' + ad + '"' }) + '</div>'; }
+  function etiketli(et, html){ return '<div class="x-f"><span class="k-alan-e">' + et + '</span>' + html + '</div>'; }
+  function degis(){ return '<div class="x-degis">' + K.ikonBtn({ ikon: 'fa-right-left', etiket: 'Yönü değiştir', tur: 'dolu', attr: 'data-degis' }) + '</div>'; }
+  function v(ad){ var i = e.querySelector('[data-hs="' + ad + '"]'); return i ? p(i.value) : NaN; }
+  function not(m){ return '<p class="k-grup-n">' + m + '</p>'; }
+
+  /* ---------- araçlar: form, hesap, oran tablosu ---------- */
+  var T = {
+    doviz: {
+      form: function(){ var k = KUR[S.kur], b = k[4] > 1 ? k[4] + ' ' + k[0] : k[0];
+        return secici('Para birimi', k[0] + ' · ' + k[1], 'kur', 'fa-money-bill-transfer') + alan('Tutar', 'tutar', S.ters ? '34.544,80' : '1.000', S.ters ? 'TRY' : b, { ilk: true }) + degis(); },
+      hesap: function(){ var k = KUR[S.kur], kur = p(k[3]) / k[4], t = v('tutar'); if (!(t > 0)) return null;
+        return { e: 'Karşılığı', d: S.ters ? t / kur : t * kur, b: S.ters ? k[0] : 'TRY', n: (k[4] > 1 ? k[4] + ' ' : '1 ') + k[0] + ' = ' + k[3] + ' TRY · satış kuru' }; },
+      tablo: function(){ return K.bb({ baslik: 'Döviz Kurları', ikon: 'fa-chart-column', not: 'Serbest piyasa' }) + '<div class="k-ic">' +
+        K.tablo({ cls: 'sol', vurgu: S.kur, sutunlar: ['Döviz', 'Alış', 'Satış'], satirlar: KUR.map(function(r){ return ['<b>' + r[0] + '</b>' + K.meta([r[1]]), r[2], r[3]]; }) }) +
+        not('15 dakika gecikmeli · 23 Kasım 2026, ' + D.piyasa.guncelleme) + '</div>'; } },
+    kredi: {
+      form: function(){ return etiketli('Kredi türü', K.segment(KRD.map(function(k){ return k[0]; }), S.krd).replace('class="k-segment"', 'class="k-segment" data-krd')) +
+        alan('Kredi tutarı', 'tutar', '100.000', 'TRY', { ilk: true }) +
+        etiketli('Vade', '<div class="k-ray s8" data-tek data-vade style="margin:0 calc(-1 * var(--kenar));padding:0 var(--kenar)">' + VADE.map(function(n){ return K.cip(n + ' ay', { secili: n === S.vade, attr: 'data-n="' + n + '"' }); }).join('') + '</div>') +
+        alan('Aylık faiz', 'faiz', KRD[S.krd][1], '%'); },
+      hesap: function(){ var P = v('tutar'), r = v('faiz') / 100, n = S.vade; if (!(P > 0) || !(r >= 0)) return null;
+        var tk = r ? P * r / (1 - Math.pow(1 + r, -n)) : P / n, top = tk * n;
+        return { e: 'Aylık taksit', d: tk, b: 'TRY', n: n + ' ay · aylık %' + f(r * 100) + ' · vergi ve masraflar hariç', dk: [['Toplam geri ödeme', f(top) + ' TRY'], ['Toplam faiz', f(top - P) + ' TRY']] }; },
+      tablo: function(){ return K.bb({ baslik: 'Kredi Faizleri', ikon: 'fa-building-columns', not: 'Aylık, ortalama' }) + '<div class="k-ic">' +
+        K.tablo({ cls: 'sol', vurgu: S.krd, sutunlar: ['Kredi', 'Oran', 'Önceki', 'Değişim'], satirlar: KRD.map(function(r){ return [r[0], '%' + r[1], r[2], r[3]]; }) }) +
+        not('Banka ortalamaları · 15 Kasım 2026 haftası') + '</div>'; } },
+    enflasyon: {
+      form: function(){ return alan('Tutar', 'tutar', '10.000', 'TRY', { ilk: true }) + secici('Başlangıç', 'Ocak ' + S.bas, 'bas', 'fa-calendar-day') +
+        alan('Bitiş', 'bitis', 'Ekim 2026', '', { pasif: true, yardim: 'Son açıklanan TÜFE verisi' }).replace(' data-hs="bitis" inputmode="decimal"', ''); },
+      hesap: function(){ var t = v('tutar'); if (!(t > 0)) return null; var F = kat(S.bas);
+        return { e: 'Bugünkü karşılığı', d: t * F, b: 'TRY', n: 'Fiyatlar genel düzeyi ' + f(F) + ' kat arttı · TÜİK TÜFE', dk: [['Dönem', 'Ocak ' + S.bas + ' – Ekim 2026'], ['Toplam artış', '%' + f((F - 1) * 100)]] }; },
+      tablo: function(){ return K.bb({ baslik: 'Yıllık Enflasyon', ikon: 'fa-chart-column', not: 'TÜFE' }) + '<div class="k-ic">' +
+        K.tablo({ cls: 'sol', sutunlar: ['Yıl', 'Yıllık TÜFE', 'Aylık ort.'], satirlar: TUFE.map(function(r){ return [String(r[0]), '%' + r[1], '%' + r[2]]; }).concat([['Ekim 2026 (yıllık)', '%32,90', '%2,40']]) }) +
+        not('Kaynak: TÜİK Tüketici Fiyat Endeksi · Ekim 2026 verisi') + '</div>'; } },
+    maas: {
+      form: function(){ return alan('Brüt maaş', 'brut', '50.000', 'TRY', { ilk: true }); },
+      hesap: function(){ var b = v('brut'); if (!(b > 0)) return null;
+        var sgk = b * .14, iss = b * .01, vg = Math.max(0, (b - sgk - iss) * .15 + b * .00759 - 4187);
+        return { e: 'Net maaş', d: b - sgk - iss - vg, b: 'TRY', n: 'Ocak 2026 · asgari ücret istisnası dahil',
+          dk: [['SGK işçi payı (%14)', '−' + f(sgk)], ['İşsizlik sigortası (%1)', '−' + f(iss)], ['Gelir ve damga vergisi', '−' + f(vg)]] }; },
+      tablo: function(){ return '<div class="k-ic">' + K.serit({ ikon: 'fa-circle-info', metin: 'Aylık hesap', alt: 'Yıl içinde kümülatif matrah üst dilime geçince net maaş düşebilir.' }) + '</div>'; } },
+    altin: {
+      form: function(){ var a = ALT[S.alt];
+        return secici('Altın türü', a[0], 'alt', 'fa-coins') + alan('Miktar', 'tutar', S.ters ? '29.684,00' : '10', S.ters ? 'TRY' : a[4], { ilk: true }) + degis(); },
+      hesap: function(){ var a = ALT[S.alt], fy = p(a[3]), t = v('tutar'); if (!(t > 0)) return null;
+        return { e: 'Karşılığı', d: S.ters ? t / fy : t * fy, b: S.ters ? a[4] : 'TRY', n: (S.alt ? '1 ' + a[4] + ' ' + a[0].toLocaleLowerCase('tr-TR') : '1 gram') + ' = ' + a[3] + ' TRY · satış fiyatı' }; },
+      tablo: function(){ return K.bb({ baslik: 'Altın Fiyatları', ikon: 'fa-chart-column', not: 'Kapalıçarşı' }) + '<div class="k-ic">' +
+        K.tablo({ cls: 'sol', vurgu: S.alt, sutunlar: ['Tür', 'Alış', 'Satış'], satirlar: ALT.map(function(r){ return ['<b>' + r[0] + '</b>' + K.meta([r[1]]), r[2], r[3]]; }) }) +
+        not('Serbest piyasa, TL · 15 dakika gecikmeli · 23 Kasım 2026, ' + D.piyasa.guncelleme) + '</div>'; } },
+    yakit: {
+      form: function(){ return alan('Mesafe', 'km', '450', 'km', { ilk: true }) + alan('Ortalama tüketim', 'tuk', '6,5', 'L/100 km') +
+        etiketli('Yakıt', K.segment(YAKIT, S.yakit).replace('class="k-segment"', 'class="k-segment" data-yakit')) + secici('İl', YKT[S.il][0], 'il', 'fa-location-dot'); },
+      hesap: function(){ var km = v('km'), tk = v('tuk'), fy = p(YKT[S.il][S.yakit + 1]); if (!(km > 0) || !(tk > 0)) return null; var l = km * tk / 100;
+        return { e: 'Yol maliyeti', d: l * fy, b: 'TRY', n: f(l) + ' litre · ' + YKT[S.il][0] + ' ' + YAKIT[S.yakit].toLocaleLowerCase('tr-TR') + ' fiyatıyla', dk: [['Yakıt', f(l) + ' L'], ['Litre fiyatı', YKT[S.il][S.yakit + 1] + ' TRY']] }; },
+      tablo: function(){ return K.bb({ baslik: 'Pompa Fiyatları', ikon: 'fa-gas-pump', not: 'TL/litre' }) + '<div class="k-ic">' +
+        K.tablo({ cls: 'sol', vurgu: S.il, sutunlar: ['İl', 'Benzin', 'Motorin', 'LPG'], satirlar: YKT }) + not('23 Kasım 2026, 06.00 itibarıyla · dağıtım şirketine göre değişebilir') + '</div>'; } }
+  };
+  /* enflasyon katsayısı: yıllık TÜFE zinciri × 2026 ocak–ekim payı (public örnek: Ocak 2020 → Ekim 2026 = 10,142504 kat) */
+  function zincir(y){ return TUFE.filter(function(r){ return r[0] >= y; }).reduce(function(c, r){ return c * (1 + p(r[1]) / 100); }, 1); }
+  var K26 = 10.142504 / zincir(2020);
+  function kat(y){ return zincir(y) * K26; }
+
+  /* ---------- sonuç ---------- */
+  function sonuc(){ var t = T[id], r = t.hesap();
+    if (!r) return '<div class="x-sonuc bos" role="status"><small>' + ({ kredi: 'Aylık taksit', maas: 'Net maaş', yakit: 'Yol maliyeti', enflasyon: 'Bugünkü karşılığı' }[id] || 'Karşılığı') + '</small><div class="s"><b>—</b></div>' +
+      '<p class="n">' + (GEC ? 'Geçerli bir değer yazınca sonuç burada görünür' : 'Değerleri yaz; sonuç burada görünür') + '</p></div>';
+    return '<div class="x-sonuc" role="status"><small>' + r.e + '</small><div class="s"><b>' + f(r.d) + '</b><em>' + r.b + '</em></div><p class="n">' + r.n + '</p>' +
+      (r.dk ? '<dl>' + r.dk.map(function(x){ return '<div><dt>' + x[0] + '</dt><dd>' + x[1] + '</dd></div>'; }).join('') + '</dl>' : '') + '</div>'; }
+  function guncelle(){ var k = document.getElementById('sonuc'); if (k) k.innerHTML = sonuc(); }
+  function ciz(){ document.getElementById('form').innerHTML = T[id].form(); guncelle(); document.getElementById('tablo').innerHTML = T[id].tablo(); }
+
+  var bas = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>' + (A ? A[1] : 'Ekonomi Aracı') + '</h1><p>' + (A ? A[2] : '') + '</p></div>';
+  var cipler = '<div class="k-ray s8" role="group">' + ARAC.map(function(a, i){ return K.cip(a[1], { ikon: a[3], secili: i === ai, attr: i === ai ? '' : 'data-href="' + K.u('ekranlar/icerik/ekonomi-araci.html', 'arac=' + a[0]) + '"' }); }).join('') + '</div>';
+  var cevrim = DUR === 'cevrimdisi' ? '<div class="k-ic" style="padding-top:var(--b-16)">' + K.serit({ tur: 'uyari', ikon: 'fa-plug-circle-xmark', metin: 'Çevrimdışısın', alt: 'Son kurlarla (' + D.piyasa.guncelleme + ') hesaplanıyor.' }) + '</div>' : '';
+  var uyari = ['doviz', 'altin', 'kredi'].indexOf(id) < 0 ? '' : '<div class="k-ic k-bl sik">' + K.serit({ ikon: 'fa-triangle-exclamation', metin: 'Yatırım uyarısı', alt: 'Hesaplamalar bilgilendirme amaçlıdır; yatırım danışmanlığı kapsamında değildir.' }) + '</div>';
+
+  if (DUR === 'yukleniyor' && !BUL) e.innerHTML = bas + cipler + '<div class="k-ic" style="padding-top:var(--b-24)">' + K.iskelet('metin', 9) + '</div><div class="k-son yalin"></div>';
+  else if (HATA) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: HATA }) + '<div class="k-son yalin"></div>';
+  else e.innerHTML = bas + cipler + cevrim + '<section class="k-bl sik"><div class="k-ic"><div id="form"></div><div id="sonuc"></div></div></section>' +
+    '<section class="k-bl" id="tablo"></section>' + uyari + '<div class="k-son yalin"></div>';
+  if (document.getElementById('form')) ciz();
+  var sc = e.querySelector('.k-ray .k-cip[aria-pressed="true"]'); if (sc && ai > 1) sc.parentNode.scrollLeft = Math.max(0, sc.offsetLeft - sc.parentNode.offsetLeft + sc.offsetWidth - sc.parentNode.clientWidth + 16);
+
+  K.ustCubuk({ geri: true, baslik: A && !BUL ? A[1] : 'Ekonomi Aracı', buyuk: !HATA, eylemler: HATA ? [] : ['paylas'] });
+
+  /* yazdıkça hesapla */
+  e.addEventListener('input', function(ev){ if (!ev.target.closest('[data-hs]')) return; var a = ev.target.closest('.k-alan'); if (a) { a.classList.remove('is-hata'); var y = a.querySelector('.k-alan-y'); if (y) y.remove(); } guncelle(); });
+  /* seçiciler: alt sayfada tek seçim */
+  function sayfa(baslik, alt, L, sec, fn){ var s = K.sayfa({ baslik: baslik, alt: alt, icerik: L.map(function(x, i){ return K.secim('sc', x[0], { satir: true, secili: i === sec, alt: x[1] }).replace('<input', '<input data-i="' + i + '"'); }).join('') });
+    s.el.addEventListener('change', function(ev){ var i = ev.target.getAttribute('data-i'); if (i == null) return; fn(+i); s.kapat(); ciz(); }); }
+  e.addEventListener('click', function(ev){ var t = ev.target, x;
+    if ((x = t.closest('[data-sec]'))) { var ad = x.getAttribute('data-sec');
+      if (ad === 'kur') sayfa('Para birimi', 'Satış kuru · ' + D.piyasa.guncelleme, KUR.map(function(k){ return [k[0] + ' · ' + k[1], (k[4] > 1 ? k[4] + ' ' + k[0] : '1 ' + k[0]) + ' = ' + k[3] + ' TRY']; }), S.kur, function(i){ S.kur = i; });
+      if (ad === 'bas') sayfa('Başlangıç', 'Ekim 2026\'ya kadar', TUFE.map(function(r){ return ['Ocak ' + r[0], '']; }).concat([['Ocak 2026', '']]), [2020, 2021, 2022, 2023, 2024, 2025, 2026].indexOf(S.bas), function(i){ S.bas = 2020 + i; });
+      if (ad === 'alt') sayfa('Altın türü', 'Satış fiyatı', ALT.map(function(r){ return [r[0], r[1] + ' · ' + r[3] + ' TRY']; }), S.alt, function(i){ S.alt = i; });
+      if (ad === 'il') sayfa('İl', 'Pompa fiyatı, TL/litre', YKT.map(function(r){ return [r[0], 'Benzin ' + r[1] + ' · Motorin ' + r[2] + ' · LPG ' + r[3]]; }), S.il, function(i){ S.il = i; }); }
+    if (t.closest('[data-degis]')) { var tu = v('tutar'), r = T[id].hesap(); S.ters = !S.ters; ciz(); var i0 = e.querySelector('[data-hs="tutar"]'); if (i0 && r) i0.value = f(r.d); guncelle(); }
+    if ((x = t.closest('[data-krd] button'))) { S.krd = [].indexOf.call(x.parentNode.children, x); var fz = e.querySelector('[data-hs="faiz"]'); if (fz) fz.value = KRD[S.krd][1]; guncelle(); document.getElementById('tablo').innerHTML = T[id].tablo(); }
+    if ((x = t.closest('[data-vade] .k-cip'))) { S.vade = +x.getAttribute('data-n'); guncelle(); }
+    if ((x = t.closest('[data-yakit] button'))) { S.yakit = [].indexOf.call(x.parentNode.children, x); guncelle(); } });
+
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

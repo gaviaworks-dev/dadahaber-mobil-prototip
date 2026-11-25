@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Afet ve Acil Durum</title>
+<!-- Dada Haber Mobil · AFET VE ACİL DURUM (6. dalga, satırlar E-? · lider numaralar). Çekmece menüsünden açılan servis ekranı; kök: Liste (büyük başlık), alt çubukta "Bölümler" seçili.
+     Yapı: büyük başlık → son 24 saatin en büyük depremi (büyük değer) → afet uyarıları satırı (üye: anahtar · misafir: giriş alt sayfası) → Son Depremler (AFAD, 24 saat) →
+     Acil Durum Telefonları (dokununca arar) → Son Duyurular (resmî kurumlar, çizelge) → Hazırlık Rehberi (akordeon) + toplanma alanı sorgusu → Afet ve Acil Durum Haberleri.
+     Sorgu: ?durum=yukleniyor | bos (son 24 saatte deprem kaydı yok) | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0 → önbellek yok; acil telefonlar yine görünür) · ?uye=0 misafir
+     Veri: public afet-acil-durum.html (deprem tablosu, telefonlar, duyurular, hazırlık rehberi, haber listesi); haber saat/yazar/okunma araclar/ornek_veri.json; görsel yalnız konuya uyan D anahtarı (konteyner). -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* KİT ADAYI: büyük değer bloğu — namaz-vakitleri.html ile aynı (.x-deger); burada deprem büyüklüğü */
+.x-deger small{display:block;font-size:14px;color:var(--metin-3)}
+.x-deger .s{display:block;margin-top:var(--b-4);font-size:52px;line-height:1;font-weight:var(--y-ince);letter-spacing:-.04em;font-variant-numeric:tabular-nums;white-space:nowrap}
+.x-deger b{display:block;margin-top:var(--b-8);font-size:17px}
+.x-deger .uc{display:flex;justify-content:space-between;gap:var(--b-12);margin-top:var(--b-8);font-size:12.5px;color:var(--metin-3);white-space:nowrap}
+/* KİT ADAYI: büyüklük satırı — deprem listesi (sol: büyüklük kutusu, 3,0+ açık sarı, 4,0+ marka sarısı; orta: yer + derinlik; sağ: saat). Tablo telefonda sığmadığı için satır */
+.x-dp{display:flex;align-items:center;gap:var(--b-12);min-height:60px;padding:var(--b-8) var(--b-16)}
+.x-dp+.x-dp{background-image:linear-gradient(var(--cizgi),var(--cizgi));background-size:calc(100% - 68px) 1px;background-position:right top;background-repeat:no-repeat}
+.x-dp .b{width:40px;height:40px;border-radius:var(--k-ic);display:grid;place-items:center;flex:none;background:var(--zemin);color:var(--metin-2);font-size:15px;font-weight:var(--y-kalin);font-variant-numeric:tabular-nums}
+.x-dp .b.o{background:var(--marka-25);color:var(--marka-metin)}
+.x-dp .b.y{background:var(--marka);color:var(--siyah)}
+.x-dp .t{flex:1;min-width:0}
+.x-dp .t b{display:block;font-size:15.5px;font-weight:var(--y-orta);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.x-dp .t small{display:block;font-size:12.5px;color:var(--metin-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.x-dp .s{flex:none;font-size:14px;font-weight:var(--y-kalin);color:var(--metin-2);white-space:nowrap;font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var Q = K.q, DUR = K.durum, I = K.I, e = document.getElementById('ekran');
+  var GUN = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'], AY = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
+
+  /* kaynak: public afet-acil-durum.html "Son Depremler" (AFAD, son 24 saat) — [yer, büyüklük, derinlik, saat] */
+  var DEP = [['Sındırgı (Balıkesir)', '2,8', '7,9 km', '13.58'], ['Sındırgı (Balıkesir)', '4,1', '8,4 km', '13.52'], ['Ege Denizi, Datça açıkları', '3,2', '12,1 km', '11.40'],
+    ['Malatya, Pütürge', '2,6', '6,8 km', '09.15'], ['Düzce, Gölyaka', '2,4', '9,3 km', '07.42'], ['Van, Erciş', '2,9', '5,2 km', '05.31'], ['Akdeniz, Kaş açıkları', '3,4', '24,6 km', '03.08'],
+    ['Kahramanmaraş, Göksun', '2,7', '7,0 km', '01.55'], ['Marmara Denizi, Silivri açıkları', '2,5', '11,2 km', '00.47'], ['Erzurum, Tekman', '2,3', '6,1 km', 'Dün 22.19']];
+  /* kaynak: public afet-acil-durum.html "Acil Durum Telefonları" — [hizmet, numara, kapsam] */
+  var TEL = [['Acil Çağrı Merkezi', '112', 'Ambulans, itfaiye, polis, jandarma, AFAD'], ['Türk Kızılay', '168', 'Kan bağışı ve afet yardımı'], ['Doğal gaz acil', '187', 'Gaz kokusu ve kaçak'],
+    ['Elektrik arıza', '186', 'Kesinti ve arıza bildirimi'], ['Su arıza', '185', 'Şebeke arızası'], ['Belediye', '153', 'Beyaz Masa']];
+  /* kaynak: public afet-acil-durum.html "Son Duyurular" — [gün (Kasım), saat, kurum, başlık, ayrıntı, tür, önem] */
+  var DUY = [[23, '13.55', 'AFAD', 'Sındırgı depremi sonrası açıklama', 'Can ve mal kaybı bildirilmedi', 'Duyuru', 'sari'],
+    [25, '10.00', 'MEB · AFAD', 'Okullarda deprem tatbikatı', '81 ilde aynı saatte', 'Tatbikat', ''],
+    [27, '09.00', 'Meteoroloji', 'Doğu Karadeniz için sel uyarısı', 'Rize, Artvin, Trabzon', 'Uyarı', 'sari']];
+  /* kaynak: public afet-acil-durum.html "Hazırlık Rehberi" (AFAD önerileri); 5. madde (toplanma alanı) aşağıda sorgu çağrısı olarak */
+  var REH = [['Deprem çantası hazırla', 'Su, uzun ömürlü yiyecek, ilk yardım malzemesi, el feneri, yedek pil, düdük, kimlik ve önemli belgelerin fotokopileri bulunmalı. Çantayı kolay ulaşılan bir yerde tut ve altı ayda bir kontrol et.'],
+    ['Aile afet planı yap', 'Afet anında buluşulacak yeri, şehir dışından aranacak bir kişiyi ve evdeki gaz, elektrik, su vanalarının yerini aile bireyleriyle önceden konuş.'],
+    ['Deprem anında', 'Çök, kapan, tutun: sağlam bir masanın yanına çök, başını ve enseni koru, sarsıntı geçene kadar tutun. Asansör ve merdiven kullanma, pencere kenarından uzak dur.'],
+    ['Deprem sonrasında', 'Gaz ve elektrik tesisatını kapat, hasarlı binaya girme. Resmî açıklamaları AFAD ve valilik hesaplarından takip et; doğrulanmamış iddiaları paylaşma.']];
+  /* kaynak: public afet-acil-durum.html haber listesi (etiketler) + araclar/ornek_veri.json (saat, yazar, süre, okunma); görsel yalnız D'de bu habere verilmiş olan (konteyner) */
+  var HAB = [['Deprem', "Balıkesir Sındırgı'da 4,1 büyüklüğünde deprem", 'Hakan Uysal', '07.40', '5 dk', '21,3 B'],
+    ['AFAD', 'Deprem sonrası hasar tespit çalışmaları tamamlandı', 'Sibel Arslan', '15.00', '2 dk', '4,8 B', 'konteyner'],
+    ['Tatbikat', 'Okullarda deprem tatbikatı haftası başlıyor', 'Hakan Uysal', '12.10', '3 dk', '3,6 B'],
+    ['Meteoroloji', 'Doğu Karadeniz için sel uyarısı', 'Ayşe Yıldız', '22 Kas', '4 dk', '2,9 B'],
+    ['Kentsel dönüşüm', 'Riskli yapı tespitinde başvuru süresi uzatıldı', 'Ayşe Yıldız', '22 Kas', '3 dk', '14,2 B'],
+    ['Sigorta', 'Zorunlu deprem sigortasında yeni tarife yürürlükte', 'Sibel Arslan', '22 Kas', '4 dk', '9,6 B'],
+    ['Gönüllülük', 'AFAD gönüllü eğitimlerine kayıtlar açıldı', 'Sibel Arslan', '21 Kas', '2 dk', '8,1 B'],
+    ['Bilim', "Kandilli: Marmara'daki küçük depremler olağan aktivite içinde", 'Ayşe Yıldız', '21 Kas', '3 dk', '6,7 B']];
+
+  function sayi(s){ return parseFloat(String(s).replace(',', '.')); }
+  function dp(d){ var b = sayi(d[1]); return '<div class="x-dp"><span class="b' + (b >= 4 ? ' y' : b >= 3 ? ' o' : '') + '" aria-label="Büyüklük ' + d[1] + '">' + d[1] + '</span>' +
+    '<span class="t"><b>' + d[0] + '</b><small>' + d[2] + ' derinlik</small></span><span class="s">' + d[3] + '</span></div>'; }
+  function gunAd(g){ return g === 23 ? 'Bugün' : g + ' ' + AY[10] + ' ' + GUN[new Date(2026, 10, g).getDay()]; }
+  function duyuru(L){ var dl = null;
+    return L.map(function(x, i){ var a = x[0] !== dl ? '<div class="k-ayrac"><span>' + gunAd(x[0]) + '</span><span>' + (x[0] === 23 ? '23 Kasım ' + GUN[1] : '') + '</span></div>' : ''; dl = x[0];
+      return a + '<div class="k-cz' + (i === 0 ? ' ilk' : '') + '"><span class="sa">' + x[1] + '</span><span class="ci"></span><span class="no"></span><div class="yazi"><div>' +
+        '<span class="k-ustsatir"><span class="s">' + x[2] + '</span></span><h3>' + x[3] + '</h3><div class="k-ab">' + K.meta([x[4]]) + K.etiket(x[5], { tur: x[6] }) + '</div></div></div></div>'; }).join(''); }
+  function haber(x){ return { alt: x[0], ikon: 'fa-house-crack', baslik: x[1], yazar: x[2], saat: x[3], sure: x[4], izlenme: x[5], g: x[6] }; }
+
+  var BOS = DUR === 'bos', EN = DEP[1];
+  var HATA = DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? 'cevrimdisi' : '';
+  var bas = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Afet ve Acil Durum</h1><p>Son depremler, hazırlık rehberi ve resmî acil durum telefonları</p></div>';
+
+  /* son 24 saatin en büyüğü; açıklama Son Duyurular'dan (AFAD 13.55) */
+  var one = '<section class="k-bl sik"><div class="k-ic"><div class="x-deger"><small>Son 24 saatin en büyük depremi</small><span class="s">' + EN[1] + '</span><b>' + EN[0] + ' · ' + EN[3] + '</b>' +
+    '<div class="uc"><span>' + EN[2] + ' derinlik</span><span>AFAD</span></div></div>' +
+    '<div style="padding-top:var(--b-16)">' + K.serit({ tur: 'basari', ikon: 'fa-circle-check', metin: DUY[0][4], alt: 'AFAD açıklaması · ' + DUY[0][1] }) + '</div>' +
+    '<div style="padding-top:var(--b-12)">' + K.btn({ metin: 'Haberi oku', ikon: 'fa-newspaper', tur: 'sade', tam: true, href: K.git('detay') }) + '</div></div></section>';
+  /* uyarı aboneliği: üye anahtar · misafir giriş alt sayfası */
+  var uyari = K.grup('', [K.uye ? { ikon: 'fa-bell', baslik: 'Afet uyarıları', alt: 'AFAD ve Meteoroloji uyarıları bildirim olarak gelsin', sag: 'anahtar', on: false }
+    : { ikon: 'fa-bell', baslik: 'Afet uyarıları', alt: 'Uyarı almak için giriş yap', sag: 'ok', attr: 'data-sayfa="tetik" data-eylem="takip"' }]).replace('<label class="k-ayar"', '<label class="k-ayar" data-uyari');
+  var dep = '<section class="k-bl">' + K.bb({ baslik: 'Son Depremler', ikon: 'fa-house-crack', not: 'Son 24 saat' }) + '<div class="k-ic">' +
+    (BOS ? K.bos({ ikon: 'fa-house-crack', baslik: 'Son 24 saatte deprem kaydı yok', aciklama: 'AFAD verisinde yeni kayıt gelince burada listelenir.' })
+      : '<div class="k-grup-k">' + DEP.map(dp).join('') + '</div><p class="k-grup-n">AFAD Deprem Dairesi verisi · son 24 saat · 23 Kasım 2026, 14.30</p>') + '</div></section>';
+  var tel = '<section class="k-bl">' + K.bb({ baslik: 'Acil Durum Telefonları', ikon: 'fa-phone', not: 'Resmî' }) +
+    K.grup('', TEL.map(function(t){ return { ikon: 'fa-phone', baslik: t[0], alt: t[2], sag: 'deger', deger: t[1], href: 'tel:' + t[1] }; }), 'Numaralar ücretsizdir; 112 bütün acil durumlar için tek numaradır. Dokununca arar.').replace('k-grup"', 'k-grup" style="margin-top:0"') + '</section>';
+  var duy = '<section class="k-bl">' + K.bb({ baslik: 'Son Duyurular', ikon: 'fa-bullhorn', not: 'Resmî kurumlardan' }) + '<div class="k-ic">' + duyuru(DUY) + '</div></section>';
+  var reh = '<section class="k-bl">' + K.bb({ baslik: 'Hazırlık Rehberi', ikon: 'fa-list-check', not: 'AFAD önerileri' }) + '<div class="k-ic">' +
+    REH.map(function(r, i){ return K.akordeon(r[0], r[1], i === 0); }).join('') +
+    '<div style="padding-top:var(--b-16)">' + K.cagri({ ikon: 'fa-map-location-dot', baslik: 'Toplanma alanını öğren', aciklama: 'e-Devlet\'te AFAD sorgusuyla', eylem: { metin: 'Sorgula', attr: 'data-toast="e-Devlet açılır"' } }) + '</div></div></section>';
+  var hab = '<section class="k-bl">' + K.bb({ baslik: 'Afet ve Acil Durum Haberleri', ikon: 'fa-newspaper', sayi: 118 }) + '<div class="k-satirlar">' + HAB.map(function(x){ return K.satir(haber(x)); }).join('') + '</div>' + K.dahaFazla('yukleniyor') + '</section>';
+  var cevrim = DUR === 'cevrimdisi' ? '<div class="k-ic">' + K.serit({ tur: 'uyari', ikon: 'fa-plug-circle-xmark', metin: 'Çevrimdışısın', alt: 'Deprem listesi 14.30 verisi; bağlantı gelince yenilenir.' }) + '</div>' : '';
+
+  if (DUR === 'yukleniyor') e.innerHTML = bas + '<div class="k-ic" style="padding-top:var(--b-16)">' + K.iskelet('metin', 4) + '</div><div class="k-satirlar" style="padding-top:var(--b-24)">' + K.iskelet('satir', 4) + '</div><div class="k-son"></div>';
+  else if (HATA === 'cevrimdisi') e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: 'cevrimdisi' }) + tel + '<div class="k-son"></div>';
+  else if (HATA) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: HATA }) + '<div class="k-son"></div>';
+  else e.innerHTML = bas + cevrim + (BOS ? '' : one) + uyari + dep + tel + duy + reh + hab + '<div class="k-son"></div>';
+
+  K.ustCubuk({ geri: true, baslik: 'Afet ve Acil Durum', buyuk: !HATA, eylemler: HATA ? [] : ['paylas'] });
+  K.altCubuk('bolum');
+  K.oynatici();
+
+  document.addEventListener('change', function(ev){ var a = ev.target.closest('[data-uyari] input'); if (!a) return;
+    K.toast(a.checked ? 'Afet uyarıları açıldı' : 'Afet uyarıları kapatıldı', { tur: a.checked ? 'basari' : 'bilgi', ikon: 'fa-bell' }); });
+  if (DUR === 'cevrimdisi' && !HATA) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

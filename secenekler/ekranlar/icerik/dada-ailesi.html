@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Dada Ailesi</title>
+<!-- Dada Haber Mobil · DADA AİLESİ (6. dalga, K41; site B-12). Menü çekmecesinin altındaki "Dada Ailesi" satırından açılan itme ekranı (geri çubuğu).
+     Kardeş siteler sitenin footer'ındaki "Dada Ailesi" bandının sırasıyla: Dada Haber (bu uygulama) · Dada Gastro · Dada Fit · Dada Diet · Dada Gourmet.
+     Her satırın tamamı dokunulur ve siteyi tarayıcıda açar (dış bağlantı işareti fa-arrow-up-right-from-square); Dada Haber satırı "Bu uygulama", bağlantısız.
+     Sorgu: ?durum=yukleniyor | hata (&hata=zaman-asimi) | cevrimdisi (liste + bant; siteler bağlantı gelince açılır) · ?tema=koyu · üye ve misafir aynı.
+     Veri: public parcalar/footer.html "Dada Ailesi" (ad, adres, simge), public index.html kardeş site bantları (Gastro, Diet, Gourmet açıklamaları; Fit'in bandı yok → yalnız adres).
+           Simgeler assets/gorsel/aile/ (public'ten kopya, KAYNAK.txt); Dada Haber satırında yalnız yeni "dada" logosu (K35), public'teki eski "dada!" favicon kullanılmaz.
+     Not: site adları ve listesi teyit edilmedi (B-12); ekranda da küçük notla belirtilir. -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* KİT ADAYI: marka satırı — dış siteye giden satır; marka simgesi (görsel) + ad + adres + kısa açıklama + dış bağlantı işareti. k-ayar yalnız Font Awesome ikonu taşıyor */
+.x-aile{display:grid;gap:var(--b-12);padding:0 var(--kenar)}
+.x-site{display:grid;grid-template-columns:48px minmax(0,1fr) auto;gap:var(--b-12);align-items:center;min-height:var(--dokun);padding:var(--b-12);border-radius:var(--k-kontrol);background:var(--k-yuzey);transition:transform .14s var(--k-egri)}
+a.x-site:active{transform:scale(.98)}
+.x-site .lg{width:48px;height:48px;border-radius:var(--k-kontrol);background:var(--zemin-2) center/cover no-repeat}
+.x-site .lg.haber{background:var(--marka) url("../../../assets/gorsel/logo/dada-beyaz.svg") center/36px auto no-repeat}
+.x-site .t{min-width:0}
+.x-site b{display:block;font-size:16px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.x-site small{display:block;margin-top:var(--b-4);font-size:12.5px;color:var(--metin-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.x-site p{margin-top:var(--b-4);font-size:13.5px;line-height:1.4;color:var(--metin-2);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.x-site>i{width:var(--dokun);height:var(--dokun);display:grid;place-items:center;font-size:13px;color:var(--metin-3)}
+.x-site .k-etiket{margin-top:var(--b-8)}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var Q = K.q, DUR = K.durum, e = document.getElementById('ekran'), I = K.I;
+  var G0 = '../../../assets/gorsel/aile/';
+  /* kaynak: public parcalar/footer.html "Dada Ailesi" (sıra, ad, adres; Dada Haber açıklaması footer marka paragrafının ilk cümlesi) + index.html kardeş site bantları (açıklama) */
+  var AILE = [{ ad: 'Dada Haber', adres: 'dadahaber.com', bu: true, aciklama: 'Günün gelişmelerini bağlamıyla veren dijital haber platformu.' },
+    { ad: 'Dada Gastro', adres: 'dadagastro.com', url: 'https://dadagastro.com', g: 'gastro.png', aciklama: 'Fiyatı artan ürünlerin yerine ne konur, buzdolabındakiyle ne pişirilir.' },
+    { ad: 'Dada Fit', adres: 'dadafit.com.tr', url: 'https://dadafit.com.tr', g: 'fit.svg' },
+    { ad: 'Dada Diet', adres: 'dadadiet.com', url: 'https://dadadiet.com', g: 'diet.png', aciklama: 'Kadın sağlığına iyi gelen tarifler, kalori hesaplayıcılar ve besin değerleri; tıbbi tavsiye yerine geçmez.' },
+    { ad: 'Dada Gourmet', adres: 'dadagourmet.com', url: 'https://dadagourmet.com', g: 'gourmet.png', aciklama: 'Hafta sonu için mekânlar, rotalar ve etkinlik takvimi.' }];
+
+  function satir(s){
+    var lg = s.bu ? '<span class="lg haber" role="img" aria-label="Dada Haber"></span>' : '<span class="lg" style="background-image:url(\'' + G0 + s.g + '\')" role="img" aria-label="' + s.ad + '"></span>';
+    var t = '<span class="t"><b>' + s.ad + '</b><small>' + s.adres + '</small>' + (s.aciklama ? '<p>' + s.aciklama + '</p>' : '') + (s.bu ? K.etiket('Bu uygulama', { ikon: 'fa-check' }) : '') + '</span>';
+    return s.bu ? '<div class="x-site">' + lg + t + '</div>'
+      : '<a class="x-site" href="' + s.url + '" target="_blank" rel="noopener" data-dis="' + s.adres + '">' + lg + t + I('fa-arrow-up-right-from-square') + '</a>'; }
+
+  var bas = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Dada Ailesi</h1><p>Dada Haber\'in kardeş siteleri. Dokununca tarayıcıda açılır.</p></div>';
+  var liste = '<section class="k-bl sik"><div class="x-aile">' + AILE.map(satir).join('') + '</div>' +
+    '<div class="k-ic"><p class="k-not">' + I('fa-circle-info') + '<span>Prototip notu: kardeş sitelerin adları ve listesi teyit bekliyor (B-12).</span></p></div></section>';
+
+  var DUZ = DUR === 'hata';
+  if (DUR === 'yukleniyor') { var isk = ''; for (var i = 0; i < 5; i++) isk += '<i class="k-isk kontrol" style="display:block;height:96px"></i>';
+    e.innerHTML = bas + '<section class="k-bl sik"><div class="x-aile" role="status" aria-label="Yükleniyor">' + isk + '</div></section><div class="k-son"></div>'; }
+  else if (DUZ) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu' }) + '<div class="k-son"></div>';
+  else e.innerHTML = bas + liste + '<div class="k-son"></div>';
+
+  K.ustCubuk({ geri: true, baslik: 'Dada Ailesi', buyuk: !DUZ });
+  K.altCubuk('ana');
+  K.oynatici();
+
+  if (DUR === 'cevrimdisi') {
+    var bt = K.toast('Çevrimdışısın', { bant: true, alt: 'Siteler bağlantı gelince açılır' });
+    document.addEventListener('click', function(ev){ var a = ev.target.closest('[data-dis]'); if (!a) return; ev.preventDefault();
+      K.toast('Bağlantı yok', { tur: 'hata', alt: a.getAttribute('data-dis') + ' bağlantı gelince açılır' }); });
+  }
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>
