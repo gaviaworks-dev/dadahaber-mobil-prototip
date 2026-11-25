@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dada Haber · UI Kit</title>
+<!--
+  UI KIT VİTRİNİ (TEK YAZAR: kit yazarı). Her bileşen, her hali, 390 px genişlikte panellerde; açık · koyu · yan yana.
+  Bileşenler kökten çıkarıldı (hibrit/kok, liste, detay, akis); stiller secenekler/kit/kit.css, kurucular secenekler/kit/kit.js.
+  Sorgu: ?tema=koyu · ?gomulu=1 (yan yana çerçevesi içi) · ?bolum=<id> (yalnız o bölüm, denetim için) · ?uye=0 (misafir halleriyle).
+  İçerik yalnız window.D; puan durumu örneği public sözlükten (araclar/ornek_veri.json › puan_tablosu, ilk altı takım).
+-->
+<link rel="stylesheet" href="_ortak/cerceve.css">
+<link rel="stylesheet" href="_ortak/marka.css">
+<link rel="stylesheet" href="kit/kit.css">
+<script src="_ortak/icerik.js"></script>
+<script src="_ortak/cerceve.js"></script>
+<script src="_ortak/icerik-ek.js"></script>
+<script src="kit/kit.js"></script>
+<style>
+/* vitrin sayfası (uygulama ekranı değil): masaüstü genişliğinde; değerler yine marka değişkenleri */
+html,body{width:auto;height:auto;overflow:visible}
+body{background:var(--zemin-2);color:var(--metin);overflow-x:hidden}
+body>.dc,body>.ec{display:none}
+.v-ust{position:sticky;top:0;z-index:200;display:flex;align-items:center;gap:16px;height:64px;padding:0 24px;background:var(--zemin);border-bottom:1px solid var(--cizgi)}
+.v-ust .logo{height:24px}
+.v-ust h1{font-size:18px;letter-spacing:-.01em;white-space:nowrap}
+.v-ust .say{display:inline-flex;align-items:center;gap:var(--ikon-bosluk);height:32px;padding:0 12px;border-radius:var(--k-ic);background:var(--marka);color:var(--siyah);font-size:13px;font-weight:var(--y-kalin);white-space:nowrap}
+.v-ust .tema{margin-left:auto;width:280px}
+.v-gov{display:grid;grid-template-columns:232px minmax(0,1fr)}
+.v-nav{position:sticky;top:64px;align-self:start;height:calc(100vh - 64px);overflow-y:auto;padding:16px 12px 40px;border-right:1px solid var(--cizgi);background:var(--zemin)}
+.v-nav a{display:flex;align-items:center;gap:10px;min-height:36px;padding:0 10px;border-radius:var(--k-ic);font-size:14px;color:var(--metin-2)}
+.v-nav a i{width:16px;text-align:center;font-size:12px;color:var(--marka-metin)}
+.v-nav a.on{background:var(--marka-25);color:var(--metin);font-weight:var(--y-kalin)}
+.v-nav a small{margin-left:auto;font-size:11.5px;color:var(--metin-3)}
+.v-nav .g{display:block;margin:16px 10px 4px;font-size:11px;font-weight:var(--y-kalin);letter-spacing:.12em;text-transform:uppercase;color:var(--metin-3)}
+main{padding:8px 32px 120px;min-width:0}
+.v-b{padding-top:40px;scroll-margin-top:64px}
+.v-b>h2{font-size:30px;letter-spacing:-.025em;display:flex;align-items:center;gap:12px}
+.v-b>h2 .bi{width:36px;height:36px;border-radius:var(--k-ic);display:grid;place-items:center;background:var(--marka);color:var(--siyah);font-size:15px}
+.v-b>p{margin-top:8px;max-width:820px;font-size:15px;line-height:1.55;color:var(--metin-2)}
+.v-bl{margin-top:28px}
+.v-bl>h3{font-size:18px;letter-spacing:-.01em;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.v-bl>h3 code{font-size:12.5px;font-weight:var(--y-orta);color:var(--metin-3)}
+.v-bl>p{margin-top:4px;max-width:820px;font-size:13.5px;line-height:1.5;color:var(--metin-3)}
+.v-iz{margin-top:14px;display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start}
+.v-p{margin:0;width:390px;flex:none}
+.v-p figcaption{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:12px;font-weight:var(--y-kalin);color:var(--metin-3);letter-spacing:.02em}
+.v-p figcaption::before{content:"";width:8px;height:8px;border-radius:var(--k-daire);background:var(--marka)}
+.v-tel{position:relative;width:390px;overflow:hidden;background:var(--zemin);border:1px solid var(--cizgi);border-radius:var(--k-kart);isolation:isolate}
+.v-tel.pad{padding:16px var(--kenar)}
+.v-tel.pady{padding:16px 0}
+.v-tel.ton{background:var(--zemin-2);--k-yuzey:var(--yuzey)}
+.v-tel.siyah{background:#000}
+.v-tel .ekran{position:absolute;inset:0}
+.v-genis{width:100%;max-width:1220px}
+.v-kod{margin-top:12px;padding:16px 18px;border-radius:var(--k-kontrol);background:var(--k-koyu);color:#E8E8E6;font:13px/1.6 ui-monospace,"SF Mono",Menlo,monospace;white-space:pre;overflow-x:auto;max-width:1000px}
+.v-kod b{color:var(--marka);font-weight:var(--y-orta)}
+.v-kart{padding:18px;border-radius:var(--k-kart);background:var(--zemin);border:1px solid var(--cizgi)}
+.v-sz{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px;margin-top:14px;max-width:1220px}
+.v-sz .v-kart b{display:flex;align-items:center;gap:var(--ikon-bosluk);font-size:15px}
+.v-sz .v-kart b i{color:var(--marka-metin)}
+.v-sz .v-kart p{margin-top:6px;font-size:13.5px;line-height:1.5;color:var(--metin-2)}
+.v-renk{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:14px;max-width:1220px}
+.v-renk div{border-radius:var(--k-kontrol);overflow:hidden;background:var(--zemin);border:1px solid var(--cizgi)}
+.v-renk span{display:block;height:64px}
+.v-renk b{display:block;padding:8px 10px 0;font-size:12.5px}
+.v-renk small{display:block;padding:0 10px 8px;font-size:11.5px;color:var(--metin-3);font-family:ui-monospace,Menlo,monospace}
+.v-tablo{width:100%;max-width:1220px;border-collapse:collapse;margin-top:14px;background:var(--zemin);border-radius:var(--k-kart);overflow:hidden;font-size:13.5px}
+.v-tablo th,.v-tablo td{padding:9px 14px;text-align:left;border-bottom:1px solid var(--cizgi);vertical-align:middle}
+.v-tablo th{font-size:12px;color:var(--metin-3);background:var(--yuzey-2)}
+.v-tablo td i{width:22px;text-align:center;font-size:16px}
+.v-tablo code{font-size:12px;color:var(--metin-2)}
+.v-ikon{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:6px;margin-top:14px;max-width:1220px}
+.v-ikon div{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;align-items:center;padding:8px 12px;border-radius:var(--k-ic);background:var(--zemin);border:1px solid var(--cizgi)}
+.v-ikon div.kontrol{border-style:dashed}
+.v-ikon i{font-size:17px;text-align:center}
+.v-ikon b{display:block;font-size:13px}
+.v-ikon code{display:block;font-size:11px;color:var(--metin-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.v-olcek{display:grid;gap:2px;margin-top:14px;max-width:1220px;background:var(--zemin);border:1px solid var(--cizgi);border-radius:var(--k-kart);overflow:hidden}
+.v-olcek div{display:grid;grid-template-columns:200px 120px minmax(0,1fr);gap:16px;align-items:baseline;padding:12px 18px;border-bottom:1px solid var(--cizgi)}
+.v-olcek small{font-size:12px;color:var(--metin-3)}
+.v-olcek code{font-size:12px;color:var(--metin-2)}
+.v-kose{display:flex;flex-wrap:wrap;gap:14px;margin-top:14px}
+.v-kose div{width:180px;padding:14px;background:var(--zemin);border:1px solid var(--cizgi);border-radius:var(--k-kontrol)}
+.v-kose span{display:block;height:72px;background:var(--marka-25);border:2px solid var(--marka)}
+.v-kose b{display:block;margin-top:10px;font-size:13.5px}
+.v-kose small{display:block;font-size:12px;line-height:1.4;color:var(--metin-3)}
+.v-bosluk{display:grid;gap:8px;margin-top:14px;max-width:700px}
+.v-bosluk div{display:grid;grid-template-columns:70px 120px minmax(0,1fr);gap:12px;align-items:center;font-size:13px}
+.v-bosluk span{height:14px;background:var(--marka);border-radius:var(--k-ic)}
+.v-bosluk small{color:var(--metin-3)}
+.v-yan{display:none;grid-template-columns:1fr 1fr;gap:0;height:calc(100vh - 64px)}
+.v-yan iframe{width:100%;height:100%;border:0;background:var(--zemin-2)}
+.v-yan iframe+iframe{border-left:1px solid var(--cizgi)}
+body.yan .v-gov{display:none}
+body.yan .v-yan{display:grid}
+html.gomulu .v-ust,html.gomulu .v-nav{display:none}
+html.gomulu .v-gov{grid-template-columns:minmax(0,1fr)}
+html.gomulu main{padding:0 20px 80px}
+.v-p .v-yatay{width:390px;height:180px;overflow:hidden;border-radius:var(--k-kart);border:1px solid var(--cizgi);background:#000}
+.v-p .v-yatay .k-video{transform:scale(.4621);transform-origin:0 0}
+@media (max-width:900px){.v-gov{grid-template-columns:1fr}.v-nav{display:none}main{padding:8px 16px 80px}.v-ust .tema{width:200px}.v-ust h1{display:none}}
+</style>
+</head>
+<body>
+<header class="v-ust">
+  <span class="logo" role="img" aria-label="Dada Haber"></span>
+  <h1>UI Kit · Mobil uygulama</h1>
+  <span class="say" id="say"><i class="fa-solid fa-shapes"></i><span></span></span>
+  <div class="tema"><div class="k-segment ince" role="tablist" aria-label="Tema" id="tema" style="--n:3;--i:0"><button type="button" role="tab" aria-selected="true" data-t="acik"><i class="fa-solid fa-sun"></i>Açık</button><button type="button" role="tab" aria-selected="false" data-t="koyu"><i class="fa-solid fa-moon"></i>Koyu</button><button type="button" role="tab" aria-selected="false" data-t="yan"><i class="fa-solid fa-circle-half-stroke"></i>Yan yana</button></div></div>
+</header>
+<div class="v-gov"><nav class="v-nav" id="nav" aria-label="Bölümler"></nav><main id="ic"></main></div>
+<div class="v-yan" id="yan"></div>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  var Q = new URLSearchParams(location.search), $ = function(i){ return document.getElementById(i); };
+  if (Q.get('gomulu') === '1') document.documentElement.classList.add('gomulu');
+  var L = D.liste.haberler, M = D.manset, I = K.I, DC = document.querySelector('body > .dc');
+  /* public sözlük (araclar/ornek_veri.json › puan_tablosu): Süper Lig, 13 hafta; ilk altı takım */
+  var PUAN = [{ ad: 'Galatasaray', kod: 'GS', G: 10, B: 2, M: 1, A: 33, Y: 10 }, { ad: 'Fenerbahçe', kod: 'FB', G: 9, B: 3, M: 1, A: 30, Y: 11 }, { ad: 'Beşiktaş', kod: 'BJK', G: 7, B: 4, M: 2, A: 25, Y: 13 },
+    { ad: 'Trabzonspor', kod: 'TS', G: 7, B: 3, M: 3, A: 21, Y: 13 }, { ad: 'Başakşehir', kod: 'BAŞ', G: 6, B: 4, M: 3, A: 19, Y: 14 }, { ad: 'Samsunspor', kod: 'SAM', G: 6, B: 3, M: 4, A: 17, Y: 14 }];
+
+  /* ---------- vitrin yardımcıları ---------- */
+  var KUR = [], BOLUM = [], SAY = {};
+  function P(et, html, o){ o = o || {}; var k = o.kur ? ' data-kur="' + (KUR.push(o.kur) - 1) + '"' : '';
+    return '<figure class="v-p"><figcaption>' + et + '</figcaption><div class="v-tel k-sahne' + (o.statik ? ' k-sahne-statik' : '') + (o.c ? ' ' + o.c : '') + '"' + k + (o.h ? ' style="height:' + o.h + 'px"' : '') + '>' + (html || '') + '</div></figure>'; }
+  /* bileşen sayımı: her bileşen bir kez (bir blokta birden çok bileşen olabilir; yalnız hal gösteren blok sayılmaz) */
+  var BIL = { 'Renkler': [], 'Yazı ölçeği': [], 'Detay okuma ölçeği': [], 'Boşluk': [], 'Köşe rolleri': [], 'Gölgeler': [], 'İkon eşlemesi': [],
+    'Rozet ve sayaç': ['Sayı rozeti', 'Sayaç', 'Sayfa noktaları'], 'Yapay zekâ ve ayraç': ['AI etiketi', 'Gün ayracı'],
+    'Düğme türleri ve halleri': ['Düğme', 'Metin bağlantısı'], 'Boylar, ikonlu, açılır-kapanır': ['Düğme grubu', 'Takip düğmesi'], 'Sosyal hesapla giriş': ['Sosyal giriş düğmesi', 'Veya ayracı'],
+    'Giriş alanı': ['Giriş alanı', 'Şifre alanı', 'Şifre gücü', 'Metin alanı'], 'Onay kutusu ve seçim': ['Onay kutusu', 'Seçim düğmesi'],
+    'Çip rayı ve ızgarası': ['Çip rayı', 'Çip ızgarası'], 'Çip satırı + görünüm anahtarı': ['Yapışkan çip satırı', 'Görünüm anahtarı'], 'Derinlik segmenti': ['Segment'],
+    'Düz üst çubuk': ['Üst çubuk', 'Büyük başlık'], 'Fotoğraf üstünde': ['Fotoğraf üstü üst çubuk', 'Okuma ilerleme çizgisi'], 'Görselli başlık ve içerik paneli': ['Görselli başlık', 'Detay kapağı', 'İçerik paneli', 'İmza'],
+    'Liste satırı': ['Liste satırı', 'Kısa satır'], 'Video kartı': ['Video kartı', 'Yatay video kartı'], 'Podcast': ['Podcast kartı', 'Podcast bölüm satırı'], 'Galeri kartı ve ızgarası': ['Galeri kartı', 'Galeri ızgarası'],
+    'Akış kartları': ['Akış şerit kartı', 'Akış tam ekran kartı', 'Akış sonu kartı'], 'Son Dakika': ['Son Dakika kartı', 'Son Dakika satırı'], 'Bölüm, yazar, bildirim, öneri satırları': ['Bölüm satırı', 'Yazar satırı', 'Bildirim satırı', 'Arama önerisi'],
+    'Hava ve namaz': ['Hava kutusu', 'Namaz kutusu', 'Canlı anlatım kutusu'], 'Bilgi satırı, spot, madde, Bana etkisi': ['Detay bilgi satırı', 'Spot', 'Özet maddeleri', 'Bana etkisi kutusu'],
+    'Bölüm kartı': ['Bölüm kartı', 'Adım çizelgesi', 'Hikâye modu düğmesi'], 'Alıntı ve içindekiler': ['Alıntı', 'İçindekiler'], 'Canlı anlatım girişi': ['Canlı anlatım girişi', 'Yeni içerik hapı'],
+    'Yorumlar': ['Yorum özeti', 'Yorum', 'Editör yanıtı', 'Yanıt alıntısı'], 'Paylaş': ['Alt sayfa', 'Paylaş sayfası', 'Paylaşım kartı'], 'Kaydet': ['Kaydet sayfası', 'Yeni klasör sayfası'],
+    'Yazı boyutu ve hız': ['Yazı boyutu sayfası', 'Hız sayfası'], 'Bildir, yorum yaz, şehir seç, güncelleme': ['Bildir sayfası', 'Yorum yaz sayfası', 'Şehir seç sayfası', 'Güncelleme sayfası'],
+    'İskelet parçaları': ['İskelet'], 'Ekran iskeletleri': [], 'Hata': ['Hata şablonu', 'Bakım ve güncelleme ekranı'], 'İzin ekranları': ['İzin ön ekranı', 'İzin reddedildi ekranı'],
+    'Tam ekran ses oynatıcısı': ['Tam ekran oynatıcı', 'Deşifre metni'], 'Profil başlığı ve sayaçlar': ['Profil başlığı', 'Sayaçlar'], 'Ayar satırı ve grubu': ['Ayar satırı', 'Ayar grubu'], 'İndirme ve ilerleme': ['İndirme halkası', 'İlerleme çubuğu'] };
+  function B(ad, kod, aciklama, paneller){ (BIL[ad] || [ad]).forEach(function(n){ SAY[n] = 1; }); return '<div class="v-bl" data-bilesen="' + ad + '" data-say="' + (BIL[ad] || [ad]).length + '"><h3>' + ad + (kod ? ' <code>' + kod + '</code>' : '') + '</h3>' + (aciklama ? '<p>' + aciklama + '</p>' : '') + '<div class="v-iz">' + paneller.join('') + '</div></div>'; }
+  function S(id, ikon, baslik, aciklama, govde){ BOLUM.push([id, ikon, baslik]); return '<section class="v-b" id="' + id + '"><h2><span class="bi">' + I(ikon) + '</span>' + baslik + '</h2>' + (aciklama ? '<p>' + aciklama + '</p>' : '') + govde.join('') + '</section>'; }
+  function dc(el, beyaz){ if (!DC) return; var c = DC.cloneNode(true); if (beyaz) c.style.color = '#fff'; el.insertBefore(c, el.firstChild); }
+  function misafir(f){ var u = K.uye; K.uye = false; try { return f(); } finally { K.uye = u; } }
+  function uye(f){ var u = K.uye; K.uye = true; try { return f(); } finally { K.uye = u; } }
+  function arka(n){ return '<div class="ekran"><div class="k-ust-bosluk"></div><div class="k-satirlar">' + L.slice(0, n || 5).map(function(h){ return K.satir(h); }).join('') + '</div></div>'; }
+  function sayfaP(et, ad, ek, h){ return P(et, arka(), { h: h || 720, statik: true, kur: function(el){ dc(el); K.ustCubuk({ yer: el, geri: true, baslik: D.liste.bolum, golgeli: true }); K.sayfa(ad, Object.assign({ yer: el, acik: true }, ek || {})); } }); }
+  var h0 = L[1], hs = K.bolum('Spor').haberler, hf = K.bolum('Finans').haberler;
+
+  var BL = [];
+  /* ================= sözleşme ================= */
+  var SZ = [['fa-hand-pointer', 'Dokun', 'Kartın tamamı dokunulabilir; görsel, başlık ve boşluk aynı hedefe gider. İçteki düğmeler (Kaydet, Takip et, Oynat) kendi işini yapar.'],
+    ['fa-hand', 'Uzun bas', '520 ms basılı tutunca bağlam menüsü: önizleme + Kaydet · Paylaş · Dinle. Akış videosunda Sesi aç · Altyazı. Vitrinde sağ tık da açar.'],
+    ['fa-arrows-left-right', 'Yana kaydır', 'Raylar yerine oturur (snap); ilk kart 16 px\'ten başlar, son kart 16 px boşlukla biter. Bölüm kartlarında yana kaydır = sonraki bölüm.'],
+    ['fa-arrow-down', 'Aşağı çek', 'Yenileme: çekiliyor → 110 px\'te "Bırak" → yenileniyor → "Güncel · 16.05". İçerik yerinde kalır; yeni gelirse "N yeni haber" hapı.'],
+    ['fa-chevron-left', 'Geri', 'iOS: soldan kenar kaydırma ve üst çubuktaki ‹. Android: sistem geri hareketi ya da düğmesi; sekme kökünde önce Ana Sayfa\'ya, sonra uygulamadan çıkar. Açık katman varsa geri önce onu kapatır.'],
+    ['fa-layer-group', 'Geçişler', 'Ekran: sağdan sola itme (geri: soldan sağa) · alt sayfa: aşağıdan yukarı 300 ms · pencere: ölçek + solma 250 ms · çekmece: sağdan 320 ms · sekme değişimi anında.'],
+    ['fa-message', 'Kısa bildirim', '3 sn görünür; "Geri al" taşıyan 4 sn ve altında geri sayım çizgisi. Alt çubuğun ya da mini oynatıcının üstünde; aynı anda tek.'],
+    ['fa-xmark', 'Kapatma', 'Alt sayfa: perdeye dokun, tutamaktan aşağı çek ya da ×. Pencere: düğmeyle. Afiş: yukarı it. Esc (klavye) en üstteki katmanı kapatır.'],
+    ['fa-mobile-screen', 'Dokunsal geri bildirim', 'Yok. Titreşim kullanılmaz (Beyar\'ın onayı olmadan eklenmez).'],
+    ['fa-headphones', 'Tek oynatıcı', 'Spiker, Haber Dinle ve podcast tek mini oynatıcıda; sayfalar arasında sürer. Akış ya da video sesi açılınca ses duraklar.'],
+    ['fa-circle-half-stroke', 'Tema ve hareket', 'Açık · koyu yalnız değişkenlerle. Hareket azaltma açıksa bütün geçiş ve canlandırmalar kapanır.'],
+    ['fa-link', 'Sorgu sözleşmesi', '?durum= hal · ?uye=0 misafir · ?tema=koyu · ?calan=1 Spiker çalıyor. Kit bunları K.durum, K.uye ile okur, bağlantılarda korur.']];
+  BL.push(S('sozlesme', 'fa-hand-pointer', 'Etkileşim sözleşmesi', 'Aynı dokunuş her ekranda aynı sonucu verir. Bu sözleşme kit.js\'te kendiliğinden bağlıdır; ekranlar ayrıca yazmaz.',
+    ['<div class="v-sz">' + SZ.map(function(x){ return '<div class="v-kart"><b>' + I(x[0]) + x[1] + '</b><p>' + x[2] + '</p></div>'; }).join('') + '</div>']));
+
+  /* ================= kullanım ================= */
+  var ESC = function(s){ return s.replace(/&/g, '&amp;').replace(/</g, '&lt;'); };
+  var TPL = ['<!doctype html>', '<html lang="tr">', '<head>', '<meta charset="utf-8">', '<meta name="viewport" content="width=390,initial-scale=1">', '<title>Kaydedilenler</title>',
+    '<link rel="stylesheet" href="../../_ortak/cerceve.css">', '<link rel="stylesheet" href="../../_ortak/marka.css">', '<link rel="stylesheet" href="../../kit/kit.css">',
+    '<script src="../../_ortak/icerik.js"><\/script>', '<script src="../../_ortak/cerceve.js"><\/script>', '<script src="../../_ortak/icerik-ek.js"><\/script>', '<script src="../../kit/kit.js"><\/script>',
+    '</head>', '<body>', '<div class="ekran" id="ekran"></div>', '<script>', "  var e = document.getElementById('ekran');",
+    "  e.innerHTML = '<div class=\"k-ust-bosluk\"></div>' +", "    (K.durum === 'bos' ? K.bos('kaydedilen')",
+    "     : K.durum === 'yukleniyor' ? '<div class=\"k-satirlar\">' + K.iskelet('satir', 5) + '</div>'",
+    "     : '<div class=\"k-satirlar\">' + D.liste.haberler.slice(0, 6).map(function(h){ return K.satir(h, { kaydedildi: true }); }).join('') + '</div>' + K.dahaFazla('son')) +",
+    "    '<div class=\"k-son\"></div>';", "  K.ustCubuk({ geri: true, baslik: 'Kaydedilenler', buyuk: false, eylemler: ['ara', 'daha'] });", "  K.altCubuk('hesap');", "  K.oynatici();", "  K.cekmece();", '<\/script>', '</body>', '</html>'].join('\n');
+  BL.push(S('kullanim', 'fa-code', 'Kullanım', 'Bir ekran yalnız şu yedi dosyayı yükler (yollar <code>secenekler/ekranlar/&lt;grup&gt;/</code> içinden). Ekran dosyasına köşe, ağırlık ve gölge için sayı yazılmaz; bileşen biçimi yazılmaz, kit sınıfı ve K işlevi kullanılır. Yeni bileşen gerekiyorsa lidere sorulur.',
+    ['<div class="v-bl"><h3>Yüklenecekler (sıra önemli)</h3><div class="v-kod">' + ESC(TPL.split('\n').slice(6, 13).join('\n')) + '</div></div>',
+     '<div class="v-bl"><h3>En küçük ekran şablonu</h3><p>Üst çubuk, alt çubuk, liste, boş ve yükleniyor halleri, mini oynatıcı ve menü çekmecesi: 25 satır.</p><div class="v-kod">' + ESC(TPL) + '</div></div>',
+     '<div class="v-bl"><h3>Kurallar</h3><div class="v-sz">' + [['fa-ruler-combined', 'Yerleşim', 'İçerik kenara yapışmaz: .k-ic ya da .k-satirlar (16 px). Bant: .k-bant / .k-bant.ton (zebra; kart zemini kendiliğinden döner). Bölüm arası .k-bl (32) ve .k-bl.sik (24).'],
+       ['fa-shapes', 'Köşe rolleri', 'Çip, küçük öğe ve satır görseli --k-ic (8) · düğme, giriş, kart, görsel --k-kontrol (12) · büyük kap, alt sayfa, pencere --k-kart (16). --k-buyuk kullanılmaz (K30).'],
+       ['fa-font', 'Yazı', 'Yalnız --y-ince, --y-orta, --y-kalin. Detay türlerinde okuma metni --mb\'ye bağlı (Aa hepsini büyütür). Bölüm başlıkları Her Kelimesi Büyük; sekme ve çip cümle düzeni.'],
+       ['fa-icons', 'İkon', 'Font Awesome 6.5.2 Solid, dolu görünen. Aynı işe her ekranda aynı ikon (eşleme tablosu: Temeller). Yalnız ×, ok, menü çizgileri ve dönen gösterge çizgi biçimli.'],
+       ['fa-image', 'Görsel', 'Yalnız G(\'anahtar\') (assets/gorsel/haber/). Görsel div\'e arka plan olarak verilir (.gr). İçerik yalnız window.D\'den; yeni veri uydurulmaz.'],
+       ['fa-hand-pointer', 'Dokunma', 'Her dokunulabilir öğe ≥44×44. Görünüşü küçük olana .k-dk44 (ortalanmış görünmez alan). Kit düğmeleri ve çipleri bunu kendiliğinden yapar.']].map(function(x){ return '<div class="v-kart"><b>' + I(x[0]) + x[1] + '</b><p>' + x[2] + '</p></div>'; }).join('') + '</div></div>']));
+
+  /* ================= temeller ================= */
+  var RENK = [['--marka', 'Marka sarısı'], ['--marka-400', 'Marka basılı'], ['--marka-metin', 'Sarı metin (okunur)'], ['--marka-25', 'Sarı zemin'], ['--marka-koyu', 'Marka koyu'], ['--siyah', 'Siyah'], ['--zemin', 'Zemin'], ['--zemin-2', 'Zemin 2 (tonlu bant)'],
+    ['--yuzey', 'Yüzey (kart, sayfa)'], ['--yuzey-2', 'Yüzey 2'], ['--metin', 'Metin'], ['--metin-2', 'Metin 2'], ['--metin-3', 'Metin 3 (künye)'], ['--cizgi', 'Çizgi'], ['--anlik', 'Anlık (Son Dakika)'], ['--artis', 'Artış'], ['--azalis', 'Azalış'],
+    ['--k-kirmizi', 'Canlı kapsülü'], ['--k-koyu', 'Koyu yüzey (iki temada)'], ['--cam', 'Cam (fotoğraf üstü)'], ['--ortu', 'Perde']];
+  var OLCEK = [['Liste görselli başlık', '34 / kalın', '<span style="font-size:34px;font-weight:var(--y-kalin);letter-spacing:-.03em;line-height:1">Gündem</span>'], ['Büyük başlık (hesap)', '32 / kalın', '<span style="font-size:32px;font-weight:var(--y-kalin);letter-spacing:-.03em">Kaydedilenler</span>'],
+    ['Detay kapak başlığı', '31 / kalın', '<span style="font-size:31px;font-weight:var(--y-kalin);letter-spacing:-.028em;line-height:1.1">' + D.detay.baslik + '</span>'], ['Hero manşet', '26 / kalın', '<span style="font-size:26px;font-weight:var(--y-kalin);letter-spacing:-.02em">' + M[1].baslik + '</span>'],
+    ['Bölüm başlığı .k-bb', '22 / kalın', '<span style="font-size:22px;font-weight:var(--y-kalin);letter-spacing:-.025em">Köşe Yazıları</span>'], ['Kart A başlığı', '19 / kalın', '<span style="font-size:19px;font-weight:var(--y-kalin)">' + hs[0].baslik + '</span>'],
+    ['Liste satırı', '16,5 / kalın', '<span style="font-size:16.5px;font-weight:var(--y-kalin)">' + L[1].baslik + '</span>'], ['Düğme', '15 / kalın', '<span style="font-size:15px;font-weight:var(--y-kalin)">Yeniden dene</span>'],
+    ['Çip, sekme', '14 / orta', '<span style="font-size:14px">Siyaset</span>'], ['Kategori etiketi', '12,5 / kalın', K.katEt('Gündem', 'fa-newspaper')], ['Bilgi satırı', '12,5 / orta', K.meta(['Hakan Uysal', '3 dk', '24,6 B']).replace('margin-top:8px', '')],
+    ['Alt çubuk', '10,5 / orta · seçili kalın', '<span style="font-size:10.5px">Ana Sayfa</span>'], ['Hafif (büyük rakam)', '52 / ince', '<span style="font-size:52px;font-weight:var(--y-ince);letter-spacing:-.04em;line-height:.95">1°</span>']];
+  var MB = [['Ara başlık', '--mb + 4', '<span style="font-size:calc(var(--mb) + 4px);font-weight:var(--y-kalin)">Taraflar ne istiyor?</span>'], ['Öne çıkan (spot, Neden önemli)', '--mb + 2', '<span class="k-spot">' + D.detay.spot.slice(0, 92) + '…</span>'],
+    ['Okuma metni (taban)', '--mb (16)', '<span style="font-size:var(--mb);line-height:1.62">' + D.detay.govde[0].p.slice(0, 120) + '…</span>'], ['İkincil (madde, yorum)', '--mb − 1', '<span style="font-size:calc(var(--mb) - 1px)">' + D.detay.ozet[0] + '</span>'],
+    ['Not, editör yanıtı', '--mb − 2', '<span style="font-size:calc(var(--mb) - 2px);color:var(--metin-2)">' + D.detay.bundanSonra + '</span>']];
+  var IK = [['Paylaş', 'fa-share-nodes'], ['Kaydet', 'fa-bookmark'], ['Okuma süresi', 'fa-clock'], ['Video süresi · Dinle', 'fa-play'], ['Haber Dinle sekmesi', 'fa-headphones'], ['Tarih (detay)', 'fa-calendar-day'], ['Güncellendi', 'fa-rotate'],
+    ['Bundan sonra', 'fa-forward'], ['Neden önemli', 'fa-circle-exclamation'], ['Bana etkisi', 'fa-user'], ['Hikâye modu', 'fa-layer-group'], ['Metne dön · kaynak', 'fa-file-lines'], ['Olay dosyası', 'fa-folder-open'], ['Liste görünümü · Gündem', 'fa-newspaper'], ['Çizelge görünümü', 'fa-clock'],
+    ['Spor', 'fa-futbol'], ['Finans · Piyasalar', 'fa-chart-column'], ['Kadın', 'fa-person-dress'], ['Savunma', 'fa-shield-halved'], ['Dünya', 'fa-earth-europe'], ['Kampüs', 'fa-graduation-cap'], ['Keşfet', 'fa-compass'],
+    ['Ana Sayfa', 'fa-house'], ['Bölümler', 'fa-shapes'], ['Akış', 'fa-mobile-screen-button'], ['Hesabım', 'fa-circle-user'], ['Ara', 'fa-magnifying-glass'], ['Sesli ara', 'fa-microphone'], ['Giriş yap', 'fa-right-to-bracket'], ['Çıkış yap', 'fa-right-from-bracket'],
+    ['Yorum', 'fa-comment'], ['Beğen', 'fa-thumbs-up'], ['Bildir', 'fa-flag'], ['Editör', 'fa-pen-nib'], ['Okur rozeti', 'fa-award'], ['Kaynaklar', 'fa-building-columns'], ['Yapay zekâ özeti', 'fa-wand-magic-sparkles'], ['Son Dakika', 'fa-bolt'],
+    ['Namaz vakti', 'fa-mosque'], ['Podcast', 'fa-podcast'], ['Köşe yazısı', 'fa-feather-pointed'], ['Takip · Senin İçin', 'fa-heart'], ['Okuma serisi', 'fa-fire'], ['Yazı boyutu', 'fa-font'], ['Görünüm', 'fa-circle-half-stroke'],
+    ['Çevrimdışı indir', 'fa-circle-down'], ['İndirildi · onay', 'fa-circle-check'], ['Bağlantı yok', 'fa-plug-circle-xmark'], ['Bildirimler (yalnız ayar/merkez)', 'fa-bell'], ['Ayarlar', 'fa-gear'], ['Süzgeç', 'fa-sliders'], ['Sırala', 'fa-arrow-down-wide-short'], ['Seçenekler', 'fa-ellipsis'], ['Galeri', 'fa-images']];
+  var IKK = [['Kapat', 'fa-xmark'], ['Ok · ileri', 'fa-chevron-right'], ['Geri', 'fa-chevron-left'], ['Aç / kapa', 'fa-chevron-down'], ['Menü', 'fa-bars'], ['Yükleniyor', 'fa-circle-notch']];
+  BL.push(S('temeller', 'fa-swatchbook', 'Temeller', 'Bütün değerler <code>_ortak/cerceve.css</code> ve <code>_ortak/marka.css</code> değişkenleri; kit yalnız birkaç türetilmiş değişken ekler (<code>--k-ub-h</code>, <code>--k-ac-h</code>, <code>--k-koyu</code>, <code>--k-kirmizi</code>, <code>--k-yuzey</code>, <code>--mb</code>). Renk örnekleri seçili temadan canlı okunur; krem yok, griler nötr.',
+    [B('Renkler', '', '', ['<div class="v-renk v-genis">' + RENK.map(function(r){ return '<div><span style="background:var(' + r[0] + ')"></span><b>' + r[1] + '</b><small data-renk="' + r[0] + '">' + r[0] + '</small></div>'; }).join('') + '</div>']),
+     B('Yazı ölçeği', 'Gilroy 300 · 500 · 800', 'Köklerden ölçüldü. Ara ağırlık yok.', ['<div class="v-olcek v-genis">' + OLCEK.map(function(r){ return '<div><small>' + r[0] + '</small><code>' + r[1] + '</code>' + r[2] + '</div>'; }).join('') + '</div>']),
+     B('Detay okuma ölçeği', '--mb', 'K29, K31: tek değişken. Aşağıdaki kaydırıcı Aa alt sayfasıyla aynıdır; hepsi birlikte büyür.', ['<div class="v-olcek v-genis"><div><small>Aa</small><code>15 – 22</code><div class="k-kaydirac-k" style="max-width:420px"><span class="a1">A</span>' + K.kaydirac({ min: 15, max: 22, adim: .5, deger: 16, etiket: 'Yazı boyutu' }).replace('<input', '<input data-mb') + '<span class="a2">A</span></div></div>' + MB.map(function(r){ return '<div><small>' + r[0] + '</small><code>' + r[1] + '</code>' + r[2] + '</div>'; }).join('') + '</div>']),
+     B('Boşluk', '', 'İkon ile metin arası her yerde 8. Kenar 16. Bant 26, blok 32 (sık 24).', ['<div class="v-bosluk">' + [[4, 'çip arası (sık)', 'Senin İçin çipleri'], [8, '--ikon-bosluk', 'ikon–metin, çip rayı'], [12, 'kart arası', 'raylar, ızgara'], [16, '--kenar', 'yatay kenar, kart içi'], [24, 'blok (sık)', 'ayraç sonrası'], [26, 'bant', 'zebra bant iç boşluğu'], [32, 'blok', 'bölümler arası']].map(function(b){ return '<div><b>' + b[0] + ' px</b><span style="width:' + b[0] * 3 + 'px"></span><small>' + b[1] + ' · ' + b[2] + '</small></div>'; }).join('') + '</div>']),
+     B('Köşe rolleri', 'K30 · K34', 'Ölçek siteyle aynı dört değer; kökte kullanım yeri bir basamak keskin. 10, 14, 18, 20 gibi ara değer yok.', ['<div class="v-kose">' + [['--k-ic', '8', 'Çip, etiket, küçük öğe, satır görseli 88, sekme içi'], ['--k-kontrol', '12', 'Düğme, giriş alanı, kart, görsel, ayraç kutusu'], ['--k-kart', '16', 'Büyük kap, alt sayfa, pencere, kubbe, panel üstü'], ['--k-buyuk', '24', 'K30 sonrası kullanılmıyor'], ['--k-daire', '%50', 'Avatar, ikon düğmesi, hikâye dairesi'], ['--k-cubuk', '999', 'Anahtar, ilerleme, gösterge, sayı rozeti']].map(function(k){ return '<div><span style="border-radius:var(' + k[0] + ')' + (k[0] === '--k-daire' ? ';width:72px' : '') + (k[0] === '--k-buyuk' ? ';opacity:.35' : '') + '"></span><b>' + k[0] + ' · ' + k[1] + '</b><small>' + k[2] + '</small></div>'; }).join('') + '</div>']),
+     B('Gölgeler', '--golge-sm · --golge-md', 'Yalnız iki değer. sm: segment kaydırgacı, yapışık şerit, görünüm anahtarı. md: alt sayfa, pencere, menü, mini oynatıcı, okuma çubuğu, Akış düğmesi.', ['<div class="v-kose"><div style="box-shadow:var(--golge-sm);border-color:transparent"><b>--golge-sm</b><small>yakın, hafif</small></div><div style="box-shadow:var(--golge-md);border-color:transparent"><b>--golge-md</b><small>yüzen katman</small></div></div>']),
+     B('İkon eşlemesi', 'K32 · K34', 'Aynı işlev, her ekranda aynı ikon; hepsi Solid ve dolu görünür. Kesik çerçeveli olanlar kontrol işaretidir (çizgi biçimli olmasına izin var). Üst çubuklarda zil yok (Beyar): bildirimlere çekmecenin hesap kartından ve Hesabım\'dan gidilir. Sosyal giriş düğmelerindeki sağlayıcı işaretleri fa-brands (Solid dışı; onay bekler).',
+       ['<div class="v-ikon">' + IK.map(function(x){ return '<div>' + I(x[1]) + '<span><b>' + x[0] + '</b><code>' + x[1] + '</code></span></div>'; }).join('') + IKK.map(function(x){ return '<div class="kontrol">' + I(x[1]) + '<span><b>' + x[0] + ' · kontrol</b><code>' + x[1] + '</code></span></div>'; }).join('') + '</div>'])]));
+
+  /* ================= işaretler ================= */
+  BL.push(S('isaretler', 'fa-tag', 'Başlık ve işaretler', 'Tek bölüm başlığı, tek bilgi satırı, tek kategori etiketi, tek Canlı kapsülü (K34).', [
+    B('Bölüm başlığı', '.k-bb · K.bb()', 'Her Kelimesi Büyük; ikon kutusu; sağda bağlantı; sayı küçük "· n".', [
+      P('İkonlu + Tümü', K.bb({ baslik: 'Gündem', ikon: 'fa-newspaper', baglanti: { metin: 'Tümü' } }), { c: 'pady' }),
+      P('Sayılı', K.bb({ baslik: 'Kaynaklar', ikon: 'fa-building-columns', sayi: 3 }), { c: 'pady' }),
+      P('Canlı noktalı', K.bb({ baslik: 'Son Dakika', canli: true, baglanti: 'Tümü' }), { c: 'pady' }),
+      P('Notlu (bağlantısız)', K.bb({ baslik: 'Piyasalar', ikon: 'fa-chart-column', not: D.piyasa.guncelleme + ' · 15 dk gecikmeli' }), { c: 'pady' })]),
+    B('Bilgi satırı', '.k-meta · K.meta()', 'Yazar · süre · izlenme; ikonsuz; video süresi başta fa-play.', [
+      P('Haber', K.meta([h0.yazar, h0.sure, h0.izlenme]), { c: 'pad' }), P('Video', K.meta([K.vid(D.akis.liste[0].sure), D.akis.liste[0].izlenme]), { c: 'pad' }),
+      P('Fotoğraf üstünde', '<div class="gr" style="background-image:' + G_(M[0].g) + ';padding:30px 16px"><div style="position:relative">' + K.meta([M[0].yazar, M[0].sure], 'foto') + '</div></div>')]),
+    B('Kategori etiketi', '.k-kat · K.katEt()', 'Kategori ikonu + karışık harf, marka sarısı; fotoğraf üstünde --marka.', [
+      P('Zemin üstünde', D.bolumler.slice(0, 4).map(function(b){ return K.katEt(b.ad, b.ikon); }).join(' &nbsp; '), { c: 'pad' }),
+      P('Fotoğraf üstünde', '<div class="gr" style="background-image:' + G_(M[1].g) + ';padding:30px 16px">' + K.katEt(M[1].kat, M[1].ikon, { foto: true, ek: M[1].sure }) + '</div>')]),
+    B('Canlı kapsülü', '.k-canli · K.canli()', 'Tek kırmızı kapsül, iki temada aynı; Spiker için küçük "YAYINDA".', [P('Canlı · Yayında', K.canli() + ' &nbsp; ' + K.canli('Yayında', { kucuk: true }), { c: 'pad' })]),
+    B('Liste üst satırı', '.k-ustsatir · K.ustSatir()', 'Tür · kategori · saat; tür alt konuyla aynıysa gösterilmez.', [P('Son Dakika · Canlı · tür · düz', [L[0], L[3], L[5], L[1]].map(function(h){ return '<div style="padding:6px 0">' + K.ustSatir(h, { ikon: D.liste.ikon }) + '</div>'; }).join(''), { c: 'pad' })]),
+    B('Durum etiketi', '.k-etiket · K.etiket()', 'Kısa durum: Analiz, Sona erdi, İndirildi, Onay bekliyor, Takipte, Kilit an.', [P('Türler', '<div style="display:flex;flex-wrap:wrap;gap:8px">' + K.etiket('Analiz') + K.etiket('Kilit an', { tur: 'sari', ikon: 'fa-star' }) + K.etiket('Takipte', { tur: 'dolu', ikon: 'fa-check' }) + K.etiket('Sona erdi', { tur: 'koyu' }) + K.etiket('İndirildi', { tur: 'yesil', ikon: 'fa-circle-check' }) + K.etiket('Yüklenemedi', { tur: 'kirmizi', ikon: 'fa-triangle-exclamation' }) + K.etiket('Onay bekliyor', { ikon: 'fa-hourglass-half' }) + '</div>', { c: 'pad' }),
+      P('Fotoğraf üstünde', '<div class="gr" style="background-image:' + G_('superlig') + ';padding:24px 16px;display:flex;gap:8px">' + K.etiket('Takipte', { tur: 'foto', ikon: 'fa-check' }) + K.etiket('Spor', { tur: 'cam', ikon: 'fa-futbol' }) + '</div>')]),
+    B('Medya rozeti', '.k-md · K.md()', 'Görsel üstünde video süresi, ses, kare sayısı.', [P('Video · Dinle · Galeri', '<div class="gr" style="height:150px;background-image:' + G_(M[0].g) + ';position:relative">' + K.md('2:14') + K.md('Dinle · 3 dk', 'fa-headphones', 'sag') + K.md('24 kare', 'fa-images', 'ust') + '</div>')]),
+    B('Rozet ve sayaç', '.k-rozet · .k-sayac · .k-noktalar', 'Sayı rozeti, okunmamış noktası, "1 / n" sayacı ve sayfa noktaları.', [
+      P('Rozetler', '<div style="display:flex;gap:18px;align-items:center">' + K.rozet(3) + K.rozet(12, 'sari') + K.ikonBtn({ ikon: 'fa-comment', etiket: 'Yorumlar', rozet: 4, tur: 'dolu' }) + K.ikonBtn({ ikon: 'fa-bookmark', etiket: 'Kaydedilenler', rozet: true, tur: 'dolu' }) + '<span class="k-sayac">2 / 5</span></div>', { c: 'pad' }),
+      P('Noktalar · zemin ve fotoğraf', '<div style="display:flex;align-items:center;justify-content:space-between;padding:16px">' + K.noktalar(3, 1) + '</div><div class="gr" style="background-image:' + G_(M[2].g) + ';padding:24px 16px;display:flex;justify-content:space-between;align-items:center">' + K.noktalar(5, 0, true) + '<span class="k-sayac foto">1 / 5</span></div>')]),
+    B('Yapay zekâ ve ayraç', '.k-ai · .k-ayrac', 'Panel AI kuralı: AI ile hazırlanan her özet etiketlenir. Liste saat ayracı.', [P('AI · gün ayracı', '<span class="k-ai">' + I('fa-wand-magic-sparkles') + 'Yapay zekâ ile özetlendi</span><div class="k-ayrac"><span>Son 1 saat</span><span>' + D.liste.toplam + ' haber</span></div>', { c: 'pad' })])]));
+
+  /* ================= düğmeler ================= */
+  function dugme(t, et){ return P(et, '<div style="display:grid;gap:10px">' + K.btn({ metin: 'Varsayılan', tur: t }) + K.btn({ metin: 'Basılı', tur: t, basili: true }) + K.btn({ metin: 'Pasif', tur: t, pasif: true }) + K.btn({ metin: 'Gönderiliyor', tur: t, durum: 'yukleniyor' }) + '</div>', { c: 'pad' }); }
+  BL.push(S('dugmeler', 'fa-hand-pointer', 'Düğmeler', 'Varsayılan 48, büyük 52 (sayfa sonu eylemi), küçük 40 görünür + 44 dokunma alanı. Yükleniyor: ikon yerine dönen gösterge, metin kalır.', [
+    B('Düğme türleri ve halleri', '.k-btn · K.btn()', 'birincil (sarı) · ikincil (koyu) · sade · çizgili · tehlike · metin.', [dugme('birincil', 'Birincil'), dugme('ikincil', 'İkincil'), dugme('sade', 'Sade'), dugme('cizgili', 'Çizgili'), dugme('tehlike', 'Tehlike'),
+      P('Metin bağlantısı · tehlike metni', '<div style="display:grid;gap:4px;justify-items:start">' + K.btn({ metin: 'Şifremi unuttum', tur: 'metin' }) + K.btn({ metin: 'Vazgeç', tur: 'metin notr' }) + K.btn({ metin: 'Hesabımı sil', tur: 'tehlike-metin' }) + '<a class="k-bag">Tümünü gör' + I('fa-chevron-right') + '</a></div>', { c: 'pad' })]),
+    B('Boylar, ikonlu, açılır-kapanır', '', 'Takip et ↔ Takipte aria-pressed ile; seçili hal marka sarısı.', [
+      P('Büyük · tam genişlik · ikonlu', '<div style="display:grid;gap:10px">' + K.btn({ metin: 'Bildirimleri aç', ikon: 'fa-bell', tur: 'birincil', boy: 'buyuk', tam: true }) + K.btn({ metin: 'Haberin tamamını oku', sagIkon: 'fa-arrow-right', tur: 'cizgili', boy: 'buyuk', tam: true }) + '<div class="k-btn-grup">' + K.btn({ metin: 'Temizle', tur: 'sade' }) + K.btn({ metin: 'Uygula', tur: 'birincil' }) + '</div></div>', { c: 'pad' }),
+      P('Küçük · takip', '<div style="display:flex;flex-wrap:wrap;gap:10px">' + K.btn({ metin: 'Takip et', ikon: 'fa-plus', boy: 'kucuk', tur: 'sade', secili: false, attr: 'data-takip' }) + K.btn({ metin: 'Takipte', ikon: 'fa-check', boy: 'kucuk', secili: true, attr: 'data-takip' }) + K.btn({ metin: 'Seç', boy: 'kucuk', tur: 'ikincil' }) + K.btn({ metin: 'Yeniden dene', ikon: 'fa-rotate-right', boy: 'kucuk', tur: 'sade' }) + '</div>', { c: 'pad' }),
+      P('Fotoğraf üstünde', '<div class="gr" style="background-image:' + G_(M[0].g) + ';padding:24px 16px;display:flex;gap:10px">' + K.btn({ metin: 'Giriş yap', ikon: 'fa-right-to-bracket', tur: 'beyaz', boy: 'kucuk' }) + K.btn({ metin: 'Video · 2:14', ikon: 'fa-play', tur: 'cam', boy: 'kucuk' }) + '</div>')]),
+    B('İkon düğmesi', '.k-ikon · K.ikonBtn()', '44 daire. Düz, dolu, cam (fotoğraf üstü), sarı, koyu, hesap (baş harf); rozetli, seçili, basılı, pasif.', [
+      P('Türler', '<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">' + K.ikonBtn({ ikon: 'fa-magnifying-glass', etiket: 'Ara' }) + K.ikonBtn({ ikon: 'fa-xmark', etiket: 'Kapat', tur: 'dolu' }) + K.ikonBtn({ ikon: 'fa-play', etiket: 'Oynat', tur: 'sari' }) + K.ikonBtn({ ikon: 'fa-pause', etiket: 'Duraklat', tur: 'koyu' }) + K.ikonBtn({ av: D.uye.ad, etiket: 'Hesabım' }) + K.ikonBtn({ ikon: 'fa-xmark', etiket: 'Kapat', tur: 'dolu kucuk' }) + '</div>', { c: 'pad' }),
+      P('Haller', '<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">' + K.ikonBtn({ ikon: 'fa-bookmark', etiket: 'Kaydet', secili: false }) + K.ikonBtn({ ikon: 'fa-bookmark', etiket: 'Kaydedildi', secili: true }) + K.ikonBtn({ ikon: 'fa-share-nodes', etiket: 'Paylaş', basili: true, tur: 'dolu' }) + K.ikonBtn({ ikon: 'fa-share-nodes', etiket: 'Paylaş', pasif: true }) + K.ikonBtn({ ikon: 'fa-comment', etiket: 'Yorumlar', rozet: 4, tur: 'dolu' }) + '</div>', { c: 'pad' }),
+      P('Cam · fotoğraf üstünde', '<div class="gr" style="background-image:' + G_('tbmm') + ';padding:24px 16px;display:flex;gap:8px">' + K.ikonBtn({ ikon: 'fa-chevron-left', etiket: 'Geri', tur: 'cam' }) + K.ikonBtn({ ikon: 'fa-bookmark', etiket: 'Kaydet', tur: 'cam', secili: true }) + K.ikonBtn({ ikon: 'fa-share-nodes', etiket: 'Paylaş', tur: 'cam' }) + K.ikonBtn({ ikon: 'fa-bars', etiket: 'Menü', tur: 'cam' }) + '</div>')]),
+    B('Sosyal hesapla giriş', '.k-sosyal · .k-veya', 'Apple · Google · Facebook. Sağlayıcı işaretleri fa-brands (K32 istisnası, onay bekler). Apple ile giriş App Store 4.8 gereği en üstte.', [
+      P('Giriş ekranı parçası', '<div class="k-sosyal">' + K.btn({ metin: 'Apple ile devam et', ikon: 'fa-brands fa-apple', tur: 'ikincil' }) + K.btn({ metin: 'Google ile devam et', ikon: 'fa-brands fa-google', tur: 'sade' }) + K.btn({ metin: 'Facebook ile devam et', ikon: 'fa-brands fa-facebook-f', tur: 'sade' }) + '</div><div class="k-veya">veya e-postayla</div>' + K.btn({ metin: 'Yönlendiriliyor', tur: 'sade', durum: 'yukleniyor', tam: true, boy: 'buyuk' }), { c: 'pad' })])]));
+
+  /* ================= form ================= */
+  BL.push(S('form', 'fa-keyboard', 'Form', 'Giriş alanı 52, köşe --k-kontrol, yazı 16 (iOS yakınlaştırmasın). Hata alanın altında tek satır; yardım metni aynı yerde.', [
+    B('Giriş alanı', '.k-alan · K.alan()', '', [
+      P('Boş · odakta · dolu', K.alan({ etiket: 'E-posta', tur: 'email', yer: 'ornek@eposta.com', ikon: 'fa-envelope' }) + K.alan({ etiket: 'Ad', yer: 'Adın', odak: true }) + K.alan({ etiket: 'Ad', deger: D.uye.ad }), { c: 'pad' }),
+      P('Hata · başarı · pasif', K.alan({ etiket: 'E-posta', tur: 'email', deger: 'ece@', hata: 'Geçerli bir e-posta adresi yaz.', ikon: 'fa-envelope' }) + K.alan({ etiket: 'E-posta', deger: 'ece@ornek.com', basari: 'Doğrulama bağlantısı gönderildi.', ikon: 'fa-envelope' }) + K.alan({ etiket: 'E-posta', deger: 'ece@ornek.com', pasif: true, yardim: 'Gönderilirken alanlar kilitlenir.' }), { c: 'pad' }),
+      P('Şifre: gizli · göster · güç', K.alan({ etiket: 'Şifre', tur: 'password', deger: 'dadahaber', ikon: 'fa-lock', yardim: 'En az 8 karakter; bir rakam.' }) + K.alan({ etiket: 'Yeni şifre', tur: 'password', deger: 'dada', ikon: 'fa-lock', hata: 'Şifre çok kısa.', guc: 1 }) + K.alan({ etiket: 'Yeni şifre', tur: 'text', deger: 'dadahaber2026', ikon: 'fa-lock', guc: 4 }).replace('data-sifre aria-label="Şifreyi göster">' + I('fa-eye'), 'data-sifre aria-label="Şifreyi gizle">' + I('fa-eye-slash')), { c: 'pad' }),
+      P('Metin alanı · sayaç · hata', K.metinAlan({ etiket: 'Görüşün', yer: 'Ne düşünüyorsun?' }) + '<div style="margin-top:16px">' + K.metinAlan({ etiket: 'Hatayı yaz', deger: 'Toplantı tarihi', hata: 'En az 20 karakter yaz.' }) + '</div>', { c: 'pad' })]),
+    B('Arama alanı', '.k-ara · K.ara()', 'Mikrofon düğmesi sesli aramayı açar. Yazınca temizle düğmesi gelir.', [
+      P('Boş · odakta yazıyor · sesli kayıt', K.ara() + '<div style="height:12px"></div>' + K.ara({ deger: 'asgari ücret', odak: true }) + '<div style="height:12px"></div>' + K.ara({ deger: 'asgari ücret', ses: 'on' }), { c: 'pad' }),
+      P('Vazgeç ile · sessiz · cam', K.ara({ iptal: true, odak: true }) + '<div style="height:12px"></div>' + K.ara({ yer: 'Şehir ara', ses: false }) + '<div class="gr" style="margin:12px -16px -16px;background-image:' + G_('kar-sokak') + ';padding:20px 16px">' + K.ara({ cam: true }) + '</div>', { c: 'pad' })]),
+    B('Anahtar', '.k-anahtar · K.anahtar()', 'Açık = marka sarısı. Satırın tamamı dokunulabilir (K.ayar).', [P('Açık · kapalı · pasif', '<div style="display:flex;gap:20px;align-items:center">' + K.anahtar(true) + K.anahtar(false) + K.anahtar(true, { pasif: true }) + K.anahtar(false, { pasif: true }) + '</div>', { c: 'pad' })]),
+    B('Onay kutusu ve seçim', '.k-onay · .k-secim', 'Satır biçiminde ≥44; onay metinleri bağlantılı.', [
+      P('Onay kutusu', K.onay('<a>Aydınlatma Metni</a>\'ni okudum.', { secili: true }) + K.onay('<a>Açık Rıza Metni</a>\'ni onaylıyorum.') + K.onay('Bülten e-postaları almak istiyorum.', { alt: 'İstediğin zaman ayrılabilirsin.' }) + K.onay('Kullanım Koşulları\'nı kabul ediyorum.', { hata: true }) + K.onay('Pasif seçenek', { pasif: true }), { c: 'pad' }),
+      P('Seçim (tek)', K.secim('v1', 'Açık', { secili: true, satir: true }) + K.secim('v1', 'Koyu', { satir: true }) + K.secim('v1', 'Sistem', { satir: true, alt: 'Telefonun ayarına uyar' }) + K.secim('v1', 'Pasif', { satir: true, pasif: true }), { c: 'pad' })]),
+    B('Kaydırıcı', '.k-kaydirac · K.kaydirac()', 'Yazı boyutu (açıkta siyah, koyuda sarı dolgu), oynatıcı ilerlemesi (sarı), ince.', [P('Aa · ilerleme · ince · pasif', '<div class="k-kaydirac-k"><span class="a1">A</span>' + K.kaydirac({ min: 15, max: 22, adim: .5, deger: 16 }) + '<span class="a2">A</span></div>' + K.kaydirac({ deger: 29, sari: true }) + K.kaydirac({ deger: 62, ince: true, sari: true }) + K.kaydirac({ deger: 40, pasif: true }), { c: 'pad' })])]));
+
+  /* ================= seçiciler ================= */
+  BL.push(S('seciciler', 'fa-sliders', 'Çip, segment, sekme', 'Çip 36 görünür; seçili = marka sarısı + siyah yazı. Tek seçimli gruplar [data-tek] ile kendiliğinden yönetilir.', [
+    B('Çip', '.k-cip · K.cip()', '', [P('Haller', '<div style="display:flex;flex-wrap:wrap;gap:8px">' + K.cip('Varsayılan') + K.cip('Basılı', { basili: true }) + K.cip('Seçili', { secili: true }) + K.cip('Galatasaray', { ikon: 'fa-plus' }) + K.cip('Faiz', { ikon: 'fa-check', secili: true }) + K.cip('Tümü', { sayi: 4 }) + K.cip('Pasif', { pasif: true }) + K.cip('Büyük', { buyuk: true }) + '</div>', { c: 'pad' }),
+      P('Fotoğraf üstünde', '<div class="gr" style="background-image:' + G_('ankara-kar') + ';padding:24px 16px;display:flex;gap:8px">' + K.cip('Tümü', { cam: true, secili: true }) + K.cip('Şehir', { cam: true }) + K.cip('Doğa ve İklim', { cam: true }) + '</div>')]),
+    B('Çip rayı ve ızgarası', '', 'Alt konular yatay kayar (ilk çip 16 px\'ten); konu seçimi satıra kırılan ızgara.', [P('Alt konu rayı', K.cipler(D.liste.altKonular, 0), { c: 'pady' }),
+      P('Konu seçimi ızgarası', '<div class="k-cip-izgara">' + D.bolumler.map(function(b, i){ return K.cip(b.ad, { ikon: b.ikon, secili: i < 3, buyuk: true }); }).join('') + '</div>', { c: 'pad' })]),
+    B('Çip satırı + görünüm anahtarı', '.k-cip-satiri · K.gorunum()', 'Liste kökü: yapışkan; sağda Liste ↔ Çizelge.', [P('Liste · Çizelge', '<div class="k-cip-satiri" style="position:relative;top:0">' + K.cipler(D.liste.altKonular, 1) + K.gorunum('liste') + '</div><div class="k-cip-satiri" style="position:relative;top:0">' + K.cipler(D.liste.altKonular, 0) + K.gorunum('cizelge') + '</div>')]),
+    B('Derinlik segmenti', '.k-segment · K.segment()', 'K17: 15 sn · 1 dk · Tam metin; kaydırgaç 300 ms.', [0, 1, 2].map(function(i){ return P(['15 sn seçili', '1 dk seçili', 'Tam metin seçili'][i], K.segment([{ metin: '15 sn', alt: '3 madde' }, { metin: '1 dk', alt: 'Özet' }, { metin: 'Tam metin', alt: D.detay.sure }], i), { c: 'pad' }); })
+      .concat([P('Tek satırlı (Görünüm)', K.segment([{ metin: 'Açık', ikon: 'fa-sun' }, { metin: 'Koyu', ikon: 'fa-moon' }, { metin: 'Sistem', ikon: 'fa-circle-half-stroke' }], 2, { ince: true }), { c: 'pad' })])),
+    B('Sekmeler', '.k-sekmeler · K.sekmeler()', 'Alt çizgili; arama türleri, hesap sekmeleri, branş.', [P('Arama türleri', K.sekmeler(['Tümü', 'Haber', 'Video', 'Podcast', 'Yazar', 'Etiket'], 0), { c: 'pady' }), P('Geçmiş · pasif sekme', K.sekmeler(['Okuduklarım', 'İzlediklerim', { metin: 'Dinlediklerim', pasif: true }], 1), { c: 'pady' })]),
+    B('Gün şeridi', '.k-gunler · K.gunler()', 'Takvim, Bugün Ne Oldu, arşiv. Bugün kırmızı nokta.', [P('Bugün seçili', K.gunler(), { c: 'pady' })])]));
+
+  /* ================= üst çubuklar ================= */
+  function ub(et, o, icerik, h, beyaz){ return P(et, '<div class="ekran">' + (icerik || '<div class="k-ust-bosluk"></div><div class="k-satirlar">' + K.satir(L[1]) + '</div>') + '</div>', { h: h || 210, statik: true, kur: function(el){ dc(el, beyaz); K.ustCubuk(Object.assign({ yer: el }, o)); } }); }
+  var kapakL = '<header class="k-kapak"' + ' style="background-image:' + G_('tbmm') + '"><h1>' + D.liste.bolum + '</h1><p>' + D.liste.aciklama + '</p></header><div class="k-yaprak"><div class="k-cip-satiri" style="position:relative;top:0;margin-top:10px">' + K.cipler(D.liste.altKonular, 0) + K.gorunum() + '</div></div>';
+  var kapakD = '<header class="k-kapak detay" style="background-image:' + G_(D.detay.g) + '"><button class="k-oynat-d" type="button">' + I('fa-play') + 'Video · ' + D.detay.video + '</button>' + K.katEt(D.detay.yol.join(' · '), D.detay.ikon, { foto: true }) + '<h1>' + D.detay.baslik + '</h1><div class="k-imza">' + K.avatar(D.detay.yazar) + '<span class="t"><b>' + D.detay.yazar + '</b><small>' + D.detay.unvan + '</small></span></div></header>' +
+    '<div class="k-yaprak"><div class="k-ic" style="padding-top:20px">' + K.zamanSatir() + '<p class="k-spot" style="margin-top:12px">' + D.detay.spot + '</p></div></div>';
+  BL.push(S('ustcubuk', 'fa-window-maximize', 'Üst çubuk ve kapaklar', 'Yükseklik güvenli alan + 48. Fotoğraf üstünde 44 cam daire, yatay boşluk 16; kaydırınca görsel koyulaşır, ortada başlık belirir (K30, K34). Zil yok: arama, hesap/giriş ve menü.', [
+    B('Düz üst çubuk', '.k-ub · K.ustCubuk()', 'Kaydırınca alt çizgi (golgeli). Başlık ortada; eylemler sağda.', [
+      ub('Geri + başlık + eylemler', { geri: true, baslik: 'Kaydedilenler', eylemler: ['ara', 'daha'] }), ub('Kaydırılmış (çizgili)', { geri: true, baslik: 'Son Dakika', eylemler: ['sirala'], golgeli: true }),
+      ub('Büyük başlık (kaydırınca küçülür)', { buyuk: true, baslik: 'Hesabım', eylemler: ['ayarlar'] }, '<div class="k-ust-bosluk"></div>' + K.profil().replace('<h1>', '<h1 style="font-size:32px">'), 230),
+      ub('Ana sayfa · üye', { logo: true, eylemler: ['ara', 'hesap', 'menu'] }), P('Ana sayfa · misafir', '<div class="ekran"><div class="k-ust-bosluk"></div><div class="k-satirlar">' + K.satir(L[1]) + '</div></div>', { h: 210, statik: true, kur: function(el){ dc(el); misafir(function(){ K.ustCubuk({ yer: el, logo: true, eylemler: ['ara', 'hesap', 'menu'] }); }); } })]),
+    B('Fotoğraf üstünde', '.k-ub.foto', 'Liste ve detay; daralınca bölüm ya da kapak görseli koyulaştırılmış zemin.', [
+      ub('Açık (görsel üstünde)', { tur: 'foto', geri: true, baslik: D.liste.bolum, eylemler: ['ara', 'paylas'], gorsel: 'tbmm' }, kapakL, 330, true),
+      ub('Daralmış', { tur: 'foto', geri: true, baslik: D.liste.bolum, eylemler: ['ara', 'paylas'], gorsel: 'tbmm', dar: true }, '<div class="k-ust-bosluk"></div><div class="k-cip-satiri cam" style="position:relative;top:0">' + K.cipler(D.liste.altKonular, 0) + K.gorunum() + '</div><div class="k-satirlar">' + K.satir(L[1]) + '</div>', 260, true),
+      ub('Detay daralmış · okuma ilerlemesi', { tur: 'foto', geri: true, baslik: D.detay.baslik, eylemler: ['kaydet'], gorsel: D.detay.g, dar: true, ilerleme: true }, '<div class="k-ust-bosluk"></div><div class="k-ic k-govde" style="padding-top:16px"><p>' + D.detay.govde[0].p + '</p></div>', 260, true)]),
+    B('Arama çubuğu', '.k-ub.ara', 'Arama ekranı: geri + alan (+ mikrofon) + Vazgeç.', [ub('Odakta', { tur: 'ara', geri: true }, '<div class="k-ust-bosluk"></div><div class="k-ic">' + K.oneri({ tur: 'son', metin: D.detay.etiketler[0] }) + K.oneri({ tur: 'son', metin: D.uye.takip[2] }) + '</div>', 210),
+      ub('Yazarken · Vazgeç', { tur: 'ara', iptal: true, ara: { deger: 'asg', ses: false } }, '<div class="k-ust-bosluk"></div><div class="k-ic">' + K.oneri({ tur: 'etiket', metin: D.detay.etiketler[0], esle: 'asg' }) + K.oneri({ tur: 'oneri', metin: L[1].baslik, esle: 'asg' }) + '</div>', 210)]),
+    B('Görselli başlık ve içerik paneli', '.k-kapak · .k-yaprak', 'Liste 224 (detay kapağının yarısı), detay 400. Panel görselin üstüne biner; üst kenarda 3 px marka şeridi (K28, K33).', [
+      P('Liste kapağı + panel', '<div class="ekran">' + kapakL + '</div>', { h: 330, statik: true, kur: function(el){ dc(el, true); K.ustCubuk({ yer: el, tur: 'foto', geri: true, eylemler: ['ara', 'paylas'] }); } }),
+      P('Detay kapağı + panel', '<div class="ekran">' + kapakD + '</div>', { h: 620, statik: true, kur: function(el){ dc(el, true); K.ustCubuk({ yer: el, tur: 'foto', geri: true, eylemler: ['kaydet'] }); } })]),
+    B('Kubbe (hero)', '.k-kubbe · .k-hero · .k-hilal', 'Tam genişlik görsel; alt köşesi --k-kart; altında 3 px hilal şerit. Ana sayfa hero\'su ve tanıtım.', [
+      P('Manşet', '<div class="k-kubbe"><span class="k-hilal"></span><div class="k-hero" style="height:440px;background-image:' + G_(M[0].g) + '">' + K.katEt(M[0].kat, M[0].ikon, { foto: true, ek: M[0].sure }) + '<h2>' + M[0].baslik + '</h2><span class="k-yz">' + K.avatar(M[0].yazar) + M[0].yazar + '</span>' + K.noktalar(5, 0, true) + '<span class="k-sayac foto">1 / 5</span></div></div>', { h: 460, statik: true, kur: function(el){ dc(el, true); K.ustCubuk({ yer: el, tur: 'foto', logo: true, eylemler: ['ara', 'hesap', 'menu'] }); } })])]));
+
+  /* ================= alt gezinme ================= */
+  function ac(et, etkin, o, h){ return P(et, (o && o.koyu ? '<div class="gr" style="position:absolute;inset:0;background-image:' + G_(D.akis.liste[0].g) + '"></div>' : ''), { h: h || 130, statik: true, kur: function(el){ K.altCubuk(etkin, Object.assign({ yer: el }, o)); } }); }
+  BL.push(S('altcubuk', 'fa-table-columns', 'Alt gezinme ve okuma çubuğu', 'Ana Sayfa · Bölümler · Akış (ortada, vurgulu) · Dinle · Hesabım. Seçili sekmede sarı gösterge; Akış\'ta çubuk koyu ve saydam.', [
+    B('Alt gezinme', '.k-ac · K.altCubuk()', 'Bağlantılar: Ana Sayfa → hibrit/kok.html?hb=4, Bölümler → ekranlar/icerik/bolumler.html, Dinle → haber-dinle.html, Hesabım → hesabim.html.', [
+      ac('Ana Sayfa seçili', 'ana'), ac('Bölümler seçili', 'bolum'), ac('Dinle seçili', 'dinle'), ac('Hesabım seçili · rozet', 'hesap', { rozet: { hesap: 3 } }), ac('Akış (koyu, görsel üstünde)', 'akis', { koyu: true }, 160)]),
+    B('Okuma çubuğu', '.k-okuma · K.okuma()', 'Detayda yüzer; iki temada koyu. Dinle · Hikâye modu · Yorum (sayılı) · Paylaş · Aa. Aşağı kaydırınca gizlenir, yukarıda geri gelir.', [P('Detay', '', { h: 130, statik: true, kur: function(el){ K.okuma({ yer: el }); } })])]));
+
+  /* ================= kartlar ================= */
+  var X = D.akis.liste, F = D.fotoFokus;
+  BL.push(S('kartlar', 'fa-newspaper', 'Kartlar ve satırlar', 'Kartın tamamı dokunulabilir; basınca hafifçe küçülür (satırlarda kenara taşan ince zemin). Uzun bas → bağlam menüsü. Görseller yalnız G().', [
+    B('Kart A · büyük ray kartı', '.k-kart-a · K.kartA()', 'Ana sayfa A kalıbı: 300 genişlik, görsel 188, başlık 3 satır.', [P('Ray', K.ray(hs.map(function(h){ return K.kartA(h); }).join('')), { c: 'pady' }), P('Medya rozetli · üst satırlı · basılı', K.ray(K.kartA(M[0], { ustSatir: true, basili: true }) + K.kartA(M[1], { ustSatir: true })), { c: 'pady' })]),
+    B('Küçük ray kartı', '.k-kart-k · K.kartK()', '232 genişlik, 4:3.', [P('Ray', K.ray(K.bolum('Keşfet').haberler.concat(K.bolum('Kampüs').haberler).map(function(h){ return K.kartK(h); }).join('')), { c: 'pady' })]),
+    B('Geniş öne çıkan kart', '.k-kart-genis · K.kartGenis()', 'Liste öne çıkanı, arama ilk sonucu. Kaydet sağ altta.', [P('Varsayılan · kaydedildi', K.kartGenis(L[0], { ikon: D.liste.ikon }) + '<div style="height:20px"></div>' + K.kartGenis(L[3], { ikon: D.liste.ikon, kaydedildi: true }), { c: 'pad' })]),
+    B('Liste satırı', '.k-satir · K.satir()', 'Görsel 88×88 sağda (K34); üst satır, başlık 3 satır, bilgi satırı + Kaydet.', [
+      P('Görselli · görselsiz', '<div class="k-satirlar">' + K.satir(L[0], { ikon: D.liste.ikon }) + K.satir(L[5], { ikon: D.liste.ikon }) + K.satir(L[3], { ikon: D.liste.ikon, kaydedildi: true }) + '</div>'),
+      P('Basılı · okundu · bekliyor', '<div class="k-satirlar">' + K.satir(L[1], { basili: true }) + K.satir(L[2], { durum: 'okundu' }) + K.satir(L[4], { durum: 'bekliyor', kaydet: false }) + '</div>'),
+      P('İndirme halleri · çevrimdışı soluk', '<div class="k-satirlar">' + K.satir(L[6], { indir: 'indiriliyor', kaydedildi: true }) + K.satir(L[7], { indir: 'indirildi', kaydedildi: true }) + K.satir(L[9], { durum: 'pasif', kaydedildi: true }) + '</div>'),
+      P('Çoklu seçim (düzenle)', '<div class="k-satirlar">' + K.satir(L[1], { secim: true, secili: true, kaydedildi: true }) + K.satir(L[5], { secim: true, kaydedildi: true }) + K.satir(L[10], { secim: true, secili: true, kaydedildi: true }) + '</div>'),
+      P('Kısa (ana sayfa B kalıbı)', '<div class="k-satirlar">' + K.bolum('Gündem').haberler.map(function(h){ return K.satir(h, { tur: 'kisa' }); }).join('') + '</div>')]),
+    B('Video kartı', '.k-kart-v · K.kartVideo()', 'Video Haber listesi ve "sıradaki videolar" (yatay).', [P('Liste', K.kartVideo(X[0]) , { c: 'pad' }), P('Yatay (sıradakiler)', X.slice(1, 4).map(function(v){ return '<div style="padding:8px 0">' + K.kartVideo(v, { yatay: true }) + '</div>'; }).join(''), { c: 'pad' })]),
+    B('Podcast', '.k-pd · .k-pd-satir', 'Ray kartı (ana sayfa) ve bölüm satırı: oynat, kaldığın yer, indir.', [P('Ray', K.ray(D.podcast.map(K.podcast).join('')), { c: 'pady' }),
+      P('Bölüm satırları', '<div class="k-satirlar">' + K.podcastSatir(D.podcast[0], { oynuyor: true, ilerleme: 26 }) + K.podcastSatir(D.podcast[1], { ilerleme: 70 }) + K.podcastSatir(D.podcast[2]) + '</div>')]),
+    B('Galeri kartı ve ızgarası', '.k-kart-g · .k-mozaik', 'Foto Fokus: albüm destesi + kare sayısı; galeri ızgarası.', [P('Albüm', K.kartGaleri(F[0]), { c: 'pad' }), P('Izgara', '<div class="k-mozaik">' + F.concat(F).slice(0, 6).map(function(f){ return '<a class="gr" style="background-image:' + G_(f.g) + '"></a>'; }).join('') + '</div>')]),
+    B('Olay ve canlı kartı', '.k-olay · K.olay()', 'Gelişen Olaylar, Canlı Gündem: görsel başlık, son iki gelişme, Olay dosyası + Takip et.', [P('Ray · canlı, takipte', K.ray(K.olay(K.OLAYLAR[0], { takip: true }) + K.olay(K.OLAYLAR[1])), { c: 'pady ton' })]),
+    B('Akış kartları', '.k-kart-akis · .k-akis-tam', 'Ana sayfa şeridi (124×220) ve Akış tam ekran kartı (kaydet ve paylaş yok; başlık habere götürür).', [P('Şerit', K.ray(X.map(K.kartAkis).join(''), 's10'), { c: 'pady' }),
+      P('Tam ekran · oynuyor', K.akisTam(X[0]), { h: 844, statik: true, c: 'siyah', kur: function(el){ dc(el, true); K.altCubuk('akis', { yer: el, koyu: true }); } }),
+      P('Duraklatıldı · altyazı', K.akisTam(X[1], { i: 1, durum: 'dur' }).replace('k-akis-ic">', 'k-akis-ic">') + '', { h: 844, statik: true, c: 'siyah', kur: function(el){ dc(el, true); K.altCubuk('akis', { yer: el, koyu: true }); el.querySelector('.k-akis-ic').insertAdjacentHTML('beforeend', '<p class="k-akis-alt">' + X[1].baslik + '</p>'); } }),
+      P('Mobil veri · bitti', K.akisTam(X[2], { i: 2, durum: 'mobil' }), { h: 844, statik: true, c: 'siyah', kur: function(el){ dc(el, true); K.altCubuk('akis', { yer: el, koyu: true }); } }),
+      P('Günün akışı bitti', K.akisBitti(), { h: 844, statik: true, c: 'siyah', kur: function(el){ dc(el, true); K.altCubuk('akis', { yer: el, koyu: true }); } })]),
+    B('Köşe yazısı kartı', '.k-kose · K.kose()', 'K26: marka sarısı, görsel üst yarı, baş harf kenara biner.', [P('Ray', K.ray(D.koseYazilari.map(K.kose).join('')), { c: 'pady' })]),
+    B('Bugün Senin İçin', '.k-sen · K.senin()', 'Üye: takip çipleri + dört haber. Misafirde gösterilmez; yerine çağrı kutusu.', [P('Üye (düz bant)', '<div class="k-ic">' + K.senin() + '</div>', { c: 'pady' }), P('Tonlu bantta', '<div class="k-ic">' + K.senin({ n: 2, cipler: false }) + '</div>', { c: 'pady ton' })]),
+    B('Hikâye şeridi', '.k-hk · K.hikayeSerit()', 'Görülmemiş: sarı halka; görülen: ince gri. Ana sayfada üst çubuğa yapışınca küçülür (K30).', [P('Varsayılan', K.hikayeSerit(), { c: 'pady' }), P('Yapışık (küçük)', '<div class="k-hk-yapis yapisik" style="position:relative;top:0">' + K.hikayeSerit({ kucuk: true }) + '</div>'), P('Koyu zemin', '<div class="gr" style="background-image:' + G_('kar-sokak') + '">' + K.hikayeSerit({ koyu: true }) + '</div>')]),
+    B('Son Dakika', '.k-sd · .k-sd-satir', 'Ana sayfa rayı (ilk saat kırmızı) ve Son Dakika ekranı satırı.', [P('Ray', K.ray(D.sonDakika.slice(0, 4).map(function(s, i){ return K.sd(s, i === 0); }).join(''), 's10'), { c: 'pady' }), P('Satırlar', '<div class="k-satirlar">' + D.sonDakika.slice(0, 4).map(function(s, i){ return K.sdSatir(s, i === 0); }).join('') + '</div>', { c: 'pady' })]),
+    B('Bölüm, yazar, bildirim, öneri satırları', '', 'Bölümler sekmesi · yazarlar · bildirim merkezi · arama önerisi.', [
+      P('Bölüm satırı', '<div class="k-satirlar">' + D.bolumler.slice(3, 7).map(K.bolumSatir).join('') + '</div>'),
+      P('Yazar satırı · takip', '<div class="k-satirlar">' + D.koseYazilari.slice(0, 3).map(function(k, i){ return K.yazarSatir(k, { takip: i === 1 }); }).join('') + '</div>'),
+      P('Bildirim satırı · okunmadı / okundu', '<div class="k-satirlar">' + K.bildirim({ tur: 'sd', ust: 'Son Dakika', saat: D.sonDakika[0].saat, baslik: D.sonDakika[0].baslik, g: 'kar-istanbul' }) + K.bildirim({ ikon: 'fa-tower-broadcast', tur: 'sd', ust: 'Canlı anlatım', saat: L[3].saat, baslik: L[3].baslik }) + K.bildirim({ ikon: 'fa-heart', ust: 'Takip ettiğin · ' + D.uye.takip[1], saat: '14.00', baslik: hf[0].baslik, g: hf[0].g, okundu: true }) + '</div>'),
+      P('Arama önerisi', '<div class="k-ic">' + K.oneri({ tur: 'son', metin: D.detay.etiketler[0] }) + K.oneri({ tur: 'gundem', metin: D.sonDakika[2].baslik }) + K.oneri({ tur: 'yazar', metin: D.detay.yazar, alt: D.detay.unvan }) + K.oneri({ tur: 'etiket', metin: D.detay.etiketler[2], esle: 'Enf' }) + '</div>')]),
+    B('Takım hücresi', '.k-takim · K.takim()', 'Takım seçimi, Takımlar; seçili sarı çerçeve + işaret.', [P('Izgara', '<div class="k-takimlar">' + PUAN.map(function(t, i){ return K.takim({ kod: t.kod, ad: t.ad, secili: i === 0 }); }).join('') + '</div>', { c: 'pad' })])]));
+
+  /* ================= ayraçlar ================= */
+  BL.push(S('ayraclar', 'fa-grip-lines', 'Ayraç kutuları', 'Bölümler arasında kompakt kutular (K22, K25, K30). Kart zemini banda göre döner.', [
+    B('Piyasalar rayı', '.k-py · K.piyasa()', '15 dk gecikmeli; artış yeşil, azalış kırmızı.', [P('Düz bant', K.piyasa(), { c: 'pady' }), P('Tonlu bant', K.piyasa(), { c: 'pady ton' })]),
+    B('Hava ve namaz', '.k-ky · K.hava() · K.namaz()', 'Tek satır; hava "Bugün | Yarın", namaz sıradaki vakit + kalan. Ayrı ayrı, bölüm aralarında.', [P('Hava · namaz', K.hava() + K.namaz(), { c: 'pady' }), P('Tonlu bant', K.hava() + K.namaz(), { c: 'pady ton' }),
+      P('Canlı anlatım girişi (aynı kalıp)', '<a class="k-ky canli"><span class="ik">' + I('fa-tower-broadcast') + '</span><span class="t"><small>Dakika Dakika · ' + L[3].saat + '</small><b>' + L[3].baslik + '</b></span>' + K.canli() + '</a>', { c: 'pady' })]),
+    B('Canlı maç', '.k-mac · K.mac()', 'İki temada koyu. Canlı · başlamadı · bitti.', [P('Canlı (takımın)', '<div class="k-ic"><div class="k-mac-et" style="margin-top:0">' + I('fa-futbol') + 'Takımın · ' + D.mac.ev + K.canli() + '</div>' + K.mac() + '</div>', { c: 'pady' }), P('Bitti', '<div class="k-ic">' + K.mac({ hal: 'bitti' }) + '</div>', { c: 'pady' })]),
+    B('Dada Spiker yayında', '.k-spk · K.spiker()', 'Oynat → mini oynatıcı (sayfalar arasında sürer).', [P('Şerit', '<div class="k-ic">' + K.spiker() + '</div>', { c: 'pady' })]),
+    B('Çağrı kutusu', '.k-cagri · K.cagri()', 'Misafir çağrısı, Takımını Ekle, konu ekle.', [P('Misafir · Takımını seç', '<div class="k-ic">' + K.cagri({ ikon: 'fa-futbol', baslik: 'Takımını seç', aciklama: 'Canlı maçı ve skoru burada görmek için', eylem: { metin: 'Giriş yap', ikon: 'fa-right-to-bracket' } }) + '</div>', { c: 'pady' }),
+      P('Takımını Ekle', '<div class="k-ic">' + K.cagri({ ikon: 'fa-futbol', baslik: 'Takımını Ekle', aciklama: 'Skoru ve haberleri ana sayfana gelsin', eylem: { metin: 'Seç' } }) + '</div>', { c: 'pady ton' })])]));
+
+  /* ================= detay ve içerik parçaları ================= */
+  var d = D.detay;
+  BL.push(S('detay', 'fa-file-lines', 'Detay ve içerik parçaları', 'Detay türleri (haber, köşe, canlı anlatım, video, galeri, bülten) bu parçalardan kurulur. Okuma metni --mb ölçeğinde.', [
+    B('Bilgi satırı, spot, madde, Bana etkisi', '.k-zamansatir · .k-spot · .k-madde · .k-etkisi', '', [P('15 sn paneli', K.zamanSatir() + '<p class="k-spot" style="margin-top:12px">' + d.spot + '</p><div style="margin-top:16px"><span class="k-ai">' + I('fa-wand-magic-sparkles') + 'Yapay zekâ ile özetlendi</span></div>' + K.madde(d.ozet) + K.etkisi(d.banaEtkisi), { c: 'pad' })]),
+    B('Bölüm kartı', '.k-bolum-kart · K.bolumKart()', 'K18: sekmeler yerinde değişir; Sıradaki düğmesi; son kartta hikâye modu.', [
+      P('Bana etkisi', '<div class="k-ray s8" data-tek style="margin:0 -16px 12px">' + K.cip('Bana etkisi', { ikon: 'fa-user', secili: true }) + K.cip('Neden önemli', { ikon: 'fa-circle-exclamation' }) + K.cip('Bundan sonra', { ikon: 'fa-forward' }) + '</div>' + K.bolumKart({ ikon: 'fa-user', baslik: 'Bana etkisi', sira: 1, toplam: 3, icerik: '<p class="duz">' + d.banaEtkisi + '</p>', sonraki: 'Neden önemli' }), { c: 'pad' }),
+      P('Bundan sonra + hikâye modu', K.bolumKart({ ikon: 'fa-forward', baslik: 'Bundan sonra', sira: 3, toplam: 3, icerik: K.adimlar([['4 Aralık Perşembe', 'İlk toplantı: veri paylaşımı, rakam beklenmiyor'], ['Aralık boyunca', 'En az dört toplantı'], ['Yılın son haftası', 'Kararın açıklanması'], ['1 Ocak 2027', 'Yeni asgari ücret geçerli']]) + '<p class="not">' + d.bundanSonra + '</p><div style="margin-top:16px">' + K.hmb('Hepsi 6 kartta, dokunarak geç') + '</div>' }), { c: 'pad' })]),
+    B('Okuma gövdesi', '.k-govde', 'Paragraf, ara başlık, tam genişlik görsel + altyazı; ortada hikâye modu düğmesi.', [P('Tam metin', '<article class="k-govde"><p>' + d.govde[0].p + '</p><p>' + d.govde[1].p + '</p>' + K.hmb() + '<h2 style="margin-top:26px">' + d.govde[2].h + '</h2><p>' + d.govde[3].p + '</p><figure><div class="gr"' + ' style="background-image:' + G_(d.govde[5].gorsel) + '"></div><figcaption>' + d.govde[5].altyazi + '</figcaption></figure></article>', { c: 'pad' })]),
+    B('Alıntı ve içindekiler', '.k-alinti · .k-icindekiler', 'Köşe yazısı alıntısı; yasal metin şablonunun içindekiler listesi.', [P('Alıntı', '<div class="k-alinti">' + I('fa-quote-left') + '<p>' + d.nedenOnemli + '</p><cite>' + d.yazar + ' · ' + d.unvan + '</cite></div>', { c: 'pad' }),
+      P('İçindekiler', '<ol class="k-icindekiler">' + d.govde.filter(function(b){ return b.h; }).concat([{ h: 'Kaynaklar' }, { h: 'Yorumlar' }]).map(function(b){ return '<li><a>' + b.h + I('fa-chevron-right') + '</a></li>'; }).join('') + '</ol>', { c: 'pad' })]),
+    B('Kaynaklar', '.k-kaynak · K.kaynaklar()', 'Vurgusuz yatay şerit.', [P('Şerit', K.kaynaklar(), { c: 'pady' })]),
+    B('Çizelge', '.k-cz · K.cizelge()', 'Liste kökü LS-C: saat sırası, saat ayracı; Canlı/Son Dakika kırmızı nokta, en yeni sarı.', [P('Bugün', K.cizelge(L.slice(0, 5), { ikon: D.liste.ikon, toplam: D.liste.toplam }), { c: 'pady' })]),
+    B('Canlı anlatım girişi', '.k-cg · K.canliGiris() · .k-yeni-hap', 'Dakika Dakika: yeni üstte, kilit anlar sarı; "N yeni gelişme" hapı üst çubuğun altında yüzer.', [P('Sürüyor', '<div style="display:flex;justify-content:center;padding:4px 0 12px">' + K.yeniHap('2 yeni gelişme', 'yerinde') + '</div><div class="k-ic">' +
+      K.canliGiris({ saat: D.sonDakika[1].saat, baslik: D.sonDakika[1].baslik, yeni: true }) + K.canliGiris({ saat: D.sonDakika[4].saat, baslik: D.sonDakika[4].baslik, metin: d.spot, kilit: true, g: 'asgari' }) + K.canliGiris({ saat: D.sonDakika[5].saat, baslik: D.sonDakika[5].baslik }) + '</div>', { c: 'pady' })]),
+    B('Yorumlar', '.k-yorum* · K.yorumlar()', 'K30–K31: Dada Gastro yorum yapısı. Üye: Yorum yaz; misafir: giriş çağrısı. Editör yanıtı gri kutuda; gönderilen yorum soluk "Onay bekliyor".', [
+      P('Üye', uye(function(){ return K.yorumlar({ sinir: 2 }); }), { c: 'pad' }), P('Misafir', misafir(function(){ return K.yorumlar({ sinir: 1 }); }), { c: 'pad' }),
+      P('Gönderildi · onay bekliyor · yanıt alıntısı', K.yorum({ ad: D.uye.ad, rozet: 'Okur', zaman: 'şimdi', metin: d.yorumlar[0].metin, begeni: 0, bekliyor: true }) + '<div style="margin-top:14px" class="k-yanit-alinti"><b>' + d.yorumlar[2].ad + '</b>' + d.yorumlar[2].metin + '</div>', { c: 'pad' })]),
+    B('Tablo', '.k-tablo · K.puanTablosu()', 'Kap içinde yatay kayar; ilk sütun yapışık; takımın satırı vurgulu. Veri: public sözlük puan_tablosu.', [P('Puan durumu', K.puanTablosu(PUAN, 'GS'), { c: 'pad' }),
+      P('Kurlar', K.tablo({ cls: 'sol', sutunlar: ['Birim', 'Satış', 'Değişim'], satirlar: D.piyasa.liste.map(function(x){ return [x.ad, x.deger, '<span class="k-yon ' + x.yon + '">' + (x.yon === 'y' ? '▲' : '▼') + ' %' + x.degisim + '</span>']; }) }) + '<p class="k-grup-n" style="margin:10px 0 0">' + D.piyasa.guncelleme + ' · ' + D.piyasa.not + '</p>', { c: 'pad' })]),
+    B('Skor satırı', '.k-skor · K.skor()', 'Canlı Skor, Fikstür: dakika/saat, ev, skor kutusu, deplasman; canlıda koyu kutu.', [P('Canlı · bitti', '<div class="k-ic">' + K.skor({ dk: D.mac.dakika, ev: D.mac.ev, dep: D.mac.dep, skor: D.mac.skor, canli: true }) + K.skor({ dk: 'MS', ev: D.mac.ev, dep: D.mac.dep, skor: D.mac.skor, kazanan: 'ev' }) + '</div>', { c: 'pady' })])]));
+
+  /* ================= alt sayfalar ================= */
+  BL.push(S('sayfalar', 'fa-window-restore', 'Alt sayfalar', 'Aşağıdan 300 ms; perdeye dokun, × ya da tutamaktan aşağı çek → kapanır. Köşe --k-kart. Hazır içerikler: K.sayfa(\'paylas\') …', [
+    B('Paylaş', 'K.sayfa(\'paylas\') · K.sayfa(\'kart\')', 'Bağlantıyı kopyala · paylaşım kartı (9:16) · mesaj · e-posta · Diğer (sistem paylaşım sayfası; iOS ve Android farklı görünür).', [sayfaP('Paylaş', 'paylas'), sayfaP('Paylaşım kartı', 'kart')]),
+    B('Kaydet', 'K.sayfa(\'kaydet\')', 'Üye: klasör seç, yeni klasör, Çevrimdışı indir. Misafir: cihaza kaydedildi + giriş çağrısı (C30 varsayımı).', [sayfaP('Üye', 'kaydet'), P('Misafir', arka(), { h: 720, statik: true, kur: function(el){ dc(el); K.ustCubuk({ yer: el, geri: true, baslik: D.liste.bolum, golgeli: true }); misafir(function(){ K.sayfa('kaydet', { yer: el, acik: true }); }); } }), sayfaP('Yeni klasör', 'yeni-klasor')]),
+    B('Yazı boyutu ve hız', 'K.sayfa(\'yazi\') · K.sayfa(\'hiz\')', 'Aa: tek ölçek bütün okuma metnini büyütür (K29). Hız 0,75× – 2×.', [sayfaP('Yazı boyutu', 'yazi'), sayfaP('Oynatma hızı', 'hiz')]),
+    B('Süzgeç', 'K.sayfa(\'suzgec\')', 'Arama sonuçları: tarih, bölüm, sıralama; Temizle · Uygula.', [sayfaP('Süzgeç', 'suzgec', {}, 844)]),
+    B('Üyelik tetik paneli', 'K.sayfa(\'tetik\', {eylem})', 'Misafir Takip et / Kaydet / Yorum / Beğen\'e dokununca; metin eyleme göre.', [sayfaP('Kaydet için', 'tetik', { eylem: 'kaydet' }), sayfaP('Yorum için', 'tetik', { eylem: 'yorum' })]),
+    B('Bildir, yorum yaz, şehir seç, güncelleme', '', '', [sayfaP('Yorumu bildir', 'bildir'), sayfaP('Haberde hata bildir', 'bildir', { haber: true }), sayfaP('Yorum yaz', 'yorum'), sayfaP('Şehir seç', 'sehir'), sayfaP('Şehir seç · konum izni yok', 'sehir', { red: true }), sayfaP('Güncelleme önerilen', 'guncelle')])]));
+
+  /* ================= pencereler ================= */
+  function pen(et, ad){ return P(et, arka(), { h: 560, statik: true, kur: function(el){ dc(el); K.ustCubuk({ yer: el, geri: true, baslik: 'Ayarlar', golgeli: true }); K.pencere(ad, { yer: el, acik: true }); } }); }
+  BL.push(S('pencereler', 'fa-square', 'Pencereler', 'Ortada; ölçek + solma 250 ms. Geri alınamaz işlemde kırmızı ikon ve kırmızı düğme. Düğmeler yan yana (iki eşit) ya da alt alta (uzun metin).', [
+    B('Onay penceresi', '.k-pencere · K.pencere()', '', [pen('Çıkış yap', 'cikis'), pen('Hesabı sil (son onay)', 'hesap-sil'), pen('İndirilenleri sil', 'indirilen-sil'), pen('Geçmişi temizle', 'gecmis'), pen('Klasörü sil', 'klasor-sil'), pen('Takibi bırak', 'takip-birak'), pen('Yorum silinsin mi', 'yorum-sil'), pen('Oturum sona erdi', 'oturum')]),
+    B('İşletim sistemi penceresi', '.k-sistem', 'İzin istemi: sistemin kendi görünümü (yalnız görünüm notu; iOS sistem yazısı). Android 13+ kendi biçiminde.', [P('Bildirim izni (iOS)', arka() + '<div class="k-perde acik"></div><div class="k-sistem"><div class="t"><b>"Dada Haber" Size Bildirim Göndermek İstiyor</b><p>Bildirimler uyarılar, sesler ve simge etiketleri içerebilir.</p></div><div class="a"><button type="button">İzin Verme</button><button type="button">İzin Ver</button></div></div>', { h: 560, statik: true, kur: function(el){ dc(el); } })])]));
+
+  /* ================= menüler ================= */
+  function menuP(et, ad){ return P(et, arka(3), { h: 400, statik: true, kur: function(el){ dc(el); K.ustCubuk({ yer: el, geri: true, baslik: 'Kaydedilenler', eylemler: ['sirala', 'daha'], golgeli: true }); K.menu(ad, { yer: el, acik: true, konum: { top: 'calc(var(--k-ub-h) + 4px)', right: '8px' } }); } }); }
+  BL.push(S('menuler', 'fa-bars', 'Menüler', 'Açılır menü (sıralama, ⋯), sağdan çekmece (üye/misafir; ana sayfa menüsünün yapısı, K31), uzun basma bağlam menüsü.', [
+    B('Açılır menü', '.k-menu · K.menu()', 'Dışına dokununca kapanır. Seçili öğe işaretli; silme kırmızı; kendi yorumunda Sil açık.', [menuP('Sıralama', 'siralama'), menuP('Klasör ⋯', 'klasor'), menuP('Yorum ⋯', 'yorum')]),
+    B('Yan çekmece', '.k-cekmece · K.cekmece()', 'Hesap kartı (üye: ad, seri, Profilim, Kaydedilenler · Takiplerim · Bildirimler; misafir: Merhaba + Giriş yap · Üye ol), bölümler (açılır), Dinle ve izle, Dada, Görünüm, Yazı boyutu, kurumsal şerit.', [
+      P('Üye', '<div class="ekran">' + K.hikayeSerit() + '</div>', { h: 844, statik: true, kur: function(el){ dc(el); uye(function(){ K.cekmece({ yer: el, acik: true }); }); } }),
+      P('Misafir · bölüm açık', '<div class="ekran"></div>', { h: 844, statik: true, kur: function(el){ dc(el); misafir(function(){ K.cekmece({ yer: el, acik: true }); }); var dd = el.querySelector('.k-ma'); if (dd) dd.open = true; } })]),
+    B('Bağlam menüsü', '.k-baglam · K.baglam()', 'Kartta 520 ms uzun basma: bulanık zemin, kalkan önizleme, eylemler. Akış videosunda Sesi aç · Altyazı (Habere git yok, K23).', [
+      P('Haber kartı', arka(), { h: 720, statik: true, kur: function(el){ dc(el); K.baglam({ h: { baslik: L[1].baslik, g: L[1].g, us: K.ustSatir(L[1]), meta: K.meta([L[1].yazar, L[1].sure, L[1].izlenme]) }, yer: el, acik: true }); } }),
+      P('Akış videosu', K.akisTam(X[0]), { h: 720, statik: true, c: 'siyah', kur: function(el){ dc(el, true); K.baglam({ h: { baslik: X[0].baslik, g: X[0].g, us: K.katEt(X[0].kat) }, tur: 'akis', yer: el, acik: true }); } })])]));
+
+  /* ================= bildirimler ================= */
+  function tst(m, o){ return K.toast(m, Object.assign({ yerinde: true, yer: document.createElement('div') }, o)).outerHTML; }
+  BL.push(S('bildirimler', 'fa-message', 'Kısa bildirim, afiş, şerit', 'Kısa bildirim alt çubuğun üstünde 3 sn (geri al 4 sn, geri sayım çizgili). Afiş üstten iner. Şerit sayfanın içinde durur.', [
+    B('Kısa bildirim', '.k-toast · K.toast()', 'bilgi · başarı · hata · eylemli · geri al · alt metinli.', [
+      P('Türler', '<div style="display:grid;gap:10px">' + tst('Kaydedildi', { ikon: 'fa-bookmark', geriAl: true, alt: 'Kaydedilenler' }) + tst('Bağlantı kopyalandı', { ikon: 'fa-link' }) + tst('Çevrimdışı okumaya indirildi', { tur: 'basari' }) + tst('Takip ediliyor', { ikon: 'fa-heart', eylem: 'Bildirim aç' }) + tst('Yorumun gönderildi', { tur: 'basari', alt: 'Denetimden sonra yayınlanır' }) + tst('İşlem yapılamadı', { tur: 'hata', eylem: 'Yeniden dene' }) + tst('Yenilenemedi', { tur: 'hata' }) + '</div>', { c: 'pad' }),
+      P('Yerinde (alt çubuğun üstünde)', arka(3), { h: 420, statik: true, kur: function(el){ K.altCubuk('ana', { yer: el }); K.toast('Kaydedilenlerden çıkarıldı', { ikon: 'fa-bookmark', geriAl: true, yer: el, sure: 0 }); } })]),
+    B('Çevrimdışı bandı', '.k-toast.bant', 'Kalıcı ince bant, alt çubuğun üstünde; bağlantı gelince yeşile döner ve kaybolur.', [P('Çevrimdışı · geldi', '<div style="display:grid;gap:10px">' + tst('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler' }) + tst('Bağlantı geri geldi', { bant: true, tur: 'basari' }) + '</div>', { c: 'pad' })]),
+    B('Uygulama içi afiş', '.k-afis · K.afis()', 'Uygulama açıkken gelen bildirim; dokun → detay, yukarı it → kapat; 5 sn.', [P('Son Dakika', K.afis({ yerinde: true, yer: document.createElement('div') }).outerHTML, { c: 'pad' }), P('Canlı anlatım (görselsiz)', K.afis({ yerinde: true, tur: 'canli', g: false, baslik: L[3].baslik, yer: document.createElement('div') }).outerHTML, { c: 'pad' }),
+      P('Ekranda', '<div class="ekran"><div class="k-ust-bosluk"></div><div class="k-satirlar">' + K.satir(L[1]) + '</div></div>', { h: 300, statik: true, kur: function(el){ dc(el); K.ustCubuk({ yer: el, logo: true, eylemler: ['ara', 'hesap', 'menu'] }); var a = K.afis({ yer: el, sure: 600000 }); a.classList.add('acik'); } })]),
+    B('Sayfa içi şerit', '.k-serit · K.serit()', 'bilgi · uyarı · hata · başarı · koyu.', [P('Türler', '<div style="display:grid;gap:10px">' + K.serit({ tur: 'uyari', ikon: 'fa-bell', metin: 'Bildirimler kapalı', alt: 'Son Dakika\'yı kaçırabilirsin', eylem: 'Aç' }) + K.serit({ tur: 'koyu', ikon: 'fa-plug-circle-xmark', metin: 'Çevrimdışı okuyorsun', alt: 'Yorumlar bağlantı gelince açılır' }) + K.serit({ metin: 'Giriş için bağlantı gerekli', ikon: 'fa-wifi' }) + K.serit({ tur: 'hata', ikon: 'fa-triangle-exclamation', metin: 'Gönderilemedi · taslağın duruyor', eylem: 'Yeniden dene' }) + K.serit({ tur: 'basari', ikon: 'fa-circle-check', metin: 'Doğrulama e-postası gönderildi' }) + '</div>', { c: 'pad' })])]));
+
+  /* ================= yükleniyor ================= */
+  BL.push(S('yukleniyor', 'fa-circle-notch', 'Yükleniyor', 'İskelet (parıltı) her liste ve detayda; kabuk (üst ve alt çubuk) yerinde kalır. Aşağı çek yenile; sayfa sonunda daha fazla.', [
+    B('İskelet parçaları', '.k-isk · K.iskelet()', 'satır · kart rayı · hero · metin · hikâye · bölüm · yorum.', [P('Satır', '<div class="k-satirlar">' + K.iskelet('satir', 2) + '</div>'), P('Kart rayı', K.iskelet('ray', 2), { c: 'pady' }), P('Hikâye · metin', K.iskelet('hikaye') + '<div class="k-ic" style="padding-top:12px">' + K.iskelet('metin', 5) + '</div>', { c: 'pady' }),
+      P('Bölüm · yorum', K.iskelet('bolum') + '<div class="k-ic">' + K.iskelet('yorum', 1) + '</div>', { c: 'pady' }), P('Tonlu bantta', '<div class="k-satirlar">' + K.iskelet('satir', 1) + '</div>', { c: 'ton' })]),
+    B('Ekran iskeletleri', '', 'Ana sayfa hero, liste, detay, Akış.', [
+      P('Ana sayfa', K.iskelet('hero') + K.iskelet('hikaye'), { h: 640, statik: true, kur: function(el){ dc(el); K.altCubuk('ana', { yer: el }); } }),
+      P('Liste', '<div class="ekran">' + K.iskelet('liste') + '</div>', { h: 640, statik: true, kur: function(el){ dc(el, true); K.ustCubuk({ yer: el, tur: 'foto', geri: true, eylemler: ['ara', 'paylas'] }); K.altCubuk('bolum', { yer: el }); } }),
+      P('Detay', '<div class="ekran">' + K.iskelet('detay') + '</div>', { h: 640, statik: true, kur: function(el){ dc(el); K.ustCubuk({ yer: el, tur: 'foto', geri: true, eylemler: ['kaydet'] }); } }),
+      P('Akış', K.iskelet('akis'), { h: 640, statik: true, c: 'siyah', kur: function(el){ dc(el, true); K.altCubuk('akis', { yer: el, koyu: true }); } })]),
+    B('Dönen gösterge', '.k-don', 'fa-circle-notch fa-spin (kontrol işareti, K34).', [P('Satır içi · büyük', '<div style="display:flex;justify-content:space-around;align-items:center;padding:12px">' + '<span class="k-don">' + I('fa-circle-notch', 'fa-spin') + 'Yükleniyor</span><span class="k-don buyuk">' + I('fa-circle-notch', 'fa-spin') + 'Ana sayfan hazırlanıyor</span></div>', { c: 'pad' })]),
+    B('Aşağı çekerek yenileme', '.k-yenile · K.yenile() · K.cekYenile()', 'Çekiliyor → bırak → yenileniyor → güncel. Yeni içerik gelirse hap.', ['cekiliyor', 'birak', 'yenileniyor', 'bitti'].map(function(h){ return P({ cekiliyor: 'Çekiliyor', birak: 'Bırak', yenileniyor: 'Yenileniyor', bitti: 'Güncel' }[h], '<div class="ekran"><div class="k-ust-bosluk"></div>' + K.yenile(h) + '<div class="k-satirlar">' + K.satir(L[1]) + '</div></div>', { h: 330, statik: true, kur: function(el){ dc(el); K.ustCubuk({ yer: el, geri: true, baslik: 'Son Dakika' }); } }); })
+      .concat([P('Yeni içerik hapı', '<div class="ekran"><div class="k-ust-bosluk"></div><div class="k-satirlar">' + K.satir(L[1]) + K.satir(L[2]) + '</div></div>', { h: 330, statik: true, kur: function(el){ dc(el); K.ustCubuk({ yer: el, geri: true, baslik: 'Son Dakika', golgeli: true }); el.insertAdjacentHTML('beforeend', K.yeniHap('3 yeni haber', 'acik')); } })])),
+    B('Sayfa sonu', '.k-dahafazla · K.dahaFazla()', 'yükleniyor · hepsi bu kadar · yüklenemedi.', [P('Yükleniyor', '<div class="k-satirlar">' + K.iskelet('satir', 1) + K.dahaFazla() + '</div>'), P('Hepsi bu kadar', '<div class="k-satirlar">' + K.satir(L[13]) + K.dahaFazla('son') + '</div>', { c: 'pady' }), P('Yüklenemedi', '<div class="k-satirlar">' + K.satir(L[13]) + K.dahaFazla('hata') + '</div>', { c: 'pady' })])]));
+
+  /* ================= boş ve hata ================= */
+  function bosP(et, html, o){ o = o || {}; return P(et, '<div class="ekran"><div class="k-ust-bosluk"></div>' + html + '</div>', { h: o.h || 560, statik: true, kur: function(el){ dc(el); K.ustCubuk({ yer: el, geri: o.geri !== false, baslik: o.b || '' }); if (o.ac) K.altCubuk(o.ac, { yer: el }); } }); }
+  BL.push(S('haller', 'fa-circle-exclamation', 'Boş durum, hata, izin', 'Tek şablon: ikon dairesi, tek cümle başlık, açıklama, tek eylem (+ ikinci bağlantı). Hata ikonu nötr; boş durum ikonu sarı.', [
+    B('Boş durum', '.k-bos · K.bos()', 'Zorunlu boş durumlar hazır: K.bos(\'kaydedilen\') …', [bosP('Kaydedilen yok', K.bos('kaydedilen'), { b: 'Kaydedilenler', ac: 'hesap', h: 600 }), bosP('Bildirim yok', K.bos('bildirim'), { b: 'Bildirimler' }), bosP('Takip edilen yok', K.bos('takip'), { b: 'Takip ettiklerim' }), bosP('Geçmiş boş', K.bos('gecmis'), { b: 'Geçmiş' }),
+      bosP('Sonuç yok', K.bos('sonuc'), { b: 'Arama' }), bosP('Yorum yok', K.bos('yorum'), { b: 'Yorumlar' }), bosP('Alt konuda haber yok', K.bos('liste'), { b: D.liste.bolum }), bosP('İndirilen yok', K.bos('indirilen'), { b: 'İndirilenler' }), bosP('Senin İçin boş', K.bos('senin'), { b: 'Bugün Senin İçin' })]),
+    B('Hata', 'K.hata({tur})', 'Kabuk yerinde, içerik yerine şablon. Yeniden denerken düğmede gösterge.', [bosP('Bağlantı yok', K.hata({ tur: 'cevrimdisi' })), bosP('Sunucu hatası', K.hata({ tur: 'sunucu' })), bosP('Zaman aşımı', K.hata({ tur: 'zaman-asimi' })), bosP('Yeniden deneniyor', K.hata({ tur: 'zaman-asimi', deneniyor: true })),
+      bosP('İçerik bulunamadı', K.hata({ tur: 'bulunamadi' })), bosP('Kaldırıldı', K.hata({ tur: 'kaldirildi' })), bosP('Uygulamada yayımlanmıyor', K.hata({ tur: 'web' })), bosP('Çok fazla istek', K.hata({ tur: 'cok-istek' })), bosP('Erişim yok', K.hata({ tur: 'erisim' })),
+      P('Bakım modu (tam ekran)', '<div class="ekran" style="display:flex;flex-direction:column;justify-content:center"><div style="text-align:center;padding-top:80px"><span class="logo" role="img" aria-label="Dada Haber"></span></div>' + K.hata({ tur: 'bakim' }) + '</div>', { h: 700, statik: true, kur: function(el){ dc(el); } }),
+      P('Güncelleme zorunlu (kapatılamaz)', '<div class="ekran" style="display:flex;flex-direction:column;justify-content:center"><div style="text-align:center;padding-top:80px"><span class="logo" role="img" aria-label="Dada Haber"></span></div>' + K.hata({ tur: 'guncelleme' }) + '</div>', { h: 700, statik: true, kur: function(el){ dc(el); } })]),
+    B('Blok yüklenemedi', '.k-blok-hata · K.blokHata()', 'Tek blok (ör. Piyasalar) satır içi; sayfanın geri kalanı çalışır.', [P('Piyasalar', K.bb({ baslik: 'Piyasalar', ikon: 'fa-chart-column' }) + '<div class="k-ic">' + K.blokHata('Piyasalar yüklenemedi') + '</div>', { c: 'pady ton' })]),
+    B('İzin ekranları', '.k-izin · K.izin()', 'Değer önce, izin sonra. Ön ekran: ne geleceği + Aç · Şimdi değil (bekleyen #5). Reddedildi: Ayarlar yolu.', ['bildirim', 'konum', 'mikrofon'].map(function(t){ return P({ bildirim: 'Bildirim izni', konum: 'Konum izni', mikrofon: 'Mikrofon izni' }[t] + ' · ön ekran', K.izin({ tur: t }), { h: 844, statik: true, kur: function(el){ dc(el); } }); })
+      .concat(['bildirim', 'konum', 'mikrofon'].map(function(t){ return P({ bildirim: 'Bildirim', konum: 'Konum', mikrofon: 'Mikrofon' }[t] + ' · reddedildi', K.izin({ tur: t, red: true }), { h: 844, statik: true, kur: function(el){ dc(el); } }); }))) ]));
+
+  /* ================= oynatıcılar ================= */
+  BL.push(S('oynaticilar', 'fa-headphones', 'Oynatıcılar ve sesli arama', 'Tek ses oynatıcısı: mini (alt çubuğun üstünde, sayfalar arasında sürer) ve tam ekran (aşağıdan açılır). Video kabuğu ve sesli arama halleri.', [
+    B('Mini oynatıcı', '.k-mo · K.oynatici()', 'Çalıyor · duraklatıldı · ses yüklenemedi. Gerçek oynatıcı K.oynatici() ile gövdeye eklenir (sessionStorage "dada-spiker").', [P('Çalıyor', K.oynatici({ yerinde: true }), { c: 'pad' }), P('Duraklatıldı', K.oynatici({ yerinde: true, dur: true }), { c: 'pad' }), P('Ses yüklenemedi', K.oynatici({ yerinde: true, hata: true }), { c: 'pad' }),
+      P('Alt çubuğun üstünde', arka(3), { h: 300, statik: true, kur: function(el){ K.altCubuk('dinle', { yer: el }); el.insertAdjacentHTML('beforeend', K.oynatici({ yerinde: true }).replace('k-mo yerinde', 'k-mo acik')); } })]),
+    B('Tam ekran ses oynatıcısı', '.k-oy · K.oynaticiTam()', 'Kapak, başlık, ilerleme, ±15 sn, hız, sıradakiler, deşifre. Küçült → mini oynatıcı.', [P('Dada Spiker · çalıyor', K.oynaticiTam({ yerinde: true }), { h: 844, statik: true, kur: function(el){ dc(el); } }), P('Podcast · duraklatıldı', K.oynaticiTam({ tur: 'podcast', durum: 'dur', yerinde: true }), { h: 844, statik: true, kur: function(el){ dc(el); } }),
+      P('Deşifre (okunan cümle)', '<p class="k-desifre">' + d.govde[0].p.split('. ').map(function(c, i){ return '<span' + (i === 1 ? ' class="on"' : '') + '>' + c + (/\.$/.test(c) ? '' : '.') + '</span> '; }).join('') + '</p>', { c: 'pad' })]),
+    B('Video oynatıcı kabuğu', '.k-video · K.video()', 'Duraklatıldı (denetimler görünür) · oynuyor (yalnız ince ilerleme) · yükleniyor · bitti · hata · mobil veri · yatay tam ekran.', ['dur', 'oynuyor', 'yukleniyor', 'bitti', 'hata', 'mobil'].map(function(h){ return P({ dur: 'Duraklatıldı · denetimler', oynuyor: 'Oynuyor', yukleniyor: 'Yükleniyor', bitti: 'Bitti · sıradaki', hata: 'Oynatılamadı', mobil: 'Mobil veri' }[h], K.video({ durum: h })); })
+      .concat([P('Yatay tam ekran (844 × 390, küçültülmüş)', '<div class="v-yatay">' + K.video({ durum: 'dur', yatay: true }) + '</div>').replace('class="v-tel k-sahne"', 'class="k-sahne"')])),
+    B('Sesli arama', '.k-ses · K.ses(hal)', 'Hazır · izin isteniyor · kaydediyor (seviye çubukları, canlı metin, süre) · duraklatıldı · gönderiliyor · anlaşılamadı · izin reddedildi.', ['hazir', 'izin', 'kayit', 'dur', 'gonder', 'hata', 'red'].map(function(h){ return P({ hazir: 'Hazır', izin: 'Mikrofon izni isteniyor', kayit: 'Kaydediyor', dur: 'Duraklatıldı', gonder: 'Gönderiliyor', hata: 'Anlaşılamadı', red: 'İzin reddedildi' }[h], '<div class="ekran"><div class="k-ust-bosluk"></div></div>', { h: 560, statik: true, kur: function(el){ dc(el); K.ustCubuk({ yer: el, tur: 'ara', geri: true, ara: { ses: h === 'kayit' ? 'on' : true } }); K.sayfa('ses', { hal: h, yer: el, acik: true }); } }); }))]));
+
+  /* ================= hesap ================= */
+  BL.push(S('hesap', 'fa-circle-user', 'Hesap ve ayarlar', 'Gruplu ayar satırları (ikon kutusu, başlık + alt metin, sağda ok / anahtar / değer / işaret). Profil başlığı, sayaçlar, avatar.', [
+    B('Profil başlığı ve sayaçlar', '.k-profil · .k-istat', 'Üye: baş harf, ad, okuma serisi. Misafir: Merhaba + Giriş yap · Üye ol.', [P('Üye', uye(function(){ return K.profil(); }) + K.istat([[D.uye.takip.length, 'Takip'], [D.uye.seri, 'Gün seri'], [3, 'Bildirim']]), { c: 'pady' }), P('Misafir', misafir(function(){ return K.profil(); }), { c: 'pady' })]),
+    B('Ayar satırı ve grubu', '.k-ayar · .k-grup · K.ayar() · K.grup()', 'Satırın tamamı dokunulabilir; anahtarlı satırda satıra dokunmak anahtarı çevirir.', [
+      P('Gezinme · değer · rozet', K.grup('Hesap', [{ ikon: 'fa-bookmark', baslik: 'Kaydedilenler', sag: 'ok' }, { ikon: 'fa-heart', baslik: 'Takip ettiklerim', sag: 'deger', deger: D.uye.takip.length }, { ikon: 'fa-bell', baslik: 'Bildirimler', sag: 'rozet', deger: 3 }, { ikon: 'fa-clock-rotate-left', baslik: 'Geçmiş' }]) + K.grup('Görünüm', [{ ikon: 'fa-circle-half-stroke', baslik: 'Tema', sag: 'deger', deger: 'Sistem' }, { ikon: 'fa-font', baslik: 'Yazı boyutu', sag: 'deger', deger: 'Orta' }]), { c: 'pady ton' }),
+      P('Anahtar · alt metin · pasif', K.grup('Bildirimler', [{ ikon: 'fa-bolt', baslik: 'Son Dakika', alt: 'Gündemi değiştiren gelişmeler', sag: 'anahtar', on: true }, { ikon: 'fa-futbol', baslik: 'Takımının maçı', alt: D.mac.ev, sag: 'anahtar', on: false }, { ikon: 'fa-newspaper', baslik: 'Günün baskıları', sag: 'anahtar', on: true, pasif: true, alt: 'Sistemde kapalı · Ayarlar\'dan aç' }], 'Bildirimler telefonun ayarlarında kapalıyken anahtarlar pasif görünür.'), { c: 'pady ton' }),
+      P('Seçim · tehlike', K.grup('Tema', [{ baslik: 'Açık', sag: 'tik' }, { baslik: 'Koyu', sag: 'tik' }, { baslik: 'Sistem', sag: 'tik', secili: true }]) + K.grup('', [{ ikon: 'fa-right-from-bracket', baslik: 'Çıkış yap', sag: 'yok', notr: true }, { ikon: 'fa-trash-can', baslik: 'Hesabı sil', sag: 'yok', tehlike: true }]), { c: 'pady ton' }),
+      P('Düz zeminde', K.grup('Veri ve depolama', [{ ikon: 'fa-circle-down', baslik: 'Günün 5\'ini kendiliğinden indir', sag: 'anahtar', on: true }, { ikon: 'fa-circle-play', baslik: 'Mobil veride video', sag: 'deger', deger: 'Dokununca' }, { ikon: 'fa-database', baslik: 'Önbelleği temizle', sag: 'ok' }]), { c: 'pady' })]),
+    B('Avatar', '.k-avatar · K.avatar()', 'Baş harf (public sitede portre yok). 36 · 44 · 64 · 88; sarı, nötr (yorum), koyu (köşe).', [P('Boylar ve türler', '<div style="display:flex;gap:14px;align-items:center">' + K.avatar(D.uye.ad) + K.avatar(D.uye.ad, 'm') + K.avatar(D.uye.ad, 'l') + K.avatar(D.uye.ad, 'xl') + K.avatar(d.yorumlar[0].ad, 'm', 'notr') + K.avatar(D.koseYazilari[0].ad, 'm', 'koyu') + '</div>', { c: 'pad' })]),
+    B('Akordeon', '.k-akordeon · K.akordeon()', 'Yardım merkezi SSS; çekmecedeki açılır satırla aynı ok.', [P('Açık · kapalı', K.akordeon('Kaydettiğim haberler nerede durur?', 'Üyeysen hesabında; misafirsen yalnız bu telefonda. Giriş yapınca cihazdakiler hesabına taşınır.', true) + K.akordeon('Bildirimleri nasıl kapatırım?', 'Hesabım › Bildirim tercihleri\'nden konu konu kapatabilirsin.'), { c: 'pad' })]),
+    B('İndirme ve ilerleme', '.k-indir · .k-ilerleme', 'İndir · indiriliyor (halka) · indirildi. İlerleme: kaldığın yer, Günün 5\'i, tanıtım adımları.', [P('İndirme halkası', '<div style="display:flex;gap:12px;align-items:center">' + K.indir() + K.indir('indiriliyor', 30) + K.indir('indiriliyor', 75) + K.indir('indirildi') + '</div>', { c: 'pad' }),
+      P('İlerleme çubukları', '<div style="display:grid;gap:16px">' + K.ilerleme(26) + K.ilerleme(60, 'kalin') + '<div class="k-ilerleme adim" style="--n:5"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></div></div>', { c: 'pad' })])]));
+
+  /* ---------- sayfayı kur ---------- */
+  var tek = Q.get('bolum');
+  $('ic').innerHTML = BL.filter(function(s, i){ return !tek || BOLUM[i][0] === tek; }).join('');
+  document.querySelectorAll('[data-kur]').forEach(function(el){ try { KUR[+el.getAttribute('data-kur')](el); } catch (e) { el.insertAdjacentHTML('beforeend', '<p style="padding:12px;color:var(--anlik)">' + e.message + '</p>'); console.error(e); } });
+  var adlar = Object.keys(SAY); $('say').querySelector('span').textContent = adlar.length + ' bileşen'; $('say').title = adlar.join(' · ');
+  var GR = { sozlesme: 'Başlangıç', temeller: 'Temeller', isaretler: 'Bileşenler', sayfalar: 'Katmanlar', yukleniyor: 'Haller', oynaticilar: 'Özel' };
+  $('nav').innerHTML = BOLUM.map(function(b){ var n = [].reduce.call(document.querySelectorAll('#' + b[0] + ' [data-say]'), function(t, x){ return t + +x.getAttribute('data-say'); }, 0); return (GR[b[0]] ? '<span class="g">' + GR[b[0]] + '</span>' : '') + '<a href="#' + b[0] + '" data-n="' + b[0] + '">' + I(b[1]) + b[2] + (n ? '<small>' + n + '</small>' : '') + '</a>'; }).join('');
+  /* renk değerleri seçili temadan okunur */
+  function renkler(){ document.querySelectorAll('[data-renk]').forEach(function(x){ x.textContent = x.getAttribute('data-renk') + ' · ' + getComputedStyle(document.documentElement).getPropertyValue(x.getAttribute('data-renk')).trim(); }); }
+  renkler();
+  /* bölüm takibi */
+  var nav = $('nav');
+  addEventListener('scroll', function(){ var on = null; BOLUM.forEach(function(b){ var s = $(b[0]); if (s && s.getBoundingClientRect().top < 140) on = b[0]; }); nav.querySelectorAll('a').forEach(function(a){ a.classList.toggle('on', a.getAttribute('data-n') === on); }); }, { passive: true });
+  /* tema: Açık · Koyu · Yan yana (yan yana = iki çerçeve, index.html gibi) */
+  var tm = $('tema');
+  function tema(t){ var i = { acik: 0, koyu: 1, yan: 2 }[t]; tm.style.setProperty('--i', i); tm.querySelectorAll('button').forEach(function(b, j){ b.setAttribute('aria-selected', j === i); });
+    document.body.classList.toggle('yan', t === 'yan');
+    if (t === 'yan') { if (!$('yan').children.length) { var y = location.pathname + '?gomulu=1' + (tek ? '&bolum=' + tek : '') + (K.uye ? '' : '&uye=0'); $('yan').innerHTML = '<iframe title="Açık" src="' + y + '"></iframe><iframe title="Koyu" src="' + y + '&tema=koyu"></iframe>'; } }
+    else { if (t === 'koyu') document.documentElement.setAttribute('data-tema', 'koyu'); else document.documentElement.removeAttribute('data-tema'); renkler(); }
+    try { localStorage.setItem('dada-kit-tema', t); } catch (e) {} }
+  tm.addEventListener('click', function(e){ var b = e.target.closest('button'); if (b) tema(b.getAttribute('data-t')); });
+  if (!document.documentElement.classList.contains('gomulu')) { var ilk = Q.get('tema') === 'koyu' ? 'koyu' : null; try { ilk = ilk || localStorage.getItem('dada-kit-tema'); } catch (e) {} if (ilk && ilk !== 'acik') tema(ilk); }
+  /* yan yana: iki çerçevenin kaydırması eşlenir */
+  if (document.documentElement.classList.contains('gomulu')) { var ben = false;
+    addEventListener('scroll', function(){ if (ben) { ben = false; return; } parent.postMessage({ kitKay: scrollY / Math.max(1, document.documentElement.scrollHeight - innerHeight) }, '*'); }, { passive: true });
+    addEventListener('message', function(e){ if (e.data && e.data.kitGit != null) { ben = true; scrollTo(0, e.data.kitGit * (document.documentElement.scrollHeight - innerHeight)); } }); }
+  else addEventListener('message', function(e){ if (!e.data || e.data.kitKay == null) return; [].forEach.call($('yan').querySelectorAll('iframe'), function(f){ if (f.contentWindow !== e.source) f.contentWindow.postMessage({ kitGit: e.data.kitKay }, '*'); }); });
+  if (location.hash) { var hd = document.querySelector(location.hash); if (hd) hd.scrollIntoView(); }
+});
+function G_(g){ return G(g); }
+</script>
+</body>
+</html>
