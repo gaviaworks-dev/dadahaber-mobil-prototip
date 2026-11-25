@@ -3453,7 +3453,7 @@ window.DIZIN = [
 "ad": "Tanıtım · adım n",
 "tur": "giriş",
 "alt": "Açılış ve tanıtım",
-"dosya": "ekranlar/giris/tanitim.html?adim=n",
+"dosya": "ekranlar/giris/tanitim.html?adim=1",
 "ok": false
 },
 {

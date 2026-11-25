@@ -573,7 +573,7 @@ Açılış, tanıtım, izin, kişiselleştirme, giriş ve üyelik akışı.
 | E-427 | Açılış (splash) · soğuk açılış | giriş | Açılış | — | — | iOS durağan görüntü; Android 12+ sistem açılışı (simge + zemin); yapılıyor | `ekranlar/giris/acilis.html` |   |
 | E-428 | Açılış · bağlantı yok | durum | Açılış | — | — | Doğrudan çevrimdışı okumaya (Kaydedilenler) | `ekranlar/giris/acilis.html?durum=cevrimdisi` |   |
 | E-429 | Açılış · güncelleme zorunlu | durum | Açılış | — | — | Açılıştan güncelleme ekranına geçiş (E-416) | `ekranlar/giris/acilis.html?durum=guncelleme` |   |
-| E-430 | Tanıtım · adım n | giriş | Tanıtım | `karsilama.html` (tercih seçimi) | — | Değer ekranları, her adımda Atla; yapılıyor | `ekranlar/giris/tanitim.html?adim=n` |   |
+| E-430 | Tanıtım · adım n | giriş | Tanıtım | `karsilama.html` (tercih seçimi) | — | Değer ekranları, her adımda Atla; yapılıyor | `ekranlar/giris/tanitim.html?adim=1` (adım 1–4) |   |
 
 ### İzin ve kişiselleştirme
 
