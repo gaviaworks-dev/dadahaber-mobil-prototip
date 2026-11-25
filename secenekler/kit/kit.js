@@ -131,7 +131,10 @@
       if (/^\d+([.,]\d+)?\s?(B|Bn|M|Mn|bin)$/.test(x)) return '<span class="ik"><i class="fa-solid fa-eye"></i>' + x + '</span>';
       return '<span>' + x + '</span>'; }).join('') + '</div>'; };
   K.vid = function(s){ return I('fa-play') + s; };
-  K.katEt = function(metin, ikon, o){ o = o || {}; return '<span class="k-kat' + (o.foto ? ' foto' : '') + '">' + I(ikon || K.ikon(metin)) + metin + (o.ek ? '<em>· ' + o.ek + '</em>' : '') + '</span>'; };
+  /* K52 (Beyar): il adı etiketinde konum ikonu (bölüm ikonu değil); 81 il */
+  K.IL = 'Adana Adıyaman Afyonkarahisar Ağrı Amasya Ankara Antalya Artvin Aydın Balıkesir Bilecik Bingöl Bitlis Bolu Burdur Bursa Çanakkale Çankırı Çorum Denizli Diyarbakır Edirne Elazığ Erzincan Erzurum Eskişehir Gaziantep Giresun Gümüşhane Hakkâri Hatay Isparta Mersin İstanbul İzmir Kars Kastamonu Kayseri Kırklareli Kırşehir Kocaeli Konya Kütahya Malatya Manisa Kahramanmaraş Mardin Muğla Muş Nevşehir Niğde Ordu Rize Sakarya Samsun Siirt Sinop Sivas Tekirdağ Tokat Trabzon Tunceli Şanlıurfa Uşak Van Yozgat Zonguldak Aksaray Bayburt Karaman Kırıkkale Batman Şırnak Bartın Ardahan Iğdır Yalova Karabük Kilis Osmaniye Düzce'.split(' ').concat(['Hakkari']);
+  K.ilMi = function(m){ return K.IL.indexOf(String(m)) > -1; };
+  K.katEt = function(metin, ikon, o){ o = o || {}; return '<span class="k-kat' + (o.foto ? ' foto' : '') + '">' + I(K.ilMi(metin) ? 'fa-location-dot' : (ikon || K.ikon(metin))) + metin + (o.ek ? '<em>· ' + o.ek + '</em>' : '') + '</span>'; };
   K.canli = function(m, o){ return '<span class="k-canli' + (o && o.kucuk ? ' kucuk' : '') + '"><span class="canli-nokta"></span>' + (m || 'Canlı') + '</span>'; };
   K.etiket = function(m, o){ o = o || {}; return '<span class="k-etiket' + (o.tur ? ' ' + o.tur : '') + '">' + (o.ikon ? I(o.ikon) : '') + m + '</span>'; };
   K.md = function(m, ikon, cls){ return '<span class="k-md' + (cls ? ' ' + cls : '') + '">' + I(ikon || 'fa-play') + m + '</span>'; };
@@ -147,7 +150,7 @@
     o = o || {}; var t = h.tur && h.tur !== h.alt ? h.tur : '', p = [];
     if (t === 'Canlı') p.push(K.canli()); else if (t === 'Son Dakika') p.push('<span class="k-tur"><span class="canli-nokta"></span>' + t + '</span>'); else if (t) p.push('<span class="tr">' + t + '</span>');
     var kat = h.alt || h.kat; if (kat) p.push(K.katEt(kat, o.ikon || h.ikon || K.ikon(h.kat || kat)));
-    var saat = h.saat || K.saatBul(h.baslik); if (!o.saatsiz && saat) p.push('<span class="s">' + saat + '</span>');
+    var saat = h.saat || K.saatBul(h.baslik); if (!o.saatsiz && saat) p.push('<span class="s">' + I('fa-calendar-day') + saat + '</span>'); /* K52: saat/tarih fa-calendar-day (sitedeki gibi; okuma süresi fa-clock) */
     /* K44: sığmazsa ikinci satıra kırılmaz, yana kayar; o.sag (ör. süre ya da görüntülenme) sağa yaslanır, ikonlu */
     var sag = o.sag ? K.meta([o.sag]).replace('<div class="k-meta">', '<span class="sag">').replace(/<\/div>$/, '</span>') : '';
     return '<span class="k-ustsatir"><span class="sol">' + p.join('<span class="nk">·</span>') + '</span>' + sag + '</span>';

@@ -85,6 +85,8 @@ body:has(.k-mo.acik) .k-son{height:calc(var(--k-ac-h) + 86px)} /* mini oynatıc�
 .k-ustsatir .sag .ik{display:inline-flex;align-items:center;gap:var(--b-4)}
 .k-ustsatir .sag i{font-size:11px;color:var(--metin-3)}
 .k-ustsatir .s,.k-ustsatir .nk{color:var(--metin-3);font-weight:var(--y-orta)}
+.k-ustsatir .s{display:inline-flex;align-items:center;gap:var(--b-4)} /* K52: saat ikonlu */
+.k-ustsatir .s i{font-size:11px;color:var(--metin-3)}
 .k-ustsatir .tr{color:var(--metin-3)}
 .k-tur{display:inline-flex;align-items:center;gap:var(--ikon-bosluk);color:var(--anlik);font-weight:var(--y-kalin)}  /* Son Dakika */
 /* durum etiketi: Analiz, Sona erdi, İndirildi, Onay bekliyor, Takipte … */

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>Ekran denetimi</title>
 <!-- Dada Haber Mobil · EKRAN DENETİMİ (TEK YAZAR: lider). Bütün ekranları (dizin.js) 390×844 çerçevede, açık ve koyu temada ölçer:
-     1 taşma (yatay) · 2 kenar 16px · 3 dokunma alanı ≥44×44 · 4 binme (aynı katmandaki dokunulabilir/yazı öğeleri) · 5 satıra kırılan bilgi (meta satırı) · 6 ikon kuralı K32 · 7 bilgi satırı (K48): kesilen öğe (kap dışında kalan, üç noktayla kısalan; yana kayan kap hariç) ve bilgi satırına binen öğe 0 · 8 görselsiz liste satırı (K48) · 9 kategori yanında saati olmayan liste satırı (K44/K48) · 10 seçili alt konu çipi ile listedeki haberlerin konusu uyuşmuyor (K49) · 11 Kaydedilenler bağlamı dışında liste, kart ya da tile içinde kaydet düğmesi (K51).
+     1 taşma (yatay) · 2 kenar 16px · 3 dokunma alanı ≥44×44 · 4 binme (aynı katmandaki dokunulabilir/yazı öğeleri) · 5 satıra kırılan bilgi (meta satırı) · 6 ikon kuralı K32 · 7 bilgi satırı (K48): kesilen öğe (kap dışında kalan, üç noktayla kısalan; yana kayan kap hariç) ve bilgi satırına binen öğe 0 · 8 görselsiz liste satırı (K48) · 9 kategori yanında saati olmayan liste satırı (K44/K48) · 10 seçili alt konu çipi ile listedeki haberlerin konusu uyuşmuyor (K49) · 11 Kaydedilenler bağlamı dışında liste, kart ya da tile içinde kaydet düğmesi (K51) · 12 üst bilgi satırında saat/tarih fa-calendar-day, il adı fa-location-dot (K52; okuma süresi fa-clock).
      ?sec=E-001,E-002 yalnız seçilenler · ?dosya=ekranlar/icerik/video,ekranlar/icerik/galeri dosya önekiyle · ?tema=acik|koyu yalnız bir tema · ?grup=icerik. Sonuç sayfada tablo + #json (headless --dump-dom ile okunur). -->
 <style>
 body{font:13px/1.4 -apple-system,system-ui,sans-serif;margin:16px;color:#111}
@@ -57,8 +57,14 @@ pre{white-space:pre-wrap}
     if (/kaydedilenler/.test(yol) || /Kaydedilen|Okunacaklar/.test(bas)) return [];
     return [].filter.call(d.querySelectorAll('.k-kay, button[aria-label="Kaydet"], [data-kaydet]'), function(b){ return !b.closest('.k-ub,.k-okuma,.k-sayfa,.k-menu,.k-baglam,.ust,.okuma') && b.closest('a,li,article,.k-satir,.k-kose-satir,[class*="k-kart"],.bk,.one,.k-ray > *'); })
       .map(function(b){ var k = b.closest('a,li,article,[class*="k-kart"],.k-satir,.bk') || b; return (k.className || k.tagName).toString().split(' ')[0] + ' «' + k.textContent.trim().slice(0, 24) + '»'; }); }
+
+  /* K52 (Beyar): üst bilgi satırında saat/tarih fa-calendar-day (sitedeki gibi), il adı fa-location-dot; okuma süresi fa-clock kalır */
+  function etiketIkon(d){ var w = d.defaultView, IL = (w.K && w.K.IL) || [], H = [];
+    [].forEach.call(d.querySelectorAll('.k-ustsatir .s, .mt > .s'), function(x){ if (!x.querySelector('i.fa-calendar-day') && /\d/.test(x.textContent)) H.push('saat ikonsuz «' + x.textContent.trim() + '»'); });
+    [].forEach.call(d.querySelectorAll('.k-kat, .kat-et'), function(x){ var t = x.textContent.replace(/·.*$/, '').trim(); if (IL.indexOf(t) > -1 && !x.querySelector('i.fa-location-dot')) H.push('il ikonu «' + t + '»'); });
+    return H.filter(function(v, i, a){ return a.indexOf(v) === i; }); }
   function olc(d, w){
-    var H = { tasma: [], kenar: [], dokun: [], binme: [], kirilma: [], ikon: [], bilgi: [], gorselsiz: [], saatsiz: [], konu: konuUyumu(d), kaydet: kaydetKarti(d) }, root = d.documentElement, all = [].slice.call(d.body.querySelectorAll('*'));
+    var H = { tasma: [], kenar: [], dokun: [], binme: [], kirilma: [], ikon: [], bilgi: [], gorselsiz: [], saatsiz: [], konu: konuUyumu(d), kaydet: kaydetKarti(d), etiket: etiketIkon(d) }, root = d.documentElement, all = [].slice.call(d.body.querySelectorAll('*'));
     var DIS = '.durum,.durum *,.ec,[data-denetim-yok],[data-denetim-yok] *';
     all.forEach(function(el){
       if (el.matches(DIS) || gizliAta(el, w)) return;
