@@ -18,15 +18,15 @@ Kaynaklar: `CLAUDE.md` (çalışma sırası 4), `docs/ekran-envanteri.md` (ilk t
 
 | Bölüm | Satır | Ekran satırı | Hal satırı (tür: durum) | Dosya (yeni) | Kök dosyasında satır | ✓ |
 |---|---|---|---|---|---|---|
-| İçerik | 581 | 181 | 400 | 69 | 59 | 581 |
+| İçerik | 587 | 187 | 400 | 69 | 59 | 587 |
 | Durumlar | 20 | 0 | 20 | 6 | 0 | 20 |
 | Giriş | 34 | 13 | 21 | 9 | 0 | 34 |
 | Hesap | 79 | 42 | 37 | 21 | 0 | 79 |
-| Sistem | 64 | 47 | 17 | 17 | 0 | 64 |
-| **Toplam** | **778** | **283** | **495** | **122** | **59** | **778** |
+| Sistem | 68 | 51 | 17 | 18 | 0 | 68 |
+| **Toplam** | **788** | **293** | **495** | **123** | **59** | **788** |
 
 Kök dosyaları (4): `hibrit/akis.html`, `hibrit/detay.html`, `hibrit/kok.html`, `hibrit/liste.html`. Kök dosyasındaki işaretsiz satırlar (yeni haller) yayılımda tek bir takım üyesine verilir; o süre boyunca kök dosyalarının tek yazarı odur (K34).
-Sistem bölümündeki 2 "aday" satırı (Canlı Etkinlik, widget) kapsam kararı bekler; sayıma dahil değildir. Güncelleme 2026-11-25: 6 dalga bitti, 679 satırın hepsi üretildi ve ölçüldü (6. dalga K41 ile eklenen 75 satır, 7. dalga spor ve borsa 99 satır dahil).
+Sistem bölümündeki "aday" satırı (Canlı Etkinlik) kapsam kararı bekler; sayıma dahil değildir. Widget'lar K47 ile kapsama girdi (E-603, E-787–E-789). Güncelleme 2026-11-25: 6 dalga bitti, 679 satırın hepsi üretildi ve ölçüldü (6. dalga K41 ile eklenen 75 satır, 7. dalga spor ve borsa 99 satır dahil).
 
 ## 1 · İçerik
 
@@ -606,7 +606,7 @@ Sitede üretilmiş, kapsam kararı bekleyen (B-24, B-25, B-26, B-12) bölümler 
 | E-690 | Canlı Skor · süzgeç başlayacak | durum | Spor | — | Liste | Saatli maçlar | `ekranlar/icerik/canli-skor.html?suz=baslayacak` | ✓ |
 | E-691 | Canlı Skor · takip ettiklerim · üye | durum | Spor | — | Liste | Takımın maçları; yoksa boş + Takımlarını yönet | `ekranlar/icerik/canli-skor.html?suz=takip` | ✓ |
 | E-692 | Canlı Skor · takip ettiklerim · misafir | durum | Spor | — | Liste | Giriş çağrısı | `ekranlar/icerik/canli-skor.html?suz=takip&uye=0` | ✓ |
-| E-693 | Lig · puan durumu · üye | içerik | Spor | `super-lig.html`, `puan-durumu.html` | Liste | Takip et, Lig değiştir, 5 sekme, takımın satırı vurgulu | `ekranlar/icerik/lig.html?lig=super-lig` | ✓ |
+| E-693 | Lig · özet · üye | içerik | Spor | `super-lig.html` | Liste | Takip et, Lig değiştir, 6 sekme; ilk açılış Özet (K47, sitedeki sıra): son skorlar, puan durumu ilk 6, fikstür, transfer, ligin haberleri; `?gor=`/`?vurgu=` ile Puan Durumu açılır | `ekranlar/icerik/lig.html?lig=super-lig` | ✓ |
 | E-694 | Lig · misafir | içerik | Spor | `super-lig.html` | Liste | Takip et → tetik paneli | `ekranlar/icerik/lig.html?uye=0` | ✓ |
 | E-695 | Lig · iç saha | içerik | Spor | `super-lig.html` | Liste | Genel · İç · Dış | `ekranlar/icerik/lig.html?gor=ic` | ✓ |
 | E-696 | Lig · fikstür | içerik | Spor | `fikstur.html` | Liste | Gün ayraçlı yaklaşan maçlar | `ekranlar/icerik/lig.html?sekme=fikstur` | ✓ |
@@ -699,6 +699,17 @@ Sitede üretilmiş, kapsam kararı bekleyen (B-24, B-25, B-26, B-12) bölümler 
 | E-778 | Enstrüman · emtia | içerik | Servis | `enstruman-detay.html` | Detay | Son, aralık, önceki | `ekranlar/icerik/enstruman.html?kod=brent` | ✓ |
 | E-779 | Enstrüman · fiyat alarmı | sistem | Servis | — | Detay | Üye alt sayfası; misafirde giriş paneli | `ekranlar/icerik/enstruman.html?durum=alarm` | ✓ |
 | E-780 | Enstrüman · boş | durum | Servis | `durumlar.html` | Detay | İlgili haber yok | `ekranlar/icerik/enstruman.html?kod=btc&durum=bos` | ✓ |
+
+### Finans konu sayfaları (K47 · Yasin Bey 2. tur: sitedeki gibi blok → haber)
+
+| ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
+|---|---|---|---|---|---|---|---|---|
+| E-781 | Döviz | içerik | Servis | `doviz.html` | Liste | Banner "Döviz" → kur tablosu → döviz çevirici (sayfada açık) → Döviz Haberleri, arada Bu Hafta Takvimde → yatırım uyarısı; hal satırları sekmeli Piyasalar'daki gibi (K42: çizilmez) | `ekranlar/icerik/piyasalar.html?konu=doviz` | ✓ |
+| E-782 | Altın | içerik | Servis | `altin.html` | Liste | Banner "Altın" → altın fiyatları → altın hesaplayıcı → Altın Haberleri | `ekranlar/icerik/piyasalar.html?konu=altin` | ✓ |
+| E-783 | Borsa | içerik | Servis | `borsa.html` | Liste | Banner "Borsa" → endeks kartları → hisseler (En Aktif · Artan · Azalan · Hacim, arama, 50 / 592) → Endeksler paneli (açılış, önceki kapanış, hacim, aralık) → Borsa Haberleri | `ekranlar/icerik/piyasalar.html?konu=borsa` | ✓ |
+| E-784 | Kripto Para | içerik | Servis | `kripto-para.html` | Liste | Banner → Piyasa Değeri · Artan · Azalan, arama, 50 kripto → kripto çevirici → Kripto Para Haberleri | `ekranlar/icerik/piyasalar.html?konu=kripto` | ✓ |
+| E-785 | Faiz Oranları | içerik | Servis | `faiz-oranlari.html` | Liste | Banner → gösterge oranlar, mevduat, kredi tabloları → hesaplayıcı → Faiz Haberleri | `ekranlar/icerik/piyasalar.html?konu=faiz` | ✓ |
+| E-786 | Akaryakıt Fiyatları | içerik | Servis | `akaryakit-fiyatlari.html` | Liste | Banner (koyu zemin; uygun fotoğraf yok) → il seçici + akaryakıt tablosu → Yakıt Maliyeti → Akaryakıt Haberleri | `ekranlar/icerik/piyasalar.html?konu=akaryakit` | ✓ |
 
 ## 2 · Durumlar
 
@@ -1021,12 +1032,20 @@ Alt sayfalar, onay pencereleri, kısa bildirimler, menüler, sesli arama, açıl
 | E-600 | Kilit ekranı · bildirim görünümü | sistem | OS | — (panel bildirim görseli 2:1) | — | Başlık, kısa metin, görsel; gruplanmış bildirimler | `ekranlar/sistem/kilit-ekrani.html` | ✓ |
 | E-601 | Kilit ekranı · medya denetimi | sistem | OS | — | — | Haber Dinle / Spiker / podcast: kapak, oynat, ±15 sn | `ekranlar/sistem/kilit-ekrani.html?durum=medya` | ✓ |
 
+### Ana ekran widget'ları (K47 · Yasin Bey 2. tur; E-603 adayının yerine)
+
+| ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
+|---|---|---|---|---|---|---|---|---|
+| E-603 | Widget'lar · galeri (bütün boy ve türler) | sistem | OS | — | — | Ana ekran üstünde küçük (2×2), orta (4×2), büyük (4×4); dokununca ilgili ekran | `ekranlar/sistem/widget.html` | ✓ |
+| E-787 | Widget · Son Dakika · küçük / orta / büyük | sistem | OS | `son-dakika.html` | — | Küçük: son haber + saat; orta: 2–3 başlık; büyük: liste; dokununca habere | `ekranlar/sistem/widget.html?tur=son-dakika` | ✓ |
+| E-788 | Widget · Piyasa · küçük / orta / büyük | sistem | OS | `piyasa-ekrani.html` | — | Dolar, Euro, gram altın, BIST 100; güncelleme saati; dokununca Piyasalar | `ekranlar/sistem/widget.html?tur=piyasa` | ✓ |
+| E-789 | Widget · Takımım · küçük / orta / büyük | sistem | OS | `mac-detay.html` | — | Canlı skor ve dakika, armalar, sıradaki maç; dokununca maç ya da takım sayfası | `ekranlar/sistem/widget.html?tur=takimim` | ✓ |
+
 ### Aday (kapsam kararı bekliyor)
 
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
 | E-602 | Canlı Etkinlik / Dynamic Island · maç skoru | sistem | OS · aday | `mac-detay.html` | — | Kilit ekranında skor; karar bekliyor | `ekranlar/sistem/kilit-ekrani.html?durum=canli-etkinlik` |   |
-| E-603 | Ana ekran widget'ları | sistem | OS · aday | — | — | Son Dakika, Günün 5'i, piyasa, namaz; karar bekliyor | `ekranlar/sistem/widget.html` |   |
 
 ### Dil seçici (K41 · 6. dalga)
 
@@ -1087,7 +1106,7 @@ Public `docs/sayfa-envanteri.md` (274 sayfa, 282 kalem) ile satır satır karş�
 | Uzun basınca bağlam menüsü | E-587–E-588 | Haptik, önizleme |
 | Aşağı çekip yenileme (ortak haller) | E-421–E-423 | Ayrıca her listenin `?durum=yenileniyor` satırı (25 satır); sitede yok |
 | Sistem temasını izle (Görünüm) | E-510 | Site yalnız açık/koyu |
-| Canlı Etkinlik, widget (aday) | E-602–E-603 | Kapsam kararı bekliyor |
+| Canlı Etkinlik (aday) | E-602 | Kapsam kararı bekliyor |
 
 ## 7 · Dosya listesi (yayılım iş bölümü)
 
@@ -1148,7 +1167,7 @@ Her dosyanın tek yazarı olur; kit ve kök dosyaları liderindir. Sayı: o dosy
 | `ekranlar/icerik/etiket.html` | 9 | E-321–E-329 |
 | `ekranlar/icerik/kisi.html` | 8 | E-330–E-337 |
 | `ekranlar/icerik/gelisen-olay.html` | 7 | E-338–E-344 |
-| `ekranlar/icerik/piyasalar.html` | 13 | E-345–E-357 |
+| `ekranlar/icerik/piyasalar.html` | 19 | E-345–E-357, E-781–E-786 (konu kipi, K47) |
 | `ekranlar/icerik/enstruman.html` | 5 | E-358–E-362 |
 | `ekranlar/icerik/hava-durumu.html` | 5 | E-363–E-367 |
 | `ekranlar/icerik/namaz-vakitleri.html` | 5 | E-368–E-372 |
@@ -1230,7 +1249,7 @@ Her dosyanın tek yazarı olur; kit ve kök dosyaları liderindir. Sayı: o dosy
 | `ekranlar/sistem/derin-baglanti.html` | 4 | E-592–E-595 |
 | `ekranlar/sistem/izin.html` | 4 | E-596–E-599 |
 | `ekranlar/sistem/kilit-ekrani.html` | 3 | E-600–E-602 |
-| `ekranlar/sistem/widget.html` | 1 | E-603 |
+| `ekranlar/sistem/widget.html` | 4 | E-603, E-787–E-789 |
 
 ## 8 · Bu listede verilmiş sayılmayanlar
 
@@ -1239,4 +1258,4 @@ Her dosyanın tek yazarı olur; kit ve kök dosyaları liderindir. Sayı: o dosy
 - Giriş ve üye ol sayfa mı alt sayfa mı (B-15), bülten üyeliksiz mi (B-14), misafirin kaydı cihazda mı (C30): açık.
 - Bildirim tercihlerinin içeriği (bekleyen #3), izin ön ekranında "Şimdi değil" (bekleyen #5), büyük yazıda kısaltma (bekleyen #7): açık.
 - Dada'ya Sor'un arama ile tek kutu olması (B-16), Gündem Takvimi (B-25): sitede de açık; satırlar kalıbı gösterir, kapsamı bağlamaz.
-- Aday satırlar (Canlı Etkinlik, widget): kapsam kararı.
+- Aday satır (Canlı Etkinlik): kapsam kararı.

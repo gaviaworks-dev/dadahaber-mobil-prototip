@@ -3950,7 +3950,7 @@ window.DIZIN = [
 },
 {
 "id": "E-693",
-"ad": "Lig · puan durumu · üye",
+"ad": "Lig · özet · üye",
 "tur": "içerik",
 "alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
 "dosya": "ekranlar/icerik/lig.html?lig=super-lig",
@@ -4650,6 +4650,54 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Borsa, hisse ve piyasa sekmeleri (K43 · 7. dalga)",
 "dosya": "ekranlar/icerik/enstruman.html?kod=btc&durum=bos",
+"ok": true
+},
+{
+"id": "E-781",
+"ad": "Döviz",
+"tur": "içerik",
+"alt": "Finans konu sayfaları (K47 · Yasin Bey 2. tur: sitedeki gibi blok → haber)",
+"dosya": "ekranlar/icerik/piyasalar.html?konu=doviz",
+"ok": true
+},
+{
+"id": "E-782",
+"ad": "Altın",
+"tur": "içerik",
+"alt": "Finans konu sayfaları (K47 · Yasin Bey 2. tur: sitedeki gibi blok → haber)",
+"dosya": "ekranlar/icerik/piyasalar.html?konu=altin",
+"ok": true
+},
+{
+"id": "E-783",
+"ad": "Borsa",
+"tur": "içerik",
+"alt": "Finans konu sayfaları (K47 · Yasin Bey 2. tur: sitedeki gibi blok → haber)",
+"dosya": "ekranlar/icerik/piyasalar.html?konu=borsa",
+"ok": true
+},
+{
+"id": "E-784",
+"ad": "Kripto Para",
+"tur": "içerik",
+"alt": "Finans konu sayfaları (K47 · Yasin Bey 2. tur: sitedeki gibi blok → haber)",
+"dosya": "ekranlar/icerik/piyasalar.html?konu=kripto",
+"ok": true
+},
+{
+"id": "E-785",
+"ad": "Faiz Oranları",
+"tur": "içerik",
+"alt": "Finans konu sayfaları (K47 · Yasin Bey 2. tur: sitedeki gibi blok → haber)",
+"dosya": "ekranlar/icerik/piyasalar.html?konu=faiz",
+"ok": true
+},
+{
+"id": "E-786",
+"ad": "Akaryakıt Fiyatları",
+"tur": "içerik",
+"alt": "Finans konu sayfaları (K47 · Yasin Bey 2. tur: sitedeki gibi blok → haber)",
+"dosya": "ekranlar/icerik/piyasalar.html?konu=akaryakit",
 "ok": true
 }
 ]
@@ -6234,6 +6282,38 @@ window.DIZIN = [
 "tur": "sistem",
 "alt": "İşletim sistemi yüzeyleri",
 "dosya": "ekranlar/sistem/kilit-ekrani.html?durum=medya",
+"ok": true
+},
+{
+"id": "E-603",
+"ad": "Widget'lar · galeri (bütün boy ve türler)",
+"tur": "sistem",
+"alt": "Ana ekran widget'ları (K47 · Yasin Bey 2. tur; E-603 adayının yerine)",
+"dosya": "ekranlar/sistem/widget.html",
+"ok": true
+},
+{
+"id": "E-787",
+"ad": "Widget · Son Dakika · küçük / orta / büyük",
+"tur": "sistem",
+"alt": "Ana ekran widget'ları (K47 · Yasin Bey 2. tur; E-603 adayının yerine)",
+"dosya": "ekranlar/sistem/widget.html?tur=son-dakika",
+"ok": true
+},
+{
+"id": "E-788",
+"ad": "Widget · Piyasa · küçük / orta / büyük",
+"tur": "sistem",
+"alt": "Ana ekran widget'ları (K47 · Yasin Bey 2. tur; E-603 adayının yerine)",
+"dosya": "ekranlar/sistem/widget.html?tur=piyasa",
+"ok": true
+},
+{
+"id": "E-789",
+"ad": "Widget · Takımım · küçük / orta / büyük",
+"tur": "sistem",
+"alt": "Ana ekran widget'ları (K47 · Yasin Bey 2. tur; E-603 adayının yerine)",
+"dosya": "ekranlar/sistem/widget.html?tur=takimim",
 "ok": true
 },
 {
