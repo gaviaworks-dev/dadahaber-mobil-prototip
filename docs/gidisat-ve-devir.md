@@ -70,3 +70,19 @@ Tarih: 2026-11-25 · Depo: `dadahaber-mobil-prototip` · Canlı: `secenekler/ekr
 - **Kaynak çelişkileri (K49): site esastır.** Günün 5'i saatleri ve üç haberin saati siteye göre düzeltildi (başlıklar zaten sitedeki gibiydi). Farklı Bakışlar'daki "Geçen hafta" ibareleri kaldırıldı (sözlük ve sitenin arşivi bu dosyaları 23 Kasım tarihli gösteriyor; sitenin "Önceki dosyalar" kutusu kendi içinde çelişkili).
 - **Alt konu süzgeci (K49):** çip seçilince yalnız o konunun haberleri; 19 alt başlığa sitenin konu sayfasından 3–4 haber. Ölçüm betiği kontrol 10 ve bağlantı betiğindeki "konu" bulgusu bunu korur.
 - **Kit adayı:** saat seçici alt sayfası (bildirim tercihleri, yerel).
+
+## 6. Dinamik görsel alanları (K50)
+
+Panelden yüklenir, API'den gelir. Görsel gelmezse prototipteki yer tutucu gösterilir. Konu, etiket ve il için görsel alanı yoktur. Ekran yolları `secenekler/` altına göredir.
+
+| Alan | Yer tutucu (görsel gelmezse) | Kit | Geçtiği ekranlar |
+|---|---|---|---|
+| **Yazar portresi** | Baş harfli koyu daire | `K.koseSatir`, `K.yazarSatir`, `K.avatar` (yazar) | Ana sayfa köşe yazarları (`hibrit/kok`), haber detayı imza (`hibrit/detay` ve detay türleri), köşe yazısı, yazar sayfası, yazarlar, arama sonuçları (yazarlar), Senin İçin, takip (Yazarlar sekmesi), canlı anlatım ve canlı yayın imzaları |
+| **Takım logosu** | Takım renkli kalkan + kısa kod (`K.arma`) | `K.arma`, `K.takim`, `K.mac`, `K.puanTablosu`, `K.TAKIM_GORSEL[ad].logo` | Ana sayfa maç kutusu, Spor listesi (puan tablosu, transfer, Takımlar rayı), canlı skor, lig, puan durumu, fikstür, maç detayı, takımlar, takım sayfası, transfer, branş, millî takım, Avrupa ligleri, Senin İçin, takip (Takımlar), tercihler, konu seçimi, tanıtım, widget (Takımım) |
+| **Takım kapağı** | Takım renkleriyle üretilmiş kapak + büyük arma | `.k-bbas[data-takim]` → `K.banner`, `K.TAKIM_GORSEL[ad].kapak` | Takım sayfası (`icerik/takim`) |
+| **Lig logosu** | Branş/kupa/bayrak ikonu (`ligIkon`) | `spor.js` lig başlığı | Canlı skor, lig, branş, Avrupa ligleri, transfer, takım, maç detayı, millî takım, widget (Takımım lig satırı) |
+| **Spor branşı ikonu** | Font Awesome branş ikonu | `spor.js` `BRANS` | Canlı skor (branş süzgeci), branş, lig, millî takım, Spor bölüm listesi |
+| **Burç görseli** | Font Awesome / burç kutusu | `icerik/astroloji`, `icerik/burc` (KİT ADAYI burç kutusu) | Astroloji, burç sayfası, Kadın bölüm listesi (Astroloji kutusu) |
+| **Borsa ve hisse logosu** | Kod yazısı (THYAO …) | `piyasa-veri.js` satırları, `K.piyasa` | Piyasalar (Borsa sekmesi ve konu sayfası: endeks kartları, hisse tablosu), hisse detayı, enstrüman (endeks), Finans bölüm listesi piyasa kutuları, ana sayfa piyasa şeridi, widget (Piyasa) |
+
+Panel için: her alan kare, saydam zeminli görsel (logo, ikon) ya da kare portre; takım kapağı yatay (görünür alan 390×224). Kayıtlar: yazar, takım (logo, kapak), lig, branş, burç, hisse/endeks.
