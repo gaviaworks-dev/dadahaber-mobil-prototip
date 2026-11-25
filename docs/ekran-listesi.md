@@ -739,105 +739,105 @@ Alt sayfalar, onay pencereleri, kısa bildirimler, menüler, sesli arama, açıl
 
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
-| E-540 | Paylaş alt sayfası | sistem | Alt sayfa | paylaşım (dh-share) | — | Bağlantıyı kopyala, uygulamalar, sistem paylaşım sayfası (iOS/Android farkı not) | `ekranlar/sistem/paylas.html` |   |
-| E-541 | Paylaş · paylaşım kartı | sistem | Alt sayfa | — | — | Hikâye biçiminde (9:16) haber kartı önizlemesi | `ekranlar/sistem/paylas.html?durum=kart` |   |
-| E-542 | Kaydet alt sayfası · üye | sistem | Alt sayfa | `hesabim-kaydedilenler.html` (klasör) | — | Klasör seç, yeni klasör, "Çevrimdışı indir" anahtarı | `ekranlar/sistem/kaydet.html` |   |
-| E-543 | Kaydet · yeni klasör | sistem | Alt sayfa | — | — | Klasör adı alanı, klavye açık | `ekranlar/sistem/kaydet.html?durum=yeni-klasor` |   |
-| E-544 | Kaydet · misafir | sistem | Alt sayfa | üyelik tetik paneli | — | Cihaza kaydedildi + "Giriş yap, her cihazda" (C30 varsayımı) | `ekranlar/sistem/kaydet.html?uye=0` |   |
-| E-545 | Oynatıcı · mini | sistem | Oynatıcı | sitede alt mini çubuk | — | Alt çubuğun üstünde; Haber Dinle, Spiker, podcast tek oynatıcı (kökte var); varsayılan kapalı, yalnız çalarken görünür; Spiker (radyo) ve Dinle (kulaklık) ayrı ad ve ikon (K39) | `ekranlar/sistem/oynatici.html` |   |
-| E-546 | Oynatıcı · tam ekran | sistem | Oynatıcı | `podcast-detay.html` (oynatıcı) | — | Kapak, başlık, ilerleme, ileri/geri, hız, sıradakiler, deşifre | `ekranlar/sistem/oynatici.html?durum=tam` |   |
-| E-547 | Oynatıcı · hız alt sayfası | sistem | Oynatıcı | — | — | 0,75× – 2× | `ekranlar/sistem/oynatici.html?durum=hiz` |   |
-| E-548 | Oynatıcı · sıradakiler | sistem | Oynatıcı | — | — | Sıra listesi; sürükle sırala, kaldır | `ekranlar/sistem/oynatici.html?durum=sira` |   |
-| E-549 | Oynatıcı · başka ses başladı | durum | Oynatıcı | sitedeki kural (aynı anda çalmaz) | — | Önceki duraklar; kısa bildirim | `ekranlar/sistem/oynatici.html?durum=degisti` |   |
-| E-550 | Oynatıcı · ses yüklenemedi | durum | Oynatıcı | — | — | Mini oynatıcıda hata + Yeniden dene | `ekranlar/sistem/oynatici.html?durum=hata` |   |
-| E-551 | Şehir seç alt sayfası | sistem | Alt sayfa | şehir seçici (citySelectModal) | — | Arama alanı, Konumumu kullan, şehir listesi | `ekranlar/sistem/sehir-sec.html` |   |
-| E-552 | Şehir seç · konum izni reddedildi | durum | Alt sayfa | konum reddi (C35) | — | Konum satırı pasif + Ayarlar | `ekranlar/sistem/sehir-sec.html?durum=konum-yok` |   |
-| E-553 | Bildir alt sayfası (yorum) | sistem | Alt sayfa | yorum bildir onay penceresi | — | Sebep seç (hakaret, spam, …), Gönder | `ekranlar/sistem/bildir.html` |   |
-| E-554 | Bildir · haberde hata bildir | sistem | Alt sayfa | `duzeltme-politikasi.html` | — | Haberdeki hatayı yaz; düzeltme talebi | `ekranlar/sistem/bildir.html?tur=haber` |   |
-| E-555 | Bildir · gönderildi | durum | Alt sayfa | — | — | Teşekkür kısa bildirimi | `ekranlar/sistem/bildir.html?durum=tamam` |   |
-| E-556 | Üyelik tetik paneli | sistem | Alt sayfa | üyelik tetik paneli (akış A3, A9) | — | Takip et / Kaydet / Yorum / Beğen → Giriş Yap · Üye Ol · Şimdi değil | `ekranlar/sistem/uyelik-tetik.html` |   |
-| E-557 | Üyelik tetik paneli · eyleme göre metin | durum | Alt sayfa | — | — | Ör. "Yorum yazmak için giriş yap" | `ekranlar/sistem/uyelik-tetik.html?eylem=yorum` |   |
+| E-540 | Paylaş alt sayfası | sistem | Alt sayfa | paylaşım (dh-share) | — | Bağlantıyı kopyala, uygulamalar, sistem paylaşım sayfası (iOS/Android farkı not) | `ekranlar/sistem/paylas.html` | ✓ |
+| E-541 | Paylaş · paylaşım kartı | sistem | Alt sayfa | — | — | Hikâye biçiminde (9:16) haber kartı önizlemesi | `ekranlar/sistem/paylas.html?durum=kart` | ✓ |
+| E-542 | Kaydet alt sayfası · üye | sistem | Alt sayfa | `hesabim-kaydedilenler.html` (klasör) | — | Klasör seç, yeni klasör, "Çevrimdışı indir" anahtarı | `ekranlar/sistem/kaydet.html` | ✓ |
+| E-543 | Kaydet · yeni klasör | sistem | Alt sayfa | — | — | Klasör adı alanı, klavye açık | `ekranlar/sistem/kaydet.html?durum=yeni-klasor` | ✓ |
+| E-544 | Kaydet · misafir | sistem | Alt sayfa | üyelik tetik paneli | — | Cihaza kaydedildi + "Giriş yap, her cihazda" (C30 varsayımı) | `ekranlar/sistem/kaydet.html?uye=0` | ✓ |
+| E-545 | Oynatıcı · mini | sistem | Oynatıcı | sitede alt mini çubuk | — | Alt çubuğun üstünde; Haber Dinle, Spiker, podcast tek oynatıcı (kökte var); varsayılan kapalı, yalnız çalarken görünür; Spiker (radyo) ve Dinle (kulaklık) ayrı ad ve ikon (K39) | `ekranlar/sistem/oynatici.html` | ✓ |
+| E-546 | Oynatıcı · tam ekran | sistem | Oynatıcı | `podcast-detay.html` (oynatıcı) | — | Kapak, başlık, ilerleme, ileri/geri, hız, sıradakiler, deşifre | `ekranlar/sistem/oynatici.html?durum=tam` | ✓ |
+| E-547 | Oynatıcı · hız alt sayfası | sistem | Oynatıcı | — | — | 0,75× – 2× | `ekranlar/sistem/oynatici.html?durum=hiz` | ✓ |
+| E-548 | Oynatıcı · sıradakiler | sistem | Oynatıcı | — | — | Sıra listesi; sürükle sırala, kaldır | `ekranlar/sistem/oynatici.html?durum=sira` | ✓ |
+| E-549 | Oynatıcı · başka ses başladı | durum | Oynatıcı | sitedeki kural (aynı anda çalmaz) | — | Önceki duraklar; kısa bildirim | `ekranlar/sistem/oynatici.html?durum=degisti` | ✓ |
+| E-550 | Oynatıcı · ses yüklenemedi | durum | Oynatıcı | — | — | Mini oynatıcıda hata + Yeniden dene | `ekranlar/sistem/oynatici.html?durum=hata` | ✓ |
+| E-551 | Şehir seç alt sayfası | sistem | Alt sayfa | şehir seçici (citySelectModal) | — | Arama alanı, Konumumu kullan, şehir listesi | `ekranlar/sistem/sehir-sec.html` | ✓ |
+| E-552 | Şehir seç · konum izni reddedildi | durum | Alt sayfa | konum reddi (C35) | — | Konum satırı pasif + Ayarlar | `ekranlar/sistem/sehir-sec.html?durum=konum-yok` | ✓ |
+| E-553 | Bildir alt sayfası (yorum) | sistem | Alt sayfa | yorum bildir onay penceresi | — | Sebep seç (hakaret, spam, …), Gönder | `ekranlar/sistem/bildir.html` | ✓ |
+| E-554 | Bildir · haberde hata bildir | sistem | Alt sayfa | `duzeltme-politikasi.html` | — | Haberdeki hatayı yaz; düzeltme talebi | `ekranlar/sistem/bildir.html?tur=haber` | ✓ |
+| E-555 | Bildir · gönderildi | durum | Alt sayfa | — | — | Teşekkür kısa bildirimi | `ekranlar/sistem/bildir.html?durum=tamam` | ✓ |
+| E-556 | Üyelik tetik paneli | sistem | Alt sayfa | üyelik tetik paneli (akış A3, A9) | — | Takip et / Kaydet / Yorum / Beğen → Giriş Yap · Üye Ol · Şimdi değil | `ekranlar/sistem/uyelik-tetik.html` | ✓ |
+| E-557 | Üyelik tetik paneli · eyleme göre metin | durum | Alt sayfa | — | — | Ör. "Yorum yazmak için giriş yap" | `ekranlar/sistem/uyelik-tetik.html?eylem=yorum` | ✓ |
 
 ### Sesli arama
 
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
-| E-558 | Sesli arama · hazır | sistem | Sesli arama | — | — | Alt sayfa, mikrofon düğmesi, "Dinliyorum" ipucu | `ekranlar/sistem/sesli-arama.html` |   |
-| E-559 | Sesli arama · mikrofon izni isteniyor | sistem | Sesli arama | — | — | Ön açıklama + sistem iletişim kutusu | `ekranlar/sistem/sesli-arama.html?durum=izin` |   |
-| E-560 | Sesli arama · kaydediyor | durum | Sesli arama | — | — | Ses dalgası, canlı metin, süre | `ekranlar/sistem/sesli-arama.html?durum=kaydediyor` |   |
-| E-561 | Sesli arama · duraklatıldı | durum | Sesli arama | — | — | Dalga durur; Devam · Gönder · İptal | `ekranlar/sistem/sesli-arama.html?durum=duraklatildi` |   |
-| E-562 | Sesli arama · gönderiliyor | durum | Sesli arama | — | — | Metin sabit, yükleniyor → arama sonuçları | `ekranlar/sistem/sesli-arama.html?durum=gonderiliyor` |   |
-| E-563 | Sesli arama · anlaşılamadı | durum | Sesli arama | — | — | Tekrar dene ya da yazarak ara | `ekranlar/sistem/sesli-arama.html?durum=hata` |   |
-| E-564 | Sesli arama · mikrofon izni reddedildi | durum | Sesli arama | — | — | Ayarlar'a git; yazarak ara | `ekranlar/sistem/sesli-arama.html?durum=izin-yok` |   |
+| E-558 | Sesli arama · hazır | sistem | Sesli arama | — | — | Alt sayfa, mikrofon düğmesi, "Dinliyorum" ipucu | `ekranlar/sistem/sesli-arama.html` | ✓ |
+| E-559 | Sesli arama · mikrofon izni isteniyor | sistem | Sesli arama | — | — | Ön açıklama + sistem iletişim kutusu | `ekranlar/sistem/sesli-arama.html?durum=izin` | ✓ |
+| E-560 | Sesli arama · kaydediyor | durum | Sesli arama | — | — | Ses dalgası, canlı metin, süre | `ekranlar/sistem/sesli-arama.html?durum=kaydediyor` | ✓ |
+| E-561 | Sesli arama · duraklatıldı | durum | Sesli arama | — | — | Dalga durur; Devam · Gönder · İptal | `ekranlar/sistem/sesli-arama.html?durum=duraklatildi` | ✓ |
+| E-562 | Sesli arama · gönderiliyor | durum | Sesli arama | — | — | Metin sabit, yükleniyor → arama sonuçları | `ekranlar/sistem/sesli-arama.html?durum=gonderiliyor` | ✓ |
+| E-563 | Sesli arama · anlaşılamadı | durum | Sesli arama | — | — | Tekrar dene ya da yazarak ara | `ekranlar/sistem/sesli-arama.html?durum=hata` | ✓ |
+| E-564 | Sesli arama · mikrofon izni reddedildi | durum | Sesli arama | — | — | Ayarlar'a git; yazarak ara | `ekranlar/sistem/sesli-arama.html?durum=izin-yok` | ✓ |
 
 ### Onay pencereleri
 
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
-| E-565 | Onay · Çıkış yap | sistem | Onay | onay penceresi (oturumu kapat) | — | Cihazdaki kaydedilenler kalır mı notu | `ekranlar/sistem/onay.html?tur=cikis` |   |
-| E-566 | Onay · Hesabı sil (son onay) | sistem | Onay | onay penceresi (hesap sil) | — | Geri alınamaz; kırmızı düğme | `ekranlar/sistem/onay.html?tur=hesap-sil` |   |
-| E-567 | Onay · İndirilenleri sil | sistem | Onay | — | — | Kazanılacak alan | `ekranlar/sistem/onay.html?tur=indirilenleri-sil` |   |
-| E-568 | Onay · Geçmişi temizle | sistem | Onay | — | — | Tümü ya da seçili sekme | `ekranlar/sistem/onay.html?tur=gecmisi-temizle` |   |
-| E-569 | Onay · Klasörü sil | sistem | Onay | — | — | İçindekiler Kaydedilenler'de kalır | `ekranlar/sistem/onay.html?tur=klasor-sil` |   |
-| E-570 | Onay · Takibi bırak | sistem | Onay | — | — | Konu/yazar adı | `ekranlar/sistem/onay.html?tur=takibi-birak` |   |
-| E-571 | Onay · Yazdığın yorum silinsin mi | sistem | Onay | — | — | Yorum alt sayfası kapatılırken | `ekranlar/sistem/onay.html?tur=taslak` |   |
-| E-572 | Onay · Oturumun sona erdi | sistem | Onay | oturum süresi doldu ara durumu | — | Yeniden giriş yap · Misafir devam | `ekranlar/sistem/onay.html?tur=oturum` |   |
+| E-565 | Onay · Çıkış yap | sistem | Onay | onay penceresi (oturumu kapat) | — | Cihazdaki kaydedilenler kalır mı notu | `ekranlar/sistem/onay.html?tur=cikis` | ✓ |
+| E-566 | Onay · Hesabı sil (son onay) | sistem | Onay | onay penceresi (hesap sil) | — | Geri alınamaz; kırmızı düğme | `ekranlar/sistem/onay.html?tur=hesap-sil` | ✓ |
+| E-567 | Onay · İndirilenleri sil | sistem | Onay | — | — | Kazanılacak alan | `ekranlar/sistem/onay.html?tur=indirilenleri-sil` | ✓ |
+| E-568 | Onay · Geçmişi temizle | sistem | Onay | — | — | Tümü ya da seçili sekme | `ekranlar/sistem/onay.html?tur=gecmisi-temizle` | ✓ |
+| E-569 | Onay · Klasörü sil | sistem | Onay | — | — | İçindekiler Kaydedilenler'de kalır | `ekranlar/sistem/onay.html?tur=klasor-sil` | ✓ |
+| E-570 | Onay · Takibi bırak | sistem | Onay | — | — | Konu/yazar adı | `ekranlar/sistem/onay.html?tur=takibi-birak` | ✓ |
+| E-571 | Onay · Yazdığın yorum silinsin mi | sistem | Onay | — | — | Yorum alt sayfası kapatılırken | `ekranlar/sistem/onay.html?tur=taslak` | ✓ |
+| E-572 | Onay · Oturumun sona erdi | sistem | Onay | oturum süresi doldu ara durumu | — | Yeniden giriş yap · Misafir devam | `ekranlar/sistem/onay.html?tur=oturum` | ✓ |
 
 ### Kısa bildirimler ve afişler
 
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
-| E-573 | Kısa bildirim · Kaydedildi · Geri al | sistem | Toast | kısa bildirim (toast) | — | Klasör adıyla; geri al 4 sn | `ekranlar/sistem/toast.html?tur=kaydedildi` |   |
-| E-574 | Kısa bildirim · Kaydedilenlerden çıkarıldı · Geri al | sistem | Toast | kısa bildirim (toast) | — | Alt çubuğun üstünde, tek satır | `ekranlar/sistem/toast.html?tur=kaldirildi` |   |
-| E-575 | Kısa bildirim · Bağlantı kopyalandı | sistem | Toast | kısa bildirim (toast) | — | Alt çubuğun üstünde, tek satır | `ekranlar/sistem/toast.html?tur=kopyalandi` |   |
-| E-576 | Kısa bildirim · Takip ediliyor | sistem | Toast | — | — | Bildirim aç önerisiyle | `ekranlar/sistem/toast.html?tur=takip` |   |
-| E-577 | Kısa bildirim · Çevrimdışı okumaya indirildi | sistem | Toast | — | — | Alt çubuğun üstünde, tek satır | `ekranlar/sistem/toast.html?tur=indirildi` |   |
-| E-578 | Kısa bildirim · Çevrimdışısın | sistem | Toast | çevrimdışı bandı | — | Kalıcı ince bant, alt çubuğun üstünde | `ekranlar/sistem/toast.html?tur=cevrimdisi` |   |
-| E-579 | Kısa bildirim · Bağlantı geri geldi | sistem | Toast | çevrimdışı bandı | — | Bant yeşile döner, kaybolur | `ekranlar/sistem/toast.html?tur=baglandi` |   |
-| E-580 | Kısa bildirim · Yorumun gönderildi | sistem | Toast | — | — | Denetim sonrası yayınlanır | `ekranlar/sistem/toast.html?tur=yorum` |   |
-| E-581 | Kısa bildirim · İşlem yapılamadı | sistem | Toast | — | — | Yeniden dene bağlantısıyla | `ekranlar/sistem/toast.html?tur=hata` |   |
-| E-582 | Uygulama içi bildirim afişi · Son Dakika | sistem | Afiş | — | — | Uygulama açıkken gelen bildirim üstten iner; dokun → detay, yukarı it → kapat | `ekranlar/sistem/bildirim-afisi.html` |   |
-| E-583 | Uygulama içi bildirim afişi · canlı anlatım | sistem | Afiş | — | — | Takip edilen canlı anlatımda yeni gelişme | `ekranlar/sistem/bildirim-afisi.html?tur=canli` |   |
+| E-573 | Kısa bildirim · Kaydedildi · Geri al | sistem | Toast | kısa bildirim (toast) | — | Klasör adıyla; geri al 4 sn | `ekranlar/sistem/toast.html?tur=kaydedildi` | ✓ |
+| E-574 | Kısa bildirim · Kaydedilenlerden çıkarıldı · Geri al | sistem | Toast | kısa bildirim (toast) | — | Alt çubuğun üstünde, tek satır | `ekranlar/sistem/toast.html?tur=kaldirildi` | ✓ |
+| E-575 | Kısa bildirim · Bağlantı kopyalandı | sistem | Toast | kısa bildirim (toast) | — | Alt çubuğun üstünde, tek satır | `ekranlar/sistem/toast.html?tur=kopyalandi` | ✓ |
+| E-576 | Kısa bildirim · Takip ediliyor | sistem | Toast | — | — | Bildirim aç önerisiyle | `ekranlar/sistem/toast.html?tur=takip` | ✓ |
+| E-577 | Kısa bildirim · Çevrimdışı okumaya indirildi | sistem | Toast | — | — | Alt çubuğun üstünde, tek satır | `ekranlar/sistem/toast.html?tur=indirildi` | ✓ |
+| E-578 | Kısa bildirim · Çevrimdışısın | sistem | Toast | çevrimdışı bandı | — | Kalıcı ince bant, alt çubuğun üstünde | `ekranlar/sistem/toast.html?tur=cevrimdisi` | ✓ |
+| E-579 | Kısa bildirim · Bağlantı geri geldi | sistem | Toast | çevrimdışı bandı | — | Bant yeşile döner, kaybolur | `ekranlar/sistem/toast.html?tur=baglandi` | ✓ |
+| E-580 | Kısa bildirim · Yorumun gönderildi | sistem | Toast | — | — | Denetim sonrası yayınlanır | `ekranlar/sistem/toast.html?tur=yorum` | ✓ |
+| E-581 | Kısa bildirim · İşlem yapılamadı | sistem | Toast | — | — | Yeniden dene bağlantısıyla | `ekranlar/sistem/toast.html?tur=hata` | ✓ |
+| E-582 | Uygulama içi bildirim afişi · Son Dakika | sistem | Afiş | — | — | Uygulama açıkken gelen bildirim üstten iner; dokun → detay, yukarı it → kapat | `ekranlar/sistem/bildirim-afisi.html` | ✓ |
+| E-583 | Uygulama içi bildirim afişi · canlı anlatım | sistem | Afiş | — | — | Takip edilen canlı anlatımda yeni gelişme | `ekranlar/sistem/bildirim-afisi.html?tur=canli` | ✓ |
 
 ### Menüler
 
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
-| E-584 | Açılır menü · sıralama | sistem | Menü | — | — | Arama, Kaydedilenler, Yorumlar: En yeni · En eski · En çok beğenilen | `ekranlar/sistem/acilir-menu.html` |   |
-| E-585 | Açılır menü · klasör (⋯) | sistem | Menü | — | — | Yeniden adlandır, Sil | `ekranlar/sistem/acilir-menu.html?tur=klasor` |   |
-| E-586 | Açılır menü · yorum (⋯) | sistem | Menü | yorum bildir | — | Bildir, Kopyala; kendi yorumunda Sil | `ekranlar/sistem/acilir-menu.html?tur=yorum` |   |
-| E-587 | Bağlam menüsü (kartta uzun basma) | sistem | Menü | — (uygulamaya özgü) | — | Haber önizlemesi + Kaydet, Paylaş, Dinle; haptik | `ekranlar/sistem/baglam-menu.html` |   |
-| E-588 | Bağlam menüsü · Akış videosu | sistem | Menü | — | — | Sesi aç, Altyazı, Habere git yok (K23) | `ekranlar/sistem/baglam-menu.html?tur=akis` |   |
+| E-584 | Açılır menü · sıralama | sistem | Menü | — | — | Arama, Kaydedilenler, Yorumlar: En yeni · En eski · En çok beğenilen | `ekranlar/sistem/acilir-menu.html` | ✓ |
+| E-585 | Açılır menü · klasör (⋯) | sistem | Menü | — | — | Yeniden adlandır, Sil | `ekranlar/sistem/acilir-menu.html?tur=klasor` | ✓ |
+| E-586 | Açılır menü · yorum (⋯) | sistem | Menü | yorum bildir | — | Bildir, Kopyala; kendi yorumunda Sil | `ekranlar/sistem/acilir-menu.html?tur=yorum` | ✓ |
+| E-587 | Bağlam menüsü (kartta uzun basma) | sistem | Menü | — (uygulamaya özgü) | — | Haber önizlemesi + Kaydet, Paylaş, Dinle; haptik | `ekranlar/sistem/baglam-menu.html` | ✓ |
+| E-588 | Bağlam menüsü · Akış videosu | sistem | Menü | — | — | Sesi aç, Altyazı, Habere git yok (K23) | `ekranlar/sistem/baglam-menu.html?tur=akis` | ✓ |
 
 ### Açılış yolları ve izinler
 
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
-| E-589 | Bildirimden açılış · uygulama kapalı | sistem | Açılış yolu | — | — | Açılış kısa → doğrudan detay; geri → ana sayfa | `ekranlar/sistem/bildirimden-acilis.html` |   |
-| E-590 | Bildirimden açılış · uygulama açık | sistem | Açılış yolu | — | — | Bulunulan ekranın üstüne detay; geri → önceki ekran | `ekranlar/sistem/bildirimden-acilis.html?durum=sicak` |   |
-| E-591 | Bildirimden açılış · içerik kaldırıldı | durum | Açılış yolu | `410.html` | — | Hata şablonu + ana sayfaya | `ekranlar/sistem/bildirimden-acilis.html?durum=kaldirildi` |   |
-| E-592 | Derin bağlantı · haber | sistem | Açılış yolu | paylaşılan site adresi | — | Site adresi uygulamada açılır → detay | `ekranlar/sistem/derin-baglanti.html` |   |
-| E-593 | Derin bağlantı · bölüm / yazar / etiket | sistem | Açılış yolu | site adresleri | — | Hedef liste ekranı; eski yönlendirmeler hedefe (DADAHABER-10 §6) | `ekranlar/sistem/derin-baglanti.html?tur=liste` |   |
-| E-594 | Derin bağlantı · giriş gerekli | durum | Açılış yolu | giriş gerekli ara durumu | — | Hesap ekranı adresi misafirde: giriş → hedefe dön | `ekranlar/sistem/derin-baglanti.html?durum=giris` |   |
-| E-595 | Derin bağlantı · uygulamada yok / bulunamadı | durum | Açılış yolu | `404.html` | — | Web'de aç ya da ana sayfa | `ekranlar/sistem/derin-baglanti.html?durum=bulunamadi` |   |
-| E-596 | İzin reddedildi · bildirim | durum | İzin | — | — | Neden gerekli + Ayarlar'a git | `ekranlar/sistem/izin.html?tur=bildirim` |   |
-| E-597 | İzin reddedildi · konum | durum | İzin | konum reddi (C35) | — | Şehri elle seç + Ayarlar | `ekranlar/sistem/izin.html?tur=konum` |   |
-| E-598 | İzin reddedildi · mikrofon | durum | İzin | — | — | Yazarak ara + Ayarlar | `ekranlar/sistem/izin.html?tur=mikrofon` |   |
-| E-599 | Konum izni · ön açıklama | sistem | İzin | — | — | Hava ve namaz için; Konumu kullan · Şehir seç | `ekranlar/sistem/izin.html?tur=konum&durum=istek` |   |
+| E-589 | Bildirimden açılış · uygulama kapalı | sistem | Açılış yolu | — | — | Açılış kısa → doğrudan detay; geri → ana sayfa | `ekranlar/sistem/bildirimden-acilis.html` | ✓ |
+| E-590 | Bildirimden açılış · uygulama açık | sistem | Açılış yolu | — | — | Bulunulan ekranın üstüne detay; geri → önceki ekran | `ekranlar/sistem/bildirimden-acilis.html?durum=sicak` | ✓ |
+| E-591 | Bildirimden açılış · içerik kaldırıldı | durum | Açılış yolu | `410.html` | — | Hata şablonu + ana sayfaya | `ekranlar/sistem/bildirimden-acilis.html?durum=kaldirildi` | ✓ |
+| E-592 | Derin bağlantı · haber | sistem | Açılış yolu | paylaşılan site adresi | — | Site adresi uygulamada açılır → detay | `ekranlar/sistem/derin-baglanti.html` | ✓ |
+| E-593 | Derin bağlantı · bölüm / yazar / etiket | sistem | Açılış yolu | site adresleri | — | Hedef liste ekranı; eski yönlendirmeler hedefe (DADAHABER-10 §6) | `ekranlar/sistem/derin-baglanti.html?tur=liste` | ✓ |
+| E-594 | Derin bağlantı · giriş gerekli | durum | Açılış yolu | giriş gerekli ara durumu | — | Hesap ekranı adresi misafirde: giriş → hedefe dön | `ekranlar/sistem/derin-baglanti.html?durum=giris` | ✓ |
+| E-595 | Derin bağlantı · uygulamada yok / bulunamadı | durum | Açılış yolu | `404.html` | — | Web'de aç ya da ana sayfa | `ekranlar/sistem/derin-baglanti.html?durum=bulunamadi` | ✓ |
+| E-596 | İzin reddedildi · bildirim | durum | İzin | — | — | Neden gerekli + Ayarlar'a git | `ekranlar/sistem/izin.html?tur=bildirim` | ✓ |
+| E-597 | İzin reddedildi · konum | durum | İzin | konum reddi (C35) | — | Şehri elle seç + Ayarlar | `ekranlar/sistem/izin.html?tur=konum` | ✓ |
+| E-598 | İzin reddedildi · mikrofon | durum | İzin | — | — | Yazarak ara + Ayarlar | `ekranlar/sistem/izin.html?tur=mikrofon` | ✓ |
+| E-599 | Konum izni · ön açıklama | sistem | İzin | — | — | Hava ve namaz için; Konumu kullan · Şehir seç | `ekranlar/sistem/izin.html?tur=konum&durum=istek` | ✓ |
 
 ### İşletim sistemi yüzeyleri
 
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
-| E-600 | Kilit ekranı · bildirim görünümü | sistem | OS | — (panel bildirim görseli 2:1) | — | Başlık, kısa metin, görsel; gruplanmış bildirimler | `ekranlar/sistem/kilit-ekrani.html` |   |
-| E-601 | Kilit ekranı · medya denetimi | sistem | OS | — | — | Haber Dinle / Spiker / podcast: kapak, oynat, ±15 sn | `ekranlar/sistem/kilit-ekrani.html?durum=medya` |   |
+| E-600 | Kilit ekranı · bildirim görünümü | sistem | OS | — (panel bildirim görseli 2:1) | — | Başlık, kısa metin, görsel; gruplanmış bildirimler | `ekranlar/sistem/kilit-ekrani.html` | ✓ |
+| E-601 | Kilit ekranı · medya denetimi | sistem | OS | — | — | Haber Dinle / Spiker / podcast: kapak, oynat, ±15 sn | `ekranlar/sistem/kilit-ekrani.html?durum=medya` | ✓ |
 
 ### Aday (kapsam kararı bekliyor)
 
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
-| E-602 | Canlı Etkinlik / Dynamic Island · maç skoru | sistem | OS · aday | `mac-detay.html` | — | Kilit ekranında skor; karar bekliyor | `ekranlar/sistem/kilit-ekrani.html?durum=canli-etkinlik` |   |
-| E-603 | Ana ekran widget'ları | sistem | OS · aday | — | — | Son Dakika, Günün 5'i, piyasa, namaz; karar bekliyor | `ekranlar/sistem/widget.html` |   |
+| E-602 | Canlı Etkinlik / Dynamic Island · maç skoru | sistem | OS · aday | `mac-detay.html` | — | Kilit ekranında skor; karar bekliyor | `ekranlar/sistem/kilit-ekrani.html?durum=canli-etkinlik` | ✓ |
+| E-603 | Ana ekran widget'ları | sistem | OS · aday | — | — | Son Dakika, Günün 5'i, piyasa, namaz; karar bekliyor | `ekranlar/sistem/widget.html` | ✓ |
 
 ## 6 · Public siteyle karşılaştırma
 
