@@ -301,4 +301,5 @@ html.tam .mo{position:fixed}
 .detay-ekr .mo{bottom:calc(var(--alt-guvenli) + 66px)}
 
 /* ---------- Ortak boşluk ---------- */
-.son{height:calc(var(--ac-h) + 96px)}
+.son{height:calc(var(--ac-h) + 20px)} /* sayfa sonu yalnız alt çubuk kadar; mini oynatıcı açıkken onun kadar daha (K33) */
+body:has(.mo.acik) .son{height:calc(var(--ac-h) + 86px)}

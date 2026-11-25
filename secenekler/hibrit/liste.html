@@ -231,6 +231,7 @@ body:not(.cizelge) .cizelge-kip{display:none}
   e.addEventListener('scroll', dar, { passive: true }); dar();
   var Q = new URLSearchParams(location.search);
   if (Q.get('kip') === 'cizelge') kip('cizelge');
+  if (Q.get('kay')) { e.scrollTop = +Q.get('kay'); dar(); }
   if (Q.get('dar') === '1') { document.body.classList.add('anlik'); e.scrollTop = 300; dar(); }
   H.altCubuk('bolum');
   H.oynatici();
