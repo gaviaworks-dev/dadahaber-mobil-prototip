@@ -1227,3 +1227,14 @@ html[data-tema="koyu"] .k-isk{background-image:linear-gradient(90deg,var(--yuzey
 .k-ilerleme.adim{display:grid;grid-template-columns:repeat(var(--n,4),1fr);gap:var(--b-4);background:none;height:4px}
 .k-ilerleme.adim i{width:auto;background:var(--cizgi)}
 .k-ilerleme.adim i.on{background:var(--marka)}
+
+/* K39 · Spiker ve Dinle ayrımı: Dinle sekmesinde canlı noktası; hikâye şeridinin ilk dairesi Spiker; mini oynatıcıda radyo / kulaklık */
+.k-ac a .cn-n{position:absolute;top:var(--b-8);left:calc(50% + var(--b-8));width:8px;height:8px;border-radius:var(--k-daire);background:var(--anlik);outline:2px solid var(--zemin)}
+.k-hk-o.spk .k-hk-f{outline-color:var(--anlik)}
+.k-hk-o.spk .k-hk-cn{position:absolute;left:50%;bottom:-8px;transform:translateX(-50%);padding:0 var(--b-4);border-radius:var(--k-ic);background:var(--anlik);color:#fff;font-size:9.5px;font-weight:var(--y-kalin);letter-spacing:.06em;line-height:16px;box-shadow:0 0 0 2px var(--zemin)}
+.k-hk-o.spk .k-hk-a{font-weight:var(--y-kalin)}
+.k-hk-o.spk.sonuk .k-hk-f{outline-color:var(--cizgi);outline-width:1.5px;filter:grayscale(.6)}
+.k-hk-o.spk.sonuk .k-hk-f i{background:var(--zemin-2);color:var(--metin-3)}
+.k-hk-o.spk.sonuk .k-hk-a{color:var(--metin-3);font-variant-numeric:tabular-nums}
+.k-mo .t small .y{display:inline-flex;align-items:center;gap:var(--ikon-bosluk);min-width:0;overflow:hidden;text-overflow:ellipsis}
+.k-mo .t small .y i{color:var(--marka);font-size:11px}

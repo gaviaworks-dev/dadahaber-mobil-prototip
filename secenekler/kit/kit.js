@@ -11,7 +11,7 @@
      K.ustCubuk({tur:'duz'|'foto'|'ara', geri, baslik, buyuk, logo, eylemler:[…|'ara'|'paylas'|'kaydet'|'menu'|'hesap'|'daha'|'ayarlar'|'sirala'], gorsel, esik, ilerleme, ara:{…}, ekran, yer})
      (Beyar: üst çubuklarda zil YOK; bildirimlere çekmecenin hesap kartından ve Hesabım'dan gidilir)
      K.altCubuk(etkin, {koyu, rozet:{hesap:3}, yer})     etkin ∈ ana · bolum · akis · dinle · hesap
-     K.oynatici({yer})  K.spikerBaslat()  K.spikerDurdur()  K.goruntuleyici({g, altyazi, sira, toplam})                  Spiker mini oynatıcısı; sessionStorage "dada-spiker" (hibrit.js ile aynı)
+     K.oynatici({yer}) (varsayılan kapalı; ?calan=1|dinle)  K.spikerBaslat()  K.dinleBaslat()  K.spikerDurdur()  K.spikerCanli()  K.goruntuleyici({g, altyazi, sira, toplam})                  Spiker mini oynatıcısı; sessionStorage "dada-spiker" (hibrit.js ile aynı)
      K.okuma({yer})                                       detayın yüzen okuma çubuğu
      K.cekmece({yer, acik})                               sağdan menü çekmecesi (üye/misafir); [data-menu] açar
      K.yapis(el, ekran)                                   hikâye şeridi yapışınca küçülür
@@ -24,7 +24,7 @@
                K.anahtar(on, {pasif})  K.onay(metin, {secili, hata})  K.secim(ad, metin, {secili, alt, satir})  K.kaydirac({min,max,deger,sari})  K.gunler({secili})
    KARTLAR     K.kartA(h,o) K.kartK(h,o) K.kartGenis(h,o) K.satir(h,{tur:'tam'|'kisa', durum, secim, kaydedildi, indir, kaydet})
                K.kartVideo(v,{yatay}) K.podcast(p) K.podcastSatir(p,{ilerleme, oynuyor, indir}) K.kartGaleri(f) K.olay(o) K.kartAkis(v)
-               K.akisTam(v,{i, durum}) K.kose(k) K.senin({n}) K.hikayeSerit({kucuk, koyu}) K.sd(s, ilk) K.sdSatir(s, ilk) K.bolumSatir(b)
+               K.akisTam(v,{i, durum}) K.kose(k) K.senin({n}) K.hikayeSerit({kucuk, koyu, spiker:false}) K.sd(s, ilk) K.sdSatir(s, ilk) K.bolumSatir(b)
                K.yazarSatir(k,{takip}) K.bildirim(o) K.oneri(o) K.takim(o) K.ray(html, cls)
    AYRAÇLAR    K.piyasa() K.hava() K.namaz() K.mac({hal}) K.spiker() K.cagri({ikon, baslik, aciklama, eylem})
    DETAY       K.zamanSatir(d) K.madde(liste) K.etkisi(metin) K.bolumKart({ikon, baslik, sira, toplam, icerik, sonraki}) K.hmb(alt) K.kaynaklar(liste)
@@ -232,7 +232,9 @@
     var gor = function(h){ return h.goruldu || iz.indexOf(h.kod) >= 0; };
     var s = D.hikayeler.filter(function(h){ return !gor(h); }).concat(D.hikayeler.filter(gor));
     var geri = encodeURIComponent(location.href.replace(K.KOK, ''));
-    return '<nav class="k-hk' + (o.kucuk ? ' kucuk' : '') + (o.koyu ? ' koyu' : '') + '" aria-label="Kategori hikâyeleri">' + s.map(function(h){ var g = gor(h);
+    var canli = K.spikerCanli(), sonraki = '19.00';
+    var spk = o.spiker === false ? '' : '<a class="k-hk-o spk' + (canli ? ' canli' : ' sonuk') + '" href="' + K.git('spiker', canli ? '' : 'spiker=0') + '" aria-label="' + (canli ? 'Dada Spiker yayında' : 'Dada Spiker, sıradaki bülten ' + sonraki) + '"><span class="k-hk-f"' + bg(D.spiker.gorsel) + '>' + (canli ? '<b class="k-hk-cn">CANLI</b>' : I('fa-radio')) + '</span><span class="k-hk-a">' + (canli ? 'Spiker' : sonraki) + '</span></a>';
+    return '<nav class="k-hk' + (o.kucuk ? ' kucuk' : '') + (o.koyu ? ' koyu' : '') + '" aria-label="Kategori hikâyeleri">' + spk + s.map(function(h){ var g = gor(h);
       return '<a class="k-hk-o' + (g ? ' gor' : '') + '" href="' + K.git('hikaye', 'kat=' + h.kod + '&geri=' + geri) + '" aria-label="' + h.kat + ' hikâyesi' + (g ? ', görüldü' : '') + '"><span class="k-hk-f"' + bg(h.g) + '>' + I(h.ikon) + '</span><span class="k-hk-a">' + h.kat + '</span></a>'; }).join('') + '</nav>'; };
   K.sd = function(s, ilk){ return '<a class="k-sd' + (ilk ? ' ilk' : '') + '" href="' + K.git('detay') + '"><time>' + s.saat + '<span>' + s.kat + '</span></time><p>' + s.baslik + '</p></a>'; };
   K.sdSatir = function(s, ilk){ return '<a class="k-sd-satir' + (ilk ? ' ilk' : '') + '" href="' + K.git('detay') + '"><time>' + s.saat + '</time><div><p>' + s.baslik + '</p><small>' + s.kat + ' · ' + s.sure + '</small></div></a>'; };
@@ -459,13 +461,15 @@
     var S = [['ana', 'Ana Sayfa', 'fa-house', K.git('ana')], ['bolum', 'Bölümler', 'fa-shapes', K.git('bolumler')], ['akis', 'Akış', 'fa-mobile-screen-button', K.git('akis')], ['dinle', 'Dinle', 'fa-headphones', K.git('dinle')], ['hesap', 'Hesabım', 'fa-circle-user', K.git('hesap')]];
     return ekle(o.yer, '<nav class="k-ac' + (o.koyu ? ' koyu' : '') + '" aria-label="Alt gezinme">' + S.map(function(s){
       var ic = s[0] === 'akis' ? '<span class="yuv">' + I(s[2]) + '</span>' : I(s[2]);
-      return '<a class="' + (s[0] === 'akis' ? 'akis' : '') + '" href="' + s[3] + '"' + (s[0] === etkin ? ' aria-current="page"' : '') + '>' + ic + s[1] + (r[s[0]] ? K.rozet(r[s[0]]) : '') + '</a>'; }).join('') + '</nav>'); };
+      var cn = s[0] === 'dinle' && K.spikerCanli() ? '<span class="cn-n" aria-label="Spiker yayında"></span>' : '';
+      return '<a class="' + (s[0] === 'akis' ? 'akis' : '') + '" href="' + s[3] + '"' + (s[0] === etkin ? ' aria-current="page"' : '') + '>' + ic + s[1] + cn + (r[s[0]] ? K.rozet(r[s[0]]) : '') + '</a>'; }).join('') + '</nav>'); };
   K.okuma = function(o){ o = o || {}; var d = D.detay;
-    return ekle(o.yer, '<nav class="k-okuma" aria-label="Okuma çubuğu"><button class="dinle" type="button" data-spiker>' + I('fa-play') + 'Dinle · ' + d.dinle + '</button><button class="hmd" type="button" data-hm-ac aria-label="Hikâye modunda oku">' + I('fa-layer-group') + '</button>' +
+    return ekle(o.yer, '<nav class="k-okuma" aria-label="Okuma çubuğu"><button class="dinle" type="button" data-dinle>' + I('fa-headphones') + 'Dinle · ' + d.dinle + '</button><button class="hmd" type="button" data-hm-ac aria-label="Hikâye modunda oku">' + I('fa-layer-group') + '</button>' +
       '<button type="button" aria-label="Yorumlar, ' + d.yorumSayisi + '" data-yorumlara>' + I('fa-comment') + K.rozet(d.yorumSayisi, 'sari') + '</button><button type="button" aria-label="Paylaş" data-sayfa="paylas">' + I('fa-share-nodes') + '</button><button class="aa" type="button" aria-label="Yazı boyutu" data-sayfa="yazi">Aa</button></nav>'); };
 
   /* Spiker mini oynatıcı: hibrit.js ile aynı anahtar ve davranış; kökler ve yeni ekranlar arasında çalmayı sürdürür */
-  var ANAHTAR = 'dada-spiker', TOPLAM = 180000, mo, zam, _mo = null;
+  /* K39: varsayılan KAPALI; yalnız ?calan=1 (Spiker) / ?calan=dinle ya da bu sayfada oynat'a basılınca görünür; çalarken uygulama içi bağlantılar calan'ı taşır */
+  var ANAHTAR = 'dada-spiker', TOPLAM = 180000, mo, zam, _mo = null, gorunur = false;
   function oku(){ try { return JSON.parse(sessionStorage.getItem(ANAHTAR) || 'null'); } catch (e) { return _mo; } }
   function yaz(v){ _mo = v; try { if (v) sessionStorage.setItem(ANAHTAR, JSON.stringify(v)); else sessionStorage.removeItem(ANAHTAR); } catch (e) {} }
   function gecen(s){ return s.dur != null ? s.dur : (Date.now() - s.bas); }
@@ -473,15 +477,19 @@
     var ust = mo.parentNode || document.body;
     mo.classList.toggle('alt-yok', !ust.querySelector('.k-ac') && !ust.querySelector('.k-okuma'));
     mo.classList.toggle('okuma-ustu', !!ust.querySelector('.k-okuma'));
-    mo.classList.toggle('acik', !!s); if (!s) return;
-    var g = gecen(s) % TOPLAM, i = Math.min(2, Math.floor(g / (TOPLAM / 3)));
-    mo.classList.toggle('dur', s.dur != null);
-    mo.querySelector('.t b').textContent = D.spiker.sirada[i];
-    mo.querySelector('.t small .y').textContent = 'Dada Spiker · ' + D.spiker.bulten + ' · ' + (i + 1) + ' / 3';
+    var ac = !!s && gorunur; mo.classList.toggle('acik', ac); if (!ac) return;
+    var g = gecen(s) % TOPLAM, i = Math.min(2, Math.floor(g / (TOPLAM / 3))), dn = s.tur === 'dinle';
+    mo.classList.toggle('dur', s.dur != null); mo.classList.toggle('dinle', dn);
+    mo.querySelector('.yuz').style.backgroundImage = G(dn ? D.detay.g : D.spiker.gorsel);
+    mo.querySelector('.t').setAttribute('href', K.git(dn ? 'detay' : 'spiker'));
+    mo.querySelector('.t b').textContent = dn ? D.detay.baslik : D.spiker.sirada[i];
+    mo.querySelector('.t small .y').innerHTML = dn ? I('fa-headphones') + 'Dinle · ' + D.detay.dinle : I('fa-radio') + 'Dada Spiker · ' + D.spiker.bulten + ' · ' + (i + 1) + ' / 3';
+    mo.setAttribute('aria-label', dn ? 'Dinle oynatıcı' : 'Spiker oynatıcı');
     mo.querySelector('.il i').style.width = (g / TOPLAM * 100).toFixed(1) + '%';
     mo.querySelector('[data-mo-oynat] i').className = 'fa-solid ' + (s.dur != null ? 'fa-play' : 'fa-pause'); }
   /* tek oynatıcı kuralı: başka ses başlayınca Spiker duraklar (Akış sesi, video, podcast) */
-  K.spikerDurdur = function(){ var s = oku(); if (s && s.dur == null){ yaz({ bas: s.bas, dur: Date.now() - s.bas }); guncelle(); return true; } return false; };
+  K.spikerDurdur = function(){ var s = oku(); if (s && s.dur == null){ yaz({ bas: s.bas, dur: Date.now() - s.bas, tur: s.tur }); guncelle(); return true; } return false; };
+  K.spikerCanli = function(){ return Q.get('spiker') !== '0'; }; /* prototipin "şimdi"si 16.05: 16.00 bülteni yayında; ?spiker=0 yayın yok */
   /* tam ekran görsel görüntüleyici (kapak, galeri karesi): K.goruntuleyici({ g, altyazi, sira, toplam, yer }) → öğe; × ya da aşağı kaydır kapatır, dokununca bilgiler gizlenir */
   K.goruntuleyici = function(o){ o = o || {};
     var v = K.el('<div class="k-goruntuleyici" role="dialog" aria-label="Görsel"><div class="u">' + K.ikonBtn({ ikon: 'fa-xmark', etiket: 'Kapat', tur: 'cam', attr: 'data-gor-kapat' }) +
@@ -494,15 +502,22 @@
     v.addEventListener('click', function(ev){ if (ev.target.closest('[data-gor-kapat]')) v.remove(); else if (!ev.target.closest('.u,.alt')) v.classList.toggle('is-yakin'); });
     return v;
   };
-  K.spikerBaslat = function(){ var s = oku(); if (!s) yaz({ bas: Date.now(), dur: null }); else if (s.dur != null) yaz({ bas: Date.now() - s.dur, dur: null }); guncelle(); };
+  function baslat(tur){ var s = oku(); if (!s || (s.tur || 'spiker') !== tur) yaz({ bas: Date.now(), dur: null, tur: tur }); else if (s.dur != null) yaz({ bas: Date.now() - s.dur, dur: null, tur: tur }); gorunur = true; guncelle(); }
+  K.spikerBaslat = function(){ baslat('spiker'); };
+  K.dinleBaslat = function(){ baslat('dinle'); };
   K.oynatici = function(o){ o = o || {};
     if (o.yerinde) return '<div class="k-mo yerinde' + (o.dur ? ' dur' : '') + (o.hata ? ' hata' : '') + '"><span class="yuz"' + bg(D.spiker.gorsel) + '></span><span class="t"><b>' + D.spiker.sirada[0] + '</b><small>' + (o.hata ? I('fa-triangle-exclamation') + 'Ses yüklenemedi' : '<span class="k-dalga"><i></i><i></i><i></i></span>Dada Spiker · ' + D.spiker.bulten + ' · 1 / 3') + '</small></span>' +
       '<button type="button" aria-label="' + (o.hata ? 'Yeniden dene' : 'Oynat / duraklat') + '">' + I(o.hata ? 'fa-rotate-right' : o.dur ? 'fa-play' : 'fa-pause') + '</button><button type="button" class="kapat" aria-label="Kapat">' + I('fa-xmark') + '</button><span class="il"><i style="width:29%"></i></span></div>';
     mo = ekle(o.yer, '<div class="k-mo" role="region" aria-label="Spiker oynatıcı"><span class="yuz"' + bg(D.spiker.gorsel) + '></span><a class="t" href="' + K.git('spiker') + '"><b></b><small><span class="k-dalga"><i></i><i></i><i></i></span><span class="y"></span></small></a>' +
       '<button type="button" data-mo-oynat aria-label="Oynat / duraklat">' + I('fa-pause') + '</button><button type="button" class="kapat" data-mo-kapat aria-label="Kapat">' + I('fa-xmark') + '</button><span class="il"><i></i></span></div>');
-    if (Q.get('calan') === '1' && !oku()) yaz({ bas: Date.now() - 52000, dur: null });
-    mo.querySelector('[data-mo-oynat]').addEventListener('click', function(){ var s = oku(); if (!s) return; yaz(s.dur != null ? { bas: Date.now() - s.dur, dur: null } : { bas: s.bas, dur: Date.now() - s.bas }); guncelle(); });
-    mo.querySelector('[data-mo-kapat]').addEventListener('click', function(){ yaz(null); guncelle(); });
+    var c = Q.get('calan');
+    if (c === '1' || c === 'dinle'){ var t0 = c === 'dinle' ? 'dinle' : 'spiker', s0 = oku(); if (!s0 || (s0.tur || 'spiker') !== t0) yaz({ bas: Date.now() - 52000, dur: null, tur: t0 }); gorunur = true; }
+    mo.querySelector('[data-mo-oynat]').addEventListener('click', function(){ var s = oku(); if (!s) return; yaz(s.dur != null ? { bas: Date.now() - s.dur, dur: null, tur: s.tur } : { bas: s.bas, dur: Date.now() - s.bas, tur: s.tur }); guncelle(); });
+    mo.querySelector('[data-mo-kapat]').addEventListener('click', function(){ yaz(null); gorunur = false; guncelle(); });
+    /* çalarken uygulama içi bağlantı calan'ı taşır */
+    document.addEventListener('click', function(e){ var a = e.target.closest('a[href]'), s = oku(); if (!a || !s || !gorunur) return;
+      var h = a.getAttribute('href'); if (!h || h.charAt(0) === '#' || /^(mailto:|tel:)/.test(h)) return;
+      var u = new URL(h, location.href); if (u.origin !== location.origin && location.protocol !== 'file:') return; u.searchParams.set('calan', s.tur === 'dinle' ? 'dinle' : '1'); a.setAttribute('href', u.href); }, true);
     addEventListener('storage', function(e){ if (e.key === ANAHTAR) guncelle(); });
     guncelle(); clearInterval(zam); zam = setInterval(guncelle, 1000);
     return mo; };
@@ -675,6 +690,7 @@
     if ((x = t.closest('[data-begen]'))) { var b2 = x.getAttribute('aria-pressed') !== 'true', n = x.querySelector('b'); x.setAttribute('aria-pressed', b2); if (n) n.textContent = +n.textContent + (b2 ? 1 : -1); }
     if ((x = t.closest('[data-sifre]'))) { var inp = x.parentNode.querySelector('input'), gos = inp.type === 'password'; inp.type = gos ? 'text' : 'password'; x.innerHTML = I(gos ? 'fa-eye-slash' : 'fa-eye'); x.setAttribute('aria-label', gos ? 'Şifreyi gizle' : 'Şifreyi göster'); }
     if (t.closest('[data-spiker]')) { ev.preventDefault(); K.spikerBaslat(); }
+    if (t.closest('[data-dinle]')) { ev.preventDefault(); K.dinleBaslat(); }
     if (t.closest('[data-menu]') && K._cekmece) K._cekmece.ac();
     if ((x = t.closest('[data-sayfa]')) && !x.closest('.k-sahne-statik')) { ev.preventDefault(); var ad = x.getAttribute('data-sayfa'); if (HAZIR[ad]) K.sayfa(ad, { eylem: x.getAttribute('data-eylem') || undefined, yer: x.closest('.k-sahne') || undefined }); }
     if ((x = t.closest('[data-yeni-klasor]'))) { ev.preventDefault(); K.sayfa('yeni-klasor', { yer: x.closest('.k-sahne') || undefined }); }
