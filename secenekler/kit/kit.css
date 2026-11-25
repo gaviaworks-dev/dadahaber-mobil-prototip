@@ -344,7 +344,7 @@ mark.k-esle,.k-esle{background:none;color:inherit;font-weight:var(--y-kalin)}
 .k-oynat-d{display:flex;align-items:center;gap:var(--b-12);height:44px;padding:0 var(--b-16) 0 var(--b-8);border-radius:var(--k-kontrol);background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.25);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);font-size:13.5px;font-weight:var(--y-kalin);color:#fff}
 .k-oynat-d i{width:32px;height:32px;border-radius:var(--k-daire);background:#fff;color:var(--siyah);display:grid;place-items:center;font-size:11px;padding-left:var(--b-4)}
 /* içerik paneli: görselin üstüne biner, üst kenarda 3px marka şeridi (K28, K33) */
-.k-yaprak{position:relative;z-index:1;margin-top:calc(-1 * var(--b-24));background:var(--zemin);border-top-left-radius:var(--k-kart);border-top-right-radius:var(--k-kart);border-top:3px solid var(--marka)}
+.k-yaprak{position:relative;z-index:1;padding-top:var(--b-12);margin-top:calc(-1 * var(--b-24));background:var(--zemin);border-top-left-radius:var(--k-kart);border-top-right-radius:var(--k-kart);border-top:3px solid var(--marka)}
 /* kubbe: tam genişlik görsel + altında 3px hilal şerit (ana sayfa hero'su, tanıtım) */
 .k-kubbe{position:relative;padding-bottom:var(--b-4)}
 .k-hilal{position:absolute;inset:0;border-bottom-left-radius:var(--k-kart);border-bottom-right-radius:var(--k-kart);background:var(--marka)}
@@ -1039,7 +1039,7 @@ html[data-tema="koyu"] .k-isk{background-image:linear-gradient(90deg,var(--yuzey
 .k-yenile .ic{width:40px;height:40px;border-radius:var(--k-daire);display:grid;place-items:center;background:var(--yuzey);box-shadow:var(--golge-sm);border:1px solid var(--cizgi);color:var(--metin);font-size:15px;transition:transform .2s,background .2s,color .2s}
 .k-yenile.birak .ic{background:var(--marka);border-color:var(--marka);color:var(--siyah);transform:rotate(180deg)}
 .k-yenile.bitti .ic{color:var(--artis)}
-.k-yenile-k{position:absolute;left:0;right:0;top:var(--k-ub-h);z-index:64;pointer-events:none;transform:translateY(-76px);transition:transform .25s var(--k-egri)}
+.k-yenile-k{position:absolute;left:0;right:0;top:var(--k-ub-h);z-index:64;pointer-events:none;transform:translateY(-76px);opacity:0;transition:transform .25s var(--k-egri),opacity .15s} /* dinlenirken gizli (görselli üst çubuğun altından görünmesin) */
 .k-yenile-k.surukle{transition:none}
 /* sayfa sonu: yükleniyor · hepsi bu kadar · yüklenemedi */
 .k-dahafazla{display:flex;flex-direction:column;align-items:center;gap:var(--b-12);padding:var(--b-16) 0 var(--b-8);font-size:13px;color:var(--metin-3);text-align:center}
@@ -1266,3 +1266,6 @@ html[data-tema="koyu"] .k-isk{background-image:linear-gradient(90deg,var(--yuzey
 .k-kose-satir h3{margin-top:var(--b-4);font-size:16.5px;line-height:1.28;font-weight:var(--y-kalin);letter-spacing:-.01em;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .k-kose-satir .k-meta{margin-top:var(--b-8)}
 .k-kose-satir>.k-kay{align-self:end}
+
+/* K45 gövde metni iki yana yaslı (kit.js K.yasla işaretler) */
+.k-yasla{text-align:justify;text-align-last:left;-webkit-hyphens:auto;hyphens:auto;overflow-wrap:break-word}
