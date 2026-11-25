@@ -1,7 +1,7 @@
 /* Dada Haber Mobil · HİBRİT ortak betiği (TEK YAZAR: lider). icerik.js, cerceve.js, icerik-ek.js'ten SONRA yüklenir.
    - ?hb=1..4 hangi hibrit; HB[n] o hibritin blok sırası ve ağırlıkları (ana sayfa); liste (K21) ve detay (K19) seçildi, dördünde aynı
    - ?saat=08.30 baskı başlığını başka saatte görmek için (varsayılan sözlükteki "şimdi" 16.05)
-   - ?calan=1 Spiker mini oynatıcısı çalarken açılır (seçenek sayfası için)
+   - ?calan=1 Spiker, ?calan=dinle Dinle mini oynatıcısı çalarken açılır; varsayılan kapalı (K39) · ?spiker=0 Spiker yayında değil
    Bloklar ve görünüşleri bütün hibritlerde aynı; hibritler yalnız sıra, ağırlık ve yer bakımından ayrışır. */
 (function(){
   var D = window.D, Q = new URLSearchParams(location.search);
@@ -201,42 +201,59 @@
 
   /* ---------- Alt gezinme (AS-A çubuğu; ortada vurgulu Akış) ---------- */
   H.altCubuk = function(etkin, koyu){
-    var S = [['ana', 'Ana Sayfa', 'fa-house', H.ana()], ['bolum', 'Bölümler', 'fa-shapes', H.liste()], ['akis', 'Akış', 'fa-mobile-screen-button', H.u('akis.html')],
-             ['dinle', 'Dinle', 'fa-headphones', ''], ['hesap', 'Hesabım', 'fa-circle-user', '']];
+    var E = function(yol){ var u = new URL('../ekranlar/' + yol, location.href); if (H.tema) u.searchParams.set('tema', H.tema); if (!H.uye) u.searchParams.set('uye', '0'); return u.href; };
+    var S = [['ana', 'Ana Sayfa', 'fa-house', H.ana()], ['bolum', 'Bölümler', 'fa-shapes', H.kok ? E('icerik/bolumler.html') : H.liste()], ['akis', 'Akış', 'fa-mobile-screen-button', H.u('akis.html')],
+             ['dinle', 'Dinle', 'fa-headphones', H.kok ? E('icerik/haber-dinle.html') : ''], ['hesap', 'Hesabım', 'fa-circle-user', H.kok ? E('hesap/hesabim.html') : '']];
     var n = document.createElement('nav'); n.className = 'ac' + (koyu ? ' koyu' : ''); n.setAttribute('aria-label', 'Alt gezinme');
     n.innerHTML = S.map(function(s){
       var ic = s[0] === 'akis' ? '<span class="yuv"><i class="fa-solid ' + s[2] + '"></i></span>' : '<i class="fa-solid ' + s[2] + '"></i>';
-      return '<a class="' + (s[0] === 'akis' ? 'akis' : '') + (s[0] === etkin ? ' etkin' : '') + '"' + (s[3] ? ' href="' + s[3] + '"' : '') + (s[0] === etkin ? ' aria-current="page"' : '') + '>' + ic + s[1] + '</a>';
+      var cn = s[0] === 'dinle' && H.spikerCanli() ? '<span class="cn-n" aria-label="Spiker yayında"></span>' : '';
+      return '<a class="' + (s[0] === 'akis' ? 'akis' : '') + (s[0] === etkin ? ' etkin' : '') + '"' + (s[3] ? ' href="' + s[3] + '"' : '') + (s[0] === etkin ? ' aria-current="page"' : '') + '>' + ic + s[1] + cn + '</a>';
     }).join('');
     document.body.appendChild(n);
   };
 
-  /* ---------- Spiker mini oynatıcı: sayfalar arasında çalmaya devam eder (oturum boyunca) ---------- */
-  var ANAHTAR = 'dada-spiker', TOPLAM = 180000, mo, zam;
+  /* ---------- Mini oynatıcı (K39): Spiker (canlı sunucu, bülten) ya da Dinle (haberin sesli okunması); ikisi ayrı ad ve ikonla.
+     Varsayılan KAPALI: yalnız sayfa ?calan=1 (Spiker) / ?calan=dinle ile açıldıysa ya da bu sayfada oynat'a basıldıysa görünür.
+     Çalarken uygulama içi bağlantılar calan'ı taşır; böylece sayfalar arasında çalmaya devam eder. Kayıt: sessionStorage "dada-spiker". ---------- */
+  var ANAHTAR = 'dada-spiker', TOPLAM = 180000, mo, zam, gorunur = false;
   function oku(){ try { return JSON.parse(sessionStorage.getItem(ANAHTAR) || 'null'); } catch (e) { return H._mo || null; } }
   function yaz(v){ H._mo = v; try { if (v) sessionStorage.setItem(ANAHTAR, JSON.stringify(v)); else sessionStorage.removeItem(ANAHTAR); } catch (e) {} }
   function gecen(s){ return s.dur != null ? s.dur : (Date.now() - s.bas); }
   function guncelle(){
     var s = oku(); if (!mo) return;
-    mo.classList.toggle('acik', !!s);
-    if (!s) return;
-    var g = gecen(s) % TOPLAM, i = Math.min(2, Math.floor(g / (TOPLAM / 3)));
-    mo.classList.toggle('dur', s.dur != null);
-    mo.querySelector('.t b').textContent = D.spiker.sirada[i];
-    mo.querySelector('.t small span.y').textContent = 'Dada Spiker · ' + D.spiker.bulten + ' · ' + (i + 1) + ' / 3';
+    var ac = !!s && gorunur; mo.classList.toggle('acik', ac);
+    if (!ac) return;
+    var g = gecen(s) % TOPLAM, i = Math.min(2, Math.floor(g / (TOPLAM / 3))), dn = s.tur === 'dinle';
+    mo.classList.toggle('dur', s.dur != null); mo.classList.toggle('dinle', dn);
+    mo.querySelector('.yuz').style.backgroundImage = G(dn ? D.detay.g : D.spiker.gorsel);
+    mo.querySelector('.t b').textContent = dn ? D.detay.baslik : D.spiker.sirada[i];
+    mo.querySelector('.t small span.y').innerHTML = dn ? '<i class="fa-solid fa-headphones"></i>Dinle · ' + D.detay.dinle : '<i class="fa-solid fa-radio"></i>Dada Spiker · ' + D.spiker.bulten + ' · ' + (i + 1) + ' / 3';
+    mo.setAttribute('aria-label', dn ? 'Dinle oynatıcı' : 'Spiker oynatıcı');
     mo.querySelector('.il i').style.width = (g / TOPLAM * 100).toFixed(1) + '%';
     mo.querySelector('[data-mo-oynat] i').className = 'fa-solid ' + (s.dur != null ? 'fa-play' : 'fa-pause');
   }
-  H.spikerBaslat = function(){ var s = oku(); if (!s) yaz({ bas: Date.now(), dur: null }); else if (s.dur != null) yaz({ bas: Date.now() - s.dur, dur: null }); guncelle(); };
+  function baslat(tur){ var s = oku(); if (!s || (s.tur || 'spiker') !== tur) yaz({ bas: Date.now(), dur: null, tur: tur }); else if (s.dur != null) yaz({ bas: Date.now() - s.dur, dur: null, tur: tur }); gorunur = true; guncelle(); }
+  H.spikerBaslat = function(){ baslat('spiker'); };
+  H.dinleBaslat = function(){ baslat('dinle'); };
+  H.spikerCanli = function(){ return Q.get('spiker') !== '0'; }; /* prototipin "şimdi"si 16.05: 16.00 bülteni yayında; ?spiker=0 yayın yok */
   H.oynatici = function(){
     mo = document.createElement('div'); mo.className = 'mo'; mo.setAttribute('role', 'region'); mo.setAttribute('aria-label', 'Spiker oynatıcı');
-    mo.innerHTML = '<span class="yuz" style="background-image:' + G(D.spiker.gorsel) + '"></span><span class="t"><b></b><small><span class="dalga"><i></i><i></i><i></i></span><span class="y"></span></small></span>' +
+    mo.innerHTML = '<span class="yuz"></span><span class="t"><b></b><small><span class="dalga"><i></i><i></i><i></i></span><span class="y"></span></small></span>' +
       '<button type="button" data-mo-oynat aria-label="Oynat / duraklat"><i class="fa-solid fa-pause"></i></button><button type="button" class="kapat" data-mo-kapat aria-label="Kapat"><i class="fa-solid fa-xmark"></i></button><span class="il"><i></i></span>';
     document.body.appendChild(mo);
-    if (Q.get('calan') === '1' && !oku()) yaz({ bas: Date.now() - 52000, dur: null });
-    mo.querySelector('[data-mo-oynat]').addEventListener('click', function(){ var s = oku(); if (!s) return; yaz(s.dur != null ? { bas: Date.now() - s.dur, dur: null } : { bas: s.bas, dur: Date.now() - s.bas }); guncelle(); });
-    mo.querySelector('[data-mo-kapat]').addEventListener('click', function(){ yaz(null); guncelle(); });
-    document.addEventListener('click', function(e){ if (e.target.closest('[data-spiker]')) { e.preventDefault(); H.spikerBaslat(); } });
+    var c = Q.get('calan');
+    if (c === '1' || c === 'dinle'){ var t = c === 'dinle' ? 'dinle' : 'spiker', s0 = oku(); if (!s0 || (s0.tur || 'spiker') !== t) yaz({ bas: Date.now() - 52000, dur: null, tur: t }); gorunur = true; }
+    mo.querySelector('[data-mo-oynat]').addEventListener('click', function(){ var s = oku(); if (!s) return; yaz(s.dur != null ? { bas: Date.now() - s.dur, dur: null, tur: s.tur } : { bas: s.bas, dur: Date.now() - s.bas, tur: s.tur }); guncelle(); });
+    mo.querySelector('[data-mo-kapat]').addEventListener('click', function(){ yaz(null); gorunur = false; guncelle(); });
+    document.addEventListener('click', function(e){
+      if (e.target.closest('[data-spiker]')) { e.preventDefault(); H.spikerBaslat(); return; }
+      if (e.target.closest('[data-dinle]')) { e.preventDefault(); H.dinleBaslat(); return; }
+      /* çalarken uygulama içi bağlantı calan'ı taşır */
+      var a = e.target.closest('a[href]'), s = oku(); if (!a || !s || !gorunur) return;
+      var h = a.getAttribute('href'); if (!h || h.charAt(0) === '#' || /^(https?:|mailto:|tel:)/.test(h)) return;
+      var u = new URL(h, location.href); u.searchParams.set('calan', s.tur === 'dinle' ? 'dinle' : '1'); a.setAttribute('href', u.href);
+    }, true);
     addEventListener('storage', function(e){ if (e.key === ANAHTAR) guncelle(); });
     guncelle(); clearInterval(zam); zam = setInterval(guncelle, 1000);
   };

@@ -321,3 +321,7 @@ body:has(.mo.acik) .son{height:calc(var(--ac-h) + 86px)}
 /* Dokunma alanı ≥44×44, görünüş aynı (K34): görsel olarak küçük denetimlere ortalanmış görünmez alan. Kit: .dk44 */
 .dk44,.mo button.kapat,.sd-tek .tm,.bl button,.rv-f button,.rv-a button,.gc button,.ys-c button,.cr .cp,.takip a,.dd.av,.gir,.cg a,.mc a,.etiket a{position:relative}
 .dk44::after,.mo button.kapat::after,.sd-tek .tm::after,.bl button::after,.rv-f button::after,.rv-a button::after,.gc button::after,.ys-c button::after,.cr .cp::after,.takip a::after,.dd.av::after,.gir::after,.cg a::after,.mc a::after,.etiket a::after{content:"";position:absolute;left:50%;top:50%;width:max(100%,44px);height:max(100%,44px);transform:translate(-50%,-50%)}
+/* K39: Spiker yayındayken Dinle sekmesinde canlı noktası; mini oynatıcıda Spiker (radyo) / Dinle (kulaklık) ayrımı */
+.ac a .cn-n{position:absolute;top:var(--b-8);left:calc(50% + var(--b-8));width:8px;height:8px;border-radius:var(--k-daire);background:var(--anlik);outline:2px solid var(--zemin)}
+.mo .t small .y{display:inline-flex;align-items:center;gap:var(--ikon-bosluk);min-width:0;overflow:hidden;text-overflow:ellipsis}
+.mo .t small .y i{color:var(--marka);font-size:11px}

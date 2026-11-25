@@ -17,7 +17,7 @@
         '<div class="tf"><b><i class="fa-solid fa-helmet-safety"></i>İşçi tarafı</b><p>' + ilk(par[2].p) + '</p></div><div class="tf"><b><i class="fa-solid fa-briefcase"></i>İşveren tarafı</b><p>' + ilk(par[3].p) + '</p></div>' },
       { c: 'acik-k k6', u: 'tema', h: '<span class="et"><i class="fa-solid fa-forward"></i>Bundan sonra</span>' +
         '<div class="tk"><div><i class="fa-solid fa-people-group"></i><span>4 Aralık · İlk toplantı, Ankara</span></div><div><i class="fa-solid fa-gavel"></i><span>Aralık son haftası · Karar bekleniyor</span></div><div><i class="fa-solid fa-calendar-check"></i><span>1 Ocak 2027 · Yeni ücret geçerli</span></div></div>' +
-        '<p class="nt">' + d.bundanSonra + '</p><div class="dg"><button type="button" class="ana" data-hm-kapat><i class="fa-solid fa-file-lines"></i>Metne dön</button><button type="button" class="iki" data-spiker-yok><i class="fa-solid fa-play"></i>Dinle · ' + d.dinle + '</button></div>' }
+        '<p class="nt">' + d.bundanSonra + '</p><div class="dg"><button type="button" class="ana" data-hm-kapat><i class="fa-solid fa-file-lines"></i>Metne dön</button><button type="button" class="iki" data-dinle><i class="fa-solid fa-headphones"></i>Dinle · ' + d.dinle + '</button></div>' }
     ];
     el = document.createElement('div'); el.className = 'hm'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Hikâye modu');
     el.innerHTML = kartlar.map(function(k){ return '<section class="hm-k ' + k.c + '">' + k.h + '</section>'; }).join('') +

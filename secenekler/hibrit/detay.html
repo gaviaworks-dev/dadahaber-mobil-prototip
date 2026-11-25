@@ -196,7 +196,7 @@ html[data-tema="koyu"] .hmb{background:var(--yuzey-2)}
 .okuma{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(var(--alt-guvenli) - 6px);z-index:80;display:flex;align-items:center;gap:2px;padding:6px;border-radius:var(--k-kart);background:var(--koyu-y);box-shadow:var(--golge-md);transition:transform .3s,opacity .3s}
 .okuma button{height:48px;min-width:48px;border-radius:var(--k-kontrol);display:grid;place-items:center;color:#fff;font-size:17px}
 .okuma .dinle{white-space:nowrap;display:flex;align-items:center;gap:10px;padding:0 18px 0 6px;background:var(--marka);color:var(--siyah);font-size:14.5px;font-weight:var(--y-kalin)}
-.okuma .dinle i{width:36px;height:36px;border-radius:var(--k-daire);background:var(--siyah);color:var(--marka);display:grid;place-items:center;font-size:12px;padding-left:2px}
+.okuma .dinle i{width:36px;height:36px;border-radius:var(--k-daire);background:var(--siyah);color:var(--marka);display:grid;place-items:center;font-size:14px}
 .okuma .yr{position:relative}
 .okuma .yr small{position:absolute;top:6px;right:4px;min-width:18px;height:18px;padding:0 4px;border-radius:var(--k-cubuk);background:var(--marka);color:var(--siyah);font-size:10.5px;font-weight:var(--y-kalin);display:grid;place-items:center}
 .okuma .aa{font-size:15px;font-weight:var(--y-kalin);letter-spacing:-.02em}
@@ -323,7 +323,7 @@ html[data-tema="koyu"] .boy input{accent-color:var(--marka)}
     alt = alt.replace(/(<section class="blk rvs" id="yorumlar"><div class="bb">.*?<\/div>).*?(<\/section><section class="blk ilgili">)/, '$1' + K.serit({ ikon: 'fa-comment', metin: 'Yorumlar kapalı', alt: 'Bağlantı gelince okuyup yazabilirsin' }) + '$2');
   }
   $('e').innerHTML = kapak + (KAPAKSIZ ? '<div>' : '<div class="yaprak">') + basAlt + seg + p0 + p1 + p2 + bolumler + kyn + alt + '<div class="dip"></div></div>';
-  $('okuma').innerHTML = '<button class="dinle" type="button"><i class="fa-solid fa-play"></i>Dinle · ' + d.dinle + '</button>' +
+  $('okuma').innerHTML = '<button class="dinle" type="button" data-dinle><i class="fa-solid fa-headphones"></i>Dinle · ' + d.dinle + '</button>' +
     '<button class="hmd" type="button" ' + HMD + ' aria-label="Hikâye modunda oku"><i class="fa-solid fa-layer-group"></i></button>' +
     '<button class="yr" type="button" id="yrd" aria-label="Yorumlar, ' + d.yorumSayisi + '"><i class="fa-solid fa-comment"></i><small>' + d.yorumSayisi + '</small></button><button type="button" aria-label="Paylaş"><i class="fa-solid fa-share-nodes"></i></button><button class="aa" type="button" aria-label="Yazı boyutu" id="aa">Aa</button>';
 
