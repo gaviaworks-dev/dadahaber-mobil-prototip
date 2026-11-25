@@ -19,8 +19,22 @@
     { kod: "HM-6", ad: "Hikâye modu · son kart", dosya: "detay.html?hb=1&mod=hikaye&kart=6&dur=1", ref: ["<b>HD-E hikâye kartları:</b>"] },
     { kod: "SPİKER", ad: "Mini oynatıcı çalarken", dosya: "ana.html?hb=1&calan=1", ref: ["<b>G2 mini oynatıcı:</b>", "<b>Spotify:</b>"] }
   ];
+  /* Detay seçildi (K19: HB-4 tabanı + K17 derinlik sekmeleri + K18 bölüm sekmeleri, sıra K20); dördü aynı olduğundan durumları yan yana */
+  var DETAY = [
+    { kod: "D-1", ad: "Açılış · 15 sn", dosya: "detay.html?hb=4&calan=1", ref: ["<b>HD-A kapak:</b>", "<b>HB-4:</b>"] },
+    { kod: "D-2", ad: "15 sn · bölümler", dosya: "detay.html?hb=4&kay=560", ref: ["<b>HD-B derinlik:</b>", "<b>HD-C bölümler:</b>"] },
+    { kod: "D-3", ad: "1 dk · Bundan sonra", dosya: "detay.html?hb=4&derinlik=1dk&bolum=sonra&kay=980", ref: ["<b>HD-B derinlik:</b>", "<b>HD-C bölümler:</b>"] },
+    { kod: "D-4", ad: "Tam metin · kaynak, yorum", dosya: "detay.html?hb=4&derinlik=tam&kay=2400", ref: ["<b>HD-A:</b>", "<b>HD-E hikâye modu:</b>"] }
+  ];
+  /* Liste seçildi (K21: HB-3 yapısı + görselli başlık, hikâye/Takip et/Bildirim yok); dördü aynı olduğundan durumları yan yana */
+  var LISTE = [
+    { kod: "L-1", ad: "Açılış · Spiker çalıyor", dosya: "liste.html?hb=3&calan=1", ref: ["<b>LS-A:</b>", "<b>HB-3:</b>"] },
+    { kod: "L-2", ad: "Kaydırınca daralan başlık", dosya: "liste.html?hb=3&dar=1", ref: ["<b>LS-A daralan başlık:</b>"] },
+    { kod: "L-3", ad: "Çizelge görünümü", dosya: "liste.html?hb=3&kip=cizelge", ref: ["<b>LS-C çizelge:</b>"] },
+    { kod: "L-4", ad: "Çizelge · daralmış", dosya: "liste.html?hb=3&kip=cizelge&dar=1", ref: ["<b>LS-C çizelge:</b>", "<b>LS-D olaylar:</b>"] }
+  ];
   var TAVSIYE = '<div class="eyb">TAVSİYE</div><h2>HB-1 · Baskı önce</h2><p style="margin-top:10px">Ürünü rakiplerden ayıran baskı fikri ilk ekranda tam ağırlığıyla duruyor; bölümler ve kutular onun altında sitenin okuruna tanıdık sırada.</p>';
   window.SEC = window.SEC || {};
-  SEC['hibrit'] = { ad: 'Hibrit', klasor: 'hibrit', alt: ALT, ortak: ORTAK, tavsiye: TAVSIYE,
-    ekranlar: [['ana', 'Ana Sayfa'], ['liste', 'Liste'], ['detay', 'Detay'], ['ortak', 'Akış · Hikâye Modu']] };
+  SEC['hibrit'] = { ad: 'Hibrit', klasor: 'hibrit', alt: ALT, ortak: ORTAK, detay: DETAY, liste: LISTE, tavsiye: TAVSIYE,
+    ekranlar: [['ana', 'Ana Sayfa'], ['liste', 'Liste · seçildi'], ['detay', 'Detay · seçildi'], ['ortak', 'Akış · Hikâye Modu']] };
 })();

@@ -120,7 +120,7 @@ function ciz(k, ek){
   if (s.ekranlar) {
     ek = s.ekranlar.some(function(x){ return x[0] === ek; }) ? ek : s.ekranlar[0][0]; simdiE = ek;
     document.getElementById('ekr').innerHTML = s.ekranlar.map(function(x){ return '<a href="#' + k + '/' + x[0] + '"' + (x[0] === ek ? ' aria-current="page"' : '') + '>' + x[1] + '</a>'; }).join('');
-    liste = ek === 'ortak' ? s.ortak : s.alt.map(function(a){ return { kod: a.kod, ad: a.ad, dosya: a.ekran[ek], ref: a.ref }; });
+    liste = Array.isArray(s[ek]) ? s[ek] : s.alt.map(function(a){ return { kod: a.kod, ad: a.ad, dosya: a.ekran[ek], ref: a.ref }; });
   }
   dort();
   document.getElementById('izgara').innerHTML = liste.map(function(a){

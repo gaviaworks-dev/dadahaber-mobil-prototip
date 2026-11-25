@@ -1,5 +1,5 @@
 /* Dada Haber Mobil · HİBRİT ortak betiği (TEK YAZAR: lider). icerik.js, cerceve.js, icerik-ek.js'ten SONRA yüklenir.
-   - ?hb=1..4 hangi hibrit; HB[n] o hibritin blok sırası ve ağırlıkları (ana sayfa, liste, detay)
+   - ?hb=1..4 hangi hibrit; HB[n] o hibritin blok sırası ve ağırlıkları (ana sayfa); liste (K21) ve detay (K19) seçildi, dördünde aynı
    - ?saat=08.30 baskı başlığını başka saatte görmek için (varsayılan sözlükteki "şimdi" 16.05)
    - ?calan=1 Spiker mini oynatıcısı çalarken açılır (seçenek sayfası için)
    Bloklar ve görünüşleri bütün hibritlerde aynı; hibritler yalnız sıra, ağırlık ve yer bakımından ayrışır. */
@@ -13,24 +13,16 @@
   window.HB = {
     1: { kod: 'HB-1', ad: 'Baskı önce',
       ana: ['ust', 'bs:buyuk', 'hikaye', 'sd:ray', 'ms:ray', 'spiker:genis',
-            'b:Gündem', 'hava', 'b:Spor', 'mac', 'b:Finans', 'piyasa', 'b:Kadın', 'podcast', 'b:Savunma', 'akis', 'b:Dünya', 'kose', 'b:Kampüs', 'namaz', 'b:Keşfet', 'senin', 'takim'],
-      liste: { hikaye: 'ust', one: 'uclu', olay: 4, olayBicim: 'dikey' },
-      detay: { kapak: 600, hm: 'kapak', sira: ['spot', 'zaman', 'ozet', 'notlar', 'govde', 'kaynak', 'etiket', 'yorum', 'ilgili'] } },
+            'b:Gündem', 'hava', 'b:Spor', 'mac', 'b:Finans', 'piyasa', 'b:Kadın', 'podcast', 'b:Savunma', 'akis', 'b:Dünya', 'kose', 'b:Kampüs', 'namaz', 'b:Keşfet', 'senin', 'takim'] },
     2: { kod: 'HB-2', ad: 'Pano önce',
       ana: ['ust', 'bs:ince', 'hikaye', 'pano', 'sd:sat', 'ms:kucuk',
-            'b:Gündem:2', 'podcast', 'b:Spor:2', 'akis', 'b:Finans:2', 'kose', 'b:Kadın:2', 'b:Savunma:2', 'b:Dünya:2', 'b:Kampüs:2', 'b:Keşfet:2'],
-      liste: { hikaye: 'tepe', one: 'ray', olay: 'bas', olayBicim: 'ray' },
-      detay: { kapak: 460, hm: 'kutu', sira: ['kutular', 'spot', 'zaman', 'govde', 'kaynak', 'etiket', 'yorum', 'ilgili'] } },
+            'b:Gündem:2', 'podcast', 'b:Spor:2', 'akis', 'b:Finans:2', 'kose', 'b:Kadın:2', 'b:Savunma:2', 'b:Dünya:2', 'b:Kampüs:2', 'b:Keşfet:2'] },
     3: { kod: 'HB-3', ad: 'Bölümler önce',
       ana: ['ust', 'bs:ince', 'hikaye', 'sd:tek', 'ms:kucuk',
-            'b:Gündem', 'duo', 'b:Spor', 'mac', 'takim', 'b:Finans', 'piyasa', 'b:Kadın', 'spiker:serit', 'b:Savunma', 'akis', 'b:Dünya', 'kose', 'b:Kampüs', 'podcast', 'b:Keşfet', 'senin'],
-      liste: { hikaye: 'ust', one: 'ray', olay: 6, olayBicim: 'ray' },
-      detay: { kapak: 440, hm: 'satir', sira: ['spot', 'zaman', 'hm', 'govde', 'ozet', 'notlar', 'kaynak', 'etiket', 'ilgili', 'yorum'] } },
+            'b:Gündem', 'duo', 'b:Spor', 'mac', 'takim', 'b:Finans', 'piyasa', 'b:Kadın', 'spiker:serit', 'b:Savunma', 'akis', 'b:Dünya', 'kose', 'b:Kampüs', 'podcast', 'b:Keşfet', 'senin'] },
     4: { kod: 'HB-4', ad: 'Kişisel önce',
       ana: ['ust:uye', 'bs:selam', 'hikaye', 'senin:buyuk', 'mac', 'spiker:serit', 'sd:ray', 'ms:ray',
-            'b:Spor', 'takim', 'b:Finans', 'piyasa', 'b:Gündem', 'duo', 'b:Savunma', 'podcast', 'b:Kadın', 'akis', 'b:Dünya', 'kose', 'b:Kampüs', 'b:Keşfet'],
-      liste: { hikaye: 'tepe', one: 'uclu', olay: 'bas', olayBicim: 'dikey', takip: true },
-      detay: { kapak: 520, hm: 'cubuk', sira: ['etkisi', 'spot', 'zaman', 'takip', 'ozet', 'notlar2', 'govde', 'kaynak', 'yorum', 'ilgili'] } }
+            'b:Spor', 'takim', 'b:Finans', 'piyasa', 'b:Gündem', 'duo', 'b:Savunma', 'podcast', 'b:Kadın', 'akis', 'b:Dünya', 'kose', 'b:Kampüs', 'b:Keşfet'] }
   };
   H.cfg = HB[H.n];
 
