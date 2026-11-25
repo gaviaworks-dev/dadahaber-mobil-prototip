@@ -57,6 +57,10 @@ body:has(.k-mo.acik) .k-son{height:calc(var(--k-ac-h) + 86px)} /* mini oynatıc�
 .k-meta{display:flex;align-items:center;gap:var(--b-8);margin-top:var(--b-8);font-size:12.5px;color:var(--metin-3);white-space:nowrap;overflow:hidden;min-width:0}
 .k-meta>span{display:inline-flex;align-items:center;gap:var(--b-8);flex:none}
 .k-meta>span+span::before{content:"·"}
+.k-meta>span.ik::before,.k-meta>span.ik+span::before{content:none}
+.k-meta>span.ik{gap:var(--b-4)}
+.k-meta>span.ik i{color:var(--metin-3);font-size:11px}
+.k-meta.foto>span.ik i{color:var(--marka)}
 .k-meta i{font-size:10px}
 .k-meta.foto{color:rgba(255,255,255,.78)}
 .k-meta.foto i{color:var(--marka)}
@@ -1244,3 +1248,5 @@ html[data-tema="koyu"] .k-isk{background-image:linear-gradient(90deg,var(--yuzey
 .k-kapak .k-kat{align-self:flex-start} /* kapak üstündeki kategori etiketi içeriği kadar */
 
 .k-akordeon:not([open]) p{display:none} /* kapalı akordeonun yanıtı yer kaplamasın (4. dalga) */
+
+.k-anlik,.k-anlik *{transition:none!important} /* banner dönüşümünde geçişsiz */

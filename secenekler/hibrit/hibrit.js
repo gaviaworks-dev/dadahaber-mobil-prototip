@@ -53,7 +53,11 @@
   function bas(ad){ return ad.split(' ').map(function(p){ return p.charAt(0); }).join('').slice(0, 2); }
   H.bas = bas;
   /* tek bilgi satırı (K35): öğeler ' · ' ile; ikon yok. Video süresi için H.vid(s) (başında fa-play) */
-  H.meta = function(o, cls){ return '<div class="meta' + (cls ? ' ' + cls : '') + '">' + o.filter(Boolean).map(function(x){ return '<span>' + x + '</span>'; }).join('') + '</div>'; };
+  /* bilgi satırı (K43): okuma süresi fa-clock, görüntülenme fa-eye; ikonlu öğeler noktasız */
+  H.meta = function(o, cls){ return '<div class="meta' + (cls ? ' ' + cls : '') + '">' + o.filter(Boolean).map(function(x){ x = String(x); if (x.indexOf('<i') > -1) return '<span>' + x + '</span>';
+      if (/^\d+\s?dk$/.test(x)) return '<span class="ik"><i class="fa-solid fa-clock"></i>' + x + '</span>';
+      if (/^\d+([.,]\d+)?\s?(B|Bn|M|Mn|bin)$/.test(x)) return '<span class="ik"><i class="fa-solid fa-eye"></i>' + x + '</span>';
+      return '<span>' + x + '</span>'; }).join('') + '</div>'; };
   H.vid = function(s){ return '<i class="fa-solid fa-play"></i>' + s; };
   /* kategori ikonu (bölüm adından) ve tek kategori etiketi (K35) */
   H.ikon = function(kat){ var b = bul(kat); return b ? b.ikon : 'fa-newspaper'; };

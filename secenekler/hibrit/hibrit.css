@@ -46,6 +46,9 @@ html[data-tema="koyu"]{--koyu-y:var(--yuzey-2);--koyu-y2:#2D2D32}
 .meta{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:12.5px;color:var(--metin-3);white-space:nowrap;overflow:hidden}
 .meta>span{display:inline-flex;align-items:center;gap:8px;flex:none}
 .meta>span+span::before{content:"·"}
+.meta>span.ik::before,.meta>span.ik+span::before{content:none}
+.meta>span.ik{gap:var(--b-4)}
+.meta>span.ik i{color:var(--metin-3);font-size:11px}
 .meta i{font-size:10px}
 /* tek kategori etiketi (K35): kategori ikonu + karışık harf, marka rengi; fotoğraf üstünde --marka */
 .kat-et{display:inline-flex;align-items:center;gap:var(--ikon-bosluk);font-size:12.5px;font-weight:var(--y-kalin);color:var(--marka-metin);white-space:nowrap}

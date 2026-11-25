@@ -103,7 +103,11 @@
   K.bas = function(ad){ return String(ad).split(' ').map(function(p){ return p.charAt(0); }).join('').slice(0, 2); };
 
   /* ---------- işaretler ---------- */
-  K.meta = function(o, cls){ return '<div class="k-meta' + (cls ? ' ' + cls : '') + '">' + o.filter(Boolean).map(function(x){ return '<span>' + x + '</span>'; }).join('') + '</div>'; };
+  /* bilgi satırı (K43): okuma süresi fa-clock, görüntülenme fa-eye; ikonlu öğeler noktasız */
+  K.meta = function(o, cls){ return '<div class="k-meta' + (cls ? ' ' + cls : '') + '">' + o.filter(Boolean).map(function(x){ x = String(x); if (x.indexOf('<i') > -1) return '<span>' + x + '</span>';
+      if (/^\d+\s?dk$/.test(x)) return '<span class="ik"><i class="fa-solid fa-clock"></i>' + x + '</span>';
+      if (/^\d+([.,]\d+)?\s?(B|Bn|M|Mn|bin)$/.test(x)) return '<span class="ik"><i class="fa-solid fa-eye"></i>' + x + '</span>';
+      return '<span>' + x + '</span>'; }).join('') + '</div>'; };
   K.vid = function(s){ return I('fa-play') + s; };
   K.katEt = function(metin, ikon, o){ o = o || {}; return '<span class="k-kat' + (o.foto ? ' foto' : '') + '">' + I(ikon || K.ikon(metin)) + metin + (o.ek ? '<em>· ' + o.ek + '</em>' : '') + '</span>'; };
   K.canli = function(m, o){ return '<span class="k-canli' + (o && o.kucuk ? ' kucuk' : '') + '"><span class="canli-nokta"></span>' + (m || 'Canlı') + '</span>'; };
@@ -528,6 +532,30 @@
     var f = function(){ var v = kap.getBoundingClientRect().top - e.getBoundingClientRect().top <= parseFloat(getComputedStyle(kap).top) + 1 && e.scrollTop > 0;
       kap.classList.toggle('yapisik', v); var h = kap.querySelector('.k-hk'); if (h) h.classList.toggle('kucuk', v); };
     e.addEventListener('scroll', f, { passive: true }); f(); };
+
+  /* ---------- görselli banner (K43): içerik merkez sayfalarında düz büyük başlık (.k-bbas) yerine bölüm listesi gibi görselli banner;
+     yukarı kaydırınca üst çubuk görselli daralır. Sayfa adı → konuya uygun fotoğraf (yoksa koyu marka zemini). Sayfa betiklerinden sonra uygulanır. ---------- */
+  var BANNER = { 'bolumler': 'kar-istanbul', 'afet': 'konteyner', 'trafik': 'metro', 'ekonomi-araclari': 'borsa', 'resmi-ilanlar': 'ankara-kar', 'piyasalar': 'borsa',
+    'son-dakika': 'kar-istanbul', 'canli-gundem': 'tbmm', 'canli-yayin': 'spiker-kare', 'haber-dinle': 'spiker-kare', 'canli-skor': 'antrenman', 'puan-durumu': 'superlig',
+    'fikstur': 'kulup', 'takimlar': 'kulup', 'namaz-vakitleri': 'balikci', 'arsiv': 'yks', 'bana-etkisi': 'carsi', 'bugun-ne-oldu': 'kar-istanbul', 'dada-baglam': 'ab-meclis',
+    'dada-dogrula': 'tarama', 'dada-ozet': 'veri-merkezi', 'farkli-bakislar': 'ab-meclis', 'guncellenen-haberler': 'asgari', 'sakin-akis': 'balikci', 'takvim': 'tbmm',
+    'veri-ve-harita': 'veri-merkezi', 'kesfet': 'veri-merkezi', 'yazarlar': '', 'hamilelik': '', 'astroloji': '', 'dada-ailesi': '', 'senin-icin': '', 'transfer': 'kulup',
+    'lig': 'superlig', 'brans': 'basket', 'milli-takim': 'milli', 'avrupa-ligleri': 'superlig', 'podcast': '', 'video': '', 'foto-fokus': 'balon', 'infografik': 'veri-merkezi' };
+  K.banner = function(){
+    var m = location.pathname.match(/ekranlar\/icerik\/([a-z0-9-]+)\.html$/); if (!m || !(m[1] in BANNER)) return;
+    var bb = document.querySelector('.ekran .k-bbas'), e = document.querySelector('.ekran'); if (!bb || !e || bb.closest('.k-kapak')) return;
+    var h = bb.querySelector('h1'), p = bb.querySelector('p'), g = BANNER[m[1]];
+    var kap = K.el('<header class="k-kapak"' + (g ? ' style="background-image:' + G(g) + '"' : '') + '><h1>' + (h ? h.innerHTML : '') + '</h1>' + (p ? '<p>' + p.innerHTML + '</p>' : '') + '</header>');
+    var bos = bb.previousElementSibling; if (bos && bos.classList.contains('k-ust-bosluk')) bos.remove();
+    var yap = K.el('<div class="k-yaprak"></div>'), n = bb.nextSibling; bb.replaceWith(kap);
+    while (n){ var s2 = n.nextSibling; if (!(n.nodeType === 1 && (n.classList.contains('k-ac') || n.classList.contains('k-ub')))) yap.appendChild(n); n = s2; }
+    kap.after(yap);
+    /* yapışkan öğeler artık banner altında: üst çubuk yüksekliğine göre yapışır */
+    var u = document.querySelector('.k-ub'); if (u){ u.classList.add('k-anlik'); u.classList.remove('buyuk', 'golgeli', 'duz'); u.classList.add('foto'); void u.offsetWidth; setTimeout(function(){ u.classList.remove('k-anlik'); }, 60); if (g) u.style.setProperty('--k-ub-g', G(g)); else u.style.setProperty('--k-ub-g', 'linear-gradient(var(--siyah),var(--siyah))');
+      document.body.setAttribute('data-durum', 'acik');
+      var kay = function(){ var v = e.scrollTop > 130; u.classList.toggle('dar', v); u.classList.remove('golgeli'); }; e.addEventListener('scroll', kay, { passive: true }); kay(); }
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function(){ K.banner(); }); else setTimeout(function(){ K.banner(); }, 0);
 
   /* ---------- katmanlar ---------- */
   var acikKatman = [];
