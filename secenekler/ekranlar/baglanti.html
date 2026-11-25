@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Bağlantı denetimi</title>
+<!-- Dada Haber Mobil · BAĞLANTI DENETİMİ (TEK YAZAR: lider; Yasin Bey 2. tur, K47). Dizindeki (dizin.js) her ekranı açar, dokunulabilir her yüzeyi toplar
+     (a[href], [data-href], kartlar, satırlar, hikâye daireleri, çipler, "Tümü", takım/lig/maç/piyasa satırları; kapalı çekmece ve alt sayfadakiler dahil) ve dener:
+       olu     · dokunulabilir görünen ama hiçbir yere gitmeyen yüzey: href'siz <a> (davranış özniteliği yoksa), href="#"/"javascript:", bağlantısız kart/satır
+       kirik   · hedef dosya yok ya da hedef açılınca ekran boş / tam sayfa hata (hedefte ?durum= yoksa)
+       yanlis  · alt başlık adı taşıyan bağlantı K.altYol'un verdiği ekrana gitmiyor (K46 tek eşleme kuralı)
+     Hedefler tek tek açılarak denenir (aynı hedef bir kez). Hal satırları (?durum=) kaynak olarak taranmaz: aynı ekranın bağlantılarını taşır.
+     ?dosya=hibrit/kok,ekranlar/icerik/lig önekle süz · ?sec=E-001,E-002 · ?hedef=0 hedefleri açma (yalnız ölü + yanlış). Sonuç #json (tasks/araclar/baglanti.sh okur). -->
+<style>
+body{font:13px/1.4 -apple-system,system-ui,sans-serif;margin:16px;color:#111}
+iframe{position:absolute;left:-2000px;top:0;width:390px;height:844px;border:0}
+pre{white-space:pre-wrap}
+</style>
+</head>
+<body>
+<h1>Bağlantı denetimi</h1>
+<p id="ozet">Çalışıyor…</p>
+<pre id="json"></pre>
+<script src="dizin.js"></script>
+<script>
+(function(){
+  var Q = new URLSearchParams(location.search), dsy = (Q.get('dosya') || '').split(',').filter(Boolean), sec = (Q.get('sec') || '').split(',').filter(Boolean), HEDEF = Q.get('hedef') !== '0';
+  var KOK = new URL('../', location.href).href; /* secenekler/ */
+  var KAYNAK = [], gor = {};
+  (window.DIZIN || []).forEach(function(g){ g.ekranlar.forEach(function(e){
+    if (sec.length && sec.indexOf(e.id) < 0) return;
+    if (dsy.length && !dsy.some(function(x){ return e.dosya.indexOf(x) === 0; })) return;
+    if (!sec.length && /[?&](durum|hal)=/.test(e.dosya)) return;
+    var a = e.dosya.split('#')[0]; if (gor[a]) return; gor[a] = 1; KAYNAK.push({ id: e.id, dosya: a }); }); });
+
+  /* dokunulabilir görünen yüzeyler: kendisi ya da atası a/button/[data-href] değilse ölü sayılır */
+  var KART = 'div.k-ayar:has(> .ok),.k-satir,.k-kart-a,.k-kart-k,.k-kart-genis,.k-kart-v,.k-kart-g,.k-kart-akis,.k-kose,.k-sd,.k-py,.k-skor,.k-mac,.k-takim,.k-hk-o,.k-olay-b,.k-pd,.k-ky,.k-podcast,.k-bolum-satir,.k-yazar-satir';
+  var DAVRANIS = ['data-sayfa', 'data-menu', 'data-menu-ac', 'data-kapat', 'data-geri', 'data-spiker', 'data-dinle', 'data-podcast', 'data-kaydet', 'data-takip', 'data-begen', 'data-kopyala', 'data-toast', 'data-basa', 'data-sifre', 'data-hesap', 'data-tum', 'data-temizle', 'data-yeni-klasor', 'data-dis', 'role', 'aria-controls', 'data-sekme', 'data-kip', 'data-ac', 'onclick'];
+  /* ekranın kendi tıklama dinleyicisine bağlanan öğe: kendisinde ya da en yakın a/button'da data-* (görsel ve denetim öznitelikleri hariç) */
+  function veriKancasi(el){ var x = el.closest('a,button,[role=button]') || el; return [].some.call(x.attributes, function(at){ return /^data-/.test(at.name) && !/^data-(g|denetim-yok|tam-genis|b)$/.test(at.name); }); }
+  function davranisli(el){ if (veriKancasi(el)) return true; for (var p = el; p && p.nodeType === 1; p = p.parentElement){ for (var i = 0; i < DAVRANIS.length; i++) if (p.hasAttribute(DAVRANIS[i])) return true; if (p.matches('button,summary,label,[tabindex]')) return true; } return false; }
+  function ad(el){ var t = (el.textContent || el.getAttribute('aria-label') || '').replace(/\s+/g, ' ').trim().slice(0, 40); return el.tagName.toLowerCase() + (el.className && typeof el.className === 'string' ? '.' + el.className.trim().split(/\s+/)[0] : '') + (t ? ' «' + t + '»' : ''); }
+  function anahtar(u){ try { var x = new URL(u); ['tema', 'uye', 'tam', 'hb', 'kok', 'calan'].forEach(function(k){ x.searchParams.delete(k); }); x.searchParams.sort(); x.hash = ''; return x.href; } catch (e) { return u; } }
+  function goreli(u){ return String(u).replace(KOK, ''); }
+
+  /* her açılışta yeni çerçeve: hata sayfasına düşen hedef (ör. tanımsız K.git adı) sonrakileri bozmasın */
+  var fr = null;
+  function ac(url, bitti){ var son = false; if (fr) fr.remove(); fr = document.createElement('iframe'); document.body.appendChild(fr);
+    function hazir(){ if (son) return; son = true; setTimeout(function(){ var d, w; try { d = fr.contentDocument; w = fr.contentWindow; } catch (e) {} bitti(d, w); }, 700); }
+    fr.onload = hazir; fr.src = url; setTimeout(function(){ if (!son) { son = true; bitti(null, null); } }, 6000); }
+
+  var olu = [], yanlis = [], hedefler = {}, yuzey = 0, i = 0, kirik = [];
+  function kaynakTara(){
+    if (i >= KAYNAK.length) return HEDEF ? hedefTara() : bitir();
+    var k = KAYNAK[i++], url = '../' + k.dosya + (k.dosya.indexOf('?') < 0 ? '?' : '&') + 'tam=1';
+    ac(url, function(d, w){
+      if (!d || !d.body) { kirik.push({ kaynak: k.id + ' ' + k.dosya, hedef: k.dosya, neden: 'kaynak açılmadı' }); return kaynakTara(); }
+      var K = w.K, gorulen = new Set();
+      /* 1. bağlantılar */
+      [].forEach.call(d.querySelectorAll('a, [data-href]'), function(el){
+        if (el.closest('.durum,.dc,.ec,[data-denetim-yok]')) return;
+        var h = el.tagName === 'A' ? el.getAttribute('href') : el.getAttribute('data-href');
+        if (el.tagName === 'A' && el.hasAttribute('data-href')) h = el.getAttribute('href') || el.getAttribute('data-href');
+        yuzey++;
+        if (h == null || h === '') { if (!davranisli(el) && !el.closest('[data-href]')) olu.push({ kaynak: k.id + ' ' + k.dosya, oge: ad(el), neden: 'href yok' }); return; }
+        if (h === '#' || /^javascript:/i.test(h)) { if (!davranisli(el)) olu.push({ kaynak: k.id + ' ' + k.dosya, oge: ad(el), neden: 'href="' + h + '"' }); return; }
+        if (/^(mailto|tel|https?):/i.test(h)) return;
+        var abs; try { abs = new URL(h, d.baseURI).href; } catch (e) { olu.push({ kaynak: k.id + ' ' + k.dosya, oge: ad(el), neden: 'geçersiz adres' }); return; }
+        if (abs.split('#')[0] === d.baseURI.split('#')[0] && /#/.test(h)) return; /* sayfa içi çapa */
+        /* adres secenekler/ altında bir dosyaya gitmeli (tanımsız K.git adı "secenekler/seri" gibi uzantısız yol üretir) */
+        if (abs.indexOf(KOK) === 0 && !/\.html(\?|#|$)/.test(abs.split('?')[0] + (abs.indexOf('?') > -1 ? '?' : ''))) { kirik.push({ kaynak: k.id + ' ' + k.dosya, oge: ad(el), hedef: goreli(abs), neden: 'sayfa değil (tanımsız yol)' }); return; }
+        var ak = anahtar(abs); if (!hedefler[ak]) hedefler[ak] = { url: abs, kaynak: k.id + ' ' + k.dosya, oge: ad(el) };
+        /* 3. alt başlık adı → K.altYol */
+        var t = (el.textContent || '').replace(/\s+/g, ' ').trim();
+        if (K && K.ALT && K.altYol && t.length < 30) { var bol = null; Object.keys(K.ALT).forEach(function(b){ if (K.ALT[b].indexOf(t) > -1) bol = b; });
+          /* aynı ekranın kendi süzgeç çipi (ör. Video Haber › Teknoloji) ve aynı ekranın sekmesi eşlemeye tabi değil */
+          var ayni = new URL(ak).pathname === new URL(d.baseURI).pathname;
+          if (bol && !ayni) { var bek = anahtar(new URL(K.altYol(t, bol), d.baseURI).href), ak2 = new URL(ak), bk = new URL(bek);
+            var sekmeFarki = ak2.pathname === bk.pathname && (function(){ var x = new URL(ak2.href); x.searchParams.delete('sekme'); return x.search === bk.search; })();
+            if (sekmeFarki) bol = null; }
+          if (bol && !ayni) { var bek = anahtar(new URL(K.altYol(t, bol), d.baseURI).href), ak2 = new URL(ak), bk = new URL(bek);
+            /* bölüm listesine giden alt başlık: konu parametresiyle aynı listeyi açması yeter */
+            if (ak2.pathname !== bk.pathname || (bk.search && bk.search !== ak2.search && !(bk.pathname.indexOf('liste.html') > -1 && ak2.searchParams.get('konu') === bk.searchParams.get('konu'))))
+              yanlis.push({ kaynak: k.id + ' ' + k.dosya, oge: ad(el), gidiyor: goreli(ak), olmali: goreli(bek) }); } }
+      });
+      /* 2. kart ve satırlar: dokunulabilir görünüp hiçbir yere gitmeyen */
+      [].forEach.call(d.querySelectorAll(KART), function(el){
+        if (el.closest('.durum,.dc,.ec,[data-denetim-yok],.k-iskelet,[aria-hidden="true"]')) return;
+        if (el.matches('a,button,[data-href]') || el.closest('a,button,[data-href]') || el.querySelector('a[href]:not(.k-kay),[data-href]') || davranisli(el)) return;
+        yuzey++; olu.push({ kaynak: k.id + ' ' + k.dosya, oge: ad(el), neden: 'kart/satır bağlantısız' });
+      });
+      kaynakTara();
+    });
+  }
+  var HL = [], j = 0;
+  function hedefTara(){
+    if (!HL.length) HL = Object.keys(hedefler);
+    if (j >= HL.length) return bitir();
+    var hk = HL[j++], h = hedefler[hk], url = h.url + (h.url.indexOf('?') < 0 ? '?' : '&') + 'tam=1';
+    ac(url, function(d, w){
+      var neden = '';
+      if (!d || !d.body) neden = 'açılmadı';
+      else if (!d.body.children.length || /ERR_FILE_NOT_FOUND|dosya bulunamadı/i.test(d.body.textContent) && !d.querySelector('.ekran')) neden = 'dosya yok';
+      else { var e = d.querySelector('.ekran'), durumlu = /[?&]durum=/.test(h.url);
+        if (e && !e.textContent.trim() && !e.querySelector('img,svg,[style*="background"]')) neden = 'ekran boş';
+        else if (!durumlu && d.querySelector('.k-hata.tam, .k-hata[data-tam], .ekran > .k-hata')) neden = 'hata ekranı açıldı'; }
+      if (neden) kirik.push({ kaynak: h.kaynak, oge: h.oge, hedef: goreli(hk), neden: neden });
+      hedefTara();
+    });
+  }
+  function bitir(){
+    var s = { kaynak_ekran: KAYNAK.length, yuzey: yuzey, benzersiz_hedef: Object.keys(hedefler).length, hedef_denendi: HEDEF, olu: olu, kirik: kirik, yanlis: yanlis };
+    document.getElementById('ozet').textContent = 'Ekran ' + s.kaynak_ekran + ' · yüzey ' + yuzey + ' · hedef ' + s.benzersiz_hedef + ' · ölü ' + olu.length + ' · kırık ' + kirik.length + ' · yanlış ' + yanlis.length;
+    document.getElementById('json').textContent = JSON.stringify(s);
+  }
+  kaynakTara();
+})();
+</script>
+</body>
+</html>
