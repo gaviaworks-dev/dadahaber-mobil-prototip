@@ -12,7 +12,7 @@
      (Beyar: üst çubuklarda zil YOK; bildirimlere çekmecenin hesap kartından ve Hesabım'dan gidilir)
      K.altCubuk(etkin, {koyu, rozet:{hesap:3}, yer})     etkin ∈ ana · bolum · akis · dinle · hesap
      K.oynatici({yer}) (varsayılan kapalı; ?calan=1|dinle)  K.spikerBaslat()  K.dinleBaslat()  K.spikerDurdur()  K.spikerCanli()  K.goruntuleyici({g, altyazi, sira, toplam})                  Spiker mini oynatıcısı; sessionStorage "dada-spiker" (hibrit.js ile aynı)
-     K.okuma({yer})                                       detayın yüzen okuma çubuğu
+     K.okuma({yer, dinle, yorum})                                       detayın yüzen okuma çubuğu
      K.cekmece({yer, acik})                               sağdan menü çekmecesi (üye/misafir); [data-menu] açar
      K.yapis(el, ekran)                                   hikâye şeridi yapışınca küçülür
    İŞARETLER   K.bb({baslik, ikon, sayi, canli, baglanti, not, yalin})  K.meta([..])  K.vid(sure)  K.katEt(metin, ikon, {foto, ek})
@@ -199,7 +199,7 @@
   K.podcastSatir = function(p, o){ o = o || {};
     return '<div class="k-pd-satir"><span class="gr"' + bg(p.g) + '></span><a href="' + K.git('podcastBolum') + '"><small>' + p.seri + ' · ' + p.no + '</small><b>' + p.baslik + '</b>' +
       K.meta([p.sure, p.konuk]) + (o.ilerleme ? K.ilerleme(o.ilerleme) : '') + '</a>' +
-      K.ikonBtn({ ikon: o.oynuyor ? 'fa-pause' : 'fa-play', etiket: o.oynuyor ? 'Duraklat' : 'Oynat', attr: 'data-spiker' }) + '</div>'; };
+      K.ikonBtn({ ikon: o.oynuyor ? 'fa-pause' : 'fa-play', etiket: o.oynuyor ? 'Duraklat' : 'Oynat', attr: 'data-podcast' }) + '</div>'; };
   K.kartGaleri = function(f){ return '<a class="k-kart-g" href="' + K.git('galeri') + '"><div class="yig"><div class="gr"' + bg(f.g) + '>' + K.md(f.adet + ' kare', 'fa-images') + '</div></div><h3>' + f.baslik + '</h3></a>'; };
   /* Gelişen Olaylar: D.liste haberleri konuya göre (liste kökündeki gruplar; yeni haber yok) */
   K.OLAYLAR = [
@@ -463,9 +463,9 @@
       var ic = s[0] === 'akis' ? '<span class="yuv">' + I(s[2]) + '</span>' : I(s[2]);
       var cn = s[0] === 'dinle' && K.spikerCanli() ? '<span class="cn-n" aria-label="Spiker yayında"></span>' : '';
       return '<a class="' + (s[0] === 'akis' ? 'akis' : '') + '" href="' + s[3] + '"' + (s[0] === etkin ? ' aria-current="page"' : '') + '>' + ic + s[1] + cn + (r[s[0]] ? K.rozet(r[s[0]]) : '') + '</a>'; }).join('') + '</nav>'); };
-  K.okuma = function(o){ o = o || {}; var d = D.detay;
-    return ekle(o.yer, '<nav class="k-okuma" aria-label="Okuma çubuğu"><button class="dinle" type="button" data-dinle>' + I('fa-headphones') + 'Dinle · ' + d.dinle + '</button><button class="hmd" type="button" data-hm-ac aria-label="Hikâye modunda oku">' + I('fa-layer-group') + '</button>' +
-      '<button type="button" aria-label="Yorumlar, ' + d.yorumSayisi + '" data-yorumlara>' + I('fa-comment') + K.rozet(d.yorumSayisi, 'sari') + '</button><button type="button" aria-label="Paylaş" data-sayfa="paylas">' + I('fa-share-nodes') + '</button><button class="aa" type="button" aria-label="Yazı boyutu" data-sayfa="yazi">Aa</button></nav>'); };
+  K.okuma = function(o){ o = o || {}; var d = D.detay, dn = o.dinle === undefined ? d.dinle : o.dinle, yc = o.yorum === undefined ? d.yorumSayisi : o.yorum; /* o.dinle: süre metni ya da '' (süresiz); o.yorum: sayı */
+    return ekle(o.yer, '<nav class="k-okuma" aria-label="Okuma çubuğu"><button class="dinle" type="button" data-dinle>' + I('fa-headphones') + 'Dinle' + (dn ? ' · ' + dn : '') + '</button><button class="hmd" type="button" data-hm-ac aria-label="Hikâye modunda oku">' + I('fa-layer-group') + '</button>' +
+      '<button type="button" aria-label="Yorumlar, ' + yc + '" data-yorumlara>' + I('fa-comment') + K.rozet(yc, 'sari') + '</button><button type="button" aria-label="Paylaş" data-sayfa="paylas">' + I('fa-share-nodes') + '</button><button class="aa" type="button" aria-label="Yazı boyutu" data-sayfa="yazi">Aa</button></nav>'); };
 
   /* Spiker mini oynatıcı: hibrit.js ile aynı anahtar ve davranış; kökler ve yeni ekranlar arasında çalmayı sürdürür */
   /* K39: varsayılan KAPALI; yalnız ?calan=1 (Spiker) / ?calan=dinle ya da bu sayfada oynat'a basılınca görünür; çalarken uygulama içi bağlantılar calan'ı taşır */
@@ -691,6 +691,8 @@
     if ((x = t.closest('[data-sifre]'))) { var inp = x.parentNode.querySelector('input'), gos = inp.type === 'password'; inp.type = gos ? 'text' : 'password'; x.innerHTML = I(gos ? 'fa-eye-slash' : 'fa-eye'); x.setAttribute('aria-label', gos ? 'Şifreyi gizle' : 'Şifreyi göster'); }
     if (t.closest('[data-spiker]')) { ev.preventDefault(); K.spikerBaslat(); }
     if (t.closest('[data-dinle]')) { ev.preventDefault(); K.dinleBaslat(); }
+    /* podcast oynat: Spiker'ı başlatmaz; tek oynatıcı kuralıyla Spiker durur (K39) */
+    if ((x = t.closest('[data-podcast]'))) { ev.preventDefault(); var po = x.getAttribute('aria-pressed') !== 'true'; x.setAttribute('aria-pressed', po); x.setAttribute('aria-label', po ? 'Duraklat' : 'Oynat'); var pi = x.querySelector('i'); if (pi) pi.className = 'fa-solid ' + (po ? 'fa-pause' : 'fa-play'); if (po && K.spikerDurdur()) K.toast('Dada Spiker duraklatıldı', { ikon: 'fa-radio' }); }
     if (t.closest('[data-menu]') && K._cekmece) K._cekmece.ac();
     if ((x = t.closest('[data-sayfa]')) && !x.closest('.k-sahne-statik')) { ev.preventDefault(); var ad = x.getAttribute('data-sayfa'); if (HAZIR[ad]) K.sayfa(ad, { eylem: x.getAttribute('data-eylem') || undefined, yer: x.closest('.k-sahne') || undefined }); }
     if ((x = t.closest('[data-yeni-klasor]'))) { ev.preventDefault(); K.sayfa('yeni-klasor', { yer: x.closest('.k-sahne') || undefined }); }

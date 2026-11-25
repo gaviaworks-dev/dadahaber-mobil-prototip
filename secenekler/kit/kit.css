@@ -26,8 +26,8 @@ html[data-tema="koyu"]{--k-koyu:var(--yuzey-2);--k-dolgu:var(--marka);--k-cam-z:
 
 /* ================= 1 · Temel ================= */
 /* dokunma alanı ≥44×44 (K34): görünüşü küçük denetime ortalanmış görünmez alan */
-.k-dk44,.k-toast button,.k-yazar-satir>a,.k-yeni-hap,.k-video .vu .k-ikon,.k-video .va .k-ikon,.k-segment.ince button,.k-cip,.k-btn.kucuk,.k-ikon.kucuk,.k-ikon.av,.k-mo .kapat,.k-yorum-a button,.k-gorunum button,.k-kay,.k-oneri .sil,.k-cekmece .k-mc a,.k-mf-bag a,.k-ara .temizle,.k-sekmeler button,.k-gun{position:relative}
-.k-dk44::after,.k-toast button::after,.k-yazar-satir>a::after,.k-yeni-hap::after,.k-video .vu .k-ikon::after,.k-video .va .k-ikon::after,.k-segment.ince button::after,.k-cip::after,.k-btn.kucuk::after,.k-ikon.kucuk::after,.k-ikon.av::after,.k-mo .kapat::after,.k-yorum-a button::after,.k-gorunum button::after,.k-kay::after,.k-oneri .sil::after,.k-cekmece .k-mc a::after,.k-mf-bag a::after,.k-ara .temizle::after,.k-gun::after{content:"";position:absolute;left:50%;top:50%;width:max(100%,44px);height:max(100%,44px);transform:translate(-50%,-50%)}
+.k-dk44,.k-toast button,.k-oy .hiz,.k-yazar-satir>a,.k-yeni-hap,.k-video .vu .k-ikon,.k-video .va .k-ikon,.k-segment.ince button,.k-cip,.k-btn.kucuk,.k-ikon.kucuk,.k-ikon.av,.k-mo .kapat,.k-yorum-a button,.k-gorunum button,.k-kay,.k-oneri .sil,.k-cekmece .k-mc a,.k-mf-bag a,.k-ara .temizle,.k-sekmeler button,.k-gun{position:relative}
+.k-dk44::after,.k-toast button::after,.k-oy .hiz::after,.k-yazar-satir>a::after,.k-yeni-hap::after,.k-video .vu .k-ikon::after,.k-video .va .k-ikon::after,.k-segment.ince button::after,.k-cip::after,.k-btn.kucuk::after,.k-ikon.kucuk::after,.k-ikon.av::after,.k-mo .kapat::after,.k-yorum-a button::after,.k-gorunum button::after,.k-kay::after,.k-oneri .sil::after,.k-cekmece .k-mc a::after,.k-mf-bag a::after,.k-ara .temizle::after,.k-gun::after{content:"";position:absolute;left:50%;top:50%;width:max(100%,44px);height:max(100%,44px);transform:translate(-50%,-50%)}
 .k-son{height:calc(var(--k-ac-h) + 20px)}                     /* sayfa sonu: alt çubuk kadar (K33) */
 body:has(.k-mo.acik) .k-son{height:calc(var(--k-ac-h) + 86px)} /* mini oynatıcı açıkken onun kadar daha */
 .k-son.yalin{height:calc(var(--alt-guvenli) + 24px)}           /* alt çubuksuz ekran */
@@ -601,7 +601,7 @@ html.tam .k-ac,html.tam .k-mo,html.tam .k-okuma,html.tam .k-ub{position:fixed}
 .k-mozaik{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--b-4)}
 .k-mozaik .gr{aspect-ratio:1/1;position:relative}
 .k-mozaik .gr:first-child{grid-column:span 2;grid-row:span 2}
-.k-goruntuleyici{position:absolute;inset:0;z-index:95;background:#000;color:#fff;display:flex;flex-direction:column}
+.k-goruntuleyici{position:absolute;inset:0;z-index:95;background:#000;color:#fff;display:flex;flex-direction:column;overflow:hidden}
 .k-goruntuleyici .u{position:absolute;left:0;right:0;top:var(--ust-guvenli);z-index:2;height:48px;padding:0 var(--kenar);display:flex;align-items:center;gap:var(--b-8);transition:opacity .2s}
 .k-goruntuleyici .u .k-sayac{margin:0 auto;color:#fff;font-size:14px}
 .k-goruntuleyici .gr{position:absolute;left:0;right:0;top:50%;height:260px;transform:translateY(-55%);background-size:cover;background-color:#000;transition:transform .3s}
@@ -1097,7 +1097,7 @@ html[data-tema="koyu"] .k-isk{background-image:linear-gradient(90deg,var(--yuzey
 /* tam ekran ses oynatıcısı (Spiker, Haber Dinle bülteni, podcast) */
 .k-oy{position:absolute;inset:0;z-index:94;display:flex;flex-direction:column;background:var(--zemin);color:var(--metin);padding:calc(var(--ust-guvenli) + var(--b-4)) var(--b-24) calc(var(--alt-guvenli) + var(--b-8));transform:translateY(100%);transition:transform .34s var(--k-egri)}
 .k-oy.acik,.k-oy.yerinde{transform:none}
-.k-oy.yerinde{position:relative;min-height:844px}
+.k-oy.yerinde{position:relative;z-index:auto;min-height:844px}
 .k-oy .u{display:flex;align-items:center;gap:var(--b-8);margin:0 calc(-1 * var(--b-12))}
 .k-oy .u .t{flex:1;min-width:0;text-align:center;font-size:12.5px;line-height:1.3;color:var(--metin-3)}
 .k-oy .u .t b{display:block;font-size:14px;color:var(--metin)}
@@ -1108,7 +1108,7 @@ html[data-tema="koyu"] .k-isk{background-image:linear-gradient(90deg,var(--yuzey
 .k-oy .bas small{display:flex;align-items:center;gap:var(--ikon-bosluk);font-size:13px;font-weight:var(--y-kalin);color:var(--marka-metin);white-space:nowrap}
 .k-oy .bas h2{margin-top:var(--b-4);font-size:22px;line-height:1.2;letter-spacing:-.02em;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .k-oy .bas p{margin-top:var(--b-4);font-size:14px;color:var(--metin-3)}
-.k-oy .sure{display:flex;justify-content:space-between;margin-top:calc(-1 * var(--b-4));font-size:12.5px;color:var(--metin-3);font-variant-numeric:tabular-nums}
+.k-oy .sure{display:flex;justify-content:space-between;margin-top:var(--b-4);font-size:12.5px;color:var(--metin-3);font-variant-numeric:tabular-nums}
 .k-oy .ilr{margin-top:var(--b-16)}
 .k-oy .dn{margin-top:var(--b-12);display:flex;align-items:center;justify-content:space-between}
 .k-oy .dn .ana{width:72px;height:72px;border-radius:var(--k-daire);background:var(--marka);color:var(--siyah);display:grid;place-items:center;font-size:26px;transition:transform .12s}
@@ -1136,7 +1136,7 @@ html[data-tema="koyu"] .k-isk{background-image:linear-gradient(90deg,var(--yuzey
 .k-video .vo .ana .fa-play{padding-left:var(--b-4)}
 .k-video .vo .k-atla{color:#fff;width:44px;height:44px;font-size:20px}
 .k-video .va{left:12px;right:8px;bottom:6px;display:flex;align-items:center;gap:var(--b-12);font-size:12px;font-weight:var(--y-kalin);font-variant-numeric:tabular-nums}
-.k-video .va .k-kaydirac{flex:1;height:32px;--k-dolgu:var(--marka)}
+.k-video .va .k-kaydirac{flex:1;height:44px;--k-dolgu:var(--marka)}
 .k-video .va .k-kaydirac::-webkit-slider-runnable-track{height:3px;background:linear-gradient(90deg,var(--marka) var(--d),rgba(255,255,255,.3) var(--d))}
 .k-video .va .k-kaydirac::-webkit-slider-thumb{width:14px;height:14px;margin-top:calc(-1 * var(--b-8));background:var(--marka);box-shadow:none}
 .k-video .va .k-ikon{width:40px;height:40px;font-size:15px;color:#fff}
@@ -1240,3 +1240,5 @@ html[data-tema="koyu"] .k-isk{background-image:linear-gradient(90deg,var(--yuzey
 .k-mo .t small .y i{color:var(--marka);font-size:11px}
 
 /* yayılım geri bildirimi: dokunma alanı 44 (yazar satırı bağlantısı, yeni haber hapı, video düğmeleri, arama alanı) */
+
+.k-kapak .k-kat{align-self:flex-start} /* kapak üstündeki kategori etiketi içeriği kadar */
