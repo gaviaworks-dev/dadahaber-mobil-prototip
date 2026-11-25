@@ -252,18 +252,18 @@
   /* hava ve namaz: ayrı ayrı, bölüm aralarında tek satır kutu (K30) */
   function hava(){
     var h = D.hava, y = h.gunler[0];
-    return '<a class="ky"><span class="ik"><i class="fa-solid ' + h.ikon + '"></i></span><span class="hv"><span class="t"><small>' + h.sehir + ' · Bugün</small><b>' + h.derece + '° ' + h.durum + '</b></span><span class="ay"></span>' +
+    return '<a class="ky" href="' + K.git('havaDurumu') + '"><span class="ik"><i class="fa-solid ' + h.ikon + '"></i></span><span class="hv"><span class="t"><small>' + h.sehir + ' · Bugün</small><b>' + h.derece + '° ' + h.durum + '</b></span><span class="ay"></span>' +
       '<span class="t"><small>Yarın</small><b>' + y.y + '° / ' + y.d + '°</b></span><i class="fa-solid ' + y.ikon + ' d"></i></span></a>';
   }
   function namaz(){
     var n = D.namaz;
-    return '<a class="ky"><span class="ik"><i class="fa-solid fa-mosque"></i></span><span class="t"><small>' + n.sehir + ' · Namaz vakti</small><b>' + n.siradaki + ' ezanı ' + n.saat + '</b></span>' +
+    return '<a class="ky" href="' + K.git('namaz') + '"><span class="ik"><i class="fa-solid fa-mosque"></i></span><span class="t"><small>' + n.sehir + ' · Namaz vakti</small><b>' + n.siradaki + ' ezanı ' + n.saat + '</b></span>' +
       '<span class="sg"><b>' + n.kalan.replace(':', ' sa ') + ' dk</b><small>kaldı</small></span></a>';
   }
   function piyasa(){
     var p = D.piyasa;
-    return '<div class="bb"><h2><span class="bi"><i class="fa-solid fa-chart-column"></i></span>Piyasalar</h2><span class="not">' + p.guncelleme + ' · 15 dk gecikmeli</span></div><div class="py ks">' +
-      p.liste.map(function(x){ return '<a><small>' + x.ad + '</small><b>' + x.deger + '</b><em class="' + x.yon + '">' + (x.yon === 'y' ? '▲' : '▼') + ' %' + x.degisim + '</em></a>'; }).join('') + '</div>';
+    return '<div class="bb"><h2><span class="bi"><i class="fa-solid fa-chart-column"></i></span>Piyasalar</h2><a href="' + K.altYol('Piyasa Ekranı') + '">Tümü<i class="fa-solid fa-chevron-right"></i></a></div><div class="py ks">' +
+      p.liste.map(function(x){ var ky = { 'Dolar': 'dolar', 'Euro': 'euro', 'Gram altın': 'gram-altin', 'BIST 100': 'xu100' }[x.ad]; return '<a href="' + K.u('ekranlar/icerik/enstruman.html' + (ky ? '?kod=' + ky : '')) + '"><small>' + x.ad + '</small><b>' + x.deger + '</b><em class="' + x.yon + '">' + (x.yon === 'y' ? '▲' : '▼') + ' %' + x.degisim + '</em></a>'; }).join('') + '</div>';
   }
   function sd(){ return B.sd('ray').replace('<section class="bl sik">', '').replace(/<\/section>$/, '') + (DUR === 'canli' ? canliGiris() : ''); }
   /* canlı anlatım sürerken (E-007): Son Dakika şeridinin altında Dakika Dakika girişi (kit .k-ky.canli; kart zemini banda göre). Haber: D.liste'deki canlı haber */
@@ -309,8 +309,8 @@
     '<a class="dd" aria-label="Ara"><i class="fa-solid fa-magnifying-glass"></i></a>' + (H.uye ? '<a class="dd av" aria-label="Hesabım">' + D.uye.ad.charAt(0) + '</a>' : '<a class="dd" aria-label="Giriş yap"><i class="fa-solid fa-right-to-bracket"></i></a>') + MENU_D;
   /* menü (K31): Dada Gastro ortak menüsünün yapısı: sağdan çekmece; hesap kartı; ikonlu, açılır alt başlıklı liste; altta ayar ve kurumsal.
      Alt başlıklar DADAHABER-10'dan (her bölümün ilk sütunu). */
-  var ALT = { 'Gündem': ['Siyaset', 'Toplum', 'Hukuk', 'Güvenlik', 'Çevre ve Afet', 'Yerel Haberler'], 'Spor': ['Futbol', 'Basketbol', 'Voleybol', 'Canlı Skor', 'Puan Durumu', 'Transfer'],
-    'Finans': ['Piyasa Ekranı', 'Döviz', 'Altın', 'Borsa', 'Kişisel Finans', 'Enflasyon'], 'Kadın': ['Kadın Gündemi', 'Kadın Hakları', 'Kadın Sağlığı', 'Ev ve Yaşam'],
+  var ALT = { 'Gündem': ['Siyaset', 'Toplum', 'Hukuk', 'Güvenlik', 'Çevre ve Afet', 'Yerel Haberler'], 'Spor': ['Canlı Skor', 'Süper Lig', 'Puan Durumu', 'Fikstür', 'Takımlar', 'Transfer', 'Basketbol', 'Voleybol', 'Millî Takım', 'Avrupa Ligleri'],
+    'Finans': ['Piyasa Ekranı', 'Borsa', 'Döviz', 'Altın', 'Kripto Para', 'Faiz Oranları', 'Akaryakıt Fiyatları', 'Ekonomik Takvim', 'Kişisel Finans', 'Enflasyon'], 'Kadın': ['Kadın Gündemi', 'Kadın Hakları', 'Kadın Sağlığı', 'Ev ve Yaşam'],
     'Savunma': ['Millî Projeler', 'İHA ve SİHA', 'Hava Platformları', 'Millî Güvenlik', 'NATO'], 'Dünya': ['Avrupa', 'Orta Doğu', 'Amerika', 'Asya Pasifik', 'Diplomasi'],
     'Kampüs': ['YKS', 'KPSS', 'Burslar', 'Staj', 'Kariyer'], 'Keşfet': ['Teknoloji', 'Bilim', 'Sağlık', 'Kültür ve Sanat', 'Dada Özet', 'Günün 5\'i'] };
   var M = document.getElementById('menu'), ok = '<i class="fa-solid fa-chevron-right"></i>';
@@ -324,7 +324,7 @@
   M.innerHTML = '<div class="mu"><span class="logo" role="img" aria-label="Dada Haber"></span><button class="dd" type="button" data-menu-kapat aria-label="Menüyü kapat"><i class="fa-solid fa-xmark"></i></button></div><div class="mi">' + hesap +
     '<nav class="mn">' + sat('fa-house', 'Ana Sayfa', '', 'on') +
       '<span class="mt">Bölümler</span>' + D.bolumler.map(function(b){ return '<details class="ma"><summary><i class="fa-solid ' + b.ikon + '"></i><span>' + b.ad + '</span><i class="fa-solid fa-chevron-down cv"></i></summary>' +
-        '<div class="mc"><a class="tm" href="' + H.liste() + '">Bütün ' + b.ad + ' haberleri' + ok + '</a>' + (ALT[b.ad] || []).map(function(x){ return '<a>' + x + '</a>'; }).join('') + '</div></details>'; }).join('') +
+        '<div class="mc"><a class="tm" href="' + K.bolumYol(b.ad) + '">Bütün ' + b.ad + ' haberleri' + ok + '</a>' + (ALT[b.ad] || []).map(function(x){ return '<a href="' + K.altYol(x, b.ad) + '">' + x + '</a>'; }).join('') + '</div></details>'; }).join('') +
       '<span class="mt">Dinle ve izle</span>' + sat('fa-headphones', 'Haber Dinle', '<span class="cn"><span class="canli-nokta"></span>Yayında</span>') + sat('fa-mobile-screen-button', 'Akış', '<em>12 video</em>') + sat('fa-podcast', 'Podcast') + sat('fa-circle-play', 'Video Haber') + sat('fa-camera', 'Foto Fokus') + sat('fa-chart-pie', 'İnfografik') +
       '<span class="mt">Servisler ve araçlar</span>' + sat('fa-triangle-exclamation', 'Afet ve Acil Durum', '', '', EK('icerik/afet.html')) + sat('fa-car', 'Trafik ve Ulaşım', '', '', EK('icerik/trafik.html')) +
         sat('fa-calculator', 'Ekonomi Araçları', '', '', EK('icerik/ekonomi-araclari.html')) + sat('fa-scroll', 'Resmî İlanlar', '', '', EK('icerik/resmi-ilanlar.html')) +

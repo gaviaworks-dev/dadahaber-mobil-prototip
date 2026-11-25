@@ -170,7 +170,7 @@
   /* AS-F kutuları */
   B.mac = function(ic){
     var m = D.mac;
-    var h = '<a class="kt mac' + (ic ? ' gen' : '') + '"><div class="u">' + H.canli() + '<span>' + m.lig + '</span></div>' +
+    var h = '<a class="kt mac' + (ic ? ' gen' : '') + '"' + (window.K ? ' href="' + K.u('ekranlar/icerik/mac-detay.html') + '"' : '') + '><div class="u">' + H.canli() + '<span>' + m.lig + '</span></div>' +
       '<div class="s"><span class="tk"><span class="ar">' + m.evKod + '</span><b>' + m.ev + '</b></span><span class="sk"><b>' + m.skor + '</b><small>' + m.dakika + '</small></span>' +
       '<span class="tk sag"><span class="ar">' + m.depKod + '</span><b>' + m.dep + '</b></span></div></a>';
     return ic ? h : '<div class="kt-tek">' + h + '</div>';

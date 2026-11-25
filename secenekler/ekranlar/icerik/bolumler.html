@@ -59,13 +59,16 @@
     'Takımlar': 'ekranlar/icerik/takimlar.html', 'Piyasa Ekranı': 'piyasalar', 'Dada Özet': 'ekranlar/icerik/dada-ozet.html', 'Günün 5\'i': 'gununBesi', 'Dada Bağlam': 'ekranlar/icerik/dada-baglam.html',
     'Dada Doğrula': 'ekranlar/icerik/dada-dogrula.html', 'Farklı Bakışlar': 'ekranlar/icerik/farkli-bakislar.html', 'Veri ve Harita': 'ekranlar/icerik/veri-ve-harita.html', 'Sakin Akış': 'ekranlar/icerik/sakin-akis.html',
     'Video Haber': 'video', 'Foto Fokus': 'fotoFokus', 'İnfografik': 'infografik', 'Podcast': 'podcast', 'Haber Dinle': 'dinle', 'Yazarlar': 'yazarlar', 'Arşiv': 'ekranlar/icerik/arsiv.html' };
-  function git(x){ return HEDEF[x] ? K.git(HEDEF[x]) : K.git('liste'); }
+  /* K46: alt başlık → kitteki tek eşleme (K.altYol); bölüm adı bağlamdan */
+  var BOLUM_SIMDI = '';
+  function git(x){ return K.altYol(x, BOLUM_SIMDI); }
 
   function bolum(b, acik){
+    BOLUM_SIMDI = b.ad;
     var S = SUTUN[b.ad] || [], hepsi = [].concat.apply([], S.map(function(s){ return s[1]; }));
     return '<details class="bl-d"' + (acik ? ' open' : '') + '><summary class="k-bolum-satir"><span class="bi">' + K.I(b.ikon) + '</span><span class="t"><b>' + b.ad + '</b><small>' + hepsi.slice(0, 4).join(' · ') + ' · ' + hepsi.length + ' alt başlık</small></span>' + K.I('fa-chevron-down') + '</summary>' +
       '<div class="bl-i">' + S.map(function(s){ return '<span class="k-grup-b">' + s[0] + '</span><div class="k-cip-izgara">' + s[1].map(function(x){ return '<a class="k-cip" href="' + git(x) + '">' + x + '</a>'; }).join('') + '</div>'; }).join('') +
-      '<a class="k-bag" href="' + K.git('liste') + '">Bütün ' + b.ad + ' haberleri' + K.I('fa-chevron-right') + '</a></div></details>';
+      '<a class="k-bag" href="' + K.bolumYol(b.ad) + '">Bütün ' + b.ad + ' haberleri' + K.I('fa-chevron-right') + '</a></div></details>';
   }
   /* Dinle ve izle: menü çekmecesiyle aynı girişler ve ikonlar */
   var DI = [['fa-headphones', 'Haber Dinle', 'dinle'], ['fa-mobile-screen-button', 'Akış', 'akis'], ['fa-podcast', 'Podcast', 'podcast'], ['fa-circle-play', 'Video Haber', 'video'], ['fa-camera', 'Foto Fokus', 'fotoFokus'], ['fa-chart-pie', 'İnfografik', 'infografik']];

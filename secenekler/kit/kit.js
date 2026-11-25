@@ -88,6 +88,25 @@
     return K.KOK + p[0] + (s ? '?' + s : '');
   };
   K.git = function(ad, ek){ return K.u(K.YOL[ad] || ad, ek); };
+  /* K46: alt başlık adı → doğru ekran (menü, Bölümler, bölüm listeleri hepsi buradan). Özel sayfası olmayan alt başlık bölüm listesini o konuyla açar. */
+  var ALT_YOL = {
+    'Canlı Skor': 'ekranlar/icerik/canli-skor.html', 'Puan Durumu': 'ekranlar/icerik/lig.html?lig=super-lig', 'Fikstür': 'ekranlar/icerik/lig.html?lig=super-lig&sekme=fikstur',
+    'Takımlar': 'ekranlar/icerik/takimlar.html', 'Transfer': 'ekranlar/icerik/transfer.html', 'Millî Takım': 'ekranlar/icerik/milli-takim.html', 'Süper Lig': 'ekranlar/icerik/lig.html?lig=super-lig',
+    'Avrupa Ligleri': 'ekranlar/icerik/avrupa-ligleri.html', 'Futbol': 'ekranlar/icerik/brans.html?brans=futbol', 'Basketbol': 'ekranlar/icerik/brans.html?brans=basketbol', 'Voleybol': 'ekranlar/icerik/brans.html?brans=voleybol',
+    'Galatasaray': 'ekranlar/icerik/takim.html?takim=galatasaray', 'Fenerbahçe': 'ekranlar/icerik/takim.html?takim=fenerbahce', 'Beşiktaş': 'ekranlar/icerik/takim.html?takim=besiktas', 'Trabzonspor': 'ekranlar/icerik/takim.html?takim=trabzonspor',
+    'Piyasa Ekranı': 'ekranlar/icerik/piyasalar.html', 'Döviz': 'ekranlar/icerik/piyasalar.html?sekme=doviz', 'Altın': 'ekranlar/icerik/piyasalar.html?sekme=altin', 'Borsa': 'ekranlar/icerik/piyasalar.html?sekme=borsa',
+    'Kripto Para': 'ekranlar/icerik/piyasalar.html?sekme=kripto', 'Faiz Oranları': 'ekranlar/icerik/piyasalar.html?sekme=faiz', 'Akaryakıt Fiyatları': 'ekranlar/icerik/piyasalar.html?sekme=akaryakit',
+    'Ekonomik Takvim': 'ekranlar/icerik/takvim.html?tur=ekonomik', 'Sınav Takvimi': 'ekranlar/icerik/takvim.html?tur=sinav', 'Gündem Takvimi': 'ekranlar/icerik/takvim.html',
+    'Hamilelik': 'ekranlar/icerik/hamilelik.html', 'Astroloji': 'ekranlar/icerik/astroloji.html', 'Çevre ve Afet': 'ekranlar/icerik/afet.html',
+    'Son Dakika': 'ekranlar/icerik/son-dakika.html', 'Canlı Gündem': 'ekranlar/icerik/canli-gundem.html', 'Canlı Yayın': 'ekranlar/icerik/canli-yayin.html', 'Dakika Dakika': 'ekranlar/icerik/canli-anlatim.html',
+    'Bugün Ne Oldu?': 'ekranlar/icerik/bugun-ne-oldu.html', 'Güncellenen Haberler': 'ekranlar/icerik/guncellenen-haberler.html', 'Dada Özet': 'ekranlar/icerik/dada-ozet.html', "Günün 5'i": 'ekranlar/icerik/gunun-5i.html',
+    'Dada Bağlam': 'ekranlar/icerik/dada-baglam.html', 'Dada Doğrula': 'ekranlar/icerik/dada-dogrula.html', 'Farklı Bakışlar': 'ekranlar/icerik/farkli-bakislar.html', 'Veri ve Harita': 'ekranlar/icerik/veri-ve-harita.html',
+    'Sakin Akış': 'ekranlar/icerik/sakin-akis.html', 'Video Haber': 'ekranlar/icerik/video.html', 'Foto Fokus': 'ekranlar/icerik/foto-fokus.html', 'İnfografik': 'ekranlar/icerik/infografik.html',
+    'Podcast': 'ekranlar/icerik/podcast.html', 'Haber Dinle': 'ekranlar/icerik/haber-dinle.html', 'Yazarlar': 'ekranlar/icerik/yazarlar.html', 'Kadın Yazarlar': 'ekranlar/icerik/yazarlar.html', 'Arşiv': 'ekranlar/icerik/arsiv.html' };
+  var BOLUM_KOD = { 'Gündem': '', 'Spor': 'spor', 'Finans': 'finans', 'Kadın': 'kadin', 'Savunma': 'savunma', 'Dünya': 'dunya', 'Kampüs': 'kampus', 'Keşfet': 'kesfet' };
+  function kodla(x){ return String(x).toLocaleLowerCase('tr').replace(/ı/g, 'i').replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ş/g, 's').replace(/ö/g, 'o').replace(/ç/g, 'c').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
+  K.altYol = function(ad, bolum){ if (ALT_YOL[ad]) return K.u(ALT_YOL[ad]); var b = BOLUM_KOD[bolum]; return K.git('liste', (b ? 'bolum=' + b + '&' : '') + 'konu=' + kodla(ad)); };
+  K.bolumYol = function(bolum){ var b = BOLUM_KOD[bolum]; return K.git('liste', b ? 'bolum=' + b : ''); };
 
   /* ---------- küçük yardımcılar ---------- */
   function I(n, cls){ return '<i class="' + (/^fa-(brands|solid) /.test(n) ? n : 'fa-solid ' + n) + (cls ? ' ' + cls : '') + '"></i>'; }
@@ -693,8 +712,8 @@
     return a; };
 
   /* çekmece (menü; ana sayfa menüsünün yapısı, K31). Alt başlıklar DADAHABER-10 (kok.html ile aynı) */
-  K.ALT = { 'Gündem': ['Siyaset', 'Toplum', 'Hukuk', 'Güvenlik', 'Çevre ve Afet', 'Yerel Haberler'], 'Spor': ['Futbol', 'Basketbol', 'Voleybol', 'Canlı Skor', 'Puan Durumu', 'Transfer'],
-    'Finans': ['Piyasa Ekranı', 'Döviz', 'Altın', 'Borsa', 'Kişisel Finans', 'Enflasyon'], 'Kadın': ['Kadın Gündemi', 'Kadın Hakları', 'Kadın Sağlığı', 'Ev ve Yaşam'],
+  K.ALT = { 'Gündem': ['Siyaset', 'Toplum', 'Hukuk', 'Güvenlik', 'Çevre ve Afet', 'Yerel Haberler'], 'Spor': ['Canlı Skor', 'Süper Lig', 'Puan Durumu', 'Fikstür', 'Takımlar', 'Transfer', 'Basketbol', 'Voleybol', 'Millî Takım', 'Avrupa Ligleri'],
+    'Finans': ['Piyasa Ekranı', 'Borsa', 'Döviz', 'Altın', 'Kripto Para', 'Faiz Oranları', 'Akaryakıt Fiyatları', 'Ekonomik Takvim', 'Kişisel Finans', 'Enflasyon'], 'Kadın': ['Kadın Gündemi', 'Kadın Hakları', 'Kadın Sağlığı', 'Ev ve Yaşam'],
     'Savunma': ['Millî Projeler', 'İHA ve SİHA', 'Hava Platformları', 'Millî Güvenlik', 'NATO'], 'Dünya': ['Avrupa', 'Orta Doğu', 'Amerika', 'Asya Pasifik', 'Diplomasi'],
     'Kampüs': ['YKS', 'KPSS', 'Burslar', 'Staj', 'Kariyer'], 'Keşfet': ['Teknoloji', 'Bilim', 'Sağlık', 'Kültür ve Sanat', 'Dada Özet', 'Günün 5\'i'] };
   K.cekmece = function(o){ o = o || {}; var yer = o.yer || document.body, ok = I('fa-chevron-right'), uye = o.uye != null ? o.uye : K.uye;
@@ -705,7 +724,7 @@
     var perde = ekle(yer, '<div class="k-perde"></div>');
     var m = ekle(yer, '<nav class="k-cekmece" aria-label="Menü"><div class="k-mu"><span class="logo" role="img" aria-label="Dada Haber"></span>' + K.ikonBtn({ ikon: 'fa-xmark', etiket: 'Menüyü kapat', attr: 'data-kapat' }) + '</div><div class="k-mi">' + hesap +
       '<nav class="k-mn">' + sat('fa-house', 'Ana Sayfa', '', K.git('ana'), (o.etkin || 'ana') === 'ana') +
-      '<span class="k-grup-b">Bölümler</span>' + D.bolumler.map(function(b){ return '<details class="k-ma"><summary>' + I(b.ikon) + '<span>' + b.ad + '</span>' + I('fa-chevron-down', 'cv') + '</summary><div class="k-mc"><a class="tm" href="' + K.git('liste') + '">Bütün ' + b.ad + ' haberleri' + ok + '</a>' + (K.ALT[b.ad] || []).map(function(x){ return '<a href="' + K.git('liste') + '">' + x + '</a>'; }).join('') + '</div></details>'; }).join('') +
+      '<span class="k-grup-b">Bölümler</span>' + D.bolumler.map(function(b){ return '<details class="k-ma"><summary>' + I(b.ikon) + '<span>' + b.ad + '</span>' + I('fa-chevron-down', 'cv') + '</summary><div class="k-mc"><a class="tm" href="' + K.bolumYol(b.ad) + '">Bütün ' + b.ad + ' haberleri' + ok + '</a>' + (K.ALT[b.ad] || []).map(function(x){ return '<a href="' + K.altYol(x, b.ad) + '">' + x + '</a>'; }).join('') + '</div></details>'; }).join('') +
       '<span class="k-grup-b">Dinle ve izle</span>' + sat('fa-headphones', 'Haber Dinle', '<span class="cn"><span class="canli-nokta"></span>Yayında</span>', K.git('dinle')) + sat('fa-mobile-screen-button', 'Akış', '<em>' + D.akis.toplam + ' video</em>', K.git('akis')) + sat('fa-podcast', 'Podcast', '', K.git('podcast')) + sat('fa-circle-play', 'Video Haber', '', K.git('video')) + sat('fa-camera', 'Foto Fokus', '', K.git('fotoFokus')) + sat('fa-chart-pie', 'İnfografik', '', K.git('infografik')) +
       '<span class="k-grup-b">Servisler ve araçlar</span>' + sat('fa-triangle-exclamation', 'Afet ve Acil Durum', '', K.git('afet')) + sat('fa-car', 'Trafik ve Ulaşım', '', K.git('trafik')) + sat('fa-calculator', 'Ekonomi Araçları', '', K.git('ekonomiAraclari')) + sat('fa-scroll', 'Resmî İlanlar', '', K.git('resmiIlanlar')) + sat('fa-baby', 'Hamilelik', '', K.git('hamilelik')) + sat('fa-star', 'Astroloji', '', K.git('astroloji')) +
       '<span class="k-grup-b">Dada</span>' + sat('fa-feather-pointed', 'Yazarlar', '', K.git('yazarlar')) + sat('fa-bolt', 'Son Dakika', '', K.git('sonDakika')) + sat('fa-calendar-day', 'Gündem Takvimi', '', K.git('takvim')) + sat('fa-message', 'Görüş Bildir', '', K.git('geriBildirim')) + '</nav>' +
