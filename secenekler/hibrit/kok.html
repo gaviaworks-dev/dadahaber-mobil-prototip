@@ -68,21 +68,52 @@
 .hk-b.yapisik .hk-f i{display:none}
 .hk-b.yapisik .hk-o{width:50px;gap:2px}
 .hk-b.yapisik .hk-a{font-size:10.5px;max-width:50px}
-/* menü: alt sayfa */
+/* menü (K31): sağdan çekmece, Dada Gastro ortak menüsünün yapısı */
 .perde-m{position:absolute;inset:0;z-index:90;background:var(--ortu);opacity:0;pointer-events:none;transition:opacity .25s}
-.menu{position:absolute;left:0;right:0;bottom:0;z-index:91;max-height:86%;overflow-y:auto;background:var(--yuzey);border-radius:var(--k-kart) var(--k-kart) 0 0;padding:10px var(--kenar) calc(var(--alt-guvenli) + 12px);transform:translateY(105%);transition:transform .3s cubic-bezier(.3,.7,.2,1)}
+.menu{position:absolute;top:0;right:0;bottom:0;z-index:91;width:86%;display:flex;flex-direction:column;background:var(--yuzey);transform:translateX(102%);transition:transform .32s cubic-bezier(.3,.7,.2,1);box-shadow:var(--golge-md)}
 .menu-acik .perde-m{opacity:1;pointer-events:auto}
 .menu-acik .menu{transform:none}
-.menu .tut{width:36px;height:5px;border-radius:var(--k-cubuk);background:var(--cizgi);margin:0 auto 8px}
-.menu .mb{display:flex;align-items:center;justify-content:space-between}
-.menu .mb h2{font-size:22px;letter-spacing:-.02em}
-.menu .mb .dd{background:var(--zemin-2)}
-.menu .mg{margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.menu .mg a{height:52px;padding:0 10px;border-radius:var(--k-ic);background:var(--zemin-2);display:flex;align-items:center;gap:10px;font-size:15px;font-weight:var(--y-kalin)}
-.menu .mg .bi{width:32px;height:32px;border-radius:var(--k-ic);background:var(--marka-25);color:var(--marka-metin);display:grid;place-items:center;font-size:13px}
-.menu h3{margin:18px 0 6px;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--metin-3)}
-.menu .ml a{display:flex;align-items:center;gap:12px;min-height:48px;border-bottom:1px solid var(--cizgi);font-size:15px}
-.menu .ml a i{width:20px;color:var(--marka-metin);font-size:14px}
+.menu .mu{flex:none;display:flex;align-items:center;justify-content:space-between;padding:calc(var(--ust-guvenli) + 4px) 8px 8px var(--kenar)}
+.menu .mu .logo{height:24px}
+.menu .mu .dd{color:var(--metin)}
+.menu .mi{flex:1;min-height:0;overflow-y:auto;scrollbar-width:none;padding:0 var(--kenar) calc(var(--alt-guvenli) + 16px)}
+.mh{padding:14px;border-radius:var(--k-kontrol);background:var(--zemin-2)}
+.mh .mr{display:block;font-size:17px}
+.mh p{margin-top:4px;font-size:13.5px;line-height:1.45;color:var(--metin-2)}
+.mh-g{margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mh-g a{height:44px;border-radius:var(--k-ic);display:grid;place-items:center;font-size:14.5px;font-weight:var(--y-kalin);background:var(--yuzey);border:1px solid var(--cizgi)}
+.mh-g a.a{background:var(--marka);border-color:var(--marka);color:var(--siyah)}
+.mh-u{display:flex;align-items:center;gap:12px}
+.mh-u .av{width:44px;height:44px;border-radius:var(--k-daire);background:var(--marka);color:var(--siyah);display:grid;place-items:center;font-size:17px;font-weight:var(--y-kalin);flex:none}
+.mh-u .t{flex:1;min-width:0}
+.mh-u b{display:block;font-size:16px}
+.mh-u small{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--marka-metin);font-weight:var(--y-kalin);white-space:nowrap}
+.mh-u .pr{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:var(--y-kalin);white-space:nowrap}
+.mh-u .pr i{font-size:10px}
+.mh-k{margin-top:12px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.mh-k a{position:relative;min-height:68px;padding:10px 4px;border-radius:var(--k-ic);background:var(--yuzey);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-size:12px;font-weight:var(--y-kalin);text-align:center;line-height:1.2}
+.mh-k a i{font-size:16px;color:var(--marka-metin)}
+.mh-k .n{position:absolute;top:8px;right:12px;min-width:18px;height:18px;padding:0 5px;border-radius:var(--k-cubuk);background:var(--anlik);color:#fff;font-size:10.5px;display:grid;place-items:center}
+.mn{margin-top:8px}
+.mn .mt{display:block;margin:18px 0 4px;font-size:11.5px;font-weight:var(--y-kalin);letter-spacing:.12em;text-transform:uppercase;color:var(--metin-3)}
+.ms,.ma summary{display:flex;align-items:center;gap:14px;min-height:50px;padding:0 10px;border-radius:var(--k-ic);font-size:15.5px;font-weight:var(--y-orta);list-style:none;cursor:pointer}
+.ma summary::-webkit-details-marker{display:none}
+.ms>i:first-child,.ma summary>i:first-child{width:20px;text-align:center;font-size:15px;color:var(--metin-2)}
+.ms span,.ma summary span{flex:1;min-width:0}
+.ms.on{background:var(--marka-25);font-weight:var(--y-kalin)}
+.ms.on>i:first-child{color:var(--marka-metin)}
+.ms em{font-style:normal;font-size:12.5px;color:var(--metin-3)}
+.ms .cn{flex:none;display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:var(--y-kalin);color:var(--anlik)}
+.ms .cv,.ma .cv{font-size:12px;color:var(--metin-3);transition:transform .2s}
+.ma[open] .cv{transform:rotate(180deg)}
+.ma[open] summary{font-weight:var(--y-kalin)}
+.mc{display:flex;flex-wrap:wrap;gap:6px;padding:4px 0 12px 44px}
+.mc a{height:34px;padding:0 10px;border-radius:var(--k-ic);border:1px solid var(--cizgi);display:inline-flex;align-items:center;font-size:13px;white-space:nowrap}
+.mc a.tm{width:100%;border:0;padding:0;height:36px;justify-content:space-between;font-weight:var(--y-kalin);color:var(--marka-metin)}
+.mc a.tm i{font-size:10px}
+.mf{margin-top:16px;padding-top:12px;border-top:1px solid var(--cizgi)}
+.mf .ms span{font-size:14.5px}
+.mf .ky{margin-top:12px;display:flex;flex-wrap:wrap;gap:6px 14px;padding:0 10px;font-size:12.5px;color:var(--metin-3)}
 /* ---------- zebra bantlar ---------- */
 .bant{padding:26px 0}
 .bant.ton{background:var(--zemin-2);--kart:var(--yuzey)}
@@ -278,12 +309,26 @@
   hr.addEventListener('scroll', function(){ var i = Math.round(hr.scrollLeft / hr.clientWidth); [].forEach.call(nk, function(x, j){ x.className = j === i ? 'on' : ''; }); sy.textContent = (i + 1) + ' / ' + D.manset.length; }, { passive: true });
   document.getElementById('ustk').innerHTML = '<span class="logo" role="img" aria-label="Dada Haber"></span><span class="bk"><i class="fa-solid ' + bk.ikon + '"></i>' + bk.kisa + '</span>' +
     '<a class="dd" aria-label="Ara"><i class="fa-solid fa-magnifying-glass"></i></a>' + (H.uye ? '<a class="dd av" aria-label="Hesabım">' + D.uye.ad.charAt(0) + '</a>' : '<a class="dd" aria-label="Giriş"><i class="fa-solid fa-circle-user"></i></a>') + MENU_D;
-  /* menü (K30): bütün bölümler ve servisler; ana sayfada yalnız öncelikliler var */
-  var M = document.getElementById('menu');
-  M.innerHTML = '<div class="tut"></div><div class="mb"><h2>Menü</h2><button class="dd" type="button" data-menu-kapat aria-label="Kapat"><i class="fa-solid fa-xmark"></i></button></div>' +
-    '<div class="mg">' + D.bolumler.map(function(b){ return '<a href="' + H.liste() + '"><span class="bi"><i class="fa-solid ' + b.ikon + '"></i></span>' + b.ad + '</a>'; }).join('') + '</div>' +
-    '<h3>Dinle ve izle</h3><div class="ml">' + [['fa-headphones','Haber Dinle'],['fa-podcast','Podcast'],['fa-circle-play','Video Haber'],['fa-camera','Foto Fokus'],['fa-chart-pie','İnfografik'],['fa-feather-pointed','Yazarlar']].map(function(x){ return '<a><i class="fa-solid ' + x[0] + '"></i>' + x[1] + '</a>'; }).join('') + '</div>' +
-    '<h3>Hesap</h3><div class="ml">' + [['fa-bookmark','Kaydedilenler'],['fa-bell','Bildirimler'],['fa-sliders','Ayarlar']].map(function(x){ return '<a><i class="fa-solid ' + x[0] + '"></i>' + x[1] + '</a>'; }).join('') + '</div>';
+  /* menü (K31): Dada Gastro ortak menüsünün yapısı: sağdan çekmece; hesap kartı; ikonlu, açılır alt başlıklı liste; altta ayar ve kurumsal.
+     Alt başlıklar DADAHABER-10'dan (her bölümün ilk sütunu). */
+  var ALT = { 'Gündem': ['Siyaset', 'Toplum', 'Hukuk', 'Güvenlik', 'Çevre ve Afet', 'Yerel Haberler'], 'Spor': ['Futbol', 'Basketbol', 'Voleybol', 'Canlı Skor', 'Puan Durumu', 'Transfer'],
+    'Finans': ['Piyasa Ekranı', 'Döviz', 'Altın', 'Borsa', 'Kişisel Finans', 'Enflasyon'], 'Kadın': ['Kadın Gündemi', 'Kadın Hakları', 'Kadın Sağlığı', 'Ev ve Yaşam'],
+    'Savunma': ['Millî Projeler', 'İHA ve SİHA', 'Hava Platformları', 'Millî Güvenlik', 'NATO'], 'Dünya': ['Avrupa', 'Orta Doğu', 'Amerika', 'Asya Pasifik', 'Diplomasi'],
+    'Kampüs': ['YKS', 'KPSS', 'Burslar', 'Staj', 'Kariyer'], 'Keşfet': ['Teknoloji', 'Bilim', 'Sağlık', 'Kültür ve Sanat', 'Dada Özet', 'Günün 5\'i'] };
+  var M = document.getElementById('menu'), ok = '<i class="fa-solid fa-chevron-right"></i>';
+  var hesap = H.uye
+    ? '<div class="mh"><div class="mh-u"><span class="av">' + D.uye.ad.charAt(0) + '</span><span class="t"><b>' + D.uye.ad + '</b><small><i class="fa-solid fa-fire"></i>' + D.uye.seri + ' günlük okuma serisi</small></span><a class="pr">Profilim' + ok + '</a></div>' +
+      '<div class="mh-k"><a><i class="fa-solid fa-bookmark"></i>Kaydedilenler</a><a><i class="fa-solid fa-heart"></i>Takip ettiklerim</a><a><i class="fa-solid fa-bell"></i>Bildirimler<span class="n">3</span></a></div></div>'
+    : '<div class="mh"><b class="mr">Merhaba</b><p>Haberleri kaydetmek, konuları takip etmek ve yorum yazmak için giriş yap.</p><div class="mh-g"><a class="a">Giriş Yap</a><a class="b">Üye Ol</a></div></div>';
+  var sat = function(ik, ad, ek, cls){ return '<a class="ms' + (cls ? ' ' + cls : '') + '"><i class="fa-solid ' + ik + '"></i><span>' + ad + '</span>' + (ek || '') + '</a>'; };
+  M.innerHTML = '<div class="mu"><span class="logo" role="img" aria-label="Dada Haber"></span><button class="dd" type="button" data-menu-kapat aria-label="Menüyü kapat"><i class="fa-solid fa-xmark"></i></button></div><div class="mi">' + hesap +
+    '<nav class="mn">' + sat('fa-house', 'Ana Sayfa', '', 'on') +
+      '<span class="mt">Bölümler</span>' + D.bolumler.map(function(b){ return '<details class="ma"><summary><i class="fa-solid ' + b.ikon + '"></i><span>' + b.ad + '</span><i class="fa-solid fa-chevron-down cv"></i></summary>' +
+        '<div class="mc"><a class="tm" href="' + H.liste() + '">Bütün ' + b.ad + ' haberleri' + ok + '</a>' + (ALT[b.ad] || []).map(function(x){ return '<a>' + x + '</a>'; }).join('') + '</div></details>'; }).join('') +
+      '<span class="mt">Dinle ve izle</span>' + sat('fa-headphones', 'Haber Dinle', '<span class="cn"><span class="canli-nokta"></span>Yayında</span>') + sat('fa-mobile-screen-button', 'Akış', '<em>12 video</em>') + sat('fa-podcast', 'Podcast') + sat('fa-circle-play', 'Video Haber') + sat('fa-camera', 'Foto Fokus') + sat('fa-chart-pie', 'İnfografik') +
+      '<span class="mt">Dada</span>' + sat('fa-feather-pointed', 'Yazarlar') + sat('fa-bolt', 'Son Dakika') + sat('fa-calendar-day', 'Gündem Takvimi') + sat('fa-message', 'Görüş Bildir') + '</nav>' +
+    '<div class="mf"><a class="ms"><i class="fa-solid fa-circle-half-stroke"></i><span>Görünüm: <b>Sistem</b></span><i class="fa-solid fa-chevron-down cv"></i></a><a class="ms"><i class="fa-solid fa-text-height"></i><span>Yazı boyutu: <b>Orta</b></span><i class="fa-solid fa-chevron-down cv"></i></a>' +
+      '<div class="ky"><a>Hakkımızda</a><a>Künye</a><a>İletişim</a><a>Gizlilik Politikası</a></div></div></div>';
   document.addEventListener('click', function(ev){
     if (ev.target.closest('[data-menu]')) document.body.classList.add('menu-acik');
     if (ev.target.closest('[data-menu-kapat]') || ev.target.id === 'perde-m') document.body.classList.remove('menu-acik');
