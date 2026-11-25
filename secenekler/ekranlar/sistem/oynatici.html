@@ -58,9 +58,8 @@
     K.altCubuk('ana'); }
   /* arka plan 2: Dinle sekmesi (Spiker + sesli haberler) */
   function arkaDinle(){
-    /* K48 saat (sırayla Günün 5'i haberleri): sözlük haberler[] aynı başlık — 15.00, 13.10, 15.35, 22 Kas; "YKS 2027 başvuru tarihleri belli oldu" sözlükte yok → public gunun-5-i.html baskı saati 07.00.
-     Not: baskı 07.00 olduğu hâlde sözlükte ilk üç haberin saati baskıdan sonra (kaynak çelişkisi, olduğu gibi). */
-    var G5_SAAT = ['15.00', '13.10', '15.35', '22 Kas', D.gunun5.baski];
+    /* K48 + K49 saat: kaynak: public gunun-5-i.html (beş haberde kendi saati yok; baskı "23 Kasım 2026 · 07.00") */
+    var G5_SAAT = D.gunun5.liste.map(function(){ return D.gunun5.baski; });
     var X = D.gunun5.liste.map(function(x, i){ return { alt: x.kat, saat: G5_SAAT[i], baslik: x.baslik, sure: x.ses, g: x.g }; });
     e.innerHTML = '<div class="k-ust-bosluk"></div><section class="k-bl sik">' + K.bb({ baslik: 'Dada Spiker', ikon: 'fa-radio' }) + '<div class="k-ic">' + K.spiker() + '</div></section>' +
       '<section class="k-bl">' + K.bb({ baslik: 'Sesli Haberler', ikon: 'fa-headphones', not: 'Günün 5\'i · ' + D.gunun5.dinleme }) + '<div class="k-satirlar">' + X.map(function(h){ return K.satir(h); }).join('') + '</div></section><div class="k-son"></div>';

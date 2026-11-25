@@ -48,10 +48,9 @@
   function isk(w, h, c){ return '<i class="k-isk' + (c ? ' ' + c : '') + '" style="width:' + w + ';height:' + h + 'px"></i>'; }
   /* K44 (1, 8): sıradaki başlıklar kitin liste satırıyla, her haberin kendi görseli solda. Görsel ve bilgi D'deki aynı haberden:
      asgari = D.gunun5.liste[0] (aynı başlık), faiz = D.gunun5.liste[1] / D.bolumler Finans (PPK kararı), kar-istanbul = D.manset[4] (Marmara karı) */
-  /* K48 saat: sözlük haberler[] — asgari 15.00 (aynı başlık), faiz 14.00 (sözlükte "Merkez Bankası politika faizini yüzde 42,5'te sabit tuttu", aynı karar);
-     "Marmara'da kar uyarısı sürüyor" sözlükte yok → public spiker sayfasında yer aldığı bültenin saati (16.00 Bülteni) */
+  /* K48 + K49 saat: asgari 15.00 kaynak: ornek_veri.json haberler[] (aynı başlık); faiz ve Marmara kaynak: public haber-dinle.html Spiker şeridi (16.00 Bülteni; haberin kendi saati yok) */
   var SR = [ { kat: 'Gündem', saat: '15.00', baslik: S.sirada[0], g: D.gunun5.liste[0].g, sure: D.gunun5.liste[0].sure },
-    { kat: 'Finans', saat: '14.00', baslik: S.sirada[1], g: D.gunun5.liste[1].g, sure: D.gunun5.liste[1].sure },
+    { kat: 'Finans', saat: S.bulten.split(' ')[0], baslik: S.sirada[1], g: D.gunun5.liste[1].g, sure: D.gunun5.liste[1].sure },
     { kat: 'Gündem', saat: S.bulten.split(' ')[0], baslik: S.sirada[2], g: D.manset[4].g } ];
   function siraSatir(){ return '<div class="k-satirlar">' + SR.map(function(h){ return K.satir(h); }).join('') + '</div>'; }
   var sirada = '<section class="k-bl sik">' + K.bb({ baslik: 'Sıradaki Başlıklar', ikon: 'fa-list-ul', sayi: S.sirada.length }) + siraSatir() + '</section>';

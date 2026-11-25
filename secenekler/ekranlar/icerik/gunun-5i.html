@@ -42,9 +42,8 @@
   ];
   /* K44 kural 8: önceki baskıya, başlıklarından görseli olan ilk konunun görseli (KAYNAK.txt): bütçe → TBMM, enflasyon → Merkez Bankası, kış lastiği → karlı yol, YKS → sınav salonu,
      Süper Lig → stat, uydu → anten, kar uyarısı → karlı İstanbul, sağlık taraması → tarama */
-  /* K48 saat (sırayla Günün 5'i haberleri): sözlük haberler[] aynı başlık — 15.00, 13.10, 15.35, 22 Kas; "YKS 2027 başvuru tarihleri belli oldu" sözlükte yok → public gunun-5-i.html baskı saati 07.00.
-     Not: baskı 07.00 olduğu hâlde sözlükte ilk üç haberin saati baskıdan sonra (kaynak çelişkisi, olduğu gibi). */
-  var G5_SAAT = ['15.00', '13.10', '15.35', '22 Kas', D.gunun5.baski];
+  /* K48 + K49 saat: kaynak: public gunun-5-i.html (beş haberde kendi saati yok; baskı "23 Kasım 2026 · 07.00") */
+  var G5_SAAT = D.gunun5.liste.map(function(){ return D.gunun5.baski; });
   function onceki(x){ return K.satir({ alt: 'Günün 5\'i', saat: x[0], baslik: x[1], yazar: x[2], sure: x[3], izlenme: x[4], g: x[5] }, { ikon: 'fa-sun', href: K.u(BU) }); }
 
   /* bugünün baskısı */

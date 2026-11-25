@@ -30,9 +30,8 @@
   var e = document.getElementById('ekran'), Q = K.q, DUR = K.durum, I = K.I, HAL = Q.get('hal');
   /* kaynak: public sakin-akis.html "Sabah ve Akşam Özeti" */
   var OZET = [['Sabah özeti', '23 Kasım · 07.30', [['Gündem', 'Marmara\'da kar nedeniyle 14 ilde okullar tatil', '3 dk', '07.30'], ['Finans', 'Piyasalar güne faiz kararı beklentisiyle başlıyor', '2 dk', '07.30'], ['Sağlık', 'Aile hekimliğinde akşam randevusu dönemi başlıyor', '2 dk', '07.30']]],
-    ['Akşam özeti', '22 Kasım · 19.00', [['Dünya', 'AB göç paketinde oylama ocağa kaldı', '3 dk', '22 Kas'], ['Kampüs', 'YKS 2027 başvuru tarihleri belli oldu', '2 dk', '22 Kas'], ['Kitap', 'Kitap fuarı 780 bin ziyaretçiyle kapandı', '2 dk', '22 Kas']]]];
-  /* K48 saat [x[3]]: sözlük haberler[] — sabah özeti üç haber 07.30 (özet saatiyle aynı), AB göç 22 Kas; kitap fuarı sözlükte "İstanbul kitap fuarı bu yıl 780 bin ziyaretçiyle kapandı" 22 Kas;
-     "YKS 2027 başvuru tarihleri belli oldu" sözlükte yok → sitedeki akşam özetinin tarihi (22 Kasım · 19.00) */
+    ['Akşam özeti', '22 Kasım · 19.00', [['Dünya', 'AB göç paketinde oylama ocağa kaldı', '3 dk', '19.00'], ['Kampüs', 'YKS 2027 başvuru tarihleri belli oldu', '2 dk', '19.00'], ['Kitap', 'Kitap fuarı 780 bin ziyaretçiyle kapandı', '2 dk', '19.00']]]];
+  /* K48 + K49 saat [x[3]]: kaynak: public sakin-akis.html "Sabah ve Akşam Özeti" (her haberin yanında özet saati: sabah 07.30, akşam 19.00) */
   /* kaynak: public sakin-akis.html "İyi Gelen Haberler" (214; ilk sayfa); Çözüm/Olumlu türü yalnız sitede yazanlarda */
   var IYI = [['', 'Kıyı köylerinde gönüllüler 40 kilometre sahili temizledi', 'İrem Su', '6 dk', '11,8 B', '11.15'], ['Çözüm', 'Mahalle kütüphaneleri gece açık kalmaya başladı', 'Ozan Er', '4 dk', '5,1 B', '10.40'],
     ['Olumlu', 'Organ bağışı kayıtları bu yıl yüzde 12 arttı', 'İrem Su', '2 dk', '10,4 B', '11.45'], ['Çözüm', 'Gıda israfına karşı askıda yemek uygulaması genişletildi', 'İrem Su', '5 dk', '3,7 B', '22 Kas'],
