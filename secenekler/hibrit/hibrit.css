@@ -43,7 +43,8 @@ html[data-tema="koyu"]{--koyu-y:var(--yuzey-2);--koyu-y2:#2D2D32}
 .bl.sik{padding-top:24px}
 
 /* tek bilgi satırı (K35): yazar · okuma süresi · (izlenme); ikon yok, yalnız video süresinin başında fa-play */
-.meta{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:12.5px;color:var(--metin-3);white-space:nowrap;overflow:hidden}
+.meta{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:12.5px;color:var(--metin-3);white-space:nowrap;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;overscroll-behavior-x:contain;min-width:0} /* K48: bilgi satırı kesilmez, kırılmaz; sığmazsa yana kayar (kit .k-meta gibi) */
+.meta::-webkit-scrollbar{display:none}
 .meta>span{display:inline-flex;align-items:center;gap:8px;flex:none}
 .meta>span+span::before{content:"·"}
 .meta>span.ik::before,.meta>span.ik+span::before{content:none}

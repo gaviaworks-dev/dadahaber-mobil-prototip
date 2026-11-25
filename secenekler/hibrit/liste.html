@@ -344,32 +344,8 @@ body:not(.cizelge) .cizelge-kip{display:none}
     ] },
     puan: [{"ad": "Galatasaray", "kod": "GS", "G": 10, "B": 2, "M": 1, "A": 33, "Y": 10}, {"ad": "Fenerbahçe", "kod": "FB", "G": 9, "B": 3, "M": 1, "A": 30, "Y": 11}, {"ad": "Beşiktaş", "kod": "BJK", "G": 7, "B": 4, "M": 2, "A": 25, "Y": 13}, {"ad": "Trabzonspor", "kod": "TS", "G": 7, "B": 3, "M": 3, "A": 21, "Y": 13}]
   };
-  /* K43/K44: görselsiz satırlara konuya uygun fotoğraf (assets/gorsel/haber/KAYNAK.txt; başlığa göre). Öne çıkanlar rayı yalnız haberin kendi görseliyle (g) seçilir.
-     Gevşek de olsa konuya uyan fotoğraf yoksa satır yazılı kalır (raporda listelendi). */
-  var FOTO = {
-    "Beşiktaş Türk Telekom'u 84-80 geçti": 'basket', "Fenerbahçe Beko tek mağlubiyetle liderliğini sürdürüyor": 'basket', "Beşiktaş'ın kaleci listesinde iki isim öne çıkıyor": 'antrenman',
-    "Anadolu Efes THY Avrupa Ligi'nde Dörtlü Final biletini aldı": 'basket', "Fenerbahçe Beko çift maç haftasında iki galibiyet aldı": 'basket', "Galatasaray derbi öncesi son antrenmanını yaptı": 'antrenman',
-    "Galatasaray sol bek transferini KAP'a bildirdi": 'superlig',
-    "Kredi büyümesindeki yavaşlama reel sektöre nasıl yansıyor": 'kredi-karti', "Ethereum'da ağ güncellemesi öncesi işlem ücretleri düştü": 'veri-merkezi', "Fed tutanakları faiz indiriminde temkinli bir çizgiye işaret etti": 'borsa',
-    "Sabit faiz kararının ardından üç senaryo ve olası etkileri": 'faiz', "TMO buğday alım fiyatlarına ilişkin değerlendirme yaptı": 'carsi', "Fındık ihracatında sezonun ilk üç ayı değerlendirildi": 'carsi',
-    "Kars'ta peynir atölyesi kuran üç kadın ürünlerini Avrupa'ya gönderiyor": 'kadin-girisim', "Kış aylarında ev içi enerji tasarrufu için uzmanlardan beş öneri": 'ruzgar', "Hizmet sektöründe uzaktan çalışan kadınların payı artıyor": 'kadin-girisim',
-    "İnsansız deniz aracı Ege'de seyir testlerini tamamladı": 'ida', "Hürjet eğitim uçağında yer testlerinin ikinci aşaması başladı": 'kaan', "Millî muharip uçak projesinde motor entegrasyonu takvimi açıklandı": 'kaan',
-    "Savunma ve havacılık ihracatının ilk on ay verileri açıklandı": 'ida', "İnsansız savaş uçağının ikinci prototipi üretim hattına alındı": 'kaan', "SSB verilerine göre savunma ve havacılık ihracatı ekimde yüzde 18 arttı": 'kaan',
-    "Almanya'da çifte vatandaşlık başvuruları yılın ilk dokuz ayında ikiye katlandı": 'ab-goc', "Bosna-Hersek'te AB müzakere çerçevesi için ilk adım atıldı": 'bruksel', "ASEAN ülkeleri ortak dijital ödeme sistemi üzerinde anlaştı": 'kredi-karti',
-    "ODTÜ'de bahar dönemi ders kayıtları 2 Şubat'ta başlıyor": 'osym', "Liselerde birinci dönem ortak sınav tarihleri belli oldu": 'yks', "Ankara'da kariyer fuarı 3-4 Aralık'ta yapılacak": 'kulup',
-    "2027 YKS başvuruları için ÖSYM takvimi açıkladı": 'yks', "Ulusal münazara turnuvasının finali İzmir'de yapıldı": 'kulup', "Kariyer Kapısı'nda 3 bin kontenjanlı staj programı açıldı": 'osym',
-    "Konservatuvarlara başvurular bu yıl yüzde 17 arttı": 'akm', "Kamu hizmetlerinde yapay zekâ kullanımına ilişkin etik ilkeler yayımlandı": 'veri-merkezi', "Asgari ücret görüşmeleri bordroya ne zaman yansır?": 'asgari',
-    "Özel tiyatrolara yönelik destek başvuruları sonuçlandı": 'akm', "Kar altındaki köprü görüntüsünün bu hafta çekildiği iddiası": 'kar-sokak', "Yeni sezonda yayına giren tarihî dizi çekimleri Kapadokya'da sürüyor": 'balon',
-    "2027 bütçe açığının millî gelire oranı yüzde 3,1 olarak öngörüldü": 'tbmm', "Seçim kanunu değişikliği teklifi komisyonda kabul edildi": 'tbmm', "TBMM Genel Kurulu bütçe görüşmelerine başladı": 'tbmm',
-    "Plan ve Bütçe Komisyonu bakanlık bütçelerini görüşüyor": 'tbmm', "Asgari ücrete ara zam talebi Meclis gündeminde": 'asgari',
-    "İstanbul'da raylı sistemde gece seferleri hafta içine yayılıyor": 'metro', "Boğaz'da yoğun sis nedeniyle gemi trafiği geçici olarak durduruldu": 'balikci', "Trabzon'da heyelan riski olan mahallede tahliye tamamlandı": 'konteyner',
-    "Başkentte hava kalitesi ölçümlerinde kış dönemi uyarısı yapıldı": 'ankara-kar', "Erzurum ve Kars'ta kar yağışı bekleniyor": 'koy-yolu',
-    "Akıllı kent projelerinde trafik verisi belediyeler arasında paylaşılacak": 'veri-merkezi', "Yapay zekâ ile üretilen içerikte etiketleme rehberi taslağı görüşe açıldı": 'veri-merkezi',
-    "Konut çatılarında güneş paneli kurulumunda başvuru süreci sadeleşti": 'ruzgar', "E-devlet kapısına yeni kimlik doğrulama yöntemi ekleniyor": 'veri-merkezi',
-    "Fiber altyapıya erişen hane sayısı yılın ilk dokuz ayında yüzde 14 arttı": 'anten', "5G ihalesinin ikinci aşaması için şartname taslağı yayımlandı": 'anten', "Yerli yarı iletken tesisinde deneme üretimi başladı": 'veri-merkezi',
-    "Yeni yargı paketi neleri değiştirecek, madde madde açıklama": 'tbmm', "Asgari ücret görüşmelerinde hangi veriler masada": 'asgari', "Bütçe görüşmeleri nasıl işliyor, süreç ve takvim": 'tbmm'
-  };
-  function gk(h){ return h.g || FOTO[h.baslik] || ''; }
+  /* K43/K44/K48: satır görseli kitten (K.gorsel: haberin görseli → başlık eşlemesi → konu sözcüğü → kategori; eski yerel başlık tablosu kite taşındı) */
+  function gk(h){ return K.gorsel(h); }
   /* K44 (6): Bana Etkisi yalnız üyeye; misafirde Bana Etkisi haberleri ve kutusu gösterilmez */
   if (!K.uye) Object.keys(EK).forEach(function(k){ if (EK[k].h) EK[k].h = EK[k].h.filter(function(h){ return h.alt !== 'Bana Etkisi'; }); });
   var BOL = { spor: 'Spor', finans: 'Finans', kadin: 'Kadın', savunma: 'Savunma', dunya: 'Dünya', kampus: 'Kampüs', kesfet: 'Keşfet' };
@@ -386,9 +362,8 @@ body:not(.cizelge) .cizelge-kip{display:none}
   if (KONU === 'sehirler') KONU = 'yerel'; /* eski adres (dizin): Yerel çipi */
   if (KONU === 'analiz' && GUNDEM) TUR = 'analiz'; /* Analiz çipi tür süzgecini açar */
   var KONUEK = { siyaset: 'siyaset', yerel: 'sehirler', teknoloji: 'teknoloji' }; /* sözlükte o günün haberleri ayrıca derlenmiş alt konular */
-  /* yedek: özel sayfası olan alt başlığın "Haberleri · Tümü" bağlantısı da bu listeyi ?konu=<çip adının kodu> ile açar (kitteki kodla ile aynı kural); çipin href'i değişmez */
-  function kodla(x){ return String(x).toLocaleLowerCase('tr').replace(/ı/g, 'i').replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ş/g, 's').replace(/ö/g, 'o').replace(/ç/g, 'c').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
-  var KONUAD = KONU ? L.altKonular.filter(function(k){ return cipKonu(k) === KONU; })[0] || L.altKonular.filter(function(k, i){ return i > 0 && kodla(k) === KONU; })[0] : null, KX;
+  /* yedek: özel sayfası olan alt başlığın "Haberleri · Tümü" bağlantısı da bu listeyi ?konu=<çip adının kodu> ile açar (kitteki K.kodla); çipin href'i değişmez */
+  var KONUAD = KONU ? L.altKonular.filter(function(k){ return cipKonu(k) === KONU; })[0] || L.altKonular.filter(function(k, i){ return i > 0 && K.kodla(k) === KONU; })[0] : null, KX;
   if (TUR === 'analiz' && GUNDEM) { X = EK.analiz.h; SECILI = Math.max(0, L.altKonular.indexOf('Analiz')); ALT = { ad: 'Analiz', t: EK.analiz.t, tur: true }; }
   else if (KONUAD && KONUEK[KONU] && EK[KONUEK[KONU]]) { X = EK[KONUEK[KONU]].h; SECILI = L.altKonular.indexOf(KONUAD); ALT = { ad: KONU === 'yerel' ? 'Şehirler' : KONUAD, t: EK[KONUEK[KONU]].t }; }
   else if (KONUAD) {
