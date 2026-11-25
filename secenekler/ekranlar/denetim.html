@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>Ekran denetimi</title>
 <!-- Dada Haber Mobil · EKRAN DENETİMİ (TEK YAZAR: lider). Bütün ekranları (dizin.js) 390×844 çerçevede, açık ve koyu temada ölçer:
-     1 taşma (yatay) · 2 kenar 16px · 3 dokunma alanı ≥44×44 · 4 binme (aynı katmandaki dokunulabilir/yazı öğeleri) · 5 satıra kırılan bilgi (meta satırı) · 6 ikon kuralı K32 · 7 bilgi satırı (K48): kesilen öğe (kap dışında kalan, üç noktayla kısalan; yana kayan kap hariç) ve bilgi satırına binen öğe 0 · 8 görselsiz liste satırı (K48) · 9 kategori yanında saati olmayan liste satırı (K44/K48).
+     1 taşma (yatay) · 2 kenar 16px · 3 dokunma alanı ≥44×44 · 4 binme (aynı katmandaki dokunulabilir/yazı öğeleri) · 5 satıra kırılan bilgi (meta satırı) · 6 ikon kuralı K32 · 7 bilgi satırı (K48): kesilen öğe (kap dışında kalan, üç noktayla kısalan; yana kayan kap hariç) ve bilgi satırına binen öğe 0 · 8 görselsiz liste satırı (K48) · 9 kategori yanında saati olmayan liste satırı (K44/K48) · 10 seçili alt konu çipi ile listedeki haberlerin konusu uyuşmuyor (K49).
      ?sec=E-001,E-002 yalnız seçilenler · ?dosya=ekranlar/icerik/video,ekranlar/icerik/galeri dosya önekiyle · ?tema=acik|koyu yalnız bir tema · ?grup=icerik. Sonuç sayfada tablo + #json (headless --dump-dom ile okunur). -->
 <style>
 body{font:13px/1.4 -apple-system,system-ui,sans-serif;margin:16px;color:#111}
@@ -42,8 +42,17 @@ pre{white-space:pre-wrap}
   function etkiliAlan(el, w, r){ var a = w.getComputedStyle(el, '::after'), W = r.width, Hh = r.height; if (a.content && a.content !== 'none' && a.position === 'absolute'){ W = Math.max(W, parseFloat(a.width) || 0); Hh = Math.max(Hh, parseFloat(a.height) || 0); } return { w: W, h: Hh }; }
   function yazili(el){ for (var n = el.firstChild; n; n = n.nextSibling) if (n.nodeType === 3 && n.textContent.trim().length > 1) return true; return false; }
   function etkin(el){ return el.matches('a,button,[role=button],[role=tab],input:not([type=hidden]),select,textarea,summary'); }
+
+  /* K49 (Beyar): seçili alt konu çipi ile listedeki haberlerin konusu uyuşmalı (çip seçili ama liste bölümün tamamı = hata).
+     Satırın konusu üst bilgi satırındaki etikettir (kategori, alt konu ya da tür). Yerel Haberler satırında il yazar (K44). */
+  function konuUyumu(d){ var c = d.querySelector('.cr .cp.etkin, .cr .cp[aria-current="page"]'); if (!c) return [];
+    var ad = c.textContent.replace(/\s+/g, ' ').trim(); if (!ad || ad === 'Tümü' || ad === 'Yerel Haberler' || ad === 'Yerel') return [];
+    var R = [].slice.call(d.querySelectorAll('.ls .k-satir, .oc > a')), kotu = [];
+    if (!R.length) return d.querySelector('.k-bos') ? [] : ['konu "' + ad + '": liste boş']; /* tasarlanmış boş hal (K.bos) muaf */
+    R.forEach(function(r){ var u = r.querySelector('.k-ustsatir') || r; if (u.textContent.indexOf(ad) < 0) kotu.push(u.textContent.replace(/\s+/g, ' ').trim().slice(0, 30)); });
+    return kotu.length ? ['konu "' + ad + '": ' + kotu.length + '/' + R.length + ' satır başka konuda (' + kotu.slice(0, 2).join(' ; ') + ')'] : []; }
   function olc(d, w){
-    var H = { tasma: [], kenar: [], dokun: [], binme: [], kirilma: [], ikon: [], bilgi: [], gorselsiz: [], saatsiz: [] }, root = d.documentElement, all = [].slice.call(d.body.querySelectorAll('*'));
+    var H = { tasma: [], kenar: [], dokun: [], binme: [], kirilma: [], ikon: [], bilgi: [], gorselsiz: [], saatsiz: [], konu: konuUyumu(d) }, root = d.documentElement, all = [].slice.call(d.body.querySelectorAll('*'));
     var DIS = '.durum,.durum *,.ec,[data-denetim-yok],[data-denetim-yok] *';
     all.forEach(function(el){
       if (el.matches(DIS) || gizliAta(el, w)) return;

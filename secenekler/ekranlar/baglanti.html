@@ -8,6 +8,7 @@
        olu     · dokunulabilir görünen ama hiçbir yere gitmeyen yüzey: href'siz <a> (davranış özniteliği yoksa), href="#"/"javascript:", bağlantısız kart/satır
        kirik   · hedef dosya yok ya da hedef açılınca ekran boş / tam sayfa hata (hedefte ?durum= yoksa)
        yanlis  · alt başlık adı taşıyan bağlantı K.altYol'un verdiği ekrana gitmiyor (K46 tek eşleme kuralı)
+       konu    · açılan hedefte seçili alt konu çipi var ama liste o konuya süzülmemiş (K49)
      Hedefler tek tek açılarak denenir (aynı hedef bir kez). Hal satırları (?durum=) kaynak olarak taranmaz: aynı ekranın bağlantılarını taşır.
      ?dosya=hibrit/kok,ekranlar/icerik/lig önekle süz · ?sec=E-001,E-002 · ?hedef=0 hedefleri açma (yalnız ölü + yanlış). Sonuç #json (tasks/araclar/baglanti.sh okur). -->
 <style>
@@ -44,11 +45,20 @@ pre{white-space:pre-wrap}
 
   /* her açılışta yeni çerçeve: hata sayfasına düşen hedef (ör. tanımsız K.git adı) sonrakileri bozmasın */
   var fr = null;
+
+  /* K49 (Beyar): seçili alt konu çipi ile listedeki haberlerin konusu uyuşmalı (çip seçili ama liste bölümün tamamı = hata).
+     Satırın konusu üst bilgi satırındaki etikettir (kategori, alt konu ya da tür). Yerel Haberler satırında il yazar (K44). */
+  function konuUyumu(d){ var c = d.querySelector('.cr .cp.etkin, .cr .cp[aria-current="page"]'); if (!c) return [];
+    var ad = c.textContent.replace(/\s+/g, ' ').trim(); if (!ad || ad === 'Tümü' || ad === 'Yerel Haberler' || ad === 'Yerel') return [];
+    var R = [].slice.call(d.querySelectorAll('.ls .k-satir, .oc > a')), kotu = [];
+    if (!R.length) return d.querySelector('.k-bos') ? [] : ['konu "' + ad + '": liste boş']; /* tasarlanmış boş hal (K.bos) muaf */
+    R.forEach(function(r){ var u = r.querySelector('.k-ustsatir') || r; if (u.textContent.indexOf(ad) < 0) kotu.push(u.textContent.replace(/\s+/g, ' ').trim().slice(0, 30)); });
+    return kotu.length ? ['konu "' + ad + '": ' + kotu.length + '/' + R.length + ' satır başka konuda (' + kotu.slice(0, 2).join(' ; ') + ')'] : []; }
   function ac(url, bitti){ var son = false; if (fr) fr.remove(); fr = document.createElement('iframe'); document.body.appendChild(fr);
     function hazir(){ if (son) return; son = true; setTimeout(function(){ var d, w; try { d = fr.contentDocument; w = fr.contentWindow; } catch (e) {} bitti(d, w); }, 700); }
     fr.onload = hazir; fr.src = url; setTimeout(function(){ if (!son) { son = true; bitti(null, null); } }, 6000); }
 
-  var olu = [], yanlis = [], hedefler = {}, yuzey = 0, i = 0, kirik = [];
+  var olu = [], yanlis = [], hedefler = {}, yuzey = 0, i = 0, kirik = [], konu = [];
   function kaynakTara(){
     if (i >= KAYNAK.length) return HEDEF ? hedefTara() : bitir();
     var k = KAYNAK[i++], url = '../' + k.dosya + (k.dosya.indexOf('?') < 0 ? '?' : '&') + 'tam=1';
@@ -104,12 +114,13 @@ pre{white-space:pre-wrap}
         if (e && !e.textContent.trim() && !e.querySelector('img,svg,[style*="background"]')) neden = 'ekran boş';
         else if (!durumlu && d.querySelector('.k-hata.tam, .k-hata[data-tam], .ekran > .k-hata')) neden = 'hata ekranı açıldı'; }
       if (neden) kirik.push({ kaynak: h.kaynak, oge: h.oge, hedef: goreli(hk), neden: neden });
+      if (d && d.body) konuUyumu(d).forEach(function(x){ konu.push({ kaynak: h.kaynak, hedef: goreli(hk), neden: x }); });
       hedefTara();
     });
   }
   function bitir(){
-    var s = { kaynak_ekran: KAYNAK.length, yuzey: yuzey, benzersiz_hedef: Object.keys(hedefler).length, hedef_denendi: HEDEF, olu: olu, kirik: kirik, yanlis: yanlis };
-    document.getElementById('ozet').textContent = 'Ekran ' + s.kaynak_ekran + ' · yüzey ' + yuzey + ' · hedef ' + s.benzersiz_hedef + ' · ölü ' + olu.length + ' · kırık ' + kirik.length + ' · yanlış ' + yanlis.length;
+    var s = { kaynak_ekran: KAYNAK.length, yuzey: yuzey, benzersiz_hedef: Object.keys(hedefler).length, hedef_denendi: HEDEF, olu: olu, kirik: kirik, yanlis: yanlis, konu: konu };
+    document.getElementById('ozet').textContent = 'Ekran ' + s.kaynak_ekran + ' · yüzey ' + yuzey + ' · hedef ' + s.benzersiz_hedef + ' · ölü ' + olu.length + ' · kırık ' + kirik.length + ' · yanlış ' + yanlis.length + ' · konu ' + konu.length;
     document.getElementById('json').textContent = JSON.stringify(s);
   }
   kaynakTara();
