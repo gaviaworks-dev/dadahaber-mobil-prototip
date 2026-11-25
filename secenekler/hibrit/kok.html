@@ -122,8 +122,16 @@
 .py em.y{color:var(--artis)}
 .py em.d{color:var(--azalis)}
 .bant .pd-ray{padding:0 var(--kenar);margin-top:0}
-.bant .ky-ray{padding:0 var(--kenar)}
-.bant .ky-ray>a{background:var(--kart)}
+.kz{gap:12px;padding:0 var(--kenar)}
+.kz>a{flex:none;width:250px;height:340px;scroll-snap-align:start;border-radius:var(--k-buyuk);overflow:hidden;background:var(--marka);color:var(--siyah);display:flex;flex-direction:column;position:relative}
+.kz .gr{height:50%;flex:none}
+.kz .av{position:absolute;left:16px;top:calc(50% - 26px);width:52px;height:52px;border-radius:var(--k-daire);background:var(--siyah);color:var(--marka);display:grid;place-items:center;font-size:17px;font-weight:var(--y-kalin);outline:4px solid var(--marka)}
+.kz .ic{flex:1;min-height:0;display:flex;flex-direction:column;padding:34px 16px 16px;position:relative}
+.kz .tr{position:absolute;right:16px;top:14px;font-size:22px;opacity:.25}
+.kz h4{font-size:18px;line-height:1.22;letter-spacing:-.015em;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.kz .yz{margin-top:auto;display:block;min-width:0}
+.kz .yz b{display:block;font-size:14px;white-space:nowrap}
+.kz .yz small{display:block;font-size:12.5px;color:rgba(18,18,18,.68);white-space:nowrap}
 /* takım: üye → canlı maç kutusu; misafir → giriş çağrısı */
 .tk-et{display:flex;align-items:center;gap:var(--ikon-bosluk);padding:0 var(--kenar);margin:18px 0 10px;font-size:13px;font-weight:var(--y-kalin);white-space:nowrap}
 .tk-et i{color:var(--marka-metin);font-size:12px}
@@ -203,8 +211,10 @@
   function sd(){ return B.sd('ray').replace('<section class="bl sik">', '').replace(/<\/section>$/, ''); }
   function podcast(){ return '<div class="bb"><h2><span class="bi"><i class="fa-solid fa-podcast"></i></span>Podcast</h2><a>Tümü<i class="fa-solid fa-chevron-right"></i></a></div><div class="pd-ray ks">' +
     D.podcast.map(function(p){ return '<a><span class="gr" style="background-image:' + G(p.g) + '"><i class="fa-solid fa-play"></i></span><span><small>' + p.seri + '</small><b class="iki">' + p.baslik + '</b><em>' + p.no + ' · ' + p.sure + '</em></span></a>'; }).join('') + '</div>'; }
-  function kose(){ return '<div class="bb"><h2><span class="bi"><i class="fa-solid fa-feather-pointed"></i></span>Köşe Yazıları</h2><a>Yazarlar<i class="fa-solid fa-chevron-right"></i></a></div><div class="ky-ray ks">' +
-    D.koseYazilari.map(function(k){ return '<a><span class="yz"><span class="av">' + k.ad.charAt(0) + '</span><span><b>' + k.ad + '</b><small>' + k.unvan + '</small></span></span><h4 class="uc">' + k.baslik + '</h4></a>'; }).join('') + '</div>'; }
+  /* Köşe Yazıları (K26): marka sarısı kart, görsel kartın üst yarısı, yazar baş harfi görselin kenarına biner */
+  function kose(){ return '<div class="bb"><h2><span class="bi"><i class="fa-solid fa-feather-pointed"></i></span>Köşe Yazıları</h2><a>Yazarlar<i class="fa-solid fa-chevron-right"></i></a></div><div class="kz ks">' +
+    D.koseYazilari.map(function(k){ return '<a><span class="gr" style="background-image:' + G(k.g) + '"></span><span class="av">' + k.ad.split(' ').map(function(x){ return x.charAt(0); }).join('') + '</span>' +
+      '<span class="ic"><i class="fa-solid fa-quote-left tr" aria-hidden="true"></i><h4>' + k.baslik + '</h4><span class="yz"><b>' + k.ad + '</b><small>' + k.unvan + '</small></span></span></a>'; }).join('') + '</div>'; }
   function akis(){ return B.akis().replace('<section class="bl">', '').replace(/<\/section>$/, '').replace('>Akış</h2>', '>Akış<small style="font-size:13px;font-weight:var(--y-orta);color:var(--metin-3);letter-spacing:0">· kısa videolar</small></h2>'); }
 
   /* Sayfa sırası (panelden yönetilecek; K22). Her satır bir bant; bantlar sırayla düz / tonlu. */
