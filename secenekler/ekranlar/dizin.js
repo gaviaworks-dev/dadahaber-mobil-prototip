@@ -101,6 +101,14 @@ window.DIZIN = [
 "ok": true
 },
 {
+"id": "E-604",
+"ad": "Ana sayfa · Spiker yayında değil",
+"tur": "durum",
+"alt": "Ana sayfa (kök)",
+"dosya": "hibrit/kok.html?spiker=0&hb=4&kok=1",
+"ok": true
+},
+{
 "id": "E-013",
 "ad": "Kategori hikâye görüntüleyici",
 "tur": "içerik",
@@ -458,6 +466,14 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Haber detayı (kök) ve türleri",
 "dosya": "hibrit/detay.html?durum=cevrimdisi&hb=4&kok=1",
+"ok": true
+},
+{
+"id": "E-605",
+"ad": "Haber detayı · Dinle çalıyor",
+"tur": "durum",
+"alt": "Haber detayı (kök) ve türleri",
+"dosya": "hibrit/detay.html?calan=dinle&hb=4&kok=1",
 "ok": true
 },
 {
@@ -1410,6 +1426,14 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/haber-dinle.html",
+"ok": false
+},
+{
+"id": "E-606",
+"ad": "Haber Dinle · Spiker yayında değil",
+"tur": "durum",
+"alt": "Dinle: Haber Dinle, Spiker, Podcast",
+"dosya": "ekranlar/icerik/haber-dinle.html?spiker=0",
 "ok": false
 },
 {

@@ -36,11 +36,11 @@ Her içerik ekranı, alt ekranı ve o ekrana ait haller. Liste ve detayların y�
 
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
-| E-001 | Ana sayfa · üye | içerik | Ana sayfa | `index.html` | Ana sayfa | Hero manşet slaytları, hikâye şeridi, Son Dakika, Bugün Senin İçin, bölümler (A/B), ayraçlar; K22, K30 | `hibrit/kok.html` | ✓ |
+| E-001 | Ana sayfa · üye | içerik | Ana sayfa | `index.html` | Ana sayfa | Hero manşet slaytları, hikâye şeridi, Son Dakika, Bugün Senin İçin, bölümler (A/B), ayraçlar; K22, K30; hikâye şeridinin ilk dairesi Spiker (yayında: kırmızı CANLI halkası); mini oynatıcı kapalı (K39) | `hibrit/kok.html` | ✓ |
 | E-002 | Ana sayfa · misafir | içerik | Ana sayfa | `index.html` | Ana sayfa | Üst çubukta "Giriş"; Bugün Senin İçin yok; "Takımını seç · Giriş yap" | `hibrit/kok.html?uye=0` | ✓ |
 | E-003 | Ana sayfa · menü çekmecesi · üye | sistem | Ana sayfa | açılır menü (`parcalar/ust.html`) | Ana sayfa | Sağdan çekmece; hesap kartı, Bölümler (açılır), Dinle ve izle, Dada, Görünüm, Yazı boyutu, kurumsal; K31 | `hibrit/kok.html?menu=1` | ✓ |
 | E-004 | Ana sayfa · menü çekmecesi · misafir | sistem | Ana sayfa | açılır menü | Ana sayfa | Hesap kartı yerine "Merhaba" + Giriş Yap · Üye Ol | `hibrit/kok.html?menu=1&uye=0` | ✓ |
-| E-005 | Ana sayfa · Spiker çalıyor | durum | Ana sayfa | sitede alt mini çubuk | Ana sayfa | Mini oynatıcı alt çubuğun üstünde; sayfa sonu boşluğu oynatıcı kadar artar (K33) | `hibrit/kok.html?calan=1` | ✓ |
+| E-005 | Ana sayfa · Spiker çalıyor | durum | Ana sayfa | sitede alt mini çubuk | Ana sayfa | Mini oynatıcı alt çubuğun üstünde; sayfa sonu boşluğu oynatıcı kadar artar (K33); oynatıcıda radyo ikonu, "Dada Spiker · 16.00 Bülteni"; oynatıcı yalnız çalarken görünür (K39) | `hibrit/kok.html?calan=1` | ✓ |
 | E-006 | Ana sayfa · başka baskı saati | durum | Ana sayfa | — | Ana sayfa | Baskı rozeti saate göre: Sabah / Öğleden Sonra / Akşam Baskısı | `hibrit/kok.html?saat=08.30` | ✓ |
 | E-007 | Ana sayfa · canlı anlatım sürerken | durum | Ana sayfa | `index.html` (canlı kartı) | Ana sayfa | Son Dakika şeridinin yanında canlı anlatım girişi (Dakika Dakika) | `hibrit/kok.html?durum=canli` | ✓ |
 | E-008 | Ana sayfa · yükleniyor | durum | Ana sayfa | `durumlar.html` (iskelet) | Ana sayfa | Hero, hikâye daireleri ve bölüm blokları iskelet; açılıştan sonra ilk görünüm | `hibrit/kok.html?durum=yukleniyor` | ✓ |
@@ -48,6 +48,7 @@ Her içerik ekranı, alt ekranı ve o ekrana ait haller. Liste ve detayların y�
 | E-010 | Ana sayfa · hata | durum | Ana sayfa | `500.html` | Ana sayfa | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `hibrit/kok.html?durum=hata` | ✓ |
 | E-011 | Ana sayfa · çevrimdışı | durum | Ana sayfa | `cevrimdisi.html` | Ana sayfa | Önbellekteki son ana sayfa + "Çevrimdışısın · Kaydedilenler" bandı; hikâye ve Akış soluk | `hibrit/kok.html?durum=cevrimdisi` | ✓ |
 | E-012 | Ana sayfa · blok yüklenemedi | durum | Ana sayfa | — | Ana sayfa | Tek blok (ör. Piyasalar) satır içi hata kutusu + Yeniden dene; sayfanın geri kalanı çalışır | `hibrit/kok.html?durum=blok-hata` | ✓ |
+| E-604 | Ana sayfa · Spiker yayında değil | durum | Ana sayfa | — | Ana sayfa | Hikâye şeridinin ilk dairesi sönük halka, altında sıradaki bülten saati (19.00); Dinle sekmesinde canlı noktası yok (K39) | `hibrit/kok.html?spiker=0` | ✓ |
 
 ### Hikâye (ana sayfa şeridi)
 
@@ -108,6 +109,7 @@ Her içerik ekranı, alt ekranı ve o ekrana ait haller. Liste ve detayların y�
 | E-055 | Haber detayı · hata | durum | Detay | `500.html` | Detay | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `hibrit/detay.html?durum=hata` | ✓ |
 | E-056 | Haber detayı · bulunamadı | durum | Detay | `404.html`, `410.html` | Detay | İçerik kaldırıldı ya da bulunamadı; bölüme dön, arama | `hibrit/detay.html?durum=bulunamadi` | ✓ |
 | E-057 | Haber detayı · çevrimdışı | durum | Detay | `cevrimdisi.html` | Detay | İndirilmemiş haber: kabuk + "Bağlantı yok" + Yeniden dene | `hibrit/detay.html?durum=cevrimdisi` | ✓ |
+| E-605 | Haber detayı · Dinle çalıyor | durum | Haber detayı | — | Detay | Okuma çubuğundaki Dinle haberi sesli okur; mini oynatıcı okuma çubuğunun üstünde, kulaklık ikonu ve haber başlığıyla; Spiker'dan ayrı (K39) | `hibrit/detay.html?calan=dinle` | ✓ |
 | E-058 | Yorumlar (tümü) · üye | içerik | Detay | `haber-detay.html` (yorumlar) | Detay | Özet kartı, süzgeç çipleri (Tümü · En çok beğenilen · Editör yanıtları), Beğen · Yanıtla · Bildir (K31) | `ekranlar/icerik/yorumlar.html` |   |
 | E-059 | Yorumlar (tümü) · misafir | içerik | Detay | `haber-detay.html` | Detay | "Yorum yapmak için giriş yap"; Beğen ve Yanıtla tetik paneli açar | `ekranlar/icerik/yorumlar.html?uye=0` |   |
 | E-060 | Yorumlar · yorum yaz | sistem | Detay | `haber-detay.html` (yorum alanı) | Detay | Alt sayfa, klavye açık; kurallar notu; gönderiliyor | `ekranlar/icerik/yorumlar.html?durum=yaz` |   |
@@ -256,7 +258,8 @@ Her içerik ekranı, alt ekranı ve o ekrana ait haller. Liste ve detayların y�
 
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
-| E-176 | Haber Dinle (Dinle sekmesi) | içerik | Ses | `haber-dinle.html` | Liste | Süzgeç: Tümü, Gündem, Finans, Spor, Dünya, Kadın, Savunma, Kampüs, Teknoloji; her içerikte ana kategori etiketi; Spiker yayında kartı. Sekmenin içeriği varsayım | `ekranlar/icerik/haber-dinle.html` |   |
+| E-176 | Haber Dinle (Dinle sekmesi) | içerik | Ses | `haber-dinle.html` | Liste | Süzgeç: Tümü, Gündem, Finans, Spor, Dünya, Kadın, Savunma, Kampüs, Teknoloji; her içerikte ana kategori etiketi; Spiker yayında kartı. Sekmenin içeriği varsayım; en üstte Spiker kartı (yayında: canlı kart; değilse son bülten + sıradaki saat), altında sesli haberler; Dinle = haberin sesli okunması, Spiker ayrı ad ve ikon; yayındayken alt gezinmede Dinle'de canlı noktası (K39) | `ekranlar/icerik/haber-dinle.html` |   |
+| E-606 | Haber Dinle · Spiker yayında değil | durum | Ses | — | Liste | En üstte son bülten ve "Sıradaki bülten 19.00"; Dinle sekmesinde canlı noktası yok (K39) | `ekranlar/icerik/haber-dinle.html?spiker=0` |   |
 | E-177 | Haber Dinle · kategori seçili | durum | Ses | `haber-dinle.html?kategori=…` | Liste | Eski kategori sayfaları yerine süzgeç | `ekranlar/icerik/haber-dinle.html?kategori=finans` |   |
 | E-178 | Haber Dinle · yayın kuşağı: Sabah Özeti | içerik | Ses | `haber-dinle.html` (yayın kuşağı) | Liste | Kuşağın bültenleri; ikinci eksen süzgeci (DADAHABER-10 §4) | `ekranlar/icerik/haber-dinle.html?kusak=sabah-ozeti` |   |
 | E-179 | Haber Dinle · yayın kuşağı: Gün Ortası | içerik | Ses | `haber-dinle.html` (yayın kuşağı) | Liste | Kuşağın bültenleri; ikinci eksen süzgeci (DADAHABER-10 §4) | `ekranlar/icerik/haber-dinle.html?kusak=gun-ortasi` |   |
@@ -274,7 +277,7 @@ Her içerik ekranı, alt ekranı ve o ekrana ait haller. Liste ve detayların y�
 | E-191 | Bülten detayı · hata | durum | Ses | `500.html` | Detay | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/haber-dinle-bulten.html?durum=hata` |   |
 | E-192 | Bülten detayı · bulunamadı | durum | Ses | `404.html`, `410.html` | Detay | İçerik kaldırıldı ya da bulunamadı; bölüme dön, arama | `ekranlar/icerik/haber-dinle-bulten.html?durum=bulunamadi` |   |
 | E-193 | Bülten detayı · çevrimdışı | durum | Ses | `cevrimdisi.html` | Detay | İndirilmişse çalar; değilse bağlantı yok | `ekranlar/icerik/haber-dinle-bulten.html?durum=cevrimdisi` |   |
-| E-194 | Dada Spiker · yayında | içerik | Ses | sitede yüzen panel (A · Yüz Açık Alt Bant) | — | Tam ekran ses + video oynatıcı; sıradaki bültenler; küçült → mini oynatıcı | `ekranlar/icerik/spiker.html` |   |
+| E-194 | Dada Spiker · yayında | içerik | Ses | sitede yüzen panel (A · Yüz Açık Alt Bant) | — | Tam ekran ses + video oynatıcı; sıradaki bültenler; küçült → mini oynatıcı; girişleri: hikâye şeridinin ilk dairesi ve Dinle sekmesi; uygulamada yüzen Spiker balonu yok (K39) | `ekranlar/icerik/spiker.html` |   |
 | E-195 | Dada Spiker · yalnız ses | durum | Ses | — | — | Görüntü kapalı, ses sürer (arka planda ve kilit ekranında) | `ekranlar/icerik/spiker.html?durum=ses` |   |
 | E-196 | Dada Spiker · yayın yok | durum | Ses | — | — | Sıradaki bülten saati; son bültenler | `ekranlar/icerik/spiker.html?durum=yayin-yok` |   |
 | E-197 | Dada Spiker · yükleniyor | durum | Ses | `durumlar.html` (iskelet) | — | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/spiker.html?durum=yukleniyor` |   |
@@ -741,7 +744,7 @@ Alt sayfalar, onay pencereleri, kısa bildirimler, menüler, sesli arama, açıl
 | E-542 | Kaydet alt sayfası · üye | sistem | Alt sayfa | `hesabim-kaydedilenler.html` (klasör) | — | Klasör seç, yeni klasör, "Çevrimdışı indir" anahtarı | `ekranlar/sistem/kaydet.html` |   |
 | E-543 | Kaydet · yeni klasör | sistem | Alt sayfa | — | — | Klasör adı alanı, klavye açık | `ekranlar/sistem/kaydet.html?durum=yeni-klasor` |   |
 | E-544 | Kaydet · misafir | sistem | Alt sayfa | üyelik tetik paneli | — | Cihaza kaydedildi + "Giriş yap, her cihazda" (C30 varsayımı) | `ekranlar/sistem/kaydet.html?uye=0` |   |
-| E-545 | Oynatıcı · mini | sistem | Oynatıcı | sitede alt mini çubuk | — | Alt çubuğun üstünde; Haber Dinle, Spiker, podcast tek oynatıcı (kökte var) | `ekranlar/sistem/oynatici.html` |   |
+| E-545 | Oynatıcı · mini | sistem | Oynatıcı | sitede alt mini çubuk | — | Alt çubuğun üstünde; Haber Dinle, Spiker, podcast tek oynatıcı (kökte var); varsayılan kapalı, yalnız çalarken görünür; Spiker (radyo) ve Dinle (kulaklık) ayrı ad ve ikon (K39) | `ekranlar/sistem/oynatici.html` |   |
 | E-546 | Oynatıcı · tam ekran | sistem | Oynatıcı | `podcast-detay.html` (oynatıcı) | — | Kapak, başlık, ilerleme, ileri/geri, hız, sıradakiler, deşifre | `ekranlar/sistem/oynatici.html?durum=tam` |   |
 | E-547 | Oynatıcı · hız alt sayfası | sistem | Oynatıcı | — | — | 0,75× – 2× | `ekranlar/sistem/oynatici.html?durum=hiz` |   |
 | E-548 | Oynatıcı · sıradakiler | sistem | Oynatıcı | — | — | Sıra listesi; sürükle sırala, kaldır | `ekranlar/sistem/oynatici.html?durum=sira` |   |
