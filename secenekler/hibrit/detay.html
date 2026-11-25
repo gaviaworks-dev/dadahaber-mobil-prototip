@@ -169,7 +169,7 @@
 .ilgili .gr{width:76px;height:76px;border-radius:var(--k-ic)}
 .ortak-alt{padding:0 var(--kenar)}
 /* içerik paneli: kapağın üstüne biner, yukarı kaydırınca görselin üzerinden geçer (ana sayfa hero'su gibi yuvarlak köşe; K28) */
-.yaprak{position:relative;z-index:1;margin-top:-24px;background:var(--zemin);border-radius:var(--k-kart) var(--k-kart) 0 0}
+.yaprak{position:relative;z-index:1;margin-top:-24px;background:var(--zemin);border-radius:var(--k-kart) var(--k-kart) 0 0;border-top:3px solid var(--marka)}
 .bas-alt{padding:20px var(--kenar) 0}
 .ozet-p{margin-top:16px;font-size:var(--mb);line-height:1.62}
 .ozet-p+.ozet-p{margin-top:12px}
@@ -193,7 +193,7 @@
 .hmb>i{color:var(--marka);font-size:13px}
 html[data-tema="koyu"] .hmb{background:var(--yuzey-2)}
 .govde .hmb{margin:6px 0 26px}
-.dip{height:160px}
+.dip{height:calc(var(--alt-guvenli) + 66px)} /* yalnız okuma çubuğu kadar (K33) */
 /* yüzen okuma çubuğu: her iki temada koyu */
 .okuma{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(var(--alt-guvenli) - 6px);z-index:80;display:flex;align-items:center;gap:2px;padding:6px;border-radius:var(--k-kart);background:var(--koyu-y);box-shadow:var(--golge-md);transition:transform .3s,opacity .3s}
 .okuma button{height:48px;min-width:48px;border-radius:var(--k-kontrol);display:grid;place-items:center;color:#fff;font-size:17px}
