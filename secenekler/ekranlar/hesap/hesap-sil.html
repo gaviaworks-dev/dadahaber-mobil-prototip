@@ -46,8 +46,9 @@
   } else {
     /* kaynak: dadahaber-prototip/hesabim-gizlilik.html (Hesabı Sil) + hesabim.html sayaçları */
     ic = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Hesabını Silmeden Önce</h1><p>Hesabını silersen aşağıdakiler kalıcı olarak silinir. Bu işlem geri alınamaz.</p></div>' +
-      K.grup('Silinecekler', [{ ikon: 'fa-bookmark', baslik: 'Kaydettiğin haberler', sag: 'deger', deger: 37 }, { ikon: 'fa-heart', baslik: 'Takip listen', sag: 'deger', deger: 24 },
-        { ikon: 'fa-clock-rotate-left', baslik: 'Okuma geçmişin ve serin', sag: 'deger', deger: D.uye.seri + ' gün' }, { ikon: 'fa-envelope', baslik: 'Bülten aboneliklerin', sag: 'deger', deger: 3 },
+      /* sayaç satırları silinmeden önce göz atılabilsin diye kendi ekranlarına gider */
+      K.grup('Silinecekler', [{ ikon: 'fa-bookmark', baslik: 'Kaydettiğin haberler', sag: 'deger', deger: 37, href: K.git('kaydedilenler') }, { ikon: 'fa-heart', baslik: 'Takip listen', sag: 'deger', deger: 24, href: K.git('takip') },
+        { ikon: 'fa-clock-rotate-left', baslik: 'Okuma geçmişin ve serin', sag: 'deger', deger: D.uye.seri + ' gün', href: K.git('gecmis') }, { ikon: 'fa-envelope', baslik: 'Bülten aboneliklerin', sag: 'deger', deger: 3, href: K.u('ekranlar/hesap/bultenler.html') },
         { ikon: 'fa-comment', baslik: 'Yorumların ve rozetlerin', sag: 'yok' }].map(function(x){ x.notr = true; return x; }), 'Yasal saklama süresine tabi kayıtlar 30 gün sonra kendiliğinden silinir.') +
       K.grup('Bunun Yerine', [{ ikon: 'fa-bell-slash', baslik: 'Bildirimleri kapat', href: K.git('bildirimTercih') }, { ikon: 'fa-right-from-bracket', baslik: 'Yalnızca çıkış yap', href: K.git('ayarlar') }]) +
       '<div class="k-ic k-bl sik">' + K.btn({ metin: 'Devam et', tur: 'tehlike', boy: 'buyuk', tam: true, href: u({ adim: 'dogrula' }) }) +

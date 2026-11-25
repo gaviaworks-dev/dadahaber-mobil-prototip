@@ -48,13 +48,22 @@
       return { ikon: x[0], baslik: x[1], alt: kilit ? 'Üyelikle' : x[2], sag: 'anahtar', on: !RED && !kilit && !!x[3], pasif: RED || kilit }; }),
       'Çok önemli gelişmelerde editörlerin gönderdiği bildirim, bildirimleri açık olan herkese gider.') +
     K.grup('Sessiz Saatler', [{ ikon: 'fa-moon', baslik: 'Sessiz saatleri aç', alt: 'Son Dakika dahil hiçbir bildirim gelmez', sag: 'anahtar', on: true, pasif: RED },
-      { ikon: 'fa-clock', baslik: 'Başlangıç', sag: 'deger', deger: '23.00', pasif: RED }, { ikon: 'fa-clock', baslik: 'Bitiş', sag: 'deger', deger: '07.00', pasif: RED }]) +
+      { ikon: 'fa-clock', baslik: 'Başlangıç', sag: 'deger', deger: '23.00', pasif: RED, attr: 'data-saat="bas"' }, { ikon: 'fa-clock', baslik: 'Bitiş', sag: 'deger', deger: '07.00', pasif: RED, attr: 'data-saat="bit"' }]) +
     (!K.uye ? '<div class="k-ic k-bl sik">' + K.cagri({ ikon: 'fa-right-to-bracket', baslik: 'Daha çok tür için giriş yap', aciklama: 'Yazar, Dada Doğrula ve yorum bildirimleri üyelikle.', eylem: { metin: 'Giriş yap', href: K.git('giris') } }) + '</div>' : '') +
     '<div class="k-son"></div>';
   K.ustCubuk({ geri: true, baslik: 'Bildirim Tercihleri', buyuk: true });
   K.altCubuk('hesap');
   K.oynatici();
   K.cekmece();
+  /* sessiz saat seçimi: kitin alt sayfası + saat çipleri (tek seçim); seçilen saat satıra yazılır */
+  var SAAT = { bas: ['Başlangıç saati', ['21.00', '22.00', '23.00', '00.00', '01.00']], bit: ['Bitiş saati', ['06.00', '07.00', '08.00', '09.00', '10.00']] }, satir = null;
+  document.addEventListener('click', function(ev){
+    var a = ev.target.closest('[data-saat]');
+    if (a) { ev.preventDefault(); if (RED) return; satir = a; var t = SAAT[a.getAttribute('data-saat')], v = a.querySelector('.dg').textContent;
+      K.sayfa({ baslik: t[0], alt: 'Sessiz saatlerde Son Dakika dahil bildirim gelmez', icerik: '<div class="k-cip-izgara" data-tek>' + t[1].map(function(h){ return K.cip(h, { secili: h === v, buyuk: true, attr: 'data-saat-sec="' + h + '"' }); }).join('') + '</div>',
+        eylemler: [{ metin: 'Tamam', tur: 'birincil', attr: 'data-kapat' }] }); return; }
+    var c = ev.target.closest('[data-saat-sec]'); if (c && satir) satir.querySelector('.dg').textContent = c.getAttribute('data-saat-sec');
+  });
 })();
 </script>
 </body>

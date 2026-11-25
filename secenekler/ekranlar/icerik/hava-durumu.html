@@ -21,8 +21,11 @@
 .x-deger .ik{width:64px;height:64px;border-radius:var(--k-daire);display:grid;place-items:center;flex:none;background:var(--marka-25);color:var(--marka-metin);font-size:26px}
 .x-deger .s{display:block;font-size:52px;line-height:1;font-weight:var(--y-ince);letter-spacing:-.04em;font-variant-numeric:tabular-nums}
 .x-deger b{display:block;margin-top:var(--b-4);font-size:17px}
-/* KİT ADAYI: hava gün kartı — .k-py ölçüsünde; ikon + en yüksek/en düşük, durum tek satır (kısaltılır) */
-.x-gun{width:132px}
+/* KİT ADAYI: hava gün kartı — .k-py ölçüsünde ama bilgi kartı (gün ayrıntısı ekranı yok: dokunulmaz, basılma hareketi yok); ikon + en yüksek/en düşük, durum tek satır (kısaltılır) */
+.x-gun{width:132px;padding:var(--b-12) var(--b-16);border-radius:var(--k-kontrol);background:var(--k-yuzey);flex:none}
+.x-gun small{display:block;font-size:12.5px;color:var(--metin-3);white-space:nowrap}
+.x-gun b{margin-top:var(--b-4);font-size:18px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.x-gun em{display:block;margin-top:var(--b-4);font-style:normal;font-size:12.5px}
 .x-gun b{display:flex;align-items:center;gap:var(--ikon-bosluk)}
 .x-gun b i{font-size:15px;color:var(--marka-metin)}
 .x-gun em{font-weight:var(--y-orta);color:var(--metin-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -41,7 +44,7 @@
     ['20.00', 'Kar', -1, -6, 80, 28], ['21.00', 'Hafif kar', -1, -6, 70, 26], ['22.00', 'Hafif kar', -2, -6, 60, 24], ['23.00', 'Bulutlu', -2, -6, 40, 22]];
   var NEM = 91, RUZ = '32 km/sa KD';
   function d(n){ return String(n).replace('-', '−') + '°'; }
-  function gun(x, bugun){ return '<div class="k-py x-gun"><small>' + (bugun ? 'Bugün' : x[0] + ' ' + x[1]) + '</small><b>' + K.I(x[3]) + d(x[4]) + ' / ' + d(x[5]) + '</b><em>' + x[2] + '</em></div>'; }
+  function gun(x, bugun){ return '<div class="x-gun"><small>' + (bugun ? 'Bugün' : x[0] + ' ' + x[1]) + '</small><b>' + K.I(x[3]) + d(x[4]) + ' / ' + d(x[5]) + '</b><em>' + x[2] + '</em></div>'; }
 
   var sehir = '<div class="k-ic" style="padding-top:var(--b-16)">' + K.btn({ metin: H.sehir, ikon: 'fa-location-dot', sagIkon: 'fa-chevron-down', tur: 'sade', tam: true, attr: DUR === 'konum-yok' ? 'data-sehir' : 'data-sayfa="sehir"' }) + '</div>';
   var simdi = '<section class="k-bl sik"><div class="k-ic"><div class="x-deger"><span class="ik">' + K.I(H.ikon) + '</span><span><span class="s">' + d(H.derece) + '</span><b>' + H.durum + '</b></span></div>' +

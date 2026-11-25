@@ -40,11 +40,12 @@
   if (!KIT[TUR]) TUR = 'cikis';
   var ust = '<div class="k-ust-bosluk"></div>', son = '<div class="k-son yalin"></div>';
 
-  /* arka planlar (kit parçalarıyla) */
+  /* arka planlar (kit parçalarıyla); satırlar arkadaki gerçek ekranın hedeflerine gider (ayarlar.html, depolama.html, takip.html ile aynı) */
+  var DEP = K.u('ekranlar/hesap/depolama.html'), IND = K.u('ekranlar/hesap/kaydedilenler.html', { sekme: 'indirilenler' });
   function ayarlar(){
-    e.innerHTML = ust + K.grup('Hesap', [{ ikon: 'fa-user', baslik: 'Profil', alt: D.uye.ad }, { ikon: 'fa-bell', baslik: 'Bildirim tercihleri' }, { ikon: 'fa-envelope', baslik: 'Bülten' }]) +
-      K.grup('Görünüm', [{ ikon: 'fa-circle-half-stroke', baslik: 'Tema', sag: 'deger', deger: 'Sistem' }, { ikon: 'fa-font', baslik: 'Yazı boyutu', sag: 'deger', deger: 'Orta' }]) +
-      K.grup('Veri ve depolama', [{ ikon: 'fa-circle-down', baslik: 'İndirilenler', sag: 'deger', deger: '8,5 MB' }]) +
+    e.innerHTML = ust + K.grup('Hesap', [{ ikon: 'fa-user', baslik: 'Profil', alt: D.uye.ad, href: K.git('profil') }, { ikon: 'fa-bell', baslik: 'Bildirim tercihleri', href: K.git('bildirimTercih') }, { ikon: 'fa-envelope', baslik: 'Bülten', href: K.u('ekranlar/hesap/bultenler.html') }]) +
+      K.grup('Görünüm', [{ ikon: 'fa-circle-half-stroke', baslik: 'Tema', sag: 'deger', deger: 'Sistem', href: K.git('gorunum') }, { ikon: 'fa-font', baslik: 'Yazı boyutu', sag: 'deger', deger: 'Orta', href: K.git('gorunum') }]) +
+      K.grup('Veri ve depolama', [{ ikon: 'fa-circle-down', baslik: 'İndirilenler', sag: 'deger', deger: '8,5 MB', href: DEP }]) +
       K.grup('', [{ ikon: 'fa-right-from-bracket', baslik: 'Çıkış yap', sag: 'yok', notr: true }, { ikon: 'fa-trash-can', baslik: 'Hesabı sil', sag: 'yok', tehlike: true }]) + son;
     K.ustCubuk({ geri: true, baslik: 'Ayarlar' }); }
   function hesapSil(){
@@ -54,9 +55,9 @@
       '<div style="margin-top:var(--b-24)">' + K.btn({ metin: 'Hesabımı sil', tur: 'tehlike', boy: 'buyuk', tam: true }) + '</div></div>' + son;
     K.ustCubuk({ geri: true, baslik: 'Hesabı sil' }); }
   function depolama(){
-    e.innerHTML = ust + K.grup('Otomatik indir', [{ ikon: 'fa-circle-down', baslik: 'Günün 5\'ini kendiliğinden indir', sag: 'anahtar', on: true }, { ikon: 'fa-circle-play', baslik: 'Mobil veride video', sag: 'deger', deger: 'Dokununca' }]) +
-      K.grup('İndirilenler', [{ ikon: 'fa-newspaper', baslik: 'Çevrimdışı haberler', alt: '4 haber', sag: 'deger', deger: '8,5 MB' }, { ikon: 'fa-trash-can', baslik: 'İndirilenleri sil', sag: 'yok', tehlike: true }], 'Haberler Kaydedilenler\'de kalır; yalnız çevrimdışı kopyalar silinir.') +
-      K.grup('', [{ ikon: 'fa-database', baslik: 'Önbelleği temizle', sag: 'ok' }]) + son;
+    e.innerHTML = ust + K.grup('Otomatik indir', [{ ikon: 'fa-circle-down', baslik: 'Günün 5\'ini kendiliğinden indir', sag: 'anahtar', on: true }, { ikon: 'fa-circle-play', baslik: 'Mobil veride video', sag: 'deger', deger: 'Dokununca', href: DEP }]) +
+      K.grup('İndirilenler', [{ ikon: 'fa-newspaper', baslik: 'Çevrimdışı haberler', alt: '4 haber', sag: 'deger', deger: '8,5 MB', href: IND }, { ikon: 'fa-trash-can', baslik: 'İndirilenleri sil', sag: 'yok', tehlike: true }], 'Haberler Kaydedilenler\'de kalır; yalnız çevrimdışı kopyalar silinir.') +
+      K.grup('', [{ ikon: 'fa-database', baslik: 'Önbelleği temizle', sag: 'ok', href: DEP }]) + son;
     K.ustCubuk({ geri: true, baslik: 'Veri ve depolama' }); }
   function gecmis(){
     e.innerHTML = ust + K.sekmeler(['Okuduklarım', 'İzlediklerim', 'Dinlediklerim'], 0) + '<div class="k-satirlar">' + L.slice(0, 5).map(function(h){ return K.satir(h); }).join('') + '</div>' + son;
@@ -65,7 +66,9 @@
     e.innerHTML = ust + '<div class="k-satirlar">' + [L[1], L[2], L[4]].map(function(h){ return K.satir(h, { kaydedildi: true }); }).join('') + '</div>' + son;
     K.ustCubuk({ geri: true, baslik: 'Okunacaklar', eylemler: ['daha'] }); }
   function takip(){
-    e.innerHTML = ust + K.grup('Konular ve takımlar', D.uye.takip.map(function(t, i){ return { ikon: i === 0 ? 'fa-futbol' : 'fa-heart', baslik: t, alt: 'Takipte', sag: 'ok' }; })) + son;
+    /* takip.html'deki gibi takipteki konular çip: dokununca takibi bırakma onayı (bu pencere) açılır */
+    e.innerHTML = ust + '<div class="k-ic" style="padding-top:var(--b-16)"><span class="k-grup-b">Konular ve takımlar</span><div class="k-cip-izgara">' + D.uye.takip.map(function(t, i){ return K.cip(t, { secili: true, ikon: i === 0 ? 'fa-futbol' : 'fa-check', attr: 'data-birak' }); }).join('') + '</div>' +
+      '<p class="k-grup-n" style="margin:var(--b-12) 0 0">Bir çipe dokunarak takibi bırakabilirsin.</p></div>' + son;
     K.ustCubuk({ geri: true, baslik: 'Takip ettiklerim' }); }
   function detay(){ var d = D.detay;
     e.innerHTML = '<header class="k-kapak detay" style="background-image:' + G(d.g) + '"><button class="k-oynat-d" type="button">' + K.I('fa-play') + 'Video · ' + d.video + '</button>' + K.katEt(d.yol.join(' · '), d.ikon, { foto: true }) +

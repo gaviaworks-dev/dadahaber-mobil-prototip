@@ -57,7 +57,7 @@
   /* sayfa başı: .k-bbas → kitin görselli banner'ı (K43/K44-8; sayfa → fotoğraf eşlemesi kitte, K.banner) */
   var kapak = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Foto Fokus</h1><p>Türkiye ve dünyadan foto muhabirlerimizin kareleri</p></div>';
   var liste;
-  if (DUR === 'bos') liste = K.bos({ ikon: 'fa-camera', baslik: 'Bu temada galeri yok', aciklama: TEMA[sec][0] + ' temasında yeni galeri yayımlanınca burada görünür.', eylem: { metin: 'Tümü\'ne dön', tur: 'sade', href: K.u(YOL) } });
+  if (DUR === 'bos' || !X.length) liste = K.bos( /* albümü olmayan tema da boş hal */{ ikon: 'fa-camera', baslik: 'Bu temada galeri yok', aciklama: TEMA[sec][0] + ' temasında yeni galeri yayımlanınca burada görünür.', eylem: { metin: 'Tümü\'ne dön', tur: 'sade', href: K.u(YOL) } });
   else {
     liste = '<div class="fl">' + K.kartGaleri(X[0]) + '</div>' + (X.length > 1 ? '<div class="fi">' + X.slice(1).map(K.kartGaleri).join('') + '</div>' : '');
     if (DUR === 'daha-fazla') liste += '<div class="k-ic k-bl sik">' + (HAL === 'son' || HAL === 'hata' ? K.dahaFazla(HAL) : '<div class="fi" style="padding-left:0;padding-right:0;padding-top:0">' + isk('100%', 128, 'kontrol') + isk('100%', 128, 'kontrol') + '</div>' + K.dahaFazla('yukleniyor')) + '</div>';

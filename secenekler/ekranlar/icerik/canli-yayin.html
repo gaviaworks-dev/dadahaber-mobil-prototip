@@ -76,7 +76,8 @@
     '<section class="k-bl">' + K.bb({ baslik: 'Oturumdan Öne Çıkanlar', canli: true, sayi: Y.akis.length }) + '<div class="k-ic">' +
       Y.akis.map(function(x, i){ return K.canliGiris({ saat: x[0], baslik: x[1], metin: x[2], yeni: i === 0 }).replace(/<\/div><\/div>$/, K.meta(['Kaynak: ' + x[3]]) + '</div></div>'); }).join('') + '</div></section>';
   var prog = (DUR === 'yayin-yok' ? Y.program.slice(1) : Y.program).map(function(x){
-    return '<div class="k-yazar-satir"><b class="tnum">' + x[0] + '</b><span style="min-width:0"><b>' + x[1] + '</b><small>' + x[2] + '</small></span>' +
+    /* satırın tamamı dokunulur: yayındaki satır sayfa başındaki oynatıcıya kayar (data-basa), sıradakiler Hatırlat'ı açıp kapatır */
+    return '<div class="k-yazar-satir" ' + (x[3] ? 'data-basa' : 'data-satir-hatirlat') + '><b class="tnum">' + x[0] + '</b><span style="min-width:0"><b>' + x[1] + '</b><small>' + x[2] + '</small></span>' +
       (x[3] ? K.canli() : K.btn({ metin: 'Hatırlat', ikon: 'fa-bell', boy: 'kucuk', tur: 'sade', secili: false, attr: 'data-hatirlat="' + x[0] + '"' })) + '</div>'; }).join('');
   var akisB = '<section class="k-bl' + (DUR === 'yayin-yok' ? ' sik' : '') + '">' + K.bb({ baslik: 'Yayın Akışı', ikon: 'fa-calendar-day', not: 'Bugün · ' + D.simdi.kisa }) + '<div class="k-satirlar">' + prog + '</div></section>';
   var bitenB = '<section class="k-bl">' + K.bb({ baslik: 'Sona Eren Yayınlar', ikon: 'fa-clock-rotate-left', sayi: Y.biten.length }) + '<div class="k-satirlar">' + Y.biten.map(function(x){ return K.satir(x, { md: x.md }); }).join('') + '</div></section>';
@@ -92,6 +93,7 @@
   var v = e.querySelector('.k-video');
   if (v) v.addEventListener('click', function(ev){ if (v.classList.contains('is-mobil') && ev.target.closest('.k-ikon.sari')) { v.classList.remove('is-mobil'); v.classList.add('is-oynuyor'); K.spikerDurdur(); return; }
     if (ev.target.closest('button')) return; if (v.classList.contains('is-oynuyor')) { v.classList.remove('is-oynuyor'); v.classList.add('is-dur'); } else if (v.classList.contains('is-dur')) { v.classList.remove('is-dur'); v.classList.add('is-oynuyor'); } });
+  document.addEventListener('click', function(ev){ var sr = ev.target.closest('[data-satir-hatirlat]'); if (sr && !ev.target.closest('button')) { sr.querySelector('[data-hatirlat]').click(); return; } });
   document.addEventListener('click', function(ev){ var t = ev.target.closest('[data-hatirlat]'); if (!t) return;
     var on = t.getAttribute('aria-pressed') !== 'true'; t.setAttribute('aria-pressed', on); t.innerHTML = K.I(on ? 'fa-check' : 'fa-bell') + '<span>' + (on ? 'Hatırlatılacak' : 'Hatırlat') + '</span>';
     if (on) K.toast(t.getAttribute('data-hatirlat') + '\'de hatırlatacağız', { ikon: 'fa-bell', alt: 'Yayın başlayınca bildirim gelir' }); });

@@ -20,9 +20,11 @@
 -->
 <link rel="stylesheet" href="../../_ortak/cerceve.css">
 <link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
 <script src="../../_ortak/icerik.js"></script>
 <script src="../../_ortak/cerceve.js"></script>
 <script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script> <!-- yalnız takım arması (K.arma) ve adresler (K.u, K.git) için -->
 <style>
 :root{--hero-y:468px}
 .ekran{overflow:hidden;background:var(--zemin)}
@@ -109,7 +111,7 @@ html[data-tema="koyu"] .nk span.on i{background:var(--marka)}
 /* 4 · kişisel */
 .mc{margin-top:8px;display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:var(--k-ic);background:rgba(255,255,255,.1)}
 .mc .tk{display:flex;align-items:center;gap:var(--ikon-bosluk);font-size:14px;font-weight:var(--y-kalin);white-space:nowrap}
-.mc .tk span{width:30px;height:30px;border-radius:var(--k-daire);background:#fff;color:var(--siyah);display:grid;place-items:center;font-size:11px}
+.mc .k-arma .kk{stroke:rgba(255,255,255,.28)} /* takım arması kitten (K.arma, Yasin Bey 25 Kasım); cam zeminde kenar açık */
 .mc .sk{font-size:20px;font-weight:var(--y-kalin);font-variant-numeric:tabular-nums;white-space:nowrap}
 .mc .dk{margin-left:auto;display:inline-flex;align-items:center;gap:var(--ikon-bosluk);font-size:12.5px;font-weight:var(--y-kalin);color:#fff;white-space:nowrap}
 .cp{margin:8px -8px 0;padding:0 8px;gap:6px}
@@ -128,8 +130,8 @@ html[data-tema="koyu"] .nk span.on i{background:var(--marka)}
   </header>
   <div class="nk" id="nk" aria-hidden="true"></div>
   <div class="alt">
-    <a class="bt a" id="ileri" href="#"><span id="ileri-y">Devam</span><i class="fa-solid fa-arrow-right"></i></a>
-    <a class="bt b" id="gir" href="#" hidden>Giriş yap</a>
+    <a class="bt a" id="ileri"><span id="ileri-y">Devam</span><i class="fa-solid fa-arrow-right"></i></a>
+    <a class="bt b" id="gir" hidden>Giriş yap</a>
   </div>
 </main>
 <script>
@@ -156,7 +158,7 @@ html[data-tema="koyu"] .nk span.on i{background:var(--marka)}
     { g: 'milli', et: ['fa-star', 'Bugün Senin İçin'], h: 'Gündemini sen kur',
       p: 'Konularını, şehrini ve takımını seç; ana sayfa seninle açılsın, takımın sahadayken skor önünde dursun.',
       sahne: '<div class="kc cam"><div class="ust-s"><i class="fa-solid fa-star"></i><span class="tek"><b>Bugün Senin İçin</b> · ' + mac.lig + '</span></div>' +
-        '<div class="mc"><span class="tk"><span>' + mac.evKod + '</span></span><span class="sk">' + mac.skor + '</span><span class="tk"><span>' + mac.depKod + '</span></span><span class="dk"><span class="canli-nokta"></span>' + mac.dakika + '</span></div>' +
+        '<div class="mc"><span class="tk">' + K.arma(mac.ev, 'm', mac.evKod) + '</span><span class="sk">' + mac.skor + '</span><span class="tk">' + K.arma(mac.dep, 'm', mac.depKod) + '</span><span class="dk"><span class="canli-nokta"></span>' + mac.dakika + '</span></div>' +
         '<div class="cp ks">' + D.uye.takip.map(function(t, i){ return '<span class="' + (i < 2 ? 'on' : '') + '"><i class="fa-solid ' + (i < 2 ? 'fa-check' : 'fa-plus') + '"></i>' + t + '</span>'; }).join('') + '</div></div>' }
   ];
 
@@ -168,6 +170,7 @@ html[data-tema="koyu"] .nk span.on i{background:var(--marka)}
   }).join('');
   nk.innerHTML = ADIM.map(function(a, i){ return '<span><i></i></span>'; }).join('');
 
+  document.getElementById('gir').href = K.git('giris');
   var ileri = document.getElementById('ileri'), ileriY = document.getElementById('ileri-y'), gir = document.getElementById('gir'), atla = document.getElementById('atla');
   var simdi = -1;
   function goster(i){
@@ -176,7 +179,7 @@ html[data-tema="koyu"] .nk span.on i{background:var(--marka)}
     var son = i === ADIM.length - 1;
     ileriY.textContent = son ? 'Başla' : 'Devam';
     ileri.querySelector('i').style.display = son ? 'none' : '';
-    ileri.setAttribute('href', son ? atla.getAttribute('href') : '#');
+    ileri.setAttribute('href', son ? atla.getAttribute('href') : K.u('ekranlar/giris/tanitim.html', 'adim=' + (i + 2))); /* Devam: sonraki adım (aynı sayfada kayarak; adresi de o adım) */
     gir.hidden = !son;
     atla.classList.toggle('gizli', son);
   }

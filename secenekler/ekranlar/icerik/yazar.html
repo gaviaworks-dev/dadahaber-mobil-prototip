@@ -45,15 +45,17 @@
   var liste = X.map(function(h){ return K.koseSatir({ ad: Y.ad, unvan: Y.unvan, baslik: h.baslik, sure: h.sure }, { tarih: h.saat, izlenme: h.izlenme }); }).join('');
   if (DUR === 'daha-fazla') liste += (HAL === 'son' || HAL === 'hata' ? '' : K.iskelet('satir', 1)) + K.dahaFazla(HAL === 'son' || HAL === 'hata' ? HAL : 'yukleniyor');
 
+  /* sayaçlar: Yazı aşağıdaki Yazıları bölümüne kayar; takipçi ve başlangıç yılı yalnız bilgi (kit .k-istat div) */
+  var istat = K.istat([[Y.yazi, 'Yazı', '#yazilari'], [Y.takipci, 'Takipçi'], [Y.bas, 'Yazmaya başladı']]).replace(/<a><b>([^<]*)<\/b><small>([^<]*)<\/small><\/a>/g, '<div><b>$1</b><small>$2</small></div>');
   var DUZ = DUR === 'hata' || DUR === 'bulunamadi' || (DUR === 'cevrimdisi' && Q.get('onbellek') === '0');
   var o = '<div class="k-ust-bosluk"></div>';
   if (DUR === 'yukleniyor') o += '<div class="k-profil"><i class="k-isk daire" style="width:64px;height:64px"></i><div class="k-isk-grup t"><i class="k-isk" style="width:70%;height:24px"></i><i class="k-isk" style="width:40%;height:13px"></i></div></div>' +
     '<div class="k-ic" style="padding-top:var(--b-16)"><i class="k-isk kontrol" style="width:100%;height:72px"></i></div><div class="k-satirlar">' + K.iskelet('satir', 4) + '</div>';
   else if (DUZ) o += K.hata({ tur: DUR === 'bulunamadi' ? 'bulunamadi' : DUR === 'cevrimdisi' ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') });
-  else o += profil + (DUR === 'bos' ? '' : K.istat([[Y.yazi, 'Yazı'], [Y.takipci, 'Takipçi'], [Y.bas, 'Yazmaya başladı']])) +
+  else o += profil + (DUR === 'bos' ? '' : istat) +
     '<div class="k-ic" style="padding-top:var(--b-16)">' + takip + '</div>' +
     (DUR === 'bos' ? K.bos({ ikon: 'fa-feather-pointed', baslik: 'Henüz yazısı yok', aciklama: 'Takip edersen ilk yazısı yayımlandığında ana sayfanda öne çıkar.' })
-      : '<section class="k-bl sik">' + K.bb({ baslik: 'Yazıları', ikon: 'fa-quote-left', sayi: Y.yazi, not: 'En yeni' }) + '<div class="k-satirlar">' + liste + '</div></section>');
+      : '<section class="k-bl sik" id="yazilari">' + K.bb({ baslik: 'Yazıları', ikon: 'fa-quote-left', sayi: Y.yazi, not: 'En yeni' }) + '<div class="k-satirlar">' + liste + '</div></section>');
   e.innerHTML = o + '<div class="k-son"></div>';
 
   K.ustCubuk({ geri: true, baslik: DUZ && DUR === 'bulunamadi' ? 'Yazar' : Y.ad, buyuk: !DUZ, eylemler: DUZ ? [] : ['paylas'] });
