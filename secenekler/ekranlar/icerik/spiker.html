@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Dada Spiker</title>
+<!-- Dada Haber Mobil · DADA SPİKER (E-194–E-199). Ana sayfa hikâye şeridindeki ilk "Spiker" dairesinin ve Dinle sekmesindeki Spiker kartının hedefi (K39).
+     Varsayılan: canlı Spiker, tam ekran ses + görüntü oynatıcısı (K.oynaticiTam spiker): kapak (Spiker yüzü, Yayında), başlık, ilerleme, ±15 sn, hız, sıradaki;
+     altında sıradaki başlıklar ve bültenler. Küçült (⌄) → mini oynatıcı (Spiker çalmaya başlar) ve geri. Görüntü düğmesi → yalnız ses.
+     K39: Spiker simgesi fa-radio, adı "Dada Spiker"; "Dinle" (sesli haber) ile karıştırılmaz.
+     Sorgu: ?durum=ses (görüntü kapalı) | yayin-yok (ya da ?spiker=0) | yukleniyor | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0) · ?uye=0 · ?tema=koyu
+     Veri: D.spiker (16.00 Bülteni, 3:00, sıradaki üç başlık, bültenler); sıradaki bülten saati 19.00 (kit, K39). -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* KİT ADAYI: k-oy "yalnız ses" kapağı — görüntü kapalıyken kapakta Spiker'ın küçük yüzü, ses dalgası ve not (oynatıcının hali) */
+.k-oy .kapak.ses{background:var(--k-koyu) !important;display:grid;place-items:center;text-align:center;color:#fff}
+.ses-k{display:flex;flex-direction:column;align-items:center;gap:var(--b-12);padding:0 var(--b-24)}
+.ses-k .yuz{width:88px;height:88px;border-radius:var(--k-daire);background-size:cover;background-position:center;outline:3px solid var(--marka);outline-offset:4px}
+.ses-k .k-dalga{height:16px}
+.ses-k b{font-size:17px}
+.ses-k small{font-size:13px;line-height:1.4;color:rgba(255,255,255,.7)}
+/* sayfa içi (yerinde) oynatıcı durum çubuğunun altında kalsın: kit .k-oy z-index 94 > .dc 90 (KİT ADAYI: .k-oy.yerinde z-index) */
+.k-oy.yerinde{z-index:1}
+/* KİT ADAYI (düzeltme): kit .k-oy .sure −4 üst boşlukla 44'lük kaydırıcıya biniyor */
+.k-oy .sure{margin-top:0}
+/* yerleşim: oynatıcının altındaki bölümler */
+.sk ol{list-style:none;counter-reset:s}
+.sk li{counter-increment:s;display:grid;grid-template-columns:32px minmax(0,1fr);gap:var(--b-12);padding:var(--b-12) 0;border-top:1px solid var(--cizgi);font-size:15.5px;line-height:1.32}
+.sk li:first-child{border-top:0}
+.sk li::before{content:counter(s);font-weight:var(--y-kalin);color:var(--marka-metin);font-variant-numeric:tabular-nums}
+.sp{padding:0 var(--kenar)}
+/* iskelet yerleşimi (yalnız ölçek değişkenleri) */
+.i-r{padding-top:var(--b-12);padding-bottom:var(--b-12)}
+.i-s{display:flex;gap:var(--b-12);padding:var(--b-12) 0}
+.i-m16{margin-top:var(--b-16)}
+.i-m24{margin-top:var(--b-24)}
+.i-o{display:flex;justify-content:center;margin-top:var(--b-24)}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var Q = K.q, DUR = K.durum, e = document.getElementById('ekran'), S = D.spiker;
+  var YOK = DUR === 'yayin-yok' || !K.spikerCanli(), SES = DUR === 'ses', CEV = DUR === 'cevrimdisi';
+  function isk(w, h, c){ return '<i class="k-isk' + (c ? ' ' + c : '') + '" style="width:' + w + ';height:' + h + 'px"></i>'; }
+  var sirada = '<section class="k-bl sik">' + K.bb({ baslik: 'Sıradaki Başlıklar', ikon: 'fa-list-ul', sayi: S.sirada.length }) + '<div class="k-ic sk"><ol>' + S.sirada.map(function(s){ return '<li><span>' + s + '</span></li>'; }).join('') + '</ol></div></section>';
+  var bultenler = '<section class="k-bl sik">' + K.bb({ baslik: 'Bültenler', ikon: 'fa-radio' }) + K.cipler(S.bultenler.map(function(b){ return { metin: b }; }), 0) + '</section>';
+
+  var DUZ = DUR === 'hata' || (CEV && Q.get('onbellek') === '0');
+  if (DUR === 'yukleniyor') {
+    e.innerHTML = '<div class="k-ust-bosluk"></div><div class="sp" role="status" aria-label="Yükleniyor">' + isk('100%', 342, 'kontrol') + '<div class="k-isk-grup i-m24">' + isk('34%', 13) + isk('100%', 22) + isk('70%', 22) + '</div>' +
+      '<div class="i-m24">' + isk('100%', 6) + '</div><div class="i-o">' + isk('72px', 72, 'daire') + '</div></div>';
+    K.ustCubuk({ geri: true, baslik: 'Dada Spiker' });
+  } else if (DUZ) {
+    e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: CEV ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') }) + '<div class="k-son yalin"></div>';
+    K.ustCubuk({ geri: true, baslik: 'Dada Spiker' });
+  } else if (YOK) {
+    /* yayın yok: sıradaki bülten saati + son bülten + bültenler */
+    e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.bos({ ikon: 'fa-radio', baslik: 'Şu an yayın yok', aciklama: 'Sıradaki bülten 19.00\'da. O zamana kadar son bülteni dinleyebilirsin.', eylem: { metin: '19.00\'da hatırlat', ikon: 'fa-bell', attr: 'data-toast="19.00\'da hatırlatacağız"' } }) +
+      '<section>' + K.bb({ baslik: 'Son Bülten', ikon: 'fa-radio' }) + '<div class="sp"><div class="k-spk"><span class="yuz" style="background-image:' + G(S.gorsel) + '"></span><span class="t"><b>Dada Spiker · ' + S.bulten + '</b><small>Bugün · ' + S.sure.replace(':00', '') + ' dk · ' + S.sirada[0] + '</small></span>' +
+      K.ikonBtn({ ikon: 'fa-play', etiket: 'Son bülteni dinle', attr: 'data-spiker' }) + '</div></div></section>' + bultenler + '<div class="k-son yalin"></div>';
+    K.ustCubuk({ geri: true, baslik: 'Dada Spiker' });
+  } else {
+    e.innerHTML = K.oynaticiTam({ tur: 'spiker', yerinde: true, durum: CEV ? 'dur' : '' }) + '<div class="sp">' + (CEV ? K.serit({ tur: 'hata', ikon: 'fa-plug-circle-xmark', metin: 'Canlı yayın için bağlantı gerekli', alt: 'Bağlanınca kaldığın yerden sürer.' }) : '') + '</div>' + sirada + bultenler + '<div class="k-son yalin"></div>';
+    var oy = e.querySelector('.k-oy');
+    /* küçült: mini oynatıcıya geçer ve geri döner */
+    var kc = oy.querySelector('.u .k-ikon'); kc.removeAttribute('data-kapat'); kc.setAttribute('data-kucult', '');
+    /* sağ üst: görüntü aç/kapat (yalnız ses) */
+    oy.querySelector('.u .k-ikon:last-child').outerHTML = K.ikonBtn({ ikon: 'fa-video', etiket: SES ? 'Görüntüyü aç' : 'Görüntüyü kapat, yalnız ses', secili: !SES, attr: 'data-goruntu' });
+    oy.querySelector('.alt .k-btn:last-child').setAttribute('data-sirada', '');
+    oy.querySelector('.dn .hiz').classList.add('k-dk44'); /* kit hız düğmesi 52×36: görünmez 44 alan */
+    if (SES) { var kp = oy.querySelector('.kapak'); kp.classList.add('ses');
+      kp.insertAdjacentHTML('beforeend', '<div class="ses-k"><span class="yuz" style="background-image:' + G(S.gorsel) + '"></span><span class="k-dalga"><i></i><i></i><i></i></span><b>Yalnız ses</b><small>Görüntü kapalı. Ses arka planda ve kilit ekranında sürer.</small></div>'); }
+  }
+  if (CEV && !DUZ) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){ var t = ev.target;
+    if (t.closest('[data-kucult]')) { K.spikerBaslat(); if (history.length > 1) history.back(); else location.href = K.git('dinle'); return; }
+    if (t.closest('[data-goruntu]')) { var p = new URLSearchParams(location.search); if (SES) p.delete('durum'); else p.set('durum', 'ses'); location.search = p.toString(); return; }
+    if (t.closest('.k-oy .dn .ana')) { var a = t.closest('.ana'), oyn = !!a.querySelector('.fa-pause'); a.innerHTML = K.I(oyn ? 'fa-play' : 'fa-pause'); a.closest('.k-oy').classList.toggle('dur', oyn); return; }
+    if (t.closest('[data-sirada]')) { K.sayfa({ baslik: 'Sıradakiler', alt: 'Dada Spiker · ' + S.bulten, icerik: '<div class="sk"><ol>' + S.sirada.map(function(s){ return '<li><span>' + s + '</span></li>'; }).join('') + '</ol></div>' }); return; }
+    var y = t.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var p = new URLSearchParams(location.search); ['durum', 'hata', 'onbellek'].forEach(function(x){ p.delete(x); }); location.search = p.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

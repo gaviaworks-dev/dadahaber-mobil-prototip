@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Video Haber</title>
+<!-- Dada Haber Mobil · VIDEO HABER LİSTESİ (E-122–E-129). Liste kökünden: görselli başlık + içerik paneli, yapışkan kategori süzgeci (DADAHABER-10 §4),
+     video kartları (tür etiketi kartta: Anlık Gelişme · Sahadan · Açıklayıcı Video · Röportaj; tür ayrı süzgeç değil), Tümü'nde Akış rayı (kısa videolar).
+     Sorgu: ?kategori=gundem|finans|spor|dunya|kadin|savunma|kampus|teknoloji · ?durum=yukleniyor | yenileniyor (&hal=cekiliyor|birak|bitti) | daha-fazla (&hal=son|hata)
+            | bos (&kategori=…, varsayılan teknoloji) | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0) · ?uye=0 · ?tema=koyu
+     Alt çubukta "Bölümler" seçili (varsayım: medya sayfaları menüden açılır, Bölümler sekmesinin içinde). -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* yerleşim (bileşen biçimi değil): kart dizisi aralığı */
+.vl{display:grid;gap:var(--b-26);padding:var(--b-16) var(--kenar) 0}
+/* iskelet yerleşimi (yalnız ölçek değişkenleri) */
+.i-r{padding-top:var(--b-12);padding-bottom:var(--b-12)}
+.i-s{display:flex;gap:var(--b-12);padding:var(--b-12) 0}
+.i-m16{margin-top:var(--b-16)}
+.i-m24{margin-top:var(--b-24)}
+.i-o{display:flex;justify-content:center;margin-top:var(--b-24)}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var Q = K.q, DUR = K.durum, HAL = Q.get('hal'), e = document.getElementById('ekran'), TAM = document.documentElement.classList.contains('tam');
+  /* kaynak: public video.html "Video haberler" (kategori, süre, tür, tarih, izlenme, muhabir; sırasıyla). "Benzine 1,20 liralık indirim" videosu konuya uygun fotoğraf olmadığı için alınmadı. */
+  var V = [
+    { kat: 'Gündem', sure: '2:14', tur: 'Anlık Gelişme', baslik: 'Kademeli emeklilik taslağı Meclis komisyonunda görüşüldü', izlenme: '14,2 B', g: 'tbmm' },
+    { kat: 'Finans', sure: '1:48', tur: 'Açıklayıcı Video', baslik: 'Para Politikası Kurulu politika faizini sabit bıraktı', izlenme: '21,8 B', g: 'faiz' },
+    { kat: 'Dünya', sure: '2:36', tur: 'Anlık Gelişme', baslik: 'AB dışişleri bakanları Brüksel\'de göç paketini görüştü', izlenme: '23,1 B', g: 'ab-goc' },
+    { kat: 'Spor', sure: '1:22', tur: 'Sahadan', baslik: 'Millî takımın hazırlık kampı Antalya\'da başladı', izlenme: '17,4 B', g: 'milli' },
+    { kat: 'Teknoloji', sure: '2:48', tur: 'Açıklayıcı Video', baslik: 'Yapay zekâ ile üretilen içerik için etiketleme rehberi görüşe açıldı', izlenme: '9,4 B', g: 'veri-merkezi' },
+    { kat: 'Kampüs', sure: '2:02', tur: 'Açıklayıcı Video', baslik: 'ÖSYM 2027 sınav takvimini yayımladı', izlenme: '42,7 B', g: 'osym' },
+    { kat: 'Savunma', sure: '3:10', tur: 'Sahadan', baslik: 'İnsansız deniz aracı ilk açık deniz testini tamamladı', izlenme: '15,6 B', g: 'ida' },
+    { kat: 'Dünya', sure: '2:47', tur: 'Açıklayıcı Video', baslik: 'İklim zirvesinin ikinci haftasında finansman başlığı öne çıktı', izlenme: '6,8 B', g: 'iklim' },
+    { kat: 'Kadın', sure: '1:54', tur: 'Röportaj', baslik: 'Kadın kooperatiflerinin ürünleri ihracat fuarında tanıtıldı', izlenme: '5,4 B', g: 'kadin-girisim' },
+    { kat: 'Spor', sure: '4:12', tur: 'Açıklayıcı Video', baslik: 'Süper Lig\'de 13. haftanın özeti', izlenme: '28,1 B', g: 'superlig' },
+    { kat: 'Gündem', sure: '2:25', tur: 'Röportaj', baslik: 'Deprem bölgesinde kalıcı konut teslimleri sürüyor', izlenme: '10,3 B', g: 'konteyner' }
+  ];
+  /* süzgeç şeridi: DADAHABER-10 §4 */
+  var KAT = [['Tümü', ''], ['Gündem', 'gundem'], ['Finans', 'finans'], ['Spor', 'spor'], ['Dünya', 'dunya'], ['Kadın', 'kadin'], ['Savunma', 'savunma'], ['Kampüs', 'kampus'], ['Teknoloji', 'teknoloji']];
+  var kq = Q.get('kategori') || (DUR === 'bos' ? 'teknoloji' : ''), sec = 0;
+  KAT.forEach(function(k, i){ if (k[1] === kq) sec = i; });
+  var secAd = KAT[sec][0], X = sec ? V.filter(function(v){ return v.kat === secAd; }) : V;
+  var YOL = 'ekranlar/icerik/video.html';
+
+  function kart(v){ var h = K.kartVideo(v, { tur: v.tur }); return v.kat === 'Teknoloji' ? h.replace('fa-newspaper"></i>Teknoloji', 'fa-microchip"></i>Teknoloji') : h; }
+  function isk(w, h, c){ return '<i class="k-isk' + (c ? ' ' + c : '') + '" style="width:' + w + ';height:' + h + 'px"></i>'; }
+  var cipler = '<div class="k-cip-satiri"><div class="k-ray s8" data-tek role="group" aria-label="Kategori">' + KAT.map(function(k, i){
+    return K.cip(k[0], { secili: i === sec, attr: 'data-href="' + K.u(YOL, k[1] ? 'kategori=' + k[1] : '') + '"' }); }).join('') + '</div></div>';
+  var kapak = '<header class="k-kapak" style="background-image:' + G('kar-sokak') + '"><h1>Video Haber</h1><p>Gündemin kısa ve kaynaklı videoları</p></header>';
+
+  var liste = '';
+  if (DUR === 'bos') liste = K.bos({ ikon: 'fa-circle-play', baslik: 'Bu kategoride video yok', aciklama: secAd + ' için yeni video yayımlanınca burada görünür.', eylem: { metin: 'Tümü\'ne dön', tur: 'sade', href: K.u(YOL) } });
+  else {
+    liste = '<div class="vl">';
+    X.forEach(function(v, i){
+      liste += kart(v);
+      /* Tümü'nde dördüncü videodan sonra Akış rayı (dikey kısa videolar) */
+      if (!sec && i === 3) liste += '</div><section class="k-bl sik">' + K.bb({ baslik: 'Kısa Videolar', ikon: 'fa-mobile-screen-button', baglanti: { metin: 'Akış\'a geç', href: K.git('akis') } }) + K.ray(D.akis.liste.map(K.kartAkis).join('')) + '</section><div class="vl">';
+    });
+    liste += '</div>';
+    if (DUR === 'daha-fazla') liste += '<div class="k-ic">' + (HAL === 'son' || HAL === 'hata' ? K.dahaFazla(HAL) : '<div class="k-bl sik">' + isk('100%', 196, 'kontrol') + '</div>' + K.dahaFazla('yukleniyor')) + '</div>';
+  }
+
+  var DUZ = DUR === 'hata' || (DUR === 'cevrimdisi' && Q.get('onbellek') === '0');
+  if (DUR === 'yukleniyor') {
+    var kartIsk = '<div class="k-isk-grup">' + isk('100%', 196, 'kontrol') + isk('46%', 12) + isk('100%', 17) + isk('72%', 17) + '</div>';
+    e.innerHTML = isk('100%', 224, '', '') + '<div class="k-yaprak"><div class="k-ray s8 i-r">' + isk('64px', 36) + isk('76px', 36) + isk('62px', 36) + isk('58px', 36) + isk('64px', 36) + '</div>' +
+      '<div class="vl" role="status" aria-label="Yükleniyor">' + kartIsk + kartIsk + '</div></div><div class="k-son"></div>';
+  } else if (DUZ) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: DUR === 'cevrimdisi' ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') }) + '<div class="k-son"></div>';
+  else e.innerHTML = (DUR === 'yenileniyor' ? '<div class="k-ust-bosluk"></div>' + K.yenile(['cekiliyor', 'birak', 'bitti'].indexOf(HAL) > -1 ? HAL : 'yenileniyor') : '') +
+    kapak + '<div class="k-yaprak">' + cipler + liste + '<div class="k-son"></div></div>';
+
+  if (DUZ) K.ustCubuk({ geri: true, baslik: 'Video Haber', eylemler: ['ara'] });
+  else K.ustCubuk({ tur: 'foto', geri: true, baslik: 'Video Haber', gorsel: 'kar-sokak', eylemler: ['ara'], dar: DUR === 'yenileniyor' });
+  K.altCubuk('bolum');
+  K.oynatici();
+
+  /* seçili çip görünür yere kayar */
+  var sc = e.querySelector('.k-cip-satiri .k-cip[aria-pressed="true"]');
+  if (sc && sec > 0) sc.parentNode.scrollLeft = sc.offsetLeft - 16;
+  if (DUR === 'daha-fazla' && !TAM) e.scrollTop = e.scrollHeight;
+  if (DUR === 'cevrimdisi' && !DUZ) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  /* Yeniden dene: düğmede gösterge, sonra hal kalkar */
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'hal', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

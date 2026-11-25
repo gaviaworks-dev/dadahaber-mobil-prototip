@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Podcast · Ekonomi Masası</title>
+<!-- Dada Haber Mobil · PODCAST PROGRAMI / SERİ (E-207–E-214). Liste kökünden: görselli başlık (program kapağı, ad, konu) + içerik paneli: periyot rozeti, açıklama,
+     Takip et (misafirde giriş tetik paneli), bölümler (yeni önce; oynat · kaldığın yer). Bölümü oynatmak Spiker'ı duraklatır (K.spikerDurdur).
+     Sorgu: ?program=ekonomi-masasi (varsayılan) | gundem-odasi | teknoloji-sohbetleri | saha-ve-tribun | strateji-ve-savunma-masasi | kultur-ajandasi | kampus-ve-gelecek
+            · ?uye=0 · ?durum=yukleniyor | yenileniyor (&hal=…) | daha-fazla (&hal=son|hata) | bos (ilk bölüm yakında) | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0) · ?tema=koyu
+     Veri: public podcast-detay.html "Diğer bölümler" (Ekonomi Masası 44–48: tarih, süre) + podcast.html bölümleri + DADAHABER-10 §4. Alt çubukta Dinle seçili (varsayım). -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* yerleşim: program bilgisi */
+.pi{padding:var(--b-16) var(--kenar) 0}
+.pi p{margin-top:var(--b-12);font-size:15px;line-height:1.5;color:var(--metin-2)}
+.pi .k-btn-grup{margin-top:var(--b-16)}
+/* iskelet yerleşimi (yalnız ölçek değişkenleri) */
+.i-r{padding-top:var(--b-12);padding-bottom:var(--b-12)}
+.i-s{display:flex;gap:var(--b-12);padding:var(--b-12) 0}
+.i-m16{margin-top:var(--b-16)}
+.i-m24{margin-top:var(--b-24)}
+.i-o{display:flex;justify-content:center;margin-top:var(--b-24)}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var Q = K.q, DUR = K.durum, HAL = Q.get('hal'), e = document.getElementById('ekran'), TAM = document.documentElement.classList.contains('tam');
+  var PER = { haftalik: ['Haftalık', 'fa-calendar-week', 'Her hafta yeni bölüm'], aylik: ['Aylık Dosya', 'fa-folder-open', 'Ayda bir kapsamlı dosya'], ozel: ['Özel Seri', 'fa-star', 'Dönemlik mini seri'] };
+  /* kaynak: DADAHABER-10 §4 (program, periyot, konu) · bölümler public podcast.html ve podcast-detay.html */
+  var P = {
+    'gundem-odasi': { ad: 'Gündem Odası', per: 'haftalik', g: 'tbmm', ac: 'Haftanın siyasi ve toplumsal özeti', B: [['40. bölüm', 'Deprem bölgesinde üçüncü kış', '51:47', 'Sibel Arslan'], ['27. bölüm', 'Brüksel\'deki göç pazarlığının arka planı', '41:20', 'Zeynep Ak']] },
+    'ekonomi-masasi': { ad: 'Ekonomi Masası', per: 'haftalik', g: 'carsi', ac: 'Piyasalar, enflasyon, kişisel finans',
+      B: [['48. bölüm', 'Kira sözleşmesi yenilerken kiracı ve ev sahibi neye dikkat etmeli?', '32 dk', '22 Kas'], ['47. bölüm', 'Asgari ücret masasında bu yıl neler konuşulacak?', '29 dk', '15 Kas'],
+        ['46. bölüm', 'Kredi kartı borcunu yönetmenin yolları', '34 dk', '8 Kas'], ['45. bölüm', 'Emeklilikte bireysel birikim ne kadar önemli?', '31 dk', '1 Kas'],
+        ['44. bölüm', 'Altın mı, mevduat mı? Birikimde risk dengesi', '36 dk', '25 Eki'], ['42. bölüm', 'Enflasyon sepetinde bu ay ne değişti?', '48:12', 'Prof. Dr. Elif Aydın']] },
+    'teknoloji-sohbetleri': { ad: 'Teknoloji Sohbetleri', per: 'haftalik', g: 'veri-merkezi', ac: 'Yapay zekâ, dijital kültür, bilim', B: [['41. bölüm', 'Yapay zekâ haber odasına girerse', '36:05', 'Kerem Aksoy']] },
+    'saha-ve-tribun': { ad: 'Saha ve Tribün', per: 'haftalik', g: 'superlig', ac: 'Lig analizi, spor gündemi', B: [['39. bölüm', 'Süper Lig\'de devre arası hesapları', '29:33', 'Murat Tekin']] },
+    'strateji-ve-savunma-masasi': { ad: 'Strateji ve Savunma Masası', per: 'aylik', g: 'kaan', ac: 'Savunma projeleri, jeopolitik, güvenlik', B: [['22. bölüm', 'Yerli hava savunma sistemlerinde son durum', '45:16', 'Mert Yalın']] },
+    'kultur-ajandasi': { ad: 'Kültür Ajandası', per: 'aylik', g: 'akm', ac: 'Sinema, kitap, sergi, şehir kültürü', B: [['9. bölüm', 'Kasım ajandası: sinema, kitap ve sergi seçkisi', '34:10', 'Nilay Ersoy']] },
+    'kampus-ve-gelecek': { ad: 'Kampüs ve Gelecek', per: 'ozel', g: 'kulup', ac: 'Sınav dönemleri, kariyer, burs, gençlik gündemi', B: [['18. bölüm', 'Üniversite tercihinde bölüm mü şehir mi', '33:48', 'Selin Koç']] }
+  };
+  var kod = P[Q.get('program')] ? Q.get('program') : 'ekonomi-masasi', PR = P[kod], r = PER[PR.per];
+  var X = PR.B.map(function(b){ return { seri: PR.ad, no: b[0], baslik: b[1], sure: b[2], konuk: b[3], g: PR.g }; });
+  function isk(w, h, c){ return '<i class="k-isk' + (c ? ' ' + c : '') + '" style="width:' + w + ';height:' + h + 'px"></i>'; }
+
+  var kapak = '<header class="k-kapak" style="background-image:' + G(PR.g) + '"><h1>' + PR.ad + '</h1><p>Podcast · ' + r[0] + ' · ' + X.length + ' bölüm</p></header>';
+  var takip = K.uye ? K.btn({ metin: 'Takip et', ikon: 'fa-plus', tur: 'birincil', attr: 'data-takip' }) : K.btn({ metin: 'Takip et', ikon: 'fa-plus', tur: 'birincil', attr: 'data-sayfa="tetik" data-eylem="takip"' });
+  var bilgi = '<div class="pi">' + K.etiket(r[0] + ' · ' + r[2], { tur: 'sari', ikon: r[1] }) + '<p>Konular: ' + PR.ac.charAt(0).toLocaleLowerCase('tr') + PR.ac.slice(1) + '.</p>' +
+    '<div class="k-btn-grup">' + takip + K.btn({ metin: 'Paylaş', ikon: 'fa-share-nodes', tur: 'sade', attr: 'data-sayfa="paylas"' }) + '</div></div>';
+  var govde;
+  if (DUR === 'bos') govde = K.bos({ ikon: 'fa-podcast', baslik: 'İlk bölüm yakında', aciklama: 'Programı takip et; yeni bölüm yayımlanınca haber verelim.' });
+  else {
+    govde = '<section class="k-bl">' + K.bb({ baslik: 'Bölümler', ikon: 'fa-headphones', sayi: X.length, not: 'Yeni önce' }) + '<div class="k-satirlar">' + X.map(function(b, i){ return K.podcastSatir(b, { ilerleme: i === 1 && K.uye ? 64 : null }); }).join('') + '</div>';
+    if (DUR === 'daha-fazla') govde += '<div class="k-ic">' + K.dahaFazla(HAL === 'son' || HAL === 'hata' ? HAL : 'yukleniyor') + '</div>';
+    govde += '</section>';
+  }
+  var DUZ = DUR === 'hata' || (DUR === 'cevrimdisi' && Q.get('onbellek') === '0');
+  if (DUR === 'yukleniyor') {
+    var rs = '<div class="i-s">' + isk('64px', 64) + '<div class="k-isk-grup" style="flex:1">' + isk('40%', 11) + isk('100%', 15) + isk('50%', 11) + '</div></div>';
+    e.innerHTML = isk('100%', 224) + '<div class="k-yaprak" role="status" aria-label="Yükleniyor"><div class="pi"><div class="k-isk-grup">' + isk('46%', 24) + isk('100%', 15) + isk('80%', 15) + '</div><div class="k-btn-grup">' + isk('100%', 48, 'kontrol') + isk('100%', 48, 'kontrol') + '</div></div>' +
+      '<div class="k-satirlar k-bl">' + rs + rs + rs + '</div></div><div class="k-son"></div>';
+  } else if (DUZ) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: DUR === 'cevrimdisi' ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') }) + '<div class="k-son"></div>';
+  else e.innerHTML = (DUR === 'yenileniyor' ? '<div class="k-ust-bosluk"></div>' + K.yenile(['cekiliyor', 'birak', 'bitti'].indexOf(HAL) > -1 ? HAL : 'yenileniyor') : '') +
+    kapak + '<div class="k-yaprak">' + bilgi + govde + '<div class="k-son"></div></div>';
+
+  if (DUZ) K.ustCubuk({ geri: true, baslik: PR.ad });
+  else K.ustCubuk({ tur: 'foto', geri: true, baslik: PR.ad, gorsel: PR.g, eylemler: ['ara'], dar: DUR === 'yenileniyor' });
+  K.altCubuk('dinle');
+  K.oynatici();
+  [].forEach.call(e.querySelectorAll('.k-pd-satir > .k-ikon'), function(b){ b.removeAttribute('data-spiker'); b.setAttribute('data-pd', ''); });
+  if (DUR === 'daha-fazla' && !TAM) e.scrollTop = e.scrollHeight;
+  if (DUR === 'cevrimdisi' && !DUZ) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'İndirilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){
+    var p = ev.target.closest('[data-pd]');
+    if (p) { ev.preventDefault(); var cal = !p.querySelector('.fa-pause');
+      [].forEach.call(e.querySelectorAll('[data-pd]'), function(x){ x.innerHTML = K.I('fa-play'); x.setAttribute('aria-label', 'Oynat'); });
+      if (cal) { p.innerHTML = K.I('fa-pause'); p.setAttribute('aria-label', 'Duraklat'); K.spikerDurdur(); } return; }
+    var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'hal', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

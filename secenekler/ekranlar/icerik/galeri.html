@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Foto Fokus · Ankara'da ilk kar</title>
+<!-- Dada Haber Mobil · GALERİ / FOTO FOKUS DETAYI (E-156–E-162). Detay kökünden: albüm kapağı (detay kapağı; dokununca görüntüleyici), içerik paneli:
+     bilgi satırı, açıklama, "Galeriyi aç", ilk kare + altyazısı, metin, diğer galeriler, yorumlar. Tam ekran görüntüleyici K.goruntuleyici (sayaç, altyazı, dokun → arayüz gizlenir, aşağı çek kapat).
+     DÜRÜST TEK KARE: veride albümün yalnız kapağı ve 1. karenin altyazısı var (public foto-fokus-detay.html); öteki 23 kare uydurulmadı, görüntüleyici "1 / 24" ile ilk kareyi gösterir.
+     Sorgu: ?durum=goruntule | yakinlastir | yukleniyor | hata (&hata=zaman-asimi) | bulunamadi | cevrimdisi (&onbellek=0) · ?uye=0 · ?tema=koyu -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* yerleşim */
+.gy{padding:var(--b-24) var(--kenar) 0}
+.gy .k-spot{margin-top:var(--b-16)}
+.gy>.k-btn{margin-top:var(--b-24)}
+.gray .k-kart-g{width:232px}
+.k-kapak{cursor:zoom-in}
+/* KİT ADAYI (düzeltme): görüntüleyici yakınlaşınca görsel çerçeveden taşmasın */
+.k-goruntuleyici{overflow:hidden}
+.k-kapak .k-kat{align-self:flex-start}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var Q = K.q, DUR = K.durum, e = document.getElementById('ekran');
+  /* kaynak: public foto-fokus-detay.html */
+  var GA = { baslik: D.fotoFokus[0].baslik, adet: 24, g: 'ankara-kar', tema: 'Şehir', yazar: 'Nilay Ersoy', unvan: 'Kültür Muhabiri', tarih: '22 Kas · 12.30', yer: 'Ankara',
+    spot: 'Mevsimin ilk kar yağışı Ankara\'da gece saatlerinde başladı. Kızılay\'dan Hamamönü\'ne, Gençlik Parkı\'ndan Eymir Gölü\'ne kadar şehrin karla geçen ilk gününü fotoğrafladık.',
+    kare1: '<b>Kızılay, sabah 07.40.</b> Gece başlayan kar yağışı sabah saatlerinde kent merkezini beyaza bürüdü; belediye ekipleri ana caddelerde tuzlama çalışmasına erken saatte başladı.',
+    kaynak: 'Fotoğraf: Dada Haber · Ankara',
+    metin: ['Meteoroloji Genel Müdürlüğünün uyarısının ardından gece yarısından sonra başlayan kar yağışı, sabah saatlerinde Ankara\'nın merkez ilçelerinde 8 santimetreye ulaştı. Galeride kentin farklı noktalarında sabahın erken saatlerinden akşama kadar çekilen 24 fotoğraf yer alıyor.',
+      'Ankara Büyükşehir Belediyesi, kar mücadelesi için 600 aracın sahada olduğunu açıkladı. Valilik ise yağışın öğle saatlerinden sonra zayıflaması beklendiği için eğitime ara verilmediğini duyurdu.',
+      'Fotoğrafların tamamı Dada Haber foto muhabirleri tarafından çekildi; kişilerin yüzü görünen karelerde izin alındı.'],
+    diger: [ { baslik: 'Depremin ikinci yılında Hatay: sokak sokak', adet: 31, g: 'konteyner' }, D.fotoFokus[1], D.fotoFokus[2], { baslik: 'Kirazlı–Halkalı metrosunda son hazırlıklar', adet: 22, g: 'metro' } ],
+    yorumlar: [ { ad: 'Hande Yurt', rozet: 'Düzenli okur', zaman: '1 gün önce', metin: 'Hamamönü karesi çok güzel. Altyazıda saatin yazması fotoğrafları sırayla takip etmeyi kolaylaştırıyor.', begeni: 17 },
+      { ad: 'Volkan Erdem', rozet: 'Okur', zaman: '20 saat önce', metin: 'Eymir Gölü fotoğraflarından daha fazlası olsa iyi olurdu.', begeni: 4 },
+      { ad: 'Dada Haber Editör', rozet: 'Editör', zaman: '18 saat önce', metin: 'Teşekkürler. Hafta sonu Eymir ve Mogan çevresinden ayrı bir galeri hazırlıyoruz.', begeni: 3 } ] };
+
+  var kapak = '<header class="k-kapak detay" style="background-image:' + G(GA.g) + '" data-gal role="button" aria-label="Galeriyi tam ekran aç">' + K.katEt('Foto Fokus', 'fa-camera', { foto: true, ek: GA.tema }) + '<h1>' + GA.baslik + '</h1>' +
+    '<div class="k-imza">' + K.avatar(GA.yazar) + '<span class="t"><b>' + GA.yazar + '</b><small>' + GA.unvan + '</small></span></div></header>';
+  var govde = '<div class="k-yaprak"><div class="gy"><div class="k-zamansatir"><span>' + K.I('fa-calendar-day') + GA.tarih + '</span><span>' + K.I('fa-images') + GA.adet + ' kare</span><span>' + K.I('fa-location-dot') + GA.yer + '</span></div>' +
+    '<p class="k-spot">' + GA.spot + '</p>' + K.btn({ metin: 'Galeriyi aç · ' + GA.adet + ' kare', ikon: 'fa-images', tur: 'birincil', boy: 'buyuk', tam: true, attr: 'data-gal' }) + '</div>' +
+    '<div class="k-ic k-bl sik"><div class="k-govde"><figure><div class="gr" style="background-image:' + G(GA.g) + '" data-gal role="button" aria-label="1. kareyi tam ekran aç"></div><figcaption><p>1 / ' + GA.adet + ' · ' + GA.kare1 + ' ' + GA.kaynak + '</p></figcaption></figure>' +
+    GA.metin.map(function(p){ return '<p>' + p + '</p>'; }).join('') + '</div></div>' +
+    '<section class="k-bl sik">' + K.bb({ baslik: 'Diğer Galeriler', ikon: 'fa-camera', baglanti: { metin: 'Foto Fokus', href: K.git('fotoFokus') } }) + K.ray(GA.diger.map(K.kartGaleri).join(''), 'gray') + '</section>' +
+    '<section class="k-bl k-ic">' + K.yorumlar({ Y: GA.yorumlar }) + '</section><div class="k-son yalin"></div></div>';
+
+  var DUZ = DUR === 'hata' || DUR === 'bulunamadi' || (DUR === 'cevrimdisi' && Q.get('onbellek') === '0');
+  if (DUR === 'yukleniyor') e.innerHTML = K.iskelet('detay') + '<div class="k-son yalin"></div>';
+  else if (DUZ) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: DUR === 'bulunamadi' ? 'bulunamadi' : DUR === 'cevrimdisi' ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') }) + '<div class="k-son yalin"></div>';
+  else e.innerHTML = kapak + govde;
+
+  if (DUZ) K.ustCubuk({ geri: true, baslik: 'Foto Fokus' });
+  else K.ustCubuk({ tur: 'foto', geri: true, baslik: 'Foto Fokus', gorsel: GA.g, eylemler: ['kaydet', 'paylas'] });
+
+  function ac(){ return K.goruntuleyici({ g: GA.g, altyazi: GA.kare1 + '<small>' + GA.kaynak + '</small>', sira: 1, toplam: GA.adet }); }
+  if (DUR === 'goruntule') ac();
+  if (DUR === 'yakinlastir') ac().classList.add('is-yakin');
+  if (DUR === 'cevrimdisi' && !DUZ) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){
+    if (ev.target.closest('[data-gal]') && !ev.target.closest('.k-ub')) { ev.preventDefault(); ac(); return; }
+    var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

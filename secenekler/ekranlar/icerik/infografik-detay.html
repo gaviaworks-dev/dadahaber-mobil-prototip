@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>İnfografik · Aylık enflasyon</title>
+<!-- Dada Haber Mobil · İNFOGRAFİK DETAYI (E-170–E-175). Detay kökünden: düz üst çubuk (geri · Kaydet · Paylaş), önce infografiğin kendisi (dokununca tam ekran görüntüleyici,
+     galeriyle ortak K.goruntuleyici; yakınlaştırınca arayüz gizlenir), sonra başlık + imza + bilgi satırı, zorunlu veri künyesi (kaynak + dönem; DADAHABER-10 §5),
+     metin, grafiğin verisi (tablo), kaynaklar, diğer infografikler.
+     Sorgu: ?durum=yakinlastir | yukleniyor | hata (&hata=zaman-asimi) | bulunamadi | cevrimdisi (&onbellek=0) · ?uye=0 · ?tema=koyu
+     Veri: public infografik-detay.html (başlık, açıklama, Elif Aras, 22 Kasım 2026, TÜİK, 1 dk, 11,2 B, metin, veri tablosu, kaynaklar, "Diğer İnfografikler").
+     Grafik görseli olmadığı için tablodaki veriden çizildi (uydurma değer yok). -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* KİT ADAYI: k-dbas — görselsiz detay başlığı (video-detay.html ile aynı) */
+.dbas{padding:var(--b-24) var(--kenar) 0}
+.dbas h1{margin-top:var(--b-8);font-size:24px;line-height:1.18;font-weight:var(--y-kalin);letter-spacing:-.02em}
+.dbas .k-zamansatir{margin-top:var(--b-16)}
+.dbas .k-spot{margin-top:var(--b-16)}
+.dbas .k-serit{margin-top:var(--b-16)}
+/* KİT ADAYI: k-grafik — infografik çubuk grafiği (değer etiketi, çubuk, dönem etiketi); .koyu tam ekran görüntüleyicide */
+.gf{position:relative;margin:var(--b-16) var(--kenar) 0;padding:var(--b-16);border-radius:var(--k-kontrol);background:var(--zemin-2);cursor:zoom-in}
+.k-goruntuleyici{overflow:hidden} /* KİT ADAYI (düzeltme): yakınlaşınca taşmasın */
+.gf figcaption{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13px;font-weight:var(--y-kalin);padding-right:var(--b-40)}
+.gf .k-ikon{position:absolute;right:var(--b-4);top:var(--b-4)}
+.gf-c{display:flex;align-items:flex-end;gap:var(--b-4);height:178px;margin-top:var(--b-16)}
+.gf-s{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:var(--b-4)}
+.gf-s em{font-style:normal;font-size:10.5px;font-weight:var(--y-kalin);font-variant-numeric:tabular-nums;color:var(--metin-2)}
+.gf-s i{width:100%;border-radius:var(--k-ic) var(--k-ic) 0 0;background:var(--metin-3);opacity:.35}
+.gf-s.on i{background:var(--marka);opacity:1}
+.gf-s b{font-size:10.5px;font-weight:var(--y-orta);color:var(--metin-3)}
+.gf small{display:block;margin-top:var(--b-12);font-size:11.5px;color:var(--metin-3)}
+.gf.koyu{margin:0;background:transparent;color:#fff;cursor:default}
+.gf.koyu .gf-s em{color:rgba(255,255,255,.85)}
+.gf.koyu .gf-s b,.gf.koyu small{color:rgba(255,255,255,.6)}
+.gf.koyu .gf-s i{background:#fff;opacity:.3}
+.gf.koyu .gf-s.on i{background:var(--marka);opacity:1}
+.gf.koyu .gf-c{height:150px}
+/* KİT ADAYI: k-veri-kart (infografik.html ile aynı önizleme kartı) */
+.ik-k{display:block;width:200px}
+.ik-t{display:flex;flex-direction:column;aspect-ratio:1/1;padding:var(--b-12);border-radius:var(--k-kontrol);background:var(--zemin-2);overflow:hidden}
+.ik-t small{font-size:11px;font-weight:var(--y-kalin);letter-spacing:.06em;color:var(--marka-metin);white-space:nowrap}
+.ik-t b{margin-top:var(--b-8);font-size:30px;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.ik-t .bi{margin-top:var(--b-4);font-size:12.5px;color:var(--metin-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ik-g{margin-top:auto;display:flex;align-items:flex-end;gap:var(--b-4);height:44px}
+.ik-g i{flex:1;min-height:4px;border-radius:var(--k-ic) var(--k-ic) 0 0;background:var(--metin-3);opacity:.3}
+.ik-g i.on{background:var(--marka);opacity:1}
+.ik-k h3{margin-top:var(--b-12);font-size:15.5px;line-height:1.28;font-weight:var(--y-kalin);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.k-goruntuleyici .gr.veri{background:none;height:300px;padding:0 var(--kenar)}
+/* iskelet yerleşimi (yalnız ölçek değişkenleri) */
+.i-r{padding-top:var(--b-12);padding-bottom:var(--b-12)}
+.i-s{display:flex;gap:var(--b-12);padding:var(--b-12) 0}
+.i-m16{margin-top:var(--b-16)}
+.i-m24{margin-top:var(--b-24)}
+.i-o{display:flex;justify-content:center;margin-top:var(--b-24)}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var Q = K.q, DUR = K.durum, e = document.getElementById('ekran');
+  /* kaynak: public infografik-detay.html */
+  var IN = { kat: 'Finans', baslik: 'Aylık enflasyonun son on aylık seyri', yazar: 'Elif Aras', unvan: 'Finans Editörü', tarih: '22 Kas', sure: '1 dk', kaynak: 'TÜİK', donem: 'Ocak–Ekim 2026',
+    spot: 'Türkiye İstatistik Kurumu verilerine göre aylık enflasyon ocakta yüzde 4,12 ile yılın en yüksek düzeyinde gerçekleşti, ekimde yüzde 1,87\'ye geriledi. On ayın verisini tek grafikte topladık.',
+    altyazi: '<b>Aylık enflasyon, Ocak-Ekim 2026.</b> Tüketici fiyatlarındaki aylık değişim yılın ilk aylarında yüzde 3 düzeyinin üzerinde seyretti, yaz aylarından itibaren yüzde 2 bandına geriledi.',
+    metin: ['Grafik, Ocak-Ekim 2026 döneminde tüketici fiyat endeksindeki aylık değişimi ve yıllık enflasyonun seyrini birlikte gösteriyor. Yıllık enflasyon ocaktaki yüzde 41,9 düzeyinden ekimde yüzde 30,8\'e geriledi.',
+      'Temmuzdaki yükselişte yönetilen fiyat ayarlamalarının etkisi belirleyici oldu. Kasım ayı verisi 3 Aralık\'ta açıklanacak; grafik o tarihte güncellenecek.'],
+    veri: [['Ocak', '4,12', '41,9'], ['Şubat', '3,05', '40,6'], ['Mart', '2,88', '39,1'], ['Nisan', '2,96', '37,8'], ['Mayıs', '2,41', '36,2'], ['Haziran', '1,94', '34,7'], ['Temmuz', '2,58', '33,5'], ['Ağustos', '2,03', '32,4'], ['Eylül', '2,21', '31,6'], ['Ekim', '1,87', '30,8']],
+    kaynaklar: [ { kurum: 'Türkiye İstatistik Kurumu', aciklama: 'Tüketici Fiyat Endeksi, Ekim 2026 haber bülteni' },
+      { kurum: 'Türkiye Cumhuriyet Merkez Bankası', aciklama: 'Piyasa Katılımcıları Anketi, Kasım 2026' },
+      { kurum: 'TÜİK Ulusal Veri Yayımlama Takvimi', aciklama: 'Kasım 2026 enflasyon verisinin açıklanma tarihi' } ],
+    /* "Diğer İnfografikler" (public; havalimanı yolcu kartında seri yok, alınmadı) */
+    diger: [ { et: 'İşsizlik', baslik: 'Büyükşehirlerde işsizlik oranları', kaynak: 'TÜİK', donem: '22 Kas', deger: '%8,6', bi: 'Türkiye · en yüksek İzmir %10,2', s: [10.2, 9.1, 8.4, 7.5, 6.8], v: 0 },
+      { et: 'Bütçe', baslik: 'Merkezi yönetim bütçesinde harcama kalemleri', kaynak: 'HMB', donem: '2026', deger: '%22', bi: 'Eğitim · sağlık %15', s: [22, 15], v: 0 },
+      { et: 'Konut', baslik: 'Konut satışlarının on yıllık görünümü', kaynak: 'TÜİK', donem: '2016–2025', deger: '1,48 mn', bi: '2025 · 2016\'da 1,29 mn', s: [1.29, 1.48], v: 1 } ] };
+
+  function grafik(koyu){ var mx = 4.12;
+    return '<figure class="gf' + (koyu ? ' koyu' : '') + '"' + (koyu ? '' : ' data-buyut') + '><figcaption>Aylık enflasyon (%) · ' + IN.donem + '</figcaption>' +
+      (koyu ? '' : K.ikonBtn({ ikon: 'fa-expand', etiket: 'Tam ekran', attr: 'data-buyut' })) +
+      '<div class="gf-c">' + IN.veri.map(function(r, i){ var v = parseFloat(r[1].replace(',', '.'));
+        return '<span class="gf-s' + (i === IN.veri.length - 1 ? ' on' : '') + '"><em>' + r[1] + '</em><i style="height:' + Math.round(v / mx * (koyu ? 110 : 136)) + 'px"></i><b>' + r[0].slice(0, 3) + '</b></span>'; }).join('') + '</div>' +
+      '<small>Veri: ' + IN.kaynak + ' · Grafik: Dada Haber</small></figure>'; }
+  function kart(x){ var mx = Math.max.apply(null, x.s);
+    return '<a class="ik-k" href="' + location.pathname + location.search + '"><div class="ik-t"><small>' + x.et.toLocaleUpperCase('tr') + '</small><b>' + x.deger + '</b><span class="bi">' + x.bi + '</span><span class="ik-g" aria-hidden="true">' +
+      x.s.map(function(s, i){ return '<i' + (i === x.v ? ' class="on"' : '') + ' style="height:' + Math.round(s / mx * 100) + '%"></i>'; }).join('') + '</span></div><h3>' + x.baslik + '</h3>' + K.meta(['Kaynak: ' + x.kaynak, x.donem]) + '</a>'; }
+  function isk(w, h, c){ return '<i class="k-isk' + (c ? ' ' + c : '') + '" style="width:' + w + ';height:' + h + 'px"></i>'; }
+
+  var sayfa = '<div class="k-ust-bosluk"></div>' + grafik() +
+    '<div class="dbas">' + K.ustSatir({ kat: IN.kat, tur: 'İnfografik' }) + '<h1>' + IN.baslik + '</h1>' +
+      '<div class="k-imza">' + K.avatar(IN.yazar) + '<span class="t"><b>' + IN.yazar + '</b><small>' + IN.unvan + '</small></span></div>' +
+      '<div class="k-zamansatir"><span>' + K.I('fa-calendar-day') + IN.tarih + '</span><span>' + K.I('fa-clock') + IN.sure + '</span><span>' + K.I('fa-eye') + '11,2 B</span></div>' +
+      K.serit({ ikon: 'fa-database', metin: 'Kaynak: ' + IN.kaynak + ' · ' + IN.donem, alt: 'Son güncelleme 3 Kasım 2026 · Kasım verisi 3 Aralık\'ta' }) +
+      '<p class="k-spot">' + IN.spot + '</p></div>' +
+    '<div class="k-ic k-bl sik"><div class="k-govde">' + IN.metin.map(function(p){ return '<p>' + p + '</p>'; }).join('') + '</div></div>' +
+    '<section>' + K.bb({ baslik: 'Grafiğin Verisi', ikon: 'fa-table' }) + '<div class="k-ic">' + K.tablo({ sutunlar: ['Ay', 'Aylık değişim (%)', 'Yıllık değişim (%)'], satirlar: IN.veri, vurgu: IN.veri.length - 1, cls: 'sol' }) +
+      '<p class="k-not">' + K.I('fa-circle-info') + 'Tüketici Fiyat Endeksi (2003=100) · Kaynak: TÜİK, Ekim 2026 bülteni</p></div></section>' +
+    '<section class="k-bl">' + K.kaynaklar(IN.kaynaklar) + '</section>' +
+    '<section class="k-bl">' + K.bb({ baslik: 'Diğer İnfografikler', ikon: 'fa-chart-pie', baglanti: { metin: 'Tümü', href: K.git('infografik') } }) + K.ray(IN.diger.map(kart).join('')) + '</section><div class="k-son yalin"></div>';
+
+  var DUZ = DUR === 'hata' || DUR === 'bulunamadi' || (DUR === 'cevrimdisi' && Q.get('onbellek') === '0');
+  if (DUR === 'yukleniyor') e.innerHTML = '<div class="k-ust-bosluk"></div><div class="k-ic" role="status" aria-label="Yükleniyor" style="padding-top:var(--b-16)">' + isk('100%', 262, 'kontrol') +
+    '<div class="k-isk-grup i-m24">' + isk('40%', 12) + isk('100%', 22) + isk('80%', 22) + '</div><div class="k-isk-grup i-m24">' + isk('100%', 16) + isk('100%', 16) + isk('62%', 16) + '</div></div>';
+  else if (DUZ) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: DUR === 'bulunamadi' ? 'bulunamadi' : DUR === 'cevrimdisi' ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') }) + '<div class="k-son yalin"></div>';
+  else e.innerHTML = sayfa;
+  K.ustCubuk({ geri: true, baslik: 'İnfografik', eylemler: DUZ ? [] : ['kaydet', 'paylas'] });
+
+  /* tam ekran görüntüleyici (galeriyle ortak): görsel yerine çizilen grafik */
+  function ac(){ var v = K.goruntuleyici({ g: '', altyazi: IN.altyazi + '<small>Veri: ' + IN.kaynak + ' · ' + IN.donem + ' · Grafik: Dada Haber</small>', sira: 1, toplam: 1 });
+    var g = v.querySelector('.gr'); g.classList.add('veri'); g.style.backgroundImage = 'none'; g.innerHTML = grafik(true); return v; }
+  if (DUR === 'yakinlastir') ac().classList.add('is-yakin');
+  if (DUR === 'cevrimdisi' && !DUZ) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){
+    if (ev.target.closest('[data-buyut]')) { ac(); return; }
+    var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

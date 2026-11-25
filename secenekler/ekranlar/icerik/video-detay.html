@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Video Haber · Asgari ücret nasıl belirleniyor?</title>
+<!-- Dada Haber Mobil · VIDEO DETAYI (E-130–E-138). Detay kökünden: düz üst çubuk (geri · Kaydet · Paylaş; K28), oynatıcı tam genişlik ve kaydırınca üst çubuğun altında yapışık,
+     başlık + imza + bilgi satırı, açıklama, Dada Özet maddeleri, metin, ilişkili haber, sıradaki videolar, kaynaklar, yorumlar.
+     Tek oynatıcı kuralı: video oynayınca Spiker duraklar (K.spikerDurdur).
+     Sorgu: ?durum=denetim (dokununca görünen denetimler) | tam-ekran (yatay; çerçevede 90° döndürülmüş) | pip (resim içinde resim; sistem davranışı)
+            | mobil-veri | yukleniyor | hata (video oynatılamadı, sayfa yerinde) | bulunamadi | cevrimdisi (&onbellek=0) · ?uye=0 · ?tema=koyu
+     Veri: public video-detay.html (başlık, açıklama, Elif Aras, 23 Kasım 10.00, 6:40, Türkçe altyazı, 38,2 B, Dada Özet, metin, sıradakiler, kaynaklar, yorumlar).
+     "Kira artışında sınır kalktı" sıradaki videosu konuya uygun fotoğraf olmadığı için alınmadı. -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* yerleşim: oynatıcı üst çubuğun altında yapışık */
+/* KİT ADAYI (düzeltme): k-video denetimleri kitte 40×40 ve kaydırıcı 32; dokunma alanı 44 olsun diye burada 44'e çekildi */
+.k-video .vu .k-ikon,.k-video .va .k-ikon{width:44px;height:44px}
+.k-video .va .k-kaydirac{height:44px}
+.vp{position:sticky;top:var(--k-ub-h);z-index:50;background:#000}
+/* KİT ADAYI: k-dbas — görselsiz detay başlığı (video, infografik): kategori/tür satırı + 24/kalın başlık; detay kapağı (.k-kapak.detay) fotoğraf gerektirdiği için */
+.dbas{padding:var(--b-16) var(--kenar) 0}
+.dbas h1{margin-top:var(--b-8);font-size:24px;line-height:1.18;font-weight:var(--y-kalin);letter-spacing:-.02em}
+.dbas .k-zamansatir{margin-top:var(--b-16)}
+.dbas .k-spot{margin-top:var(--b-16)}
+.yl{display:grid;gap:var(--b-16)}
+/* yatay tam ekran: 844×390 oynatıcı dikey çerçevede 90° döndürülür (telefon yan çevrilmiş); durum çubuğu ve ana ekran çizgisi gizli */
+.yatay-kap{position:absolute;left:0;top:0;width:844px;height:390px;transform-origin:0 0;transform:translateX(390px) rotate(90deg);background:#000}
+body.yatay .dc,body.yatay .ec{display:none}
+/* resim içinde resim: telefonun ana ekranı (koyu zemin) + sağ altta küçük pencere */
+.pip-z{position:absolute;inset:0;background:var(--k-koyu);padding:calc(var(--ust-guvenli) + var(--b-16)) var(--kenar) 0}
+.pip{position:absolute;right:var(--kenar);bottom:calc(var(--alt-guvenli) + var(--b-40));width:236px;box-shadow:var(--golge-md);border-radius:var(--k-kontrol)}
+/* iskelet yerleşimi (yalnız ölçek değişkenleri) */
+.i-r{padding-top:var(--b-12);padding-bottom:var(--b-12)}
+.i-s{display:flex;gap:var(--b-12);padding:var(--b-12) 0}
+.i-m16{margin-top:var(--b-16)}
+.i-m24{margin-top:var(--b-24)}
+.i-o{display:flex;justify-content:center;margin-top:var(--b-24)}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var Q = K.q, DUR = K.durum, e = document.getElementById('ekran');
+  /* kaynak: public video-detay.html */
+  var VD = { kat: 'Finans', tur: 'Açıklayıcı Video', baslik: 'Asgari ücret nasıl belirleniyor? Komisyonun işleyişi 6 dakikada',
+    spot: 'Asgari Ücret Tespit Komisyonu kimlerden oluşuyor, hangi verilere bakıyor, karar nasıl çıkıyor? Komisyonun işleyişini resmî belgeler üzerinden adım adım anlattık.',
+    yazar: 'Elif Aras', unvan: 'Finans Editörü', tarih: '23 Kas · 10.00', sure: '6:40', izlenme: '38,2 B', g: 'asgari',
+    ozet: ['Komisyon işçi, işveren ve hükümet tarafından beşer temsilciden oluşuyor.', 'Karar için en az 10 üyenin katılımı ve oy çokluğu gerekiyor.', 'Komisyon, hane halkı verileri ve enflasyon beklentilerini esas alıyor.'],
+    metin: ['Videoda Asgari Ücret Tespit Komisyonunun yapısını, toplantı takvimini ve kararın nasıl alındığını Asgari Ücret Yönetmeliği\'ndeki maddeler üzerinden anlatıyoruz. Komisyon her yıl aralık ayında toplanıyor ve belirlediği ücret ocak ayından itibaren uygulanıyor.',
+      'Komisyonda işçi tarafını en çok üyeye sahip konfederasyon, işveren tarafını ise işveren sendikaları konfederasyonu temsil ediyor. Hükümet tarafında Çalışma ve Sosyal Güvenlik Bakanlığı, Hazine ve Maliye Bakanlığı ile Türkiye İstatistik Kurumu temsilcileri yer alıyor.'],
+    neler: 'İlk bölümde komisyonun üyelerini, ikinci bölümde masaya gelen verileri, son bölümde ise uzlaşma sağlanamadığında kararın nasıl alındığını anlatıyoruz. Videonun Türkçe altyazısı ve deşifresi bulunuyor; sessiz ortamda da izlenebiliyor.',
+    sirada: [ { kat: 'Kampüs', baslik: 'YKS 2027 takvimi: başvurudan sonuca önemli tarihler', sure: '3:18', izlenme: '23 Kas', g: 'yks' },
+      { kat: 'Teknoloji', baslik: '5G\'ye geçiş: telefonunuz uyumlu mu, nasıl anlaşılır?', sure: '5:06', izlenme: '22 Kas', g: 'anten' },
+      { kat: 'Dünya', baslik: 'BM İklim Konferansı\'nın sonuç metni üç maddede', sure: '2:47', izlenme: '22 Kas', g: 'iklim' } ],
+    kaynaklar: [ { kurum: 'Resmî Gazete', aciklama: 'Asgari Ücret Yönetmeliği, komisyonun yapısı ve çalışma usulü' },
+      { kurum: 'Çalışma ve Sosyal Güvenlik Bakanlığı', aciklama: 'Asgari Ücret Tespit Komisyonu duyurusu · 22 Kasım 2026' },
+      { kurum: 'Türkiye İstatistik Kurumu', aciklama: 'Hane Halkı Bütçe Araştırması, 2025' } ],
+    yorumlar: [ { ad: 'Derya Kurt', rozet: 'Düzenli okur', zaman: '3 saat önce', metin: 'Komisyonda kimlerin oy kullandığını hiç bilmiyordum. Altyazı olması da iyi, işte sessiz izledim.', begeni: 19 },
+      { ad: 'Dada Haber Editör', rozet: 'Editör', zaman: '2 saat önce', metin: 'Teşekkürler. Komisyonun ilk toplantısından sonra bu videonun kısa bir güncellemesini yayımlayacağız.', begeni: 6 },
+      { ad: 'Murat Esen', rozet: 'Okur', zaman: '1 saat önce', metin: 'Uzlaşma sağlanamazsa ne olduğu kısmı net olmuş. Geçen yılki oy dağılımı da eklenebilir.', begeni: 8 } ] };
+
+  function oynatici(durum){ var h = K.video({ durum: durum, g: VD.g, sure: VD.sure, gecen: '2:14', baslik: VD.baslik }); return h; }
+  function sayfa(vdurum){
+    var ilgili = D.manset[0];
+    return '<div class="k-ust-bosluk"></div><div class="vp">' + oynatici(vdurum) + '</div>' +
+      '<div class="dbas">' + K.ustSatir({ kat: VD.kat, tur: VD.tur }) + '<h1>' + VD.baslik + '</h1>' +
+        '<div class="k-imza">' + K.avatar(VD.yazar) + '<span class="t"><b>' + VD.yazar + '</b><small>' + VD.unvan + '</small></span></div>' +
+        '<div class="k-zamansatir"><span>' + K.I('fa-calendar-day') + VD.tarih + '</span><span>' + K.I('fa-play') + VD.sure + '</span><span>' + K.I('fa-closed-captioning') + 'Türkçe altyazı</span></div>' +
+        '<p class="k-spot">' + VD.spot + '</p></div>' +
+      '<section class="k-bl sik">' + K.bb({ baslik: 'Dada Özet', ikon: 'fa-wand-magic-sparkles', not: '15 sn' }) + '<div class="k-ic">' + K.madde(VD.ozet) + '</div></section>' +
+      '<div class="k-ic k-bl sik"><div class="k-govde"><p>' + VD.metin[0] + '</p><p>' + VD.metin[1] + '</p><h2>Videoda neler var?</h2><p>' + VD.neler + '</p></div></div>' +
+      '<section>' + K.bb({ baslik: 'İlişkili Haber', ikon: 'fa-newspaper' }) + '<div class="k-satirlar">' + K.satir(ilgili, { ustSatir: true }) + '</div></section>' +
+      '<section class="k-bl">' + K.bb({ baslik: 'Sıradaki Videolar', ikon: 'fa-circle-play', sayi: VD.sirada.length }) + '<div class="k-ic yl">' +
+        VD.sirada.map(function(v){ return K.kartVideo(v, { yatay: true }); }).join('') + '</div></section>' +
+      '<section class="k-bl">' + K.kaynaklar(VD.kaynaklar) + '</section>' +
+      '<section class="k-bl k-ic">' + K.yorumlar({ Y: VD.yorumlar }) + '</section><div class="k-son yalin"></div>';
+  }
+  function isk(w, h, c){ return '<i class="k-isk' + (c ? ' ' + c : '') + '" style="width:' + w + ';height:' + h + 'px"></i>'; }
+
+  var DUZ = DUR === 'bulunamadi' || (DUR === 'cevrimdisi' && Q.get('onbellek') === '0');
+  if (DUR === 'tam-ekran') {
+    document.body.classList.add('yatay');
+    e.innerHTML = '<div class="yatay-kap" data-tam-genis>' + K.video({ durum: 'dur', yatay: true, g: VD.g, sure: VD.sure, gecen: '2:14', baslik: VD.baslik }) + '</div>';
+    pause(e.querySelector('.k-video'));
+  } else if (DUR === 'pip') {
+    document.body.setAttribute('data-durum', 'acik'); document.body.setAttribute('data-ec', 'acik');
+    e.innerHTML = '<div class="pip-z">' + K.serit({ tur: 'koyu', ikon: 'fa-mobile-screen', metin: 'Telefonun ana ekranı', alt: 'Uygulamadan çıkınca video küçük pencerede sürer. Pencere sürüklenir, kenara itilince gizlenir (iOS ve Android sistem davranışı).' }) +
+      '</div><div class="pip">' + K.video({ durum: 'oynuyor', yuvarlak: true, g: VD.g, sure: VD.sure }) + '</div>';
+  } else if (DUR === 'yukleniyor') {
+    e.innerHTML = '<div class="k-ust-bosluk"></div><div class="vp">' + oynatici('yukleniyor') + '</div><div class="dbas" role="status" aria-label="Yükleniyor"><div class="k-isk-grup">' +
+      isk('42%', 12) + isk('100%', 22) + isk('86%', 22) + '</div><div class="k-imza">' + isk('36px', 36, 'daire') + '<div class="k-isk-grup" style="flex:1">' + isk('40%', 13) + isk('28%', 11) + '</div></div>' +
+      '<div class="k-isk-grup i-m16">' + isk('100%', 16) + isk('100%', 16) + isk('62%', 16) + '</div></div><div class="k-son yalin"></div>';
+    e.querySelector('.k-video').style.backgroundImage = 'none';
+  } else if (DUZ) {
+    e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: DUR === 'bulunamadi' ? 'bulunamadi' : 'cevrimdisi' }) + '<div class="k-son yalin"></div>';
+  } else {
+    var vd = DUR === 'denetim' ? 'dur' : DUR === 'mobil-veri' ? 'mobil' : (DUR === 'hata' || DUR === 'cevrimdisi') ? 'hata' : 'oynuyor';
+    e.innerHTML = sayfa(vd);
+    if (DUR === 'denetim') pause(e.querySelector('.k-video'));
+    if (vd === 'oynuyor' || DUR === 'denetim') K.spikerDurdur(); /* tek oynatıcı: video sesi başlayınca Spiker duraklar */
+    if (DUR === 'cevrimdisi') e.querySelector('.k-video .vd small').textContent = 'Bağlantı yok. Video çevrimdışı izlenemez.';
+  }
+  /* oynuyorken dokununca görünen denetimler: oynat düğmesi duraklat olur */
+  function pause(v){ if (!v) return; var b = v.querySelector('.vo .ana'); b.innerHTML = K.I('fa-pause'); b.setAttribute('aria-label', 'Duraklat'); }
+
+  if (DUR !== 'tam-ekran' && DUR !== 'pip') K.ustCubuk({ geri: true, baslik: 'Video Haber', eylemler: DUZ ? [] : ['kaydet', 'paylas'], golgeli: true });
+  if (DUR === 'cevrimdisi' && !DUZ) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  /* oynat / duraklat: dokununca denetimler görünür, oynatınca Spiker duraklar */
+  document.addEventListener('click', function(ev){
+    var v = ev.target.closest('.k-video'); if (!v || ev.target.closest('.vu,.va,.k-atla,.vb')) return;
+    if (v.classList.contains('is-oynuyor')) { v.classList.remove('is-oynuyor'); v.classList.add('is-dur'); pause(v); return; }
+    var a = ev.target.closest('.vo .ana, .vd .k-ikon'); if (!a) return;
+    var oyn = a.querySelector('.fa-pause'); if (oyn) { a.innerHTML = K.I('fa-play'); a.setAttribute('aria-label', 'Oynat'); return; }
+    v.className = v.className.replace(/is-\S+/, 'is-oynuyor'); K.spikerDurdur();
+  });
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>İnfografik</title>
+<!-- Dada Haber Mobil · İNFOGRAFİK LİSTESİ (E-163–E-169). Liste kökünden: görselli başlık + içerik paneli, yapışkan konu süzgeci (DADAHABER-10 §4),
+     öne çıkan infografik tam genişlik, ötekiler iki sütun. İnfografiklerin fotoğrafı yok: kart, verinin kendisini gösteren önizleme (başlık rakamı + küçük grafik);
+     altında başlık ve zorunlu veri künyesi (kaynak · dönem; dönemi veride olmayanlarda yayın tarihi).
+     Sorgu: ?kategori=finans-ve-ekonomi|toplum-ve-demografi|enerji-ve-iklim|savunma-ve-teknoloji|spor|egitim-ve-kampus|dunya · ?durum=yukleniyor | yenileniyor (&hal=…)
+            | daha-fazla (&hal=son|hata) | bos (&kategori=…) | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0) · ?uye=0 · ?tema=koyu
+     Veri: public infografik.html kartları (kaynak, tarih, öne çıkan değerler) ve infografik-detay.html veri tablosu (enflasyon; listedeki "%2,1 Ekim" yerine detaydaki %1,87 kullanıldı, ikisi tutarsız).
+     Konu eşlemesi kart etiketinden (ENFLASYON → Finans ve Ekonomi …). Alt çubukta Bölümler seçili (varsayım). -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* KİT ADAYI: k-veri-kart — infografik önizleme kartı (fotoğraf yok): kutuda konu etiketi, başlık rakamı, alt bilgi, küçük çubuk grafik; altında başlık + künye.
+   Ayrıca KİT ADAYI: k-cubuk-grafik (.ik-g) — küçük dikey çubuk grafik, vurgulu çubuk marka sarısı. Yalnız değişkenler. */
+.ik-k{display:block;min-width:0}
+.ik-t{display:flex;flex-direction:column;aspect-ratio:1/1;padding:var(--b-12);border-radius:var(--k-kontrol);background:var(--zemin-2);overflow:hidden}
+.ik-t small{font-size:11px;font-weight:var(--y-kalin);letter-spacing:.06em;color:var(--marka-metin);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ik-t b{margin-top:var(--b-8);font-size:30px;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.ik-t .bi{margin-top:var(--b-4);font-size:12.5px;color:var(--metin-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ik-g{margin-top:auto;display:flex;align-items:flex-end;gap:var(--b-4);height:44px}
+.ik-g i{flex:1;min-height:4px;border-radius:var(--k-ic) var(--k-ic) 0 0;background:var(--metin-3);opacity:.3}
+.ik-g i.on{background:var(--marka);opacity:1}
+.ik-e{display:flex;justify-content:space-between;margin-top:var(--b-4);font-size:11px;color:var(--metin-3)}
+.ik-k h3{margin-top:var(--b-12);font-size:15.5px;line-height:1.28;font-weight:var(--y-kalin);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.ik-k.buyuk .ik-t{aspect-ratio:16/10;padding:var(--b-16)}
+.ik-k.buyuk .ik-t b{font-size:40px}
+.ik-k.buyuk .ik-g{height:96px;gap:var(--b-8)}
+.ik-k.buyuk h3{font-size:19px;line-height:1.24;letter-spacing:-.015em}
+/* yerleşim */
+.il{padding:var(--b-16) var(--kenar) 0}
+.ii{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--b-24) var(--b-12);padding:var(--b-24) var(--kenar) 0}
+/* iskelet yerleşimi (yalnız ölçek değişkenleri) */
+.i-r{padding-top:var(--b-12);padding-bottom:var(--b-12)}
+.i-s{display:flex;gap:var(--b-12);padding:var(--b-12) 0}
+.i-m16{margin-top:var(--b-16)}
+.i-m24{margin-top:var(--b-24)}
+.i-o{display:flex;justify-content:center;margin-top:var(--b-24)}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var Q = K.q, DUR = K.durum, HAL = Q.get('hal'), e = document.getElementById('ekran'), TAM = document.documentElement.classList.contains('tam');
+  /* kaynak: public infografik.html + infografik-detay.html (enflasyon tablosu). s = grafik serisi [etiket, değer]; v = vurgulanan sıra */
+  var IG = [
+    { konu: 'Finans ve Ekonomi', et: 'Enflasyon', baslik: 'Aylık enflasyonun son on aylık seyri', kaynak: 'TÜİK', donem: 'Ocak–Ekim 2026', deger: '%1,87', bi: 'Ekim · yıllık %30,8',
+      s: [['Oca', 4.12], ['Şub', 3.05], ['Mar', 2.88], ['Nis', 2.96], ['May', 2.41], ['Haz', 1.94], ['Tem', 2.58], ['Ağu', 2.03], ['Eyl', 2.21], ['Eki', 1.87]], v: 9 },
+    { konu: 'Toplum ve Demografi', et: 'İşsizlik', baslik: 'Büyükşehirlerde işsizlik oranları', kaynak: 'TÜİK', donem: '22 Kas', deger: '%8,6', bi: 'Türkiye · en yüksek İzmir %10,2',
+      s: [['İzmir', 10.2], ['İstanbul', 9.1], ['Ankara', 8.4], ['Antalya', 7.5], ['Bursa', 6.8]], v: 0 },
+    { konu: 'Finans ve Ekonomi', et: 'Bütçe', baslik: 'Merkezi yönetim bütçesinde harcama kalemleri', kaynak: 'HMB', donem: '2026', deger: '%22', bi: 'Eğitim · sağlık %15', s: [['Eğitim', 22], ['Sağlık', 15]], v: 0 },
+    { konu: 'Dünya', et: 'Göç', baslik: 'Dünyada zorla yerinden edilen insan sayısı', kaynak: 'BMMYK', donem: '2016–2025', deger: '123 mn', bi: '2025 · 2016\'da 65 mn', s: [['2016', 65], ['2025', 123]], v: 1 },
+    { konu: 'Savunma ve Teknoloji', et: 'Savunma', baslik: 'Savunma ve havacılık ihracatının on yıllık seyri', kaynak: 'SSB', donem: '2016–2025', deger: '7,1 mr $', bi: '2025 · 2016\'da 1,9 mr $', s: [['2016', 1.9], ['2025', 7.1]], v: 1 },
+    { konu: 'Eğitim ve Kampüs', et: 'Eğitim', baslik: 'İllere göre okul öncesi okullaşma', kaynak: 'MEB', donem: '20 Kas', deger: '%78', bi: 'Türkiye · en yüksek Ankara %86',
+      s: [['Ankara', 86], ['İzmir', 83], ['Bursa', 80], ['İstanbul', 74], ['Konya', 71]], v: 0 },
+    { konu: 'Enerji ve İklim', et: 'Enerji', baslik: 'Elektrik üretiminin kaynaklara göre dağılımı', kaynak: 'TEİAŞ', donem: '20 Kas', deger: '%35', bi: 'Kömür · doğal gaz %21', s: [['Kömür', 35], ['Doğal gaz', 21]], v: 0 },
+    { konu: 'Spor', et: 'Gol', baslik: 'Süper Lig\'de maç başına gol ortalaması', kaynak: 'TFF', donem: '2016-17 – 2025-26', deger: '2,94', bi: '2025-26 · 2016-17\'de 2,61', s: [['2016-17', 2.61], ['2025-26', 2.94]], v: 1 }
+  ];
+  var KONU = [['Tümü', ''], ['Finans ve Ekonomi', 'finans-ve-ekonomi'], ['Toplum ve Demografi', 'toplum-ve-demografi'], ['Enerji ve İklim', 'enerji-ve-iklim'], ['Savunma ve Teknoloji', 'savunma-ve-teknoloji'], ['Spor', 'spor'], ['Eğitim ve Kampüs', 'egitim-ve-kampus'], ['Dünya', 'dunya']];
+  var kq = Q.get('kategori') || (DUR === 'bos' ? 'enerji-ve-iklim' : ''), sec = 0;
+  KONU.forEach(function(k, i){ if (k[1] === kq) sec = i; });
+  var X = sec ? IG.filter(function(x){ return x.konu === KONU[sec][0]; }) : IG;
+  var YOL = 'ekranlar/icerik/infografik.html', DET = K.u('ekranlar/icerik/infografik-detay.html');
+  function isk(w, h, c){ return '<i class="k-isk' + (c ? ' ' + c : '') + '" style="width:' + w + ';height:' + h + 'px"></i>'; }
+  function kart(x, buyuk){ var mx = Math.max.apply(null, x.s.map(function(s){ return s[1]; }));
+    return '<a class="ik-k' + (buyuk ? ' buyuk' : '') + '" href="' + DET + '"><div class="ik-t"><small>' + x.et.toLocaleUpperCase('tr') + '</small><b>' + x.deger + '</b><span class="bi">' + x.bi + '</span>' +
+      '<span class="ik-g" aria-hidden="true">' + x.s.map(function(s, i){ return '<i' + (i === x.v ? ' class="on"' : '') + ' style="height:' + Math.round(s[1] / mx * 100) + '%"></i>'; }).join('') + '</span>' +
+      (buyuk ? '<span class="ik-e"><span>' + x.s[0][0] + '</span><span>' + x.s[x.s.length - 1][0] + '</span></span>' : '') + '</div>' +
+      '<h3>' + x.baslik + '</h3>' + K.meta(['Kaynak: ' + x.kaynak, x.donem]) + '</a>'; }
+
+  var cipler = '<div class="k-cip-satiri"><div class="k-ray s8" data-tek role="group" aria-label="Konu">' + KONU.map(function(k, i){
+    return K.cip(k[0], { secili: i === sec, attr: 'data-href="' + K.u(YOL, k[1] ? 'kategori=' + k[1] : '') + '"' }); }).join('') + '</div></div>';
+  var kapak = '<header class="k-kapak" style="background-image:' + G('borsa') + '"><h1>İnfografik</h1><p>Gündemi kaynaklı verilerle tek bakışta anlat</p></header>';
+  var liste;
+  if (DUR === 'bos') liste = K.bos({ ikon: 'fa-chart-pie', baslik: 'Bu konuda infografik yok', aciklama: KONU[sec][0] + ' konusunda yeni infografik yayımlanınca burada görünür.', eylem: { metin: 'Tümü\'ne dön', tur: 'sade', href: K.u(YOL) } });
+  else {
+    liste = '<div class="il">' + kart(X[0], true) + '</div>' + (X.length > 1 ? '<div class="ii">' + X.slice(1).map(function(x){ return kart(x); }).join('') + '</div>' : '');
+    if (DUR === 'daha-fazla') liste += '<div class="k-ic k-bl sik">' + (HAL === 'son' || HAL === 'hata' ? K.dahaFazla(HAL) : '<div class="ii" style="padding-left:0;padding-right:0;padding-top:0">' + isk('100%', 171, 'kontrol') + isk('100%', 171, 'kontrol') + '</div>' + K.dahaFazla('yukleniyor')) + '</div>';
+  }
+  var DUZ = DUR === 'hata' || (DUR === 'cevrimdisi' && Q.get('onbellek') === '0');
+  if (DUR === 'yukleniyor') {
+    var ki = '<div class="k-isk-grup">' + isk('100%', 171, 'kontrol') + isk('100%', 15) + isk('70%', 15) + '</div>';
+    e.innerHTML = isk('100%', 224) + '<div class="k-yaprak" role="status" aria-label="Yükleniyor"><div class="k-ray s8 i-r">' + isk('64px', 36) + isk('140px', 36) + isk('150px', 36) + '</div>' +
+      '<div class="il"><div class="k-isk-grup">' + isk('100%', 224, 'kontrol') + isk('100%', 19) + isk('60%', 19) + '</div></div><div class="ii">' + ki + ki + '</div></div><div class="k-son"></div>';
+  } else if (DUZ) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: DUR === 'cevrimdisi' ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') }) + '<div class="k-son"></div>';
+  else e.innerHTML = (DUR === 'yenileniyor' ? '<div class="k-ust-bosluk"></div>' + K.yenile(['cekiliyor', 'birak', 'bitti'].indexOf(HAL) > -1 ? HAL : 'yenileniyor') : '') +
+    kapak + '<div class="k-yaprak">' + cipler + liste + '<div class="k-son"></div></div>';
+
+  if (DUZ) K.ustCubuk({ geri: true, baslik: 'İnfografik', eylemler: ['ara'] });
+  else K.ustCubuk({ tur: 'foto', geri: true, baslik: 'İnfografik', gorsel: 'borsa', eylemler: ['ara'], dar: DUR === 'yenileniyor' });
+  K.altCubuk('bolum');
+  K.oynatici();
+  var sc = e.querySelector('.k-cip-satiri .k-cip[aria-pressed="true"]');
+  if (sc && sec > 0) sc.parentNode.scrollLeft = sc.offsetLeft - 16;
+  if (DUR === 'daha-fazla' && !TAM) e.scrollTop = e.scrollHeight;
+  if (DUR === 'cevrimdisi' && !DUZ) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'hal', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

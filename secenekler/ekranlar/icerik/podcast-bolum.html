@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Podcast · Ekonomi Masası 48. bölüm</title>
+<!-- Dada Haber Mobil · PODCAST BÖLÜMÜ (E-215–E-221). Detay kökünden, Haber Dinle bülten detayıyla aynı kalıp: düz üst çubuk (geri · Kaydet · Paylaş), ses başlığı (program kapağı,
+     program, sunucu, başlık, bilgi satırı), yapışık oynatma satırı (Oynat · hız · İndir; kaldığın yerde ilerleme), açıklama, bölüm notları, ilişkili haber, deşifre, kaynaklar,
+     diğer bölümler, yorumlar. Oynatınca Spiker duraklar (tek oynatıcı; K.spikerDurdur).
+     Sorgu: ?durum=indirildi (&hal=indiriliyor → indirme halkası) | devam (kaldığın yerden) | yukleniyor | hata (&hata=zaman-asimi) | bulunamadi
+            | cevrimdisi (indirilmiş: çalar; &indirili=0 → bağlantı yok) · ?uye=0 · ?tema=koyu
+     Veri: public podcast-detay.html (Ekonomi Masası 48. bölüm: Can Demir, 22 Kasım 2026, 32 dk, 12,6 B dinlenme, notlar, deşifre, diğer bölümler, kaynaklar, yorumlar).
+     İlişkili haber: D.liste'deki kira payı haberi (aynı konu). "Kaldığın yer" 14.30, deşifredeki zaman damgasıdır. -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* KİT ADAYI: k-ses-bas (haber-dinle-bulten.html ile aynı) */
+.sb{padding:var(--b-16) var(--kenar) 0}
+.sb-u{display:flex;align-items:center;gap:var(--b-16)}
+.sb-a{width:88px;height:88px;flex:none;border-radius:var(--k-kontrol);display:grid;place-items:center;background:var(--marka-25) center/cover no-repeat;color:var(--marka-metin);font-size:34px}
+.sb-u .t{min-width:0}
+.sb-u .t b{display:block;margin-top:var(--b-4);font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb-u .t small{display:block;margin-top:var(--b-4);font-size:12.5px;color:var(--metin-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb h1{margin-top:var(--b-16);font-size:24px;line-height:1.18;font-weight:var(--y-kalin);letter-spacing:-.02em}
+.sb .k-zamansatir{margin-top:var(--b-12)}
+.sb .k-spot{margin-top:var(--b-16)}
+.sb .k-serit{margin-top:var(--b-4)}
+/* KİT ADAYI: k-ses-panel (haber-dinle-bulten.html ile aynı) */
+.sp-p{position:sticky;top:var(--k-ub-h);z-index:40;background:var(--zemin);padding:var(--b-16) var(--kenar) var(--b-12)}
+.sp-a{display:flex;align-items:center;gap:var(--b-8)}
+.sp-a>.k-btn.birincil{flex:1;min-width:0}
+.sp-a>.k-btn.sade{min-width:52px;padding:0 var(--b-12);font-variant-numeric:tabular-nums}
+.sp-s{display:flex;justify-content:space-between;margin-top:var(--b-8);font-size:12.5px;color:var(--metin-3);font-variant-numeric:tabular-nums}
+.sp-p .k-ilerleme{margin-top:var(--b-12)}
+.ds{display:grid;grid-template-columns:50px minmax(0,1fr);gap:var(--b-12);padding:var(--b-8) 0;cursor:pointer}
+.ds time{font-size:13px;font-weight:var(--y-kalin);color:var(--metin-3);font-variant-numeric:tabular-nums;padding-top:var(--b-4)}
+/* iskelet yerleşimi (yalnız ölçek değişkenleri) */
+.i-r{padding-top:var(--b-12);padding-bottom:var(--b-12)}
+.i-s{display:flex;gap:var(--b-12);padding:var(--b-12) 0}
+.i-m16{margin-top:var(--b-16)}
+.i-m24{margin-top:var(--b-24)}
+.i-o{display:flex;justify-content:center;margin-top:var(--b-24)}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var Q = K.q, DUR = K.durum, e = document.getElementById('ekran');
+  var CEV = DUR === 'cevrimdisi', DEV = DUR === 'devam';
+  /* kaynak: public podcast-detay.html */
+  var PB = { seri: 'Ekonomi Masası', no: 'Bölüm 48', g: 'carsi', yazar: 'Can Demir', unvan: 'Piyasa Muhabiri', tarih: '22 Kas', sure: '32 dk', top: '32:00', dinlenme: '12,6 B',
+    baslik: 'Kira sözleşmesi yenilerken kiracı ve ev sahibi neye dikkat etmeli?',
+    spot: 'Ekonomi Masası\'nın 48. bölümünde kira sözleşmesi yenilenirken tarafların nelere dikkat etmesi gerektiğini, hukukçu ve emlak sektöründen iki konukla konuştuk.',
+    notlar: ['Konut kiralarında yıllık artış on iki aylık TÜFE ortalamasıyla sınırlı. Bu bölümde, sözleşme yenilerken tarafların haklarını, tespit davalarının nasıl işlediğini ve büyükşehirlerdeki kira verilerini konuşuyoruz.',
+      'Konuklarımız: Av. Gülşen Aktaş (kira hukuku) ve Ferhat Uysal (gayrimenkul değerleme uzmanı). Bölümde adı geçen veriler Türkiye İstatistik Kurumu ve Merkez Bankası kaynaklarından alınmıştır; bağlantılar aşağıdaki Kaynaklar bölümünde.',
+      'Bölümdeki bilgiler genel niteliktedir; kendi sözleşmeniz için bir hukukçudan görüş almanızı öneririz.'],
+    desifre: [['00:00', 'Ekonomi Masası\'na hoş geldiniz. Bu hafta kiraları konuşuyoruz; sözleşme yenilenirken kiracı ve ev sahibi neye dikkat etmeli?'],
+      ['03:12', 'Av. Gülşen Aktaş: Sınırın kalkmasıyla artış oranı yeniden on iki aylık TÜFE ortalamasıyla sınırlı. Yani artış serbest değil, ama tavan değişti.'],
+      ['08:45', 'Ferhat Uysal: Büyükşehirlerde yeni sözleşmelerle eski sözleşmeler arasındaki fark açıldı. Tespit davalarının artmasının temel nedeni bu.'],
+      ['14:30', 'Av. Gülşen Aktaş: Beş yılı dolduran sözleşmelerde mahkeme, emsal kiralara ve hakkaniyete göre yeni bedeli belirleyebiliyor.'],
+      ['21:05', 'Can Demir: Dinleyicilerimizden gelen soruların çoğu depozito ve ev sahibinin tahliye talebiyle ilgiliydi; şimdi onlara geçelim.'],
+      ['28:40', 'Ferhat Uysal: Sözleşmeyi yenilemeden önce bölgedeki güncel kira verilerine bakmak, iki taraf için de pazarlığı kolaylaştırıyor.']],
+    diger: [['47. bölüm', 'Asgari ücret masasında bu yıl neler konuşulacak?', '29 dk', '15 Kas'], ['46. bölüm', 'Kredi kartı borcunu yönetmenin yolları', '34 dk', '8 Kas'],
+      ['45. bölüm', 'Emeklilikte bireysel birikim ne kadar önemli?', '31 dk', '1 Kas'], ['44. bölüm', 'Altın mı, mevduat mı? Birikimde risk dengesi', '36 dk', '25 Eki']],
+    kaynaklar: [ { kurum: 'Türk Borçlar Kanunu', aciklama: 'Kira bedelinin belirlenmesi, madde 344' }, { kurum: 'Türkiye İstatistik Kurumu', aciklama: 'Tüketici Fiyat Endeksi, Ekim 2026' },
+      { kurum: 'Türkiye Cumhuriyet Merkez Bankası', aciklama: 'Konut Fiyat Endeksi ve kira göstergeleri' } ],
+    yorumlar: [ { ad: 'Gamze Tunç', rozet: 'Düzenli okur', zaman: '1 gün önce', metin: 'Deşifrenin olması çok iyi; dinleyemediğim yerleri okuyarak takip ettim.', begeni: 22 },
+      { ad: 'Selim Ateş', rozet: 'Okur', zaman: '20 saat önce', metin: 'Tespit davası kısmı için ayrı bir bölüm yapılabilir mi? Konu çok kişiyi ilgilendiriyor.', begeni: 9 },
+      { ad: 'Dada Haber Editör', rozet: 'Editör', zaman: '18 saat önce', metin: 'Teşekkürler. Tespit davalarını ayrıntılı ele alacağımız bölümü aralık ayında yayımlamayı planlıyoruz.', begeni: 5 } ] };
+  function isk(w, h, c){ return '<i class="k-isk' + (c ? ' ' + c : '') + '" style="width:' + w + ';height:' + h + 'px"></i>'; }
+
+  var ind = (DUR === 'indirildi' || CEV) ? (Q.get('hal') === 'indiriliyor' ? 'indiriliyor' : 'indirildi') : 'yok';
+  var panel = '<div class="sp-p"><div class="sp-a">' + K.btn({ metin: DEV ? 'Kaldığın yerden · 17:30 kaldı' : 'Oynat · ' + PB.sure, ikon: 'fa-play', tur: 'birincil', boy: 'buyuk', attr: 'data-oynat' }) +
+    K.btn({ metin: '1×', tur: 'sade', boy: 'buyuk', attr: 'data-sayfa="hiz" aria-label="Oynatma hızı"' }) + K.indir(ind, 62) + '</div>' +
+    (DEV ? K.ilerleme(45) + '<div class="sp-s"><span>14:30</span><span>' + PB.top + '</span></div>' : '') + '</div>';
+  var ilgili = D.liste.haberler[4];
+  var sayfa = '<div class="k-ust-bosluk"></div><div class="sb"><div class="sb-u"><span class="sb-a" style="background-image:' + G(PB.g) + '"></span><span class="t">' + K.ustSatir({ tur: 'Podcast', kat: PB.seri, ikon: 'fa-podcast' }) +
+      '<b>' + PB.yazar + '</b><small>' + PB.unvan + ' · ' + PB.no + '</small></span></div><h1>' + PB.baslik + '</h1>' +
+      '<div class="k-zamansatir"><span>' + K.I('fa-calendar-day') + PB.tarih + '</span><span>' + K.I('fa-clock') + PB.sure + '</span><span>' + K.I('fa-podcast') + PB.dinlenme + ' dinlenme</span></div></div>' + panel +
+    '<div class="sb" style="padding-top:0">' + (ind === 'indirildi' ? K.serit({ tur: 'basari', ikon: 'fa-circle-check', metin: 'İndirildi', alt: 'Bağlantı yokken de dinleyebilirsin.' }) : ind === 'indiriliyor' ? K.serit({ ikon: 'fa-circle-down', metin: 'İndiriliyor · %62', alt: 'Bitince çevrimdışı dinleyebilirsin.' }) : '') +
+      '<p class="k-spot">' + PB.spot + '</p></div>' +
+    '<section class="k-bl">' + K.bb({ baslik: 'Bölüm Notları', ikon: 'fa-file-lines' }) + '<div class="k-ic k-govde">' + PB.notlar.map(function(p){ return '<p>' + p + '</p>'; }).join('') + '</div></section>' +
+    '<section>' + K.bb({ baslik: 'İlişkili Haber', ikon: 'fa-newspaper' }) + '<div class="k-satirlar">' + K.satir(ilgili) + '</div></section>' +
+    '<section class="k-bl">' + K.bb({ baslik: 'Deşifre', ikon: 'fa-file-lines', not: 'Dokun, o ana geç' }) + '<div class="k-ic">' +
+      PB.desifre.map(function(d){ return '<div class="ds" data-an><time>' + d[0] + '</time><p class="k-desifre"><span' + (DEV && d[0] === '14:30' ? ' class="on"' : '') + '>' + d[1] + '</span></p></div>'; }).join('') + '</div></section>' +
+    '<section class="k-bl">' + K.kaynaklar(PB.kaynaklar) + '</section>' +
+    '<section class="k-bl">' + K.bb({ baslik: 'Diğer Bölümler', ikon: 'fa-podcast', baglanti: { metin: PB.seri, href: K.u('ekranlar/icerik/podcast-program.html', 'program=ekonomi-masasi') } }) + '<div class="k-satirlar">' +
+      PB.diger.map(function(b){ return K.podcastSatir({ seri: PB.seri, no: b[0], baslik: b[1], sure: b[2], konuk: b[3], g: PB.g }); }).join('') + '</div></section>' +
+    '<section class="k-bl k-ic">' + K.yorumlar({ Y: PB.yorumlar }) + '</section><div class="k-son yalin"></div>';
+
+  var DUZ = DUR === 'hata' || DUR === 'bulunamadi' || (CEV && Q.get('indirili') === '0');
+  if (DUR === 'yukleniyor') e.innerHTML = '<div class="k-ust-bosluk"></div><div class="sb" role="status" aria-label="Yükleniyor"><div class="sb-u">' + isk('88px', 88, 'kontrol') + '<div class="k-isk-grup" style="flex:1">' + isk('60%', 12) + isk('40%', 15) + isk('70%', 12) + '</div></div>' +
+    '<div class="k-isk-grup i-m16">' + isk('100%', 22) + isk('84%', 22) + isk('60%', 13) + '</div><div class="i-m16">' + isk('100%', 52, 'kontrol') + '</div>' +
+    '<div class="k-isk-grup i-m24">' + isk('100%', 16) + isk('100%', 16) + isk('62%', 16) + '</div></div>';
+  else if (DUZ) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: DUR === 'bulunamadi' ? 'bulunamadi' : CEV ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') }) + '<div class="k-son yalin"></div>';
+  else e.innerHTML = sayfa;
+  K.ustCubuk({ geri: true, baslik: 'Podcast', eylemler: DUZ ? [] : ['kaydet', 'paylas'] });
+  [].forEach.call(e.querySelectorAll('.k-pd-satir > .k-ikon'), function(b){ b.removeAttribute('data-spiker'); b.setAttribute('data-pd', ''); });
+  if (CEV && !DUZ) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'İndirilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){
+    var a = ev.target.closest('[data-an]');
+    if (a) { e.querySelectorAll('.ds .k-desifre span').forEach(function(s){ s.classList.toggle('on', s.closest('.ds') === a); }); return; }
+    var o = ev.target.closest('[data-oynat]');
+    if (o) { var cal = !o.querySelector('.fa-pause'); o.innerHTML = K.I(cal ? 'fa-pause' : 'fa-play') + '<span>' + (cal ? 'Duraklat' : 'Oynat · ' + PB.sure) + '</span>'; if (cal) K.spikerDurdur(); return; }
+    var p = ev.target.closest('[data-pd]');
+    if (p) { ev.preventDefault(); var c2 = !p.querySelector('.fa-pause'); p.innerHTML = K.I(c2 ? 'fa-pause' : 'fa-play'); if (c2) K.spikerDurdur(); return; }
+    if (ev.target.closest('.k-indir') && ind === 'yok') { var k = ev.target.closest('.k-indir'); k.outerHTML = K.indir('indiriliyor', 30); return; }
+    var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'indirili'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

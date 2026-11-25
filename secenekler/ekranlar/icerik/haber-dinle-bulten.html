@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Haber Dinle · Gün Ortası</title>
+<!-- Dada Haber Mobil · HABER DİNLE BÜLTEN DETAYI (E-188–E-193). Detay kökünden: düz üst çubuk (geri · Kaydet · Paylaş), ses başlığı (kuşak simgesi, başlık, imza, bilgi satırı),
+     oynatma satırı (Dinle · hız · indir; çalarken ilerleme), açıklama, bültendeki sesli haberler (zaman damgalı), deşifre (okunan cümle vurgulu; dokununca o ana atlar), sıradaki bülten.
+     K39: Haber Dinle "Dinle"dir (fa-headphones), Dada Spiker değil; Spiker yüzü ve adı kullanılmaz.
+     Sorgu: ?durum=caliyor | yukleniyor | hata (&hata=zaman-asimi) | bulunamadi | cevrimdisi (indirilmiş: çalar; &indirili=0 → bağlantı yok) · ?uye=0 · ?tema=koyu
+     Veri: public haber-dinle-detay.html (Gün Ortası/Öğle bülteni 23 Kasım 12.30, 9 dk, 8 haber, 7,4 B dinlenme, haber listesi zaman damgalarıyla, deşifre). Haber süresi zaman damgalarının farkıdır. -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* KİT ADAYI: k-ses-bas — ses içeriği başlığı (Haber Dinle bülteni, podcast bölümü): kare kapak ya da simge kutusu + seri/kuşak, altında 24/kalın başlık, imza, bilgi satırı */
+.sb{padding:var(--b-16) var(--kenar) 0}
+.sb-u{display:flex;align-items:center;gap:var(--b-16)}
+.sb-a{width:88px;height:88px;flex:none;border-radius:var(--k-kontrol);display:grid;place-items:center;background:var(--marka-25) center/cover no-repeat;color:var(--marka-metin);font-size:34px}
+.sb-u .t{min-width:0}
+.sb-u .t b{display:block;margin-top:var(--b-4);font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb-u .t small{display:block;margin-top:var(--b-4);font-size:12.5px;color:var(--metin-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb h1{margin-top:var(--b-16);font-size:24px;line-height:1.18;font-weight:var(--y-kalin);letter-spacing:-.02em}
+.sb .k-zamansatir{margin-top:var(--b-12)}
+/* KİT ADAYI: k-ses-panel — sayfa içi oynatma satırı: Dinle/Duraklat (geniş) + hız + indir; çalarken ilerleme ve süreler */
+.sp-p{position:sticky;top:var(--k-ub-h);z-index:40;background:var(--zemin);padding:var(--b-16) var(--kenar) var(--b-12)} /* çalarken üst çubuğun altında yapışık kalır */
+.sp-a{display:flex;align-items:center;gap:var(--b-8)}
+.sp-a>.k-btn.birincil{flex:1;min-width:0}
+.sp-a>.k-btn.sade{min-width:52px;padding:0 var(--b-12);font-variant-numeric:tabular-nums}
+.sp-s{display:flex;justify-content:space-between;margin-top:var(--b-8);font-size:12.5px;color:var(--metin-3);font-variant-numeric:tabular-nums}
+.sp-p .k-ilerleme{margin-top:var(--b-12)}
+.sb .k-spot{margin-top:var(--b-16)}
+.sb .k-serit{margin-top:var(--b-4)}
+/* deşifre: zaman damgası + metin (sesli haber satırıyla aynı sütun) */
+.ds{display:grid;grid-template-columns:50px minmax(0,1fr);gap:var(--b-12);padding:var(--b-8) 0;cursor:pointer}
+.ds time{font-size:13px;font-weight:var(--y-kalin);color:var(--metin-3);font-variant-numeric:tabular-nums;padding-top:var(--b-4)}
+.k-sd-satir small .k-dalga{margin-right:var(--b-8)}
+/* iskelet yerleşimi (yalnız ölçek değişkenleri) */
+.i-r{padding-top:var(--b-12);padding-bottom:var(--b-12)}
+.i-s{display:flex;gap:var(--b-12);padding:var(--b-12) 0}
+.i-m16{margin-top:var(--b-16)}
+.i-m24{margin-top:var(--b-24)}
+.i-o{display:flex;justify-content:center;margin-top:var(--b-24)}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var Q = K.q, DUR = K.durum, e = document.getElementById('ekran'), TAM = document.documentElement.classList.contains('tam');
+  var CAL = DUR === 'caliyor', CEV = DUR === 'cevrimdisi';
+  /* kaynak: public haber-dinle-detay.html */
+  var B = { kusak: 'Gün Ortası', ikon: 'fa-cloud-sun', baslik: 'Gün Ortası, 23 Kasım: sabahtan bu yana 8 haber 9 dakikada', tarih: '23 Kas · 12.30', sure: '9 dk', top: '9:00', dinlenme: '7,4 B',
+    spot: 'Günün öne çıkan sekiz haberi, kaynaklarıyla birlikte kısa ve sakin bir dille. Bülteni baştan dinleyebilir ya da aşağıdaki listeden istediğin habere geçebilirsin.',
+    haber: [['00:00', 'Finans', 'Kredi kartında asgari ödeme oranı ocakta değişmeyecek'], ['01:05', 'Gündem', 'Marmara\'da kar yağışı nedeniyle 14 ilde okullar tatil edildi'],
+      ['02:10', 'Kampüs', '2027 YKS başvuruları 3 Şubat\'ta başlıyor, sınav 19-20 Haziran\'da'], ['03:15', 'Kadın', 'Doğum izninin 24 haftaya çıkarılmasını öngören teklif komisyonda'],
+      ['04:30', 'Savunma', 'Savunma sanayiinde 2027 yatırım programı açıklandı'], ['05:40', 'Dünya', 'BM İklim Konferansı uzatmalı oturumla sona erdi'],
+      ['06:55', 'Teknoloji', '5G hizmeti ilk aşamada 11 ilde kullanıma açıldı'], ['08:00', 'Spor', 'Süper Lig\'de devre arası transfer dönemi 5 Ocak\'ta açılacak']],
+    desifre: [['00:00', 'İyi günler, 23 Kasım öğle bülteni. Bankacılık Düzenleme ve Denetleme Kurumu, dün kredi kartı asgari ödeme oranlarının ocak ayında da değişmeyeceğini açıkladı.'],
+      ['01:05', 'Marmara\'da etkili olan kar yağışı nedeniyle İstanbul dahil 14 ilde okullar bugün tatil edildi. Valilikler yarın için kararını öğleden sonra açıklayacak.'],
+      ['02:10', 'Ölçme, Seçme ve Yerleştirme Merkezi 2027 sınav takvimini yayımladı. YKS başvuruları 3 Şubat\'ta başlayacak.'],
+      ['03:15', 'Doğum iznini 24 haftaya çıkaran kanun teklifi perşembe günü Meclis komisyonunda görüşülecek.'],
+      ['05:40', 'Antalya\'daki BM İklim Konferansı, sonuç metninin kabul edilmesiyle sona erdi.'],
+      ['08:00', 'Ve spor: Süper Lig\'de ara transfer dönemi 5 Ocak\'ta açılacak. Bültenimiz burada sona erdi; iyi günler.']] };
+  var SIRA = 2; /* çalarken: 02:10 (Kampüs) */
+  function sn(t){ var p = t.split(':'); return +p[0] * 60 + +p[1]; }
+  function fark(i){ var a = sn(B.haber[i][0]), b = i + 1 < B.haber.length ? sn(B.haber[i + 1][0]) : sn(B.top); var d = b - a; return Math.floor(d / 60) + ':' + ('0' + d % 60).slice(-2); }
+  function isk(w, h, c){ return '<i class="k-isk' + (c ? ' ' + c : '') + '" style="width:' + w + ';height:' + h + 'px"></i>'; }
+
+  var indir = CEV ? 'indirildi' : (Q.get('indir') || 'yok');
+  var panel = '<div class="sp-p"><div class="sp-a">' + K.btn({ metin: CAL ? 'Duraklat · 6:22 kaldı' : 'Dinle · ' + B.sure, ikon: CAL ? 'fa-pause' : 'fa-headphones', tur: 'birincil', boy: 'buyuk', attr: 'data-oynat' }) +
+    K.btn({ metin: '1×', tur: 'sade', boy: 'buyuk', attr: 'data-sayfa="hiz" aria-label="Oynatma hızı"' }) + K.indir(indir) + '</div>' +
+    (CAL ? K.ilerleme(29) + '<div class="sp-s"><span>2:38</span><span>' + B.top + '</span></div>' : '') + '</div>';
+  var bas = '<div class="sb"><div class="sb-u"><span class="sb-a">' + K.I(B.ikon) + '</span><span class="t">' + K.ustSatir({ tur: 'Bülten', kat: B.kusak, ikon: 'fa-headphones' }) +
+    '<b>Dada Haber</b><small>Sesli bülten · Editör kontrolünde</small></span></div><h1>' + B.baslik + '</h1>' +
+    '<div class="k-zamansatir"><span>' + K.I('fa-calendar-day') + B.tarih + '</span><span>' + K.I('fa-headphones') + B.sure + '</span><span>' + K.I('fa-list-ul') + B.haber.length + ' haber</span></div></div>' + panel +
+    '<div class="sb" style="padding-top:0">' + (CEV ? K.serit({ tur: 'basari', ikon: 'fa-circle-check', metin: 'İndirildi', alt: 'Bağlantı yokken de dinleyebilirsin.' }) : '') +
+    '<p class="k-spot">' + B.spot + '</p><p class="k-not">' + K.I('fa-circle-info') + 'Yapay zekâ ile seslendirildi, yayından önce editör tarafından kontrol edildi.</p></div>';
+  var haberler = '<section class="k-bl">' + K.bb({ baslik: 'Bültendeki Haberler', ikon: 'fa-list-ul', sayi: B.haber.length }) + '<div class="k-satirlar">' +
+    B.haber.map(function(h, i){ var s = K.sdSatir({ saat: h[0], kat: h[1], baslik: h[2], sure: fark(i) });
+      return CAL && i === SIRA ? s.replace('<small>', '<small><span class="k-dalga"><i></i><i></i><i></i></span>Şimdi okunuyor · ') : s; }).join('') + '</div></section>';
+  var desifre = '<section class="k-bl" id="desifre">' + K.bb({ baslik: 'Deşifre', ikon: 'fa-file-lines', not: 'Dokun, o ana geç' }) + '<div class="k-ic">' +
+    B.desifre.map(function(d, i){ return '<div class="ds" data-an><time>' + d[0] + '</time><p class="k-desifre"><span' + (CAL && i === SIRA ? ' class="on"' : '') + '>' + d[1] + '</span></p></div>'; }).join('') + '</div></section>';
+  var sonra = '<section class="k-bl k-ic">' + K.serit({ ikon: 'fa-moon', metin: 'Sıradaki: Akşam Bülteni · 18.00', alt: 'Günün 8 haberi 9 dakikada', eylem: 'Hatırlat' }) + '</section><div class="k-son yalin"></div>';
+
+  var DUZ = DUR === 'hata' || DUR === 'bulunamadi' || (CEV && Q.get('indirili') === '0');
+  if (DUR === 'yukleniyor') e.innerHTML = '<div class="k-ust-bosluk"></div><div class="sb" role="status" aria-label="Yükleniyor"><div class="sb-u">' + isk('88px', 88, 'kontrol') + '<div class="k-isk-grup" style="flex:1">' + isk('50%', 12) + isk('40%', 15) + isk('70%', 12) + '</div></div>' +
+    '<div class="k-isk-grup i-m16">' + isk('100%', 22) + isk('84%', 22) + isk('60%', 13) + '</div><div class="i-m16">' + isk('100%', 52, 'kontrol') + '</div></div><div class="k-satirlar">' + K.iskelet('satir', 3).replace(/<i class="k-isk" style="width:88px;height:88px"><\/i>/g, '') + '</div>';
+  else if (DUZ) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: DUR === 'bulunamadi' ? 'bulunamadi' : CEV ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') }) + '<div class="k-son yalin"></div>';
+  else e.innerHTML = '<div class="k-ust-bosluk"></div>' + bas + haberler + desifre + sonra;
+  K.ustCubuk({ geri: true, baslik: 'Haber Dinle', eylemler: DUZ ? [] : ['kaydet', 'paylas'] });
+
+  if (CAL && !TAM) { var d = document.getElementById('desifre'); if (d) e.scrollTop = d.offsetTop - 210; }
+  if (CEV && !DUZ) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'İndirilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){
+    var a = ev.target.closest('[data-an]');
+    if (a) { e.querySelectorAll('.ds .k-desifre span').forEach(function(s){ s.classList.toggle('on', s.closest('.ds') === a); }); return; }
+    var o = ev.target.closest('[data-oynat]');
+    if (o) { var cal = !o.querySelector('.fa-pause'); o.innerHTML = K.I(cal ? 'fa-pause' : 'fa-headphones') + '<span>' + (cal ? 'Duraklat' : 'Dinle · ' + B.sure) + '</span>'; if (cal) K.spikerDurdur(); return; }
+    var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var p = new URLSearchParams(location.search); ['durum', 'hata', 'indirili'].forEach(function(x){ p.delete(x); }); location.search = p.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

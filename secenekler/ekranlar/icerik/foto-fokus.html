@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Foto Fokus</title>
+<!-- Dada Haber Mobil · FOTO FOKUS LİSTESİ (E-149–E-155). Liste kökünden: görselli başlık + içerik paneli, yapışkan tema süzgeci (DADAHABER-10 §4),
+     öne çıkan albüm tam genişlik, ötekiler iki sütun; her kartta kare sayısı (galeri kartı K.kartGaleri).
+     Sorgu: ?tema=… yerine ?kategori=sehir|toplum|doga-ve-iklim|kultur-ve-sanat|spor|savunma|dunya · ?durum=yukleniyor | yenileniyor (&hal=cekiliyor|birak|bitti)
+            | daha-fazla (&hal=son|hata) | bos (&kategori=…, varsayılan kultur-ve-sanat) | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0) · ?uye=0 · ?tema=koyu
+     Veri: public foto-fokus.html albümleri (tema, kare sayısı) + foto-fokus-detay.html "Diğer Galeriler" + D.fotoFokus. Konuya uygun fotoğrafı olmayan albümler
+     (Eber Gölü, Mardin, Kemeraltı, Kaçkarlar, Van, Şeb-i Arus, Porsuk) alınmadı; teması public listede olmayanlar yalnız Tümü'de. Alt çubukta Bölümler seçili (varsayım). -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* yerleşim: öne çıkan albüm + iki sütunlu ızgara */
+.fl{padding:var(--b-16) var(--kenar) 0}
+.fi{display:grid;grid-template-columns:1fr 1fr;gap:var(--b-24) var(--b-12);padding:var(--b-24) var(--kenar) 0}
+/* iskelet yerleşimi (yalnız ölçek değişkenleri) */
+.i-r{padding-top:var(--b-12);padding-bottom:var(--b-12)}
+.i-s{display:flex;gap:var(--b-12);padding:var(--b-12) 0}
+.i-m16{margin-top:var(--b-16)}
+.i-m24{margin-top:var(--b-24)}
+.i-o{display:flex;justify-content:center;margin-top:var(--b-24)}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var Q = K.q, DUR = K.durum, HAL = Q.get('hal'), e = document.getElementById('ekran'), TAM = document.documentElement.classList.contains('tam');
+  /* kaynak: public foto-fokus.html (tema, kare sayısı) · foto-fokus-detay.html "Diğer Galeriler" · D.fotoFokus */
+  var F = [
+    { baslik: D.fotoFokus[0].baslik, adet: 24, g: 'ankara-kar', tema: 'Şehir' },
+    { baslik: 'Depremin ikinci yılında Hatay: sokak sokak', adet: 31, g: 'konteyner', tema: 'Toplum' },
+    { baslik: 'Deniz Kuvvetleri\'nin kış tatbikatından kareler', adet: 18, g: 'ida', tema: 'Savunma' },
+    { baslik: 'Kadın voleybol liginde haftanın kareleri', adet: 16, g: 'voleybol', tema: 'Spor' },
+    { baslik: D.fotoFokus[1].baslik, adet: D.fotoFokus[1].adet, g: D.fotoFokus[1].g },
+    { baslik: 'Brüksel\'de AB zirvesi gününden kareler', adet: 16, g: 'bruksel', tema: 'Dünya' },
+    { baslik: D.fotoFokus[2].baslik, adet: D.fotoFokus[2].adet, g: D.fotoFokus[2].g },
+    { baslik: 'Kirazlı–Halkalı metrosunda son hazırlıklar', adet: 22, g: 'metro' }
+  ];
+  var TEMA = [['Tümü', ''], ['Şehir', 'sehir'], ['Toplum', 'toplum'], ['Doğa ve İklim', 'doga-ve-iklim'], ['Kültür ve Sanat', 'kultur-ve-sanat'], ['Spor', 'spor'], ['Savunma', 'savunma'], ['Dünya', 'dunya']];
+  var kq = Q.get('kategori') || (DUR === 'bos' ? 'kultur-ve-sanat' : ''), sec = 0;
+  TEMA.forEach(function(k, i){ if (k[1] === kq) sec = i; });
+  var X = sec ? F.filter(function(f){ return f.tema === TEMA[sec][0]; }) : F;
+  var YOL = 'ekranlar/icerik/foto-fokus.html';
+  function isk(w, h, c){ return '<i class="k-isk' + (c ? ' ' + c : '') + '" style="width:' + w + ';height:' + h + 'px"></i>'; }
+
+  var cipler = '<div class="k-cip-satiri"><div class="k-ray s8" data-tek role="group" aria-label="Tema">' + TEMA.map(function(k, i){
+    return K.cip(k[0], { secili: i === sec, attr: 'data-href="' + K.u(YOL, k[1] ? 'kategori=' + k[1] : '') + '"' }); }).join('') + '</div></div>';
+  var kapak = '<header class="k-kapak" style="background-image:' + G('balon') + '"><h1>Foto Fokus</h1><p>Türkiye ve dünyadan foto muhabirlerimizin kareleri</p></header>';
+  var liste;
+  if (DUR === 'bos') liste = K.bos({ ikon: 'fa-camera', baslik: 'Bu temada galeri yok', aciklama: TEMA[sec][0] + ' temasında yeni galeri yayımlanınca burada görünür.', eylem: { metin: 'Tümü\'ne dön', tur: 'sade', href: K.u(YOL) } });
+  else {
+    liste = '<div class="fl">' + K.kartGaleri(X[0]) + '</div>' + (X.length > 1 ? '<div class="fi">' + X.slice(1).map(K.kartGaleri).join('') + '</div>' : '');
+    if (DUR === 'daha-fazla') liste += '<div class="k-ic k-bl sik">' + (HAL === 'son' || HAL === 'hata' ? K.dahaFazla(HAL) : '<div class="fi" style="padding-left:0;padding-right:0;padding-top:0">' + isk('100%', 128, 'kontrol') + isk('100%', 128, 'kontrol') + '</div>' + K.dahaFazla('yukleniyor')) + '</div>';
+  }
+  var DUZ = DUR === 'hata' || (DUR === 'cevrimdisi' && Q.get('onbellek') === '0');
+  if (DUR === 'yukleniyor') {
+    var ki = '<div class="k-isk-grup">' + isk('100%', 128, 'kontrol') + isk('100%', 15) + isk('70%', 15) + '</div>';
+    e.innerHTML = isk('100%', 224) + '<div class="k-yaprak" role="status" aria-label="Yükleniyor"><div class="k-ray s8 i-r">' + isk('64px', 36) + isk('70px', 36) + isk('78px', 36) + isk('110px', 36) + '</div>' +
+      '<div class="fl"><div class="k-isk-grup">' + isk('100%', 262, 'kontrol') + isk('100%', 18) + isk('64%', 18) + '</div></div><div class="fi">' + ki + ki + '</div></div><div class="k-son"></div>';
+  } else if (DUZ) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: DUR === 'cevrimdisi' ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') }) + '<div class="k-son"></div>';
+  else e.innerHTML = (DUR === 'yenileniyor' ? '<div class="k-ust-bosluk"></div>' + K.yenile(['cekiliyor', 'birak', 'bitti'].indexOf(HAL) > -1 ? HAL : 'yenileniyor') : '') +
+    kapak + '<div class="k-yaprak">' + cipler + liste + '<div class="k-son"></div></div>';
+
+  if (DUZ) K.ustCubuk({ geri: true, baslik: 'Foto Fokus', eylemler: ['ara'] });
+  else K.ustCubuk({ tur: 'foto', geri: true, baslik: 'Foto Fokus', gorsel: 'balon', eylemler: ['ara'], dar: DUR === 'yenileniyor' });
+  K.altCubuk('bolum');
+  K.oynatici();
+  var sc = e.querySelector('.k-cip-satiri .k-cip[aria-pressed="true"]');
+  if (sc && sec > 0) sc.parentNode.scrollLeft = sc.offsetLeft - 16;
+  if (DUR === 'daha-fazla' && !TAM) e.scrollTop = e.scrollHeight;
+  if (DUR === 'cevrimdisi' && !DUZ) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'hal', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>
