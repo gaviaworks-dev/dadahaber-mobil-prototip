@@ -1242,3 +1242,5 @@ html[data-tema="koyu"] .k-isk{background-image:linear-gradient(90deg,var(--yuzey
 /* yayılım geri bildirimi: dokunma alanı 44 (yazar satırı bağlantısı, yeni haber hapı, video düğmeleri, arama alanı) */
 
 .k-kapak .k-kat{align-self:flex-start} /* kapak üstündeki kategori etiketi içeriği kadar */
+
+.k-akordeon:not([open]) p{display:none} /* kapalı akordeonun yanıtı yer kaplamasın (4. dalga) */
