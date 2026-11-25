@@ -344,6 +344,107 @@ body:not(.cizelge) .cizelge-kip{display:none}
     ] },
     puan: [{"ad": "Galatasaray", "kod": "GS", "G": 10, "B": 2, "M": 1, "A": 33, "Y": 10}, {"ad": "Fenerbahçe", "kod": "FB", "G": 9, "B": 3, "M": 1, "A": 30, "Y": 11}, {"ad": "Beşiktaş", "kod": "BJK", "G": 7, "B": 4, "M": 2, "A": 25, "Y": 13}, {"ad": "Trabzonspor", "kod": "TS", "G": 7, "B": 3, "M": 3, "A": 21, "Y": 13}]
   };
+  /* K49 (Beyar): alt konu çipi seçilince yalnız o konunun haberleri. Özel derlemesi olmayan 19 alt konu için sitedeki konu sayfasının
+     "X haberleri" listesinin ilk dört haberi (başlık, yazar, süre, görüntülenme aynen; t = sitedeki "N haber"). Saat: 23 Kasım haberinde sözlükteki saat
+     (araclar/ornek_veri.json), önceki gün "22 Kas" (cs = sözlükteki saat, çizelge için). alt = çipin adı. Görsel kitten (K.gorsel). Site ile sözlük karşılaştırıldı, çelişki yok.
+     Anahtar = çipin kodu (K.kodla). Sıra: en yeni önce. */
+  var KONUH = {
+    doviz: { t: 86, h: [ /* Kaynak: public doviz.html › "Döviz Haberleri" (ilk 4) */
+      {"saat": "15.00", "alt": "Döviz", "baslik": "Dolar/TL güne yatay başladı, gözler enflasyon verisinde", "yazar": "Elif Aras", "sure": "2 dk", "izlenme": "18,4 B"},
+      {"saat": "07.25", "alt": "Döviz", "baslik": "Euro, ECB açıklamaları sonrası değer kazandı", "yazar": "Nazlı Öztürk", "sure": "3 dk", "izlenme": "5,1 B"},
+      {"saat": "22 Kas", "alt": "Döviz", "baslik": "Sterlin İngiltere büyüme verisiyle geriledi", "yazar": "Can Demir", "sure": "2 dk", "izlenme": "3,8 B", "cs": "20.05"},
+      {"saat": "22 Kas", "alt": "Döviz", "baslik": "Merkez Bankası rezervleri haftalık bazda arttı", "yazar": "Tolga Bayram", "sure": "3 dk", "izlenme": "7,3 B", "cs": "13.25"} ] },
+    altin: { t: 74, h: [ /* Kaynak: public altin.html › "Altın Haberleri" (ilk 4) */
+      {"saat": "12.00", "alt": "Altın", "baslik": "Gram altın 2.968 lira ile haftaya yükselişle başladı", "yazar": "Elif Aras", "sure": "3 dk", "izlenme": "16,2 B"},
+      {"saat": "10.25", "alt": "Altın", "baslik": "Merkez bankalarının altın alımları üçüncü çeyrekte arttı", "yazar": "Tolga Bayram", "sure": "5 dk", "izlenme": "7,7 B"},
+      {"saat": "09.35", "alt": "Altın", "baslik": "Ons altında Fed tutanakları sonrası sınırlı alım", "yazar": "Can Demir", "sure": "4 dk", "izlenme": "9,2 B"},
+      {"saat": "06.55", "alt": "Altın", "baslik": "Çeyrek altın kuyumcularda 4.900 lirayı aştı", "yazar": "Can Demir", "sure": "2 dk", "izlenme": "8,4 B"} ] },
+    "akaryakit-fiyatlari": { t: 64, h: [ /* Kaynak: public akaryakit-fiyatlari.html › "Akaryakıt Fiyatları Haberleri" (ilk 4) */
+      {"saat": "14.15", "alt": "Akaryakıt Fiyatları", "baslik": "LPG fiyatlarında kış dönemi artışı bekleniyor", "yazar": "Elif Aras", "sure": "5 dk", "izlenme": "7,7 B"},
+      {"saat": "11.50", "alt": "Akaryakıt Fiyatları", "baslik": "Motorindeki indirim pompaya yansıdı", "yazar": "Elif Aras", "sure": "3 dk", "izlenme": "21,4 B"},
+      {"saat": "11.15", "alt": "Akaryakıt Fiyatları", "baslik": "Akaryakıtta ÖTV güncellemesinin ocak takvimi belli oldu", "yazar": "Nazlı Öztürk", "sure": "2 dk", "izlenme": "8,4 B"},
+      {"saat": "10.50", "alt": "Akaryakıt Fiyatları", "baslik": "Brent petrolde talep endişesi fiyatları geriletti", "yazar": "Tolga Bayram", "sure": "2 dk", "izlenme": "9,2 B"} ] },
+    enflasyon: { t: 97, h: [ /* Kaynak: public enflasyon.html › "Enflasyon haberleri" (ilk 4) */
+      {"saat": "14.35", "alt": "Enflasyon", "baslik": "Piyasa katılımcıları yıl sonu enflasyon beklentisini düşürdü", "yazar": "Nazlı Öztürk", "sure": "2 dk", "izlenme": "6,1 B"},
+      {"saat": "14.25", "alt": "Enflasyon", "baslik": "Kasım enflasyon verisi 3 Aralık'ta açıklanacak", "yazar": "Tolga Bayram", "sure": "4 dk", "izlenme": "15,2 B"},
+      {"saat": "11.55", "alt": "Enflasyon", "baslik": "Ekim'de yıllık enflasyon yüzde 32,9 oldu", "yazar": "Can Demir", "sure": "4 dk", "izlenme": "6,9 B"},
+      {"saat": "06.55", "alt": "Enflasyon", "baslik": "Gıda fiyatlarındaki artış ekimde yavaşladı", "yazar": "Nazlı Öztürk", "sure": "5 dk", "izlenme": "5,8 B"} ] },
+    "kisisel-finans": { t: 134, h: [ /* Kaynak: public kisisel-finans.html › "Kişisel Finans haberleri" (ilk 4) */
+      {"saat": "11.40", "alt": "Kişisel Finans", "baslik": "Kredi kartı borcunu yapılandırmadan önce bilinmesi gerekenler", "yazar": "Can Demir", "sure": "3 dk", "izlenme": "10,4 B"},
+      {"saat": "10.55", "alt": "Kişisel Finans", "baslik": "Mevduat ile katılım hesabı arasındaki farklar", "yazar": "Elif Aras", "sure": "2 dk", "izlenme": "6,9 B"},
+      {"saat": "10.40", "alt": "Kişisel Finans", "baslik": "Bireysel emeklilik sisteminde devlet katkısı oranı değişti", "yazar": "Can Demir", "sure": "5 dk", "izlenme": "6,1 B"},
+      {"saat": "09.45", "alt": "Kişisel Finans", "baslik": "Aylık bütçede sabit giderleri izlemenin üç yolu", "yazar": "Can Demir", "sure": "4 dk", "izlenme": "7,7 B"} ] },
+    "ekonomik-takvim": { t: 58, h: [ /* Kaynak: public ekonomik-takvim.html › "Takvim Haberleri" (ilk 4) */
+      {"saat": "14.25", "alt": "Ekonomik Takvim", "baslik": "Kasım enflasyon verisi 3 Aralık'ta açıklanacak", "yazar": "Tolga Bayram", "sure": "4 dk", "izlenme": "15,2 B"},
+      {"saat": "14.00", "alt": "Ekonomik Takvim", "baslik": "Merkez Bankası politika faizini yüzde 42,5'te sabit tuttu", "yazar": "Elif Aras", "sure": "3 dk", "izlenme": "27,5 B"},
+      {"saat": "13.40", "alt": "Ekonomik Takvim", "baslik": "Üçüncü çeyrek büyüme verisi 1 Aralık'ta açıklanacak", "yazar": "Elif Aras", "sure": "2 dk", "izlenme": "14,6 B"},
+      {"saat": "10.30", "alt": "Ekonomik Takvim", "baslik": "ABD'de PCE verisi Fed'in aralık kararı için izleniyor", "yazar": "Can Demir", "sure": "5 dk", "izlenme": "6,1 B"} ] },
+    "kadin-sagligi": { t: 81, h: [ /* Kaynak: public kadin-sagligi.html › "Kadın Sağlığı haberleri" (ilk 4) */
+      {"saat": "12.15", "alt": "Kadın Sağlığı", "baslik": "Araştırma: menopoz döneminde kemik yoğunluğu kaybı erken başlıyor", "yazar": "Seda Uslu", "sure": "5 dk", "izlenme": "7,6 B"},
+      {"saat": "09.25", "alt": "Kadın Sağlığı", "baslik": "Sağlık Bakanlığı verilerine göre kanser tarama sayısı yüzde 14 arttı", "yazar": "Burcu Yaman", "sure": "3 dk", "izlenme": "6,2 B"},
+      {"saat": "07.20", "alt": "Kadın Sağlığı", "baslik": "Meme kanseri taramalarında ücretsiz mamografi kapsamı genişletildi", "yazar": "Burcu Yaman", "sure": "3 dk", "izlenme": "12,5 B"},
+      {"saat": "07.15", "alt": "Kadın Sağlığı", "baslik": "HPV aşısının ulusal aşı takvimine alınmasına ilişkin çalışma sürüyor", "yazar": "Burcu Yaman", "sure": "4 dk", "izlenme": "12,9 B"} ] },
+    burslar: { t: 71, h: [ /* Kaynak: public burslar.html › "Burslar haberleri" (ilk 4) */
+      {"saat": "13.20", "alt": "Burslar", "baslik": "Vakıf burslarında başvuru için gereken belgeler listelendi", "yazar": "Selin Koç", "sure": "4 dk", "izlenme": "9,9 B"},
+      {"saat": "09.35", "alt": "Burslar", "baslik": "KYK kredi borcu yapılandırma başvurularının süresi uzatıldı", "yazar": "Selin Koç", "sure": "2 dk", "izlenme": "6,2 B"},
+      {"saat": "08.10", "alt": "Burslar", "baslik": "Yurt dışı yüksek lisans bursu için başvuru dönemi açıldı", "yazar": "Ece Demirel", "sure": "3 dk", "izlenme": "14,5 B"},
+      {"saat": "07.15", "alt": "Burslar", "baslik": "KYK burs ve kredi ödemeleri 3 Aralık'ta hesaplara geçecek", "yazar": "Ece Demirel", "sure": "4 dk", "izlenme": "10,8 B"} ] },
+    kpss: { t: 76, h: [ /* Kaynak: public kpss.html › "KPSS haberleri" (ilk 4) */
+      {"saat": "12.45", "alt": "KPSS", "baslik": "MEB 15 bin sözleşmeli öğretmen ataması için takvimi açıkladı", "yazar": "Ece Demirel", "sure": "4 dk", "izlenme": "6,0 B"},
+      {"saat": "09.30", "alt": "KPSS", "baslik": "2027 KPSS lisans oturumları temmuz ayında yapılacak", "yazar": "Ece Demirel", "sure": "6 dk", "izlenme": "14,3 B"},
+      {"saat": "07.20", "alt": "KPSS", "baslik": "KPSS-2026/7 tercih kılavuzu yayımlandı", "yazar": "Selin Koç", "sure": "3 dk", "izlenme": "10,6 B"},
+      {"saat": "06.50", "alt": "KPSS", "baslik": "KPSS ortaöğretim sonuçları erişime açıldı", "yazar": "Ece Demirel", "sure": "2 dk", "izlenme": "10,4 B"} ] },
+    "kultur-ve-sanat": { t: 156, h: [ /* Kaynak: public kultur-ve-yasam.html › "Kültür ve Yaşam haberleri" (ilk 4) */
+      {"saat": "13.35", "alt": "Kültür ve Sanat", "baslik": "Geleneksel el sanatları ustaları için çırak destek programı açıldı", "yazar": "Ozan Er", "sure": "4 dk", "izlenme": "6,5 B"},
+      {"saat": "12.45", "alt": "Kültür ve Sanat", "baslik": "Somut olmayan kültürel miras listesine iki yeni başvuru hazırlanıyor", "yazar": "İrem Su", "sure": "3 dk", "izlenme": "7,9 B"},
+      {"saat": "11.20", "alt": "Kültür ve Sanat", "baslik": "Beyoğlu Kültür Yolu Festivali yoğun katılımla sona erdi", "yazar": "İrem Su", "sure": "5 dk", "izlenme": "2,6 B"},
+      {"saat": "07.05", "alt": "Kültür ve Sanat", "baslik": "Halk kütüphanelerinde gece açık kalan şube sayısı artırıldı", "yazar": "İrem Su", "sure": "6 dk", "izlenme": "13,2 B"} ] },
+    saglik: { t: 214, h: [ /* Kaynak: public saglik.html › "Sağlık haberleri" (ilk 4) */
+      {"saat": "14.20", "alt": "Sağlık", "baslik": "Grip aşısı için risk grupları hatırlatma mesajı alacak", "yazar": "Ozan Er", "sure": "4 dk", "izlenme": "12,0 B"},
+      {"saat": "14.15", "alt": "Sağlık", "baslik": "Geri ödeme listesine 47 yeni ilaç eklendi", "yazar": "Nilay Ersoy", "sure": "3 dk", "izlenme": "13,4 B"},
+      {"saat": "10.55", "alt": "Sağlık", "baslik": "Kalp krizi sonrası rehabilitasyon programının etkisi araştırıldı", "yazar": "Ozan Er", "sure": "6 dk", "izlenme": "6,7 B"},
+      {"saat": "10.05", "alt": "Sağlık", "baslik": "Hastanelerde randevu iptallerine yönelik yeni bildirim sistemi devrede", "yazar": "İrem Su", "sure": "5 dk", "izlenme": "8,1 B"} ] },
+    "hava-platformlari": { t: 41, h: [ /* Kaynak: public hava-platformlari.html › "Hava Platformları haberleri" (ilk 4) */
+      {"saat": "14.05", "alt": "Hava Platformları", "baslik": "Yerli genel maksat helikopteri için teslimat takvimi açıklandı", "yazar": "Arda Kılınç", "sure": "4 dk", "izlenme": "11,3 B"},
+      {"saat": "12.25", "alt": "Hava Platformları", "baslik": "Eğitim uçağı filosu için yerli aviyonik paket teslim edildi", "yazar": "Arda Kılınç", "sure": "3 dk", "izlenme": "9,5 B"},
+      {"saat": "08.45", "alt": "Hava Platformları", "baslik": "Hava Kuvvetleri'nin modernizasyon programında yeni aşamaya geçildi", "yazar": "Mert Yalın", "sure": "6 dk", "izlenme": "10,4 B"},
+      {"saat": "07.40", "alt": "Hava Platformları", "baslik": "Hürjet'in ikinci prototipi uçuş zarfı testlerine başladı", "yazar": "Onur Kaya", "sure": "2 dk", "izlenme": "12,2 B"} ] },
+    "milli-guvenlik": { t: 49, h: [ /* Kaynak: public milli-guvenlik.html › "Millî Güvenlik haberleri" (ilk 4) */
+      {"saat": "12.45", "alt": "Millî Güvenlik", "baslik": "Kritik altyapıların korunmasına yönelik yönetmelik yürürlüğe girdi", "yazar": "Mert Yalın", "sure": "3 dk", "izlenme": "11,5 B"},
+      {"saat": "09.50", "alt": "Millî Güvenlik", "baslik": "Afet ve acil durumlarda güvenlik koordinasyonu için yeni protokol imzalandı", "yazar": "Arda Kılınç", "sure": "3 dk", "izlenme": "9,7 B"},
+      {"saat": "08.15", "alt": "Millî Güvenlik", "baslik": "Millî Güvenlik Kurulu toplantısının ardından bildiri yayımlandı", "yazar": "Tarık Bulut", "sure": "4 dk", "izlenme": "12,4 B"},
+      {"saat": "07.40", "alt": "Millî Güvenlik", "baslik": "Siber güvenlik kurumu yıllık tehdit raporunu açıkladı", "yazar": "Onur Kaya", "sure": "5 dk", "izlenme": "10,6 B"} ] },
+    nato: { t: 38, h: [ /* Kaynak: public nato.html › "NATO haberleri" (ilk 4) */
+      {"saat": "14.45", "alt": "NATO", "baslik": "NATO savunma harcaması hedefi için ülke raporları açıklandı", "yazar": "Tarık Bulut", "sure": "3 dk", "izlenme": "14,0 B"},
+      {"saat": "14.15", "alt": "NATO", "baslik": "NATO dışişleri bakanları Brüksel'de bir araya geldi", "yazar": "Onur Kaya", "sure": "4 dk", "izlenme": "14,9 B"},
+      {"saat": "10.40", "alt": "NATO", "baslik": "NATO Genel Sekreteri Karadeniz güvenliğini önceliklendirdi", "yazar": "Onur Kaya", "sure": "2 dk", "izlenme": "12,2 B"},
+      {"saat": "08.25", "alt": "NATO", "baslik": "Türkiye NATO'nun yüksek hazırlıklı kuvvetine yeni birlik tahsis etti", "yazar": "Mert Yalın", "sure": "5 dk", "izlenme": "13,1 B"} ] },
+    amerika: { t: 71, h: [ /* Kaynak: public amerika.html › "Amerika haberleri" (ilk 4) */
+      {"saat": "12.55", "alt": "Amerika", "baslik": "Kanada yeni göçmen kotasını açıkladı", "yazar": "Merve Çınar", "sure": "3 dk", "izlenme": "9,7 B"},
+      {"saat": "11.20", "alt": "Amerika", "baslik": "Brezilya'da Amazon koruma fonuna yeni katkı sözü verildi", "yazar": "Kaan Yücel", "sure": "3 dk", "izlenme": "13,8 B"},
+      {"saat": "09.30", "alt": "Amerika", "baslik": "ABD'de Federal Rezerv tutanakları yakın vadede indirime işaret etmedi", "yazar": "Kaan Yücel", "sure": "2 dk", "izlenme": "3,2 B"},
+      {"saat": "07.45", "alt": "Amerika", "baslik": "ABD Kongresi bütçe uzlaşması için yeni tarih belirledi", "yazar": "Zeynep Ak", "sure": "4 dk", "izlenme": "9,9 B"} ] },
+    guvenlik: { t: 117, h: [ /* Kaynak: public guvenlik.html › "Güvenlik haberleri" (ilk 4) */
+      {"saat": "14.05", "alt": "Güvenlik", "baslik": "Siber dolandırıcılığa karşı bankalarla ortak uyarı sistemi kuruldu", "yazar": "Ayşe Yıldız", "sure": "4 dk", "izlenme": "14,2 B"},
+      {"saat": "13.15", "alt": "Güvenlik", "baslik": "Sahte ilan şebekesine yönelik 12 ilde operasyon düzenlendi", "yazar": "Hakan Uysal", "sure": "3 dk", "izlenme": "4,8 B"},
+      {"saat": "11.00", "alt": "Güvenlik", "baslik": "Telefonla dolandırıcılık ihbarları için tek hat devreye girdi", "yazar": "Hakan Uysal", "sure": "5 dk", "izlenme": "12,6 B"},
+      {"saat": "09.00", "alt": "Güvenlik", "baslik": "Kış dönemi trafik denetimlerinde hız ihlali yüzde 9 azaldı", "yazar": "Sibel Arslan", "sure": "3 dk", "izlenme": "11,1 B"} ] },
+    hukuk: { t: 128, h: [ /* Kaynak: public hukuk.html › "Hukuk haberleri" (ilk 4) */
+      {"saat": "12.30", "alt": "Hukuk", "baslik": "Tüketici hakem heyetlerinde parasal sınır yeniden belirlendi", "yazar": "Ayşe Yıldız", "sure": "3 dk", "izlenme": "6,2 B"},
+      {"saat": "11.25", "alt": "Hukuk", "baslik": "Yargıtay kira uyuşmazlıklarında arabuluculuk şartını değerlendirdi", "yazar": "Sibel Arslan", "sure": "4 dk", "izlenme": "9,4 B"},
+      {"saat": "10.20", "alt": "Hukuk", "baslik": "Anayasa Mahkemesi bireysel başvuru istatistiklerini yayımladı", "yazar": "Sibel Arslan", "sure": "5 dk", "izlenme": "8,1 B"},
+      {"saat": "09.40", "alt": "Hukuk", "baslik": "Yeni yargı paketi taslağı barolarla paylaşıldı", "yazar": "Ayşe Yıldız", "sure": "2 dk", "izlenme": "11,7 B"} ] },
+    "ozel-haber": { t: 46, h: [ /* Kaynak: public ozel-haber.html › "Özel Haber haberleri" (ilk 4) */
+      {"saat": "13.55", "alt": "Özel Haber", "baslik": "Sınır illerinde mevsimlik tarım işçilerinin barınma koşulları", "yazar": "Hakan Uysal", "sure": "5 dk", "izlenme": "12,6 B"},
+      {"saat": "12.30", "alt": "Özel Haber", "baslik": "Deprem bölgesinde konteyner kentlerden kalıcı konutlara geçişi üç aile anlatıyor", "yazar": "Sibel Arslan", "sure": "5 dk", "izlenme": "10,5 B"},
+      {"saat": "10.55", "alt": "Özel Haber", "baslik": "Kamu hastanelerinde randevu bekleme süreleri 10 ilden verilerle", "yazar": "Ayşe Yıldız", "sure": "3 dk", "izlenme": "4,8 B"},
+      {"saat": "09.05", "alt": "Özel Haber", "baslik": "Kooperatif konutlarında 12 yıldır teslim bekleyen 400 hane", "yazar": "Sibel Arslan", "sure": "4 dk", "izlenme": "5,3 B"} ] },
+    toplum: { t: 142, h: [ /* Kaynak: public toplum.html › "Toplum haberleri" (ilk 4) */
+      {"saat": "10.35", "alt": "Toplum", "baslik": "TÜİK verilerine göre ortalama hane büyüklüğü 3,1 kişiye geriledi", "yazar": "Ayşe Yıldız", "sure": "3 dk", "izlenme": "10,5 B"},
+      {"saat": "09.50", "alt": "Toplum", "baslik": "Gönüllü kan bağışında kış dönemi açığı için çağrı yapıldı", "yazar": "Mehmet Koçak", "sure": "5 dk", "izlenme": "11,7 B"},
+      {"saat": "07.50", "alt": "Toplum", "baslik": "Gençlerin yüzde 38'i ilk işini dijital platformdan buluyor", "yazar": "Ayşe Yıldız", "sure": "6 dk", "izlenme": "12,6 B"},
+      {"saat": "06.40", "alt": "Toplum", "baslik": "Engelli bireyler için erişilebilir ulaşım haritası yayımlandı", "yazar": "Hakan Uysal", "sure": "3 dk", "izlenme": "6,7 B"} ] }
+  };
   /* K43/K44/K48: satır görseli kitten (K.gorsel: haberin görseli → başlık eşlemesi → konu sözcüğü → kategori; eski yerel başlık tablosu kite taşındı) */
   function gk(h){ return K.gorsel(h); }
   /* K44 (6): Bana Etkisi yalnız üyeye; misafirde Bana Etkisi haberleri ve kutusu gösterilmez */
@@ -366,6 +467,7 @@ body:not(.cizelge) .cizelge-kip{display:none}
   var KONUAD = KONU ? L.altKonular.filter(function(k){ return cipKonu(k) === KONU; })[0] || L.altKonular.filter(function(k, i){ return i > 0 && K.kodla(k) === KONU; })[0] : null, KX;
   if (TUR === 'analiz' && GUNDEM) { X = EK.analiz.h; SECILI = Math.max(0, L.altKonular.indexOf('Analiz')); ALT = { ad: 'Analiz', t: EK.analiz.t, tur: true }; }
   else if (KONUAD && KONUEK[KONU] && EK[KONUEK[KONU]]) { X = EK[KONUEK[KONU]].h; SECILI = L.altKonular.indexOf(KONUAD); ALT = { ad: KONU === 'yerel' ? 'Şehirler' : KONUAD, t: EK[KONUEK[KONU]].t }; }
+  else if (KONUAD && KONUH[KONU]) { X = KONUH[KONU].h; SECILI = L.altKonular.indexOf(KONUAD); ALT = { ad: KONUAD, t: KONUH[KONU].t }; } /* K49 */
   else if (KONUAD) {
     /* öteki alt konular: bölümün o alt konuya (ya da türe) ait haberleri; sözlükte o gün haberi yoksa çip seçili, bölümün bütün haberleri kalır */
     SECILI = L.altKonular.indexOf(KONUAD); KX = X.filter(function(h){ return h.alt === KONUAD || h.tur === KONUAD; });
@@ -562,9 +664,9 @@ body:not(.cizelge) .cizelge-kip{display:none}
   /* çizelge */
   var cz = '<div class="cz cizelge-kip"><div class="gun"><span>Bugün</span><small>23 Kasım Pazartesi · ' + (ALT ? ALT.t : L.toplam) + ' haber</small></div>', dl = '';
   X.forEach(function(h, i){
-    var s = h.saat.split('.')[0] + '.00', v = h.tur === 'Canlı' || h.tur === 'Son Dakika';
+    var hs = h.cs || h.saat, s = h.cs ? h.saat : hs.split('.')[0] + '.00', v = h.tur === 'Canlı' || h.tur === 'Son Dakika'; /* önceki gün haberi (K49): ayraçta gün (22 Kas), satırda saat */
     if (s !== dl){ dl = s; cz += '<div class="dl"><span><b>' + s + '</b></span><span></span></div>'; }
-    cz += '<div class="oc' + (i === 0 ? ' ilk' : '') + (v ? ' vur' : '') + '"><span class="sa">' + h.saat + '</span><span class="ci"></span><span class="no"></span>' +
+    cz += '<div class="oc' + (i === 0 ? ' ilk' : '') + (v ? ' vur' : '') + '"><span class="sa">' + hs + '</span><span class="ci"></span><span class="no"></span>' +
       '<a class="' + (gk(h) ? '' : 'yazi') + '" href="' + d + '"><div>' + mt(h, true) + '<h3 class="uc">' + h.baslik + '</h3>' + H.meta([h.yazar, h.sure, h.izlenme]) + '</div>' + (gk(h) ? '<div class="gr" style="background-image:' + G(gk(h)) + '"></div>' : '') + '</a></div>';
   });
   cz += '</div>';
