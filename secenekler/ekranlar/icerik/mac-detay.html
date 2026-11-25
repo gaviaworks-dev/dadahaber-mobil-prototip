@@ -4,8 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=390,initial-scale=1">
 <title>Galatasaray – Fenerbahçe</title>
-<!-- Dada Haber Mobil · MAÇ DETAYI (E-399–E-406). Detay kökünden (kendi düzeni, kit bileşenleri): düz üst çubuk, skor kutusu (kit maç kutusu, her iki temada koyu; maç başında
-     armalar büyük (K.arma l), arma üstte ad altta; takım → takım sayfası), künye satırı. Takımlar her yerde arma ile (puan tablosu s, son maçlar xs).
+<!-- Dada Haber Mobil · MAÇ DETAYI (E-399–E-406). Detay kökünden (kendi düzeni, kit bileşenleri).
+     K53 (Beyar): başta bütün maçlar için TEK ortak stadyum görseli (K.stadyum(); panelden bir kez yüklenir, API'den gelir; yoksa yer tutucu). Takım kapağı yalnız takım sayfasında.
+     Skor alanı (lig · hafta, armalar K.arma l — arma üstte ad altta, takım → takım sayfası; skor, dakika, künye) görselin üstünde, koyu örtü (K38 fotoğraf üstü yazı); kit maç kutusu
+     zeminsiz kullanılır. Üst çubuk görselli/cam (tur:'foto'), aşağı kayınca aynı stadyum görseliyle daralır. Altında sarı şeritli yaprak (sekmeler, haberler).
+     Bütün haller aynı başla: yükleniyor, hata, çevrimdışı (önbelleksiz) ve bulunamadı halinde kapak aynı yükseklikte yalnız görsel (skor alanı gizli), içerik yaprakta. Takımlar her yerde arma ile (puan tablosu s, son maçlar xs).
      Maç merkezi (Maçkolik tarzı yapı): yapışkan sekmeler (yerinde değişir, kaydırma değil; K18), altında maçla ilgili haberler (K44 satırı).
      Canlı (varsayılan): Anlatım · İstatistik · Kadrolar · Puan Durumu · Rekabet. Bitti (?durum=bitti): Özet (goller, maç haberi) · Kadrolar · Puan Durumu · Rekabet.
      Başlamadı (?durum=once): Kadrolar (ilk 11) · Rekabet · Puan Durumu. Puan Durumu: Süper Lig tablosu, iki takımın satırı vurgulu (maç öncesi, 13 hafta).
@@ -45,9 +48,14 @@
 /* yapışkan denetim bandı (branş segmenti + gün sekmeleri) */
 .sp-yapis{position:sticky;top:var(--k-ub-h);z-index:60;background:var(--zemin)}
 .sp-sw{padding:var(--b-12) var(--kenar) 0}
-/* maç başı: kit maç kutusunda büyük arma (l) üstte, ad altta (dar sütunda ad kısalmasın) */
-.md-kutu .k-mac .tk,.md-kutu .k-mac .tk.sag{flex-direction:column;justify-content:center;text-align:center;min-height:var(--dokun)}
-.md-kutu .k-mac .tk b{max-width:100%}
+/* K53 maç başı: ortak stadyum görseli üstünde skor alanı (kit kapağı; yükseklik içerikten, üst çubuğun altından başlar), koyu örtü fotoğraf üstü yazı için */
+.k-kapak.mac-bas{height:auto;padding-top:var(--k-ub-h)}
+.k-kapak.mac-bas::before{background:linear-gradient(0deg,rgba(10,10,10,.92) 0%,rgba(10,10,10,.72) 55%,rgba(10,10,10,.6) 100%)}
+.mac-bas .k-mac{background:transparent;padding:var(--b-8) 0 0;border-radius:0}
+.mac-bas .k-mac .tk,.mac-bas .k-mac .tk.sag{flex-direction:column;justify-content:center;text-align:center;min-height:var(--dokun)}
+.mac-bas .k-mac .tk b{max-width:100%}
+.mac-bas .k-meta{justify-content:center;margin-top:var(--b-16);color:rgba(255,255,255,.75)}
+.mac-bas.bos .k-mac,.mac-bas.bos .k-meta{visibility:hidden}
 </style>
 </head>
 <body>
@@ -98,9 +106,10 @@
   function bolum(bb, ic){ return '<section class="k-bl sik">' + K.bb(bb) + '<div class="k-ic">' + ic + '</div></section>'; }
   function haberler(l, bb){ return '<section class="k-bl sik">' + K.bb(bb) + '<div class="k-satirlar">' + l.map(function(h){ return K.satir(h); }).join('') + '</div></section>'; }
 
-  /* skor kutusu: kitin maç kutusu; sayfanın kendisi olduğu için bağlantı değil (div) */
-  var kutu = '<div class="k-ic md-kutu" style="padding-top:var(--b-8)">' + K.mac({ hal: KIP === 'once' ? 'baslamadi' : KIP, saat: '14.45' }).replace(/ href="[^"]*"/, '').replace(/^<a /, '<div ').replace(/<\/a>$/, '</div>').replace(/k-arma m\b/g, 'k-arma l') +
-    K.meta(KIP === 'once' ? ['İstanbul', 'Hakem Cem Arıkan', 'Başlama 14.45'] : ['İstanbul', 'Hakem Cem Arıkan', '51.840 seyirci']) + '</div>';
+  /* K53 başlık: ortak stadyum görseli + kitin maç kutusu (zeminsiz); sayfanın kendisi olduğu için bağlantı değil (div) */
+  function kutu(bos){ return '<header class="k-kapak mac-bas' + (bos ? ' bos' : '') + '" style="background-image:' + K.stadyum() + '"' + (bos ? ' aria-hidden="true"' : '') + '>' + K.mac({ hal: KIP === 'once' ? 'baslamadi' : KIP, saat: '14.45' }).replace(/ href="[^"]*"/, '').replace(/^<a /, '<div ').replace(/<\/a>$/, '</div>').replace(/k-arma m\b/g, 'k-arma l') +
+    K.meta(KIP === 'once' ? ['İstanbul', 'Hakem Cem Arıkan', 'Başlama 14.45'] : ['İstanbul', 'Hakem Cem Arıkan', '51.840 seyirci']) + '</header>'; }
+  function yaprak(ic){ return '<div class="k-yaprak">' + ic + '<div class="k-son"></div></div>'; }
 
   /* sekmeler: maç haline göre (Maçkolik tarzı maç merkezi) */
   var AD = { anlatim: 'Anlatım', istatistik: 'İstatistik', kadrolar: 'Kadrolar', puan: 'Puan Durumu', rekabet: 'Rekabet', ozet: 'Özet' };
@@ -121,11 +130,13 @@
     (KIP === 'once' ? haberler(X.filter(function(h){ return !/çıktı$/.test(h.baslik); }), { baslik: 'Maç Öncesi', ikon: 'fa-futbol', sayi: 42 }) : haberler(X, { baslik: 'Maçla İlgili Haberler', ikon: 'fa-futbol', sayi: 42 }));
 
   var DUZ = DUR === 'hata' || DUR === 'bulunamadi' || (DUR === 'cevrimdisi' && Q.get('onbellek') === '0');
-  if (DUR === 'yukleniyor') e.innerHTML = '<div class="k-ust-bosluk"></div><div class="k-ic" style="padding-top:var(--b-8)">' + K.iskelet('metin', 4) + '</div><div class="k-satirlar">' + K.iskelet('satir', 4) + '</div><div class="k-son"></div>';
-  else if (DUZ) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: DUR === 'bulunamadi' ? 'bulunamadi' : DUR === 'cevrimdisi' ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') }) + '<div class="k-son"></div>';
-  else e.innerHTML = '<div class="k-ust-bosluk"></div>' + (DUR === 'yenileniyor' ? K.yenile(['cekiliyor', 'birak', 'bitti'].indexOf(HAL) > -1 ? HAL : 'yenileniyor') : '') + kutu + govde + '<div class="k-son"></div>';
+  if (DUR === 'yukleniyor') e.innerHTML = kutu(true) + yaprak('<div class="k-ic" style="padding-top:var(--b-8)">' + K.iskelet('metin', 4) + '</div><div class="k-satirlar">' + K.iskelet('satir', 4) + '</div>');
+  else if (DUZ) e.innerHTML = kutu(true) + yaprak(K.hata({ tur: DUR === 'bulunamadi' ? 'bulunamadi' : DUR === 'cevrimdisi' ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') }));
+  else e.innerHTML = (DUR === 'yenileniyor' ? '<div class="k-ust-bosluk"></div>' + K.yenile(['cekiliyor', 'birak', 'bitti'].indexOf(HAL) > -1 ? HAL : 'yenileniyor') : '') + kutu(false) + yaprak(govde);
 
-  K.ustCubuk({ geri: true, baslik: DUR === 'bulunamadi' ? 'Maç' : m.ev + ' – ' + m.dep, eylemler: DUZ ? [] : ['paylas'] });
+  /* üst çubuk görselli/cam; daralınca aynı stadyum görseli (takım rengi değil) */
+  var ub = K.ustCubuk({ tur: 'foto', geri: true, baslik: DUR === 'bulunamadi' ? 'Maç' : m.ev + ' – ' + m.dep, eylemler: DUZ || DUR === 'yukleniyor' ? [] : ['paylas'], dar: DUR === 'yenileniyor' });
+  ub.style.setProperty('--k-ub-g', K.stadyum());
   K.altCubuk('bolum');
   K.oynatici();
 
@@ -134,7 +145,7 @@
   /* puan tablosunda iki takımın satırı vurgulu */
   e.querySelectorAll('[data-tablo] tbody tr').forEach(function(tr){ var a = tr.querySelector('.tk'); a = a ? a.lastChild.textContent : ''; if (a === m.ev || a === m.dep) tr.classList.add('is-vurgu'); });
   /* maç başında takım → takım sayfası */
-  e.querySelectorAll('.md-kutu .k-mac .tk').forEach(function(t){ var a = t.querySelector('b'), h = a && SPOR.takimHref(a.textContent); if (h) { t.setAttribute('data-href', h); t.setAttribute('role', 'link'); t.style.cursor = 'pointer'; } });
+  e.querySelectorAll('.mac-bas:not(.bos) .k-mac .tk').forEach(function(t){ var a = t.querySelector('b'), h = a && SPOR.takimHref(a.textContent); if (h) { t.setAttribute('data-href', h); t.setAttribute('role', 'link'); t.style.cursor = 'pointer'; } });
   e.addEventListener('click', function(ev){ var b = ev.target.closest('.sp-yapis .k-sekmeler button'); if (!b) return;
     var i = [].indexOf.call(b.parentNode.querySelectorAll('button'), b);
     e.querySelectorAll('[data-panel]').forEach(function(p){ p.hidden = +p.getAttribute('data-panel') !== i; }); });

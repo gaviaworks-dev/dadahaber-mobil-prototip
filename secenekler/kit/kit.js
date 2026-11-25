@@ -380,6 +380,10 @@
   var TAKIM_KOD = { 'Galatasaray': 'GS', 'Fenerbahçe': 'FB', 'Beşiktaş': 'BJK', 'Trabzonspor': 'TS', 'Türkiye': 'TÜR' };
   /* panelden yüklenen logo ve kapak (prototipte boş; doldurulunca yer tutucunun yerine geçer) */
   K.TAKIM_GORSEL = {};
+  /* K53 (Beyar): Maç Detayı başında bütün maçlar için TEK ortak stadyum görseli (panelden bir kez yüklenir, API'den gelir). Takım kapağı yalnız takım sayfasında.
+     Prototipte panel görseli yok → Süper Lig stadyum fotoğrafı (assets/gorsel/haber/superlig.jpg, KAYNAK.txt) yer tutucu. */
+  K.MAC_STADYUM = '';
+  K.stadyum = function(){ return K.MAC_STADYUM ? "url('" + K.MAC_STADYUM + "')" : G('superlig'); };
   K.takimRenk = function(ad){ var a = TAKIM_KULUP[ad] || ad, r = TAKIM_RENK[a]; return r ? { a1: r[0], a2: r[1], d: r[2], kulup: a } : null; };
   var armaNo = 0;
   K.arma = function(ad, boy, kod){
