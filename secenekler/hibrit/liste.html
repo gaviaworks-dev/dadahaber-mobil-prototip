@@ -147,7 +147,7 @@ body:not(.cizelge) .cizelge-kip{display:none}
   var L = D.liste, X = L.haberler, C = { one: 'ray', olay: 6, olayBicim: 'ray' }, AY = H.AY, d = H.detay();
   document.title = H.cfg.kod + ' · ' + H.cfg.ad + ' · Liste';
   document.getElementById('orta').textContent = L.bolum;
-  document.getElementById('geri').href = H.u('ana.html');
+  document.getElementById('geri').href = H.ana();
   function mt(h){ var v = h.tur === 'Canlı' || h.tur === 'Son Dakika'; return '<span class="mt">' + (h.tur ? (v ? '<span class="tur"><span class="canli-nokta"></span>' + h.tur + '</span>' : '<span class="s" style="font-weight:var(--y-kalin)">' + h.tur + '</span>') : '') + '<span>' + h.alt + '</span><span class="s">' + h.saat + '</span></span>'; }
   function ab(h){ return '<span class="ab"><span><i class="fa-solid fa-clock"></i>' + h.sure + '</span><span><i class="fa-solid fa-eye"></i>' + h.izlenme + '</span><span class="kay" aria-label="Kaydet"><i class="fa-solid fa-bookmark"></i></span></span>'; }
 

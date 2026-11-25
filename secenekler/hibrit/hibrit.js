@@ -27,10 +27,14 @@
   H.cfg = HB[H.n];
 
   /* ---------- Bağlantılar: hibrit ve tema korunur ---------- */
+  /* kök (K22): ?kok=1 bağlantılarda taşınır, alt çubuğun Ana Sayfa'sı kok.html'e gider; ?uye=0 misafir hali */
+  H.kok = Q.get('kok') === '1' || /kok\.html$/.test(location.pathname);
+  H.uye = Q.get('uye') !== '0';
   H.u = function(dosya, ek){
-    var p = 'hb=' + H.n + (H.tema ? '&tema=' + H.tema : '') + (ek ? '&' + ek : '');
+    var p = 'hb=' + H.n + (H.tema ? '&tema=' + H.tema : '') + (H.kok ? '&kok=1' : '') + (H.uye ? '' : '&uye=0') + (ek ? '&' + ek : '');
     return dosya + '?' + p;
   };
+  H.ana = function(){ return H.u(H.kok ? 'kok.html' : 'ana.html'); };
   H.detay = function(){ return H.u('detay.html'); };
   H.liste = function(ek){ return H.u('liste.html', ek); };
 
@@ -190,7 +194,7 @@
 
   /* ---------- Alt gezinme (AS-A çubuğu; ortada vurgulu Akış) ---------- */
   H.altCubuk = function(etkin, koyu){
-    var S = [['ana', 'Ana Sayfa', 'fa-house', H.u('ana.html')], ['bolum', 'Bölümler', 'fa-table-cells-large', H.liste()], ['akis', 'Akış', 'fa-mobile-screen-button', H.u('akis.html')],
+    var S = [['ana', 'Ana Sayfa', 'fa-house', H.ana()], ['bolum', 'Bölümler', 'fa-table-cells-large', H.liste()], ['akis', 'Akış', 'fa-mobile-screen-button', H.u('akis.html')],
              ['dinle', 'Dinle', 'fa-headphones', ''], ['hesap', 'Hesabım', 'fa-circle-user', '']];
     var n = document.createElement('nav'); n.className = 'ac' + (koyu ? ' koyu' : ''); n.setAttribute('aria-label', 'Alt gezinme');
     n.innerHTML = S.map(function(s){
