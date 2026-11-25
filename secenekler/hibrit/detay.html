@@ -260,6 +260,8 @@ html[data-tema="koyu"] .boy input{accent-color:var(--marka)}
     { k: 'neden', ad: 'Neden önemli', ik: 'fa-circle-exclamation', h: '<p class="buyuk">' + d.nedenOnemli + '</p>' },
     { k: 'sonra', ad: 'Bundan sonra', ik: 'fa-forward', h: '<ol class="cizelge"><li><b>4 Aralık Perşembe</b><span>İlk toplantı: veri paylaşımı, rakam beklenmiyor</span></li><li><b>Aralık boyunca</b><span>En az dört toplantı</span></li><li><b>Yılın son haftası</b><span>Kararın açıklanması</span></li><li><b>1 Ocak 2027</b><span>Yeni asgari ücret geçerli</span></li></ol><p class="not">' + d.bundanSonra + '</p>' }
   ];
+  /* K44: Bana Etkisi yalnız üyeye; misafirde bölüm sekmesi hiç yok (giriş çağrısı konmaz) */
+  if (!H.uye) BL = BL.filter(function(b){ return b.k !== 'bana'; });
   var bolumler = '<section class="bolum-kap"><div class="bl" role="tablist" aria-label="Haberin bölümleri">' + BL.map(function(b, i){ return '<button type="button" role="tab" data-b="' + i + '"><i class="fa-solid ' + b.ik + '"></i>' + b.ad + '</button>'; }).join('') + '</div>' +
     '<div class="bk" id="bk">' + BL.map(function(b, i){
       var s = BL[i + 1];
@@ -271,7 +273,7 @@ html[data-tema="koyu"] .boy input{accent-color:var(--marka)}
     '<button class="oynat" type="button"><i class="fa-solid fa-play"></i>Video · ' + d.video + '</button>' +
     '<span class="kat"><i class="fa-solid ' + d.ikon + '"></i>' + d.yol.join(' · ') + '</span><h1>' + d.baslik + '</h1>' +
     '<div class="imza"><span class="av">' + d.yazar.charAt(0) + '</span><span class="t"><b>' + d.yazar + '</b><small>' + d.unvan + '</small></span></div></header>';
-  var basAlt = '<div class="bas-alt"><div class="zaman"><span><i class="fa-solid fa-calendar-day"></i>' + d.tarih.replace(/ \d{4}$/, '') + ' · ' + d.saat + '</span><span><i class="fa-solid fa-rotate"></i>' + d.guncelleme + ' Güncellendi</span><span><i class="fa-solid fa-clock"></i>' + d.sure + '</span></div>' +
+  var basAlt = '<div class="bas-alt">' + H.meta(['<i class="fa-solid fa-calendar-day"></i>' + d.tarih.replace(/ \d{4}$/, '') + ' · ' + d.saat, '<i class="fa-solid fa-rotate"></i>' + d.guncelleme + ' Güncellendi', d.sure, d.izlenme], 'zaman') +
     '<p class="spot">' + d.spot + '</p></div>';
   var seg = '<div class="seg-kap"><div class="seg" role="tablist" aria-label="Okuma derinliği"><span class="kayar" id="kayar"></span>' +
     '<button type="button" role="tab" data-d="0">15 sn<small>3 madde</small></button>' +
