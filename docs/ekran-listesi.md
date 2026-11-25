@@ -519,36 +519,36 @@ Ekrandan bağımsız tam ekran hata ve uygulama durumları (tek hata şablonu) i
 
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
-| E-407 | Bağlantı yok (çevrimdışı) | durum | Hata | `cevrimdisi.html` | — | Tam ekran; Yeniden dene + "Kaydedilenleri oku" | `ekranlar/durum/hata.html?durum=cevrimdisi` |   |
-| E-408 | Sunucu hatası | durum | Hata | `500.html` | — | Bir şeyler ters gitti; Yeniden dene; ana sayfaya dön | `ekranlar/durum/hata.html?durum=sunucu` |   |
-| E-409 | Zaman aşımı | durum | Hata | — (sitede yok) | — | Yanıt gecikti; Yeniden dene | `ekranlar/durum/hata.html?durum=zaman-asimi` |   |
-| E-410 | Yeniden deneniyor | durum | Hata | — | — | Düğmede yükleniyor; ikinci başarısızlıkta "Daha sonra dene" | `ekranlar/durum/hata.html?durum=yeniden-deneniyor` |   |
-| E-411 | İçerik bulunamadı | durum | Hata | `404.html` | — | Bulunamadı; arama + bölüm çipleri (yatay kayar) | `ekranlar/durum/hata.html?durum=bulunamadi` |   |
-| E-412 | İçerik kaldırıldı | durum | Hata | `410.html` | — | Yayından kaldırıldı; bölüme dön | `ekranlar/durum/hata.html?durum=kaldirildi` |   |
-| E-413 | Uygulamada yayımlanmıyor | durum | Hata | — (panel "Uygulama" kanalı) | — | Haber yalnız web kanalında: "Web'de aç" | `ekranlar/durum/hata.html?durum=uygulamada-yok` |   |
-| E-414 | Çok fazla istek | durum | Hata | `429.html` | — | Kısa bekleme süresi; sayaçlı Yeniden dene | `ekranlar/durum/hata.html?durum=cok-istek` |   |
-| E-415 | Erişim yok | durum | Hata | `403.html` | — | Bu içeriğe erişilemiyor; ana sayfaya dön | `ekranlar/durum/hata.html?durum=erisim-yok` |   |
+| E-407 | Bağlantı yok (çevrimdışı) | durum | Hata | `cevrimdisi.html` | — | Tam ekran; Yeniden dene + "Kaydedilenleri oku" | `ekranlar/durum/hata.html?durum=cevrimdisi` | ✓ |
+| E-408 | Sunucu hatası | durum | Hata | `500.html` | — | Bir şeyler ters gitti; Yeniden dene; ana sayfaya dön | `ekranlar/durum/hata.html?durum=sunucu` | ✓ |
+| E-409 | Zaman aşımı | durum | Hata | — (sitede yok) | — | Yanıt gecikti; Yeniden dene | `ekranlar/durum/hata.html?durum=zaman-asimi` | ✓ |
+| E-410 | Yeniden deneniyor | durum | Hata | — | — | Düğmede yükleniyor; ikinci başarısızlıkta "Daha sonra dene" | `ekranlar/durum/hata.html?durum=yeniden-deneniyor` | ✓ |
+| E-411 | İçerik bulunamadı | durum | Hata | `404.html` | — | Bulunamadı; arama + bölüm çipleri (yatay kayar) | `ekranlar/durum/hata.html?durum=bulunamadi` | ✓ |
+| E-412 | İçerik kaldırıldı | durum | Hata | `410.html` | — | Yayından kaldırıldı; bölüme dön | `ekranlar/durum/hata.html?durum=kaldirildi` | ✓ |
+| E-413 | Uygulamada yayımlanmıyor | durum | Hata | — (panel "Uygulama" kanalı) | — | Haber yalnız web kanalında: "Web'de aç" | `ekranlar/durum/hata.html?durum=uygulamada-yok` | ✓ |
+| E-414 | Çok fazla istek | durum | Hata | `429.html` | — | Kısa bekleme süresi; sayaçlı Yeniden dene | `ekranlar/durum/hata.html?durum=cok-istek` | ✓ |
+| E-415 | Erişim yok | durum | Hata | `403.html` | — | Bu içeriğe erişilemiyor; ana sayfaya dön | `ekranlar/durum/hata.html?durum=erisim-yok` | ✓ |
 
 ### Uygulama düzeyi
 
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
-| E-416 | Güncelleme zorunlu | durum | Uygulama | — (sitede yok) | — | Tam ekran, kapatılamaz; "Güncelle" → mağaza | `ekranlar/durum/guncelleme.html?durum=zorunlu` |   |
-| E-417 | Güncelleme önerilen | durum | Uygulama | — | — | Alt sayfa; Güncelle · Sonra | `ekranlar/durum/guncelleme.html?durum=onerilen` |   |
-| E-418 | Bakım modu | durum | Uygulama | `bakim.html` (panel Site Ayarları) | — | Logo, tahmini bitiş saati, Yeniden dene; kaydedilenler okunabilir | `ekranlar/durum/bakim.html` |   |
-| E-419 | Bakım bitti | durum | Uygulama | — | — | Yeniden dene sonrası ana sayfaya geçiş | `ekranlar/durum/bakim.html?durum=bitti` |   |
-| E-420 | Yakında (özellik henüz açık değil) | durum | Uygulama | `yakinda.html` | — | Özellik adı, kısa açıklama, "Hazır olunca haber ver" anahtarı | `ekranlar/durum/yakinda.html` |   |
+| E-416 | Güncelleme zorunlu | durum | Uygulama | — (sitede yok) | — | Tam ekran, kapatılamaz; "Güncelle" → mağaza | `ekranlar/durum/guncelleme.html?durum=zorunlu` | ✓ |
+| E-417 | Güncelleme önerilen | durum | Uygulama | — | — | Alt sayfa; Güncelle · Sonra | `ekranlar/durum/guncelleme.html?durum=onerilen` | ✓ |
+| E-418 | Bakım modu | durum | Uygulama | `bakim.html` (panel Site Ayarları) | — | Logo, tahmini bitiş saati, Yeniden dene; kaydedilenler okunabilir | `ekranlar/durum/bakim.html` | ✓ |
+| E-419 | Bakım bitti | durum | Uygulama | — | — | Yeniden dene sonrası ana sayfaya geçiş | `ekranlar/durum/bakim.html?durum=bitti` | ✓ |
+| E-420 | Yakında (özellik henüz açık değil) | durum | Uygulama | `yakinda.html` | — | Özellik adı, kısa açıklama, "Hazır olunca haber ver" anahtarı | `ekranlar/durum/yakinda.html` | ✓ |
 
 ### Ortak etkileşim halleri (bütün listeler)
 
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
-| E-421 | Aşağı çekip yenileme · aşamalar | durum | Yenileme | — | — | Çekiliyor → bırak → yenileniyor → "Güncel · 16.05"; haptik | `ekranlar/durum/yenileme.html` |   |
-| E-422 | Yenileme · yeni içerik hapı | durum | Yenileme | — | — | "N yeni haber" hapı; dokununca başa ve yenile | `ekranlar/durum/yenileme.html?durum=yeni-icerik` |   |
-| E-423 | Yenileme · başarısız | durum | Yenileme | — | — | Eski içerik kalır; "Yenilenemedi" kısa bildirimi | `ekranlar/durum/yenileme.html?durum=hata` |   |
-| E-424 | Sayfa sonu · daha fazla yükleniyor | durum | Sayfa sonu | — (sitede sayfalama) | — | Son kartın altında yükleniyor | `ekranlar/durum/sayfa-sonu.html` |   |
-| E-425 | Sayfa sonu · hepsi bu kadar | durum | Sayfa sonu | — | — | Liste bitti işareti; başa dön | `ekranlar/durum/sayfa-sonu.html?durum=son` |   |
-| E-426 | Sayfa sonu · yüklenemedi | durum | Sayfa sonu | — | — | Satır içi Yeniden dene | `ekranlar/durum/sayfa-sonu.html?durum=hata` |   |
+| E-421 | Aşağı çekip yenileme · aşamalar | durum | Yenileme | — | — | Çekiliyor → bırak → yenileniyor → "Güncel · 16.05"; haptik | `ekranlar/durum/yenileme.html` | ✓ |
+| E-422 | Yenileme · yeni içerik hapı | durum | Yenileme | — | — | "N yeni haber" hapı; dokununca başa ve yenile | `ekranlar/durum/yenileme.html?durum=yeni-icerik` | ✓ |
+| E-423 | Yenileme · başarısız | durum | Yenileme | — | — | Eski içerik kalır; "Yenilenemedi" kısa bildirimi | `ekranlar/durum/yenileme.html?durum=hata` | ✓ |
+| E-424 | Sayfa sonu · daha fazla yükleniyor | durum | Sayfa sonu | — (sitede sayfalama) | — | Son kartın altında yükleniyor | `ekranlar/durum/sayfa-sonu.html` | ✓ |
+| E-425 | Sayfa sonu · hepsi bu kadar | durum | Sayfa sonu | — | — | Liste bitti işareti; başa dön | `ekranlar/durum/sayfa-sonu.html?durum=son` | ✓ |
+| E-426 | Sayfa sonu · yüklenemedi | durum | Sayfa sonu | — | — | Satır içi Yeniden dene | `ekranlar/durum/sayfa-sonu.html?durum=hata` | ✓ |
 
 ### Zorunlu boş durumlar (dizin; yeni satır değildir)
 
@@ -574,49 +574,49 @@ Açılış, tanıtım, izin, kişiselleştirme, giriş ve üyelik akışı.
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
 | E-427 | Açılış (splash) · soğuk açılış | giriş | Açılış | — | — | iOS durağan görüntü; Android 12+ sistem açılışı (simge + zemin); yapılıyor | `ekranlar/giris/acilis.html` | ✓ |
-| E-428 | Açılış · bağlantı yok | durum | Açılış | — | — | Doğrudan çevrimdışı okumaya (Kaydedilenler) | `ekranlar/giris/acilis.html?durum=cevrimdisi` |   |
-| E-429 | Açılış · güncelleme zorunlu | durum | Açılış | — | — | Açılıştan güncelleme ekranına geçiş (E-416) | `ekranlar/giris/acilis.html?durum=guncelleme` |   |
+| E-428 | Açılış · bağlantı yok | durum | Açılış | — | — | Doğrudan çevrimdışı okumaya (Kaydedilenler) | `ekranlar/giris/acilis.html?durum=cevrimdisi` | ✓ |
+| E-429 | Açılış · güncelleme zorunlu | durum | Açılış | — | — | Açılıştan güncelleme ekranına geçiş (E-416) | `ekranlar/giris/acilis.html?durum=guncelleme` | ✓ |
 | E-430 | Tanıtım · adım n | giriş | Tanıtım | `karsilama.html` (tercih seçimi) | — | Değer ekranları, her adımda Atla; yapılıyor | `ekranlar/giris/tanitim.html?adim=1` (adım 1–4) | ✓ |
 
 ### İzin ve kişiselleştirme
 
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
-| E-431 | Bildirim izni · ön ekran | giriş | İzin | bildirim izni kartı (C8) | — | Ne gelecek (Son Dakika, takımın maçı), Bildirimleri aç; "Şimdi değil" bekleyen #5 | `ekranlar/giris/bildirim-izni.html` |   |
-| E-432 | Bildirim izni · sistem iletişim kutusu | sistem | İzin | — | — | iOS ve Android 13+ sistem penceresi (yalnız görünüm notu) | `ekranlar/giris/bildirim-izni.html?durum=sistem` |   |
-| E-433 | Bildirim izni · reddedildi | durum | İzin | — | — | Sonra açmak için Ayarlar yolu; uygulama devam eder | `ekranlar/giris/bildirim-izni.html?durum=reddedildi` |   |
-| E-434 | Konu ve kategori seçimi | giriş | Kişiselleştirme | `karsilama.html`, `hesabim-tercihler.html` | — | 8 bölüm ve konular çip; en az seçim sayısı karar bekliyor | `ekranlar/giris/konu-secimi.html` |   |
-| E-435 | Takım seçimi | giriş | Kişiselleştirme | `karsilama.html` (takım) | — | Galatasaray, Fenerbahçe, Beşiktaş, Trabzonspor, Süper Lig, Avrupa Ligleri; Atla | `ekranlar/giris/konu-secimi.html?adim=takim` |   |
-| E-436 | Şehir seçimi | giriş | Kişiselleştirme | `karsilama.html` (şehir) | — | Konumumu kullan ya da listeden (Şehirler) | `ekranlar/giris/konu-secimi.html?adim=sehir` |   |
-| E-437 | Konu seçimi · hazırlanıyor | durum | Kişiselleştirme | — | — | "Ana sayfan hazırlanıyor" kısa geçiş → ana sayfa | `ekranlar/giris/konu-secimi.html?durum=hazirlaniyor` |   |
+| E-431 | Bildirim izni · ön ekran | giriş | İzin | bildirim izni kartı (C8) | — | Ne gelecek (Son Dakika, takımın maçı), Bildirimleri aç; "Şimdi değil" bekleyen #5 | `ekranlar/giris/bildirim-izni.html` | ✓ |
+| E-432 | Bildirim izni · sistem iletişim kutusu | sistem | İzin | — | — | iOS ve Android 13+ sistem penceresi (yalnız görünüm notu) | `ekranlar/giris/bildirim-izni.html?durum=sistem` | ✓ |
+| E-433 | Bildirim izni · reddedildi | durum | İzin | — | — | Sonra açmak için Ayarlar yolu; uygulama devam eder | `ekranlar/giris/bildirim-izni.html?durum=reddedildi` | ✓ |
+| E-434 | Konu ve kategori seçimi | giriş | Kişiselleştirme | `karsilama.html`, `hesabim-tercihler.html` | — | 8 bölüm ve konular çip; en az seçim sayısı karar bekliyor | `ekranlar/giris/konu-secimi.html` | ✓ |
+| E-435 | Takım seçimi | giriş | Kişiselleştirme | `karsilama.html` (takım) | — | Galatasaray, Fenerbahçe, Beşiktaş, Trabzonspor, Süper Lig, Avrupa Ligleri; Atla | `ekranlar/giris/konu-secimi.html?adim=takim` | ✓ |
+| E-436 | Şehir seçimi | giriş | Kişiselleştirme | `karsilama.html` (şehir) | — | Konumumu kullan ya da listeden (Şehirler) | `ekranlar/giris/konu-secimi.html?adim=sehir` | ✓ |
+| E-437 | Konu seçimi · hazırlanıyor | durum | Kişiselleştirme | — | — | "Ana sayfan hazırlanıyor" kısa geçiş → ana sayfa | `ekranlar/giris/konu-secimi.html?durum=hazirlaniyor` | ✓ |
 
 ### Giriş ve üyelik
 
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
-| E-438 | Giriş | giriş | Üyelik | `giris.html` + pencere | — | E-posta + şifre, Apple · Google · Facebook, Şifremi unuttum, Üye ol; sayfa mı alt sayfa mı B-15 | `ekranlar/giris/giris.html` |   |
-| E-439 | Giriş · hatalı şifre | durum | Üyelik | `giris.html` | — | Alan altında tek satır hata | `ekranlar/giris/giris.html?durum=hata` |   |
-| E-440 | Giriş · hesap kilitlendi | durum | Üyelik | — | — | Çok deneme; bekleme süresi + şifre sıfırla | `ekranlar/giris/giris.html?durum=kilitli` |   |
-| E-441 | Giriş · gönderiliyor | durum | Üyelik | — | — | Düğmede yükleniyor; alanlar kilitli | `ekranlar/giris/giris.html?durum=gonderiliyor` |   |
-| E-442 | Giriş · çevrimdışı | durum | Üyelik | `cevrimdisi.html` | — | Giriş için bağlantı gerekli bandı | `ekranlar/giris/giris.html?durum=cevrimdisi` |   |
-| E-443 | Üye ol | giriş | Üyelik | `uye-ol.html` + pencere | — | Ad, e-posta, şifre; onay metinleri (Aydınlatma, Açık Rıza, bülten izni); sosyal hesap | `ekranlar/giris/uye-ol.html` |   |
-| E-444 | Üye ol · alan hataları | durum | Üyelik | `uye-ol.html` | — | Geçersiz e-posta, zayıf şifre, onay eksik | `ekranlar/giris/uye-ol.html?durum=hata` |   |
-| E-445 | Üye ol · e-posta zaten kayıtlı | durum | Üyelik | — | — | Giriş yap ya da şifremi unuttum | `ekranlar/giris/uye-ol.html?durum=kayitli` |   |
-| E-446 | Üye ol · gönderiliyor | durum | Üyelik | — | — | Düğmede yükleniyor | `ekranlar/giris/uye-ol.html?durum=gonderiliyor` |   |
-| E-447 | Şifremi unuttum · e-posta | giriş | Üyelik | `sifremi-unuttum.html` | — | E-posta alanı, Bağlantı gönder | `ekranlar/giris/sifremi-unuttum.html` |   |
-| E-448 | Şifremi unuttum · bağlantı gönderildi | durum | Üyelik | `sifre-gonderildi.html` | — | E-postanı kontrol et; sayaçlı yeniden gönder; E-posta uygulamasını aç | `ekranlar/giris/sifremi-unuttum.html?adim=gonderildi` |   |
-| E-449 | Şifremi unuttum · yeni şifre | giriş | Üyelik | `sifre-yeni.html` | — | Bağlantıdan uygulamaya (derin bağlantı); yeni şifre iki kez | `ekranlar/giris/sifremi-unuttum.html?adim=yeni` |   |
-| E-450 | Şifremi unuttum · şifre değişti | durum | Üyelik | — | — | Onay + Giriş yap | `ekranlar/giris/sifremi-unuttum.html?adim=tamam` |   |
-| E-451 | Şifremi unuttum · bağlantı geçersiz | durum | Üyelik | `sifre-baglanti-gecersiz.html` | — | Süresi doldu ya da kullanıldı; yeni bağlantı iste | `ekranlar/giris/sifremi-unuttum.html?adim=gecersiz` |   |
-| E-452 | E-posta doğrulama · bekliyor | giriş | Üyelik | `eposta-dogrula.html` | — | Adres gösterilir; yeniden gönder (sayaçlı), adresi değiştir | `ekranlar/giris/eposta-dogrulama.html` |   |
-| E-453 | E-posta doğrulama · yeniden gönderildi | durum | Üyelik | — | — | Kısa bildirim + sayaç yeniden başlar | `ekranlar/giris/eposta-dogrulama.html?durum=gonderildi` |   |
-| E-454 | E-posta doğrulama · doğrulandı | durum | Üyelik | `eposta-dogrulandi.html` | — | Onay → konu seçimi ya da kaldığı yer | `ekranlar/giris/eposta-dogrulama.html?durum=dogrulandi` |   |
-| E-455 | E-posta doğrulama · bağlantı geçersiz | durum | Üyelik | `eposta-dogrula.html` (geçersiz) | — | Yeni bağlantı iste | `ekranlar/giris/eposta-dogrulama.html?durum=gecersiz` |   |
-| E-456 | Sosyal hesapla giriş · yönlendiriliyor | giriş | Üyelik | sitede Google, Facebook, Apple (C31) | — | Sağlayıcı sayfası/sistem penceresi üstünde bekleme; App Store 4.8 notu (Apple ile Giriş) | `ekranlar/giris/sosyal-giris.html` |   |
-| E-457 | Sosyal hesapla giriş · iptal edildi | durum | Üyelik | — | — | Giriş ekranına dönüş, sessiz | `ekranlar/giris/sosyal-giris.html?durum=iptal` |   |
-| E-458 | Sosyal hesapla giriş · hata | durum | Üyelik | — | — | Sağlayıcıya ulaşılamadı; başka yolla dene | `ekranlar/giris/sosyal-giris.html?durum=hata` |   |
-| E-459 | Sosyal hesapla giriş · hesapları bağla | durum | Üyelik | `hesap-bagla.html` | — | Bu e-posta kayıtlı: şifreyle doğrula ve bağla | `ekranlar/giris/sosyal-giris.html?durum=bagla` |   |
-| E-460 | Sosyal hesapla giriş · onayları tamamla | durum | Üyelik | `uye-ol.html` (onaylar) | — | İlk sosyal girişte Kullanım Koşulları ve Aydınlatma onayı | `ekranlar/giris/sosyal-giris.html?durum=onay` |   |
+| E-438 | Giriş | giriş | Üyelik | `giris.html` + pencere | — | E-posta + şifre, Apple · Google · Facebook, Şifremi unuttum, Üye ol; sayfa mı alt sayfa mı B-15 | `ekranlar/giris/giris.html` | ✓ |
+| E-439 | Giriş · hatalı şifre | durum | Üyelik | `giris.html` | — | Alan altında tek satır hata | `ekranlar/giris/giris.html?durum=hata` | ✓ |
+| E-440 | Giriş · hesap kilitlendi | durum | Üyelik | — | — | Çok deneme; bekleme süresi + şifre sıfırla | `ekranlar/giris/giris.html?durum=kilitli` | ✓ |
+| E-441 | Giriş · gönderiliyor | durum | Üyelik | — | — | Düğmede yükleniyor; alanlar kilitli | `ekranlar/giris/giris.html?durum=gonderiliyor` | ✓ |
+| E-442 | Giriş · çevrimdışı | durum | Üyelik | `cevrimdisi.html` | — | Giriş için bağlantı gerekli bandı | `ekranlar/giris/giris.html?durum=cevrimdisi` | ✓ |
+| E-443 | Üye ol | giriş | Üyelik | `uye-ol.html` + pencere | — | Ad, e-posta, şifre; onay metinleri (Aydınlatma, Açık Rıza, bülten izni); sosyal hesap | `ekranlar/giris/uye-ol.html` | ✓ |
+| E-444 | Üye ol · alan hataları | durum | Üyelik | `uye-ol.html` | — | Geçersiz e-posta, zayıf şifre, onay eksik | `ekranlar/giris/uye-ol.html?durum=hata` | ✓ |
+| E-445 | Üye ol · e-posta zaten kayıtlı | durum | Üyelik | — | — | Giriş yap ya da şifremi unuttum | `ekranlar/giris/uye-ol.html?durum=kayitli` | ✓ |
+| E-446 | Üye ol · gönderiliyor | durum | Üyelik | — | — | Düğmede yükleniyor | `ekranlar/giris/uye-ol.html?durum=gonderiliyor` | ✓ |
+| E-447 | Şifremi unuttum · e-posta | giriş | Üyelik | `sifremi-unuttum.html` | — | E-posta alanı, Bağlantı gönder | `ekranlar/giris/sifremi-unuttum.html` | ✓ |
+| E-448 | Şifremi unuttum · bağlantı gönderildi | durum | Üyelik | `sifre-gonderildi.html` | — | E-postanı kontrol et; sayaçlı yeniden gönder; E-posta uygulamasını aç | `ekranlar/giris/sifremi-unuttum.html?adim=gonderildi` | ✓ |
+| E-449 | Şifremi unuttum · yeni şifre | giriş | Üyelik | `sifre-yeni.html` | — | Bağlantıdan uygulamaya (derin bağlantı); yeni şifre iki kez | `ekranlar/giris/sifremi-unuttum.html?adim=yeni` | ✓ |
+| E-450 | Şifremi unuttum · şifre değişti | durum | Üyelik | — | — | Onay + Giriş yap | `ekranlar/giris/sifremi-unuttum.html?adim=tamam` | ✓ |
+| E-451 | Şifremi unuttum · bağlantı geçersiz | durum | Üyelik | `sifre-baglanti-gecersiz.html` | — | Süresi doldu ya da kullanıldı; yeni bağlantı iste | `ekranlar/giris/sifremi-unuttum.html?adim=gecersiz` | ✓ |
+| E-452 | E-posta doğrulama · bekliyor | giriş | Üyelik | `eposta-dogrula.html` | — | Adres gösterilir; yeniden gönder (sayaçlı), adresi değiştir | `ekranlar/giris/eposta-dogrulama.html` | ✓ |
+| E-453 | E-posta doğrulama · yeniden gönderildi | durum | Üyelik | — | — | Kısa bildirim + sayaç yeniden başlar | `ekranlar/giris/eposta-dogrulama.html?durum=gonderildi` | ✓ |
+| E-454 | E-posta doğrulama · doğrulandı | durum | Üyelik | `eposta-dogrulandi.html` | — | Onay → konu seçimi ya da kaldığı yer | `ekranlar/giris/eposta-dogrulama.html?durum=dogrulandi` | ✓ |
+| E-455 | E-posta doğrulama · bağlantı geçersiz | durum | Üyelik | `eposta-dogrula.html` (geçersiz) | — | Yeni bağlantı iste | `ekranlar/giris/eposta-dogrulama.html?durum=gecersiz` | ✓ |
+| E-456 | Sosyal hesapla giriş · yönlendiriliyor | giriş | Üyelik | sitede Google, Facebook, Apple (C31) | — | Sağlayıcı sayfası/sistem penceresi üstünde bekleme; App Store 4.8 notu (Apple ile Giriş) | `ekranlar/giris/sosyal-giris.html` | ✓ |
+| E-457 | Sosyal hesapla giriş · iptal edildi | durum | Üyelik | — | — | Giriş ekranına dönüş, sessiz | `ekranlar/giris/sosyal-giris.html?durum=iptal` | ✓ |
+| E-458 | Sosyal hesapla giriş · hata | durum | Üyelik | — | — | Sağlayıcıya ulaşılamadı; başka yolla dene | `ekranlar/giris/sosyal-giris.html?durum=hata` | ✓ |
+| E-459 | Sosyal hesapla giriş · hesapları bağla | durum | Üyelik | `hesap-bagla.html` | — | Bu e-posta kayıtlı: şifreyle doğrula ve bağla | `ekranlar/giris/sosyal-giris.html?durum=bagla` | ✓ |
+| E-460 | Sosyal hesapla giriş · onayları tamamla | durum | Üyelik | `uye-ol.html` (onaylar) | — | İlk sosyal girişte Kullanım Koşulları ve Aydınlatma onayı | `ekranlar/giris/sosyal-giris.html?durum=onay` | ✓ |
 
 ## 4 · Hesap
 
