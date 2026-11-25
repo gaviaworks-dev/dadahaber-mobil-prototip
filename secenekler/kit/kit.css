@@ -75,7 +75,13 @@ body:has(.k-mo.acik) .k-son{height:calc(var(--k-ac-h) + 86px)} /* mini oynatıc�
 .k-canli .canli-nokta::after{background:#fff}
 .k-canli.kucuk{height:22px;padding:0 var(--b-8);font-size:10.5px;letter-spacing:.04em;text-transform:uppercase} /* "YAYINDA" (Spiker) */
 /* liste üst satırı: tür · kategori · saat (ayraç ·) */
-.k-ustsatir{display:flex;align-items:center;gap:var(--b-8);font-size:12.5px;font-weight:var(--y-kalin);color:var(--marka-metin);white-space:nowrap;overflow:hidden;min-width:0}
+.k-ustsatir{display:flex;align-items:center;gap:var(--b-8);font-size:12.5px;font-weight:var(--y-kalin);color:var(--marka-metin);white-space:nowrap;min-width:0}
+.k-ustsatir .sol{display:flex;align-items:center;gap:var(--b-8);min-width:0;flex:1;overflow-x:auto;scrollbar-width:none} /* K44: kırılmaz, yana kayar */
+.k-ustsatir .sol::-webkit-scrollbar{display:none}
+.k-ustsatir .sol>*{flex:none}
+.k-ustsatir .sag{margin-left:auto;flex:none;display:inline-flex;align-items:center;gap:var(--b-4);font-weight:var(--y-orta);color:var(--metin-3)}
+.k-ustsatir .sag .ik{display:inline-flex;align-items:center;gap:var(--b-4)}
+.k-ustsatir .sag i{font-size:11px;color:var(--metin-3)}
 .k-ustsatir .s,.k-ustsatir .nk{color:var(--metin-3);font-weight:var(--y-orta)}
 .k-ustsatir .tr{color:var(--metin-3)}
 .k-tur{display:inline-flex;align-items:center;gap:var(--ikon-bosluk);color:var(--anlik);font-weight:var(--y-kalin)}  /* Son Dakika */
@@ -405,16 +411,16 @@ html.tam .k-ac,html.tam .k-mo,html.tam .k-okuma,html.tam .k-ub{position:fixed}
 .k-kart-genis .k-ustsatir{margin-top:var(--b-12)}
 .k-kart-genis h2{margin-top:var(--b-8);font-size:23px;line-height:1.18;font-weight:var(--y-kalin);letter-spacing:-.02em}
 /* liste satırı (liste .sat; 88×88 görsel, K34) */
-.k-satir{display:grid;grid-template-columns:minmax(0,1fr) 88px;gap:var(--b-16);align-items:start;padding:var(--b-16) 0;border-bottom:1px solid var(--cizgi)}
+.k-satir{display:grid;grid-template-columns:88px minmax(0,1fr);gap:var(--b-16);align-items:start;padding:var(--b-16) 0;border-bottom:1px solid var(--cizgi)}
 .k-satir.yazi{grid-template-columns:minmax(0,1fr)}
-.k-satir h3{margin-top:var(--b-8);font-size:16.5px;line-height:1.28;font-weight:var(--y-kalin);letter-spacing:-.01em;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.k-satir h3{margin-top:var(--b-4);font-size:16.5px;line-height:1.28;font-weight:var(--y-kalin);letter-spacing:-.01em;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .k-satir>.gr{width:88px;height:88px;border-radius:var(--k-ic);position:relative}
 .k-satir>.gr .k-md{left:6px;bottom:6px;height:24px;padding:0 var(--b-8);font-size:11px}
 .k-satir.kisa{align-items:center;padding:var(--b-16) 0;border-bottom:0}
 .k-satir.kisa+.k-satir.kisa{border-top:1px solid var(--cizgi)}
 .k-satir.kisa h3{margin-top:0;font-size:16px;line-height:1.3}
 .k-satir.is-okundu h3{color:var(--metin-3)}
-.k-satir.is-secim{grid-template-columns:32px minmax(0,1fr) 88px}
+.k-satir.is-secim{grid-template-columns:32px 88px minmax(0,1fr)}
 .k-satir.is-secim.yazi{grid-template-columns:32px minmax(0,1fr)}
 .k-satir.is-secim .k-onay{padding:0;min-height:0;align-self:center}
 .k-satir.is-bekliyor{opacity:.6}
@@ -1250,3 +1256,13 @@ html[data-tema="koyu"] .k-isk{background-image:linear-gradient(90deg,var(--yuzey
 .k-akordeon:not([open]) p{display:none} /* kapalı akordeonun yanıtı yer kaplamasın (4. dalga) */
 
 .k-anlik,.k-anlik *{transition:none!important} /* banner dönüşümünde geçişsiz */
+
+/* K44 köşe yazısı satırı: solda yazar görseli, yanında bilgiler, altında başlık */
+.k-kose-satir{display:grid;grid-template-columns:56px minmax(0,1fr) auto;gap:var(--b-12);align-items:start;padding:var(--b-16) 0;border-bottom:1px solid var(--cizgi);position:relative;isolation:isolate}
+.k-kose-satir .k-avatar.l{width:56px;height:56px;font-size:19px}
+.k-kose-satir .u{display:flex;align-items:baseline;gap:var(--b-8);min-width:0;white-space:nowrap;overflow-x:auto;scrollbar-width:none}
+.k-kose-satir .u b{font-size:14.5px}
+.k-kose-satir .u small{font-size:12.5px;color:var(--metin-3)}
+.k-kose-satir h3{margin-top:var(--b-4);font-size:16.5px;line-height:1.28;font-weight:var(--y-kalin);letter-spacing:-.01em;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.k-kose-satir .k-meta{margin-top:var(--b-8)}
+.k-kose-satir>.k-kay{align-self:end}

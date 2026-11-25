@@ -121,7 +121,9 @@
     if (t === 'Canlı') p.push(K.canli()); else if (t === 'Son Dakika') p.push('<span class="k-tur"><span class="canli-nokta"></span>' + t + '</span>'); else if (t) p.push('<span class="tr">' + t + '</span>');
     var kat = h.alt || h.kat; if (kat) p.push(K.katEt(kat, o.ikon || h.ikon || K.ikon(h.kat || kat)));
     if (!o.saatsiz && h.saat) p.push('<span class="s">' + h.saat + '</span>');
-    return '<span class="k-ustsatir">' + p.join('<span class="nk">·</span>') + '</span>';
+    /* K44: sığmazsa ikinci satıra kırılmaz, yana kayar; o.sag (ör. süre ya da görüntülenme) sağa yaslanır, ikonlu */
+    var sag = o.sag ? K.meta([o.sag]).replace('<div class="k-meta">', '<span class="sag">').replace(/<\/div>$/, '</span>') : '';
+    return '<span class="k-ustsatir"><span class="sol">' + p.join('<span class="nk">·</span>') + '</span>' + sag + '</span>';
   };
   K.bb = function(o){
     var on = o.canli ? '<span class="canli-nokta"></span>' : (o.ikon ? '<span class="bi">' + I(o.ikon) + '</span>' : '');
@@ -187,17 +189,18 @@
   function medya(h){ var m = h.medya; if (!m) return ''; m = Array.isArray(m) ? m[0] : m; return K.md(m.replace(/^Video · /, ''), /Dinle/.test(m) ? 'fa-headphones' : 'fa-play'); }
   K.ray = function(html, cls){ return '<div class="k-ray' + (cls ? ' ' + cls : '') + '">' + html + '</div>'; };
   K.kartA = function(h, o){ o = o || {};
-    return '<a class="k-kart-a' + (o.basili ? ' is-basili' : '') + '" href="' + (o.href || K.git('detay')) + '"><div class="gr"' + bg(h.g) + '>' + medya(h) + '</div>' + (o.ustSatir ? K.ustSatir(h, o) : '') + '<h3>' + h.baslik + '</h3>' + K.meta([h.yazar, h.sure]) + '</a>'; };
+    return '<a class="k-kart-a' + (o.basili ? ' is-basili' : '') + '" href="' + (o.href || K.git('detay')) + '"><div class="gr"' + bg(h.g) + '>' + medya(h) + '</div>' + (o.ustSatir !== false ? K.ustSatir(h, Object.assign({ sag: h.sure }, o)) : '') + '<h3>' + h.baslik + '</h3>' + K.meta([h.yazar, h.izlenme]) + '</a>'; };
   K.kartK = function(h, o){ o = o || {}; return '<a class="k-kart-k" href="' + (o.href || K.git('detay')) + '"><div class="gr"' + bg(h.g) + '>' + medya(h) + '</div><h4>' + h.baslik + '</h4>' + K.meta([h.yazar, h.sure]) + '</a>'; };
   K.kartGenis = function(h, o){ o = o || {};
-    return '<a class="k-kart-genis" href="' + (o.href || K.git('detay')) + '"><div class="gr"' + bg(h.g) + '>' + medya(h) + '</div>' + K.ustSatir(h, o) + '<h2>' + h.baslik + '</h2><div class="k-ab">' + K.meta([h.yazar, h.sure, h.izlenme]) + K.kaydet(o.kaydedildi) + '</div></a>'; };
+    return '<a class="k-kart-genis" href="' + (o.href || K.git('detay')) + '"><div class="gr"' + bg(h.g) + '>' + medya(h) + '</div>' + K.ustSatir(h, Object.assign({ sag: h.sure }, o)) + '<h2>' + h.baslik + '</h2><div class="k-ab">' + K.meta([h.yazar, h.izlenme]) + K.kaydet(o.kaydedildi) + '</div></a>'; };
   K.satir = function(h, o){ o = o || {};
     var kisa = o.tur === 'kisa', g = h.g && o.gorsel !== false;
     var cls = 'k-satir' + (kisa ? ' kisa' : '') + (g ? '' : ' yazi') + (o.durum ? ' is-' + o.durum : '') + (o.secim ? ' is-secim' : '') + (o.basili ? ' is-basili' : '');
     var gov = kisa ? '<div><h3>' + h.baslik + '</h3>' + K.meta([h.yazar, h.sure]) + '</div>'
       : '<div>' + K.ustSatir(h, o) + '<h3>' + h.baslik + '</h3><div class="k-ab">' + K.meta([h.yazar, h.sure, h.izlenme]) + (o.indir ? K.indir(o.indir) : '') + (o.kaydet === false ? '' : K.kaydet(o.kaydedildi)) + '</div>' +
         (o.durum === 'bekliyor' ? K.etiket('Onay bekliyor', { ikon: 'fa-hourglass-half' }) : '') + '</div>';
-    return '<a class="' + cls + '" href="' + (o.href || K.git('detay')) + '">' + (o.secim ? K.onay('', { secili: o.secili }) : '') + gov + (g ? '<div class="gr"' + bg(h.g) + '>' + (o.md ? K.md(o.md) : '') + '</div>' : '') + '</a>';
+    /* K44 (Yasin Bey): görsel solda; yanında kategori/il · saat, altında başlık, altında yazar ve ikonlu bilgiler + kaydet. Çizelge istisna (görsel sağda). */
+    return '<a class="' + cls + '" href="' + (o.href || K.git('detay')) + '">' + (o.secim ? K.onay('', { secili: o.secili }) : '') + (g ? '<div class="gr"' + bg(h.g) + '>' + (o.md ? K.md(o.md) : '') + '</div>' : '') + gov + '</a>';
   };
   K.kartVideo = function(v, o){ o = o || {};
     return '<a class="k-kart-v' + (o.yatay ? ' yatay' : '') + '" href="' + (o.href || K.git('videoDetay')) + '"><div class="gr"' + bg(v.g) + '>' + K.md(v.sure) + '</div><div>' +
@@ -246,6 +249,9 @@
   K.sd = function(s, ilk){ return '<a class="k-sd' + (ilk ? ' ilk' : '') + '" href="' + K.git('detay') + '"><time>' + s.saat + '<span>' + s.kat + '</span></time><p>' + s.baslik + '</p></a>'; };
   K.sdSatir = function(s, ilk){ return '<a class="k-sd-satir' + (ilk ? ' ilk' : '') + '" href="' + K.git('detay') + '"><time>' + s.saat + '</time><div><p>' + s.baslik + '</p><small>' + s.kat + ' · ' + s.sure + '</small></div></a>'; };
   K.bolumSatir = function(b){ return '<a class="k-bolum-satir" href="' + K.git('liste') + '"><span class="bi">' + I(b.ikon) + '</span><span class="t"><b>' + b.ad + '</b><small>' + b.haberler[0].baslik + '</small></span>' + I('fa-chevron-right') + '</a>'; };
+  /* K44: köşe yazısı satırı aynı mantık: solda yazarın görseli, yanında ad · unvan ve ikonlu bilgiler, altında yazının başlığı */
+  K.koseSatir = function(k, o){ o = o || {}; return '<a class="k-kose-satir" href="' + (o.href || K.git('kose')) + '"><span class="k-avatar l koyu">' + K.bas(k.ad) + '</span><span class="t"><span class="u"><b>' + k.ad + '</b><small>' + k.unvan + '</small></span>' +
+      '<h3>' + k.baslik + '</h3>' + K.meta([o.tarih, k.sure, o.izlenme]) + '</span>' + (o.kaydet === false ? '' : K.kaydet(o.kaydedildi)) + '</a>'; };
   K.yazarSatir = function(k, o){ o = o || {}; return '<div class="k-yazar-satir"><span class="k-avatar m koyu">' + K.bas(k.ad) + '</span><a href="' + K.git('yazar') + '"><b>' + k.ad + '</b><small>' + k.unvan + '</small>' + (k.baslik ? '<p>' + k.baslik + '</p>' : '') + '</a>' +
     K.btn({ metin: o.takip ? 'Takipte' : 'Takip et', ikon: o.takip ? 'fa-check' : 'fa-plus', boy: 'kucuk', tur: o.takip ? '' : 'sade', secili: !!o.takip, attr: 'data-takip' }) + '</div>'; };
   K.bildirim = function(o){ var g = o.g;
