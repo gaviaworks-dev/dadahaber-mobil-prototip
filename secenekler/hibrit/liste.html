@@ -6,15 +6,15 @@
 <title>Hibrit · Liste</title>
 <link rel="stylesheet" href="../_ortak/cerceve.css">
 <link rel="stylesheet" href="../_ortak/marka.css">
-<link rel="stylesheet" href="../_ortak/hikaye.css">
 <link rel="stylesheet" href="hibrit.css">
 <script src="../_ortak/icerik.js"></script>
 <script src="../_ortak/cerceve.js"></script>
 <script src="../_ortak/icerik-ek.js"></script>
 <script src="hibrit.js"></script>
 <style>
-/* Liste: LS-A daralan büyük başlık + birden fazla öne çıkan + Liste ↔ Çizelge (LS-C) + "Gelişen Olaylar" bloğu (LS-D) + hikâye şeridi.
-   Yer ve ağırlık HB[n].liste'den. ?kip=cizelge çizelgede açar; ?dar=1 başlık daralmış halde açar. */
+/* Liste (K21: HB-3 "Bölümler önce" yapısı, dört hibritte aynı): görselli başlık (detay kapağının yarısı; üstünde bölüm adı ve açıklaması; Beyar: hikâye şeridi,
+   Takip et ve Bildirim yok) → alt konu sekmeleri + Liste ↔ Çizelge (LS-C) → öne çıkanlar rayı → haberler, araya "Gelişen Olaylar" rayı (LS-D).
+   Kaydırınca başlık daralır (LS-A). ?kip=cizelge çizelgede açar; ?dar=1 başlık daralmış halde açar. */
 :root{--cam-z:rgba(255,255,255,.86)}
 html[data-tema="koyu"]{--cam-z:rgba(14,14,16,.86)}
 /* daralan üst çubuk */
@@ -25,19 +25,12 @@ html[data-tema="koyu"]{--cam-z:rgba(14,14,16,.86)}
 .cb .orta{position:absolute;left:50%;transform:translateX(-50%);bottom:12px;font-size:16.5px;font-weight:var(--y-kalin);opacity:0;transition:opacity .2s}
 .dar .cb .orta{opacity:1}
 .cb .sag{margin-left:auto;display:flex}
-/* büyük başlık */
-.tepe{padding-top:calc(var(--ust-guvenli) + 46px)}
-.tepe .hk{padding-bottom:6px}
-.buyuk{padding:calc(var(--ust-guvenli) + 52px) var(--kenar) 4px}
-.tepe+.buyuk{padding-top:10px}
-.buyuk .eb{display:inline-flex;align-items:center;gap:var(--ikon-bosluk);font-size:12px;font-weight:var(--y-kalin);letter-spacing:.12em;text-transform:uppercase;color:var(--marka-metin)}
-.buyuk h1{font-size:40px;line-height:1;font-weight:var(--y-kalin);letter-spacing:-.03em;margin-top:8px}
-.buyuk p{margin-top:8px;font-size:14.5px;color:var(--metin-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.tk{margin-top:14px;display:flex;gap:8px}
-.tk button{height:40px;padding:0 16px;border-radius:var(--k-kontrol);font-size:14px;font-weight:var(--y-kalin);display:inline-flex;align-items:center;gap:var(--ikon-bosluk)}
-.tk .t1{background:var(--metin);color:var(--zemin)}
-.tk .t2{background:var(--zemin-2)}
-.hk-ust{padding-top:10px}
+/* görselli başlık: detay kapağının (400) yarısı */
+.buyuk{position:relative;height:200px;display:flex;flex-direction:column;justify-content:flex-end;padding:0 var(--kenar) 16px;color:#fff;isolation:isolate;background-size:cover;background-position:center}
+.buyuk::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,rgba(10,10,10,.9) 0%,rgba(10,10,10,.45) 55%,rgba(10,10,10,.5) 100%)}
+.buyuk h1{font-size:34px;line-height:1;font-weight:var(--y-kalin);letter-spacing:-.03em}
+.buyuk p{margin-top:6px;font-size:14px;color:rgba(255,255,255,.8);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body:not(.dar) .cb .geri,body:not(.dar) .cb .dd{color:#fff}
 /* yapışkan çip satırı + Liste/Çizelge anahtarı */
 .cr{position:sticky;top:calc(var(--ust-guvenli) + 48px);z-index:60;background:var(--zemin);display:flex;align-items:center;border-bottom:1px solid var(--cizgi);margin-top:10px}
 .dar .cr{background:var(--cam-z);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px)}
@@ -63,6 +56,7 @@ html[data-tema="koyu"]{--cam-z:rgba(14,14,16,.86)}
 .one-ray h2{margin-top:6px;font-size:19px;line-height:1.22;font-weight:var(--y-kalin);letter-spacing:-.015em}
 .mt{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:12.5px;font-weight:var(--y-kalin);color:var(--marka-metin);white-space:nowrap;overflow:hidden}
 .mt .s{color:var(--metin-3);font-weight:var(--y-orta)}
+.mt>span+span::before{content:"·";margin-right:8px;color:var(--metin-3);font-weight:var(--y-orta)}
 .mt .tur{color:var(--anlik);display:inline-flex;align-items:center;gap:6px}
 .ab{display:flex;align-items:center;gap:14px;margin-top:8px;font-size:12.5px;color:var(--metin-3);white-space:nowrap}
 .ab i{font-size:11px;margin-right:6px}
@@ -125,7 +119,8 @@ html[data-tema="koyu"]{--cam-z:rgba(14,14,16,.86)}
 .oc .k{font-size:12px;font-weight:var(--y-kalin);color:var(--marka-metin);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap;overflow:hidden;display:flex;gap:6px}
 .oc .k .tur{color:var(--anlik)}
 .oc h3{font-size:15.5px;line-height:1.3;font-weight:var(--y-kalin);margin-top:4px}
-.oc .m{margin-top:6px;font-size:12.5px;color:var(--metin-3);white-space:nowrap;display:flex;gap:12px}
+.oc .m{margin-top:6px;font-size:12.5px;color:var(--metin-3);white-space:nowrap;display:flex;gap:8px}
+.oc .m span+span::before{content:"·";margin-right:8px}
 .oc .gr{width:64px;height:64px;border-radius:var(--k-kontrol);margin-top:4px}
 .cizelge .liste-kip{display:none}
 body:not(.cizelge) .cizelge-kip{display:none}
@@ -149,7 +144,7 @@ body:not(.cizelge) .cizelge-kip{display:none}
 </div>
 <script>
 (function(){
-  var L = D.liste, X = L.haberler, C = H.cfg.liste, AY = H.AY, d = H.detay();
+  var L = D.liste, X = L.haberler, C = { one: 'ray', olay: 6, olayBicim: 'ray' }, AY = H.AY, d = H.detay();
   document.title = H.cfg.kod + ' · ' + H.cfg.ad + ' · Liste';
   document.getElementById('orta').textContent = L.bolum;
   document.getElementById('geri').href = H.u('ana.html');
@@ -203,21 +198,17 @@ body:not(.cizelge) .cizelge-kip{display:none}
     var s = h.saat.split('.')[0] + '.00', v = h.tur === 'Canlı' || h.tur === 'Son Dakika';
     if (s !== dl){ dl = s; cz += '<div class="dl"><span><b>' + s + '</b></span><span></span></div>'; }
     cz += '<div class="oc' + (i === 0 ? ' ilk' : '') + (v ? ' vur' : '') + '"><span class="sa">' + h.saat + '</span><span class="ci"></span><span class="no"></span>' +
-      '<a class="' + (h.g ? '' : 'yazi') + '" href="' + d + '"><div><span class="k">' + (h.tur ? '<span class="' + (v ? 'tur' : '') + '">' + h.tur + '</span>·' : '') + h.alt + '</span><h3 class="uc">' + h.baslik + '</h3>' +
+      '<a class="' + (h.g ? '' : 'yazi') + '" href="' + d + '"><div><span class="k">' + (h.tur ? '<span class="' + (v ? 'tur' : '') + '">' + h.tur + '</span><span>·</span>' : '') + '<span>' + h.alt + '</span></span><h3 class="uc">' + h.baslik + '</h3>' +
       '<span class="m"><span>' + h.sure + '</span><span>' + h.izlenme + '</span><span>' + h.yazar + '</span></span></div>' + (h.g ? '<div class="gr" style="background-image:' + G(h.g) + '"></div>' : '') + '</a></div>';
   });
   cz += '</div>';
 
-  var hk = '<div data-hikaye-serit></div>';
-  var bas = '<header class="buyuk"><span class="eb"><i class="fa-solid ' + L.ikon + '"></i>Bölüm</span><h1>' + L.bolum + '</h1><p>' + L.aciklama + '</p>' +
-    '<div class="tk"><button class="t1" type="button"><i class="fa-solid fa-plus"></i>Takip et</button><button class="t2" type="button"><i class="fa-solid fa-bell"></i>Bildirim</button></div></header>';
+  var bas = '<header class="buyuk" style="background-image:' + G('tbmm') + '"><h1>' + L.bolum + '</h1><p>' + L.aciklama + '</p></header>';
   var cr = '<nav class="cr" aria-label="Alt konular ve görünüm"><div class="ks">' + L.altKonular.map(function(k, i){ return '<a class="cp' + (i === 0 ? ' etkin' : '') + '">' + k + '</a>'; }).join('') + '</div>' +
     '<div class="gc" role="group" aria-label="Görünüm"><button type="button" data-kip="liste" aria-pressed="true" aria-label="Liste"><i class="fa-solid fa-list"></i></button><button type="button" data-kip="cizelge" aria-pressed="false" aria-label="Çizelge"><i class="fa-solid fa-timeline"></i></button></div></nav>';
 
   var o = '';
-  if (C.hikaye === 'tepe') o += '<div class="tepe">' + hk + '</div>' + bas;
-  else o += bas + '<div class="hk-ust">' + hk + '</div>';
-  o += cr;
+  o += bas + cr;
   if (C.olay === 'bas') o += go + one; else o += one;
   o += satirlar + cz + '<div class="son"></div>';
   var e = document.getElementById('ekran');
@@ -232,15 +223,15 @@ body:not(.cizelge) .cizelge-kip{display:none}
     var c = ev.target.closest('.cp'); if (c) document.querySelectorAll('.cp').forEach(function(x){ x.classList.toggle('etkin', x === c); });
     var t = ev.target.closest('[data-takip]'); if (t) { var a = t.classList.toggle('acik'); t.innerHTML = a ? '<i class="fa-solid fa-check"></i>Takipte' : '<i class="fa-solid fa-plus"></i>Takip et'; }
   });
-  e.addEventListener('scroll', function(){ document.body.classList.toggle('dar', e.scrollTop > 70); }, { passive: true });
+  function dar(){ var v = e.scrollTop > 110; document.body.classList.toggle('dar', v); document.body.setAttribute('data-durum', v ? '' : 'acik'); }
+  e.addEventListener('scroll', dar, { passive: true }); dar();
   var Q = new URLSearchParams(location.search);
   if (Q.get('kip') === 'cizelge') kip('cizelge');
-  if (Q.get('dar') === '1') { document.body.classList.add('anlik', 'dar'); e.scrollTop = 300; }
+  if (Q.get('dar') === '1') { document.body.classList.add('anlik'); e.scrollTop = 300; dar(); }
   H.altCubuk('bolum');
   H.oynatici();
   H.raylar();
 })();
 </script>
-<script src="../_ortak/hikaye.js"></script>
 </body>
 </html>
