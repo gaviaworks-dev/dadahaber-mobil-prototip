@@ -626,110 +626,110 @@ Hesabım sekmesi, kaydedilenler, takip, geçmiş, bildirimler, tercihler, ayarla
 
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
-| E-461 | Hesabım · üye | hesap | Hesabım | `hesabim.html` | — | Profil kartı (ad, okuma serisi), Kaydedilenler, Takip, Geçmiş, Bildirimler, Bültenler, Tercihler, Ayarlar; alt çubukta "Hesabım" | `ekranlar/hesap/hesabim.html` |   |
-| E-462 | Hesabım · misafir | hesap | Hesabım | `hesabim-misafir.html` | — | Giriş Yap · Üye Ol çağrısı + cihaz tercihleri (Görünüm, Bildirimler, Kaydedilenler cihazda) | `ekranlar/hesap/hesabim.html?uye=0` |   |
-| E-463 | Profil düzenle | hesap | Hesabım | `hesabim.html` (profil) | — | Ad, profil fotoğrafı (baş harf), e-posta değiştir, şifre değiştir | `ekranlar/hesap/profil.html` |   |
-| E-464 | Profil düzenle · kaydediliyor / alan hatası | durum | Hesabım | — | — | Düğmede yükleniyor; alan altında hata | `ekranlar/hesap/profil.html?durum=hata` |   |
-| E-465 | Profil düzenle · e-posta değişikliği doğrulama | durum | Hesabım | — | — | Yeni adrese doğrulama gönderildi | `ekranlar/hesap/profil.html?durum=dogrula` |   |
-| E-466 | Serim ve rozetlerim | hesap | Hesabım | `hesabim-seri.html` | — | Okuma serisi, rozet ızgarası (Günün Serisi 2. çeyrek) | `ekranlar/hesap/seri.html` |   |
-| E-467 | Serim · seri yok | durum | Hesabım | — | — | Bugün ilk haberini oku, seri başlasın | `ekranlar/hesap/seri.html?durum=bos` |   |
+| E-461 | Hesabım · üye | hesap | Hesabım | `hesabim.html` | — | Profil kartı (ad, okuma serisi), Kaydedilenler, Takip, Geçmiş, Bildirimler, Bültenler, Tercihler, Ayarlar; alt çubukta "Hesabım" | `ekranlar/hesap/hesabim.html` | ✓ |
+| E-462 | Hesabım · misafir | hesap | Hesabım | `hesabim-misafir.html` | — | Giriş Yap · Üye Ol çağrısı + cihaz tercihleri (Görünüm, Bildirimler, Kaydedilenler cihazda) | `ekranlar/hesap/hesabim.html?uye=0` | ✓ |
+| E-463 | Profil düzenle | hesap | Hesabım | `hesabim.html` (profil) | — | Ad, profil fotoğrafı (baş harf), e-posta değiştir, şifre değiştir | `ekranlar/hesap/profil.html` | ✓ |
+| E-464 | Profil düzenle · kaydediliyor / alan hatası | durum | Hesabım | — | — | Düğmede yükleniyor; alan altında hata | `ekranlar/hesap/profil.html?durum=hata` | ✓ |
+| E-465 | Profil düzenle · e-posta değişikliği doğrulama | durum | Hesabım | — | — | Yeni adrese doğrulama gönderildi | `ekranlar/hesap/profil.html?durum=dogrula` | ✓ |
+| E-466 | Serim ve rozetlerim | hesap | Hesabım | `hesabim-seri.html` | — | Okuma serisi, rozet ızgarası (Günün Serisi 2. çeyrek) | `ekranlar/hesap/seri.html` | ✓ |
+| E-467 | Serim · seri yok | durum | Hesabım | — | — | Bugün ilk haberini oku, seri başlasın | `ekranlar/hesap/seri.html?durum=bos` | ✓ |
 
 ### Kaydedilenler ve çevrimdışı
 
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
-| E-468 | Kaydedilenler · üye | hesap | Kaydedilenler | `hesabim-kaydedilenler.html` | Liste | Klasör çipleri (yatay kayar), indirilenler işareti, depolama özeti | `ekranlar/hesap/kaydedilenler.html` |   |
-| E-469 | Kaydedilenler · misafir | hesap | Kaydedilenler | `hesabim-misafir.html` | Liste | Cihazda tutulanlar + "Giriş yap, her cihazda gör" (C30 varsayımı) | `ekranlar/hesap/kaydedilenler.html?uye=0` |   |
-| E-470 | Kaydedilenler · klasör | hesap | Kaydedilenler | `hesabim-kaydedilenler.html` | Liste | Klasör içi; ⋯ menüsü (yeniden adlandır, sil) | `ekranlar/hesap/kaydedilenler.html?klasor=1` |   |
-| E-471 | Kaydedilenler · çevrimdışı indirilenler | hesap | Kaydedilenler | — (uygulamaya özgü) | Liste | İndirilen haber, bülten, podcast bölümü; kapladığı alan | `ekranlar/hesap/kaydedilenler.html?sekme=indirilenler` |   |
-| E-472 | Kaydedilenler · düzenle (çoklu seçim) | durum | Kaydedilenler | — | Liste | Seç, klasöre taşı, sil, indir | `ekranlar/hesap/kaydedilenler.html?durum=duzenle` |   |
-| E-473 | Kaydedilenler · indiriliyor | durum | Kaydedilenler | — | Liste | Kartta indirme halkası; kuyruk | `ekranlar/hesap/kaydedilenler.html?durum=indiriliyor` |   |
-| E-474 | Kaydedilenler · yükleniyor | durum | Kaydedilenler | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/hesap/kaydedilenler.html?durum=yukleniyor` |   |
-| E-475 | Kaydedilenler · aşağı çekip yenileme | durum | Kaydedilenler | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/hesap/kaydedilenler.html?durum=yenileniyor` |   |
-| E-476 | Kaydedilenler · boş | durum | Kaydedilenler | `durumlar.html` (boş) | Liste | Kaydedilen yok: kaydet simgesini göster; ana sayfaya dön | `ekranlar/hesap/kaydedilenler.html?durum=bos` |   |
-| E-477 | Kaydedilenler · hata | durum | Kaydedilenler | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/hesap/kaydedilenler.html?durum=hata` |   |
-| E-478 | Kaydedilenler · çevrimdışı | durum | Kaydedilenler | `cevrimdisi.html` | Liste | Yalnız indirilenler açılır; ötekiler soluk | `ekranlar/hesap/kaydedilenler.html?durum=cevrimdisi` |   |
-| E-479 | İndirilenler · boş | durum | Kaydedilenler | — | Liste | İndirilen yok: kaydederken "Çevrimdışı indir"i aç | `ekranlar/hesap/kaydedilenler.html?sekme=indirilenler&durum=bos` |   |
+| E-468 | Kaydedilenler · üye | hesap | Kaydedilenler | `hesabim-kaydedilenler.html` | Liste | Klasör çipleri (yatay kayar), indirilenler işareti, depolama özeti | `ekranlar/hesap/kaydedilenler.html` | ✓ |
+| E-469 | Kaydedilenler · misafir | hesap | Kaydedilenler | `hesabim-misafir.html` | Liste | Cihazda tutulanlar + "Giriş yap, her cihazda gör" (C30 varsayımı) | `ekranlar/hesap/kaydedilenler.html?uye=0` | ✓ |
+| E-470 | Kaydedilenler · klasör | hesap | Kaydedilenler | `hesabim-kaydedilenler.html` | Liste | Klasör içi; ⋯ menüsü (yeniden adlandır, sil) | `ekranlar/hesap/kaydedilenler.html?klasor=1` | ✓ |
+| E-471 | Kaydedilenler · çevrimdışı indirilenler | hesap | Kaydedilenler | — (uygulamaya özgü) | Liste | İndirilen haber, bülten, podcast bölümü; kapladığı alan | `ekranlar/hesap/kaydedilenler.html?sekme=indirilenler` | ✓ |
+| E-472 | Kaydedilenler · düzenle (çoklu seçim) | durum | Kaydedilenler | — | Liste | Seç, klasöre taşı, sil, indir | `ekranlar/hesap/kaydedilenler.html?durum=duzenle` | ✓ |
+| E-473 | Kaydedilenler · indiriliyor | durum | Kaydedilenler | — | Liste | Kartta indirme halkası; kuyruk | `ekranlar/hesap/kaydedilenler.html?durum=indiriliyor` | ✓ |
+| E-474 | Kaydedilenler · yükleniyor | durum | Kaydedilenler | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/hesap/kaydedilenler.html?durum=yukleniyor` | ✓ |
+| E-475 | Kaydedilenler · aşağı çekip yenileme | durum | Kaydedilenler | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/hesap/kaydedilenler.html?durum=yenileniyor` | ✓ |
+| E-476 | Kaydedilenler · boş | durum | Kaydedilenler | `durumlar.html` (boş) | Liste | Kaydedilen yok: kaydet simgesini göster; ana sayfaya dön | `ekranlar/hesap/kaydedilenler.html?durum=bos` | ✓ |
+| E-477 | Kaydedilenler · hata | durum | Kaydedilenler | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/hesap/kaydedilenler.html?durum=hata` | ✓ |
+| E-478 | Kaydedilenler · çevrimdışı | durum | Kaydedilenler | `cevrimdisi.html` | Liste | Yalnız indirilenler açılır; ötekiler soluk | `ekranlar/hesap/kaydedilenler.html?durum=cevrimdisi` | ✓ |
+| E-479 | İndirilenler · boş | durum | Kaydedilenler | — | Liste | İndirilen yok: kaydederken "Çevrimdışı indir"i aç | `ekranlar/hesap/kaydedilenler.html?sekme=indirilenler&durum=bos` | ✓ |
 
 ### Takip, geçmiş
 
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
-| E-480 | Takip ettiklerim · üye | hesap | Takip | `hesabim-takip.html` | Liste | Sekmeler: Konular, Şehirler, Takımlar, Yazarlar, Kişi ve kurumlar; Takibi bırak | `ekranlar/hesap/takip.html` |   |
-| E-481 | Takip ettiklerim · misafir | hesap | Takip | `hesabim-misafir.html` | Liste | Cihazdaki takipler + giriş çağrısı (C30 varsayımı) | `ekranlar/hesap/takip.html?uye=0` |   |
-| E-482 | Takip ettiklerim · öneriler | hesap | Takip | `hesabim-takip.html` (katalog) | Liste | Takip edilebilecek konular kataloğu | `ekranlar/hesap/takip.html?durum=oneri` |   |
-| E-483 | Takip ettiklerim · yükleniyor | durum | Takip | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/hesap/takip.html?durum=yukleniyor` |   |
-| E-484 | Takip ettiklerim · boş | durum | Takip | `durumlar.html` (boş) | Liste | Takip edilen yok: konu ve takım öner | `ekranlar/hesap/takip.html?durum=bos` |   |
-| E-485 | Takip ettiklerim · hata | durum | Takip | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/hesap/takip.html?durum=hata` |   |
-| E-486 | Takip ettiklerim · çevrimdışı | durum | Takip | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/hesap/takip.html?durum=cevrimdisi` |   |
-| E-487 | Geçmiş (okuma, izleme, dinleme) | hesap | Geçmiş | `hesabim-gecmis.html` | Liste | Sekmeler: Okuduklarım, İzlediklerim, Dinlediklerim; gün ayracı; Temizle | `ekranlar/hesap/gecmis.html` |   |
-| E-488 | Geçmiş · yükleniyor | durum | Geçmiş | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/hesap/gecmis.html?durum=yukleniyor` |   |
-| E-489 | Geçmiş · sayfa sonu yükleme | durum | Geçmiş | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/hesap/gecmis.html?durum=daha-fazla` |   |
-| E-490 | Geçmiş · boş | durum | Geçmiş | `durumlar.html` (boş) | Liste | Geçmiş boş | `ekranlar/hesap/gecmis.html?durum=bos` |   |
-| E-491 | Geçmiş · hata | durum | Geçmiş | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/hesap/gecmis.html?durum=hata` |   |
-| E-492 | Geçmiş · çevrimdışı | durum | Geçmiş | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/hesap/gecmis.html?durum=cevrimdisi` |   |
+| E-480 | Takip ettiklerim · üye | hesap | Takip | `hesabim-takip.html` | Liste | Sekmeler: Konular, Şehirler, Takımlar, Yazarlar, Kişi ve kurumlar; Takibi bırak | `ekranlar/hesap/takip.html` | ✓ |
+| E-481 | Takip ettiklerim · misafir | hesap | Takip | `hesabim-misafir.html` | Liste | Cihazdaki takipler + giriş çağrısı (C30 varsayımı) | `ekranlar/hesap/takip.html?uye=0` | ✓ |
+| E-482 | Takip ettiklerim · öneriler | hesap | Takip | `hesabim-takip.html` (katalog) | Liste | Takip edilebilecek konular kataloğu | `ekranlar/hesap/takip.html?durum=oneri` | ✓ |
+| E-483 | Takip ettiklerim · yükleniyor | durum | Takip | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/hesap/takip.html?durum=yukleniyor` | ✓ |
+| E-484 | Takip ettiklerim · boş | durum | Takip | `durumlar.html` (boş) | Liste | Takip edilen yok: konu ve takım öner | `ekranlar/hesap/takip.html?durum=bos` | ✓ |
+| E-485 | Takip ettiklerim · hata | durum | Takip | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/hesap/takip.html?durum=hata` | ✓ |
+| E-486 | Takip ettiklerim · çevrimdışı | durum | Takip | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/hesap/takip.html?durum=cevrimdisi` | ✓ |
+| E-487 | Geçmiş (okuma, izleme, dinleme) | hesap | Geçmiş | `hesabim-gecmis.html` | Liste | Sekmeler: Okuduklarım, İzlediklerim, Dinlediklerim; gün ayracı; Temizle | `ekranlar/hesap/gecmis.html` | ✓ |
+| E-488 | Geçmiş · yükleniyor | durum | Geçmiş | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/hesap/gecmis.html?durum=yukleniyor` | ✓ |
+| E-489 | Geçmiş · sayfa sonu yükleme | durum | Geçmiş | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/hesap/gecmis.html?durum=daha-fazla` | ✓ |
+| E-490 | Geçmiş · boş | durum | Geçmiş | `durumlar.html` (boş) | Liste | Geçmiş boş | `ekranlar/hesap/gecmis.html?durum=bos` | ✓ |
+| E-491 | Geçmiş · hata | durum | Geçmiş | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/hesap/gecmis.html?durum=hata` | ✓ |
+| E-492 | Geçmiş · çevrimdışı | durum | Geçmiş | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/hesap/gecmis.html?durum=cevrimdisi` | ✓ |
 
 ### Bildirimler ve bültenler
 
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
-| E-493 | Bildirim merkezi | hesap | Bildirim | bildirim merkezi paneli (C32) | Liste | Okunmamış önce, okunmuş soluk; gün ayracı; Tümünü okundu say | `ekranlar/hesap/bildirim-merkezi.html` |   |
-| E-494 | Bildirim merkezi · yükleniyor | durum | Bildirim | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/hesap/bildirim-merkezi.html?durum=yukleniyor` |   |
-| E-495 | Bildirim merkezi · aşağı çekip yenileme | durum | Bildirim | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/hesap/bildirim-merkezi.html?durum=yenileniyor` |   |
-| E-496 | Bildirim merkezi · sayfa sonu yükleme | durum | Bildirim | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/hesap/bildirim-merkezi.html?durum=daha-fazla` |   |
-| E-497 | Bildirim merkezi · boş | durum | Bildirim | `durumlar.html` (boş) | Liste | Bildirim yok; bildirim tercihlerine git | `ekranlar/hesap/bildirim-merkezi.html?durum=bos` |   |
-| E-498 | Bildirim merkezi · hata | durum | Bildirim | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/hesap/bildirim-merkezi.html?durum=hata` |   |
-| E-499 | Bildirim merkezi · çevrimdışı | durum | Bildirim | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/hesap/bildirim-merkezi.html?durum=cevrimdisi` |   |
-| E-500 | Bildirim merkezi · izin kapalı bandı | durum | Bildirim | — | Liste | Sistem izni kapalı: üstte "Bildirimler kapalı · Aç" | `ekranlar/hesap/bildirim-merkezi.html?durum=izin-yok` |   |
-| E-501 | Bildirim tercihleri | hesap | Bildirim | `hesabim-bildirimler.html` | — | Aç/kapa, türler, sessiz saatler; panelin "bütün abonelere" kuralı bekleyen #3 | `ekranlar/hesap/bildirim-tercihleri.html` |   |
-| E-502 | Bildirim tercihleri · sistemde kapalı | durum | Bildirim | — | — | Anahtarlar pasif; "Ayarlar'dan aç" | `ekranlar/hesap/bildirim-tercihleri.html?durum=izin-yok` |   |
-| E-503 | Bültenlerim · üye | hesap | Bülten | `hesabim-bultenler.html`, `bulten.html` | — | Bülten listesi, abone ol / ayrıl anahtarı, sıklık | `ekranlar/hesap/bultenler.html` |   |
-| E-504 | Bültenler · misafir | hesap | Bülten | `bulten.html` | — | E-posta ile abone ol (üyeliksiz mi: B-14) | `ekranlar/hesap/bultenler.html?uye=0` |   |
-| E-505 | Bültenler · abone olundu | durum | Bülten | `bulten.html` (alındı) | — | Doğrulama e-postası gönderildi notu | `ekranlar/hesap/bultenler.html?durum=tamam` |   |
+| E-493 | Bildirim merkezi | hesap | Bildirim | bildirim merkezi paneli (C32) | Liste | Okunmamış önce, okunmuş soluk; gün ayracı; Tümünü okundu say | `ekranlar/hesap/bildirim-merkezi.html` | ✓ |
+| E-494 | Bildirim merkezi · yükleniyor | durum | Bildirim | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/hesap/bildirim-merkezi.html?durum=yukleniyor` | ✓ |
+| E-495 | Bildirim merkezi · aşağı çekip yenileme | durum | Bildirim | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/hesap/bildirim-merkezi.html?durum=yenileniyor` | ✓ |
+| E-496 | Bildirim merkezi · sayfa sonu yükleme | durum | Bildirim | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/hesap/bildirim-merkezi.html?durum=daha-fazla` | ✓ |
+| E-497 | Bildirim merkezi · boş | durum | Bildirim | `durumlar.html` (boş) | Liste | Bildirim yok; bildirim tercihlerine git | `ekranlar/hesap/bildirim-merkezi.html?durum=bos` | ✓ |
+| E-498 | Bildirim merkezi · hata | durum | Bildirim | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/hesap/bildirim-merkezi.html?durum=hata` | ✓ |
+| E-499 | Bildirim merkezi · çevrimdışı | durum | Bildirim | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/hesap/bildirim-merkezi.html?durum=cevrimdisi` | ✓ |
+| E-500 | Bildirim merkezi · izin kapalı bandı | durum | Bildirim | — | Liste | Sistem izni kapalı: üstte "Bildirimler kapalı · Aç" | `ekranlar/hesap/bildirim-merkezi.html?durum=izin-yok` | ✓ |
+| E-501 | Bildirim tercihleri | hesap | Bildirim | `hesabim-bildirimler.html` | — | Aç/kapa, türler, sessiz saatler; panelin "bütün abonelere" kuralı bekleyen #3 | `ekranlar/hesap/bildirim-tercihleri.html` | ✓ |
+| E-502 | Bildirim tercihleri · sistemde kapalı | durum | Bildirim | — | — | Anahtarlar pasif; "Ayarlar'dan aç" | `ekranlar/hesap/bildirim-tercihleri.html?durum=izin-yok` | ✓ |
+| E-503 | Bültenlerim · üye | hesap | Bülten | `hesabim-bultenler.html`, `bulten.html` | — | Bülten listesi, abone ol / ayrıl anahtarı, sıklık | `ekranlar/hesap/bultenler.html` | ✓ |
+| E-504 | Bültenler · misafir | hesap | Bülten | `bulten.html` | — | E-posta ile abone ol (üyeliksiz mi: B-14) | `ekranlar/hesap/bultenler.html?uye=0` | ✓ |
+| E-505 | Bültenler · abone olundu | durum | Bülten | `bulten.html` (alındı) | — | Doğrulama e-postası gönderildi notu | `ekranlar/hesap/bultenler.html?durum=tamam` | ✓ |
 
 ### Tercihler ve ayarlar
 
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
-| E-506 | Tercihler (ilgi, şehir, takım, Bana Etkisi profili) | hesap | Tercihler | `hesabim-tercihler.html` | — | Konu seçimiyle aynı çipler; profil: Öğrenci, Çalışan, Emekli, Ev sahibi, Kiracı, Esnaf | `ekranlar/hesap/tercihler.html` |   |
-| E-507 | Tercihler · takım | hesap | Tercihler | `hesabim-tercihler.html` | — | Ana sayfadaki "Takımını Ekle" buraya | `ekranlar/hesap/tercihler.html?sekme=takim` |   |
-| E-508 | Ayarlar | hesap | Ayarlar | `hesabim.html` (ayar sekmeleri) | — | Görünüm, Bildirimler, Veri ve depolama, Gizlilik, Güvenlik, Yardım, Hakkında, Yasal, Çıkış yap | `ekranlar/hesap/ayarlar.html` |   |
-| E-509 | Ayarlar · misafir | hesap | Ayarlar | `hesabim-misafir.html` | — | Güvenlik ve Çıkış yok; Giriş yap satırı | `ekranlar/hesap/ayarlar.html?uye=0` |   |
-| E-510 | Görünüm (tema, yazı boyutu, Sakin mod) | hesap | Ayarlar | Görünüm penceresi (C7) | — | Açık · Koyu · Sistem; yazı boyutu önizlemeli (detaydaki Aa ile aynı ölçek) | `ekranlar/hesap/gorunum.html` |   |
-| E-511 | Görünüm · en büyük yazı | durum | Ayarlar | — | — | Önizleme en büyük boyutta; kısaltma kuralı bekleyen #7 | `ekranlar/hesap/gorunum.html?boy=en-buyuk` |   |
-| E-512 | Veri ve depolama | hesap | Ayarlar | `hesabim-uygulama.html` | — | Otomatik indir (Günün 5'i), mobil veride video, indirilenler alanı, önbelleği temizle, sürüm | `ekranlar/hesap/depolama.html` |   |
-| E-513 | Güvenlik ve bağlı hesaplar | hesap | Ayarlar | `hesabim-guvenlik.html`, `hesap-bagla.html` | — | Şifre değiştir, iki adımlı doğrulama, oturumlar, Apple · Google · Facebook bağla/kaldır | `ekranlar/hesap/guvenlik.html` |   |
-| E-514 | Güvenlik · oturumlar | hesap | Ayarlar | `hesabim-guvenlik.html` | — | Cihaz satırları; bu cihaz dışındakileri kapat | `ekranlar/hesap/guvenlik.html?sekme=oturumlar` |   |
-| E-515 | Gizlilik ve veriler | hesap | Ayarlar | `hesabim-gizlilik.html` | — | İzinler özeti (bildirim, konum, mikrofon), kişiselleştirme, verilerimi indir, KVKK başvurusu, Hesabı sil | `ekranlar/hesap/gizlilik.html` |   |
-| E-516 | Verilerimi indir · talep alındı | durum | Ayarlar | `hesabim-gizlilik.html` | — | E-postaya gönderilecek notu | `ekranlar/hesap/gizlilik.html?durum=talep` |   |
-| E-517 | Hesabı sil · bilgilendirme | hesap | Hesap silme | `hesabim-gizlilik.html` (silme akışı) | — | Neler silinir; uygulama içinden silme iki mağazada zorunlu | `ekranlar/hesap/hesap-sil.html` |   |
-| E-518 | Hesabı sil · doğrulama | hesap | Hesap silme | — | — | Şifre ya da sosyal hesapla yeniden doğrula; son onay penceresi | `ekranlar/hesap/hesap-sil.html?adim=dogrula` |   |
-| E-519 | Hesabı sil · silindi | durum | Hesap silme | `hesap-silindi.html` | — | Hesap silindi; misafir olarak devam | `ekranlar/hesap/hesap-sil.html?adim=silindi` |   |
+| E-506 | Tercihler (ilgi, şehir, takım, Bana Etkisi profili) | hesap | Tercihler | `hesabim-tercihler.html` | — | Konu seçimiyle aynı çipler; profil: Öğrenci, Çalışan, Emekli, Ev sahibi, Kiracı, Esnaf | `ekranlar/hesap/tercihler.html` | ✓ |
+| E-507 | Tercihler · takım | hesap | Tercihler | `hesabim-tercihler.html` | — | Ana sayfadaki "Takımını Ekle" buraya | `ekranlar/hesap/tercihler.html?sekme=takim` | ✓ |
+| E-508 | Ayarlar | hesap | Ayarlar | `hesabim.html` (ayar sekmeleri) | — | Görünüm, Bildirimler, Veri ve depolama, Gizlilik, Güvenlik, Yardım, Hakkında, Yasal, Çıkış yap | `ekranlar/hesap/ayarlar.html` | ✓ |
+| E-509 | Ayarlar · misafir | hesap | Ayarlar | `hesabim-misafir.html` | — | Güvenlik ve Çıkış yok; Giriş yap satırı | `ekranlar/hesap/ayarlar.html?uye=0` | ✓ |
+| E-510 | Görünüm (tema, yazı boyutu, Sakin mod) | hesap | Ayarlar | Görünüm penceresi (C7) | — | Açık · Koyu · Sistem; yazı boyutu önizlemeli (detaydaki Aa ile aynı ölçek) | `ekranlar/hesap/gorunum.html` | ✓ |
+| E-511 | Görünüm · en büyük yazı | durum | Ayarlar | — | — | Önizleme en büyük boyutta; kısaltma kuralı bekleyen #7 | `ekranlar/hesap/gorunum.html?boy=en-buyuk` | ✓ |
+| E-512 | Veri ve depolama | hesap | Ayarlar | `hesabim-uygulama.html` | — | Otomatik indir (Günün 5'i), mobil veride video, indirilenler alanı, önbelleği temizle, sürüm | `ekranlar/hesap/depolama.html` | ✓ |
+| E-513 | Güvenlik ve bağlı hesaplar | hesap | Ayarlar | `hesabim-guvenlik.html`, `hesap-bagla.html` | — | Şifre değiştir, iki adımlı doğrulama, oturumlar, Apple · Google · Facebook bağla/kaldır | `ekranlar/hesap/guvenlik.html` | ✓ |
+| E-514 | Güvenlik · oturumlar | hesap | Ayarlar | `hesabim-guvenlik.html` | — | Cihaz satırları; bu cihaz dışındakileri kapat | `ekranlar/hesap/guvenlik.html?sekme=oturumlar` | ✓ |
+| E-515 | Gizlilik ve veriler | hesap | Ayarlar | `hesabim-gizlilik.html` | — | İzinler özeti (bildirim, konum, mikrofon), kişiselleştirme, verilerimi indir, KVKK başvurusu, Hesabı sil | `ekranlar/hesap/gizlilik.html` | ✓ |
+| E-516 | Verilerimi indir · talep alındı | durum | Ayarlar | `hesabim-gizlilik.html` | — | E-postaya gönderilecek notu | `ekranlar/hesap/gizlilik.html?durum=talep` | ✓ |
+| E-517 | Hesabı sil · bilgilendirme | hesap | Hesap silme | `hesabim-gizlilik.html` (silme akışı) | — | Neler silinir; uygulama içinden silme iki mağazada zorunlu | `ekranlar/hesap/hesap-sil.html` | ✓ |
+| E-518 | Hesabı sil · doğrulama | hesap | Hesap silme | — | — | Şifre ya da sosyal hesapla yeniden doğrula; son onay penceresi | `ekranlar/hesap/hesap-sil.html?adim=dogrula` | ✓ |
+| E-519 | Hesabı sil · silindi | durum | Hesap silme | `hesap-silindi.html` | — | Hesap silindi; misafir olarak devam | `ekranlar/hesap/hesap-sil.html?adim=silindi` | ✓ |
 
 ### Yardım, hakkında, yasal
 
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
-| E-520 | Geri bildirim (Görüş bildir) | hesap | Destek | Görüş Bildir pencereleri (3), `iletisim.html` | — | Konu seç, metin, ekran görüntüsü ekle | `ekranlar/hesap/geri-bildirim.html` |   |
-| E-521 | Geri bildirim · gönderildi | durum | Destek | — | — | Teşekkür + kapat | `ekranlar/hesap/geri-bildirim.html?durum=tamam` |   |
-| E-522 | Geri bildirim · hata | durum | Destek | — | — | Gönderilemedi; taslak korunur, Yeniden dene | `ekranlar/hesap/geri-bildirim.html?durum=hata` |   |
-| E-523 | Yardım merkezi | hesap | Destek | `yardim-merkezi.html` | — | Sık sorulanlar akordeon, arama | `ekranlar/hesap/yardim.html` |   |
-| E-524 | İletişim | hesap | Destek | `iletisim.html` | — | Başvuru kanalları (7) + form | `ekranlar/hesap/iletisim.html` |   |
-| E-525 | Hakkında | hesap | Kurumsal | `hakkimizda.html` | — | Hakkımızda, sürüm; Künye, Yayın İlkeleri, Düzeltme Politikası bağlantıları | `ekranlar/hesap/hakkinda.html` |   |
-| E-526 | Yasal metinler (dizin) | hesap | Yasal | footer yasal bağlantıları | — | Metin listesi | `ekranlar/hesap/yasal.html` |   |
-| E-527 | Metin · Kullanım Koşulları | hesap | Yasal | `kullanim-kosullari.html` | — | Tek metin şablonu; içindekiler başta açılır | `ekranlar/hesap/yasal.html?metin=kullanim-kosullari` |   |
-| E-528 | Metin · Gizlilik ve KVKK | hesap | Yasal | `gizlilik-ve-kvkk.html` | — | Tek metin şablonu; içindekiler başta açılır | `ekranlar/hesap/yasal.html?metin=gizlilik-ve-kvkk` |   |
-| E-529 | Metin · Aydınlatma Metni | hesap | Yasal | `aydinlatma-metni.html` | — | Tek metin şablonu; içindekiler başta açılır | `ekranlar/hesap/yasal.html?metin=aydinlatma-metni` |   |
-| E-530 | Metin · Açık Rıza Metni | hesap | Yasal | `acik-riza-metni.html` | — | Tek metin şablonu; içindekiler başta açılır | `ekranlar/hesap/yasal.html?metin=acik-riza-metni` |   |
-| E-531 | Metin · Telif Hakları | hesap | Yasal | `telif-haklari.html` | — | Tek metin şablonu; içindekiler başta açılır | `ekranlar/hesap/yasal.html?metin=telif-haklari` |   |
-| E-532 | Metin · Topluluk Kuralları (yorumlar) | hesap | Yasal | `topluluk-kurallari.html` | — | Tek metin şablonu; içindekiler başta açılır | `ekranlar/hesap/yasal.html?metin=topluluk-kurallari` |   |
-| E-533 | Metin · Erişilebilirlik Beyanı | hesap | Yasal | `erisilebilirlik.html` | — | Tek metin şablonu; içindekiler başta açılır | `ekranlar/hesap/yasal.html?metin=erisilebilirlik` |   |
-| E-534 | Metin · Yayın İlkeleri | hesap | Yasal | `yayin-ilkeleri.html` | — | Tek metin şablonu; içindekiler başta açılır | `ekranlar/hesap/yasal.html?metin=yayin-ilkeleri` |   |
-| E-535 | Metin · Düzeltme Politikası | hesap | Yasal | `duzeltme-politikasi.html` | — | Tek metin şablonu; içindekiler başta açılır | `ekranlar/hesap/yasal.html?metin=duzeltme-politikasi` |   |
-| E-536 | Metin · Künye | hesap | Yasal | `kunye.html` | — | Tek metin şablonu; içindekiler başta açılır | `ekranlar/hesap/yasal.html?metin=kunye` |   |
-| E-537 | Metin sayfası · yükleniyor | durum | Yasal | `durumlar.html` (iskelet) | — | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/hesap/yasal.html?metin=kullanim-kosullari&durum=yukleniyor` |   |
-| E-538 | Metin sayfası · hata | durum | Yasal | `500.html` | — | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/hesap/yasal.html?metin=kullanim-kosullari&durum=hata` |   |
-| E-539 | Metin sayfası · çevrimdışı | durum | Yasal | `cevrimdisi.html` | — | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/hesap/yasal.html?metin=kullanim-kosullari&durum=cevrimdisi` |   |
+| E-520 | Geri bildirim (Görüş bildir) | hesap | Destek | Görüş Bildir pencereleri (3), `iletisim.html` | — | Konu seç, metin, ekran görüntüsü ekle | `ekranlar/hesap/geri-bildirim.html` | ✓ |
+| E-521 | Geri bildirim · gönderildi | durum | Destek | — | — | Teşekkür + kapat | `ekranlar/hesap/geri-bildirim.html?durum=tamam` | ✓ |
+| E-522 | Geri bildirim · hata | durum | Destek | — | — | Gönderilemedi; taslak korunur, Yeniden dene | `ekranlar/hesap/geri-bildirim.html?durum=hata` | ✓ |
+| E-523 | Yardım merkezi | hesap | Destek | `yardim-merkezi.html` | — | Sık sorulanlar akordeon, arama | `ekranlar/hesap/yardim.html` | ✓ |
+| E-524 | İletişim | hesap | Destek | `iletisim.html` | — | Başvuru kanalları (7) + form | `ekranlar/hesap/iletisim.html` | ✓ |
+| E-525 | Hakkında | hesap | Kurumsal | `hakkimizda.html` | — | Hakkımızda, sürüm; Künye, Yayın İlkeleri, Düzeltme Politikası bağlantıları | `ekranlar/hesap/hakkinda.html` | ✓ |
+| E-526 | Yasal metinler (dizin) | hesap | Yasal | footer yasal bağlantıları | — | Metin listesi | `ekranlar/hesap/yasal.html` | ✓ |
+| E-527 | Metin · Kullanım Koşulları | hesap | Yasal | `kullanim-kosullari.html` | — | Tek metin şablonu; içindekiler başta açılır | `ekranlar/hesap/yasal.html?metin=kullanim-kosullari` | ✓ |
+| E-528 | Metin · Gizlilik ve KVKK | hesap | Yasal | `gizlilik-ve-kvkk.html` | — | Tek metin şablonu; içindekiler başta açılır | `ekranlar/hesap/yasal.html?metin=gizlilik-ve-kvkk` | ✓ |
+| E-529 | Metin · Aydınlatma Metni | hesap | Yasal | `aydinlatma-metni.html` | — | Tek metin şablonu; içindekiler başta açılır | `ekranlar/hesap/yasal.html?metin=aydinlatma-metni` | ✓ |
+| E-530 | Metin · Açık Rıza Metni | hesap | Yasal | `acik-riza-metni.html` | — | Tek metin şablonu; içindekiler başta açılır | `ekranlar/hesap/yasal.html?metin=acik-riza-metni` | ✓ |
+| E-531 | Metin · Telif Hakları | hesap | Yasal | `telif-haklari.html` | — | Tek metin şablonu; içindekiler başta açılır | `ekranlar/hesap/yasal.html?metin=telif-haklari` | ✓ |
+| E-532 | Metin · Topluluk Kuralları (yorumlar) | hesap | Yasal | `topluluk-kurallari.html` | — | Tek metin şablonu; içindekiler başta açılır | `ekranlar/hesap/yasal.html?metin=topluluk-kurallari` | ✓ |
+| E-533 | Metin · Erişilebilirlik Beyanı | hesap | Yasal | `erisilebilirlik.html` | — | Tek metin şablonu; içindekiler başta açılır | `ekranlar/hesap/yasal.html?metin=erisilebilirlik` | ✓ |
+| E-534 | Metin · Yayın İlkeleri | hesap | Yasal | `yayin-ilkeleri.html` | — | Tek metin şablonu; içindekiler başta açılır | `ekranlar/hesap/yasal.html?metin=yayin-ilkeleri` | ✓ |
+| E-535 | Metin · Düzeltme Politikası | hesap | Yasal | `duzeltme-politikasi.html` | — | Tek metin şablonu; içindekiler başta açılır | `ekranlar/hesap/yasal.html?metin=duzeltme-politikasi` | ✓ |
+| E-536 | Metin · Künye | hesap | Yasal | `kunye.html` | — | Tek metin şablonu; içindekiler başta açılır | `ekranlar/hesap/yasal.html?metin=kunye` | ✓ |
+| E-537 | Metin sayfası · yükleniyor | durum | Yasal | `durumlar.html` (iskelet) | — | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/hesap/yasal.html?metin=kullanim-kosullari&durum=yukleniyor` | ✓ |
+| E-538 | Metin sayfası · hata | durum | Yasal | `500.html` | — | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/hesap/yasal.html?metin=kullanim-kosullari&durum=hata` | ✓ |
+| E-539 | Metin sayfası · çevrimdışı | durum | Yasal | `cevrimdisi.html` | — | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/hesap/yasal.html?metin=kullanim-kosullari&durum=cevrimdisi` | ✓ |
 
 ## 5 · Sistem
 

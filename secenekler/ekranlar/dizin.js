@@ -3732,7 +3732,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Hesabım",
 "dosya": "ekranlar/hesap/hesabim.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-462",
@@ -3740,7 +3740,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Hesabım",
 "dosya": "ekranlar/hesap/hesabim.html?uye=0",
-"ok": false
+"ok": true
 },
 {
 "id": "E-463",
@@ -3748,7 +3748,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Hesabım",
 "dosya": "ekranlar/hesap/profil.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-464",
@@ -3756,7 +3756,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Hesabım",
 "dosya": "ekranlar/hesap/profil.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-465",
@@ -3764,7 +3764,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Hesabım",
 "dosya": "ekranlar/hesap/profil.html?durum=dogrula",
-"ok": false
+"ok": true
 },
 {
 "id": "E-466",
@@ -3772,7 +3772,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Hesabım",
 "dosya": "ekranlar/hesap/seri.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-467",
@@ -3780,7 +3780,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Hesabım",
 "dosya": "ekranlar/hesap/seri.html?durum=bos",
-"ok": false
+"ok": true
 },
 {
 "id": "E-468",
@@ -3788,7 +3788,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Kaydedilenler ve çevrimdışı",
 "dosya": "ekranlar/hesap/kaydedilenler.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-469",
@@ -3796,7 +3796,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Kaydedilenler ve çevrimdışı",
 "dosya": "ekranlar/hesap/kaydedilenler.html?uye=0",
-"ok": false
+"ok": true
 },
 {
 "id": "E-470",
@@ -3804,7 +3804,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Kaydedilenler ve çevrimdışı",
 "dosya": "ekranlar/hesap/kaydedilenler.html?klasor=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-471",
@@ -3812,7 +3812,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Kaydedilenler ve çevrimdışı",
 "dosya": "ekranlar/hesap/kaydedilenler.html?sekme=indirilenler",
-"ok": false
+"ok": true
 },
 {
 "id": "E-472",
@@ -3820,7 +3820,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Kaydedilenler ve çevrimdışı",
 "dosya": "ekranlar/hesap/kaydedilenler.html?durum=duzenle",
-"ok": false
+"ok": true
 },
 {
 "id": "E-473",
@@ -3828,7 +3828,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Kaydedilenler ve çevrimdışı",
 "dosya": "ekranlar/hesap/kaydedilenler.html?durum=indiriliyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-474",
@@ -3836,7 +3836,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Kaydedilenler ve çevrimdışı",
 "dosya": "ekranlar/hesap/kaydedilenler.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-475",
@@ -3844,7 +3844,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Kaydedilenler ve çevrimdışı",
 "dosya": "ekranlar/hesap/kaydedilenler.html?durum=yenileniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-476",
@@ -3852,7 +3852,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Kaydedilenler ve çevrimdışı",
 "dosya": "ekranlar/hesap/kaydedilenler.html?durum=bos",
-"ok": false
+"ok": true
 },
 {
 "id": "E-477",
@@ -3860,7 +3860,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Kaydedilenler ve çevrimdışı",
 "dosya": "ekranlar/hesap/kaydedilenler.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-478",
@@ -3868,7 +3868,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Kaydedilenler ve çevrimdışı",
 "dosya": "ekranlar/hesap/kaydedilenler.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-479",
@@ -3876,7 +3876,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Kaydedilenler ve çevrimdışı",
 "dosya": "ekranlar/hesap/kaydedilenler.html?sekme=indirilenler&durum=bos",
-"ok": false
+"ok": true
 },
 {
 "id": "E-480",
@@ -3884,7 +3884,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Takip, geçmiş",
 "dosya": "ekranlar/hesap/takip.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-481",
@@ -3892,7 +3892,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Takip, geçmiş",
 "dosya": "ekranlar/hesap/takip.html?uye=0",
-"ok": false
+"ok": true
 },
 {
 "id": "E-482",
@@ -3900,7 +3900,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Takip, geçmiş",
 "dosya": "ekranlar/hesap/takip.html?durum=oneri",
-"ok": false
+"ok": true
 },
 {
 "id": "E-483",
@@ -3908,7 +3908,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Takip, geçmiş",
 "dosya": "ekranlar/hesap/takip.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-484",
@@ -3916,7 +3916,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Takip, geçmiş",
 "dosya": "ekranlar/hesap/takip.html?durum=bos",
-"ok": false
+"ok": true
 },
 {
 "id": "E-485",
@@ -3924,7 +3924,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Takip, geçmiş",
 "dosya": "ekranlar/hesap/takip.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-486",
@@ -3932,7 +3932,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Takip, geçmiş",
 "dosya": "ekranlar/hesap/takip.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-487",
@@ -3940,7 +3940,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Takip, geçmiş",
 "dosya": "ekranlar/hesap/gecmis.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-488",
@@ -3948,7 +3948,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Takip, geçmiş",
 "dosya": "ekranlar/hesap/gecmis.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-489",
@@ -3956,7 +3956,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Takip, geçmiş",
 "dosya": "ekranlar/hesap/gecmis.html?durum=daha-fazla",
-"ok": false
+"ok": true
 },
 {
 "id": "E-490",
@@ -3964,7 +3964,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Takip, geçmiş",
 "dosya": "ekranlar/hesap/gecmis.html?durum=bos",
-"ok": false
+"ok": true
 },
 {
 "id": "E-491",
@@ -3972,7 +3972,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Takip, geçmiş",
 "dosya": "ekranlar/hesap/gecmis.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-492",
@@ -3980,7 +3980,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Takip, geçmiş",
 "dosya": "ekranlar/hesap/gecmis.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-493",
@@ -3988,7 +3988,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Bildirimler ve bültenler",
 "dosya": "ekranlar/hesap/bildirim-merkezi.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-494",
@@ -3996,7 +3996,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Bildirimler ve bültenler",
 "dosya": "ekranlar/hesap/bildirim-merkezi.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-495",
@@ -4004,7 +4004,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Bildirimler ve bültenler",
 "dosya": "ekranlar/hesap/bildirim-merkezi.html?durum=yenileniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-496",
@@ -4012,7 +4012,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Bildirimler ve bültenler",
 "dosya": "ekranlar/hesap/bildirim-merkezi.html?durum=daha-fazla",
-"ok": false
+"ok": true
 },
 {
 "id": "E-497",
@@ -4020,7 +4020,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Bildirimler ve bültenler",
 "dosya": "ekranlar/hesap/bildirim-merkezi.html?durum=bos",
-"ok": false
+"ok": true
 },
 {
 "id": "E-498",
@@ -4028,7 +4028,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Bildirimler ve bültenler",
 "dosya": "ekranlar/hesap/bildirim-merkezi.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-499",
@@ -4036,7 +4036,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Bildirimler ve bültenler",
 "dosya": "ekranlar/hesap/bildirim-merkezi.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-500",
@@ -4044,7 +4044,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Bildirimler ve bültenler",
 "dosya": "ekranlar/hesap/bildirim-merkezi.html?durum=izin-yok",
-"ok": false
+"ok": true
 },
 {
 "id": "E-501",
@@ -4052,7 +4052,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Bildirimler ve bültenler",
 "dosya": "ekranlar/hesap/bildirim-tercihleri.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-502",
@@ -4060,7 +4060,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Bildirimler ve bültenler",
 "dosya": "ekranlar/hesap/bildirim-tercihleri.html?durum=izin-yok",
-"ok": false
+"ok": true
 },
 {
 "id": "E-503",
@@ -4068,7 +4068,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Bildirimler ve bültenler",
 "dosya": "ekranlar/hesap/bultenler.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-504",
@@ -4076,7 +4076,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Bildirimler ve bültenler",
 "dosya": "ekranlar/hesap/bultenler.html?uye=0",
-"ok": false
+"ok": true
 },
 {
 "id": "E-505",
@@ -4084,7 +4084,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Bildirimler ve bültenler",
 "dosya": "ekranlar/hesap/bultenler.html?durum=tamam",
-"ok": false
+"ok": true
 },
 {
 "id": "E-506",
@@ -4092,7 +4092,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Tercihler ve ayarlar",
 "dosya": "ekranlar/hesap/tercihler.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-507",
@@ -4100,7 +4100,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Tercihler ve ayarlar",
 "dosya": "ekranlar/hesap/tercihler.html?sekme=takim",
-"ok": false
+"ok": true
 },
 {
 "id": "E-508",
@@ -4108,7 +4108,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Tercihler ve ayarlar",
 "dosya": "ekranlar/hesap/ayarlar.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-509",
@@ -4116,7 +4116,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Tercihler ve ayarlar",
 "dosya": "ekranlar/hesap/ayarlar.html?uye=0",
-"ok": false
+"ok": true
 },
 {
 "id": "E-510",
@@ -4124,7 +4124,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Tercihler ve ayarlar",
 "dosya": "ekranlar/hesap/gorunum.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-511",
@@ -4132,7 +4132,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Tercihler ve ayarlar",
 "dosya": "ekranlar/hesap/gorunum.html?boy=en-buyuk",
-"ok": false
+"ok": true
 },
 {
 "id": "E-512",
@@ -4140,7 +4140,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Tercihler ve ayarlar",
 "dosya": "ekranlar/hesap/depolama.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-513",
@@ -4148,7 +4148,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Tercihler ve ayarlar",
 "dosya": "ekranlar/hesap/guvenlik.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-514",
@@ -4156,7 +4156,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Tercihler ve ayarlar",
 "dosya": "ekranlar/hesap/guvenlik.html?sekme=oturumlar",
-"ok": false
+"ok": true
 },
 {
 "id": "E-515",
@@ -4164,7 +4164,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Tercihler ve ayarlar",
 "dosya": "ekranlar/hesap/gizlilik.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-516",
@@ -4172,7 +4172,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Tercihler ve ayarlar",
 "dosya": "ekranlar/hesap/gizlilik.html?durum=talep",
-"ok": false
+"ok": true
 },
 {
 "id": "E-517",
@@ -4180,7 +4180,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Tercihler ve ayarlar",
 "dosya": "ekranlar/hesap/hesap-sil.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-518",
@@ -4188,7 +4188,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Tercihler ve ayarlar",
 "dosya": "ekranlar/hesap/hesap-sil.html?adim=dogrula",
-"ok": false
+"ok": true
 },
 {
 "id": "E-519",
@@ -4196,7 +4196,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Tercihler ve ayarlar",
 "dosya": "ekranlar/hesap/hesap-sil.html?adim=silindi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-520",
@@ -4204,7 +4204,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Yardım, hakkında, yasal",
 "dosya": "ekranlar/hesap/geri-bildirim.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-521",
@@ -4212,7 +4212,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Yardım, hakkında, yasal",
 "dosya": "ekranlar/hesap/geri-bildirim.html?durum=tamam",
-"ok": false
+"ok": true
 },
 {
 "id": "E-522",
@@ -4220,7 +4220,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Yardım, hakkında, yasal",
 "dosya": "ekranlar/hesap/geri-bildirim.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-523",
@@ -4228,7 +4228,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Yardım, hakkında, yasal",
 "dosya": "ekranlar/hesap/yardim.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-524",
@@ -4236,7 +4236,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Yardım, hakkında, yasal",
 "dosya": "ekranlar/hesap/iletisim.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-525",
@@ -4244,7 +4244,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Yardım, hakkında, yasal",
 "dosya": "ekranlar/hesap/hakkinda.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-526",
@@ -4252,7 +4252,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Yardım, hakkında, yasal",
 "dosya": "ekranlar/hesap/yasal.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-527",
@@ -4260,7 +4260,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Yardım, hakkında, yasal",
 "dosya": "ekranlar/hesap/yasal.html?metin=kullanim-kosullari",
-"ok": false
+"ok": true
 },
 {
 "id": "E-528",
@@ -4268,7 +4268,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Yardım, hakkında, yasal",
 "dosya": "ekranlar/hesap/yasal.html?metin=gizlilik-ve-kvkk",
-"ok": false
+"ok": true
 },
 {
 "id": "E-529",
@@ -4276,7 +4276,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Yardım, hakkında, yasal",
 "dosya": "ekranlar/hesap/yasal.html?metin=aydinlatma-metni",
-"ok": false
+"ok": true
 },
 {
 "id": "E-530",
@@ -4284,7 +4284,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Yardım, hakkında, yasal",
 "dosya": "ekranlar/hesap/yasal.html?metin=acik-riza-metni",
-"ok": false
+"ok": true
 },
 {
 "id": "E-531",
@@ -4292,7 +4292,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Yardım, hakkında, yasal",
 "dosya": "ekranlar/hesap/yasal.html?metin=telif-haklari",
-"ok": false
+"ok": true
 },
 {
 "id": "E-532",
@@ -4300,7 +4300,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Yardım, hakkında, yasal",
 "dosya": "ekranlar/hesap/yasal.html?metin=topluluk-kurallari",
-"ok": false
+"ok": true
 },
 {
 "id": "E-533",
@@ -4308,7 +4308,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Yardım, hakkında, yasal",
 "dosya": "ekranlar/hesap/yasal.html?metin=erisilebilirlik",
-"ok": false
+"ok": true
 },
 {
 "id": "E-534",
@@ -4316,7 +4316,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Yardım, hakkında, yasal",
 "dosya": "ekranlar/hesap/yasal.html?metin=yayin-ilkeleri",
-"ok": false
+"ok": true
 },
 {
 "id": "E-535",
@@ -4324,7 +4324,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Yardım, hakkında, yasal",
 "dosya": "ekranlar/hesap/yasal.html?metin=duzeltme-politikasi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-536",
@@ -4332,7 +4332,7 @@ window.DIZIN = [
 "tur": "hesap",
 "alt": "Yardım, hakkında, yasal",
 "dosya": "ekranlar/hesap/yasal.html?metin=kunye",
-"ok": false
+"ok": true
 },
 {
 "id": "E-537",
@@ -4340,7 +4340,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Yardım, hakkında, yasal",
 "dosya": "ekranlar/hesap/yasal.html?metin=kullanim-kosullari&durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-538",
@@ -4348,7 +4348,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Yardım, hakkında, yasal",
 "dosya": "ekranlar/hesap/yasal.html?metin=kullanim-kosullari&durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-539",
@@ -4356,7 +4356,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Yardım, hakkında, yasal",
 "dosya": "ekranlar/hesap/yasal.html?metin=kullanim-kosullari&durum=cevrimdisi",
-"ok": false
+"ok": true
 }
 ]
 },
