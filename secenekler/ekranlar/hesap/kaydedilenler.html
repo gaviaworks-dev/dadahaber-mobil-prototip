@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Kaydedilenler</title>
+<!--
+  KAYDEDİLENLER VE ÇEVRİMDIŞI · E-468–E-479 · kök: Liste (alt çubukta "Hesabım").
+  Yapı: büyük başlık → sekmeler (Kaydedilenler · İndirilenler, yapışık) → klasör çipleri (yatay kayar; Yeni klasör) → depolama özeti şeridi
+        → liste satırları (kaydet işaretli; indirilen satırda indirildi işareti) → sayfa sonu.
+  Parametreler: ?klasor=1 (Okunacaklar klasörü; ⋯ menüsü) · ?sekme=indirilenler (haber, bülten, podcast; kapladığı alan)
+    · ?durum=duzenle (çoklu seçim; alt çubuğun yerine Taşı · İndir · Sil) | indiriliyor (halka + kuyruk) | yukleniyor | yenileniyor (&hal=cekiliyor|birak|bitti)
+    | bos | hata (&hata=zaman-asimi) | cevrimdisi (yalnız indirilenler açılır, ötekiler soluk) · ?uye=0 (cihazda tutulanlar, C30) · ?tema=koyu · ?calan=1
+  Veri: public hesabim-kaydedilenler.html (klasörler Tümü 37 · Okunacaklar 12 · Ekonomi 9 · Uzun okumalar 10 · Kampüs 6; 9 haber, aynı sırayla),
+        hesabim-misafir.html ("Bu Cihazda Kaydedilenler" 3 haber), bulten.html (Sabah Bülteni · 23 Kasım), D.podcast[0]. Görseller konuya uygun olanlarda; uygun görsel yoksa satır görselsiz.
+  Varsayımlar (onaylanmadı): hangi haberlerin indirildiği, Okunacaklar klasörünün içeriği ve dosya boyutları (MB) örnektir; misafirde klasör yok (C30: kayıt cihazda).
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* KİT ADAYI: seçim eylem çubuğu — çoklu seçimde alt gezinmenin yerini alır (Taşı · İndir · Sil); kitte çoklu seçim satırı var, eylem çubuğu yok */
+.kd-ec{position:absolute;left:0;right:0;bottom:0;z-index:80;height:var(--k-ac-h);background:var(--zemin);border-top:1px solid var(--cizgi);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--b-8);align-content:start;padding:var(--b-8) var(--kenar) 0}
+/* KİT ADAYI: soluk satır — çevrimdışıyken indirilmemiş haber açılamaz; kitte .k-satir için bu hal yok */
+.k-satir.is-soluk{opacity:.42;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), Q = K.q, DUR = K.durum, hal = Q.get('hal');
+  var IND = Q.get('sekme') === 'indirilenler', KLASOR = Q.get('klasor') === '1', DZ = DUR === 'duzenle', INR = DUR === 'indiriliyor', CD = DUR === 'cevrimdisi';
+  var KEND = K.u('ekranlar/hesap/kaydedilenler.html');
+  /* kaynak: dadahaber-prototip/hesabim-kaydedilenler.html (klasör çipleri ve 9 haber) */
+  var KL = [['Tümü', 37], ['Okunacaklar', 12], ['Ekonomi', 9], ['Uzun okumalar', 10], ['Kampüs', 6]];
+  var H = [
+    { alt: 'Finans', kat: 'Finans', saat: '23 Kas', baslik: 'Kira sözleşmesi yenilerken bilinmesi gereken beş madde', yazar: 'Nazlı Öztürk', sure: '4 dk', izlenme: '15,1 B', mb: '1,2 MB' },
+    { alt: 'Gündem', kat: 'Gündem', saat: '23 Kas', baslik: 'Asgari ücret görüşmelerinde ilk toplantı 4 Aralık\'ta yapılacak', yazar: 'Hakan Uysal', sure: '3 dk', izlenme: '24,6 B', g: 'asgari', ind: 1, mb: '2,4 MB' },
+    { alt: 'Teknoloji', kat: 'Keşfet', saat: '23 Kas', baslik: 'Büyük dil modellerinin enerji tüketimi üzerine yeni rapor yayımlandı', yazar: 'Kerem Aksoy', sure: '5 dk', izlenme: '8,5 B', g: 'veri-merkezi', ind: 1, mb: '2,1 MB' },
+    { alt: 'Dünya', kat: 'Dünya', saat: '22 Kas', baslik: 'Doğu Akdeniz enerji hattı için ortak protokol imzalandı', yazar: 'Zeynep Ak', sure: '3 dk', izlenme: '13,8 B', mb: '0,9 MB' },
+    { alt: 'Kampüs', kat: 'Kampüs', saat: '22 Kas', baslik: 'YKS 2027 başvuru takvimi açıklandı', yazar: 'Selin Koç', sure: '3 dk', izlenme: '42,7 B', g: 'yks', ind: 1, mb: '1,8 MB' },
+    { alt: 'Finans', kat: 'Finans', saat: '22 Kas', baslik: 'Enflasyon beklentisi anketinde yıl sonu tahmini geriledi', yazar: 'Elif Aras', sure: '2 dk', izlenme: '12,4 B', g: 'carsi', mb: '1,6 MB' },
+    { alt: 'Kültür ve Yaşam', kat: 'Keşfet', saat: '23 Kas', baslik: 'Arkeoloji müzesinde Hitit dönemi buluntuları ilk kez sergileniyor', yazar: 'Nilay Ersoy', sure: '2 dk', izlenme: '12,8 B', mb: '0,8 MB' },
+    { alt: 'Gündem', kat: 'Gündem', saat: '23 Kas', baslik: 'Barajlardaki doluluk oranı İstanbul\'da yüzde 38\'e geriledi', yazar: 'Ayşe Yıldız', sure: '3 dk', izlenme: '11,7 B', mb: '1,0 MB' },
+    { alt: 'Spor', kat: 'Spor', saat: '23 Kas', baslik: 'Millî takımın aday kadrosu açıklandı', yazar: 'Burak Tan', sure: '2 dk', izlenme: '18,2 B', g: 'milli', ind: 1, mb: '2,2 MB' }];
+  /* kaynak: dadahaber-prototip/hesabim-misafir.html (Bu Cihazda Kaydedilenler) */
+  var M = [H[1], { alt: 'Dada Bağlam', kat: 'Gündem', saat: '22 Kas', baslik: 'İstanbul\'un su sorunu: barajlardan musluğa bir yıl', yazar: 'Dada Bağlam', sure: '6 dk' },
+    { alt: 'Finans', kat: 'Finans', saat: '23 Kas', baslik: D.bolumler[2].haberler[0].baslik, yazar: 'Elif Aras', sure: '3 dk', izlenme: '27,5 B', g: 'faiz' }];
+  /* kaynak: dadahaber-prototip/bulten.html (Sabah Bülteni · 23 Kasım) */
+  var BULTEN = { alt: 'Sabah Bülteni', kat: 'Gündem', saat: '23 Kas', baslik: 'Sabah Bülteni · 23 Kasım: faiz kararı, kar tatili ve bütçe görüşmeleri', yazar: 'Bülten', sure: '3 dk', izlenme: '0,4 MB' };
+  var P = D.podcast[0];
+
+  function satir(h, o){ o = o || {}; var x = Object.assign({}, h); if (o.boyut) x.izlenme = h.mb;
+    return K.satir(x, { kaydedildi: true, indir: INR && o.kuyruk ? 'indiriliyor' : (h.ind ? 'indirildi' : ''), secim: DZ, secili: o.secili, durum: CD && !h.ind ? 'soluk' : '', ikon: o.ikon, gorsel: o.gorsel }); }
+  var sekme = '<div style="position:sticky;top:var(--k-ub-h);z-index:60;background:var(--zemin)">' + K.sekmeler([{ metin: 'Kaydedilenler', sayi: DUR === 'bos' && !IND ? 0 : 37 }, { metin: 'İndirilenler', sayi: DUR === 'bos' ? 0 : 6 }], IND ? 1 : 0) + '</div>';
+  var klasor = '<div class="k-ray s8" style="padding-top:var(--b-16)">' + KL.map(function(k, i){ return K.cip(k[0], { secili: i === 0, sayi: k[1], attr: i === 1 ? 'data-href="' + K.u('ekranlar/hesap/kaydedilenler.html', { klasor: 1 }) + '"' : '' }); }).join('') +
+    K.cip('Yeni klasör', { ikon: 'fa-folder-plus', attr: 'data-yeni-klasor' }) + '</div>';
+  var ozet = '<div class="k-ic" style="padding-top:var(--b-12)">' + K.serit({ ikon: 'fa-circle-down', metin: '6 içerik çevrimdışı', alt: 'Telefonda 54 MB yer kaplıyor', eylem: 'Yönet' }).replace('<button type="button">', '<button type="button" data-href="' + K.u('ekranlar/hesap/depolama.html') + '">') + '</div>';
+  var bas = function(b, p){ return '<div class="k-ust-bosluk"></div>' + (DUR === 'yenileniyor' ? K.yenile(['cekiliyor', 'birak', 'bitti'].indexOf(hal) > -1 ? hal : 'yenileniyor') : '') + '<div class="k-bbas"><h1>' + b + '</h1><p>' + p + '</p></div>'; };
+  var hata = DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : '';
+  var ic, son = '<div class="k-son"></div>';
+
+  if (!K.uye) {
+    ic = bas('Kaydedilenler', 'Giriş yapmadan kaydettiklerin yalnızca bu telefonda durur.') +
+      '<div class="k-ic">' + K.serit({ ikon: 'fa-mobile-screen', metin: 'Bu telefonda tutuluyor', alt: 'Uygulamayı silersen kayıtların da gider.' }) + '</div>' +
+      (DUR === 'bos' ? K.bos('kaydedilen') : '<div class="k-satirlar">' + M.map(function(h){ return satir(h); }).join('') + '</div>') +
+      '<div class="k-ic k-bl sik">' + K.cagri({ ikon: 'fa-right-to-bracket', baslik: 'Giriş yap, her cihazda gör', aciklama: 'Bu telefondaki kayıtların hesabına aktarılır.', eylem: { metin: 'Giriş yap', href: K.git('giris') } }) + '</div>';
+  } else if (KLASOR) {
+    /* klasör içi (varsayım: Okunacaklar'daki haberler örnek) */
+    var KH = [H[0], H[2], H[3], H[6]];
+    ic = bas('Okunacaklar', '12 haber · 1\'i indirildi') + '<div class="k-satirlar">' + KH.map(function(h){ return satir(h); }).join('') + '</div>' + K.dahaFazla('yukleniyor', 'haber');
+  } else if (hata) {
+    ic = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: hata });
+  } else if (DUR === 'yukleniyor') {
+    ic = bas('Kaydedilenler', 'Kaydettiğin haberler ve klasörlerin; her cihazda seninle.') + sekme +
+      '<div style="display:flex;gap:var(--b-8);padding:var(--b-16) var(--kenar) 0;"><i class="k-isk" style="width:82px;height:36px"></i><i class="k-isk" style="width:120px;height:36px"></i><i class="k-isk" style="width:96px;height:36px"></i></div>' +
+      '<div class="k-satirlar">' + K.iskelet('satir', 5) + '</div>';
+  } else if (DUR === 'bos') {
+    ic = bas('Kaydedilenler', 'Kaydettiğin haberler ve klasörlerin; her cihazda seninle.') + sekme +
+      (IND ? K.bos('indirilen', { eylem: { metin: 'Kaydedilenleri aç', tur: 'sade', href: KEND } }) : K.bos('kaydedilen'));
+  } else if (IND) {
+    ic = bas('Kaydedilenler', 'Kaydettiğin haberler ve klasörlerin; her cihazda seninle.') + sekme +
+      '<div class="k-ic" style="padding-top:var(--b-16)">' + K.serit({ ikon: 'fa-database', metin: '54 MB kullanılıyor', alt: '4 haber, 1 bülten, 1 podcast bölümü', eylem: 'Yönet' }).replace('<button type="button">', '<button type="button" data-href="' + K.u('ekranlar/hesap/depolama.html') + '">') + '</div>' +
+      '<div class="k-satirlar"><div class="k-ayrac"><span>Haberler</span><span>8,5 MB</span></div>' + H.filter(function(h){ return h.ind; }).map(function(h){ return satir(h, { boyut: true }); }).join('') +
+      '<div class="k-ayrac"><span>Bülten</span><span>0,4 MB</span></div>' + K.satir(BULTEN, { ikon: 'fa-envelope', indir: 'indirildi', kaydedildi: true }) +
+      '<div class="k-ayrac"><span>Podcast</span><span>45 MB</span></div>' + K.podcastSatir({ seri: P.seri, no: P.no, baslik: P.baslik, sure: P.sure, konuk: '45 MB', g: P.g }) + '</div>' +
+      '<div class="k-ic k-bl sik">' + K.btn({ metin: 'İndirilenleri sil', ikon: 'fa-trash-can', tur: 'tehlike-metin', tam: true, attr: 'data-indirilen-sil' }) + '</div>';
+  } else {
+    var ust = INR ? '<div class="k-ic" style="padding-top:var(--b-12)">' + K.serit({ ikon: 'fa-circle-down', metin: '3 haber indiriliyor · 1 / 3', alt: 'Wi-Fi\'da indiriliyor; bitince bildiririz.', eylem: 'Durdur' }) + '</div>' : DZ ? '' : ozet;
+    ic = bas('Kaydedilenler', 'Kaydettiğin haberler ve klasörlerin; her cihazda seninle.') + (DZ ? '' : sekme + klasor) + ust +
+      '<div class="k-satirlar">' + H.map(function(h, i){ return satir(h, { secili: DZ && (i === 1 || i === 4 || i === 5), kuyruk: i === 0 || i === 3 || i === 7 }); }).join('') + '</div>' +
+      (DZ ? '' : K.dahaFazla('yukleniyor', 'haber'));
+  }
+  e.innerHTML = ic + son;
+
+  var eyl = hata || DUR === 'yukleniyor' || DUR === 'bos' ? [] : KLASOR ? ['daha'] : [{ ikon: 'fa-ellipsis', etiket: 'Seçenekler', attr: 'data-kd-menu' }];
+  if (DZ) K.ustCubuk({ geri: KEND, baslik: '3 seçildi', eylemler: [{ ikon: 'fa-check', etiket: 'Bitti', href: KEND }] });
+  else K.ustCubuk({ geri: true, baslik: KLASOR ? 'Okunacaklar' : 'Kaydedilenler', buyuk: true, eylemler: eyl });
+  if (DZ) document.body.insertAdjacentHTML('beforeend', '<div class="kd-ec" role="toolbar" aria-label="Seçilenler">' + K.btn({ metin: 'Taşı', ikon: 'fa-folder-open', tur: 'sade', attr: 'data-sayfa="kaydet"' }) +
+    K.btn({ metin: 'İndir', ikon: 'fa-circle-down', tur: 'sade', attr: 'data-toast="3 haber indiriliyor"' }) + K.btn({ metin: 'Sil', ikon: 'fa-trash-can', tur: 'tehlike', attr: 'data-kd-sil' }) + '</div>');
+  else { K.altCubuk('hesap'); K.oynatici(); }
+  K.cekmece();
+  if (!DZ) K.cekYenile(e);
+
+  document.querySelector('.k-sekmeler') && document.querySelector('.k-sekmeler').addEventListener('click', function(ev){ var b = ev.target.closest('button'); if (!b) return;
+    var i = [].indexOf.call(this.querySelectorAll('button'), b); location.href = K.u('ekranlar/hesap/kaydedilenler.html', i ? { sekme: 'indirilenler' } : {}); });
+  document.addEventListener('click', function(ev){ var t = ev.target, x;
+    if ((x = t.closest('[data-kd-menu]'))) { ev.preventDefault(); ev.stopPropagation();
+      K.menu({ hedef: x, ogeler: [{ metin: 'Seç', ikon: 'fa-circle-check' }, { metin: 'Yeni klasör', ikon: 'fa-folder-plus' }, { metin: 'Depolama', ikon: 'fa-database' }] }); return; }
+    if ((x = t.closest('.k-menu-o'))) { var m = x.textContent;
+      if (m === 'Seç') location.href = K.u('ekranlar/hesap/kaydedilenler.html', { durum: 'duzenle' });
+      else if (m === 'Yeni klasör') K.sayfa('yeni-klasor');
+      else if (m === 'Depolama') location.href = K.u('ekranlar/hesap/depolama.html');
+      else if (m === 'Klasörü sil') K.pencere('klasor-sil');
+      else if (m === 'Yeniden adlandır') K.sayfa({ baslik: 'Klasörü yeniden adlandır', icerik: K.alan({ etiket: 'Klasör adı', deger: 'Okunacaklar', odak: true }), eylemler: [{ metin: 'Vazgeç', tur: 'sade', attr: 'data-kapat' }, { metin: 'Kaydet', tur: 'birincil', attr: 'data-kapat' }] }); }
+    if (t.closest('[data-indirilen-sil]')) K.pencere('indirilen-sil');
+    if (t.closest('[data-kd-sil]')) K.pencere({ ikon: 'fa-trash-can', tehlike: true, baslik: '3 haber kaldırılsın mı?', metin: 'Kaydedilenlerden ve klasörlerden çıkarılır; çevrimdışı kopyaları da silinir.', yan: true, eylemler: [{ metin: 'Vazgeç', tur: 'sade', attr: 'data-kapat' }, { metin: 'Kaldır', tur: 'tehlike', attr: 'data-kapat' }] });
+    if (t.closest('.k-satir.is-secim')) { ev.preventDefault(); var c = t.closest('.k-satir').querySelector('input'); if (t.tagName !== 'INPUT') c.checked = !c.checked;
+      var n = document.querySelectorAll('.k-satir.is-secim input:checked').length, b = document.querySelector('.k-ub-b span'); if (b) b.textContent = n ? n + ' seçildi' : 'Seç'; }
+    var y = t.closest('[data-yeniden]'); if (y) { y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+      setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'hal'].forEach(function(k){ q.delete(k); }); location.search = q.toString(); }, 1200); }
+  });
+  if (CD) { var bt = K.toast('Çevrimdışısın · yalnız indirilenler açılır', { bant: true }); }
+  if (DZ) { var bb = document.querySelector('.k-ub-b'); if (bb) bb.style.opacity = 1; }
+})();
+</script>
+</body>
+</html>

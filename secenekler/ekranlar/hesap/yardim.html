@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Yardım Merkezi</title>
+<!--
+  YARDIM MERKEZİ · E-523 · alt çubukta "Hesabım".
+  Yapı: büyük başlık + not (soru sayısı, destek yanıt süresi) → yardımda ara → başlık çipleri (yana kayar; dokununca bölüme kayar)
+        → beş bölüm, sık sorulanlar akordeon (ilki açık) → "Hâlâ yardıma mı ihtiyacın var?" çağrısı (İletişim, Teknik destek kanalı).
+  Parametreler: ?tema=koyu · ?uye=0 · ?calan=1
+  Veri: public yardim-merkezi.html (5 başlık, sorular ve yanıtlar; "Destek yanıtı: 1 iş günü"). Yanıtlar aynen alındı; yalnız sitedeki menü yolları uygulamadaki yollarla
+        (Hesabım › …) yazıldı, tarayıcıya özgü cümleler çıkarıldı. Sitedeki dil seçici sorusu uygulamada dil seçici olmadığı için alınmadı (16 soru).
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* KİT ADAYI (düzeltme): kapalı akordeonun yanıtı ölçümde yer kaplamasın — Chrome kapalı <details> içeriğini kutu olarak bırakıyor, denetim binme sayıyor */
+.k-akordeon:not([open]) p{display:none}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran');
+  /* kaynak: dadahaber-prototip/yardim-merkezi.html (uygulama yollarıyla) */
+  var S = [
+    ['fa-circle-user', 'Hesap ve üyelik', [
+      ['Üye olmadan haber okuyabilir miyim?', 'Evet. Bütün haberler üyeliksiz okunabilir. Üyelik yalnızca kaydetme, takip ve bülten gibi kişisel özellikler için gerekir.'],
+      ['Şifremi unuttum, ne yapmalıyım?', 'Giriş ekranındaki "Şifremi unuttum" bağlantısından e-posta adresinizi yazın. Size 30 dakika geçerli bir sıfırlama bağlantısı gönderilir.'],
+      ['Hesabımı nasıl silerim?', 'Hesabım › Ayarlar › Gizlilik ve veriler bölümünden hesabınızı silebilirsiniz. Silme işlemi geri alınamaz; kaydettiğiniz haberler ve tercihleriniz de silinir.'],
+      ['E-posta adresimi değiştirebilir miyim?', 'Hesabım › Profili düzenle bölümünden yeni adresinizi yazabilirsiniz. Değişiklik, yeni adrese gönderilen bağlantı onaylandığında geçerli olur.']]],
+    ['fa-bookmark', 'Kaydetme ve takip', [
+      ['Kaydettiğim haberler nerede?', 'Hesabım › Kaydedilenler bölümünden ulaşabilirsiniz.'],
+      ['Kaydettiğim haberleri çevrimdışı okuyabilir miyim?', 'Evet. Kaydedilen haberler cihazınızda saklanır ve bağlantı yokken de açılabilir.'],
+      ['Bir konuyu ya da yazarı nasıl takip ederim?', 'Etiket ve yazar sayfalarındaki "Takip et" düğmesini kullanın. Takip ettiğiniz konular Hesabım › Takip ettiklerim bölümünde listelenir.']]],
+    ['fa-headphones', 'Haber Dinle ve formatlar', [
+      ['Haber Dinle nasıl çalışır?', 'Haber kartlarındaki ve haber sayfasındaki "Dinle" düğmesi metnin seslendirilmiş halini oynatır. Seslendirme yapay zekâ ile üretilir ve bu durum oynatıcıda belirtilir.'],
+      ['Dinleme hızını değiştirebilir miyim?', 'Evet. Oynatıcıdaki hız düğmesiyle 0,75x ile 2x arasında seçim yapabilirsiniz.'],
+      ['Dada Özet nedir?', 'Uzun bir haberi üç maddede anlatan kısa özettir. Özet editör tarafından kontrol edilir ve her maddenin dayandığı kaynak haberde yer alır.'],
+      ['Videolarda altyazı var mı?', 'Bütün videolarımız Türkçe altyazılıdır; altyazı oynatıcıdaki düğmeyle açılıp kapatılabilir.']]],
+    ['fa-bell', 'Bildirim ve bülten', [
+      ['Bildirimleri nasıl kapatırım?', 'Hesabım › Bildirimler › Bildirim tercihleri bölümünden bildirim türlerini tek tek açıp kapatabilirsiniz.'],
+      ['Bülten aboneliğimden nasıl ayrılırım?', 'Her bültenin altındaki "Abonelikten ayrıl" bağlantısını kullanabilir ya da Hesabım › Bültenlerim bölümünden aboneliklerinizi yönetebilirsiniz.'],
+      ['Son Dakika bildirimleri ne sıklıkta gelir?', 'Son Dakika bildirimleri yalnızca doğrulanmış ve kamuoyunu doğrudan ilgilendiren gelişmelerde gönderilir; günde en fazla beş bildirim hedeflenir.']]],
+    ['fa-circle-half-stroke', 'Görünüm', [
+      ['Karanlık mod ve yazı boyutu nerede?', 'Görünüm ekranından karanlık modu, yazı boyutunu ve Sakin modu ayarlayabilirsiniz. Üye iseniz tercihleriniz hesabınıza kaydedilir.'],
+      ['Sakin mod ne işe yarar?', 'Sakin mod hareketli öğeleri, otomatik oynayan videoları ve Son Dakika şeridini durdurur; sayfayı daha sade gösterir.']]]];
+  var n = 0; S.forEach(function(s){ n += s[2].length; });
+  var ic = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Yardım Merkezi</h1><p>Hesap, kaydetme, Haber Dinle, bildirim ve görünüm ayarlarıyla ilgili sık sorulanlar.</p></div>' +
+    '<div class="k-ic">' + K.ara({ yer: 'Yardımda ara', ses: false }) + '<p class="k-grup-n" style="margin:var(--b-8) var(--b-4) 0">' + n + ' soru, ' + S.length + ' başlık · Destek yanıtı: 1 iş günü</p></div>' +
+    '<div class="k-ray s8" style="padding-top:var(--b-16)">' + S.map(function(s, i){ return K.cip(s[1], { ikon: s[0], attr: 'data-bolum="yb' + i + '"' }); }).join('') + '</div>' +
+    S.map(function(s, i){ return '<section class="k-bl sik" id="yb' + i + '">' + K.bb({ baslik: s[1].replace(/(^| )(\S)/g, function(m, a, b){ return a + b.toLocaleUpperCase('tr'); }).replace(' Ve ', ' ve '), ikon: s[0], sayi: s[2].length }) +
+      '<div class="k-ic">' + s[2].map(function(q, j){ return K.akordeon(q[0], q[1], i === 0 && j === 0); }).join('') + '</div></section>'; }).join('') +
+    '<div class="k-ic k-bl">' + K.cagri({ ikon: 'fa-headset', baslik: 'Hâlâ yardıma mı ihtiyacın var?', aciklama: 'Teknik destek kanalına yaz; en geç bir iş günü içinde yanıtlarız.', eylem: { metin: 'Bize yaz', href: K.u('ekranlar/hesap/iletisim.html', { kanal: 'destek' }) } }) + '</div>' +
+    '<div class="k-son"></div>';
+  e.innerHTML = ic;
+  K.ustCubuk({ geri: true, baslik: 'Yardım Merkezi', buyuk: true });
+  K.altCubuk('hesap');
+  K.oynatici();
+  K.cekmece();
+  document.addEventListener('click', function(ev){ var c = ev.target.closest('[data-bolum]'); if (!c) return; var s = document.getElementById(c.getAttribute('data-bolum'));
+    e.scrollTo({ top: s.offsetTop - parseFloat(getComputedStyle(document.querySelector('.k-ub')).height), behavior: 'smooth' }); });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Bildirimler</title>
+<!--
+  BİLDİRİM MERKEZİ · E-493–E-500 · kök: Liste (alt çubukta "Hesabım"; K36: zil üst çubuklarda yok, buraya çekmecenin hesap kartından ve Hesabım'dan gelinir).
+  Yapı: büyük başlık → tür çipleri (Tümü · Son Dakika · Takip · Editör · Yanıtlar; tek seçim, listeyi süzer) → gün ayraçlı bildirim satırları
+        (okunmamış önce: kırmızı nokta, kalın; okunmuş soluk) → "Bildirimler 30 gün saklanır" notu. Üst çubukta Tümünü okundu say + Bildirim tercihleri.
+  Türler: Son Dakika (fa-bolt, kırmızı) · Takip (fa-heart: yazar, takım) · Editör (fa-pen-nib: Günün 5'i, Dada Doğrula sonucu) · Yorum yanıtı (fa-comment).
+  Parametreler: ?durum=yukleniyor | yenileniyor (&hal=cekiliyor|birak|bitti) | daha-fazla (&hal=son|hata) | bos | hata (&hata=zaman-asimi)
+    | cevrimdisi (&onbellek=0) | izin-yok (sistem izni kapalı: üstte "Bildirimler kapalı · Aç") · ?uye=0 (yalnız Son Dakika ve editör bildirimleri) · ?tema=koyu · ?calan=1
+  Veri: public hesabim-bildirimler.html (Son Dakika faiz kararı 14.00, Elif Aras yeni yazı 11.30, iddia incelendi 11.15, Dün 19.30 takım, Dün 16.40 editör yanıtı; "30 gün saklanır"),
+        D.sonDakika[0] (16.05), D.koseYazilari[1] (Elif Aras yazısı), D.gunun5 (07.00 baskısı), D.bolumler Spor[0].
+  Varsayımlar (onaylanmadı): takım bildirimi public'teki Beşiktaş yerine örnek üyenin takımı Galatasaray (D.uye) ve D'deki Spor haberi; okunmamış sayısı 3.
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), Q = K.q, DUR = K.durum, hal = Q.get('hal');
+  /* kaynak: dadahaber-prototip/hesabim-bildirimler.html "Gelen Bildirimler" + D */
+  var B = [
+    ['Bugün', '23 Kasım 2026', [
+      { t: 'sd', ikon: 'fa-bolt', ust: 'Son Dakika', saat: '16.05', baslik: D.sonDakika[0].baslik, g: 'kar-istanbul' },
+      { t: 'sd', ikon: 'fa-bolt', ust: 'Son Dakika', saat: '14.00', baslik: 'Merkez Bankası faiz kararını açıkladı', g: 'faiz' },
+      { t: 'takip', ikon: 'fa-heart', ust: 'Takip · Elif Aras', saat: '11.30', baslik: 'Elif Aras yeni bir yazı yayımladı: ' + D.koseYazilari[1].baslik, href: K.git('kose') },
+      { t: 'editor', ikon: 'fa-clipboard-check', ust: 'Dada Doğrula', saat: '11.15', baslik: 'Gönderdiğin iddia incelendi: Yanıltıcı', okundu: 1, uye: 1, href: K.u('ekranlar/icerik/dada-dogrula.html') },
+      { t: 'editor', ikon: 'fa-sun', ust: 'Günün 5\'i', saat: '07.00', baslik: 'Günün 5\'i hazır: ' + D.gunun5.alt, okundu: 1, href: K.git('gununBesi') }]],
+    ['Dün', '22 Kasım 2026', [
+      { t: 'takip', ikon: 'fa-futbol', ust: 'Takip · ' + D.uye.takip[0], saat: '19.30', baslik: D.bolumler[1].haberler[0].baslik, g: 'superlig', okundu: 1 },
+      { t: 'yanit', ikon: 'fa-comment', ust: 'Yorum yanıtı', saat: '16.40', baslik: 'Yorumuna editör yanıt verdi', okundu: 1, uye: 1, href: K.git('yorumlar') }]]];
+  var CIP = [['Tümü', ''], ['Son Dakika', 'sd'], ['Takip', 'takip'], ['Editör', 'editor'], ['Yanıtlar', 'yanit']];
+  function liste(tur, ek){ return '<div class="k-satirlar">' + B.map(function(g){ var L = g[2].filter(function(b){ return (!tur || b.t === tur) && (K.uye || (!b.uye && b.t !== 'takip')); });
+      return L.length ? '<div class="k-ayrac"><span>' + g[0] + '</span><span>' + g[1] + '</span></div><div>' + L.map(function(b){ return K.bildirim({ tur: b.t, ikon: b.ikon, ust: b.ust, saat: b.saat, baslik: b.baslik, g: b.g, okundu: b.okundu || DUR === 'okundu', href: b.href }); }).join('') + '</div>' : ''; }).join('') +
+    (ek || '') + '</div>'; }
+  var cipler = '<div class="k-ray s8" data-tek style="padding-top:var(--b-4)">' + CIP.map(function(c, i){ return K.cip(c[0], { secili: i === 0, attr: 'data-tur="' + c[1] + '"' }); }).join('') + '</div>';
+  var izin = DUR === 'izin-yok' ? '<div class="k-ic" style="padding-top:var(--b-12)">' + K.serit({ tur: 'uyari', ikon: 'fa-bell-slash', metin: 'Bildirimler kapalı', alt: 'Son Dakika\'yı kaçırabilirsin', eylem: 'Aç' }).replace('<button type="button">', '<button type="button" class="k-dk44" data-href="' + K.u('ekranlar/hesap/bildirim-tercihleri.html', { durum: 'izin-yok' }) + '">') + '</div>' : '';
+  var bas = '<div class="k-ust-bosluk"></div>' + (DUR === 'yenileniyor' ? K.yenile(['cekiliyor', 'birak', 'bitti'].indexOf(hal) > -1 ? hal : 'yenileniyor') : '') +
+    '<div class="k-bbas"><h1>Bildirimler</h1><p>Son Dakika, takip ettiklerin ve editörden gelenler.</p></div>';
+  var not = '<p class="k-grup-n" style="margin:var(--b-16) var(--kenar) 0">Bildirimler 30 gün saklanır.</p>';
+  var hata = DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? 'cevrimdisi' : '';
+  function iskSatir(n){ var o = ''; for (var i = 0; i < n; i++) o += '<div style="display:grid;grid-template-columns:44px minmax(0,1fr) 56px;gap:var(--b-12);padding:var(--b-16) 0;border-bottom:1px solid var(--cizgi)"><i class="k-isk daire" style="width:44px;height:44px"></i><span class="k-isk-grup"><i class="k-isk" style="width:40%;height:12px"></i><i class="k-isk" style="width:100%;height:15px"></i><i class="k-isk" style="width:70%;height:15px"></i></span><i class="k-isk" style="width:56px;height:56px"></i></div>'; return '<div role="status" aria-label="Yükleniyor">' + o + '</div>'; }
+  var ic;
+  if (hata) ic = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: hata });
+  else if (DUR === 'yukleniyor') ic = bas + '<div class="k-satirlar"><div class="k-ayrac"><i class="k-isk" style="width:56px;height:13px"></i><i class="k-isk" style="width:96px;height:13px"></i></div>' + iskSatir(5) + '</div>';
+  else if (DUR === 'bos') ic = bas + izin + K.bos('bildirim');
+  else if (DUR === 'daha-fazla') ic = bas + cipler + liste('', (hal === 'son' || hal === 'hata' ? '' : iskSatir(1)) + K.dahaFazla(hal === 'son' || hal === 'hata' ? hal : 'yukleniyor', 'bildirim'));
+  else ic = bas + izin + cipler + liste('') + not;
+  e.innerHTML = ic + '<div class="k-son"></div>';
+
+  var okunmamis = !hata && !DUR || DUR === 'izin-yok' || DUR === 'yenileniyor' || DUR === 'cevrimdisi' || DUR === 'daha-fazla';
+  K.ustCubuk({ geri: true, baslik: 'Bildirimler', buyuk: true, eylemler: hata || DUR === 'yukleniyor' || DUR === 'bos' ? [{ ikon: 'fa-gear', etiket: 'Bildirim tercihleri', href: K.git('bildirimTercih') }]
+    : [{ ikon: 'fa-check-double', etiket: 'Tümünü okundu say', attr: 'data-okundu' }, { ikon: 'fa-gear', etiket: 'Bildirim tercihleri', href: K.git('bildirimTercih') }] });
+  K.altCubuk('hesap', okunmamis && K.uye ? { rozet: { hesap: 3 } } : {});
+  K.oynatici();
+  K.cekmece();
+  K.cekYenile(e);
+  if (DUR === 'daha-fazla' && !document.documentElement.classList.contains('tam')) e.scrollTop = e.scrollHeight;
+  document.addEventListener('click', function(ev){ var t = ev.target, x;
+    if ((x = t.closest('[data-tur]'))) { var l = e.querySelector('.k-satirlar'); if (l) l.outerHTML = liste(x.getAttribute('data-tur')); }
+    if (t.closest('[data-okundu]')) { ev.preventDefault(); [].forEach.call(e.querySelectorAll('.k-bildirim.is-okunmadi'), function(b){ b.classList.remove('is-okunmadi'); b.classList.add('is-okundu'); });
+      var r = document.querySelector('.k-ac .k-rozet'); if (r) r.remove(); K.toast('Bütün bildirimler okundu', { tur: 'basari' }); }
+    var y = t.closest('[data-yeniden]'); if (y) { y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+      setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'hal', 'onbellek'].forEach(function(k){ q.delete(k); }); location.search = q.toString(); }, 1200); }
+  });
+  if (DUR === 'cevrimdisi' && !hata) { var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } }); bt.querySelector('button').classList.add('k-dk44'); }
+})();
+</script>
+</body>
+</html>

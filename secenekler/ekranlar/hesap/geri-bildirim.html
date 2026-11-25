@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Görüş Bildir</title>
+<!--
+  GERİ BİLDİRİM (Görüş bildir) · E-520–E-522 · alt çubukta "Hesabım"; çekmecedeki "Görüş Bildir" buraya gelir.
+  Yapı: büyük başlık → tür segmenti (Görüş bildir · Bir sorum var · İhlal bildir; sitedeki üç pencere) → İlgili alan çipleri → memnuniyet (5'li, tek seçim)
+        → metin alanı (sayaçlı) → e-posta (yanıt istersen; üyede dolu) → ekran görüntüsü ekle → Gönder → Yardım merkezi bağlantısı.
+  Parametreler: ?durum=tamam (teşekkür + kapat) | hata (gönderilemedi; taslak korunur, Yeniden dene) · ?tur=soru|ihlal · ?uye=0 · ?tema=koyu · ?calan=1
+  Veri: public Görüş bildir penceresi (index.html #pn-gorus ve assets/js/ortak.js: sekmeler, İlgili alan, "Bu sayfadan memnun musun?" beş seçenek, örnek görüş metni,
+        "en az 10 karakter", "isteğe bağlı, en çok 5 MB · PNG ya da JPG", başarı metni "Teşekkürler, görüşün bize ulaştı…", Yardım Merkezi bağlantısı).
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), DUR = K.durum, TUR = ['', 'soru', 'ihlal'].indexOf(K.q.get('tur') || ''), HATA = DUR === 'hata';
+  if (TUR < 0) TUR = 0;
+  /* kaynak: dadahaber-prototip/index.html #pn-gorus (örnek görüş metni) */
+  var TASLAK = 'Dakika dakika sayfasında girişlerin tarihini de görmek isterim; gece yarısından sonra hangi gün olduğu karışıyor.';
+  var ic;
+  if (DUR === 'tamam') ic = '<div class="k-ust-bosluk"></div>' + K.bos({ ikon: 'fa-circle-check', baslik: 'Teşekkürler, görüşün bize ulaştı', aciklama: 'Yayın ekibi görüşleri her iş günü okur. E-posta bıraktıysan yanıtı oraya göndeririz.',
+      eylem: { metin: 'Kapat', attr: 'data-geri' }, ikinci: { metin: 'Yeni görüş gönder', href: K.u('ekranlar/hesap/geri-bildirim.html') } });
+  else {
+    var alan = ['Haber içeriği', 'Tasarım', 'Hız ve erişim', 'Üyelik', 'Diğer'], puan = ['Çok kötü', 'Kötü', 'İdare eder', 'İyi', 'Harika'];
+    ic = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Görüş Bildir</h1><p>Uygulamayı birlikte iyileştirelim; her görüşü okuyoruz.</p></div>' +
+      (HATA ? '<div class="k-ic" style="padding-bottom:var(--b-16)">' + K.serit({ tur: 'hata', ikon: 'fa-circle-exclamation', metin: 'Gönderilemedi', alt: 'Taslağın saklandı; bağlantın gelince yeniden dene.' }) + '</div>' : '') +
+      '<div class="k-ic">' + K.segment(['Görüş bildir', 'Bir sorum var', 'İhlal bildir'], TUR, { ince: true }) + '</div>' +
+      '<div class="k-ic" style="display:grid;gap:var(--b-24);padding-top:var(--b-24)">' +
+        '<div><span class="k-alan-e">İlgili alan</span><div class="k-cip-izgara" data-tek style="margin-top:var(--b-8)">' + alan.map(function(x, i){ return K.cip(x, { secili: i === 0 }); }).join('') + '</div></div>' +
+        '<div><span class="k-alan-e">Bu ekrandan memnun musun?</span><div class="k-cip-izgara" data-tek style="margin-top:var(--b-8)">' + puan.map(function(x, i){ return K.cip(x, { secili: HATA && i === 3 }); }).join('') + '</div></div>' +
+        K.metinAlan({ etiket: 'Görüşünü yaz', yer: 'Lütfen birkaç cümleyle yaz; en az 10 karakter.', sinir: 1000, deger: HATA ? TASLAK : '' }) +
+        K.alan({ etiket: 'E-posta · yanıt istersen', tur: 'email', deger: K.uye ? 'ece.yilmaz@eposta.com' : '', yer: 'ornek@eposta.com', oto: 'email' }) +
+        K.cagri({ ikon: 'fa-image', baslik: 'Ekran görüntüsü ekle', aciklama: 'İsteğe bağlı; PNG ya da JPG, en çok 5 MB', eylem: { metin: 'Seç', attr: 'data-toast="Fotoğraflar açılır"' } }) +
+        K.btn({ metin: HATA ? 'Yeniden dene' : 'Gönder', ikon: HATA ? 'fa-rotate-right' : 'fa-paper-plane', tur: 'birincil', boy: 'buyuk', tam: true, attr: 'data-gonder' }) +
+      '</div><div class="k-ic" style="padding-top:var(--b-8)"><a class="k-bag" href="' + K.git('yardim') + '">Hazır yanıtlar için Yardım merkezi' + K.I('fa-chevron-right') + '</a></div>';
+  }
+  e.innerHTML = ic + '<div class="k-son"></div>';
+  K.ustCubuk({ geri: true, baslik: 'Görüş Bildir', buyuk: DUR !== 'tamam' });
+  K.altCubuk('hesap');
+  K.oynatici();
+  K.cekmece();
+  document.addEventListener('click', function(ev){ var b = ev.target.closest('[data-gonder]'); if (!b) return;
+    b.classList.add('is-yukleniyor'); b.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Gönderiliyor</span>';
+    setTimeout(function(){ location.href = K.u('ekranlar/hesap/geri-bildirim.html', { durum: 'tamam' }); }, 1000); });
+})();
+</script>
+</body>
+</html>

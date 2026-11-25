@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Güvenlik</title>
+<!--
+  GÜVENLİK VE BAĞLI HESAPLAR · E-513–E-514 · alt çubukta "Hesabım".
+  Yapı: büyük başlık → Giriş (Şifre değiştir: alt sayfa, iki adımlı doğrulama anahtarı) → Oturumlar satırı → Bağlı hesaplar (Apple · Google · Facebook; bağla / kaldır).
+  ?sekme=oturumlar: cihaz satırları (bu cihaz işaretli; ötekine dokununca "oturum kapatılsın mı" penceresi) → "Bu cihaz dışındakileri kapat" → not.
+  Parametreler: ?sekme=oturumlar · ?uye=0 (misafir: giriş çağrısı) · ?tema=koyu · ?calan=1
+  Veri: public hesabim-guvenlik.html (şifre "4 ay önce değiştirildi", iki adımlı doğrulama metni, açık oturumlar, bağlı hesaplar Google bağlı · Apple bağlı değil, not metni)
+        ve hesap-bagla.html (Facebook). Uygulamada "bu cihaz" iPhone · Dada Haber uygulaması (public'te Mac · Chrome bu cihazdı; saatler yer değiştirdi).
+  Sosyal sağlayıcı işaretleri fa-brands (K37: K32'ye istisna, onay bekler).
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), OT = K.q.get('sekme') === 'oturumlar', KEND = K.u('ekranlar/hesap/guvenlik.html');
+  /* kaynak: dadahaber-prototip/hesabim-guvenlik.html (Açık Oturumlar) */
+  var OTUR = [['fa-mobile-screen', 'iPhone · Dada Haber uygulaması', 'İstanbul · şu an', 1], ['fa-laptop', 'Mac · Chrome', 'İstanbul · 2 saat önce'], ['fa-tablet-screen-button', 'Android tablet · Chrome', 'Ankara · 6 gün önce']];
+  var ic;
+  if (!K.uye) ic = '<div class="k-ust-bosluk"></div>' + K.bos({ ikon: 'fa-lock', baslik: 'Güvenlik ayarları üyelikle', aciklama: 'Şifre, oturumlar ve bağlı hesaplar için giriş yap.', eylem: { metin: 'Giriş yap', ikon: 'fa-right-to-bracket', href: 'giris' }, ikinci: { metin: 'Üye ol', href: 'uyeOl' } });
+  else if (OT) ic = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Oturumlar</h1><p>Hesabının açık olduğu cihazlar.</p></div>' +
+    K.grup('Bu Cihaz', [{ ikon: OTUR[0][0], baslik: OTUR[0][1], alt: OTUR[0][2], sag: 'yok' }]) +
+    K.grup('Diğer Cihazlar', OTUR.slice(1).map(function(o){ return { ikon: o[0], baslik: o[1], alt: o[2], attr: 'data-oturum' }; }), 'Tanımadığın bir oturum görürsen şifreni değiştir.') +
+    '<div class="k-ic k-bl sik">' + K.btn({ metin: 'Bu cihaz dışındakileri kapat', ikon: 'fa-right-from-bracket', tur: 'sade', boy: 'buyuk', tam: true, attr: 'data-hepsi' }) + '</div>';
+  else ic = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Güvenlik</h1><p>Şifren, açık oturumların ve bağlı hesapların.</p></div>' +
+    K.grup('Giriş', [{ ikon: 'fa-key', baslik: 'Şifre değiştir', alt: '4 ay önce değiştirildi', attr: 'data-sifre-degis' },
+      { ikon: 'fa-shield-halved', baslik: 'İki adımlı doğrulama', alt: 'Girişte telefonuna gelen kodu da iste', sag: 'anahtar', on: false },
+      { ikon: 'fa-mobile-screen', baslik: 'Oturumlar', sag: 'deger', deger: OTUR.length + ' cihaz', href: K.u('ekranlar/hesap/guvenlik.html', { sekme: 'oturumlar' }) }]) +
+    K.grup('Bağlı Hesaplar', [{ ikon: 'fa-brands fa-apple', baslik: 'Apple', alt: 'Bağlı değil', sag: 'deger', deger: 'Bağla', attr: 'data-bagla' },
+      { ikon: 'fa-brands fa-google', baslik: 'Google', alt: 'ece.yilmaz@eposta.com ile bağlı', sag: 'deger', deger: 'Kaldır', attr: 'data-kaldir' },
+      { ikon: 'fa-brands fa-facebook-f', baslik: 'Facebook', alt: 'Bağlı değil', sag: 'deger', deger: 'Bağla', attr: 'data-bagla' }],
+      'Bağlı hesapla da e-posta ve şifrenle de giriş yapabilirsin. Kaydettiklerin, takip listen ve serin olduğu gibi kalır.') +
+    K.grup('Profil', [{ ikon: 'fa-user', baslik: 'Profil bilgileri', alt: 'Ad, kullanıcı adı, e-posta', href: K.git('profil') }]);
+  e.innerHTML = ic + '<div class="k-son"></div>';
+  K.ustCubuk({ geri: OT ? KEND : true, baslik: OT ? 'Oturumlar' : 'Güvenlik', buyuk: true });
+  K.altCubuk('hesap');
+  K.oynatici();
+  K.cekmece();
+  var VZ = { metin: 'Vazgeç', tur: 'sade', attr: 'data-kapat' };
+  document.addEventListener('click', function(ev){ var t = ev.target, x;
+    if (t.closest('[data-sifre-degis]')) { ev.preventDefault();
+      K.sayfa({ baslik: 'Şifre değiştir', icerik: '<div style="display:grid;gap:var(--b-16)">' + K.alan({ etiket: 'Şu anki şifre', tur: 'password', oto: 'current-password' }) + K.alan({ etiket: 'Yeni şifre', tur: 'password', oto: 'new-password', guc: 0, yardim: 'En az 8 karakter; harf ve rakam' }) + K.alan({ etiket: 'Yeni şifre (tekrar)', tur: 'password', oto: 'new-password' }) + '</div>',
+        eylemler: [{ metin: 'Şifreyi değiştir', tur: 'birincil', attr: 'data-kapat data-toast="Şifren değiştirildi"' }] }); }
+    if ((x = t.closest('[data-oturum]'))) { ev.preventDefault(); K.pencere({ ikon: 'fa-right-from-bracket', baslik: 'Bu oturum kapatılsın mı?', metin: x.querySelector('b').textContent + ' cihazında yeniden giriş yapman gerekir.', yan: true, eylemler: [VZ, { metin: 'Oturumu kapat', tur: 'ikincil', attr: 'data-kapat' }] }); }
+    if (t.closest('[data-hepsi]')) K.pencere({ ikon: 'fa-right-from-bracket', baslik: 'Öteki oturumlar kapatılsın mı?', metin: 'Bu telefon dışındaki bütün cihazlarda hesabından çıkılır.', yan: true, eylemler: [VZ, { metin: 'Hepsini kapat', tur: 'ikincil', attr: 'data-kapat data-toast="2 oturum kapatıldı"' }] });
+    if (t.closest('[data-kaldir]')) { ev.preventDefault(); K.pencere({ ikon: 'fa-link-slash', baslik: 'Google bağlantısı kaldırılsın mı?', metin: 'Bundan sonra e-posta ve şifrenle giriş yaparsın.', yan: true, eylemler: [VZ, { metin: 'Kaldır', tur: 'tehlike', attr: 'data-kapat' }] }); }
+    if (t.closest('[data-bagla]')) { ev.preventDefault(); K.toast('Sağlayıcının giriş sayfası açılır', { ikon: 'fa-link' }); }
+  });
+})();
+</script>
+</body>
+</html>

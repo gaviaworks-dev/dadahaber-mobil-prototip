@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Hesabım</title>
+<!--
+  HESABIM (sekme kökü) · E-461–E-462 · alt çubukta "Hesabım" seçili.
+  Üye: profil başlığı (baş harf, ad, okuma serisi) → sayaç kutuları (Takip · Kaydedilen · Okuma serisi; dokununca ilgili ekran)
+       → "Benim" grubu (Kaydedilenler, Takip ettiklerim, Geçmiş, Bildirimler, Bültenlerim) → "Kişisel" (Tercihler, Serim ve rozetlerim)
+       → "Uygulama" (Ayarlar, Görünüm, Veri ve depolama) → "Destek" (Yardım, Görüş bildir).
+  Misafir (?uye=0): Merhaba + Giriş yap · Üye ol (K.profil) → "bu cihazda" şeridi → cihaz tercihleri (Görünüm, Bildirimler, Kaydedilenler cihazda, Takip, Şehir)
+       → "Üyelikle" faydaları → Ayarlar, Destek.
+  Parametreler: ?uye=0 · ?tema=koyu · ?calan=1
+  Veri: public hesabim.html (sayaçlar 24 takip, 37 kaydedilen, 12 gün seri, 3 bülten; "Kasım 2025'ten beri üye"), hesabim-misafir.html (cihaz tercihleri, üyelik faydaları); ad ve seri D.uye.
+  Varsayımlar (onaylanmadı): Çıkış yap yalnız Ayarlar'da; bildirim rozeti 3 (çekmecedeki hesap kartıyla aynı); misafirin kaydı ve takibi cihazda (C30).
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), U = D.uye;
+  var destek = K.grup('Destek', [
+    { ikon: 'fa-circle-question', baslik: 'Yardım merkezi', href: K.git('yardim') },
+    { ikon: 'fa-message', baslik: 'Görüş bildir', href: K.git('geriBildirim') },
+    { ikon: 'fa-circle-info', baslik: 'Hakkında', href: K.git('hakkinda') }]);
+  var ic;
+  if (K.uye) {
+    /* kaynak: dadahaber-prototip/hesabim.html (Genel Bakış sayaçları) */
+    ic = '<div class="k-ust-bosluk"></div>' + K.profil() +
+      K.istat([[24, 'Takip', K.git('takip')], [37, 'Kaydedilen', K.git('kaydedilenler')], [U.seri + ' gün', 'Okuma serisi', K.git('seri')]]).replace('k-istat"', 'k-istat" style="margin-top:var(--b-24)"') +
+      K.grup('Benim', [
+        { ikon: 'fa-bookmark', baslik: 'Kaydedilenler', alt: 'Klasörler ve çevrimdışı indirilenler', sag: 'deger', deger: 37, href: K.git('kaydedilenler') },
+        { ikon: 'fa-heart', baslik: 'Takip ettiklerim', alt: 'Konu, şehir, takım ve yazarlar', sag: 'deger', deger: 24, href: K.git('takip') },
+        { ikon: 'fa-clock-rotate-left', baslik: 'Geçmiş', alt: 'Okuduğun, izlediğin ve dinlediğin', href: K.git('gecmis') },
+        { ikon: 'fa-bell', baslik: 'Bildirimler', sag: 'rozet', deger: 3, href: K.git('bildirimler') },
+        { ikon: 'fa-envelope', baslik: 'Bültenlerim', sag: 'deger', deger: 3, href: K.u('ekranlar/hesap/bultenler.html') }]) +
+      K.grup('Kişisel', [
+        { ikon: 'fa-sliders', baslik: 'Tercihler', alt: 'İlgi alanları, şehir, takım, Bana Etkisi', href: K.git('tercihler') },
+        { ikon: 'fa-fire', baslik: 'Serim ve rozetlerim', sag: 'deger', deger: '9 rozet', href: K.u('ekranlar/hesap/seri.html') }]) +
+      K.grup('Uygulama', [
+        { ikon: 'fa-gear', baslik: 'Ayarlar', alt: 'Bildirim, gizlilik, güvenlik, hesap', href: K.git('ayarlar') },
+        { ikon: 'fa-circle-half-stroke', baslik: 'Görünüm', sag: 'deger', deger: 'Sistem', href: K.git('gorunum') },
+        { ikon: 'fa-database', baslik: 'Veri ve depolama', href: K.u('ekranlar/hesap/depolama.html') }]) +
+      destek + '<p class="k-grup-n" style="margin:var(--b-16) var(--kenar) 0">ece.yilmaz@eposta.com · Kasım 2025\'ten beri üye</p>';
+  } else {
+    /* kaynak: dadahaber-prototip/hesabim-misafir.html */
+    ic = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Hesabım</h1><p>Giriş yapmadan da okuyabilirsin; tercihlerin şimdilik yalnızca bu cihazda saklanıyor.</p></div>' + K.profil() +
+      K.grup('Bu Cihazda', [
+        { ikon: 'fa-bookmark', baslik: 'Kaydedilenler', alt: 'Yalnız bu telefonda', sag: 'deger', deger: 3, href: K.git('kaydedilenler') },
+        { ikon: 'fa-heart', baslik: 'Takip ettiklerim', alt: 'Yalnız bu telefonda', href: K.git('takip') },
+        { ikon: 'fa-bell', baslik: 'Bildirimler', href: K.git('bildirimTercih') },
+        { ikon: 'fa-circle-half-stroke', baslik: 'Görünüm', sag: 'deger', deger: 'Sistem', href: K.git('gorunum') },
+        { ikon: 'fa-location-dot', baslik: 'Şehrin', sag: 'deger', deger: D.hava.sehir, attr: 'data-sayfa="sehir"' }], 'Uygulamayı silersen bu tercihler sıfırlanır.') +
+      K.grup('Üyelikle', [
+        { ikon: 'fa-mobile-screen', baslik: 'Kaydettiklerin kaybolmaz', alt: 'Telefon, tablet ve bilgisayarda aynı liste', sag: 'yok' },
+        { ikon: 'fa-heart', baslik: 'Bugün Senin İçin', alt: 'Takip ettiğin konu, şehir ve takımdan', sag: 'yok' },
+        { ikon: 'fa-envelope', baslik: 'Bültenler ve bildirimler', alt: 'Sabah bülteni, haftalık özetler', sag: 'yok' }], 'Bu cihazdaki tercihlerin ve kaydettiklerin hesabına aktarılır.') +
+      K.grup('Uygulama', [
+        { ikon: 'fa-gear', baslik: 'Ayarlar', href: K.git('ayarlar') },
+        { ikon: 'fa-database', baslik: 'Veri ve depolama', href: K.u('ekranlar/hesap/depolama.html') }]) + destek;
+  }
+  e.innerHTML = ic + '<div class="k-son"></div>';
+  K.ustCubuk({ buyuk: true, baslik: 'Hesabım', eylemler: ['ayarlar'] });
+  K.altCubuk('hesap', K.uye ? { rozet: { hesap: 3 } } : {});
+  K.oynatici();
+  K.cekmece();
+  K.cekYenile(e);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Bildirim Tercihleri</title>
+<!--
+  BİLDİRİM TERCİHLERİ · E-501–E-502 · alt çubukta "Hesabım".
+  Yapı: büyük başlık → "Bildirimlere izin ver" ana anahtarı → Türler (anahtarlı satırlar, alt metin) → Sessiz saatler (anahtar + başlangıç/bitiş) → not.
+  Parametreler: ?durum=izin-yok (telefonda kapalı: üstte uyarı şeridi + Ayarlar yolu; anahtarlar pasif) · ?uye=0 (üyelik isteyen türler soluk: yazar, Dada Doğrula, yorum yanıtı) · ?tema=koyu · ?calan=1
+  Veri: public hesabim-bildirimler.html "Bildirim Ayarları" (11 tür, alt metinleriyle; "Varsayılan olarak yalnızca Son Dakika açıktır") ve "Sessiz Saatler" (23.00–07.00).
+        Takım satırı örnek üyenin takımıyla (D.mac.ev; public'te Beşiktaş).
+  Bekleyen #3 (karar değil): panel kararı "bildirim bütün abonelere gider" ile buradaki tür süzgeçlerinin ilişkisi. Ekranda yalnız not olarak yazıldı.
+  Varsayımlar (onaylanmadı): örnek üyede açık türler (Son Dakika, takım, yazarlar, Günün 5'i, Dada Doğrula, yorum yanıtları).
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), RED = K.durum === 'izin-yok';
+  /* kaynak: dadahaber-prototip/hesabim-bildirimler.html (Bildirim Ayarları) */
+  var T = [
+    ['fa-bolt', 'Son Dakika', 'Yalnızca teyit edilmiş önemli gelişmeler', 1],
+    ['fa-newspaper', 'Gündem', 'Günde en fazla 3 bildirim', 0],
+    ['fa-chart-column', 'Ekonomi ve piyasa', 'Faiz, enflasyon ve döviz kararları', 0],
+    ['fa-futbol', 'Spor ve takımım', D.mac.ev + ' maç başlangıcı ve sonucu', 1],
+    ['fa-earth-europe', 'Dünya', 'Diplomasi ve bölgesel gelişmeler', 0],
+    ['fa-graduation-cap', 'Kampüs', 'Sınav takvimi ve burs duyuruları', 0],
+    ['fa-shield-halved', 'Savunma', 'Millî projeler ve test atışları', 0],
+    ['fa-feather-pointed', 'Takip ettiğin yazarlar', 'Yeni yazı yayımlandığında', 1, 1],
+    ['fa-sun', 'Günün 5\'i', 'Her sabah 07.00', 1],
+    ['fa-clipboard-check', 'Dada Doğrula sonuçları', 'Gönderdiğin iddia incelendiğinde', 1, 1],
+    ['fa-comment', 'Yorum yanıtları', 'Yorumuna yanıt geldiğinde', 1, 1]];
+  var ust = RED ? '<div class="k-ic">' + K.serit({ tur: 'uyari', ikon: 'fa-bell-slash', metin: 'Bildirimler telefonda kapalı', alt: 'Seçtiğin türler, izni açınca gelir.' }) +
+      '<div class="k-yol" style="margin-top:var(--b-12)"><span>' + K.I('fa-gear') + 'Ayarlar</span>' + K.I('fa-chevron-right', 'ok') + '<span>Dada Haber</span>' + K.I('fa-chevron-right', 'ok') + '<span>Bildirimler</span></div>' +
+      '<div style="margin-top:var(--b-12)">' + K.btn({ metin: 'Ayarlar\'a git', ikon: 'fa-gear', tur: 'birincil', boy: 'buyuk', tam: true, attr: 'data-toast="Telefonun ayarları açılır"' }) + '</div></div>' : '';
+  e.innerHTML = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Bildirim Tercihleri</h1><p>Hangi konularda bildirim alacağını seç. Varsayılan olarak yalnızca Son Dakika açıktır.</p></div>' + ust +
+    K.grup('', [{ ikon: 'fa-bell', baslik: 'Bildirimlere izin ver', alt: RED ? 'Telefonun ayarlarında kapalı' : 'Telefonda açık', sag: 'anahtar', on: !RED, pasif: RED }]) +
+    K.grup('Türler', T.map(function(x){ var kilit = !K.uye && x[4];
+      return { ikon: x[0], baslik: x[1], alt: kilit ? 'Üyelikle' : x[2], sag: 'anahtar', on: !RED && !kilit && !!x[3], pasif: RED || kilit }; }),
+      'Çok önemli gelişmelerde editörlerin gönderdiği bildirim, bildirimleri açık olan herkese gider.') +
+    K.grup('Sessiz Saatler', [{ ikon: 'fa-moon', baslik: 'Sessiz saatleri aç', alt: 'Son Dakika dahil hiçbir bildirim gelmez', sag: 'anahtar', on: true, pasif: RED },
+      { ikon: 'fa-clock', baslik: 'Başlangıç', sag: 'deger', deger: '23.00', pasif: RED }, { ikon: 'fa-clock', baslik: 'Bitiş', sag: 'deger', deger: '07.00', pasif: RED }]) +
+    (!K.uye ? '<div class="k-ic k-bl sik">' + K.cagri({ ikon: 'fa-right-to-bracket', baslik: 'Daha çok tür için giriş yap', aciklama: 'Yazar, Dada Doğrula ve yorum bildirimleri üyelikle.', eylem: { metin: 'Giriş yap', href: K.git('giris') } }) + '</div>' : '') +
+    '<div class="k-son"></div>';
+  K.ustCubuk({ geri: true, baslik: 'Bildirim Tercihleri', buyuk: true });
+  K.altCubuk('hesap');
+  K.oynatici();
+  K.cekmece();
+})();
+</script>
+</body>
+</html>

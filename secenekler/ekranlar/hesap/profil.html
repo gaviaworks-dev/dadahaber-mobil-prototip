@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Profili Düzenle</title>
+<!--
+  PROFİLİ DÜZENLE · E-463–E-465 · alt çubukta "Hesabım"; Hesabım'daki profil başlığının kalem düğmesinden gelinir.
+  Yapı: profil fotoğrafı (baş harf; "Fotoğrafı değiştir" alt sayfası) → Ad soyad, Kullanıcı adı, E-posta, Telefon (isteğe bağlı) → Şifre değiştir satırı → son güncelleme notu → Kaydet.
+  Parametreler: ?durum=hata (alan altında hata; &hal=kaydediliyor düğmede yükleniyor) | dogrula (e-posta değişikliği: yeni adrese doğrulama gönderildi, onay bekliyor) · ?tema=koyu · ?calan=1
+  Veri: public hesabim-guvenlik.html "Profil Bilgileri" (Ece Yılmaz, eceyilmaz, ece.yilmaz@eposta.com, "05xx xxx xx xx", "Son güncelleme: 3 Kasım 2026"),
+        yardim-merkezi.html ("Değişiklik, yeni adrese gönderilen bağlantı onaylandığında geçerli olur").
+  Varsayımlar (onaylanmadı): hata örneği kullanıcı adı alınmış; doğrula halinde yeni adres gösterilmez (örnek adres uydurulmadı).
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), DUR = K.durum, HATA = DUR === 'hata', DOG = DUR === 'dogrula', KAY = HATA && K.q.get('hal') === 'kaydediliyor';
+  var ic;
+  if (!K.uye) ic = '<div class="k-ust-bosluk"></div>' + K.bos({ ikon: 'fa-user', baslik: 'Profil üyelikle', aciklama: 'Adın, e-postan ve profil fotoğrafın için giriş yap.', eylem: { metin: 'Giriş yap', ikon: 'fa-right-to-bracket', href: 'giris' }, ikinci: { metin: 'Üye ol', href: 'uyeOl' } });
+  else ic = '<div class="k-ust-bosluk"></div>' +
+    (DOG ? '<div class="k-ic" style="padding-top:var(--b-8)">' + K.serit({ tur: 'basari', ikon: 'fa-envelope-circle-check', metin: 'Doğrulama bağlantısı gönderildi', alt: 'Yeni adresine gelen bağlantıyı onaylayınca geçerli olur.' }) + '</div>' : '') +
+    (HATA && !KAY ? '<div class="k-ic" style="padding-top:var(--b-8)">' + K.serit({ tur: 'hata', ikon: 'fa-circle-exclamation', metin: 'Değişiklikler kaydedilmedi', alt: 'İşaretli alanı düzelt, yeniden dene.' }) + '</div>' : '') +
+    '<div class="k-ic" style="display:flex;flex-direction:column;align-items:center;gap:var(--b-12);padding-top:var(--b-24)">' + K.avatar(D.uye.ad, 'xl', 'duzenle') +
+      K.btn({ metin: 'Fotoğrafı değiştir', ikon: 'fa-camera', tur: 'sade', boy: 'kucuk', attr: 'data-foto' }) + '</div>' +
+    '<div class="k-ic" style="display:grid;gap:var(--b-16);padding-top:var(--b-24)">' +
+      K.alan({ etiket: 'Ad soyad', deger: 'Ece Yılmaz', oto: 'name' }) +
+      K.alan({ etiket: 'Kullanıcı adı', deger: HATA ? 'ece' : 'eceyilmaz', ikon: 'fa-at', hata: HATA ? 'Bu kullanıcı adı alınmış. Başka bir ad dene.' : '', odak: HATA && !KAY, yardim: HATA ? '' : 'Yorumlarda adının yanında görünür.' }) +
+      K.alan({ etiket: 'E-posta', tur: 'email', deger: 'ece.yilmaz@eposta.com', oto: 'email', yardim: DOG ? 'Yeni adres onay bekliyor; o zamana kadar bu adres geçerli.' : '' }) +
+      (DOG ? '<div class="k-btn-grup">' + K.btn({ metin: 'Yeniden gönder', tur: 'sade', attr: 'data-toast="Bağlantı yeniden gönderildi"' }) + K.btn({ metin: 'Değişikliği iptal et', tur: 'sade' }) + '</div>' : '') +
+      K.alan({ etiket: 'Telefon · isteğe bağlı', tur: 'tel', yer: '05xx xxx xx xx', oto: 'tel' }) + '</div>' +
+    K.grup('Giriş', [{ ikon: 'fa-key', baslik: 'Şifre değiştir', alt: '4 ay önce değiştirildi', href: K.u('ekranlar/hesap/guvenlik.html') }], 'Son güncelleme: 3 Kasım 2026') +
+    '<div class="k-ic k-bl sik">' + K.btn({ metin: KAY ? 'Kaydediliyor' : 'Değişiklikleri kaydet', tur: 'birincil', boy: 'buyuk', tam: true, durum: KAY ? 'yukleniyor' : '', attr: 'data-kaydet-profil' }) + '</div>';
+  e.innerHTML = ic + '<div class="k-son"></div>';
+  K.ustCubuk({ geri: true, baslik: 'Profili Düzenle' });
+  K.altCubuk('hesap');
+  K.oynatici();
+  K.cekmece();
+  document.addEventListener('click', function(ev){ var t = ev.target;
+    if (t.closest('[data-foto]')) K.sayfa({ baslik: 'Profil fotoğrafı', icerik: K.grup('', [{ ikon: 'fa-camera', baslik: 'Fotoğraf çek', attr: 'data-kapat' }, { ikon: 'fa-image', baslik: 'Fotoğraflardan seç', attr: 'data-kapat' },
+      { ikon: 'fa-font', baslik: 'Baş harfimi kullan', sag: 'tik', secili: true }]).replace('k-grup"', 'k-grup" style="margin:0"') });
+    var b = t.closest('[data-kaydet-profil]'); if (b && !KAY) { b.classList.add('is-yukleniyor'); b.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Kaydediliyor</span>';
+      setTimeout(function(){ b.classList.remove('is-yukleniyor'); b.innerHTML = '<span>Değişiklikleri kaydet</span>'; K.toast('Profilin güncellendi', { tur: 'basari' }); }, 1000); }
+  });
+})();
+</script>
+</body>
+</html>

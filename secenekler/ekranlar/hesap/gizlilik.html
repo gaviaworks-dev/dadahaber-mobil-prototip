@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Gizlilik ve Veriler</title>
+<!--
+  GİZLİLİK VE VERİLER · E-515–E-516 · alt çubukta "Hesabım".
+  Yapı: büyük başlık → Telefon izinleri özeti (bildirim, konum, mikrofon; dokununca telefonun ayarları) → Kişiselleştirme ve analitik (4 anahtar)
+        → Verilerim (Verilerimi indir, KVKK başvurusu, Gizlilik ve KVKK, Açık Rıza Metni) → Hesabı sil (tehlike; silme akışına gider).
+  Parametreler: ?durum=talep (Verilerimi indir · talep alındı: e-postaya gönderilecek notu; satır "Talep edildi") · ?uye=0 (Verilerim ve Hesabı sil yok) · ?tema=koyu · ?calan=1
+  Veri: public hesabim-gizlilik.html (4 izin ve alt metinleri, "Kapalıyken de reklam görürsün…", Verilerim satırları, "48 saat sürebilir", Hesabı Sil metni),
+        acik-riza-metni.html (rızayı geri alma), iletisim.html (KVKK kanalı kvkk@dadahaber.com · 30 gün).
+  Varsayımlar (onaylanmadı): izin değerleri (Bildirim açık, Konum kapalı, Mikrofon sorulmadı); KVKK başvurusu uygulamada İletişim formunun KVKK kanalına gider.
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), TALEP = K.durum === 'talep', y = function(m){ return K.u('ekranlar/hesap/yasal.html', { metin: m }); };
+  e.innerHTML = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Gizlilik ve Veriler</h1><p>İzinlerin, kişiselleştirme tercihlerin ve verilerin.</p></div>' +
+    (TALEP ? '<div class="k-ic">' + K.serit({ tur: 'basari', ikon: 'fa-envelope-circle-check', metin: 'Talebin alındı', alt: 'Bağlantı hazır olunca e-postana gelir; 48 saat sürebilir.' }) + '</div>' : '') +
+    K.grup('Telefon İzinleri', [{ ikon: 'fa-bell', baslik: 'Bildirimler', sag: 'deger', deger: 'Açık', attr: 'data-izin' }, { ikon: 'fa-location-dot', baslik: 'Konum', sag: 'deger', deger: 'Kapalı', attr: 'data-izin' },
+      { ikon: 'fa-microphone', baslik: 'Mikrofon', sag: 'deger', deger: 'Sorulmadı', attr: 'data-izin' }], 'İzinler telefonun ayarlarından değişir; dokununca oraya gidersin.') +
+    K.grup('Kişiselleştirme ve Analitik', [{ ikon: 'fa-wand-magic-sparkles', baslik: 'Okuma geçmişine göre öneriler', alt: 'Bugün Senin İçin ve öneriler', sag: 'anahtar', on: true },
+      { ikon: 'fa-location-dot', baslik: 'Konuma göre yerel haberler', alt: 'Yalnızca seçtiğin şehir kullanılır', sag: 'anahtar', on: true },
+      { ikon: 'fa-chart-simple', baslik: 'Anonim kullanım analitiği', alt: 'Ne kadar okunduğu, kimliksiz olarak', sag: 'anahtar', on: true },
+      { ikon: 'fa-bullhorn', baslik: 'Kişiselleştirilmiş reklam', alt: 'Kapalıyken de reklam görürsün', sag: 'anahtar', on: false }],
+      'Rızanı istediğin zaman buradan geri alabilirsin; geri alma o tarihten sonraki işlemleri etkiler. <a class="k-bag" href="' + y('acik-riza-metni') + '">Açık Rıza Metni</a>') +
+    (K.uye ? K.grup('Verilerim', [{ ikon: 'fa-file-arrow-down', baslik: 'Verilerimi indir', alt: 'Profil, takip, kaydedilenler, geçmiş', sag: 'deger', deger: TALEP ? 'Talep edildi' : 'Talep et', pasif: TALEP, href: K.u('ekranlar/hesap/gizlilik.html', { durum: 'talep' }) },
+      { ikon: 'fa-scale-balanced', baslik: 'KVKK başvurusu', alt: 'Bilgi, düzeltme ve silme talepleri', href: K.u('ekranlar/hesap/iletisim.html', { kanal: 'kvkk' }) },
+      { ikon: 'fa-user-shield', baslik: 'Gizlilik ve KVKK', alt: 'Verilerin nasıl işlendiği', href: y('gizlilik-ve-kvkk') }], 'İndirme bağlantısı hazır olduğunda ece.yilmaz@eposta.com adresine gönderilir.') +
+      K.grup('Hesap', [{ ikon: 'fa-trash-can', baslik: 'Hesabı sil', alt: 'Kalıcıdır, geri alınamaz', tehlike: true, href: K.u('ekranlar/hesap/hesap-sil.html') }])
+      : K.grup('Yasal', [{ ikon: 'fa-user-shield', baslik: 'Gizlilik ve KVKK', href: y('gizlilik-ve-kvkk') }])) +
+    '<div class="k-son"></div>';
+  K.ustCubuk({ geri: true, baslik: 'Gizlilik ve Veriler', buyuk: true });
+  K.altCubuk('hesap');
+  K.oynatici();
+  K.cekmece();
+  if (TALEP) K.toast('Veri talebin alındı', { tur: 'basari' });
+  document.addEventListener('click', function(ev){ if (!ev.target.closest('[data-izin]')) return; ev.preventDefault(); K.toast('Telefonun ayarları açılır', { ikon: 'fa-gear' }); });
+})();
+</script>
+</body>
+</html>

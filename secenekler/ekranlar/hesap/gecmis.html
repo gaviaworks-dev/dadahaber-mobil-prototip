@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Geçmiş</title>
+<!--
+  GEÇMİŞ (okuma, izleme, dinleme) · E-487–E-492 · kök: Liste (alt çubukta "Hesabım").
+  Yapı: büyük başlık → sekmeler (Okuduklarım · İzlediklerim · Dinlediklerim; yapışık) → gün ayraçlı satırlar (saat 14.30 biçimi)
+        → sayfa sonu → "Okuma geçmişini kaydet" anahtarı + 90 gün notu. Üst çubukta Temizle (onay penceresi).
+  Parametreler: ?sekme=okuma|izleme|dinleme · ?durum=yukleniyor | daha-fazla (&hal=son|hata) | bos | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0)
+    · ?tema=koyu · ?calan=1 · ?uye=0 (misafirde geçmiş bu cihazda tutulur; aynı görünüm + şerit)
+  Veri: public hesabim-gecmis.html (Okuma 214 · İzleme 18 · Podcast 6; okunan ve izlenen içerikler, saatleri; "Geçmiş 90 gün saklanır"), yazar ve süre D'den ya da public hesabim.html'den;
+        Dinlediklerim D.podcast (uygulamanın podcast bölümleri). Görseller konuya uygun olanlarda.
+  Varsayımlar (onaylanmadı): dinleme ilerlemesi yüzdeleri örnek.
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), Q = K.q, DUR = K.durum, hal = Q.get('hal');
+  var SK = [['okuma', 'Okuduklarım', 214], ['izleme', 'İzlediklerim', 18], ['dinleme', 'Dinlediklerim', 6]];
+  var si = Math.max(0, SK.map(function(x){ return x[0]; }).indexOf(Q.get('sekme')));
+  /* kaynak: dadahaber-prototip/hesabim-gecmis.html (Okuma ve İzleme sekmeleri, aynı sıra ve saatler) */
+  var OKU = [
+    ['Bugün', '23 Kasım 2026', [
+      { alt: 'Finans', kat: 'Finans', saat: '15.10', baslik: 'Merkez Bankası politika faizini yüzde 42,5\'te sabit tuttu', yazar: 'Elif Aras', sure: '3 dk', g: 'faiz' },
+      { alt: 'Gündem', kat: 'Gündem', saat: '14.25', baslik: 'Asgari ücret görüşmelerinde ilk toplantı 4 Aralık\'ta yapılacak', yazar: 'Hakan Uysal', sure: '3 dk', g: 'asgari' },
+      { alt: 'Dünya', kat: 'Dünya', saat: '14.15', baslik: 'AB dışişleri bakanları göç paketini görüştü', yazar: 'Zeynep Ak', sure: '3 dk', g: 'ab-goc' },
+      { alt: 'Dada Doğrula', kat: 'Gündem', ikon: 'fa-clipboard-check', saat: '11.50', baslik: 'Asgari ücrete ocakta yüzde 60 zam yapılacağı iddiası yanıltıcı', yazar: 'Dada Doğrula' }]],
+    ['Dün', '22 Kasım 2026', [
+      { alt: 'Spor', kat: 'Spor', saat: '23.05', baslik: 'Beşiktaş deplasmanda üç puanı iki golle aldı', yazar: 'Emre Sönmez', sure: '2 dk' },
+      { alt: 'Dada Bağlam', kat: 'Gündem', ikon: 'fa-folder-open', saat: '21.10', baslik: 'İstanbul\'un su sorunu: barajlardan musluğa bir yıl', yazar: 'Dada Bağlam', sure: '6 dk' },
+      { alt: 'Kampüs', kat: 'Kampüs', saat: '19.00', baslik: 'YKS 2027 başvuru takvimi açıklandı', yazar: 'Selin Koç', sure: '3 dk', g: 'yks' },
+      { alt: 'Uzay', kat: 'Keşfet', saat: '12.30', baslik: 'Yerli haberleşme uydusunun yörünge testleri tamamlandı' }]]];
+  var IZLE = [
+    ['Bugün', '23 Kasım 2026', [
+      { alt: 'Gündem', kat: 'Gündem', saat: '10.05', baslik: 'Marmara\'da kar: İstanbul\'da sabah saatlerinden görüntüler', v: '0:48', g: 'kar-sokak' },
+      { alt: 'Siyaset', kat: 'Gündem', saat: '09.30', baslik: 'Plan ve Bütçe Komisyonu\'nda günün özeti', v: '2:14', g: 'tbmm' }]],
+    ['Dün', '22 Kasım 2026', [
+      { alt: 'Uzay', kat: 'Keşfet', saat: '21.40', baslik: 'Yerli haberleşme uydusunun yörünge testi nasıl yapıldı?', v: '3:05' },
+      { alt: 'Dünya', kat: 'Dünya', saat: '18.10', baslik: 'Türkiye–AB toplantısı sonrası ortak basın toplantısı', v: '4:12', g: 'bruksel' }]],
+    ['21 Kasım', 'Cumartesi', [
+      { alt: 'Kültür ve Yaşam', kat: 'Keşfet', saat: '19.20', baslik: 'Kitap fuarında son gün: en çok ziyaret edilen bölümler', v: '1:36' }]]];
+  var DINLE = [['Bugün', '23 Kasım 2026', [[D.podcast[0], 26]]], ['Dün', '22 Kasım 2026', [[D.podcast[1], 100], [D.podcast[2], 62]]]];
+
+  function satir(h){ return h.v ? K.satir({ alt: h.alt, kat: h.kat, saat: h.saat, baslik: h.baslik, sure: K.vid(h.v), g: h.g }, { md: h.g ? h.v : '', href: K.git('videoDetay') })
+    : K.satir(h, { ikon: h.ikon }); }
+  function gunler(L){ return L.map(function(g){ return '<div class="k-ayrac"><span>' + g[0] + '</span><span>' + g[1] + '</span></div><div>' +
+    g[2].map(function(x){ return Array.isArray(x) ? K.podcastSatir(x[0], { ilerleme: x[1] }) : satir(x); }).join('') + '</div>'; }).join(''); }
+  function liste(i, ek){ return '<div class="k-satirlar">' + gunler([OKU, IZLE, DINLE][i]) + (ek || '') + '</div>'; }
+  var ayar = K.grup('Geçmiş Ayarı', [{ ikon: 'fa-clock-rotate-left', baslik: 'Okuma geçmişini kaydet', alt: 'Kapatırsan öneriler sana göre olmaz', sag: 'anahtar', on: true }], 'Geçmiş 90 gün saklanır ve yalnızca sana görünür.');
+  var bas = '<div class="k-ust-bosluk"></div>' + (DUR === 'yenileniyor' ? K.yenile('yenileniyor') : '') + '<div class="k-bbas"><h1>Geçmiş</h1><p>Okuduğun, izlediğin ve dinlediğin içerikler; son 90 gün.</p></div>' +
+    (!K.uye ? '<div class="k-ic" style="padding-bottom:var(--b-8)">' + K.serit({ ikon: 'fa-mobile-screen', metin: 'Bu telefonda tutuluyor', alt: 'Giriş yaparsan geçmişin her cihazda seninle.' }) + '</div>' : '');
+  var sekme = '<div style="position:sticky;top:var(--k-ub-h);z-index:60;background:var(--zemin)">' + K.sekmeler(SK.map(function(x){ return { metin: x[1], sayi: DUR === 'bos' ? null : x[2] }; }), si) + '</div>';
+  var hata = DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? 'cevrimdisi' : '';
+  var ic;
+  if (hata) ic = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: hata });
+  else if (DUR === 'yukleniyor') ic = bas + sekme + '<div class="k-satirlar"><div class="k-ayrac"><i class="k-isk" style="width:56px;height:13px"></i><i class="k-isk" style="width:96px;height:13px"></i></div>' + K.iskelet('satir', 5) + '</div>';
+  else if (DUR === 'bos') ic = bas + sekme + K.bos('gecmis', { eylem: { metin: 'Ana sayfaya dön', href: 'ana', tur: 'sade' } });
+  else if (DUR === 'daha-fazla') ic = bas + sekme + liste(si, (hal === 'son' || hal === 'hata' ? '' : K.iskelet('satir', 1)) + K.dahaFazla(hal === 'son' || hal === 'hata' ? hal : 'yukleniyor', 'içerik'));
+  else ic = bas + sekme + liste(si, K.dahaFazla('yukleniyor', 'içerik')) + ayar;
+  e.innerHTML = ic + '<div class="k-son"></div>';
+
+  K.ustCubuk({ geri: true, baslik: 'Geçmiş', buyuk: true, eylemler: hata || DUR === 'yukleniyor' || DUR === 'bos' ? [] : [{ ikon: 'fa-trash-can', etiket: 'Geçmişi temizle', attr: 'data-gc-temizle' }] });
+  K.altCubuk('hesap');
+  K.oynatici();
+  K.cekmece();
+  K.cekYenile(e);
+  var sk = e.querySelector('.k-sekmeler');
+  if (sk && !DUR) sk.addEventListener('click', function(ev){ var b = ev.target.closest('button'); if (!b) return; var i = [].indexOf.call(sk.querySelectorAll('button'), b);
+    var q = new URLSearchParams(location.search); q.set('sekme', SK[i][0]); history.replaceState(null, '', '?' + q.toString());
+    e.querySelector('.k-satirlar').outerHTML = liste(i, K.dahaFazla('yukleniyor', 'içerik')); });
+  if (DUR === 'daha-fazla' && !document.documentElement.classList.contains('tam')) e.scrollTop = e.scrollHeight;
+  document.addEventListener('click', function(ev){ var t = ev.target;
+    if (t.closest('[data-gc-temizle]')) { ev.preventDefault(); var p = K.pencere('gecmis'); p.el.querySelector('.k-btn.tehlike').addEventListener('click', function(){ location.href = K.u('ekranlar/hesap/gecmis.html', { durum: 'bos' }); }); }
+    var y = t.closest('[data-yeniden]'); if (y) { y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+      setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'hal', 'onbellek'].forEach(function(k){ q.delete(k); }); location.search = q.toString(); }, 1200); }
+  });
+  if (DUR === 'cevrimdisi' && !hata) { var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } }); bt.querySelector('button').classList.add('k-dk44'); }
+})();
+</script>
+</body>
+</html>

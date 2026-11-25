@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Hesabı Sil</title>
+<!--
+  HESABI SİL · E-517–E-519 · alt çubukta "Hesabım". Uygulama içinden silme App Store ve Google Play'de zorunlu.
+  Adımlar: bilgilendirme (neler silinir; bunun yerine: bildirimleri kapat, çıkış yap; Devam et · Vazgeç)
+    → ?adim=dogrula (şifreyle ya da bağlı Google hesabıyla yeniden doğrula; "Hesabımı kalıcı olarak sil" son onay penceresini açar; pencere açık gelir)
+    → ?adim=silindi (Hesabın silindi; misafir olarak devam: alt çubuk ve bağlantılar misafir haliyle).
+  Parametreler: ?adim=dogrula|silindi · ?tema=koyu · ?calan=1
+  Veri: public hesabim-gizlilik.html (Hesabı Sil metni), hesap-silindi.html (başlık, açıklama, "30 gün", "Bundan sonra" maddeleri, Görüş bildir), hesabim.html (sayılar),
+        hesabim-guvenlik.html (Google bağlı), kit K.pencere('hesap-sil').
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), ADIM = K.q.get('adim') || '', u = function(q){ return K.u('ekranlar/hesap/hesap-sil.html', q); };
+  if (ADIM === 'silindi') K.uye = false; /* silindikten sonra misafir: bağlantılar uye=0 taşır */
+  var ic, baslik = 'Hesabı Sil';
+  if (ADIM === 'silindi') {
+    /* kaynak: dadahaber-prototip/hesap-silindi.html */
+    baslik = 'Hesap Silindi';
+    ic = '<div class="k-ust-bosluk"></div>' + K.bos({ ikon: 'fa-circle-check', baslik: 'Hesabın silindi', aciklama: 'Dada Haber hesabın ve sana bağlı kişisel veriler silindi. Haberleri okumaya üyeliksiz devam edebilirsin.',
+        eylem: { metin: 'Ana sayfaya dön', href: 'ana' }, ikinci: { metin: 'Yeniden üye ol', href: 'uyeOl' } }) +
+      K.grup('Bundan Sonra', [{ ikon: 'fa-book-open', baslik: 'Okumak serbest', alt: 'Bütün haberler üyeliksiz açık', sag: 'yok' },
+        { ikon: 'fa-envelope', baslik: 'Bülten gönderilmez', alt: 'Bülten ya da bildirim e-postası gelmez', sag: 'yok' },
+        { ikon: 'fa-hourglass-half', baslik: '30 gün', alt: 'Yasal saklamalı kayıtlar sonra silinir', sag: 'yok' }]) +
+      K.grup('', [{ ikon: 'fa-message', baslik: 'Ayrılma nedenini paylaş', alt: 'Görüş bildir', href: K.git('geriBildirim') }]);
+  } else if (ADIM === 'dogrula') {
+    ic = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Kimliğini Doğrula</h1><p>Hesabını silmeden önce bunun sen olduğunu doğrulamamız gerekiyor.</p></div>' +
+      '<div class="k-ic"><div style="display:grid;gap:var(--b-16)">' + K.alan({ etiket: 'E-posta', deger: 'ece.yilmaz@eposta.com', pasif: true }) + K.alan({ etiket: 'Şifre', tur: 'password', deger: 'dadahaber', oto: 'current-password' }) + '</div>' +
+      '<div class="k-veya">veya</div><div class="k-sosyal">' + K.btn({ metin: 'Google ile doğrula', ikon: 'fa-brands fa-google', tur: 'sade' }) + '</div>' +
+      '<div class="k-bl sik">' + K.btn({ metin: 'Hesabımı kalıcı olarak sil', ikon: 'fa-trash-can', tur: 'tehlike', boy: 'buyuk', tam: true, attr: 'data-son-onay' }) +
+      '<div style="margin-top:var(--b-8)">' + K.btn({ metin: 'Vazgeç', tur: 'metin', tam: true, href: K.git('ayarlar') }) + '</div></div></div>';
+  } else {
+    /* kaynak: dadahaber-prototip/hesabim-gizlilik.html (Hesabı Sil) + hesabim.html sayaçları */
+    ic = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Hesabını Silmeden Önce</h1><p>Hesabını silersen aşağıdakiler kalıcı olarak silinir. Bu işlem geri alınamaz.</p></div>' +
+      K.grup('Silinecekler', [{ ikon: 'fa-bookmark', baslik: 'Kaydettiğin haberler', sag: 'deger', deger: 37 }, { ikon: 'fa-heart', baslik: 'Takip listen', sag: 'deger', deger: 24 },
+        { ikon: 'fa-clock-rotate-left', baslik: 'Okuma geçmişin ve serin', sag: 'deger', deger: D.uye.seri + ' gün' }, { ikon: 'fa-envelope', baslik: 'Bülten aboneliklerin', sag: 'deger', deger: 3 },
+        { ikon: 'fa-comment', baslik: 'Yorumların ve rozetlerin', sag: 'yok' }].map(function(x){ x.notr = true; return x; }), 'Yasal saklama süresine tabi kayıtlar 30 gün sonra kendiliğinden silinir.') +
+      K.grup('Bunun Yerine', [{ ikon: 'fa-bell-slash', baslik: 'Bildirimleri kapat', href: K.git('bildirimTercih') }, { ikon: 'fa-right-from-bracket', baslik: 'Yalnızca çıkış yap', href: K.git('ayarlar') }]) +
+      '<div class="k-ic k-bl sik">' + K.btn({ metin: 'Devam et', tur: 'tehlike', boy: 'buyuk', tam: true, href: u({ adim: 'dogrula' }) }) +
+      '<div style="margin-top:var(--b-8)">' + K.btn({ metin: 'Vazgeç', tur: 'metin', tam: true, attr: 'data-geri' }) + '</div></div>';
+  }
+  e.innerHTML = ic + '<div class="k-son"></div>';
+  K.ustCubuk({ geri: ADIM === 'silindi' ? false : true, baslik: baslik, buyuk: ADIM !== 'silindi' });
+  K.altCubuk('hesap');
+  K.oynatici();
+  K.cekmece();
+  function sonOnay(acik){ var p = K.pencere('hesap-sil', { acik: acik });
+    p.el.querySelector('.k-btn.tehlike').addEventListener('click', function(){ this.classList.add('is-yukleniyor'); this.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Siliniyor</span>';
+      setTimeout(function(){ location.href = u({ adim: 'silindi', uye: '0' }); }, 900); }); return p; }
+  if (ADIM === 'dogrula') sonOnay(true);
+  document.addEventListener('click', function(ev){ if (ev.target.closest('[data-son-onay]')) sonOnay(); });
+})();
+</script>
+</body>
+</html>

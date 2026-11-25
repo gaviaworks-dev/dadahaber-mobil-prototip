@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Ayarlar</title>
+<!--
+  AYARLAR · E-508–E-509 · alt çubukta "Hesabım".
+  Üye: Görünüm (tema, yazı boyutu) · Bildirimler (tercihler, bültenler) · Veri ve depolama · Gizlilik ve veriler · Güvenlik ve bağlı hesaplar
+       · Destek (Yardım, Görüş bildir, İletişim) · Hakkında (Hakkında, Yasal metinler) · Çıkış yap (onay penceresi).
+  Misafir (?uye=0): en üstte Giriş yap satırı; Güvenlik, Bültenler ve Çıkış yok.
+  Parametreler: ?uye=0 · ?tema=koyu · ?calan=1
+  Veri: sürüm public uygulama.html (Sürüm 1.6); hesap e-postası public hesabim.html.
+  Varsayımlar (onaylanmadı): depolama değeri (54 MB) Kaydedilenler › İndirilenler ile aynı örnek değer.
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), u = function(a, q){ return K.u('ekranlar/hesap/' + a + '.html', q); };
+  e.innerHTML = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Ayarlar</h1>' + (K.uye ? '<p>ece.yilmaz@eposta.com</p>' : '<p>Giriş yapmadan da her ayarı bu telefon için değiştirebilirsin.</p>') + '</div>' +
+    (!K.uye ? K.grup('', [{ ikon: 'fa-right-to-bracket', baslik: 'Giriş yap', alt: 'Ayarların her cihazda seninle olsun', href: K.git('giris') }]) : '') +
+    K.grup('Görünüm', [{ ikon: 'fa-circle-half-stroke', baslik: 'Tema', sag: 'deger', deger: 'Sistem', href: K.git('gorunum') },
+      { ikon: 'fa-font', baslik: 'Yazı boyutu', sag: 'deger', deger: 'Orta', href: K.git('gorunum') }]) +
+    K.grup('Bildirimler', [{ ikon: 'fa-bell', baslik: 'Bildirim tercihleri', href: K.git('bildirimTercih') }].concat(K.uye ? [{ ikon: 'fa-envelope', baslik: 'Bültenler', sag: 'deger', deger: 3, href: u('bultenler') }] : [])) +
+    K.grup('Veri ve Gizlilik', [{ ikon: 'fa-database', baslik: 'Veri ve depolama', sag: 'deger', deger: '54 MB', href: u('depolama') },
+      { ikon: 'fa-user-shield', baslik: 'Gizlilik ve veriler', href: u('gizlilik') }].concat(K.uye ? [{ ikon: 'fa-lock', baslik: 'Güvenlik ve bağlı hesaplar', href: u('guvenlik') }] : [])) +
+    K.grup('Destek', [{ ikon: 'fa-circle-question', baslik: 'Yardım merkezi', href: K.git('yardim') }, { ikon: 'fa-message', baslik: 'Görüş bildir', href: K.git('geriBildirim') },
+      { ikon: 'fa-envelope-open-text', baslik: 'İletişim', href: K.git('iletisim') }]) +
+    K.grup('Dada Haber', [{ ikon: 'fa-circle-info', baslik: 'Hakkında', sag: 'deger', deger: 'Sürüm 1.6', href: K.git('hakkinda') }, { ikon: 'fa-scale-balanced', baslik: 'Yasal metinler', href: K.git('yasal') }]) +
+    (K.uye ? K.grup('', [{ ikon: 'fa-right-from-bracket', baslik: 'Çıkış yap', sag: 'yok', notr: true, attr: 'data-cikis' }]) : '') +
+    '<div class="k-son"></div>';
+  K.ustCubuk({ geri: true, baslik: 'Ayarlar', buyuk: true });
+  K.altCubuk('hesap');
+  K.oynatici();
+  K.cekmece();
+  document.addEventListener('click', function(ev){ if (!ev.target.closest('[data-cikis]')) return; ev.preventDefault();
+    var p = K.pencere('cikis'); p.el.querySelector('.k-btn.ikincil').addEventListener('click', function(){ location.href = K.u('ekranlar/hesap/hesabim.html', { uye: '0' }); }); });
+})();
+</script>
+</body>
+</html>

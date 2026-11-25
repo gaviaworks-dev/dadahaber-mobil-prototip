@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Hakkında</title>
+<!--
+  HAKKINDA · E-525 · alt çubukta "Hesabım".
+  Yapı: "dada" logosu (K35: yalnız yeni logo) + tek cümle tanım → sayılar (yayın bölümü, yayın formatı, saat açık haber masası) → Kısaca Dada Haber · Ne yayımlıyoruz · Nasıl çalışıyoruz (metin)
+        → Kurumsal bağlantılar (Künye, Yayın İlkeleri, Düzeltme Politikası, İletişim, Yasal metinler) → Uygulama (sürüm, son güncelleme, değerlendir).
+  Parametreler: ?tema=koyu · ?uye=0 · ?calan=1
+  Veri: public hakkimizda.html (tanım, "7 ana yayın bölümü · 5 yayın formatı · 24 saat açık haber masası", paragraflar ve format listesi; kısaltılarak), uygulama.html (Sürüm 1.6 · 19 Kasım 2026; iOS 16.0 / Android 9.0).
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), y = function(m){ return K.u('ekranlar/hesap/yasal.html', { metin: m }); };
+  /* kaynak: dadahaber-prototip/hakkimizda.html */
+  e.innerHTML = '<div class="k-ust-bosluk"></div><div class="k-bbas"><span class="logo" role="img" aria-label="Dada Haber" style="height:40px"></span>' +
+    '<p style="margin-top:var(--b-16)">Dada Haber, gündemi doğrulanmış bilgi ve görünür kaynakla, sakin bir dille aktaran dijital haber platformudur.</p></div>' +
+    K.istat([[7, 'yayın bölümü'], [5, 'yayın formatı'], [24, 'saat haber masası']]).replace(/<a>/g, '<div>').replace(/<\/a>/g, '</div>') +
+    '<section class="k-bl sik">' + K.bb({ baslik: 'Kısaca Dada Haber', ikon: 'fa-circle-info', yalin: true }) + '<div class="k-ic k-govde">' +
+      '<p>Dada Haber, telefondan ve sosyal medyadan haberi takip eden okurlar için kuruldu. Amacımız, bir gelişmeyi ilk duyuran olmaktan çok, neyin doğrulandığını ve neyin henüz bilinmediğini açıkça gösteren olmaktır.</p>' +
+      '<p>Her haberde dayandığımız kaynakları aynı sayfada gösteriyor, yayından sonra değişen bilgiyi saatiyle işaretliyoruz.</p></div></section>' +
+    '<section>' + K.bb({ baslik: 'Ne Yayımlıyoruz', ikon: 'fa-layer-group', yalin: true }) + '<div class="k-ic">' +
+      K.madde(['Dada Özet: uzun bir haberi üç maddede anlatan kısa özet.', 'Dada Bağlam: bir gelişmenin arka planını ve önceki adımlarını gösteren zaman çizgisi.', 'Dada Doğrula: sosyal medyada yayılan iddiaların kaynaklarıyla incelenmesi.',
+        'Video, Podcast, Foto Fokus ve İnfografik: aynı gündemin izlenen, dinlenen ve görülen halleri.', 'Haber Dinle: haber metinlerinin seslendirilmiş hali.']) + '</div></section>' +
+    '<section class="k-bl sik">' + K.bb({ baslik: 'Nasıl Çalışıyoruz', ikon: 'fa-clipboard-check', yalin: true }) + '<div class="k-ic k-govde"><p>Bir bilgi, en az iki bağımsız kaynakla doğrulanmadan haber olarak yayımlanmaz. Doğrulama süren gelişmeleri "doğrulanıyor" etiketiyle ve haber dilinden ayrı biçimde aktarırız.</p></div></section>' +
+    K.grup('Kurumsal', [{ ikon: 'fa-id-card', baslik: 'Künye', href: y('kunye') }, { ikon: 'fa-newspaper', baslik: 'Yayın İlkeleri', href: y('yayin-ilkeleri') }, { ikon: 'fa-pen', baslik: 'Düzeltme Politikası', href: y('duzeltme-politikasi') },
+      { ikon: 'fa-envelope-open-text', baslik: 'İletişim', href: K.git('iletisim') }, { ikon: 'fa-scale-balanced', baslik: 'Yasal metinler', href: K.git('yasal') }]) +
+    K.grup('Uygulama', [{ ikon: 'fa-mobile-screen', baslik: 'Sürüm 1.6', alt: 'Son güncelleme: 19 Kasım 2026', sag: 'yok' }, { ikon: 'fa-star', baslik: 'Uygulamayı değerlendir', alt: 'App Store ya da Google Play', attr: 'data-toast="Mağaza sayfası açılır"' }],
+      'iOS 16.0 ve Android 9.0 ya da üstü. Uygulama, sitedeki gizlilik kurallarına tabidir.') +
+    '<div class="k-son"></div>';
+  K.ustCubuk({ geri: true, baslik: 'Hakkında' });
+  K.altCubuk('hesap');
+  K.oynatici();
+  K.cekmece();
+})();
+</script>
+</body>
+</html>

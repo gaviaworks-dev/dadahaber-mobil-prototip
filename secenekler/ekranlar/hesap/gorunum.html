@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Görünüm</title>
+<!--
+  GÖRÜNÜM (tema, yazı boyutu, Sakin mod) · E-510–E-511 · alt çubukta "Hesabım". Sitedeki Görünüm penceresinin (C7) uygulama karşılığı.
+  Yapı: büyük başlık → Tema (Açık · Koyu · Sistem; işaretli satır; seçince tema anında değişir) → Yazı boyutu: kaydırıcı (detaydaki Aa ile aynı ölçek: --mb 15–22, varsayılan 16)
+        + önizleme (öne çıkan metin --mb+2, okuma metni --mb; K29, K31) → Sakin mod ve hareketli içerik anahtarları.
+  Parametreler: ?boy=en-buyuk (önizleme en büyük boyutta, --mb 22) · ?kip=acik|koyu|sistem (işaretli tema; varsayılan sistem) · ?tema=koyu · ?uye=0 · ?calan=1
+  Veri: D.detay (spot ve ilk paragraf), public hesabim-tercihler.html (Sakin mod ve "Hareketli içerikleri durdur" metinleri), public Görünüm penceresi (Karanlık Mod, Sakin Mod açıklamaları).
+  Bekleyen #7 (karar değil): büyük yazı boyutunda başlık kısaltma kuralının gevşemesi; önizleme yalnız okuma metnini gösterir.
+  Varsayımlar (onaylanmadı): boyut adları (Küçük 15 · Orta 16 · Büyük 18 · Çok büyük 20 · En büyük 22).
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* KİT ADAYI: önizleme kutusu — ayar değişikliğinin canlı önizlemesi (yazı boyutu); kitte yalnız alt sayfadaki yazı boyutu önizlemesi var */
+.gr-onizleme{margin-top:var(--b-12);padding:var(--b-16);border-radius:var(--k-kontrol);background:var(--k-yuzey)}
+.gr-onizleme .k-govde p{margin:var(--b-12) 0 0}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), Q = K.q, EB = Q.get('boy') === 'en-buyuk', kip = Q.get('kip') || 'sistem', mb = EB ? 22 : 16;
+  var ADI = function(v){ v = +v; return v <= 15 ? 'Küçük' : v < 17 ? 'Orta' : v < 19 ? 'Büyük' : v < 21.5 ? 'Çok büyük' : 'En büyük'; };
+  document.documentElement.style.setProperty('--mb', mb + 'px');
+  var d = D.detay;
+  e.innerHTML = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Görünüm</h1><p>Tema, yazı boyutu ve Sakin mod. Üyeysen tercihlerin hesabına kaydedilir.</p></div>' +
+    K.grup('Tema', [{ ikon: 'fa-sun', baslik: 'Açık', sag: 'tik', secili: kip === 'acik', attr: '' }, { ikon: 'fa-moon', baslik: 'Koyu', alt: 'Gece okumaya uygun koyu zemin', sag: 'tik', secili: kip === 'koyu' },
+      { ikon: 'fa-circle-half-stroke', baslik: 'Sistem', alt: 'Telefonun ayarına uyar', sag: 'tik', secili: kip === 'sistem' }]).replace(/<button type="button" class="k-ayar"/g, function(m){ return m.replace('class', 'data-kip class'); }) +
+    '<section class="k-grup"><span class="k-grup-b">Yazı Boyutu</span><div class="k-kaydirac-k"><span class="a1">A</span>' + K.kaydirac({ min: 15, max: 22, adim: .5, deger: mb, etiket: 'Yazı boyutu' }).replace('<input', '<input data-mb') + '<span class="a2">A</span></div>' +
+    '<p class="k-grup-n" id="gr-ad">' + ADI(mb) + ' · bütün okuma metni birlikte büyür</p>' +
+    '<div class="gr-onizleme">' + K.katEt(d.kat, d.ikon) + '<p class="k-spot" style="margin-top:var(--b-8)">' + d.spot + '</p><div class="k-govde"><p>' + d.govde[0].p + '</p></div></div></section>' +
+    K.grup('Sakin Okuma', [{ ikon: 'fa-leaf', baslik: 'Sakin mod', alt: 'Sarsıcı görseller bulanık, sayaçlar kapalı', sag: 'anahtar', on: false },
+      { ikon: 'fa-circle-pause', baslik: 'Hareketli içerikleri durdur', alt: 'Video ve şeritler kendiliğinden oynamaz', sag: 'anahtar', on: false }],
+      'Telefonunda "Hareketi azalt" açıksa geçişler ve canlandırmalar kendiliğinden kapanır.') +
+    '<div class="k-son"></div>';
+  K.ustCubuk({ geri: true, baslik: 'Görünüm', buyuk: true });
+  K.altCubuk('hesap');
+  K.oynatici();
+  K.cekmece();
+  document.addEventListener('input', function(ev){ if (ev.target.hasAttribute && ev.target.hasAttribute('data-mb')) document.getElementById('gr-ad').textContent = ADI(ev.target.value) + ' · bütün okuma metni birlikte büyür'; });
+  /* tema satırı: işaret taşınır, tema anında değişir (Sistem: telefonun ayarı; önizlemede mevcut tema kalır) */
+  document.addEventListener('click', function(ev){ var t = ev.target.closest('[data-kip]'); if (!t) return;
+    var yeni = ['acik', 'koyu', 'sistem'][[].indexOf.call(t.parentNode.querySelectorAll('[data-kip]'), t)], q = new URLSearchParams(location.search);
+    q.set('kip', yeni); if (yeni === 'koyu') q.set('tema', 'koyu'); else if (yeni === 'acik') q.delete('tema'); location.search = q.toString(); });
+})();
+</script>
+</body>
+</html>

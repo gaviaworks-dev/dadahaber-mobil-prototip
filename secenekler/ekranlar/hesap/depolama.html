@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Veri ve Depolama</title>
+<!--
+  VERİ VE DEPOLAMA · E-512 · alt çubukta "Hesabım".
+  Yapı: büyük başlık → depolama özeti (kullanılan alan, ilerleme çubuğu; İndirilenler ve önbellek satırları) → Otomatik indirme (Günün 5'i, kaydederken indir, yalnız Wi-Fi)
+        → Mobil veri (video, sesli haber) → Önbelleği temizle (kısa bildirim) · İndirilenleri sil (onay penceresi) → sürüm.
+  Parametreler: ?uye=0 · ?tema=koyu · ?calan=1
+  Veri: sürüm ve boyut public uygulama.html (Sürüm 1.6; iOS 48 MB); "Mobil veride video · Dokununca" kit vitrini (K.video mobil hali); Günün 5'i 07.00 baskısı D.gunun5.
+  Varsayımlar (onaylanmadı): kullanılan alan değerleri (İndirilenler 54 MB, önbellek 22 MB) örnek; Kaydedilenler › İndirilenler ile aynı.
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran');
+  e.innerHTML = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Veri ve Depolama</h1><p>Çevrimdışı okuma, otomatik indirme ve mobil veri kullanımı.</p></div>' +
+    '<div class="k-ic"><div class="k-istat" style="margin:0;grid-template-columns:repeat(3,minmax(0,1fr))"><div><b>76 MB</b><small>Toplam</small></div><div><b>54 MB</b><small>İndirilenler</small></div><div><b>22 MB</b><small>Önbellek</small></div></div>' +
+    '<div style="margin-top:var(--b-12)">' + K.ilerleme(71, 'kalin') + '</div></div>' +
+    K.grup('Depolama', [{ ikon: 'fa-circle-down', baslik: 'İndirilenler', alt: '4 haber, 1 bülten, 1 podcast', sag: 'deger', deger: '54 MB', href: K.u('ekranlar/hesap/kaydedilenler.html', { sekme: 'indirilenler' }) },
+      { ikon: 'fa-broom', baslik: 'Önbelleği temizle', alt: 'Görseller ve sayfalar yeniden yüklenir', sag: 'deger', deger: '22 MB', attr: 'data-onbellek' }]) +
+    K.grup('Otomatik İndirme', [{ ikon: 'fa-sun', baslik: 'Günün 5\'ini kendiliğinden indir', alt: 'Her sabah ' + D.gunun5.baski + ' baskısı', sag: 'anahtar', on: true },
+      { ikon: 'fa-bookmark', baslik: 'Kaydederken çevrimdışı indir', alt: 'Kaydettiğin haber bağlantısız açılır', sag: 'anahtar', on: true },
+      { ikon: 'fa-wifi', baslik: 'Yalnız Wi-Fi\'da indir', alt: 'Mobil veri kullanılmaz', sag: 'anahtar', on: true }]) +
+    K.grup('Mobil Veri', [{ ikon: 'fa-circle-play', baslik: 'Mobil veride video', sag: 'deger', deger: 'Dokununca', attr: 'data-video-veri' },
+      { ikon: 'fa-headphones', baslik: 'Sesli haberi önceden yükle', alt: 'Dinle\'de bir sonraki haber hazır bekler', sag: 'anahtar', on: false }], 'Akış videoları mobil veride kendiliğinden oynamaz; dokununca oynar.') +
+    K.grup('', [{ ikon: 'fa-trash-can', baslik: 'İndirilenleri sil', sag: 'yok', tehlike: true, attr: 'data-indirilen-sil' }]) +
+    '<p class="k-grup-n" style="margin:var(--b-24) var(--kenar) 0;text-align:center">Dada Haber · Sürüm 1.6</p><div class="k-son"></div>';
+  K.ustCubuk({ geri: true, baslik: 'Veri ve Depolama', buyuk: true });
+  K.altCubuk('hesap');
+  K.oynatici();
+  K.cekmece();
+  document.addEventListener('click', function(ev){ var t = ev.target;
+    if (t.closest('[data-onbellek]')) { ev.preventDefault(); var r = t.closest('[data-onbellek]'); r.querySelector('.dg').textContent = '0 MB'; K.toast('Önbellek temizlendi', { tur: 'basari', alt: '22 MB boşaldı' }); }
+    if (t.closest('[data-indirilen-sil]')) { ev.preventDefault(); K.pencere('indirilen-sil'); }
+    if (t.closest('[data-video-veri]')) { ev.preventDefault(); K.sayfa({ baslik: 'Mobil veride video', icerik: K.grup('', [{ baslik: 'Kendiliğinden oynat', sag: 'tik' }, { baslik: 'Dokununca oynat', sag: 'tik', secili: true }, { baslik: 'Yalnız Wi-Fi\'da', sag: 'tik' }]).replace('k-grup"', 'k-grup" style="margin:0"') }); }
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Serim ve Rozetlerim</title>
+<!--
+  SERİM VE ROZETLERİM · E-466–E-467 · alt çubukta "Hesabım"; Hesabım'daki okuma serisi ve sayaçtan gelinir.
+  Yapı: büyük başlık → sayılar (güncel seri, en uzun seri, okunan haber, rozet) → son 7 gün çubuğu → sıradaki rozete ilerleme
+        → Rozetlerim ızgarası (kazanılan: sarı daire + tarih; kilitli: soluk + kilit + ilerleme) → seri kuralı notu.
+  Parametreler: ?durum=bos (seri yok: "Bugün ilk haberini oku, seri başlasın"; kazanılmış rozetler kalır) · ?uye=0 (giriş çağrısı) · ?tema=koyu · ?calan=1
+  Veri: public hesabim-seri.html (12 gün güncel, 31 gün en uzun, 214 okunan haber, 9 rozet; 12 rozetin adları, kazanma tarihleri ve kilitli ilerlemeleri; seri kuralı metni), D.uye.seri.
+  Rozet ikonları kitin ikon eşlemesinden (Dada Bağlam fa-folder-open, Dada Doğrula fa-clipboard-check, Sakin fa-leaf, Dinle fa-headphones …).
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* KİT ADAYI: rozet ızgarası — kazanılan / kilitli rozet kutusu (daire ikon, ad, tarih ya da ilerleme); kitte yok, takım kutusunun (.k-takim) ölçüleriyle */
+.rz{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--b-12)}
+.rz>div{display:flex;flex-direction:column;align-items:center;gap:var(--b-8);padding:var(--b-16) var(--b-8) var(--b-12);border-radius:var(--k-kontrol);background:var(--k-yuzey);text-align:center;min-width:0}
+.rz .ik{position:relative;width:52px;height:52px;border-radius:var(--k-daire);display:grid;place-items:center;font-size:20px;background:var(--marka);color:var(--siyah)}
+.rz b{font-size:13.5px;line-height:1.25;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rz small{font-size:12px;color:var(--metin-3);white-space:nowrap}
+.rz .kilit .ik{background:var(--zemin-2);color:var(--metin-3)}
+.rz .kilit .ik em{position:absolute;right:calc(-1 * var(--b-4));bottom:calc(-1 * var(--b-4));width:22px;height:22px;border-radius:var(--k-daire);display:grid;place-items:center;font-size:10px;font-style:normal;background:var(--k-koyu);color:#fff;outline:2px solid var(--k-yuzey)}
+.rz .kilit .k-ilerleme{width:100%}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), BOS = K.durum === 'bos', SERI = BOS ? 0 : D.uye.seri;
+  /* kaynak: dadahaber-prototip/hesabim-seri.html (Rozetlerim) */
+  var R = [['fa-calendar-week', 'Bir hafta', '9 Kas'], ['fa-sun', 'Sabahçı', '12 Kas'], ['fa-building-columns', 'Kaynak avcısı', '3 Kas'], ['fa-headphones', 'Dinleyici', '28 Eki'],
+    ['fa-folder-open', 'Bağlam okuru', '19 Kas'], ['fa-clipboard-check', 'Doğrulayıcı', '22 Kas'], ['fa-earth-europe', 'Dünya gezgini', '15 Kas'], ['fa-leaf', 'Sakin okur', '6 Kas'],
+    ['fa-comment', 'Yorumcu', '20 Kas'], ['fa-calendar-days', 'Bir ay', null, SERI + '/30 gün', SERI / 30 * 100], ['fa-graduation-cap', 'Kampüs takipçisi', null, '4/10 haber', 40], ['fa-moon', 'Gece kuşu', null, '2/5 gece', 40]];
+  var rozet = '<div class="rz">' + R.map(function(r){ return r[2] ? '<div><span class="ik">' + K.I(r[0]) + '</span><b>' + r[1] + '</b><small>' + r[2] + '</small></div>'
+    : '<div class="kilit"><span class="ik">' + K.I(r[0]) + '<em>' + K.I('fa-lock') + '</em></span><b>' + r[1] + '</b><small>' + r[3] + '</small>' + K.ilerleme(r[4]) + '</div>'; }).join('') + '</div>';
+  var hafta = '<div class="k-ilerleme adim kalin" style="--n:7;height:8px">' + [0, 1, 2, 3, 4, 5, 6].map(function(i){ return '<i class="on"></i>'; }).join('') + '</div>';
+  var ic;
+  if (!K.uye) ic = '<div class="k-ust-bosluk"></div>' + K.bos({ ikon: 'fa-fire', baslik: 'Okuma serin üyelikle', aciklama: 'Her gün en az bir haberi sonuna kadar oku; serin ve rozetlerin hesabında birikir.', eylem: { metin: 'Giriş yap', ikon: 'fa-right-to-bracket', href: 'giris' }, ikinci: { metin: 'Üye ol', href: 'uyeOl' } });
+  else ic = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Serim ve Rozetlerim</h1><p>Okuma alışkanlığın, serin ve kazandığın rozetler.</p></div>' +
+    (BOS ? K.bos({ ikon: 'fa-fire', baslik: 'Serin henüz başlamadı', aciklama: 'Bugün ilk haberini sonuna kadar oku, serin başlasın.', eylem: { metin: 'Günün 5\'ini oku', ikon: 'fa-sun', href: 'gununBesi' } }) : '') +
+    K.istat([[SERI + ' gün', 'Güncel seri'], ['31 gün', 'En uzun seri'], [214, 'Okunan haber'], [9, 'Rozet']]).replace('k-istat"', 'k-istat" style="grid-template-columns:repeat(2,minmax(0,1fr))"').replace(/<a>/g, '<div>').replace(/<\/a>/g, '</div>') +
+    (BOS ? '' : K.grup('Son 7 Gün', ['<div style="padding:var(--b-16)">' + hafta + '<p class="k-grup-n" style="margin:var(--b-12) 0 0">17–23 Kasım her gün okudun. Bugünkü okuman sayıldı.</p></div>'])) +
+    K.grup('Sıradaki Rozet', ['<div style="display:flex;align-items:center;gap:var(--b-12);padding:var(--b-16);"><span class="k-avatar m notr">' + K.I('fa-calendar-days') + '</span><div style="flex:1;min-width:0"><b style="display:block;font-size:15.5px">Bir ay</b>' +
+      '<small style="display:block;margin:var(--b-4) 0 var(--b-8);font-size:12.5px;color:var(--metin-3)">' + (30 - SERI) + ' gün daha oku</small>' + K.ilerleme(SERI / 30 * 100, 'kalin') + '</div></div>']) +
+    '<section class="k-bl sik">' + K.bb({ baslik: 'Rozetlerim', ikon: 'fa-award', sayi: '9 / 12' }) + '<div class="k-ic"><p class="k-grup-n" style="margin:0 0 var(--b-12)">12 rozetin 9\'unu kazandın. Kilitli rozetlerin altında ilerlemen yazıyor.</p>' + rozet +
+    '<p class="k-not">' + K.I('fa-circle-info') + 'Her gün en az bir haberi sonuna kadar okuduğunda serin bir gün uzar. Seri yalnızca sana görünür.</p></div></section>';
+  e.innerHTML = ic + '<div class="k-son"></div>';
+  K.ustCubuk({ geri: true, baslik: 'Serim ve Rozetlerim', buyuk: true });
+  K.altCubuk('hesap');
+  K.oynatici();
+  K.cekmece();
+})();
+</script>
+</body>
+</html>

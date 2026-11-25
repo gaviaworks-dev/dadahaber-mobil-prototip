@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Takip Ettiklerim</title>
+<!--
+  TAKİP ETTİKLERİM · E-480–E-486 · kök: Liste (alt çubukta "Hesabım").
+  Yapı: büyük başlık → sekmeler (Konular · Şehirler · Takımlar · Yazarlar · Kişi ve kurumlar; yapışık, yana kayar) → konu ara
+        → takip edilen çipler (seçili; dokununca "takibi bırak" penceresi) → Önerilen Konular (çip + ekle). Yazarlar sekmesinde yazar satırı + Takipte düğmesi,
+        Takımlar sekmesinde takım kutuları. Sekme dokununca ?sekme= ile açılır.
+  Parametreler: ?sekme=konular|sehirler|takimlar|yazarlar|kisiler · ?durum=oneri (takip edilebilecek konular kataloğu, DADAHABER-10 alt başlıkları)
+    | yukleniyor | bos (konu ve takım öner) | hata (&hata=zaman-asimi) | cevrimdisi (önbellekteki liste + bant; &onbellek=0 tam ekran)
+    · ?uye=0 (cihazdaki takipler + giriş çağrısı, C30) · ?tema=koyu · ?calan=1
+  Veri: public hesabim-takip.html (sayılar 12 · 2 · 1 · 4 · 5; şehirler, kişi ve kurumlar, önerilen konular), D.uye.takip (Galatasaray, Faiz, İstanbul, Savunma Sanayii),
+        D.koseYazilari (takip edilen yazarlar, ad ve unvan), public sözlük puan_tablosu (takımlar), kit K.ALT (katalog alt başlıkları).
+  Varsayımlar (onaylanmadı): public listedeki takım (Beşiktaş) ve iki konu, uygulamanın örnek üyesine (D.uye) göre Galatasaray, Faiz ve Savunma Sanayii yapıldı;
+    misafirin takibi cihazda (C30), cihazdaki tek takip seçili şehir (İstanbul).
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), Q = K.q, DUR = K.durum;
+  /* kaynak: dadahaber-prototip/hesabim-takip.html; takım ve iki konu D.uye.takip'ten */
+  var KONU = ['Ekonomi', 'Faiz', 'Asgari Ücret', 'Savunma Sanayii', 'Teknoloji', 'Yapay Zekâ', 'Dünya', 'Diplomasi', 'Kültür ve sanat', 'Kitap', 'İklim', 'Kuraklık'];
+  var SEHIR = ['İstanbul', 'Ankara'], KISI = ['Merkez Bankası', 'TÜİK', 'TBMM', 'Meteoroloji', 'Asgari Ücret Tespit Komisyonu'];
+  var ONERI = ['Kira', 'Enerji', 'Uzay', 'YKS', 'Farklı Bakışlar', 'Seyahat'];
+  /* kaynak: public sözlük puan_tablosu.takimlar (ilk altı) */
+  var TAKIM = [['Galatasaray', 'GS'], ['Fenerbahçe', 'FB'], ['Beşiktaş', 'BJK'], ['Trabzonspor', 'TS'], ['Başakşehir', 'BAŞ'], ['Samsunspor', 'SAM']];
+  var SK = [['konular', 'Konular', 12], ['sehirler', 'Şehirler', 2], ['takimlar', 'Takımlar', 1], ['yazarlar', 'Yazarlar', 4], ['kisiler', 'Kişi ve kurumlar', 5]];
+  var si = Math.max(0, SK.map(function(x){ return x[0]; }).indexOf(Q.get('sekme')));
+  var hata = DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? 'cevrimdisi' : '';
+
+  function takipCip(m, ikon){ return K.cip(m, { secili: true, ikon: ikon || 'fa-check', attr: 'data-birak' }); }
+  function ekleCip(m){ return K.cip(m, { ikon: 'fa-plus', attr: 'data-ekle' }); }
+  var izgara = function(html){ return '<div class="k-cip-izgara">' + html + '</div>'; };
+  var notS = '<p class="k-grup-n" style="margin:var(--b-12) 0 0">Bir çipe dokunarak takibi bırakabilirsin.</p>';
+  function govde(i){
+    var k = SK[i][0];
+    if (k === 'konular') return '<div class="k-ic" style="padding-top:var(--b-16)">' + K.ara({ yer: 'Konu ara', ses: false }) + '</div>' +
+      '<div class="k-ic" style="padding-top:var(--b-16)">' + izgara(KONU.map(function(x){ return takipCip(x); }).join('')) + notS + '</div>' +
+      '<section class="k-bl sik">' + K.bb({ baslik: 'Önerilen Konular', ikon: 'fa-wand-magic-sparkles', baglanti: { metin: 'Katalog', href: K.u('ekranlar/hesap/takip.html', { durum: 'oneri' }) } }) +
+      '<div class="k-ic"><p class="k-grup-n" style="margin:0 0 var(--b-12)">Okuma geçmişine göre ilgini çekebilecek başlıklar.</p>' + izgara(ONERI.map(ekleCip).join('')) + '</div></section>';
+    if (k === 'sehirler') return '<div class="k-ic" style="padding-top:var(--b-16)">' + izgara(SEHIR.map(function(x){ return takipCip(x, 'fa-location-dot'); }).join('')) + notS + '</div>' +
+      K.grup('', [{ ikon: 'fa-plus', baslik: 'Şehir ekle', alt: 'Hava, namaz ve yerel haberler', attr: 'data-sayfa="sehir"' }]);
+    if (k === 'takimlar') return '<div class="k-ic" style="padding-top:var(--b-16)"><div class="k-takimlar">' + TAKIM.map(function(t, j){ return K.takim({ ad: t[0], kod: t[1], secili: j === 0 }); }).join('') + '</div>' +
+      '<p class="k-grup-n" style="margin:var(--b-12) 0 0">Takımının maçında gol ve sonuç bildirimi gelir.</p></div>' + K.grup('', [{ ikon: 'fa-futbol', baslik: 'Bütün takımlar', alt: 'Süper Lig ve millî takımlar', href: K.u('ekranlar/hesap/tercihler.html', { sekme: 'takim' }) }]);
+    if (k === 'yazarlar') return '<div class="k-satirlar">' + D.koseYazilari.slice(1).map(function(y){ return K.yazarSatir({ ad: y.ad, unvan: y.unvan }, { takip: true }); }).join('') + '</div>' +
+      K.grup('', [{ ikon: 'fa-feather-pointed', baslik: 'Bütün yazarlar', href: K.git('yazarlar') }]);
+    return '<div class="k-ic" style="padding-top:var(--b-16)">' + izgara(KISI.map(function(x){ return takipCip(x); }).join('')) + notS + '</div>';
+  }
+  var bas = function(p){ return '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Takip Ettiklerim</h1><p>' + (p || 'Konular, şehirler, takımlar ve yazarlar: Bugün Senin İçin bu listeden dolar.') + '</p></div>'; };
+  var sekme = function(){ return '<div style="position:sticky;top:var(--k-ub-h);z-index:60;background:var(--zemin)">' + K.sekmeler(SK.map(function(x){ return { metin: x[1], sayi: x[2] }; }), si) + '</div>'; };
+  var ic;
+  if (hata) ic = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: hata });
+  else if (!K.uye) {
+    ic = bas('Giriş yapmadan takip ettiklerin yalnızca bu telefonda durur.') + '<div class="k-ic">' + K.serit({ ikon: 'fa-mobile-screen', metin: 'Bu telefonda tutuluyor', alt: 'Giriş yaparsan takiplerin her cihazda seninle.' }) + '</div>' +
+      '<section class="k-bl sik">' + K.bb({ baslik: 'Bu Cihazda', ikon: 'fa-heart', sayi: 1 }) + '<div class="k-ic">' + izgara(takipCip(D.hava.sehir, 'fa-location-dot')) + '</div></section>' +
+      '<section class="k-bl sik">' + K.bb({ baslik: 'Önerilen Konular', ikon: 'fa-wand-magic-sparkles' }) + '<div class="k-ic">' + izgara(D.bolumler.map(function(b){ return K.cip(b.ad, { ikon: b.ikon, attr: 'data-ekle' }); }).join('')) + '</div></section>' +
+      '<div class="k-ic k-bl sik">' + K.cagri({ ikon: 'fa-right-to-bracket', baslik: 'Giriş yap, her cihazda takip et', aciklama: 'Bu telefondaki takiplerin hesabına aktarılır.', eylem: { metin: 'Giriş yap', href: K.git('giris') } }) + '</div>';
+  } else if (DUR === 'yukleniyor') {
+    var ci = ''; [76, 52, 104, 128, 88, 96, 70, 116, 84].forEach(function(w){ ci += '<i class="k-isk" style="width:' + w + 'px;height:36px"></i>'; });
+    ic = bas() + sekme() + '<div class="k-ic" style="padding-top:var(--b-16)" role="status" aria-label="Yükleniyor"><i class="k-isk kontrol" style="width:100%;height:44px"></i><div class="k-cip-izgara" style="margin-top:var(--b-16)">' + ci + '</div></div>';
+  } else if (DUR === 'bos') {
+    ic = bas() + K.bos('takip') +
+      '<section>' + K.bb({ baslik: 'Önerilen Konular', ikon: 'fa-wand-magic-sparkles' }) + '<div class="k-ic">' + izgara(D.bolumler.map(function(b){ return K.cip(b.ad, { ikon: b.ikon, attr: 'data-ekle' }); }).join('')) + '</div></section>' +
+      '<section class="k-bl sik">' + K.bb({ baslik: 'Takımını Seç', ikon: 'fa-futbol' }) + '<div class="k-ic"><div class="k-takimlar">' + TAKIM.map(function(t){ return K.takim({ ad: t[0], kod: t[1] }); }).join('') + '</div></div></section>';
+  } else if (DUR === 'oneri') {
+    ic = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Konu Kataloğu</h1><p>Bölümlerin alt başlıklarını takip et; haberleri Bugün Senin İçin\'de öne çıksın.</p></div>' +
+      '<div class="k-ic">' + K.ara({ yer: 'Konu ara', ses: false }) + '</div>' +
+      D.bolumler.map(function(b){ return '<section class="k-bl sik">' + K.bb({ baslik: b.ad, ikon: b.ikon, sayi: (K.ALT[b.ad] || []).length }) + '<div class="k-ic">' +
+        izgara((K.ALT[b.ad] || []).map(function(x){ return KONU.indexOf(x) > -1 ? takipCip(x) : ekleCip(x); }).join('')) + '</div></section>'; }).join('');
+  } else ic = bas() + sekme() + govde(si);
+  e.innerHTML = ic + '<div class="k-son"></div>';
+
+  K.ustCubuk({ geri: true, baslik: DUR === 'oneri' ? 'Konu Kataloğu' : 'Takip Ettiklerim', buyuk: true, eylemler: hata || DUR === 'yukleniyor' ? [] : [{ ikon: 'fa-plus', etiket: 'Konu ekle', href: K.u('ekranlar/hesap/takip.html', { durum: 'oneri' }) }] });
+  K.altCubuk('hesap');
+  K.oynatici();
+  K.cekmece();
+  K.cekYenile(e);
+  var sk = document.querySelector('.k-sekmeler');
+  if (sk) sk.addEventListener('click', function(ev){ var b = ev.target.closest('button'); if (!b) return; var i = [].indexOf.call(sk.querySelectorAll('button'), b);
+    var q = new URLSearchParams(location.search); q.set('sekme', SK[i][0]); history.replaceState(null, '', '?' + q.toString()); si = i;
+    var g = document.getElementById('tk-govde'); if (g) g.innerHTML = govde(i); });
+  var ilk = e.querySelector('.k-sekmeler'); if (ilk) { var p = ilk.parentNode, d = document.createElement('div'); d.id = 'tk-govde'; while (p.nextSibling && !(p.nextSibling.classList && p.nextSibling.classList.contains('k-son'))) d.appendChild(p.nextSibling); p.after(d); }
+  document.addEventListener('click', function(ev){ var t = ev.target, x;
+    if ((x = t.closest('[data-birak]'))) { ev.stopPropagation(); x.setAttribute('aria-pressed', 'true'); var ad = x.textContent.trim();
+      var p = K.pencere({ ikon: 'fa-heart', baslik: '"' + ad + '" takibi bırakılsın mı?', metin: 'Bu konudaki haberler Bugün Senin İçin\'de öne çıkmaz.', yan: true,
+        eylemler: [{ metin: 'Vazgeç', tur: 'sade', attr: 'data-kapat' }, { metin: 'Bırak', tur: 'ikincil', attr: 'data-kapat data-birak-ok' }] });
+      p.el.querySelector('[data-birak-ok]').addEventListener('click', function(){ x.remove(); K.toast('Takip bırakıldı', { ikon: 'fa-heart', geriAl: true }); }); }
+    if ((x = t.closest('[data-ekle]'))) { var on = x.getAttribute('aria-pressed') === 'true'; var i = x.querySelector('i'); if (i) i.className = 'fa-solid ' + (on ? 'fa-check' : 'fa-plus'); if (on) K.toast('Takip ediliyor', { ikon: 'fa-heart', alt: x.textContent.trim() }); }
+    var y = t.closest('[data-yeniden]'); if (y) { y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+      setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'onbellek'].forEach(function(k){ q.delete(k); }); location.search = q.toString(); }, 1200); }
+  });
+  if (DUR === 'cevrimdisi' && !hata) { var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } }); bt.querySelector('button').classList.add('k-dk44'); }
+})();
+</script>
+</body>
+</html>

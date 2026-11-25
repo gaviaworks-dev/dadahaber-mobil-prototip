@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Bültenlerim</title>
+<!--
+  BÜLTENLERİM · E-503–E-505 · alt çubukta "Hesabım".
+  Üye: büyük başlık → Abonelikler (her bülten için abone ol / ayrıl anahtarı; alt metinde sıklık ve içerik) → gönderim adresi notu → Son Gönderilenler (uygulamada okunur).
+  Misafir (?uye=0): E-posta ile abone ol: e-posta alanı, bülten seçimi (çip ızgarası), Aydınlatma onayı, Abone ol; "Aboneliklerini yönetmek için giriş yap".
+  Parametreler: ?durum=tamam (abone olundu: doğrulama e-postası gönderildi notu) · ?uye=0 · ?tema=koyu · ?calan=1
+  Veri: public hesabim-bultenler.html (6 bülten, sıklıkları, gönderim adresi, son gönderilenler) ve bulten.html (bülten açıklamaları, abone formu, "Bültenlerde ne var?").
+  Bekleyen B-14 (karar değil): bülten üyeliksiz mi; misafir formu public siteye göre çizildi.
+  Varsayımlar (onaylanmadı): örnek üyenin abone olduğu üç bülten (Sabah Bülteni, Haftalık Ekonomi, Spor Haftası; public'te sayı 3, adlar yok); tamam halinde yeni abonelik Kampüs Bülteni.
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), TAMAM = K.durum === 'tamam';
+  /* kaynak: dadahaber-prototip/hesabim-bultenler.html + bulten.html */
+  var B = [['fa-sun', 'Sabah Bülteni', 'Her gün 07.00', 1], ['fa-moon', 'Akşam Özeti', 'Her gün 19.00', 0],
+    ['fa-chart-column', 'Haftalık Ekonomi', 'Her cuma 17.00', 1], ['fa-graduation-cap', 'Kampüs Bülteni', 'Her pazartesi 08.00', 0],
+    ['fa-futbol', 'Spor Haftası', 'Her pazartesi 09.00', 1], ['fa-earth-europe', 'Dünya Gündemi', 'Her cuma 18.00', 0]];
+  var SON = [['Sabah Bülteni · 23 Kasım', 'Faiz kararı, kar yağışı, bütçe görüşmeleri'], ['Akşam Özeti · 22 Kasım', 'Asgari ücret takvimi, göç paketi'], ['Spor Haftası · 17 Kasım', '13. hafta sonuçları ve puan durumu']];
+  var bas = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Bültenlerim</h1><p>' + (K.uye ? 'Abone olduğun bültenler ve gönderim adresi.' : 'Seçtiğin gündem, kaynaklarıyla e-posta kutunda.') + '</p></div>';
+  var basari = TAMAM ? '<div class="k-ic">' + K.serit({ tur: 'basari', ikon: 'fa-envelope-circle-check', metin: 'Doğrulama e-postası gönderildi', alt: 'Bağlantıyı onaylayınca ilk bültenin gelir.' }) + '</div>' : '';
+  var nelerVar = K.grup('Bültenlerde Ne Var?', [
+    { ikon: 'fa-building-columns', baslik: 'Kaynaklı özetler', alt: 'Her başlığın altında dayandığı kaynak', sag: 'yok' },
+    { ikon: 'fa-clock', baslik: 'Üç dakikada okunur', alt: 'Kısa, sakin ve tekrar etmeyen derleme', sag: 'yok' },
+    { ikon: 'fa-ban', baslik: 'Reklamsız', alt: 'Reklam ve sponsorlu içerik yok', sag: 'yok' }]);
+  var ic;
+  if (K.uye) {
+    ic = bas + basari + K.grup('Abonelikler', B.map(function(x){ return { ikon: x[0], baslik: x[1], alt: x[2], sag: 'anahtar', on: !!x[3] || (TAMAM && x[1] === 'Kampüs Bülteni') }; }),
+        'Gönderim adresi ece.yilmaz@eposta.com. Her e-postanın altından tek dokunuşla ayrılabilirsin.') +
+      K.grup('Son Gönderilenler', SON.map(function(x){ return { ikon: 'fa-envelope', baslik: x[0], alt: x[1], href: K.git('detay') }; })) + nelerVar;
+  } else if (TAMAM) {
+    ic = '<div class="k-ust-bosluk"></div>' + K.bos({ ikon: 'fa-envelope-circle-check', baslik: 'Doğrulama e-postası gönderildi', aciklama: 'E-posta adresine gelen bağlantıyı onayladığında ilk bültenin gelir. Gelmediyse istenmeyen klasörüne bak.',
+      eylem: { metin: 'Ana sayfaya dön', href: 'ana' }, ikinci: { metin: 'Yeniden gönder', attr: 'data-toast="Doğrulama e-postası yeniden gönderildi"' } }) + nelerVar;
+  } else {
+    ic = bas + '<div class="k-ic"><div style="display:grid;gap:var(--b-16)">' + K.alan({ etiket: 'E-posta', tur: 'email', yer: 'ornek@eposta.com', oto: 'email' }) +
+      '<div><span class="k-alan-e">Almak istediğin bültenler</span><div class="k-cip-izgara" style="margin-top:var(--b-8)">' + B.map(function(x, i){ return K.cip(x[1], { secili: i === 0, ikon: x[0] }); }).join('') + '</div></div>' +
+      K.onay('<a class="k-dk44" href="' + K.u('ekranlar/hesap/yasal.html', { metin: 'aydinlatma-metni' }) + '">Aydınlatma Metni</a>\'ni okudum.', { alt: 'E-posta adresim bülten gönderimi için işlenir.' }) +
+      K.btn({ metin: 'Abone ol', ikon: 'fa-envelope', tur: 'birincil', boy: 'buyuk', tam: true, href: K.u('ekranlar/hesap/bultenler.html', { durum: 'tamam' }) }) +
+      '<p class="k-not" style="margin:0">' + K.I('fa-circle-info') + 'İstediğin zaman tek dokunuşla ayrılabilirsin.</p></div></div>' +
+      '<div class="k-ic k-bl sik">' + K.cagri({ ikon: 'fa-right-to-bracket', baslik: 'Aboneliklerini yönet', aciklama: 'Giriş yaparsan bültenlerini buradan açıp kapatırsın.', eylem: { metin: 'Giriş yap', href: K.git('giris') } }) + '</div>' + nelerVar;
+  }
+  e.innerHTML = ic + '<div class="k-son"></div>';
+  K.ustCubuk({ geri: true, baslik: 'Bültenlerim', buyuk: true });
+  K.altCubuk('hesap');
+  K.oynatici();
+  K.cekmece();
+  if (TAMAM && K.uye) K.toast('Kampüs Bülteni\'ne abone oldun', { tur: 'basari' });
+})();
+</script>
+</body>
+</html>

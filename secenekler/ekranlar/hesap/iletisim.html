@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>İletişim</title>
+<!--
+  İLETİŞİM · E-524 · alt çubukta "Hesabım".
+  Yapı: büyük başlık → hızlı kanallar (e-posta, telefon, çalışma saati) → "Bize Yazın" formu (ad soyad, e-posta, konu çipleri = 7 başvuru kanalı, mesaj, Aydınlatma onayı, Gönder)
+        → Başvuru kanalları (7; adres ve yanıt süresi) → Adres.
+  Parametreler: ?kanal=genel|ihbar|duzeltme|reklam|ik|kvkk|destek (konu çipi seçili gelir; Yardım › "Bize yaz" destek, Gizlilik › KVKK başvurusu kvkk) · ?uye=0 · ?tema=koyu · ?calan=1
+  Veri: public iletisim.html (iletisim@dadahaber.com, +90 212 555 01 23, Hafta içi 09.00–18.00, form alanları ve onay metni, 7 kanal tablosu, adres) — aynen.
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran');
+  /* kaynak: dadahaber-prototip/iletisim.html (Başvuru kanalları) */
+  var KN = [['genel', 'Genel', 'iletisim@dadahaber.com', '2 iş günü', 'fa-envelope'], ['ihbar', 'Haber ihbarı', 'ihbar@dadahaber.com', 'Aynı gün', 'fa-bolt'],
+    ['duzeltme', 'Düzeltme talebi', 'duzeltme@dadahaber.com', '5 iş günü', 'fa-pen'], ['reklam', 'Reklam', 'reklam@dadahaber.com', '2 iş günü', 'fa-bullhorn'],
+    ['ik', 'İnsan kaynakları', 'ik@dadahaber.com', '10 iş günü', 'fa-briefcase'], ['kvkk', 'KVKK', 'kvkk@dadahaber.com', '30 gün', 'fa-scale-balanced'], ['destek', 'Teknik destek', 'destek@dadahaber.com', '1 iş günü', 'fa-headset']];
+  var sec = Math.max(0, KN.map(function(k){ return k[0]; }).indexOf(K.q.get('kanal')));
+  e.innerHTML = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>İletişim</h1><p>Haber ihbarı, düzeltme talebi, reklam ve diğer konularda bize ulaşabileceğin kanallar.</p></div>' +
+    K.grup('', [{ ikon: 'fa-envelope', baslik: 'iletisim@dadahaber.com', alt: 'E-posta', attr: 'data-toast="E-posta uygulaması açılır"' }, { ikon: 'fa-phone', baslik: '+90 212 555 01 23', alt: 'Hafta içi 09.00–18.00', attr: 'data-toast="Arama başlatılır"' }]).replace('k-grup"', 'k-grup" style="margin-top:var(--b-8)"') +
+    '<section class="k-bl">' + K.bb({ baslik: 'Bize Yazın', ikon: 'fa-pen' }) + '<div class="k-ic" style="display:grid;gap:var(--b-16)">' +
+      '<p class="k-grup-n" style="margin:0">Mesajın seçtiğin kanala göre ilgili ekibe iletilir. Haber ihbarlarında kaynağının gizliliği korunur.</p>' +
+      K.alan({ etiket: 'Ad soyad', deger: K.uye ? 'Ece Yılmaz' : '', yer: 'Adın ve soyadın', oto: 'name' }) + K.alan({ etiket: 'E-posta', tur: 'email', deger: K.uye ? 'ece.yilmaz@eposta.com' : '', yer: 'ornek@eposta.com', oto: 'email' }) +
+      '<div><span class="k-alan-e">Konu</span><div class="k-cip-izgara" data-tek style="margin-top:var(--b-8)">' + KN.map(function(k, i){ return K.cip(k[1], { secili: i === sec }); }).join('') + '</div></div>' +
+      K.metinAlan({ etiket: 'Mesajın', yer: 'Mesajını yaz. Bir haberle ilgiliyse haberin adresini de ekle.', sinir: 2000 }) +
+      K.onay('<a class="k-dk44" href="' + K.u('ekranlar/hesap/yasal.html', { metin: 'aydinlatma-metni' }) + '">Aydınlatma Metni</a>\'ni okudum; başvurumun yanıtlanması için kişisel verilerimin işlenmesini kabul ediyorum.') +
+      K.btn({ metin: 'Gönder', ikon: 'fa-paper-plane', tur: 'birincil', boy: 'buyuk', tam: true, attr: 'data-toast="Mesajın alındı · ' + KN[sec][3] + ' içinde yanıtlarız"' }) + '</div></section>' +
+    K.grup('Başvuru Kanalları', KN.map(function(k){ return { ikon: k[4], baslik: k[1], alt: k[2], sag: 'deger', deger: k[3], attr: 'data-toast="E-posta uygulaması açılır"' }; })) +
+    K.grup('Adres', [{ ikon: 'fa-location-dot', baslik: 'Dada Medya Yayıncılık A.Ş.', alt: 'Esentepe Mah. Yazı Sok. No: 14, Şişli / İstanbul', sag: 'yok' }], 'Ziyaretler randevu ile kabul edilir.') +
+    '<div class="k-son"></div>';
+  K.ustCubuk({ geri: true, baslik: 'İletişim', buyuk: true });
+  K.altCubuk('hesap');
+  K.oynatici();
+  K.cekmece();
+})();
+</script>
+</body>
+</html>

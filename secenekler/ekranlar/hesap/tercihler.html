@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Tercihler</title>
+<!--
+  TERCİHLER (ilgi, şehir, takım, Bana Etkisi profili) · E-506–E-507 · alt çubukta "Hesabım".
+  Yapı: büyük başlık → sekmeler (İlgi alanları · Takım · Şehir · Bana Etkisi; yapışık) → sekmenin içeriği:
+        İlgi alanları: konu seçimiyle aynı çip ızgarası (çoklu) · Takım: takım ara + takım kutuları (ana sayfadaki "Takımını Ekle" buraya gelir)
+        · Şehir: seçili şehir + Şehir seç alt sayfası · Bana Etkisi: profil çipleri (Öğrenci, Çalışan, Emekli, Ev sahibi, Kiracı, Esnaf; çoklu).
+  Parametreler: ?sekme=ilgi|takim|sehir|etkisi · ?uye=0 (tercihler bu cihazda şeridi) · ?tema=koyu · ?calan=1
+  Veri: public hesabim-tercihler.html (İlgi Alanları 10 konu, Bana Etkisi Profili 6 seçenek ve açıklaması, Şehrin İstanbul), public sözlük puan_tablosu (18 Süper Lig takımı), D.uye (Galatasaray).
+  Varsayımlar (onaylanmadı): örnek üyede seçili ilgi alanları (Ekonomi, Spor, Dünya, Savunma, Teknoloji) ve Bana Etkisi profili (Çalışan, Kiracı).
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), Q = K.q;
+  var SK = [['ilgi', 'İlgi alanları'], ['takim', 'Takım'], ['sehir', 'Şehir'], ['etkisi', 'Bana Etkisi']];
+  var si = Math.max(0, SK.map(function(x){ return x[0]; }).indexOf(Q.get('sekme')));
+  /* kaynak: dadahaber-prototip/hesabim-tercihler.html */
+  var ILGI = [['Ekonomi', 'fa-chart-column', 1], ['Teknoloji', 'fa-microchip', 1], ['Spor', 'fa-futbol', 1], ['Kültür ve sanat', 'fa-masks-theater', 0], ['Sağlık', 'fa-heart-pulse', 0],
+    ['Dünya', 'fa-earth-europe', 1], ['Kampüs', 'fa-graduation-cap', 0], ['Savunma', 'fa-shield-halved', 1], ['İklim', 'fa-leaf', 0], ['Kadın', 'fa-person-dress', 0]];
+  var PROFIL = [['Öğrenci', 'fa-graduation-cap', 0], ['Çalışan', 'fa-briefcase', 1], ['Emekli', 'fa-person-cane', 0], ['Ev sahibi', 'fa-house', 0], ['Kiracı', 'fa-key', 1], ['Esnaf', 'fa-store', 0]];
+  /* kaynak: public sözlük araclar/ornek_veri.json puan_tablosu.takimlar */
+  var TAKIM = [['Galatasaray', 'GS'], ['Fenerbahçe', 'FB'], ['Beşiktaş', 'BJK'], ['Trabzonspor', 'TS'], ['Başakşehir', 'BAŞ'], ['Samsunspor', 'SAM'], ['Göztepe', 'GÖZ'], ['Kasımpaşa', 'KAS'], ['Eyüpspor', 'EYP'],
+    ['Antalyaspor', 'ANT'], ['Konyaspor', 'KON'], ['Alanyaspor', 'ALN'], ['Rizespor', 'RİZ'], ['Gaziantep FK', 'GFK'], ['Kocaelispor', 'KOC'], ['Amedspor', 'AMD'], ['Kayserispor', 'KAY'], ['Gençlerbirliği', 'GB']];
+  var izgara = function(L){ return '<div class="k-cip-izgara">' + L.map(function(x){ return K.cip(x[0], { ikon: x[1], secili: !!x[2], buyuk: true }); }).join('') + '</div>'; };
+  var not = function(m){ return '<p class="k-grup-n" style="margin:var(--b-12) 0 0">' + m + '</p>'; };
+  function govde(i){
+    var k = SK[i][0];
+    if (k === 'ilgi') return '<div class="k-ic" style="padding-top:var(--b-16)">' + izgara(ILGI) + not('Bugün Senin İçin ve öneriler bu konulara göre hazırlanır. En az üç konu seç.') + '</div>' +
+      K.grup('', [{ ikon: 'fa-heart', baslik: 'Takip ettiklerim', alt: 'Konu, kişi ve kurumlar', sag: 'deger', deger: K.uye ? 24 : 1, href: K.git('takip') }]);
+    if (k === 'takim') return '<div class="k-ic" style="padding-top:var(--b-16)">' + K.ara({ yer: 'Takım ara', ses: false }) + '</div>' +
+      '<section class="k-bl sik">' + K.bb({ baslik: 'Süper Lig', ikon: 'fa-futbol', sayi: TAKIM.length }) + '<div class="k-ic"><div class="k-takimlar">' + TAKIM.map(function(t){ return K.takim({ ad: t[0], kod: t[1], secili: K.uye && t[0] === D.uye.takip[0] }); }).join('') + '</div>' +
+      not('Takımının maçları ana sayfada öne çıkar; gol ve sonuç bildirimi Bildirim tercihlerinden açılır.') + '</div></section>';
+    if (k === 'sehir') return K.grup('Şehrin', [{ ikon: 'fa-location-dot', baslik: D.hava.sehir, alt: 'Hava durumu, namaz vakti ve yerel haberler', sag: 'deger', deger: 'Değiştir', attr: 'data-sayfa="sehir"' }]) +
+      K.grup('Konum', [{ ikon: 'fa-location-arrow', baslik: 'Konumumu kullan', alt: 'Yalnızca seçtiğin şehir kullanılır', sag: 'anahtar', on: false }], 'Anlık konum alınmaz; konum izni yalnızca şehrini bulmak için istenir.');
+    return '<div class="k-ic" style="padding-top:var(--b-16)">' + izgara(PROFIL) + not('Birden fazla profil seçebilirsin. Haberlerde "Bana etkisi" bölümü bu profile göre öne çıkar.') + '</div>' +
+      K.grup('', [{ ikon: 'fa-user', baslik: 'Bana Etkisi', alt: 'Profiline göre haberler', href: K.u('ekranlar/icerik/bana-etkisi.html') }]);
+  }
+  e.innerHTML = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Tercihler</h1><p>İlgi alanların, takımın, şehrin ve Bana Etkisi profilin.</p></div>' +
+    (!K.uye ? '<div class="k-ic" style="padding-bottom:var(--b-8)">' + K.serit({ ikon: 'fa-mobile-screen', metin: 'Tercihlerin bu telefonda', alt: 'Giriş yaparsan her cihazda seninle.' }) + '</div>' : '') +
+    '<div style="position:sticky;top:var(--k-ub-h);z-index:60;background:var(--zemin)">' + K.sekmeler(SK.map(function(x){ return x[1]; }), si) + '</div><div id="tr-govde">' + govde(si) + '</div><div class="k-son"></div>';
+  K.ustCubuk({ geri: true, baslik: 'Tercihler', buyuk: true });
+  K.altCubuk('hesap');
+  K.oynatici();
+  K.cekmece();
+  var sk = e.querySelector('.k-sekmeler');
+  sk.addEventListener('click', function(ev){ var b = ev.target.closest('button'); if (!b) return; var i = [].indexOf.call(sk.querySelectorAll('button'), b);
+    var q = new URLSearchParams(location.search); q.set('sekme', SK[i][0]); history.replaceState(null, '', '?' + q.toString()); document.getElementById('tr-govde').innerHTML = govde(i); });
+  /* takım tek seçim: aynı anda bir takım */
+  document.addEventListener('click', function(ev){ var t = ev.target.closest('.k-takim'); if (!t) return; var on = t.getAttribute('aria-pressed') === 'true';
+    [].forEach.call(document.querySelectorAll('.k-takim'), function(x){ if (x !== t) x.setAttribute('aria-pressed', 'false'); });
+    if (on) K.toast('Takımın: ' + t.querySelector('span:nth-child(2)').textContent, { tur: 'basari', ikon: 'fa-futbol' }); });
+})();
+</script>
+</body>
+</html>
