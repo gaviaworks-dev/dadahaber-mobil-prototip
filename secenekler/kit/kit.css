@@ -602,7 +602,6 @@ html.tam .k-ac,html.tam .k-mo,html.tam .k-okuma,html.tam .k-ub{position:fixed}
 /* takım hücresi (takım seçimi, takımlar) */
 .k-takimlar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--b-12)}
 .k-takim{display:flex;flex-direction:column;align-items:center;gap:var(--b-8);padding:var(--b-16) var(--b-8) var(--b-12);border-radius:var(--k-kontrol);background:var(--k-yuzey);border:1.5px solid transparent;font-size:13.5px;font-weight:var(--y-kalin);text-align:center;position:relative}
-.k-takim .ar{width:52px;height:52px;border-radius:var(--k-daire);display:grid;place-items:center;font-size:14px;font-weight:var(--y-kalin);color:#fff;background:var(--k-koyu)}
 .k-takim span{max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .k-takim[aria-pressed="true"],.k-takim.is-secili{border-color:var(--marka);background:var(--marka-25)}
 .k-takim .tik{position:absolute;top:8px;right:8px;width:22px;height:22px;border-radius:var(--k-daire);display:none;place-items:center;font-size:10px;background:var(--marka);color:var(--siyah)}
@@ -1269,3 +1268,26 @@ html[data-tema="koyu"] .k-isk{background-image:linear-gradient(90deg,var(--yuzey
 
 /* K45 gövde metni iki yana yaslı (kit.js K.yasla işaretler) */
 .k-yasla{text-align:justify;text-align-last:left;-webkit-hyphens:auto;hyphens:auto;overflow-wrap:break-word}
+
+/* ---------- takım arması (Yasin Bey, 25 Kasım): harfli dairenin yerine tek logo bileşeni ----------
+   Logo panelden yüklenir (.logo: kare, saydam zeminli görsel, kutuya sığdırılır). Yer tutucu: takım renkli kalkan + kısa kod (m ve üstünde).
+   Kutu oranı 40:46; boy değişkeni genişliktir. Kalkan çevresinde ince kontur: beyaz ağırlıklı armalar açık zeminde de seçilir. */
+.k-arma{--a:26px;width:var(--a);height:calc(var(--a) * 1.15);flex:none;display:inline-grid;place-items:center;line-height:0}
+.k-arma svg,.k-arma img{width:100%;height:100%;display:block}
+.k-arma img{object-fit:contain}
+.k-arma .kk{fill:none;stroke:rgba(0,0,0,.22);stroke-width:1}
+html[data-tema="koyu"] .k-arma .kk,.k-mac .k-arma .kk,.k-kapak .k-arma .kk{stroke:rgba(255,255,255,.28)}
+.k-arma text{font-family:inherit;font-weight:var(--y-kalin);font-size:11px;text-anchor:middle;fill:#fff;stroke:rgba(0,0,0,.55);stroke-width:2.4px;paint-order:stroke;letter-spacing:-.02em;display:none}
+.k-arma.yok .kk{fill:var(--k-yuzey);stroke:var(--cizgi)}
+.k-arma.yok text{display:block;fill:var(--metin-2);stroke:none}
+.k-arma.xs{--a:20px}.k-arma.s{--a:26px}.k-arma.m{--a:32px}.k-arma.l{--a:52px}.k-arma.xl{--a:72px}.k-arma.xxl{--a:112px}
+.k-arma.l text,.k-arma.xl text,.k-arma.xxl text{display:block}
+/* takım kapağı (K.banner .k-bbas[data-takim]): panel kapağı yoksa takım renkleri; çapraz şeritler ikinci renkte, sağda büyük arma */
+.k-kapak.takim{background-color:var(--a1);background-image:repeating-linear-gradient(120deg,transparent 0 36px,color-mix(in srgb,var(--a2) 22%,transparent) 36px 60px),linear-gradient(160deg,var(--a1) 30%,color-mix(in srgb,var(--a1) 55%,#000))}
+.k-kapak.takim.foto{background-size:cover;background-position:center}
+.k-kapak.takim::before{background:linear-gradient(0deg,rgba(10,10,10,.82) 0%,rgba(10,10,10,.35) 50%,rgba(10,10,10,0) 80%)}
+.k-kapak.takim .ka{position:absolute;right:var(--kenar);bottom:var(--b-40);z-index:-1;filter:drop-shadow(0 8px 24px rgba(0,0,0,.35))}
+.k-kapak.takim.foto .ka{display:none}
+.k-kapak.takim h1,.k-kapak.takim p{max-width:calc(100% - 96px)}
+.k-tablo .tk .k-arma{margin-right:0}
+.k-takim .k-arma{margin-top:0}

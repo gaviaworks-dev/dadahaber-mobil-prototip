@@ -26,6 +26,7 @@
                K.kartVideo(v,{yatay}) K.podcast(p) K.podcastSatir(p,{ilerleme, oynuyor, indir}) K.kartGaleri(f) K.olay(o) K.kartAkis(v)
                K.akisTam(v,{i, durum}) K.kose(k) K.senin({n}) K.hikayeSerit({kucuk, koyu, spiker:false}) K.sd(s, ilk) K.sdSatir(s, ilk) K.bolumSatir(b)
                K.yazarSatir(k,{takip}) K.bildirim(o) K.oneri(o) K.takim(o) K.ray(html, cls)
+               K.arma(takımAdı, boy, kod) boy ∈ xs·s·m·l·xl·xxl (logo panelden; yoksa takım renkli kalkan)  K.takimRenk(ad)  K.takimKapakStil(ad)  K.TAKIM_GORSEL
    AYRAÇLAR    K.piyasa() K.hava() K.namaz() K.mac({hal}) K.spiker() K.cagri({ikon, baslik, aciklama, eylem})
    DETAY       K.zamanSatir(d) K.madde(liste) K.etkisi(metin) K.bolumKart({ikon, baslik, sira, toplam, icerik, sonraki}) K.hmb(alt) K.kaynaklar(liste)
                K.cizelge(haberler, {ikon, toplam}) K.adimlar(liste) K.canliGiris({saat, baslik, metin, g, kilit, yeni}) K.yeniHap(metin) K.yorumlar({Y, sinir}) K.yorum(y, yanit)
@@ -70,7 +71,7 @@
     mac: 'ekranlar/icerik/mac-detay.html', canliSkor: 'ekranlar/icerik/canli-skor.html', puanDurumu: 'ekranlar/icerik/puan-durumu.html',
     giris: 'ekranlar/giris/giris.html', uyeOl: 'ekranlar/giris/uye-ol.html', konuSecimi: 'ekranlar/giris/konu-secimi.html',
     profil: 'ekranlar/hesap/profil.html', kaydedilenler: 'ekranlar/hesap/kaydedilenler.html', takip: 'ekranlar/hesap/takip.html',
-    gecmis: 'ekranlar/hesap/gecmis.html', bildirimler: 'ekranlar/hesap/bildirim-merkezi.html', bildirimTercih: 'ekranlar/hesap/bildirim-tercihleri.html',
+    gecmis: 'ekranlar/hesap/gecmis.html', seri: 'ekranlar/hesap/seri.html', bildirimler: 'ekranlar/hesap/bildirim-merkezi.html', bildirimTercih: 'ekranlar/hesap/bildirim-tercihleri.html',
     tercihler: 'ekranlar/hesap/tercihler.html', ayarlar: 'ekranlar/hesap/ayarlar.html', gorunum: 'ekranlar/hesap/gorunum.html',
     geriBildirim: 'ekranlar/hesap/geri-bildirim.html', hakkinda: 'ekranlar/hesap/hakkinda.html', yasal: 'ekranlar/hesap/yasal.html',
     iletisim: 'ekranlar/hesap/iletisim.html', yardim: 'ekranlar/hesap/yardim.html',
@@ -88,16 +89,17 @@
     return K.KOK + p[0] + (s ? '?' + s : '');
   };
   K.git = function(ad, ek){ return K.u(K.YOL[ad] || ad, ek); };
-  /* K46: alt başlık adı → doğru ekran (menü, Bölümler, bölüm listeleri hepsi buradan). Özel sayfası olmayan alt başlık bölüm listesini o konuyla açar. */
+  /* K46 + K47 (Yasin Bey): sitedeki gibi özel bloklu alt sayfa kendi ekranına (Finans: piyasalar.html?konu=…; Spor: Puan Durumu ve Fikstür kendi sayfasına); sitede yalnız banner + haber olan alt başlık (ör. Çevre ve Afet, Enflasyon) bölüm listesini o konuyla açar.
+     alt başlık adı → doğru ekran (menü, Bölümler, bölüm listeleri hepsi buradan). Özel sayfası olmayan alt başlık bölüm listesini o konuyla açar. */
   var ALT_YOL = {
-    'Canlı Skor': 'ekranlar/icerik/canli-skor.html', 'Puan Durumu': 'ekranlar/icerik/lig.html?lig=super-lig', 'Fikstür': 'ekranlar/icerik/lig.html?lig=super-lig&sekme=fikstur',
+    'Canlı Skor': 'ekranlar/icerik/canli-skor.html', 'Puan Durumu': 'ekranlar/icerik/puan-durumu.html', 'Fikstür': 'ekranlar/icerik/fikstur.html',
     'Takımlar': 'ekranlar/icerik/takimlar.html', 'Transfer': 'ekranlar/icerik/transfer.html', 'Millî Takım': 'ekranlar/icerik/milli-takim.html', 'Süper Lig': 'ekranlar/icerik/lig.html?lig=super-lig',
     'Avrupa Ligleri': 'ekranlar/icerik/avrupa-ligleri.html', 'Futbol': 'ekranlar/icerik/brans.html?brans=futbol', 'Basketbol': 'ekranlar/icerik/brans.html?brans=basketbol', 'Voleybol': 'ekranlar/icerik/brans.html?brans=voleybol',
     'Galatasaray': 'ekranlar/icerik/takim.html?takim=galatasaray', 'Fenerbahçe': 'ekranlar/icerik/takim.html?takim=fenerbahce', 'Beşiktaş': 'ekranlar/icerik/takim.html?takim=besiktas', 'Trabzonspor': 'ekranlar/icerik/takim.html?takim=trabzonspor',
-    'Piyasa Ekranı': 'ekranlar/icerik/piyasalar.html', 'Döviz': 'ekranlar/icerik/piyasalar.html?sekme=doviz', 'Altın': 'ekranlar/icerik/piyasalar.html?sekme=altin', 'Borsa': 'ekranlar/icerik/piyasalar.html?sekme=borsa',
-    'Kripto Para': 'ekranlar/icerik/piyasalar.html?sekme=kripto', 'Faiz Oranları': 'ekranlar/icerik/piyasalar.html?sekme=faiz', 'Akaryakıt Fiyatları': 'ekranlar/icerik/piyasalar.html?sekme=akaryakit',
+    'Piyasa Ekranı': 'ekranlar/icerik/piyasalar.html', 'Döviz': 'ekranlar/icerik/piyasalar.html?konu=doviz', 'Altın': 'ekranlar/icerik/piyasalar.html?konu=altin', 'Borsa': 'ekranlar/icerik/piyasalar.html?konu=borsa',
+    'Kripto Para': 'ekranlar/icerik/piyasalar.html?konu=kripto', 'Faiz Oranları': 'ekranlar/icerik/piyasalar.html?konu=faiz', 'Akaryakıt Fiyatları': 'ekranlar/icerik/piyasalar.html?konu=akaryakit',
     'Ekonomik Takvim': 'ekranlar/icerik/takvim.html?tur=ekonomik', 'Sınav Takvimi': 'ekranlar/icerik/takvim.html?tur=sinav', 'Gündem Takvimi': 'ekranlar/icerik/takvim.html',
-    'Hamilelik': 'ekranlar/icerik/hamilelik.html', 'Astroloji': 'ekranlar/icerik/astroloji.html', 'Çevre ve Afet': 'ekranlar/icerik/afet.html',
+    'Hamilelik': 'ekranlar/icerik/hamilelik.html', 'Astroloji': 'ekranlar/icerik/astroloji.html',
     'Son Dakika': 'ekranlar/icerik/son-dakika.html', 'Canlı Gündem': 'ekranlar/icerik/canli-gundem.html', 'Canlı Yayın': 'ekranlar/icerik/canli-yayin.html', 'Dakika Dakika': 'ekranlar/icerik/canli-anlatim.html',
     'Bugün Ne Oldu?': 'ekranlar/icerik/bugun-ne-oldu.html', 'Güncellenen Haberler': 'ekranlar/icerik/guncellenen-haberler.html', 'Dada Özet': 'ekranlar/icerik/dada-ozet.html', "Günün 5'i": 'ekranlar/icerik/gunun-5i.html',
     'Dada Bağlam': 'ekranlar/icerik/dada-baglam.html', 'Dada Doğrula': 'ekranlar/icerik/dada-dogrula.html', 'Farklı Bakışlar': 'ekranlar/icerik/farkli-bakislar.html', 'Veri ve Harita': 'ekranlar/icerik/veri-ve-harita.html',
@@ -105,6 +107,7 @@
     'Podcast': 'ekranlar/icerik/podcast.html', 'Haber Dinle': 'ekranlar/icerik/haber-dinle.html', 'Yazarlar': 'ekranlar/icerik/yazarlar.html', 'Kadın Yazarlar': 'ekranlar/icerik/yazarlar.html', 'Arşiv': 'ekranlar/icerik/arsiv.html' };
   var BOLUM_KOD = { 'Gündem': '', 'Spor': 'spor', 'Finans': 'finans', 'Kadın': 'kadin', 'Savunma': 'savunma', 'Dünya': 'dunya', 'Kampüs': 'kampus', 'Keşfet': 'kesfet' };
   function kodla(x){ return String(x).toLocaleLowerCase('tr').replace(/ı/g, 'i').replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ş/g, 's').replace(/ö/g, 'o').replace(/ç/g, 'c').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
+  K.kodla = kodla;
   K.altYol = function(ad, bolum){ if (ALT_YOL[ad]) return K.u(ALT_YOL[ad]); var b = BOLUM_KOD[bolum]; return K.git('liste', (b ? 'bolum=' + b + '&' : '') + 'konu=' + kodla(ad)); };
   K.bolumYol = function(bolum){ var b = BOLUM_KOD[bolum]; return K.git('liste', b ? 'bolum=' + b : ''); };
 
@@ -278,7 +281,68 @@
   K.oneri = function(o){ var ik = { son: 'fa-clock-rotate-left', gundem: 'fa-arrow-trend-up', oneri: 'fa-magnifying-glass', yazar: 'fa-feather-pointed', etiket: 'fa-hashtag' }[o.tur || 'oneri'];
     var m = o.esle ? o.metin.replace(new RegExp('(' + o.esle + ')', 'i'), '<b>$1</b>') : o.metin;
     return '<a class="k-oneri" href="' + K.git('aramaSonuc') + '">' + I(ik) + '<span>' + m + (o.alt ? '<small>' + o.alt + '</small>' : '') + '</span>' + (o.tur === 'son' ? '<button type="button" class="sil" aria-label="Kaldır">' + I('fa-xmark') + '</button>' : I('fa-chevron-right', 'sil')) + '</a>'; };
-  K.takim = function(o){ return '<button type="button" class="k-takim" aria-pressed="' + !!o.secili + '"><span class="ar">' + o.kod + '</span><span>' + o.ad + '</span><span class="tik">' + I('fa-check') + '</span></button>'; };
+  K.takim = function(o){ return '<button type="button" class="k-takim" aria-pressed="' + !!o.secili + '">' + K.arma(o.ad, 'l', o.kod) + '<span>' + o.ad + '</span><span class="tik">' + I('fa-check') + '</span></button>'; };
+
+  /* ---------- takım arması ve kapağı (Yasin Bey, 25 Kasım) ----------
+     Harfli daire yerine tek logo bileşeni. Gerçek logo ve kapak görseli panelden yüklenir (TAKIM_GORSEL[ad] = { logo, kapak }; prototipte boş).
+     Logo yokken yer tutucu: takımın iki rengiyle kalkan biçiminde arma + kısa kod (32px ve üstünde). Renkler kulübün bilinen formalarından yaklaşık
+     alındı; gerçek arma, logo ve görsel kullanılmadı. Desen: y yarım · s şerit · c çapraz · b bant · d düz (iç kenar ikinci renk).
+     Boy: xs 20 (tablo, sıkı satır) · s 26 (skor satırı, tablo) · m 32 (maç kartı, transfer) · l 52 (takım döşemesi, maç başlığı) · xl 72 · xxl 112 (takım kapağı). */
+  var TAKIM_RENK = {
+    'Galatasaray': ['#A90432', '#FDB912', 'y'], 'Fenerbahçe': ['#0B2A6B', '#FFDD00', 's'], 'Beşiktaş': ['#141414', '#FFFFFF', 's'], 'Trabzonspor': ['#6E1430', '#5DB3E4', 'y'],
+    'Başakşehir': ['#E4572E', '#1B2A4A', 'c'], 'Samsunspor': ['#D2122E', '#FFFFFF', 'b'], 'Göztepe': ['#FFD200', '#D2122E', 'y'], 'Kasımpaşa': ['#1B3C8C', '#FFFFFF', 's'],
+    'Eyüpspor': ['#5B2A86', '#FFD200', 'c'], 'Antalyaspor': ['#D2122E', '#FFFFFF', 's'], 'Konyaspor': ['#0E7A3B', '#FFFFFF', 'b'], 'Alanyaspor': ['#F28C28', '#0E7A3B', 'y'],
+    'Rizespor': ['#0E7A3B', '#1B5EAB', 'y'], 'Gaziantep FK': ['#C8102E', '#141414', 'y'], 'Kocaelispor': ['#0E7A3B', '#141414', 's'], 'Amedspor': ['#0E7A3B', '#D2122E', 'y'],
+    'Kayserispor': ['#D2122E', '#FFD200', 'y'], 'Gençlerbirliği': ['#D2122E', '#141414', 'y'],
+    'Bodrum FK': ['#0E7A3B', '#FFFFFF', 'b'], 'Erzurumspor': ['#1B5EAB', '#FFFFFF', 'b'], 'Sakaryaspor': ['#0E7A3B', '#141414', 's'], 'Bandırmaspor': ['#D2122E', '#1B3C8C', 'y'],
+    'Pendikspor': ['#D2122E', '#FFFFFF', 'b'], 'Iğdır FK': ['#1B3C8C', '#FFFFFF', 'b'],
+    'Arsenal': ['#E30613', '#FFFFFF', 'd'], 'Manchester City': ['#6CABDD', '#FFFFFF', 'd'], 'Liverpool': ['#C8102E', '#F6EB61', 'd'], 'Chelsea': ['#034694', '#FFFFFF', 'd'],
+    'Aston Villa': ['#670E36', '#95BFE5', 'y'], 'Newcastle': ['#141414', '#FFFFFF', 's'], 'Tottenham': ['#FFFFFF', '#132257', 'd'], 'Manchester United': ['#DA291C', '#141414', 'd'],
+    'Brighton': ['#0057B8', '#FFFFFF', 's'], 'Nottingham Forest': ['#DD0000', '#FFFFFF', 'd'], 'Fulham': ['#FFFFFF', '#141414', 'd'], 'Brentford': ['#E30613', '#FFFFFF', 's'],
+    'Real Madrid': ['#FFFFFF', '#E0B21B', 'd'], 'Barcelona': ['#A50044', '#004D98', 's'], 'Atlético Madrid': ['#CB3524', '#FFFFFF', 's'], 'Athletic': ['#EE2523', '#FFFFFF', 's'],
+    'Real Sociedad': ['#0067B1', '#FFFFFF', 's'], 'Real Betis': ['#0BB363', '#FFFFFF', 's'], 'Valencia': ['#FFFFFF', '#EE7F00', 'd'],
+    'Inter': ['#0068A8', '#141414', 's'], 'Napoli': ['#12A0D7', '#FFFFFF', 'd'], 'Juventus': ['#141414', '#FFFFFF', 's'], 'Milan': ['#E1000F', '#141414', 's'],
+    'Atalanta': ['#1E71B8', '#141414', 's'], 'Roma': ['#8E1F2F', '#F0BC42', 'y'], 'Fiorentina': ['#482E92', '#FFFFFF', 'd'],
+    'Bayern München': ['#DC052D', '#FFFFFF', 'd'], 'Bayer Leverkusen': ['#E32221', '#141414', 'y'], 'Dortmund': ['#FDE100', '#141414', 'd'], 'Leipzig': ['#FFFFFF', '#DD0741', 'd'],
+    'Stuttgart': ['#FFFFFF', '#E32219', 'b'], 'Frankfurt': ['#141414', '#E1000F', 'd'],
+    'Club Brugge': ['#0074C8', '#141414', 's'], 'Lyon': ['#FFFFFF', '#DA001A', 'd'], 'Porto': ['#003893', '#FFFFFF', 's'], 'Monaco': ['#E2001A', '#FFFFFF', 'c'],
+    'Olympiakos': ['#E2001A', '#FFFFFF', 's'], 'Panathinaikos': ['#007A3D', '#FFFFFF', 'd'],
+    'Anadolu Efes': ['#003C8C', '#FFFFFF', 'd'], 'Türk Telekom': ['#1B5EAB', '#00A3E0', 'c'], 'Bahçeşehir Koleji': ['#F28C28', '#1B3C8C', 'y'], 'Tofaş': ['#1B5EAB', '#FFFFFF', 'b'],
+    'Karşıyaka': ['#0E7A3B', '#D2122E', 'y'], 'Manisa Basket': ['#FFD200', '#141414', 'b'], 'Mersinspor': ['#D2122E', '#1B3C8C', 'y'], 'Büyükçekmece': ['#1B3C8C', '#F28C28', 'c'],
+    'ÇBK Mersin': ['#D2122E', '#141414', 'c'], 'Emlak Konut': ['#1B5EAB', '#FFFFFF', 'b'], 'Nesibe Aydın': ['#5B2A86', '#FFFFFF', 'b'], 'Ulm': ['#F28C28', '#141414', 'd'], 'Bourg': ['#D2122E', '#FFFFFF', 'd'],
+    'VakıfBank': ['#FFD200', '#141414', 'y'], 'Eczacıbaşı': ['#E4572E', '#FFFFFF', 'b'], 'Türk Hava Yolları': ['#C8102E', '#FFFFFF', 'd'], 'Aras Kargo': ['#1B3C8C', '#D2122E', 'c'],
+    'Nilüfer Belediyespor': ['#1B5EAB', '#FFFFFF', 'b'], 'Kuzeyboru': ['#5B2A86', '#FFFFFF', 'c'], 'Bahçelievler': ['#0E7A3B', '#FFFFFF', 'c'], 'İlbank': ['#1B3C8C', '#FFFFFF', 'd'],
+    'Halkbank': ['#1B5EAB', '#FFFFFF', 'c'], 'Ziraat Bankkart': ['#D2122E', '#FFFFFF', 'c'], 'Arkas Spor': ['#1B3C8C', '#FFFFFF', 'b'], 'Spor Toto': ['#0E7A3B', '#FFFFFF', 'd'],
+    'Conegliano': ['#1B3C8C', '#D2122E', 'y'], 'Milano': ['#1B3C8C', '#FFFFFF', 'b'], 'Łódź': ['#D2122E', '#FFFFFF', 'b'],
+    'Türkiye': ['#E30A17', '#FFFFFF', 'd'], 'Macaristan': ['#CE2939', '#477050', 'b'], 'Bosna Hersek': ['#002395', '#FECB00', 'c'], 'Romanya': ['#002B7F', '#FCD116', 'b'],
+    'Japonya': ['#FFFFFF', '#BC002D', 'd'], 'Portekiz': ['#006600', '#E1000F', 'y'], 'FUT Esports': ['#141414', '#FFFFFF', 'c'], 'BBL Esports': ['#1B3C8C', '#FFFFFF', 'c']
+  };
+  /* aynı kulübün branş takımları kulübün renklerini alır */
+  var TAKIM_KULUP = { 'Fenerbahçe Beko': 'Fenerbahçe', 'Fenerbahçe Opet': 'Fenerbahçe', 'Fenerbahçe Medicana': 'Fenerbahçe', 'Galatasaray Daikin': 'Galatasaray' };
+  var TAKIM_KOD = { 'Galatasaray': 'GS', 'Fenerbahçe': 'FB', 'Beşiktaş': 'BJK', 'Trabzonspor': 'TS', 'Türkiye': 'TÜR' };
+  /* panelden yüklenen logo ve kapak (prototipte boş; doldurulunca yer tutucunun yerine geçer) */
+  K.TAKIM_GORSEL = {};
+  K.takimRenk = function(ad){ var a = TAKIM_KULUP[ad] || ad, r = TAKIM_RENK[a]; return r ? { a1: r[0], a2: r[1], d: r[2], kulup: a } : null; };
+  var armaNo = 0;
+  K.arma = function(ad, boy, kod){
+    ad = String(ad || ''); var r = K.takimRenk(ad), g = K.TAKIM_GORSEL[ad] || K.TAKIM_GORSEL[TAKIM_KULUP[ad]] || {};
+    kod = kod || TAKIM_KOD[TAKIM_KULUP[ad] || ad] || ad.replace(/[^A-Za-zÇĞİÖŞÜçğıöşü ]/g, '').split(' ')[0].slice(0, 3).toLocaleUpperCase('tr');
+    var cls = 'k-arma ' + (boy || 's');
+    if (g.logo) return '<span class="' + cls + ' logo" role="img" aria-label="' + ad + '"><img src="' + g.logo + '" alt=""></span>';
+    if (!r) return '<span class="' + cls + ' yok" role="img" aria-label="' + ad + '"><svg viewBox="0 0 40 46" aria-hidden="true"><path class="kk" d="M20 1.5 38 6.5V22c0 12-8 19.5-18 23C10 41.5 2 34 2 22V6.5Z"/><text x="20" y="27.5">' + kod + '</text></svg></span>';
+    var id = 'ka' + (++armaNo), a1 = r.a1, a2 = r.a2, d = r.d, ic = '';
+    if (d === 'y') ic = '<rect width="20" height="46" fill="' + a1 + '"/><rect x="20" width="20" height="46" fill="' + a2 + '"/>';
+    else if (d === 's') ic = '<rect width="40" height="46" fill="' + a1 + '"/><rect x="7" width="6.5" height="46" fill="' + a2 + '"/><rect x="26.5" width="6.5" height="46" fill="' + a2 + '"/>';
+    else if (d === 'c') ic = '<rect width="40" height="46" fill="' + a1 + '"/><path d="M40 4V46H0Z" fill="' + a2 + '"/>';
+    else if (d === 'b') ic = '<rect width="40" height="46" fill="' + a1 + '"/><rect y="15" width="40" height="13" fill="' + a2 + '"/>';
+    else ic = '<rect width="40" height="46" fill="' + a1 + '"/><path d="M20 5 34.5 9.2V22c0 9.8-6.4 16-14.5 19.2C11.9 38 5.5 31.8 5.5 22V9.2Z" fill="none" stroke="' + a2 + '" stroke-width="2.4"/>';
+    return '<span class="' + cls + '" role="img" aria-label="' + ad + '"><svg viewBox="0 0 40 46" aria-hidden="true"><defs><clipPath id="' + id + '"><path d="M20 1.5 38 6.5V22c0 12-8 19.5-18 23C10 41.5 2 34 2 22V6.5Z"/></clipPath></defs>' +
+      '<g clip-path="url(#' + id + ')">' + ic + '</g><path class="kk" d="M20 1.5 38 6.5V22c0 12-8 19.5-18 23C10 41.5 2 34 2 22V6.5Z"/><text x="20" y="27.5">' + kod + '</text></svg></span>';
+  };
+  /* takım kapağı: panelden kapak görseli varsa fotoğraf, yoksa takım renkleriyle üretilmiş kapak + büyük arma. K.banner .k-bbas[data-takim] ile çağırır. */
+  K.takimKapakStil = function(ad){ var r = K.takimRenk(ad) || { a1: '#2a2a2a', a2: '#555555' }, g = K.TAKIM_GORSEL[ad] || {};
+    return '--a1:' + r.a1 + ';--a2:' + r.a2 + (g.kapak ? ';background-image:url(\'' + g.kapak + '\')' : ''); };
+
 
   /* ---------- ayraç kutuları ---------- */
   K.piyasa = function(){ var p = D.piyasa; return K.bb({ baslik: 'Piyasalar', ikon: 'fa-chart-column', not: p.guncelleme + ' · 15 dk gecikmeli' }) + '<div class="k-ray s10">' +
@@ -290,7 +354,7 @@
   K.mac = function(o){ o = o || {}; var m = D.mac, hal = o.hal || 'canli';
     var sk = hal === 'baslamadi' ? '<b>' + (o.saat || '') + '</b><small>Başlamadı</small>' : '<b>' + m.skor + '</b><small>' + (hal === 'bitti' ? 'MS' : m.dakika) + '</small>';
     return '<a class="k-mac ' + hal + '" href="' + K.git('mac') + '"><div class="u">' + (hal === 'canli' ? K.canli() : '<span>' + (hal === 'bitti' ? 'Maç sonu' : 'Bugün') + '</span>') + '<span>' + m.lig + '</span></div>' +
-      '<div class="s"><span class="tk"><span class="ar">' + m.evKod + '</span><b>' + m.ev + '</b></span><span class="sk">' + sk + '</span><span class="tk sag"><span class="ar">' + m.depKod + '</span><b>' + m.dep + '</b></span></div></a>'; };
+      '<div class="s"><span class="tk">' + K.arma(m.ev, 'm', m.evKod) + '<b>' + m.ev + '</b></span><span class="sk">' + sk + '</span><span class="tk sag">' + K.arma(m.dep, 'm', m.depKod) + '<b>' + m.dep + '</b></span></div></a>'; };
   K.spiker = function(){ var s = D.spiker;
     return '<div class="k-spk"><span class="yuz"' + bg(s.gorsel) + '></span><a class="t" href="' + K.git('spiker') + '">' + K.canli('Yayında', { kucuk: true }) + '<b>Dada Spiker · ' + s.bulten + '</b><small>' + s.sirada[0] + '</small></a>' + K.ikonBtn({ ikon: 'fa-play', etiket: 'Spiker\'ı dinle', attr: 'data-spiker' }) + '</div>'; };
   K.cagri = function(o){ return '<div class="k-cagri"><span class="ik">' + I(o.ikon) + '</span><span class="t"><b>' + o.baslik + '</b>' + (o.aciklama ? '<small>' + o.aciklama + '</small>' : '') + '</span>' + (o.eylem ? K.btn(Object.assign({ boy: 'kucuk', tur: 'ikincil' }, o.eylem)) : '') + '</div>'; };
@@ -302,7 +366,7 @@
   K.bolumKart = function(o){ return '<section class="k-bolum-kart"><div class="kb"><span class="ik">' + I(o.ikon) + '</span><h2>' + o.baslik + '</h2>' + (o.toplam ? '<span class="k-sayac">' + o.sira + ' / ' + o.toplam + '</span>' : '') + '</div>' + o.icerik +
     (o.sonraki ? '<button class="k-sir" type="button">Sıradaki: <b>' + o.sonraki + '</b>' + I('fa-arrow-right') + '</button>' : '') + '</section>'; };
   K.hmb = function(alt){ return '<button class="k-hmb" type="button" data-hm-ac><span class="ik">' + I('fa-layer-group') + '</span><span><b>Hikâye modunda oku</b><small>' + (alt || 'Bu haber 6 kartta · yaklaşık 1 dk') + '</small></span>' + I('fa-chevron-right') + '</button>'; };
-  K.kaynaklar = function(l){ l = l || D.detay.kaynaklar; return K.bb({ baslik: 'Kaynaklar', ikon: 'fa-building-columns', sayi: l.length }) + '<div class="k-ray s10">' + l.map(function(k){ return '<a class="k-kaynak">' + I('fa-file-lines') + '<span><b>' + k.kurum + '</b><span>' + k.aciklama + '</span></span></a>'; }).join('') + '</div>'; };
+  K.kaynaklar = function(l){ l = l || D.detay.kaynaklar; return K.bb({ baslik: 'Kaynaklar', ikon: 'fa-building-columns', sayi: l.length }) + '<div class="k-ray s10">' + l.map(function(k){ return '<a class="k-kaynak"' + (k.url ? ' href="' + k.url + '" target="_blank" rel="noopener"' : ' href="#" data-dis="' + k.kurum + '"') + '>' + I('fa-file-lines') + '<span><b>' + k.kurum + '</b><span>' + k.aciklama + '</span></span></a>'; }).join('') + '</div>'; };
   /* çizelge (liste kökü LS-C): saat sırası; saat ayracı; Canlı/Son Dakika kırmızı nokta, ilk haber sarı */
   K.cizelge = function(X, o){ o = o || {}; var s = '<div class="k-ic"><div class="k-cz-gun"><span>' + (o.gun || 'Bugün') + '</span><small>' + D.simdi.tarih.replace(' 2026', '') + ' ' + D.simdi.gun + (o.toplam ? ' · ' + o.toplam + ' haber' : '') + '</small></div>', dl = '';
     X.forEach(function(h, i){ var sa = h.saat.split('.')[0] + '.00', v = h.tur === 'Canlı' || h.tur === 'Son Dakika';
@@ -330,7 +394,7 @@
     o.satirlar.map(function(r, i){ return '<tr' + (i === o.vurgu ? ' class="is-vurgu"' : '') + '>' + r.map(function(c, j){ return '<td' + (j === r.length - 1 && o.sonKalin ? ' class="p"' : '') + '>' + c + '</td>'; }).join('') + '</tr>'; }).join('') + '</tbody></table></div>'; };
   /* takimlar: [{ad, kod, G, B, M, A, Y}] (public sözlük puan_tablosu biçimi); O, AV, P hesaplanır */
   K.puanTablosu = function(t, vurguKod){ var v = -1;
-    var r = t.map(function(x, i){ if (x.kod === vurguKod) v = i; return ['<span class="tk"><em>' + (i + 1) + '</em><span class="ar">' + x.kod + '</span>' + x.ad + '</span>', x.G + x.B + x.M, x.G, x.B, x.M, (x.A - x.Y > 0 ? '+' : '') + (x.A - x.Y), 3 * x.G + x.B]; });
+    var r = t.map(function(x, i){ if (x.kod === vurguKod) v = i; return ['<span class="tk"><em>' + (i + 1) + '</em>' + K.arma(x.ad, 's', x.kod) + x.ad + '</span>', x.G + x.B + x.M, x.G, x.B, x.M, (x.A - x.Y > 0 ? '+' : '') + (x.A - x.Y), 3 * x.G + x.B]; });
     return K.tablo({ sutunlar: ['Takım', 'O', 'G', 'B', 'M', 'AV', 'P'], satirlar: r, vurgu: v, sonKalin: true }); };
   K.skor = function(o){ return '<a class="k-skor' + (o.canli ? ' canli' : '') + '" href="' + K.git('mac') + '"><span class="dk">' + o.dk + '</span><span class="ev' + (o.kazanan === 'ev' ? ' kz' : '') + '">' + o.ev + '</span><span class="sk">' + o.skor + '</span><span class="dp' + (o.kazanan === 'dep' ? ' kz' : '') + '">' + o.dep + '</span></a>'; };
 
@@ -346,6 +410,8 @@
     var cls = 'k-ayar' + (o.tehlike ? ' tehlike' : '') + (o.pasif ? ' is-pasif' : '') + (o.basili ? ' is-basili' : '');
     if (sag === 'anahtar') return '<label class="' + cls + '">' + ik + t + s + '</label>';
     if (sag === 'tik') return '<button type="button" class="' + cls + '" role="menuitemradio" aria-checked="' + !!o.secili + '">' + ik + t + s + '</button>';
+    /* K47: adresi ve eylemi olmayan satır bilgi satırıdır, bağlantı değil (bağlantı denetimi ölü saymasın; ok işaretli olan yine ölü sayılır) */
+    if (!o.href && !o.attr) return '<div class="' + cls + '">' + ik + t + s + '</div>';
     return '<a class="' + cls + '"' + href(o.href) + (o.attr ? ' ' + o.attr : '') + '>' + ik + t + s + '</a>'; };
   K.grup = function(b, satirlar, not){ return '<section class="k-grup">' + (b ? '<span class="k-grup-b">' + b + '</span>' : '') + '<div class="k-grup-k">' + satirlar.map(function(s){ return typeof s === 'string' ? s : K.ayar(s); }).join('') + '</div>' + (not ? '<p class="k-grup-n">' + not + '</p>' : '') + '</section>'; };
   K.profil = function(){ return K.uye
@@ -567,10 +633,14 @@
     'veri-ve-harita': 'veri-merkezi', 'kesfet': 'veri-merkezi', 'yazarlar': '', 'hamilelik': '', 'astroloji': '', 'dada-ailesi': '', 'senin-icin': '', 'transfer': 'antrenman',
     'lig': 'superlig', 'milli-takim': 'milli', 'avrupa-ligleri': 'superlig', 'podcast': '', 'video': '', 'foto-fokus': 'balon', 'infografik': 'veri-merkezi' };
   K.banner = function(){
-    var m = location.pathname.match(/ekranlar\/icerik\/([a-z0-9-]+)\.html$/); if (!m || !(m[1] in BANNER)) return;
-    var bb = document.querySelector('.ekran .k-bbas'), e = document.querySelector('.ekran'); if (!bb || !e || bb.closest('.k-kapak')) return;
-    var h = bb.querySelector('h1'), p = bb.querySelector('p'), g = BANNER[m[1]];
-    var kap = K.el('<header class="k-kapak"' + (g ? ' style="background-image:' + G(g) + '"' : '') + '><h1>' + (h ? h.innerHTML : '') + '</h1>' + (p ? '<p>' + p.innerHTML + '</p>' : '') + '</header>');
+    /* .k-bbas[data-takim="Galatasaray"] → takım kapağı (panel kapağı ya da takım renkleri + büyük arma); .k-bbas[data-g="altin"] → sayfa içi konuya göre fotoğraf ("" koyu zemin) */
+    var m = location.pathname.match(/ekranlar\/icerik\/([a-z0-9-]+)\.html$/);
+    var bb = document.querySelector('.ekran .k-bbas'), e = document.querySelector('.ekran'); if (!m || !bb || !e || bb.closest('.k-kapak')) return;
+    var tk = bb.getAttribute('data-takim'); if (!(m[1] in BANNER) && !tk && !bb.hasAttribute('data-g')) return;
+    var h = bb.querySelector('h1'), p = bb.querySelector('p'), g = bb.hasAttribute('data-g') ? bb.getAttribute('data-g') : BANNER[m[1]];
+    var stil = tk ? K.takimKapakStil(tk) : (g ? 'background-image:' + G(g) : '');
+    var kap = K.el('<header class="k-kapak' + (tk ? ' takim' + ((K.TAKIM_GORSEL[tk] || {}).kapak ? ' foto' : '') : '') + '"' + (stil ? ' style="' + stil + '"' : '') + '>' + (tk ? '<span class="ka">' + K.arma(tk, 'xl') + '</span>' : '') + '<h1>' + (h ? h.innerHTML : '') + '</h1>' + (p ? '<p>' + p.innerHTML + '</p>' : '') + '</header>');
+    if (tk) { var r = K.takimRenk(tk); g = null; kap._ubg = r ? 'linear-gradient(135deg,' + r.a1 + ',color-mix(in srgb,' + r.a1 + ' 55%,#000))' : ''; }
     var bos = bb.previousElementSibling; if (bos && bos.classList.contains('k-ust-bosluk')) bos.remove();
     /* taşınan öğelerde yatay kaydırma (seçili çip) korunur */
     var kay0 = [].slice.call(e.querySelectorAll('*')).filter(function(x){ return x.scrollLeft > 0; }).map(function(x){ return [x, x.scrollLeft]; });
@@ -579,7 +649,7 @@
     kap.after(yap);
     kay0.forEach(function(z){ z[0].scrollLeft = z[1]; });
     /* yapışkan öğeler artık banner altında: üst çubuk yüksekliğine göre yapışır */
-    var u = document.querySelector('.k-ub'); if (u){ u.classList.add('k-anlik'); u.classList.remove('buyuk', 'golgeli', 'duz'); u.classList.add('foto'); void u.offsetWidth; setTimeout(function(){ u.classList.remove('k-anlik'); }, 60); if (g) u.style.setProperty('--k-ub-g', G(g)); else u.style.setProperty('--k-ub-g', 'linear-gradient(var(--siyah),var(--siyah))');
+    var u = document.querySelector('.k-ub'); if (u){ u.classList.add('k-anlik'); u.classList.remove('buyuk', 'golgeli', 'duz'); u.classList.add('foto'); void u.offsetWidth; setTimeout(function(){ u.classList.remove('k-anlik'); }, 60); if (kap._ubg) u.style.setProperty('--k-ub-g', kap._ubg); else if (g) u.style.setProperty('--k-ub-g', G(g)); else u.style.setProperty('--k-ub-g', 'linear-gradient(var(--siyah),var(--siyah))');
       document.body.setAttribute('data-durum', 'acik');
       /* çekip yenilemede banner aşağı itilir, üstü açık kalır: durum çubuğu o zaman koyu yazılır */
       var kay = function(){ var v = e.scrollTop > 130; u.classList.toggle('dar', v); u.classList.remove('golgeli'); document.body.setAttribute('data-durum', kap.getBoundingClientRect().top > 20 ? '' : 'acik'); };
@@ -769,6 +839,8 @@
     if ((x = t.closest('[data-menu-ac]'))) { ev.preventDefault(); ev.stopPropagation(); K.menu(x.getAttribute('data-menu-ac'), { hedef: x, yer: x.closest('.k-sahne') || undefined }); }
     if ((x = t.closest('[data-kopyala]'))) { var k0 = ustKatman(); if (k0) k0.kapat(); K.toast('Bağlantı kopyalandı', { ikon: 'fa-link', yer: x.closest('.k-sahne') || undefined }); return; }
     if ((x = t.closest('[data-toast]'))) K.toast(x.getAttribute('data-toast'), { tur: 'basari' });
+    /* dış kaynak (K47): kaynağın adresi panelde tutulur, uygulama içi tarayıcıda açılır; prototipte adres yok → kısa bilgi */
+    if ((x = t.closest('[data-dis]'))) { ev.preventDefault(); K.toast(x.getAttribute('data-dis') + ' · uygulama içi tarayıcıda açılır', { ikon: 'fa-arrow-up-right-from-square', yer: x.closest('.k-sahne') || undefined }); }
     if ((x = t.closest('[data-href]'))) location.href = x.getAttribute('data-href');
     if (t.closest('[data-basa]')) { var e2 = document.querySelector('.ekran'); if (e2) e2.scrollTo({ top: 0, behavior: 'smooth' }); }
     if (t.closest('[data-geri]')) { ev.preventDefault(); if (history.length > 1) history.back(); else location.href = K.git('ana'); }
