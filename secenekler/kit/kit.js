@@ -542,7 +542,7 @@
   /* ---------- görselli banner (K43): içerik merkez sayfalarında düz büyük başlık (.k-bbas) yerine bölüm listesi gibi görselli banner;
      yukarı kaydırınca üst çubuk görselli daralır. Sayfa adı → konuya uygun fotoğraf (yoksa koyu marka zemini). Sayfa betiklerinden sonra uygulanır. ---------- */
   var BANNER = { 'bolumler': 'kar-istanbul', 'afet': 'konteyner', 'trafik': 'metro', 'ekonomi-araclari': 'borsa', 'resmi-ilanlar': 'ankara-kar', 'piyasalar': 'borsa',
-    'son-dakika': 'kar-istanbul', 'canli-gundem': 'tbmm', 'canli-yayin': 'spiker-kare', 'haber-dinle': 'spiker-kare', 'canli-skor': 'antrenman', 'puan-durumu': 'superlig',
+    'son-dakika': 'kar-istanbul', 'canli-gundem': 'tbmm', 'haber-dinle': 'spiker-kare', 'canli-skor': 'antrenman', 'puan-durumu': 'superlig',
     'fikstur': 'superlig', 'takimlar': 'antrenman', 'namaz-vakitleri': 'balikci', 'arsiv': 'yks', 'bana-etkisi': 'carsi', 'bugun-ne-oldu': 'kar-istanbul', 'dada-baglam': 'ab-meclis',
     'dada-dogrula': 'tarama', 'dada-ozet': 'veri-merkezi', 'farkli-bakislar': 'ab-meclis', 'guncellenen-haberler': 'asgari', 'sakin-akis': 'balikci', 'takvim': 'tbmm',
     'veri-ve-harita': 'veri-merkezi', 'kesfet': 'veri-merkezi', 'yazarlar': '', 'hamilelik': '', 'astroloji': '', 'dada-ailesi': '', 'senin-icin': '', 'transfer': 'antrenman',
@@ -553,13 +553,18 @@
     var h = bb.querySelector('h1'), p = bb.querySelector('p'), g = BANNER[m[1]];
     var kap = K.el('<header class="k-kapak"' + (g ? ' style="background-image:' + G(g) + '"' : '') + '><h1>' + (h ? h.innerHTML : '') + '</h1>' + (p ? '<p>' + p.innerHTML + '</p>' : '') + '</header>');
     var bos = bb.previousElementSibling; if (bos && bos.classList.contains('k-ust-bosluk')) bos.remove();
+    /* taşınan öğelerde yatay kaydırma (seçili çip) korunur */
+    var kay0 = [].slice.call(e.querySelectorAll('*')).filter(function(x){ return x.scrollLeft > 0; }).map(function(x){ return [x, x.scrollLeft]; });
     var yap = K.el('<div class="k-yaprak"></div>'), n = bb.nextSibling; bb.replaceWith(kap);
     while (n){ var s2 = n.nextSibling; if (!(n.nodeType === 1 && (n.classList.contains('k-ac') || n.classList.contains('k-ub')))) yap.appendChild(n); n = s2; }
     kap.after(yap);
+    kay0.forEach(function(z){ z[0].scrollLeft = z[1]; });
     /* yapışkan öğeler artık banner altında: üst çubuk yüksekliğine göre yapışır */
     var u = document.querySelector('.k-ub'); if (u){ u.classList.add('k-anlik'); u.classList.remove('buyuk', 'golgeli', 'duz'); u.classList.add('foto'); void u.offsetWidth; setTimeout(function(){ u.classList.remove('k-anlik'); }, 60); if (g) u.style.setProperty('--k-ub-g', G(g)); else u.style.setProperty('--k-ub-g', 'linear-gradient(var(--siyah),var(--siyah))');
       document.body.setAttribute('data-durum', 'acik');
-      var kay = function(){ var v = e.scrollTop > 130; u.classList.toggle('dar', v); u.classList.remove('golgeli'); }; e.addEventListener('scroll', kay, { passive: true }); kay(); }
+      /* çekip yenilemede banner aşağı itilir, üstü açık kalır: durum çubuğu o zaman koyu yazılır */
+      var kay = function(){ var v = e.scrollTop > 130; u.classList.toggle('dar', v); u.classList.remove('golgeli'); document.body.setAttribute('data-durum', kap.getBoundingClientRect().top > 20 ? '' : 'acik'); };
+      e.addEventListener('scroll', kay, { passive: true }); kay(); setTimeout(kay, 300); setTimeout(kay, 900); }
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function(){ K.banner(); }); else setTimeout(function(){ K.banner(); }, 0);
 
