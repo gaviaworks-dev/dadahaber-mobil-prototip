@@ -26,8 +26,8 @@ html[data-tema="koyu"]{--k-koyu:var(--yuzey-2);--k-dolgu:var(--marka);--k-cam-z:
 
 /* ================= 1 · Temel ================= */
 /* dokunma alanı ≥44×44 (K34): görünüşü küçük denetime ortalanmış görünmez alan */
-.k-dk44,.k-toast button,.k-segment.ince button,.k-cip,.k-btn.kucuk,.k-ikon.kucuk,.k-ikon.av,.k-mo .kapat,.k-yorum-a button,.k-gorunum button,.k-kay,.k-oneri .sil,.k-cekmece .k-mc a,.k-mf-bag a,.k-ara .temizle,.k-sekmeler button,.k-gun{position:relative}
-.k-dk44::after,.k-toast button::after,.k-segment.ince button::after,.k-cip::after,.k-btn.kucuk::after,.k-ikon.kucuk::after,.k-ikon.av::after,.k-mo .kapat::after,.k-yorum-a button::after,.k-gorunum button::after,.k-kay::after,.k-oneri .sil::after,.k-cekmece .k-mc a::after,.k-mf-bag a::after,.k-ara .temizle::after,.k-gun::after{content:"";position:absolute;left:50%;top:50%;width:max(100%,44px);height:max(100%,44px);transform:translate(-50%,-50%)}
+.k-dk44,.k-toast button,.k-yazar-satir>a,.k-yeni-hap,.k-video .vu .k-ikon,.k-video .va .k-ikon,.k-segment.ince button,.k-cip,.k-btn.kucuk,.k-ikon.kucuk,.k-ikon.av,.k-mo .kapat,.k-yorum-a button,.k-gorunum button,.k-kay,.k-oneri .sil,.k-cekmece .k-mc a,.k-mf-bag a,.k-ara .temizle,.k-sekmeler button,.k-gun{position:relative}
+.k-dk44::after,.k-toast button::after,.k-yazar-satir>a::after,.k-yeni-hap::after,.k-video .vu .k-ikon::after,.k-video .va .k-ikon::after,.k-segment.ince button::after,.k-cip::after,.k-btn.kucuk::after,.k-ikon.kucuk::after,.k-ikon.av::after,.k-mo .kapat::after,.k-yorum-a button::after,.k-gorunum button::after,.k-kay::after,.k-oneri .sil::after,.k-cekmece .k-mc a::after,.k-mf-bag a::after,.k-ara .temizle::after,.k-gun::after{content:"";position:absolute;left:50%;top:50%;width:max(100%,44px);height:max(100%,44px);transform:translate(-50%,-50%)}
 .k-son{height:calc(var(--k-ac-h) + 20px)}                     /* sayfa sonu: alt çubuk kadar (K33) */
 body:has(.k-mo.acik) .k-son{height:calc(var(--k-ac-h) + 86px)} /* mini oynatıcı açıkken onun kadar daha */
 .k-son.yalin{height:calc(var(--alt-guvenli) + 24px)}           /* alt çubuksuz ekran */
@@ -200,7 +200,7 @@ html[data-tema="koyu"] .k-btn:active,html[data-tema="koyu"] .k-btn.is-basili{fil
 /* arama alanı (+ sesli arama düğmesi) */
 .k-ara{display:flex;align-items:center;gap:var(--ikon-bosluk);height:48px;padding:0 var(--b-4) 0 var(--b-16);border-radius:var(--k-kontrol);background:var(--zemin-2);border:1.5px solid transparent;flex:1;min-width:0;transition:background .15s,border-color .15s}
 .k-ara>i{color:var(--metin-3);font-size:15px;flex:none}
-.k-ara input{flex:1;min-width:0;height:100%;border:0;background:none;font:inherit;font-size:16px;color:var(--metin);outline:0}
+.k-ara input{flex:1;min-width:0;height:100%;min-height:44px;border:0;background:none;font:inherit;font-size:16px;color:var(--metin);outline:0}
 .k-ara input::placeholder{color:var(--metin-3)}
 .k-ara .temizle{width:32px;height:44px;display:grid;place-items:center;color:var(--metin-3);font-size:15px;flex:none}
 .k-ara .ses{width:40px;height:40px;border-radius:var(--k-daire);display:grid;place-items:center;font-size:16px;color:var(--metin);flex:none;position:relative}
@@ -1238,3 +1238,5 @@ html[data-tema="koyu"] .k-isk{background-image:linear-gradient(90deg,var(--yuzey
 .k-hk-o.spk.sonuk .k-hk-a{color:var(--metin-3);font-variant-numeric:tabular-nums}
 .k-mo .t small .y{display:inline-flex;align-items:center;gap:var(--ikon-bosluk);min-width:0;overflow:hidden;text-overflow:ellipsis}
 .k-mo .t small .y i{color:var(--marka);font-size:11px}
+
+/* yayılım geri bildirimi: dokunma alanı 44 (yazar satırı bağlantısı, yeni haber hapı, video düğmeleri, arama alanı) */

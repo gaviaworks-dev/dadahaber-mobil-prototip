@@ -39,7 +39,7 @@
    HALLER      K.bos({ikon, baslik, aciklama, eylem, ikinci, tam}) · K.bos('kaydedilen'|'bildirim'|'takip'|'gecmis'|'sonuc'|'yorum'|'liste'|'indirilen'|'senin')
                K.hata({tur:'sunucu'|'cevrimdisi'|'bulunamadi'|'zaman-asimi'|'kaldirildi'|'web'|'cok-istek'|'erisim'|'bakim'|'guncelleme', tam, deneniyor})
                K.blokHata(baslik)  K.iskelet(tur, n)  tur ∈ satir · kart · ray · hero · metin · hikaye · detay · akis · bolum · yorum · liste
-               K.yenile(hal) hal ∈ cekiliyor · birak · yenileniyor · bitti  ·  K.cekYenile(ekran, bitince)  ·  K.dahaFazla(hal) hal ∈ yukleniyor · son · hata
+               K.yenile(hal) hal ∈ cekiliyor · birak · yenileniyor · bitti  ·  K.cekYenile(ekran, bitince)  ·  K.dahaFazla(hal, ne) hal ∈ yukleniyor · son · hata
                K.izin({tur:'bildirim'|'konum'|'mikrofon', red})
    OYNATICI    K.oynaticiTam({tur:'spiker'|'podcast'|'dinle', durum, yer, yerinde, acik})  K.video({g, durum, sure, gecen, yatay, baslik, yuvarlak})  K.ses(hal)
    HESAP       K.ayar({ikon, baslik, alt, sag:'ok'|'anahtar'|'deger'|'tik', deger, on, pasif, tehlike, href, secili})  K.grup(baslik, satirlar, not)
@@ -374,10 +374,10 @@
     return satir; };
   K.yenile = function(hal){ var h = hal || 'cekiliyor', m = { cekiliyor: ['fa-arrow-down', 'Yenilemek için çek'], birak: ['fa-arrow-down', 'Bırak, yenilensin'], yenileniyor: ['fa-circle-notch fa-spin', 'Yenileniyor'], bitti: ['fa-check', 'Güncel · ' + D.simdi.saat] }[h];
     return '<div class="k-yenile ' + h + '" role="status"><span class="ic">' + I(m[0]) + '</span>' + m[1] + '</div>'; };
-  K.dahaFazla = function(hal){ var h = hal || 'yukleniyor';
+  K.dahaFazla = function(hal, ne){ var h = hal || 'yukleniyor', n = ne || 'haber'; /* ne: 'haber' | 'video' | 'yorum' | 'bölüm' … */
     if (h === 'son') return '<div class="k-dahafazla son"><b>Hepsi bu kadar</b>' + K.btn({ metin: 'Başa dön', ikon: 'fa-arrow-up', boy: 'kucuk', tur: 'sade', attr: 'data-basa' }) + '</div>';
-    if (h === 'hata') return '<div class="k-dahafazla hata"><b>Daha fazla haber yüklenemedi</b>' + K.btn({ metin: 'Yeniden dene', ikon: 'fa-rotate-right', boy: 'kucuk', tur: 'sade', attr: 'data-yeniden' }) + '</div>';
-    return '<div class="k-dahafazla" role="status"><span class="k-don">' + I('fa-circle-notch', 'fa-spin') + 'Daha fazla haber yükleniyor</span></div>'; };
+    if (h === 'hata') return '<div class="k-dahafazla hata"><b>Daha fazla ' + n + ' yüklenemedi</b>' + K.btn({ metin: 'Yeniden dene', ikon: 'fa-rotate-right', boy: 'kucuk', tur: 'sade', attr: 'data-yeniden' }) + '</div>';
+    return '<div class="k-dahafazla" role="status"><span class="k-don">' + I('fa-circle-notch', 'fa-spin') + 'Daha fazla ' + n + ' yükleniyor</span></div>'; };
   K.izin = function(o){ o = o || {}; var t = o.tur || 'bildirim', m;
     if (t === 'bildirim') m = { ikon: 'fa-bell', b: 'Önemli gelişmeleri kaçırma', p: 'Bildirimleri açarsan yalnız seçtiğin konularda haber veririz; istediğin zaman kapatırsın.',
       l: [['fa-bolt', 'Son Dakika', 'Gündemi değiştiren gelişmeler, anında'], ['fa-futbol', 'Takımının maçı', D.mac.ev + ' maçında gol ve sonuç'], ['fa-newspaper', 'Günün baskıları', 'Sabah, Öğleden Sonra ve Akşam Baskısı']], e: 'Bildirimleri aç' };
