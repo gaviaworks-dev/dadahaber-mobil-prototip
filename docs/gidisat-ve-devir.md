@@ -61,3 +61,11 @@ Tarih: 2026-11-25 · Depo: `dadahaber-mobil-prototip` · Canlı: `secenekler/ekr
 - **Alt sayfa eşlemesi tek yerde** (`K.altYol`): sitede özel bloklu alt sayfa kendi ekranına, düz konu sayfası bölüm listesine `?konu=` ile. Liste, özel sayfası olan konunun kodunu da tanır (konu sayfasındaki "Tümü").
 - **Bağlantı denetimi** `tasks/araclar/baglanti.sh` (sayfa `secenekler/ekranlar/baglanti.html`): ölü, kırık, alt başlık eşlemesine uymayan yüzey. Her yayından önce çalıştırılır.
 - **Açık:** Hamilelikte hesaplayıcı uygulamada en üstte, sitede yan sütunda (K41 tasarımı korundu). Kit bölüm başlığı (`K.bb`) uzun başlığı kesmiyor; banner alt satırı tek satırda kesiliyor (uzun site açıklamaları kısaltıldı). Bütün gelişen olayların listelendiği ekran yok. Piyasa adı → enstrüman kodu eşlemesi iki dosyada elle (kite alınmalı). Finans'ın sözlüğünde Döviz, Altın, Akaryakıt alt konulu haber yok: liste o konuda bölümün bütün haberlerini gösterir.
+
+## 5. K48 (K44 canlı kontrol düzeltmeleri) notları
+
+- **Kit:** `K.satir` satırda kaydet çizmez (Kaydedilenler bağlamı `{ kaydedildi: true }` istisna); `K.gorsel(h)` tek görsel eşlemesi (haberin görseli → başlık → konu sözcüğü → alt konu → bölüm); `K.saatBul(başlık)` ortak veriden saat; `K.sdSatir` görsel sağda + ikonlu bilgi; `.k-meta` yana kayar; `.k-ab` küçük düğmeleri görünürde dar, dokunma alanı 44.
+- **Ölçüm betiği** (`ekranlar/denetim.html`) kalıcı kontroller: 7 bilgi satırı (kesik/binen), 8 görselsiz liste satırı, 9 saatsiz liste satırı.
+- **Varsayım (onaylanmadı):** dört köşe yazısının okuma süresi sözlükte yok → sözlükteki köşe yazılarının süre ortancası 4 dk.
+- **Kaynak çelişkileri** (ekran dosyalarında notlu): Günün 5'i baskısı 07.00 ama ilk üç haberin sözlük saati sonrası; üç haberin başlığı sözlükte farklı (faiz kararı, barajlar, kitap fuarı); Farklı Bakışlar'daki "Geçen hafta" ibareleri sözlük ve arşivle çelişiyordu, kaldırıldı.
+- **Kit adayı:** saat seçici alt sayfası (bildirim tercihleri, yerel).
