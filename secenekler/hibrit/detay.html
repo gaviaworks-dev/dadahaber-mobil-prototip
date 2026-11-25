@@ -19,7 +19,7 @@
    ya da yana kaydırınca yerinde değişir, aşağı kaydırma yok) → kaynaklar yatay şerit (vurgusuz) → yorum → sıradaki haberler.
    "Hikâye modunda oku" sayfaya serpiştirilir: açıklamanın altında, 15 sn sonunda, tam metnin ortasında, bölümlerin sonunda ve okuma çubuğunda.
    ?derinlik=15sn|1dk|tam · ?bolum=bana|neden|sonra · ?kay=px · ?mod=hikaye (?kart=n, ?dur=1) · ?aa=1 yazı ayarı açık. */
-:root{--mb:17px} /* yazı ölçeği (K29): okuma metni --mb; öne çıkan +2; ara başlık +4; ikincil -2. Aa ayarı hepsini birlikte büyütür */
+:root{--mb:16px} /* yazı ölçeği (K29): okuma metni --mb; öne çıkan +2; ara başlık +4; ikincil -2. Aa ayarı hepsini birlikte büyütür */
 .ust-d{position:absolute;left:0;right:0;top:0;z-index:70;height:calc(var(--ust-guvenli) + 52px);padding:var(--ust-guvenli) 12px 0;display:flex;align-items:center;gap:8px;transition:background .25s,border-color .25s;border-bottom:1px solid transparent}
 .ust-d .d{width:44px;height:44px;border-radius:var(--k-daire);display:grid;place-items:center;font-size:16px;color:#fff;background:var(--cam);border:1px solid var(--cam-cizgi);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);flex:none;transition:background .25s,color .25s}
 .ust-d .bt{flex:1;min-width:0;font-size:15px;font-weight:var(--y-kalin);text-align:center;opacity:0;transition:opacity .25s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -67,8 +67,8 @@
 .ai{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:var(--y-orta);color:var(--metin-3);white-space:nowrap}
 .ai i{color:var(--marka-metin)}
 .madde{list-style:none;margin-top:12px;display:grid;gap:10px}
-.madde li{display:grid;grid-template-columns:28px 1fr;gap:12px;padding:16px;border-radius:var(--k-kontrol);background:var(--zemin-2);font-size:var(--mb);line-height:1.5;font-weight:var(--y-orta)}
-.madde li i{width:28px;height:28px;border-radius:var(--k-daire);background:var(--marka);color:var(--siyah);display:grid;place-items:center;font-size:12px}
+.madde li{display:grid;grid-template-columns:24px 1fr;gap:10px;padding:12px 14px;border-radius:var(--k-kontrol);background:var(--zemin-2);font-size:calc(var(--mb) - 1px);line-height:1.5;font-weight:var(--y-orta)}
+.madde li i{width:24px;height:24px;border-radius:var(--k-daire);background:var(--marka);color:var(--siyah);display:grid;place-items:center;font-size:11px}
 .etkisi{margin-top:10px;display:grid;grid-template-columns:28px 1fr;gap:12px;padding:16px;border-radius:var(--k-kontrol);background:var(--marka-25)}
 .etkisi>i{width:28px;height:28px;border-radius:var(--k-daire);background:var(--siyah);color:var(--marka);display:grid;place-items:center;font-size:12px}
 .etkisi b{display:block;font-size:12.5px;color:var(--marka-metin);letter-spacing:.06em;text-transform:uppercase}
@@ -85,11 +85,11 @@
 .bk>section{display:none;padding:18px;border-radius:var(--k-kart);background:var(--zemin-2)}
 .bk>section.etkin{display:block;animation:gel .24s ease}
 .kb{display:flex;align-items:center;gap:12px;margin-bottom:12px}
-.kb .ik{width:38px;height:38px;border-radius:var(--k-ic);background:var(--marka);color:var(--siyah);display:grid;place-items:center;font-size:15px;flex:none}
-.kb h2{font-size:calc(var(--mb) + 2px);letter-spacing:-.015em}
+.kb .ik{width:32px;height:32px;border-radius:var(--k-ic);background:var(--marka);color:var(--siyah);display:grid;place-items:center;font-size:13px;flex:none}
+.kb h2{font-size:var(--mb);letter-spacing:-.015em}
 .kb .sy{margin-left:auto;font-size:12px;color:var(--metin-3);white-space:nowrap}
-.bk .duz{font-size:var(--mb);line-height:1.6}
-.bk .buyuk{font-size:calc(var(--mb) + 2px);line-height:1.45;font-weight:var(--y-kalin);letter-spacing:-.015em}
+.bk .duz{font-size:calc(var(--mb) - 1px);line-height:1.55}
+.bk .buyuk{font-size:var(--mb);line-height:1.5;font-weight:var(--y-kalin);letter-spacing:-.015em}
 .bk .madde{margin-top:14px}
 .cizelge{list-style:none;position:relative}
 .cizelge li{position:relative;padding:0 0 16px 30px}
@@ -199,6 +199,8 @@ html[data-tema="koyu"] .hmb{background:var(--yuzey-2)}
 .okuma button{height:48px;min-width:48px;border-radius:var(--k-kontrol);display:grid;place-items:center;color:#fff;font-size:17px}
 .okuma .dinle{white-space:nowrap;display:flex;align-items:center;gap:10px;padding:0 18px 0 6px;background:var(--marka);color:var(--siyah);font-size:14.5px;font-weight:var(--y-kalin)}
 .okuma .dinle i{width:36px;height:36px;border-radius:var(--k-daire);background:var(--siyah);color:var(--marka);display:grid;place-items:center;font-size:12px;padding-left:2px}
+.okuma .yr{position:relative}
+.okuma .yr small{position:absolute;top:6px;right:4px;min-width:18px;height:18px;padding:0 4px;border-radius:var(--k-cubuk);background:var(--marka);color:var(--siyah);font-size:10.5px;font-weight:var(--y-kalin);display:grid;place-items:center}
 .okuma .aa{font-size:15px;font-weight:var(--y-kalin);letter-spacing:-.02em}
 .okuma .hmd{color:var(--marka)}
 .okuma.gizli{transform:translate(-50%,120px);opacity:0}
@@ -227,7 +229,7 @@ html[data-tema="koyu"] .boy input{accent-color:var(--marka)}
 <div class="sayfa" role="dialog" aria-label="Yazı ayarı">
   <div class="tut"></div>
   <h2>Yazı Boyutu</h2>
-  <div class="boy"><span style="font-size:14px">A</span><input id="boy" type="range" min="15" max="22" step="0.5" value="17" aria-label="Yazı boyutu"><span style="font-size:22px">A</span></div>
+  <div class="boy"><span style="font-size:14px">A</span><input id="boy" type="range" min="15" max="22" step="0.5" value="16" aria-label="Yazı boyutu"><span style="font-size:22px">A</span></div>
 </div>
 <script>
 (function(){
