@@ -327,7 +327,7 @@
         '<div class="mc"><a class="tm" href="' + H.liste() + '">Bütün ' + b.ad + ' haberleri' + ok + '</a>' + (ALT[b.ad] || []).map(function(x){ return '<a>' + x + '</a>'; }).join('') + '</div></details>'; }).join('') +
       '<span class="mt">Dinle ve izle</span>' + sat('fa-headphones', 'Haber Dinle', '<span class="cn"><span class="canli-nokta"></span>Yayında</span>') + sat('fa-mobile-screen-button', 'Akış', '<em>12 video</em>') + sat('fa-podcast', 'Podcast') + sat('fa-circle-play', 'Video Haber') + sat('fa-camera', 'Foto Fokus') + sat('fa-chart-pie', 'İnfografik') +
       '<span class="mt">Dada</span>' + sat('fa-feather-pointed', 'Yazarlar') + sat('fa-bolt', 'Son Dakika') + sat('fa-calendar-day', 'Gündem Takvimi') + sat('fa-message', 'Görüş Bildir') + '</nav>' +
-    '<div class="mf"><a class="ms"><i class="fa-solid fa-circle-half-stroke"></i><span>Görünüm: <b>Sistem</b></span><i class="fa-solid fa-chevron-down cv"></i></a><a class="ms"><i class="fa-solid fa-text-height"></i><span>Yazı boyutu: <b>Orta</b></span><i class="fa-solid fa-chevron-down cv"></i></a>' +
+    '<div class="mf"><a class="ms"><i class="fa-solid fa-circle-half-stroke"></i><span>Görünüm: <b>Sistem</b></span><i class="fa-solid fa-chevron-down cv"></i></a><a class="ms"><i class="fa-solid fa-font"></i><span>Yazı boyutu: <b>Orta</b></span><i class="fa-solid fa-chevron-down cv"></i></a>' +
       '<div class="ky"><a>Hakkımızda</a><a>Künye</a><a>İletişim</a><a>Gizlilik Politikası</a></div></div></div>';
   document.addEventListener('click', function(ev){
     if (ev.target.closest('[data-menu]')) document.body.classList.add('menu-acik');

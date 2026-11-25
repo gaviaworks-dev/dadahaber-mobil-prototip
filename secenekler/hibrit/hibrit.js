@@ -194,7 +194,7 @@
 
   /* ---------- Alt gezinme (AS-A çubuğu; ortada vurgulu Akış) ---------- */
   H.altCubuk = function(etkin, koyu){
-    var S = [['ana', 'Ana Sayfa', 'fa-house', H.ana()], ['bolum', 'Bölümler', 'fa-table-cells-large', H.liste()], ['akis', 'Akış', 'fa-mobile-screen-button', H.u('akis.html')],
+    var S = [['ana', 'Ana Sayfa', 'fa-house', H.ana()], ['bolum', 'Bölümler', 'fa-shapes', H.liste()], ['akis', 'Akış', 'fa-mobile-screen-button', H.u('akis.html')],
              ['dinle', 'Dinle', 'fa-headphones', ''], ['hesap', 'Hesabım', 'fa-circle-user', '']];
     var n = document.createElement('nav'); n.className = 'ac' + (koyu ? ' koyu' : ''); n.setAttribute('aria-label', 'Alt gezinme');
     n.innerHTML = S.map(function(s){
