@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Canlı Yayın</title>
+<!--
+  CANLI YAYIN · E-090–E-095 · kök: Detay (kapaksız detay: düz üst çubuk, başlık zeminde; kapağın yerinde oynatıcı).
+  Yapı: kitin video oynatıcı kabuğu (K.video, 16:9 oran korunur, üstünde Canlı kapsülü) → zaman satırı (başlangıç, güncelleme, izleyici) → kategori, başlık, imza, açıklama
+  → Oturumdan Öne Çıkanlar (kitin canlı anlatım girişi) → Yayın Akışı · Bugün (saat, yayın, Hatırlat) → Sona Eren Yayınlar (tekrarı izle) → İlgili Haberler.
+  Video oynarken Spiker duraklar (tek oynatıcı kuralı); bu yüzden mini oynatıcı yok.
+  Parametreler: ?durum=yayin-yok (sıradaki yayın saati) | mobil-veri (otomatik oynatma kapalı, dokun oynat) | yukleniyor | hata (yayın açılamadı) | cevrimdisi (&onbellek=0) · ?uye=0 · ?tema=koyu
+  Veri (satır içinde): public canli-yayin.html (TBMM Genel Kurulu, 2027 bütçe; öne çıkanlar, yayın akışı, sona eren yayınlar). Görsel: tbmm (yayın), osym (ÖSYM tanıtım tekrarı).
+  Varsayımlar (onaylanmadı): Hatırlat bildirimle hatırlatır (misafirde de cihazda); sona eren yayınların görseli kütüphanede olmayanlar görselsiz.
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), Q = K.q, DUR = K.durum;
+  /* kaynak: dadahaber-prototip/canli-yayin.html */
+  var Y = {
+    baslik: '2027 bütçesinin görüşmeleri Genel Kurul\'da başladı', kat: 'Siyaset', g: 'tbmm', gecen: '2:42:10',
+    spot: '2027 yılı merkezi yönetim bütçe kanunu teklifi, Plan ve Bütçe Komisyonu\'nun ardından Türkiye Büyük Millet Meclisi Genel Kurulu\'nda görüşülmeye başlandı. Oturumu canlı izleyebilir, öne çıkan gelişmeleri aşağıdaki akıştan takip edebilirsin.',
+    yazar: 'Ayşe Yıldız', unvan: 'Haber Müdürü', bas: '13.00\'ten beri', son: '15.42 Güncellendi', izleyici: '4,8 B izleyici',
+    akis: [['15.42', 'Muhalefet partileri adına ilk konuşmalar tamamlandı', 'Muhalefet grupları adına yapılan konuşmalarda vergi gelirlerinin dağılımı ve yatırım ödenekleri öne çıktı. Oturuma kısa bir ara verildi.', 'TBMM'],
+      ['15.05', 'Bakan, faiz giderleri tahminini açıkladı', 'Hazine ve Maliye Bakanı, 2027 bütçesinde faiz giderlerinin toplam harcamalar içindeki payının yüzde 14 olarak öngörüldüğünü belirtti.', 'TBMM'],
+      ['14.20', 'Bütçe sunuşu tamamlandı', 'Bütçe sunuşunun ardından grup konuşmalarına geçildi. Her grubun konuşma süresi 40 dakika olarak belirlendi.', 'TBMM'],
+      ['13.35', 'Bütçe büyüklüğü ve açık hedefi açıklandı', 'Sunuşta 2027 için öngörülen bütçe açığının millî gelire oranının yüzde 3,1 olduğu bildirildi.', 'Strateji ve Bütçe Başkanlığı'],
+      ['13.00', 'Oturum Meclis Başkanının açılışıyla başladı', 'Genel Kurul görüşmelerinin 12 gün sürmesi ve bütçenin yıl sonundan önce oylanması planlanıyor.', 'TBMM']],
+    program: [['13.00', 'TBMM Genel Kurulu · 2027 bütçe görüşmeleri', 'Grup konuşmaları sürüyor · Meclis TV yayını', true], ['17.00', 'Valilik kar koordinasyon toplantısı sonrası açıklama', 'İstanbul Valiliği · yaklaşık 20 dk'],
+      ['19.30', 'Akşam bülteni canlı: günün sekiz başlığı', 'Dada Haber stüdyosu · 25 dk'], ['21.00', 'Ekonomi Masası canlı: bütçenin ilk günü', 'Can Demir ve konukları · 40 dk']],
+    biten: [{ tur: 'Sona erdi', alt: 'Siyaset', saat: '22 Kas', baslik: 'Plan ve Bütçe Komisyonu\'nda son gün oturumu', yazar: 'TBMM', sure: '3 sa 10 dk' },
+      { tur: 'Sona erdi', alt: 'Dünya', saat: '21 Kas', baslik: 'BM İklim Konferansı kapanış oturumu', yazar: 'Antalya', sure: '1 sa 52 dk' },
+      { tur: 'Sona erdi', alt: 'Kampüs', saat: '21 Kas', baslik: 'ÖSYM 2027 sınav takvimi tanıtım toplantısı', yazar: 'Ankara', sure: '48 dk', g: 'osym', md: '48 dk' }],
+    ilgili: [{ tur: 'Canlı', alt: 'Siyaset', saat: '23 Kas', baslik: 'TBMM\'de 2027 bütçesi görüşmeleri: gelişmeler dakika dakika', yazar: 'Ayşe Yıldız', sure: 'Son giriş 15.42', izlenme: '21,7 B', href: K.git('canliAnlatim') },
+      { alt: 'Siyaset', saat: '22 Kas', baslik: 'Plan ve Bütçe Komisyonu\'nda bütçe görüşmeleri tamamlandı', sure: '2 dk', izlenme: '7,1 B' }]
+  };
+  var hata = DUR === 'cevrimdisi' && Q.get('onbellek') === '0' ? 'cevrimdisi' : '';
+  K.ustCubuk({ geri: true, baslik: 'Canlı Yayın', eylemler: hata || DUR === 'yukleniyor' ? [] : ['paylas'], golgeli: true });
+  if (hata) { e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: hata }) + '<div class="k-son yalin"></div>'; bagla(); return; }
+  if (DUR === 'yukleniyor') {
+    e.innerHTML = '<div class="k-ust-bosluk"></div><div role="status" aria-label="Yükleniyor"><i class="k-isk" style="width:100%;height:219px"></i><div class="k-ic k-bl sik">' + '' +
+      '<div class="k-isk-grup" style="margin-top:var(--b-16)"><i class="k-isk" style="width:30%;height:13px"></i><i class="k-isk" style="width:100%;height:28px"></i><i class="k-isk" style="width:70%;height:28px"></i></div><div style="margin-top:var(--b-24)">' + K.iskelet('metin', 4) + '</div></div></div><div class="k-son yalin"></div>';
+    bagla(); return;
+  }
+
+  /* oynatıcı: kitin video kabuğu + Canlı kapsülü (sol üstte, her halde görünür) */
+  var canliRozet = '<span style="left:var(--b-12);top:var(--b-12)">' + K.canli() + '</span>';
+  var oyn;
+  if (DUR === 'yayin-yok') oyn = '<div class="k-video is-bitti" style="background-image:' + G(Y.g) + '"><div class="vd">' + K.I('fa-video-slash') + 'Şu an yayın yok<small>Sıradaki yayın saat 17.00</small>' +
+    K.btn({ metin: 'Hatırlat', ikon: 'fa-bell', boy: 'kucuk', tur: 'beyaz', secili: false, attr: 'data-hatirlat="17.00"' }) + '</div></div>';
+  else if (DUR === 'cevrimdisi') oyn = '<div class="k-video is-hata" style="background-image:' + G(Y.g) + '"><div class="vd">' + K.I('fa-plug-circle-xmark') + 'Bağlantı yok<small>Canlı yayını izlemek için internete bağlan.</small></div></div>';
+  else {
+    oyn = K.video({ g: Y.g, durum: DUR === 'mobil-veri' ? 'mobil' : DUR === 'hata' ? 'hata' : 'oynuyor', sure: 'Canlı', gecen: Y.gecen }).replace('<div class="vu">', canliRozet + '<div class="vu">').replace(/<div class="vu">.*?<\/div>/, function(m){ return m.replace(/class="k-ikon"/g, 'class="k-ikon k-dk44"'); }); /* kitin video düğmeleri 40: görünmez 44 alan */
+    if (DUR === 'hata') oyn = oyn.replace('Video oynatılamadı', 'Yayın açılamadı').replace('Bağlantını kontrol et.', 'Yayın akışına ulaşılamadı. Birazdan yeniden dene.').replace('class="k-btn kucuk beyaz"', 'class="k-btn kucuk beyaz" data-yeniden');
+    if (DUR === 'mobil-veri') oyn = oyn.replace('Mobil veride videolar kendiliğinden oynamaz · Canlı', 'Mobil veride videolar kendiliğinden oynamaz');
+  }
+  var bilgi = DUR === 'yayin-yok' ? '' : '<div class="k-ic" style="padding-top:var(--b-16)"><div class="k-zamansatir"><span>' + K.I('fa-video') + Y.bas + '</span><span>' + K.I('fa-rotate') + Y.son + '</span><span>' + K.I('fa-eye') + Y.izleyici + '</span></div></div>' +
+    '<div class="k-bbas" style="padding-top:var(--b-16)">' + K.katEt(Y.kat, 'fa-newspaper') + '<h1 style="margin-top:var(--b-12)">' + Y.baslik + '</h1><div class="k-imza">' + K.avatar(Y.yazar) + '<span class="t"><b>' + Y.yazar + '</b><small>' + Y.unvan + '</small></span></div></div>' +
+    '<div class="k-ic"><p class="k-spot">' + Y.spot + '</p></div>' +
+    '<section class="k-bl">' + K.bb({ baslik: 'Oturumdan Öne Çıkanlar', canli: true, sayi: Y.akis.length }) + '<div class="k-ic">' +
+      Y.akis.map(function(x, i){ return K.canliGiris({ saat: x[0], baslik: x[1], metin: x[2], yeni: i === 0 }).replace(/<\/div><\/div>$/, K.meta(['Kaynak: ' + x[3]]) + '</div></div>'); }).join('') + '</div></section>';
+  var prog = (DUR === 'yayin-yok' ? Y.program.slice(1) : Y.program).map(function(x){
+    return '<div class="k-yazar-satir"><b class="tnum">' + x[0] + '</b><span style="min-width:0"><b>' + x[1] + '</b><small>' + x[2] + '</small></span>' +
+      (x[3] ? K.canli() : K.btn({ metin: 'Hatırlat', ikon: 'fa-bell', boy: 'kucuk', tur: 'sade', secili: false, attr: 'data-hatirlat="' + x[0] + '"' })) + '</div>'; }).join('');
+  var akisB = '<section class="k-bl' + (DUR === 'yayin-yok' ? ' sik' : '') + '">' + K.bb({ baslik: 'Yayın Akışı', ikon: 'fa-calendar-day', not: 'Bugün · ' + D.simdi.kisa }) + '<div class="k-satirlar">' + prog + '</div></section>';
+  var bitenB = '<section class="k-bl">' + K.bb({ baslik: 'Sona Eren Yayınlar', ikon: 'fa-clock-rotate-left', sayi: Y.biten.length }) + '<div class="k-satirlar">' + Y.biten.map(function(x){ return K.satir(x, { md: x.md }); }).join('') + '</div></section>';
+  var ilgiliB = DUR === 'yayin-yok' ? '' : '<section class="k-bl">' + K.bb({ baslik: 'İlgili Haberler', ikon: 'fa-newspaper' }) + '<div class="k-satirlar">' + Y.ilgili.map(function(x){ return K.satir(x, { href: x.href }); }).join('') + '</div></section>';
+  e.innerHTML = '<div class="k-ust-bosluk"></div>' + oyn + bilgi + akisB + bitenB + ilgiliB + '<div class="k-son yalin"></div>';
+
+  if (!DUR || DUR === 'hata') K.spikerDurdur(); /* tek oynatıcı: yayın açılınca Spiker duraklar */
+  if (DUR === 'cevrimdisi') {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  /* video: dokununca denetimler görünür / gizlenir; mobil veride dokun, oynat */
+  var v = e.querySelector('.k-video');
+  if (v) v.addEventListener('click', function(ev){ if (v.classList.contains('is-mobil') && ev.target.closest('.k-ikon.sari')) { v.classList.remove('is-mobil'); v.classList.add('is-oynuyor'); K.spikerDurdur(); return; }
+    if (ev.target.closest('button')) return; if (v.classList.contains('is-oynuyor')) { v.classList.remove('is-oynuyor'); v.classList.add('is-dur'); } else if (v.classList.contains('is-dur')) { v.classList.remove('is-dur'); v.classList.add('is-oynuyor'); } });
+  document.addEventListener('click', function(ev){ var t = ev.target.closest('[data-hatirlat]'); if (!t) return;
+    var on = t.getAttribute('aria-pressed') !== 'true'; t.setAttribute('aria-pressed', on); t.innerHTML = K.I(on ? 'fa-check' : 'fa-bell') + '<span>' + (on ? 'Hatırlatılacak' : 'Hatırlat') + '</span>';
+    if (on) K.toast(t.getAttribute('data-hatirlat') + '\'de hatırlatacağız', { ikon: 'fa-bell', alt: 'Yayın başlayınca bildirim gelir' }); });
+  bagla();
+  function bagla(){ document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); }); }
+})();
+</script>
+</body>
+</html>

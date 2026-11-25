@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Ara</title>
+<!--
+  ARAMA GİRİŞİ · E-104–E-106 · kendi düzeni (kit bileşenleri). Üst çubuktaki ara düğmesiyle açılır; klavye açık gelir.
+  Yapı: arama çubuğu (.k-ub.ara: alan + sesli arama + Vazgeç) → Haberlerde ara · Dada'ya sor seçicisi (B-16: tek kutu, iki kip; public arama penceresi)
+  → Son Aramalar (Temizle; satırda ×) → Gündemdekiler. Yazarken: konu, haber, yazar önerileri (eşleşen kısım kalın) + "Dada'ya sor" satırı.
+  Parametreler: ?durum=yaziyor ("kar" yazılmış) | bos (son arama yok: yalnız gündemdekiler) · ?uye=0 · ?tema=koyu
+  Veri: son aramalar = public arama sayfası ve penceresindeki sorgular ("deprem", "asgari ücret") + üyenin takipleri (D.uye.takip);
+    gündemdekiler = public sayfaların etiketleri (dakika-dakika, canli-yayin, arama Konular, D.detay.etiketler); öneriler D ve public son-dakika başlıkları.
+  Varsayımlar (onaylanmadı): B-16 açık kabul edildi (iki kip tek ekranda, varsayılan Haberlerde ara); misafirin son aramaları cihazda tutulur.
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* KİT ADAYI: sistem klavyesi yeri (.kb) — yorumlar.html ile aynı; "klavye açık" hallerinde telefonun klavyesi (iOS çizimi; marka değeri değil). */
+.kb{position:absolute;left:0;right:0;bottom:0;z-index:92;height:300px;padding:var(--b-8) var(--b-4) var(--alt-guvenli);background:#D3D5DB;display:flex;flex-direction:column;gap:var(--b-12);font-family:-apple-system,"SF Pro Text",system-ui,sans-serif;color:#000}
+.kb-s{display:flex;gap:var(--b-4);justify-content:center}
+.kb-s span{flex:1;max-width:32px;height:42px;border-radius:var(--k-ic);background:#fff;display:grid;place-items:center;font-size:21px;font-weight:var(--y-ince);box-shadow:var(--golge-sm)}
+.kb-s span.g{max-width:none;flex:0 0 88px;background:#ABB0BA;font-size:15px}
+.kb-s span.b{max-width:none;flex:1;font-size:15px}
+.kb-s span.a{max-width:none;flex:0 0 88px;background:#0A84FF;color:#fff;font-size:15px}
+html[data-tema="koyu"] .kb{background:#2C2C2E;color:#fff}
+html[data-tema="koyu"] .kb-s span{background:#6B6B6E;box-shadow:none}
+html[data-tema="koyu"] .kb-s span.g{background:#464648}
+html[data-tema="koyu"] .kb-s span.a{background:#0A84FF}
+.kb-yer{height:300px}
+/* KİT ADAYI (düzeltme): üst çubuktaki arama alanının girdisi 41 px kalıyor (alan 44, çerçeve 1,5); girdi 44 px dokunma alanı alır */
+.k-ub.ara .k-ara input{height:44px}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), DUR = K.durum, YAZ = DUR === 'yaziyor';
+  function klavye(son){ var R = ['qwertyuıopğü', 'asdfghjklşi', 'zxcvbnmöç'];
+    return '<div class="kb" aria-hidden="true" data-denetim-yok>' + R.map(function(r){ return '<div class="kb-s">' + r.split('').map(function(c){ return '<span>' + c + '</span>'; }).join('') + '</div>'; }).join('') +
+      '<div class="kb-s"><span class="g">123</span><span class="b">boşluk</span><span class="a">' + son + '</span></div></div>'; }
+  var SON = ['deprem', 'asgari ücret', D.uye.takip[0], D.uye.takip[2]];
+  var GUNDEM = ['Kar Yağışı', 'Bütçe 2027', D.detay.etiketler[0], 'Deprem', 'Gümrük Birliği'];
+  var sor = function(m){ return K.oneri({ tur: 'oneri', metin: m, alt: 'Dada\'ya sor · haberlerimizden yanıt' }).replace('fa-magnifying-glass', 'fa-wand-magic-sparkles').replace(K.git('aramaSonuc'), K.git('dadayaSor')); };
+  var sil = function(h){ return h.replace(K.I('fa-chevron-right'), ''); };
+  var kip = '<div class="k-ic" style="padding-top:var(--b-12)">' + K.segment([{ metin: 'Haberlerde ara', ikon: 'fa-magnifying-glass' }, { metin: 'Dada\'ya sor', ikon: 'fa-wand-magic-sparkles' }], 0, { ince: false }) + '</div>';
+  var son = '<section class="k-bl sik">' + sil(K.bb({ baslik: 'Son Aramalar', ikon: 'fa-clock-rotate-left', baglanti: { metin: 'Temizle' } })).replace('<a>', '<a data-temizle>') + '<div class="k-ic" id="son">' + SON.map(function(x){ return K.oneri({ tur: 'son', metin: x }); }).join('') + '</div></section>';
+  var gun = '<section class="k-bl sik">' + K.bb({ baslik: 'Gündemdekiler', ikon: 'fa-arrow-trend-up' }) + '<div class="k-ic">' + GUNDEM.map(function(x){ return K.oneri({ tur: 'gundem', metin: x }); }).join('') + '</div></section>';
+  var ic;
+  if (YAZ) {
+    var q = 'kar';
+    ic = '<section class="k-bl sik"><div class="k-ic">' + K.oneri({ tur: 'etiket', metin: 'Kar Yağışı', alt: 'Konu', esle: q }) +
+      ['Marmara\'da yoğun kar yağışı: gelişmeler dakika dakika', 'Havalimanlarında kar nedeniyle 46 iç hat seferi iptal edildi', 'Meteoroloji\'den Marmara için turuncu kodlu kar uyarısı'].map(function(x){ return K.oneri({ tur: 'oneri', metin: x, esle: q }); }).join('') +
+      K.oneri({ tur: 'yazar', metin: D.koseYazilari[4].ad, alt: D.koseYazilari[4].unvan, esle: q }) + sor('Kar tatili hangi illerde sürüyor?') + '</div></section>';
+  } else ic = kip + (DUR === 'bos' ? '' : son) + gun;
+  e.innerHTML = '<div class="k-ust-bosluk"></div>' + ic + '<div class="kb-yer"></div>';
+  K.ustCubuk({ tur: 'ara', geri: true, ara: { odak: true, deger: YAZ ? 'kar' : '' }, golgeli: YAZ });
+  document.body.insertAdjacentHTML('beforeend', klavye('ara'));
+
+  /* Dada'ya sor kipine geçince soru ekranı */
+  e.addEventListener('click', function(ev){ var b = ev.target.closest('.k-segment button'); if (b && /sor/.test(b.textContent)) setTimeout(function(){ location.href = K.git('dadayaSor'); }, 220);
+    var x = ev.target.closest('#son .sil'); if (x) { ev.preventDefault(); ev.stopPropagation(); x.closest('.k-oneri').remove(); }
+    if (ev.target.closest('[data-temizle]')) { ev.preventDefault(); var s = document.getElementById('son'); if (s) { var eski = s.innerHTML; s.innerHTML = ''; K.toast('Son aramalar temizlendi', { geriAl: true, eylemFn: function(){ s.innerHTML = eski; } }); } } });
+  var inp = document.querySelector('.k-ub input');
+  inp.addEventListener('keydown', function(ev){ if (ev.key === 'Enter' && inp.value.trim()) location.href = K.git('aramaSonuc'); });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Bölümler</title>
+<!--
+  BÖLÜMLER SEKMESİ (bölüm dizini) · E-019–E-022 · kök: Liste · alt çubukta "Bölümler" seçili.
+  Yapı: büyük başlık → 8 bölüm, kitin bölüm satırı (.k-bolum-satir, kit notu: "Diğer Bölümler, Bölümler sekmesi") açılır satır olarak;
+  açılınca DADAHABER-10 sütunları (küçük grup başlığı + çip ızgarası, menü çekmecesindeki alt başlık kalıbı) ve "Bütün … haberleri".
+  Ardından "Dinle ve İzle" girişleri (çekmecedeki hesap kutusunun ikonlu döşeme ızgarası, aynı ikonlar).
+  Parametreler: ?durum=yukleniyor | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0 → önbellek yok) · ?uye=0 · ?tema=koyu · ?calan=1
+  Varsayımlar (onaylanmadı): Gündem açık gelir, diğerleri kapalı; alt başlık çipi bölüm listesini (liste kökü) açar, servis ve format çipleri kendi ekranını.
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* KİT ADAYI: açılır bölüm satırı — kitin .k-bolum-satir'ı <details> özeti olarak; ok açılınca döner, içerik metin hizasından başlar (çekmecedeki .k-ma/.k-mc davranışı) */
+.bl-d>summary{list-style:none;cursor:pointer}
+.bl-d>summary::-webkit-details-marker{display:none}
+.bl-d>summary>i{transition:transform .2s}
+.bl-d[open]>summary>i{transform:rotate(180deg)}
+.bl-d+.bl-d{border-top:1px solid var(--cizgi)}
+.bl-d .bl-i{padding:0 0 var(--b-16) calc(var(--dokun) - var(--b-4) + var(--b-12))}
+.bl-d .k-grup-b{margin-top:var(--b-8)}
+.bl-d:not([open]) .bl-i{display:none}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), Q = K.q, DUR = K.durum;
+  /* kaynak: docs/kaynak/DADAHABER-10-kategori-ve-medya-yapisi.md §2 (sütun düzeni; site, panel ve uygulamada tek kaynak) */
+  var SUTUN = {
+    'Gündem': [['Temel Kategoriler', ['Siyaset', 'Toplum', 'Hukuk', 'Güvenlik', 'Çevre ve Afet']], ['Yerel Haberler', ['Yerel Haberler', 'İstanbul', 'Ankara', 'İzmir', 'Şehirler']], ['Özgün İçerikler', ['Özel Haber', 'Araştırma']]],
+    'Spor': [['Branşlar', ['Futbol', 'Basketbol', 'Voleybol', 'Motor Sporları', 'Bisiklet', 'Tenis', 'Atletizm', 'Olimpiyatlar', 'E-Spor']], ['Servisler', ['Canlı Skor', 'Puan Durumu', 'Fikstür', 'Takımlar', 'Transfer', 'Millî Takım']], ['Takımlar', ['Galatasaray', 'Fenerbahçe', 'Beşiktaş', 'Trabzonspor', 'Süper Lig', 'Avrupa Ligleri']]],
+    'Finans': [['Piyasalar', ['Piyasa Ekranı', 'Döviz', 'Altın', 'Borsa', 'Kripto Para', 'Akaryakıt Fiyatları', 'Faiz Oranları', 'Ekonomik Takvim']], ['Ekonomi', ['Türkiye Ekonomisi', 'Dünya Ekonomisi', 'Bankacılık', 'Kişisel Finans', 'Enflasyon']], ['Sektörler', ['İş Dünyası', 'Şirketler', 'Girişimcilik', 'Çalışma Hayatı', 'Enerji', 'Tarım', 'Sanayi', 'Gayrimenkul', 'Otomotiv']]],
+    'Kadın': [['Gündem', ['Kadın Gündemi', 'Kadın Hakları', 'Toplumsal Cinsiyet', 'Kadın ve Hukuk', 'Kadın ve Çalışma Hayatı', 'Başarı Hikâyeleri']], ['Sağlık', ['Kadın Sağlığı', 'Hamilelik', 'Anne ve Çocuk']], ['Yaşam', ['Moda', 'Güzellik', 'Ev ve Yaşam', 'Astroloji', 'Kadın Yazarlar']]],
+    'Savunma': [['Savunma Sanayii', ['Millî Projeler', 'İHA ve SİHA', 'Hava Platformları', 'Deniz Platformları', 'Kara Sistemleri', 'Füze ve Roket Sistemleri']], ['Güvenlik', ['Millî Güvenlik', 'Askerî Operasyonlar', 'Sınır Güvenliği', 'Terörle Mücadele', 'Uluslararası Güvenlik', 'NATO']], ['İçerikler', ['Savunma Teknolojileri', 'İhracat ve Anlaşmalar']]],
+    'Dünya': [['Bölgeler', ['Avrupa', 'Orta Doğu', 'Amerika', 'Asya Pasifik', 'Afrika', 'Balkanlar', 'Kafkasya', 'Türk Dünyası']], ['Konular', ['Diplomasi', 'Küresel Siyaset', 'Savaş ve Çatışmalar', 'Göç', 'Uluslararası Kuruluşlar']]],
+    'Kampüs': [['Sınav ve Eğitim', ['Eğitim ve Sınavlar', 'YKS', 'KPSS', 'ALES ve YDS', 'Sınav Takvimi']], ['Üniversite', ['Üniversiteler', 'Burslar', 'Yurtlar', 'Öğrenci Toplulukları']], ['Kariyer', ['Staj', 'Kariyer', 'Gençlerin Gündemi']]],
+    'Keşfet': [['Anlık', ['Son Dakika', 'Canlı Gündem', 'Canlı Yayın', 'Dakika Dakika', 'Bugün Ne Oldu?', 'Gündem Takvimi', 'Güncellenen Haberler']], ['Teknoloji ve Bilim', ['Teknoloji', 'Yapay Zekâ', 'Bilim', 'Uzay', 'Siber Güvenlik', 'Oyun', 'Gelecek', 'İklim']],
+      ['Sağlık ve Yaşam', ['Sağlık', 'Halk Sağlığı', 'Beslenme', 'Ruh Sağlığı', 'Seyahat', 'Gastronomi']], ['Kültür ve Sanat', ['Kültür ve Yaşam', 'Sinema', 'Dizi', 'Müzik', 'Kitap', 'Tiyatro', 'Sergi']],
+      ['Keşfet Formatları', ['Dada Özet', 'Günün 5\'i', 'Dada Bağlam', 'Dada Doğrula', 'Farklı Bakışlar', 'Veri ve Harita', 'Sakin Akış']], ['Medya ve Arşiv', ['Video Haber', 'Foto Fokus', 'İnfografik', 'Podcast', 'Haber Dinle', 'Yazarlar', 'Arşiv']]]
+  };
+  /* servis ve format başlıkları kendi ekranını açar (docs/ekran-listesi.md dosyaları); öteki alt başlıklar bölüm listesini */
+  var HEDEF = { 'Son Dakika': 'sonDakika', 'Canlı Gündem': 'canliGundem', 'Canlı Yayın': 'ekranlar/icerik/canli-yayin.html', 'Dakika Dakika': 'canliAnlatim', 'Bugün Ne Oldu?': 'ekranlar/icerik/bugun-ne-oldu.html',
+    'Gündem Takvimi': 'takvim', 'Güncellenen Haberler': 'ekranlar/icerik/guncellenen-haberler.html', 'Canlı Skor': 'canliSkor', 'Puan Durumu': 'puanDurumu', 'Fikstür': 'ekranlar/icerik/fikstur.html',
+    'Takımlar': 'ekranlar/icerik/takimlar.html', 'Piyasa Ekranı': 'piyasalar', 'Dada Özet': 'ekranlar/icerik/dada-ozet.html', 'Günün 5\'i': 'gununBesi', 'Dada Bağlam': 'ekranlar/icerik/dada-baglam.html',
+    'Dada Doğrula': 'ekranlar/icerik/dada-dogrula.html', 'Farklı Bakışlar': 'ekranlar/icerik/farkli-bakislar.html', 'Veri ve Harita': 'ekranlar/icerik/veri-ve-harita.html', 'Sakin Akış': 'ekranlar/icerik/sakin-akis.html',
+    'Video Haber': 'video', 'Foto Fokus': 'fotoFokus', 'İnfografik': 'infografik', 'Podcast': 'podcast', 'Haber Dinle': 'dinle', 'Yazarlar': 'yazarlar', 'Arşiv': 'ekranlar/icerik/arsiv.html' };
+  function git(x){ return HEDEF[x] ? K.git(HEDEF[x]) : K.git('liste'); }
+
+  function bolum(b, acik){
+    var S = SUTUN[b.ad] || [], hepsi = [].concat.apply([], S.map(function(s){ return s[1]; }));
+    return '<details class="bl-d"' + (acik ? ' open' : '') + '><summary class="k-bolum-satir"><span class="bi">' + K.I(b.ikon) + '</span><span class="t"><b>' + b.ad + '</b><small>' + hepsi.slice(0, 4).join(' · ') + ' · ' + hepsi.length + ' alt başlık</small></span>' + K.I('fa-chevron-down') + '</summary>' +
+      '<div class="bl-i">' + S.map(function(s){ return '<span class="k-grup-b">' + s[0] + '</span><div class="k-cip-izgara">' + s[1].map(function(x){ return '<a class="k-cip" href="' + git(x) + '">' + x + '</a>'; }).join('') + '</div>'; }).join('') +
+      '<a class="k-bag" href="' + K.git('liste') + '">Bütün ' + b.ad + ' haberleri' + K.I('fa-chevron-right') + '</a></div></details>';
+  }
+  /* Dinle ve izle: menü çekmecesiyle aynı girişler ve ikonlar */
+  var DI = [['fa-headphones', 'Haber Dinle', 'dinle'], ['fa-mobile-screen-button', 'Akış', 'akis'], ['fa-podcast', 'Podcast', 'podcast'], ['fa-circle-play', 'Video Haber', 'video'], ['fa-camera', 'Foto Fokus', 'fotoFokus'], ['fa-chart-pie', 'İnfografik', 'infografik']];
+  var dinle = '<section class="k-bl">' + K.bb({ baslik: 'Dinle ve İzle', ikon: 'fa-headphones' }) + '<div class="k-ic"><div class="k-mh"><div class="k-mh-k" style="margin-top:0">' +
+    DI.map(function(x){ return '<a href="' + K.git(x[2]) + '">' + K.I(x[0]) + x[1] + '</a>'; }).join('') + '</div></div></div></section>';
+
+  var bas = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Bölümler</h1><p>' + D.bolumler.length + ' bölüm ve bütün alt başlıklar</p></div>';
+  var liste = '<div class="k-satirlar">' + D.bolumler.map(function(b, i){ return bolum(b, i === 0); }).join('') + '</div>';
+  function isk(){ var s = ''; for (var i = 0; i < 8; i++) s += '<div class="k-bolum-satir"><i class="k-isk" style="width:40px;height:40px"></i><span class="k-isk-grup" style="gap:var(--b-8);"><i class="k-isk" style="width:34%;height:15px"></i><i class="k-isk" style="width:82%;height:12px"></i></span><span></span></div>'; return '<div class="k-satirlar" role="status" aria-label="Yükleniyor">' + s + '</div>'; }
+
+  var hata = DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? 'cevrimdisi' : '';
+  if (DUR === 'yukleniyor') e.innerHTML = bas + isk() + '<div class="k-son"></div>';
+  else if (hata) e.innerHTML = bas + K.hata({ tur: hata }) + '<div class="k-son"></div>';
+  else e.innerHTML = bas + liste + dinle + '<div class="k-son"></div>';
+
+  K.ustCubuk({ baslik: 'Bölümler', buyuk: true, eylemler: ['ara'] });
+  K.altCubuk('bolum');
+  K.oynatici();
+  K.cekmece();
+  /* tek açık bölüm: biri açılınca öteki kapanır (çekmecedeki gibi) */
+  e.addEventListener('toggle', function(ev){ var d = ev.target; if (!d.open) return; e.querySelectorAll('.bl-d[open]').forEach(function(x){ if (x !== d) x.open = false; }); }, true);
+  if (DUR === 'cevrimdisi' && !hata) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

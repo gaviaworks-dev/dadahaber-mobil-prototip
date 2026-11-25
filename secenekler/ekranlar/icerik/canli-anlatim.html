@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Dakika Dakika</title>
+<!--
+  CANLI ANLATIM (Dakika Dakika) · E-074–E-082 · kök: Detay.
+  Detay kökünün iskeleti kit bileşenleriyle: kapak (.k-kapak.detay) + panel (.k-yaprak) + okuma çubuğu (K.okuma; hikâye modu yok).
+  Sıra: Canlı kapsülü ve başlık → zaman satırı (başlangıç, güncelleme, gelişme sayısı) → açıklama → Dada Özet (AI etiketi) → Kilit Anlar rayı (dokununca girişe iner)
+  → Dakika Dakika (Tümü · Kilit anlar; yeni üstte, sıçrama yok: yeni girişler "N yeni gelişme" hapıyla gelir) → konunun sayfası → kaynaklar → yorumlar → ilgili haberler.
+  Parametreler: ?durum=yeni (2 yeni gelişme hapı; dokununca başa ve girişler eklenir) | kilit (yalnız kilit anlar) | bitti (sona erdi: özet başta, girişler eskiden yeniye)
+    | yukleniyor | yenileniyor (&hal=cekiliyor|birak|bitti) | hata (&hata=zaman-asimi) | bulunamadi (&hata=kaldirildi) | cevrimdisi (&onbellek=0) · ?uye=0 · ?tema=koyu
+  Veri (satır içinde): sürüyor = public dakika-dakika.html (Marmara'da kar), sona erdi = public dakika-dakika-zirve.html (Türkiye–AB). Görseller: kar-istanbul (kapak), metro (toplu taşıma videosu), bruksel (AB kapağı).
+  Varsayımlar (onaylanmadı): "Dinle" süresi veride yok, yalnız "Dinle"; sona eren anlatımın 15.05 videosunun görseli kütüphanede yok, girişte görsel yok.
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), Q = K.q, DUR = K.durum, hal = Q.get('hal');
+  /* kaynak: dadahaber-prototip/dakika-dakika.html */
+  var CANLI = {
+    baslik: 'Marmara\'da yoğun kar yağışı: gelişmeler dakika dakika', g: 'kar-istanbul', yazar: 'Mehmet Koçak', unvan: 'Gündem Editörü', kat: 'Gündem',
+    spot: 'Meteoroloji\'nin turuncu kodlu uyarısının ardından Marmara Bölgesi\'nde etkili olan kar yağışı ulaşımı ve eğitimi etkiliyor. Valilik ve kurum açıklamalarını geldikçe bu sayfada topluyoruz.',
+    bas: '23 Kasım · 06.10', son: '16.05 Güncellendi', izlenme: '64,3 B',
+    ozet: ['Marmara\'da 14 ilde okullar tatil; İstanbul\'da tatil yarın da sürecek.', 'Havalimanlarında 46 iç hat seferi iptal edildi, otoyolda tır geçişi kısıtlandı.', 'Yağışın gece kuvvetlenmesi, 24 Kasım öğle saatlerinde zayıflaması bekleniyor.'],
+    kilit: [['16.05', 'İstanbul\'da okullar yarın da tatil'], ['15.20', 'Havalimanlarında 46 sefer iptal'], ['13.55', 'Yağış gece kuvvetlenecek'], ['12.25', 'Tatil kararı verilen il sayısı 14\'e çıktı'], ['06.10', 'Turuncu kodlu uyarı yürürlüğe girdi']],
+    girisler: [
+      { saat: '16.05', baslik: 'İstanbul Valiliği: okullar yarın da tatil', metin: 'İstanbul Valiliği, kar yağışının yarın öğle saatlerine kadar sürmesinin beklenmesi nedeniyle okul öncesi, ilk ve ortaöğretim kurumlarında eğitime 24 Kasım\'da da ara verildiğini açıkladı.', kaynak: 'İstanbul Valiliği', kilit: true },
+      { saat: '15.20', baslik: 'Havalimanlarında 46 sefer iptal edildi', metin: 'Valilik koordinasyon merkezinin açıklamasına göre gün içinde 46 iç hat seferi iptal edildi. Yolculara uçuş durumunu havayolu şirketlerinden kontrol etmeleri öneriliyor.', kaynak: 'İstanbul Valiliği', kilit: true },
+      { saat: '14.40', baslik: 'Kuzey Marmara Otoyolu\'nda tır geçişlerine kısıtlama', metin: 'Karayolları Genel Müdürlüğü, ağır tonajlı araçların otoyola girişine yağış süresince izin verilmeyeceğini duyurdu.', kaynak: 'Karayolları Genel Müdürlüğü' },
+      { saat: '13.55', baslik: 'Meteoroloji: yağış gece saatlerinde kuvvetlenecek', metin: 'Meteoroloji Genel Müdürlüğü, yağışın gece saatlerinde kuvvetlenmesi, kar kalınlığının yüksek kesimlerde 30 santimetreye ulaşması beklendiğini bildirdi.', kaynak: 'Meteoroloji Genel Müdürlüğü', kilit: true },
+      { saat: '13.10', baslik: 'Toplu taşımada ek seferler', metin: 'İstanbul\'da metro ve Marmaray hatlarında sefer sıklığı artırıldı; vapur seferlerinde ise rüzgâr nedeniyle bazı iptaller yaşanıyor.', kaynak: 'İstanbul Valiliği', g: 'metro', video: '0:48' },
+      { saat: '12.25', baslik: 'Kocaeli ve Sakarya\'da da okullar tatil edildi', metin: 'Kocaeli ve Sakarya valilikleri, kar yağışı nedeniyle eğitime bir gün ara verildiğini açıkladı. Tatil kararı verilen il sayısı 14\'e yükseldi.', kaynak: 'Kocaeli Valiliği', kilit: true },
+      { saat: '11.30', baslik: 'AFAD: vatandaşlar zorunlu olmadıkça yola çıkmamalı', metin: 'Afet ve Acil Durum Yönetimi Başkanlığı, sürücülerin kış lastiği ve zincir bulundurmasını, zorunlu olmadıkça seyahat edilmemesini istedi.', kaynak: 'AFAD', alinti: ['Zorunlu olmadıkça yola çıkmayın; çıkacaksanız aracınızda zincir, battaniye ve su bulundurun.', 'AFAD yazılı açıklaması'] },
+      { saat: '10.15', baslik: 'Edirne-İstanbul yolunda ulaşım kontrollü sağlanıyor', metin: 'Karayolları ekipleri, Edirne-İstanbul kara yolunda tuzlama çalışmalarını sürdürüyor. Ulaşım kontrollü olarak sağlanıyor.', kaynak: 'Karayolları Genel Müdürlüğü' },
+      { saat: '08.40', baslik: 'Belediye 1.200 araçla sahada', metin: 'İstanbul Büyükşehir Belediyesi, kar mücadelesi için 1.200 araç ve 7 bin personelin sahada olduğunu açıkladı.', kaynak: 'İstanbul Büyükşehir Belediyesi' },
+      { saat: '06.10', baslik: 'Turuncu kodlu uyarı yürürlükte', metin: 'Meteoroloji Genel Müdürlüğü, Marmara Bölgesi için yayımladığı turuncu kodlu uyarının 24 Kasım öğle saatlerine kadar geçerli olduğunu bildirdi.', kaynak: 'Meteoroloji Genel Müdürlüğü', kilit: true }
+    ],
+    konu: ['fa-road', 'Trafik ve ulaşım', 'Kış, yol ve toplu taşıma haberleri tek yerde'],
+    kaynaklar: [{ kurum: 'Meteoroloji Genel Müdürlüğü', aciklama: 'Marmara Bölgesi turuncu kodlu meteorolojik uyarı · 23 Kasım 2026' }, { kurum: 'İstanbul Valiliği', aciklama: 'Eğitime ara verilmesine ilişkin duyuru · 23 Kasım 2026' }, { kurum: 'Karayolları Genel Müdürlüğü', aciklama: 'Yol durumu ve ağır tonajlı araç kısıtlaması bildirimi' }],
+    yorumlar: [{ ad: 'Pınar Er', rozet: 'Düzenli okur', zaman: '40 dakika önce', metin: 'Saat saat valilik açıklamalarını tek sayfada görmek işime yaradı. Sabahtan beri buradan takip ediyorum.', begeni: 31 },
+      { ad: 'Kaan Duru', rozet: 'Okur', zaman: '25 dakika önce', metin: 'Vapur seferlerindeki iptallerin listesi de eklenebilir mi?', begeni: 12 },
+      { ad: 'Dada Haber Editör', rozet: 'Editör', zaman: '15 dakika önce', metin: 'Teşekkürler. Şehir Hatları\'nın güncel sefer bilgisini aldığımızda akışa ekleyeceğiz.', begeni: 7 }],
+    ilgili: [{ baslik: 'Kar yağışı nedeniyle okulların tatil edildiği iller listesi güncellendi', yazar: 'Mehmet Koçak', sure: '2 dk', saat: '23 Kas', izlenme: '45,6 B' }, { baslik: 'Kış lastiği zorunluluğu: hangi araçlar kapsamda, ceza ne kadar?', yazar: 'Sibel Arslan', sure: '3 dk', saat: '23 Kas', izlenme: '18,9 B' },
+      { baslik: 'Doğal gaz tüketimi soğuk havayla birlikte rekor seviyeye yaklaştı', yazar: 'Mehmet Koçak', sure: '3 dk', saat: '22 Kas', izlenme: '9,4 B' }, { baslik: 'Meteoroloji\'den hafta sonu için Ege ve Akdeniz\'e kuvvetli yağış uyarısı', yazar: 'Mehmet Koçak', sure: '2 dk', saat: '22 Kas', izlenme: '7,8 B' }]
+  };
+  /* kaynak: dadahaber-prototip/dakika-dakika-zirve.html (sona erdi) */
+  var BITTI = {
+    baslik: 'Türkiye–AB yüksek düzeyli diyalog toplantısı: dakika dakika', g: 'bruksel', yazar: 'Kaan Yücel', unvan: 'Diplomasi Muhabiri', kat: 'Dünya', bitti: true,
+    spot: 'Ankara’da yapılan toplantıda Gümrük Birliği’nin güncellenmesi, vize kolaylığı ve göç işbirliği görüşüldü. Gün boyu gelişmeleri bu sayfada aktardık; anlatım 17.40’ta sona erdi.',
+    bas: '22 Kasım · 10.00', son: '17.40’ta kapandı', izlenme: '15,3 B',
+    ozet: ['Gümrük Birliği’nin güncellenmesi için teknik çalışma grubu kurulacak; ilk toplantı ocakta.', 'Vize işlemlerinin kolaylaştırılması ve göç işbirliği ele alındı.', 'Anlatım 17.40’ta sona erdi; sonuçlar ayrı haberde derlendi.'],
+    ozetMetin: ['Ankara’daki yüksek düzeyli diyalog toplantısında Türkiye ve AB, Gümrük Birliği’nin güncellenmesi için teknik çalışma grubu kurulmasında uzlaştı. Grubun ilk toplantısı ocakta yapılacak ve ilk raporunu altı ay içinde sunacak.',
+      'Öğleden sonra oturumunda iş insanları ve öğrenciler için vize kolaylığı, ikinci oturumda ise göç ve sığınma işbirliği ele alındı. Anlatım 17.40’ta ortak açıklamayla sona erdi.'],
+    kilit: [['17.40', 'Anlatım sona erdi: sonuçlar'], ['17.15', 'Ortak basın toplantısı'], ['16.20', 'Gümrük Birliği için çalışma grubu'], ['11.10', 'Toplantı başladı']],
+    girisler: [
+      { saat: '17.40', baslik: 'Anlatım sona erdi', metin: 'Toplantı, Gümrük Birliği’nin güncellenmesi için teknik çalışma grubu kurulması ve vize işlemlerinin kolaylaştırılmasına yönelik ortak açıklamayla kapandı.', kaynak: 'Dışişleri Bakanlığı', kilit: true },
+      { saat: '17.15', baslik: 'Ortak basın toplantısı: “somut bir takvim” vurgusu', metin: 'Dışişleri Bakanı ile AB Komisyonunun genişlemeden sorumlu üyesi ortak basın toplantısı düzenledi. İki taraf, teknik çalışma grubunun ilk toplantısının ocak ayında yapılacağını açıkladı.', kaynak: 'Avrupa Komisyonu', kilit: true,
+        alinti: ['Bugün ilk kez somut bir takvim üzerinde uzlaştık. Teknik çalışma grubu ocakta toplanacak ve ilk raporunu altı ay içinde sunacak.', 'AB Komisyonu genişlemeden sorumlu üyesi, ortak basın toplantısı'] },
+      { saat: '16.20', baslik: 'Gümrük Birliği için teknik çalışma grubu kurulacak', metin: 'Ticaret Bakanlığının açıklamasına göre çalışma grubu; tarım ürünleri, hizmetler ve kamu alımlarını kapsayacak bir güncelleme taslağı hazırlayacak.', kaynak: 'Ticaret Bakanlığı', kilit: true },
+      { saat: '15.05', baslik: 'Öğleden sonra oturumunda vize kolaylığı ele alındı', metin: 'Heyetler, iş insanları ve öğrenciler için çok girişli vize uygulamasının yaygınlaştırılmasını görüştü.', kaynak: 'Avrupa Birliği Başkanlığı' },
+      { saat: '13.30', baslik: 'Göç ve sığınma işbirliği görüşüldü', metin: 'Toplantının ikinci oturumunda göç ve sığınma alanındaki mali işbirliği ile sınır yönetimi projeleri ele alındı.', kaynak: 'Dışişleri Bakanlığı' },
+      { saat: '11.10', baslik: 'Toplantı açılış konuşmalarıyla başladı', metin: 'Yüksek düzeyli diyalog toplantısı, Dışişleri Bakanı ile AB Dışişleri ve Güvenlik Politikası Yüksek Temsilcisinin açılış konuşmalarıyla başladı.', kaynak: 'Dışişleri Bakanlığı', kilit: true },
+      { saat: '10.00', baslik: 'Heyetler Ankara’da bir araya geliyor', metin: 'AB heyeti sabah saatlerinde Ankara’ya ulaştı. Toplantının 11.00’de başlaması, ortak basın toplantısının ise akşamüstü yapılması planlanıyor.', kaynak: 'Avrupa Birliği Başkanlığı' }
+    ],
+    konu: ['fa-handshake', 'Diplomasi', 'Türkiye–AB ilişkileri ve diplomasi haberleri tek yerde'],
+    kaynaklar: [{ kurum: 'Dışişleri Bakanlığı', aciklama: 'Yüksek düzeyli diyalog toplantısına ilişkin basın açıklaması · 22 Kasım 2026' }, { kurum: 'Ticaret Bakanlığı', aciklama: 'Gümrük Birliği teknik çalışma grubu duyurusu · 22 Kasım 2026' }, { kurum: 'Avrupa Birliği Başkanlığı', aciklama: 'Toplantı programı ve gündem başlıkları' }],
+    yorumlar: [{ ad: 'Okan Tekin', rozet: 'Düzenli okur', zaman: 'dün 18.20', metin: 'Gümrük Birliği kısmını en net burada okudum. Çalışma grubunun ocaktaki toplantısını da takip edecek misiniz?', begeni: 15 },
+      { ad: 'Dada Haber Editör', rozet: 'Editör', zaman: 'dün 18.45', metin: 'Evet. Konunun sayfasını takip edersen çalışma grubuyla ilgili yeni gelişmelerde bildirim alırsın.', begeni: 7 }],
+    ilgili: [{ baslik: 'Türkiye–AB toplantısında Gümrük Birliği için takvim belirlendi', sure: '4 dk', saat: '22 Kas', izlenme: '12,8 B', alt: 'Dünya' }]
+  };
+  var A = DUR === 'bitti' ? BITTI : CANLI, YENI = DUR === 'yeni' ? 2 : 0, KILIT = DUR === 'kilit';
+
+  function giris(x, yeni){
+    var s = K.canliGiris({ saat: x.saat, baslik: x.baslik, metin: x.metin, g: x.g, kilit: x.kilit, yeni: yeni });
+    if (x.video) s = s.replace(/(<div class="gr"[^>]*>)(<\/div>)/, '$1' + K.md(x.video) + '$2');
+    if (x.alinti) s = s.replace('</p>', '</p><div class="k-alinti">' + K.I('fa-quote-left') + '<p>' + x.alinti[0] + '</p><cite>' + x.alinti[1] + '</cite></div>');
+    s = s.replace(/<\/div><\/div>$/, K.meta(['Kaynak: ' + x.kaynak]) + '</div></div>');
+    return s.replace('<div class="k-cg', '<div id="g' + x.saat.replace('.', '') + '" class="k-cg');
+  }
+  function girisler(){
+    var L = A.girisler.slice(YENI).filter(function(x){ return !KILIT || x.kilit; });
+    if (A.bitti) L = L.slice().reverse(); /* sona erdi: eskiden yeniye */
+    return L.map(function(x, i){ return giris(x, !A.bitti && i === 0 && !YENI); }).join('');
+  }
+  function satirlar(L){ return '<div class="k-satirlar">' + L.map(function(x){ return K.satir({ alt: x.alt || A.kat, saat: x.saat, baslik: x.baslik, yazar: x.yazar, sure: x.sure, izlenme: x.izlenme }, { href: K.git('detay') }); }).join('') + '</div>'; }
+
+  var hata = DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : DUR === 'bulunamadi' ? (Q.get('hata') === 'kaldirildi' ? 'kaldirildi' : 'bulunamadi') : (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? 'cevrimdisi' : '';
+  if (hata) { e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: hata }) + '<div class="k-son yalin"></div>'; K.ustCubuk({ geri: true }); bagla(); return; }
+  if (DUR === 'yukleniyor') {
+    e.innerHTML = K.iskelet('detay') + '<div class="k-ic">' + K.iskelet('metin', 6) + '</div><div class="k-son okuma"></div>';
+    K.ustCubuk({ tur: 'foto', geri: true, eylemler: ['kaydet'] }); document.body.removeAttribute('data-durum');
+    K.okuma().classList.add('is-pasif'); okumaAyar(); return;
+  }
+
+  var rozet = A.bitti ? K.etiket('Sona erdi', { tur: 'cam', ikon: 'fa-circle-check' }) : K.canli();
+  var kapak = '<header class="k-kapak detay" style="background-image:' + G(A.g) + '"><span style="display:flex;align-items:center;gap:var(--b-8)">' + rozet + K.katEt('Dakika Dakika', 'fa-tower-broadcast', { foto: true }) + '</span>' +
+    '<h1>' + A.baslik + '</h1><div class="k-imza foto">' + K.avatar(A.yazar) + '<span class="t"><b>' + A.yazar + '</b><small>' + A.unvan + '</small></span></div></header>';
+  var zaman = '<div class="k-zamansatir"><span>' + K.I('fa-calendar-day') + A.bas + '</span><span>' + K.I(A.bitti ? 'fa-circle-check' : 'fa-rotate') + A.son + '</span><span>' + K.I('fa-list-ul') + A.girisler.length + ' gelişme</span></div>';
+  var ozet = '<span class="k-ai">' + K.I('fa-wand-magic-sparkles') + 'Yapay zekâ ile özetlendi</span>' + K.madde(A.ozet) + (A.ozetMetin ? '<div class="k-govde" style="margin-top:var(--b-16)">' + A.ozetMetin.map(function(p){ return '<p>' + p + '</p>'; }).join('') + '</div>' : '');
+  var kilitRay = '<section class="k-bl sik">' + K.bb({ baslik: 'Kilit Anlar', ikon: 'fa-star', sayi: A.kilit.length }) +
+    K.ray(A.kilit.map(function(x, i){ return K.sd({ saat: x[0], kat: '', baslik: x[1] }, i === 0 && !A.bitti).replace(K.git('detay'), '#g' + x[0].replace('.', '')); }).join(''), 's10') + '</section>';
+  var cevrim = DUR === 'cevrimdisi';
+  var akis = '<section class="k-bl" id="akis">' + K.bb({ baslik: A.bitti ? 'Anlatım' : 'Dakika Dakika', canli: !A.bitti, ikon: 'fa-clock', sayi: A.girisler.length }) +
+    '<div class="k-ic">' + K.segment(['Tümü', { metin: 'Kilit anlar', ikon: 'fa-star' }], KILIT ? 1 : 0) + '<div id="liste" style="margin-top:var(--b-8)">' + girisler() + '</div></div></section>';
+  var panel = '<div class="k-yaprak"><div class="k-ic" style="padding-top:var(--b-24)">' +
+    (cevrim ? '<div style="margin-bottom:var(--b-16)">' + K.serit({ tur: 'koyu', ikon: 'fa-plug-circle-xmark', metin: 'Çevrimdışısın', alt: 'Son güncelleme ' + A.son.replace(' Güncellendi', '') + ' · bağlantı gelince yenilenir' }) + '</div>' : '') +
+    zaman + '<p class="k-spot" style="margin-top:var(--b-12)">' + A.spot + '</p><div class="k-bl sik">' + ozet + '</div></div>' + kilitRay + akis +
+    '<section class="k-bl k-ic">' + K.cagri({ ikon: A.konu[0], baslik: A.konu[1], aciklama: A.konu[2], eylem: { metin: 'Takip et', ikon: 'fa-plus', attr: 'data-takip' } }) + '</section>' +
+    '<section class="k-bl">' + K.kaynaklar(A.kaynaklar) + '</section>' +
+    '<section class="k-bl k-ic" id="yorumlar">' + (cevrim ? K.bb({ baslik: 'Yorumlar', ikon: 'fa-comment', sayi: A.yorumlar.length, yalin: true }) + K.serit({ ikon: 'fa-comment', metin: 'Yorumlar kapalı', alt: 'Bağlantı gelince okuyup yazabilirsin' }) : K.yorumlar({ Y: A.yorumlar })) + '</section>' +
+    '<section class="k-bl">' + K.bb({ baslik: 'İlgili Haberler', ikon: 'fa-newspaper' }) + satirlar(A.ilgili) + '</section><div class="k-son okuma"></div></div>';
+  var yen = DUR === 'yenileniyor';
+  e.innerHTML = (yen ? '<div class="k-ust-bosluk"></div>' + K.yenile(['cekiliyor', 'birak', 'bitti'].indexOf(hal) > -1 ? hal : 'yenileniyor') : '') + kapak + panel;
+  K.ustCubuk({ tur: 'foto', geri: true, baslik: A.baslik, eylemler: ['paylas', 'kaydet'], gorsel: A.g, ilerleme: true, esik: 280, dar: yen });
+  K.okuma(); okumaAyar();
+  if (cevrim) document.querySelector('.k-okuma [data-yorumlara]').classList.add('is-pasif');
+
+  /* Tümü · Kilit anlar: liste yerinde değişir */
+  e.addEventListener('click', function(ev){ var b = ev.target.closest('#akis .k-segment button'); if (!b) return; KILIT = /Kilit/.test(b.textContent); document.getElementById('liste').innerHTML = girisler(); });
+  /* yeni gelişme: okur yerinde kalır; hap dokununca başa çıkılır ve bekleyen girişler eklenir */
+  if (YENI) {
+    document.body.insertAdjacentHTML('beforeend', K.yeniHap(YENI + ' yeni gelişme', 'acik k-dk44'));
+    var hap = document.querySelector('.k-yeni-hap');
+    hap.addEventListener('click', function(){ YENI = 0; document.getElementById('liste').innerHTML = girisler(); hap.classList.remove('acik');
+      var g = document.getElementById('akis'); setTimeout(function(){ e.scrollTo({ top: g.offsetTop - 110, behavior: 'smooth' }); }, 0); });
+    if (!document.documentElement.classList.contains('tam')) e.scrollTop = document.getElementById('akis').offsetTop + 260;
+  }
+  function okumaAyar(){ var o = document.querySelector('.k-okuma'); if (!o) return;
+    var h = o.querySelector('.hmd'); if (h) h.remove();
+    o.querySelector('.dinle').innerHTML = K.I('fa-headphones') + 'Dinle';
+    var y = o.querySelector('[data-yorumlara]'); y.setAttribute('aria-label', 'Yorumlar, ' + A.yorumlar.length); y.querySelector('.k-rozet').textContent = A.yorumlar.length;
+    y.addEventListener('click', function(){ var s = document.getElementById('yorumlar'); if (s) e.scrollTo({ top: s.offsetTop - 120, behavior: 'smooth' }); }); }
+  bagla();
+  function bagla(){ document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'hal', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); }); }
+})();
+</script>
+</body>
+</html>

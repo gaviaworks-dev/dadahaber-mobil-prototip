@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Yorumlar</title>
+<!--
+  YORUMLAR (tümü) · E-058–E-067 · kök: Detay (haberin yorumlarından "Bütün yorumları oku" ve okuma çubuğundaki yorum düğmesiyle açılır).
+  Yapı K31: Dada Gastro yorum yapısı, kitin K.yorumlar() bileşeniyle (özet kartı, Yorum yaz / misafirde giriş, bilgi notu, süzgeç çipleri, kartsız yorumlar, editör yanıtı gri kutuda).
+  Üstte haberin kendisi (kısa satır, dokununca habere döner); üst çubukta sıralama.
+  Parametreler: ?uye=0 misafir (Beğen ve Yanıtla üyelik tetik panelini açar)
+    ?durum=yaz (alt sayfa, klavye açık; &hal=gonderiliyor) | yanitla | gonderildi | yukleniyor | daha-fazla (&hal=son|hata) | bos | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0)
+  Veri: D.detay (asgari ücret haberi ve 4 yorumu; public haber-detay.html). Yeni yorum uydurulmadı.
+  Varsayımlar (onaylanmadı): yazılan yorum örneği kit vitrinindeki gibi (Ece, ilk yorumun metni); sayfa sonunda "Hepsi bu kadar" (haberin 4 yorumu var).
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* KİT ADAYI: sistem klavyesi yeri (.kb) — "klavye açık" hallerinde alt sayfanın altında duran telefon klavyesi (iOS çizimi; marka değeri değil, durum çubuğu gibi telefonun parçası).
+   Alt sayfa klavyenin üstüne oturur. Renkler iOS klavyesinin açık/koyu tonları. */
+.kb{position:absolute;left:0;right:0;bottom:0;z-index:92;height:300px;padding:var(--b-8) var(--b-4) var(--alt-guvenli);background:#D3D5DB;display:flex;flex-direction:column;gap:var(--b-12);font-family:-apple-system,"SF Pro Text",system-ui,sans-serif;color:#000}
+.kb-s{display:flex;gap:var(--b-4);justify-content:center}
+.kb-s span{flex:1;max-width:32px;height:42px;border-radius:var(--k-ic);background:#fff;display:grid;place-items:center;font-size:21px;font-weight:var(--y-ince);box-shadow:var(--golge-sm)}
+.kb-s span.g{max-width:none;flex:0 0 88px;background:#ABB0BA;font-size:15px}
+.kb-s span.b{max-width:none;flex:1;font-size:15px}
+.kb-s span.a{max-width:none;flex:0 0 88px;background:#0A84FF;color:#fff;font-size:15px}
+html[data-tema="koyu"] .kb{background:#2C2C2E;color:#fff}
+html[data-tema="koyu"] .kb-s span{background:#6B6B6E;box-shadow:none}
+html[data-tema="koyu"] .kb-s span.g{background:#464648}
+html[data-tema="koyu"] .kb-s span.a{background:#0A84FF}
+.k-sayfa.kb-ust{bottom:300px;border-bottom-left-radius:0;border-bottom-right-radius:0;max-height:calc(100% - 300px - var(--ust-guvenli) - var(--b-12))}
+.k-sayfa.kb-ust .k-sayfa-a{padding-bottom:var(--b-12)}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), Q = K.q, DUR = K.durum, hal = Q.get('hal'), d = D.detay, Y = d.yorumlar;
+  var BEKLEYEN = { ad: D.uye.ad, rozet: 'Okur', zaman: 'şimdi', metin: Y[0].metin, begeni: 0, bekliyor: true };
+  function klavye(son){ var R = ['qwertyuıopğü', 'asdfghjklşi', 'zxcvbnmöç'];
+    return '<div class="kb" aria-hidden="true" data-denetim-yok>' + R.map(function(r){ return '<div class="kb-s">' + r.split('').map(function(c){ return '<span>' + c + '</span>'; }).join('') + '</div>'; }).join('') +
+      '<div class="kb-s"><span class="g">123</span><span class="b">boşluk</span><span class="a">' + son + '</span></div></div>'; }
+
+  /* haberin kendisi: kısa satır (liste kartı, dokununca habere döner) */
+  var haber = '<div class="k-satirlar">' + K.satir(d, { tur: 'kisa' }) + '</div>';
+  /* kitin yorum bloğu; üst çubukta "Yorumlar" yazdığı için bölüm başlığı ve alttaki "Bütün yorumları oku" bu ekranda yok */
+  function blok(){ return K.yorumlar({}).replace(/^<div class="k-bb[^>]*>.*?<\/h2><\/div>/, '').replace(/<a class="k-bag"[^>]*>Bütün yorumları oku.*?<\/a>$/, ''); }
+  function son(h){ return K.dahaFazla(h).replace('Daha fazla haber yükleniyor', 'Daha fazla yorum yükleniyor').replace('Daha fazla haber yüklenemedi', 'Daha fazla yorum yüklenemedi'); }
+  var ozIsk = '<div class="k-yorum-oz" role="status" aria-label="Yükleniyor"><div class="s"><i class="k-isk" style="width:44px;height:34px"></i><i class="k-isk" style="width:60px;height:11px"></i></div><div class="k-isk-grup"><i class="k-isk" style="width:100%;height:12px"></i><i class="k-isk" style="width:80%;height:12px"></i><i class="k-isk" style="width:60%;height:12px"></i></div></div>';
+
+  var hata = DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? 'cevrimdisi' : '';
+  var ic;
+  if (hata) ic = K.hata({ tur: hata });
+  else if (DUR === 'yukleniyor') ic = haber + '<div class="k-ic">' + ozIsk + '<div style="margin-top:var(--b-16)"><i class="k-isk kontrol" style="width:100%;height:52px"></i></div>' + K.iskelet('yorum', 4) + '</div>';
+  else if (DUR === 'bos') ic = haber + K.bos('yorum', { aciklama: 'İlk yorumu sen yaz. Yorumlar denetim sonrası yayınlanır.', eylem: K.uye ? { metin: 'Yorum yaz', ikon: 'fa-pen', attr: 'data-sayfa="yorum"' } : { metin: 'Yorum yapmak için giriş yap', ikon: 'fa-right-to-bracket', href: 'giris' } });
+  else {
+    var b = blok();
+    if (DUR === 'gonderildi') b = b.replace('<article class="k-yorum', K.yorum(BEKLEYEN) + '<article class="k-yorum');
+    ic = haber + '<div class="k-ic k-bl sik">' + b + (DUR === 'daha-fazla' ? (hal === 'son' || hal === 'hata' ? '' : K.iskelet('yorum', 1)) + son(hal === 'son' || hal === 'hata' ? hal : 'yukleniyor') : son('son')) + '</div>';
+  }
+  e.innerHTML = '<div class="k-ust-bosluk"></div>' + ic + '<div class="k-son yalin"></div>';
+  K.ustCubuk({ geri: true, baslik: 'Yorumlar', eylemler: hata || DUR === 'bos' ? [] : ['sirala'] });
+
+  /* çevrimdışı: önbellekteki yorumlar okunur, yazma ve beğenme bağlantı ister */
+  if (DUR === 'cevrimdisi' && !hata) {
+    [].forEach.call(e.querySelectorAll('[data-sayfa="yorum"], .k-yorum-a'), function(x){ x.classList.add('is-pasif'); });
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  /* yaz · yanıtla: alt sayfa klavyenin üstünde */
+  function yanitla(y, acik){
+    var s = K.sayfa({ baslik: 'Yanıtla', alt: y.ad + ' adlı okura', acik: acik,
+      icerik: '<div class="k-yanit-alinti"><b>' + y.ad + '</b>' + y.metin + '</div><div style="margin-top:var(--b-12)">' + K.metinAlan({ yer: 'Yanıtını yaz…', sinir: 1000 }) + '</div><p class="k-not">' + K.I('fa-circle-info') + 'Yorumlar denetim sonrası yayınlanır.</p>',
+      eylemler: [{ metin: 'Gönder', ikon: 'fa-paper-plane', tur: 'birincil', attr: 'data-kapat data-toast="Yanıtın gönderildi · Denetimden sonra yayınlanır"' }] });
+    return s;
+  }
+  function klavyeli(s){ s.el.classList.add('kb-ust'); s.el.insertAdjacentHTML('afterend', klavye('satır')); }
+  if (DUR === 'yaz') {
+    var s = K.sayfa('yorum', { acik: true }); klavyeli(s);
+    if (hal === 'gonderiliyor') { s.el.querySelector('textarea').value = BEKLEYEN.metin; s.el.querySelector('.say').textContent = BEKLEYEN.metin.length + ' / 1000';
+      var g = s.el.querySelector('.k-sayfa-a .k-btn'); g.classList.add('is-yukleniyor'); g.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Gönderiliyor</span>'; }
+  }
+  if (DUR === 'yanitla') klavyeli(yanitla(Y[2], true));
+  if (DUR === 'gonderildi') K.toast('Yorumun gönderildi', { tur: 'basari', alt: 'Yorumlar denetim sonrası yayınlanır', sure: 0 });
+
+  /* Yanıtla (üye) alt sayfayı açar; misafirde Beğen ve Yanıtla üyelik tetik panelini (yakalama evresinde, kitin beğeni sayacından önce) */
+  document.addEventListener('click', function(ev){
+    var t = ev.target.closest('.k-yorum-a button'); if (!t || t.hasAttribute('data-sayfa')) return;
+    var begen = t.hasAttribute('data-begen'), yan = /Yanıtla/.test(t.textContent);
+    if (!K.uye && (begen || yan)) { ev.preventDefault(); ev.stopPropagation(); K.sayfa('tetik', { eylem: begen ? 'begen' : 'yorum' }); return; }
+    if (yan) { var art = t.closest('.k-yorum'), ad = art.querySelector('.k-yorum-h b').textContent, y = Y.filter(function(x){ return x.ad === ad; })[0]; if (y) yanitla(y); }
+  }, true);
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'hal', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

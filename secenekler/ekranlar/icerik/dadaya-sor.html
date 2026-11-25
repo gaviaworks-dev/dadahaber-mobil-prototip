@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Dada'ya Sor</title>
+<!--
+  DADA'YA SOR · E-116–E-121 · kendi düzeni (kit bileşenleri). Arama ekranındaki "Dada'ya sor" kipiyle ya da arama sonuçlarındaki çağrıyla açılır (B-16: tek kutu, iki kip).
+  Yapı: Haberlerde ara · Dada'ya sor seçicisi → başlangıçta tanıtım + Sık Sorulanlar + kaynak notu; soru alanı başparmak bölgesinde, alta sabit.
+  Yanıt: sorulan soru (alıntı kutusu) → Dada'nın Yanıtı, "AI ile hazırlandı" etiketi (panel AI kuralı: AI içeriği her yerde etiketlenir), dayandığı kaynak sayısı ve saat
+  → yanıt metni → editör denetimi notu → Kaynaklar (resmî kaynak ve haber) → İlgili Haberler → işe yaradı mı.
+  Parametreler: ?durum=yaziyor (yanıt akarak gelir; Durdur) | yanit | bos (haberlerde karşılığı yok → aramaya geç) | hata (&hata=zaman-asimi) | cevrimdisi (son yanıt önbellekte; &onbellek=0) · ?uye=0 · ?tema=koyu
+  Veri (satır içinde): public dadaya-sor.html (sık sorulanlar, "deprem bölgesinde kalıcı konut" sorusu, yanıt, kaynaklar, ilgili haberler). Görsel: konteyner.
+  Varsayımlar (onaylanmadı): yanıt bulunamayan soru örnek; "işe yaradı mı" geri bildirimi panelde AI kalitesi için toplanır.
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* KİT ADAYI: alta sabit soru kutusu (.sor-alt) — sohbet tipi ekranlarda giriş başparmak bölgesinde; kitin arama alanı + gönder/durdur ikon düğmesi, üstte ince çizgi */
+.sor-alt{position:absolute;left:0;right:0;bottom:0;z-index:80;display:flex;align-items:center;gap:var(--b-8);padding:var(--b-12) var(--kenar) calc(var(--alt-guvenli) + var(--b-4));background:var(--zemin);border-top:1px solid var(--cizgi)}
+html.tam .sor-alt{position:fixed}
+.sor-yer{height:calc(var(--alt-guvenli) + 96px)}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), Q = K.q, DUR = K.durum;
+  /* kaynak: dadahaber-prototip/dadaya-sor.html */
+  var SIK = ['Asgari ücret görüşmeleri ne zaman başlıyor?', 'Politika faizi neden sabit tutuldu?', 'Kar tatili hangi illerde sürüyor?'];
+  var S = {
+    soru: 'Deprem bölgesinde kalıcı konut teslimleri ne aşamada?', dayanak: '3 haber, 2 resmî kaynak', saat: '14.20',
+    metin: ['Bakanlığın 22 Kasım açıklamasına göre Hatay ve Kahramanmaraş’ta bu hafta 4 bin kalıcı konut daha hak sahiplerine teslim edildi. Bakanlık, bölgedeki toplam teslim sayısının yıl sonuna kadar artarak süreceğini belirtiyor.',
+      'AFAD’ın kasım raporu, konteyner kentlerde kalan hane sayısının azaldığını, ancak bazı ilçelerde altyapı çalışmalarının teslim takvimini etkilediğini aktarıyor. İl bazındaki güncel sayılar için aşağıdaki kaynaklara bakabilirsin.'],
+    not: 'Bu yanıt yapay zekâ ile hazırlanmıştır ve editör denetiminden geçmemiştir; ayrıntı ve kesin rakamlar için kaynakları esas al.',
+    kaynaklar: [{ kurum: 'Çevre, Şehircilik ve İklim Değişikliği Bakanlığı', aciklama: 'Deprem bölgesi kalıcı konut teslim açıklaması · 22 Kasım 2026' }, { kurum: 'AFAD', aciklama: 'Deprem bölgesi barınma ve iyileştirme raporu · Kasım 2026' }, { kurum: 'Dada Haber', aciklama: 'Hatay ve Kahramanmaraş’ta 4 bin kalıcı konut daha teslim edildi · 23 Kasım 2026' }],
+    ilgili: [{ alt: 'Gündem', saat: '23 Kas', baslik: 'Hatay ve Kahramanmaraş’ta 4 bin kalıcı konut daha teslim edildi', yazar: 'Sibel Arslan', sure: '3 dk', izlenme: '10,6 B', g: 'konteyner' },
+      { alt: 'Toplum', saat: '22 Kas', baslik: 'AFAD, deprem çantası hazırlığı için güncel listeyi yayımladı', yazar: 'Mehmet Koçak', sure: '2 dk', izlenme: '8,4 B' },
+      { alt: 'Kişisel Finans', saat: '22 Kas', baslik: 'Zorunlu deprem sigortasında 2027 primleri belli oldu', yazar: 'Sibel Arslan', sure: '3 dk', izlenme: '12,0 B', ikon: 'fa-chart-column' },
+      { alt: 'Üniversiteler', saat: '21 Kas', baslik: 'Deprem bölgesindeki üniversitelerde kalıcı kampüs inşaatı sürüyor', yazar: 'Mehmet Koçak', sure: '4 dk', izlenme: '5,1 B', ikon: 'fa-graduation-cap' }]
+  };
+  var BOS_SORU = '2027 ehliyet sınavı tarihleri ne zaman açıklanacak?';
+  var hata = DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? 'cevrimdisi' : '';
+  var kip = '<div class="k-ic" style="padding-top:var(--b-12)">' + K.segment([{ metin: 'Haberlerde ara', ikon: 'fa-magnifying-glass' }, { metin: 'Dada\'ya sor', ikon: 'fa-wand-magic-sparkles' }], 1) + '</div>';
+  var WAND = function(h){ return h.replace('fa-magnifying-glass', 'fa-wand-magic-sparkles'); };
+  function soru(m){ return '<div class="k-ic k-bl sik"><div class="k-yanit-alinti"><b>' + (K.uye ? D.uye.ad : 'Sorun') + '</b>' + m + '</div></div>'; }
+  var yanitBas = '<div class="k-ic k-bl sik">' + K.bb({ baslik: 'Dada\'nın Yanıtı', ikon: 'fa-wand-magic-sparkles', yalin: true }) +
+    '<div style="display:flex;align-items:center;gap:var(--b-8);min-width:0">' + K.etiket('AI ile hazırlandı', { tur: 'sari', ikon: 'fa-wand-magic-sparkles' }) + K.meta([S.dayanak, S.saat]).replace('k-meta"', 'k-meta" style="margin-top:0"') + '</div></div>';
+  function yanit(){
+    return soru(S.soru) + yanitBas + '<div class="k-ic"><div class="k-govde" style="margin-top:var(--b-16)">' + S.metin.map(function(p){ return '<p>' + p + '</p>'; }).join('') + '</div><p class="k-not" style="margin-top:0">' + K.I('fa-circle-info') + S.not + '</p></div>' +
+      '<section class="k-bl">' + K.kaynaklar(S.kaynaklar) + '</section>' +
+      '<section class="k-bl">' + K.bb({ baslik: 'İlgili Haberler', ikon: 'fa-newspaper', sayi: S.ilgili.length }) + '<div class="k-satirlar">' + S.ilgili.map(function(h){ return K.satir(h, { ikon: h.ikon }); }).join('') + '</div></section>' +
+      '<div class="k-ic k-bl sik"><div class="k-serit"><i class="fa-solid fa-comment"></i><span><b>Yanıt işine yaradı mı?</b><small>Geri bildirimin yanıtları iyileştirir</small></span>' +
+        K.ikonBtn({ ikon: 'fa-thumbs-up', etiket: 'Evet', secili: false, attr: 'data-oy' }) + K.ikonBtn({ ikon: 'fa-thumbs-down', etiket: 'Hayır', secili: false, attr: 'data-oy' }) + '</div></div>';
+  }
+  var ic;
+  if (hata) ic = (DUR === 'hata' ? soru(S.soru) : '') + K.hata({ tur: hata });
+  else if (DUR === 'yaziyor') ic = soru(S.soru) + yanitBas.replace(/<div style="display:flex[^]*<\/div><\/div>$/, '<span class="k-don" style="margin-top:var(--b-4)">' + K.I('fa-circle-notch', 'fa-spin') + 'Haberler taranıyor · 3 haber bulundu</span></div>') +
+    '<div class="k-ic"><div class="k-govde" style="margin-top:var(--b-16)"><p>' + S.metin[0].slice(0, 118) + '…</p></div>' + K.iskelet('metin', 3) + '</div>';
+  else if (DUR === 'bos') ic = soru(BOS_SORU) + K.bos({ ikon: 'fa-wand-magic-sparkles', baslik: 'Haberlerimizde bunun yanıtı yok', aciklama: 'Dada yalnız Dada Haber haberlerine ve resmî kaynaklara dayanarak yanıt verir. Haberlerde arayabilir ya da sorunu değiştirebilirsin.',
+    eylem: { metin: 'Haberlerde ara', ikon: 'fa-magnifying-glass', href: 'aramaSonuc' }, ikinci: { metin: 'Soruyu değiştir', attr: 'data-soru-degistir' } });
+  else if (DUR === 'yanit' || DUR === 'cevrimdisi') ic = yanit();
+  else ic = kip + K.bos({ ikon: 'fa-wand-magic-sparkles', baslik: 'Dada\'ya sor', aciklama: 'Sorunu sor, yanıtı haberlerimiz ve kaynaklarıyla gelsin.' }).replace('class="k-bos"', 'class="k-bos" style="padding-top:var(--b-32);padding-bottom:var(--b-16)"') +
+    '<section>' + K.bb({ baslik: 'Sık Sorulanlar', ikon: 'fa-circle-question' }) + '<div class="k-ic">' + SIK.map(function(x){ return WAND(K.oneri({ tur: 'oneri', metin: x })).replace(K.git('aramaSonuc'), K.git('dadayaSor', 'durum=yaziyor')); }).join('') +
+    '<p class="k-not">' + K.I('fa-circle-info') + 'Dada, yanıtını Dada Haber arşivindeki haberlere ve resmî kaynaklara dayandırır.</p></div></section>';
+  e.innerHTML = '<div class="k-ust-bosluk"></div>' + ic + '<div class="sor-yer"></div>';
+  K.ustCubuk({ geri: true, baslik: 'Dada\'ya Sor', golgeli: true });
+
+  /* alta sabit soru kutusu: gönder (yazarken durdur) */
+  var yaz = DUR === 'yaziyor', kapali = DUR === 'cevrimdisi' || hata === 'cevrimdisi';
+  var alt = K.el('<div class="sor-alt' + (kapali ? ' is-pasif' : '') + '">' + WAND(K.ara({ yer: DUR === 'yanit' || yaz ? 'Yeni bir soru sor' : 'Bir soru sor', ses: !yaz })) +
+    K.ikonBtn(yaz ? { ikon: 'fa-stop', etiket: 'Durdur', tur: 'koyu', attr: 'data-durdur' } : { ikon: 'fa-arrow-up', etiket: 'Gönder', tur: 'sari', attr: 'data-sor' }) + '</div>');
+  document.body.appendChild(alt);
+  if (DUR === 'cevrimdisi' && !hata) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44'); bt.style.bottom = (alt.offsetHeight + 8) + 'px';
+  }
+  e.addEventListener('click', function(ev){ var b = ev.target.closest('.k-segment button'); if (b && /ara/.test(b.textContent)) setTimeout(function(){ location.href = K.git('arama'); }, 220);
+    if (ev.target.closest('[data-soru-degistir]')) { ev.preventDefault(); alt.querySelector('input').focus(); }
+    var o = ev.target.closest('[data-oy]'); if (o) { o.parentNode.querySelectorAll('[data-oy]').forEach(function(x){ x.setAttribute('aria-pressed', x === o); }); K.toast('Teşekkürler · geri bildirimin alındı', { tur: 'basari', yer: document.body }); } });
+  alt.addEventListener('click', function(ev){ if (ev.target.closest('[data-sor]')) location.href = K.git('dadayaSor', 'durum=yaziyor'); var d = ev.target.closest('[data-durdur]'); if (d) { var dn = e.querySelector('.k-don'); if (dn) dn.innerHTML = K.I('fa-circle-stop') + 'Yanıt durduruldu'; var sk = e.querySelector('.k-govde + [role="status"]'); if (sk) sk.remove();
+      d.outerHTML = K.ikonBtn({ ikon: 'fa-arrow-up', etiket: 'Gönder', tur: 'sari', attr: 'data-sor' }); } });
+  alt.querySelector('input').addEventListener('keydown', function(ev){ if (ev.key === 'Enter' && this.value.trim()) location.href = K.git('dadayaSor', 'durum=yaziyor'); });
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

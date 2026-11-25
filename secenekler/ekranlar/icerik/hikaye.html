@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Kategori hikâyesi</title>
+<!--
+  KATEGORİ HİKÂYE GÖRÜNTÜLEYİCİ · E-013–E-018 · kök: Hikâye modu · K13 (onaylı davranış: secenekler/hikaye/hikaye.html denemesi).
+  Tam ekran, her iki temada koyu (tam ekran medya, Akış gibi): sayfa koyu tema değişkenleriyle çizilir, kit bileşenleri (boş, hata, bant) koyu haliyle gelir.
+  Kategorinin bugünkü haberleri tek tek kart: üstte ilerleme çizgileri; sağa dokun ileri, sola geri; basılı tut dur; aşağı çek kapat; kategori bitince sıradaki kategori.
+  Kartta görsel, kategori, başlık, yazar · süre; "Haberi oku", kaydet ve paylaş YOK (K13, Beyar).
+  Parametreler: ?kat=gundem|spor|… (D.hikayeler[].kod; ana sayfa şeridi gönderir) · ?geri=<secenekler/'e göre adres> (kapatınca dönülecek yer)
+    ?durum=dur (duraklatıldı) | bos (bugün hikâye yok; varsayılan kategori Kampüs) | yukleniyor | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0 → önbellek yok)
+  Varsayımlar (onaylanmadı): görüntüleyici her iki temada koyu; bugün hikâyesi olmayan kategoride 3 sn sonra sıradakine geçilir; çevrimdışında önbellekteki ilk kart oynar.
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* KİT ADAYI: hikâye görüntüleyici (.hy) — kategori hikâyesi tam ekranı; kitte yalnız şerit (.k-hk) var. Akış tam ekran kartının (.k-akis-tam) diliyle:
+   koyu zemin, alttan koyulaşan görsel, ilerleme çizgileri (.k-ilerleme dolgusu), cam düğmeler. Yalnız değişken. */
+html,body{background:#000}
+.hy{position:absolute;inset:0;min-height:844px;overflow:hidden;background:#000;color:#fff;transition:transform .25s var(--k-egri),border-radius .25s}
+.hy.cek{transition:none;border-radius:var(--k-kart)}
+.hy-k{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;background:#000 center/cover no-repeat}
+.hy-k::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.6) 0%,rgba(0,0,0,0) 24%,rgba(0,0,0,0) 44%,rgba(0,0,0,.9) 100%)}
+.hy-ic{position:relative;padding:0 var(--kenar) calc(var(--alt-guvenli) + var(--b-32))}
+.hy-ic h1{margin-top:var(--b-12);font-size:30px;line-height:1.12;font-weight:var(--y-kalin);letter-spacing:-.02em;text-wrap:pretty}
+.hy-ic .k-meta{margin-top:var(--b-12);font-size:13px}
+.hy.cd .hy-ic{padding-bottom:calc(var(--alt-guvenli) + var(--b-40) + var(--b-32))}
+.hy-u{position:absolute;left:0;right:0;top:0;z-index:5;padding:calc(var(--ust-guvenli) + var(--b-4)) var(--b-4) 0 var(--kenar);transition:opacity .2s}
+.hy-cz{display:flex;gap:var(--b-4);margin-right:var(--b-12)}
+.hy-cz span{flex:1;height:3px;border-radius:var(--k-cubuk);background:rgba(255,255,255,.32);overflow:hidden}
+.hy-cz span i{display:block;height:100%;width:0;border-radius:var(--k-cubuk);background:#fff}
+.hy-s{margin-top:var(--b-8);display:flex;align-items:center;gap:var(--b-12)}
+.hy-s .k-avatar i{font-size:14px}
+.hy-s .t{flex:1;min-width:0;line-height:1.25}
+.hy-s .t b{display:block;font-size:15px;white-space:nowrap}
+.hy-s .k-ikon{color:#fff}
+.hy.dur .hy-u{opacity:.4}
+.hy-dok{position:absolute;top:calc(var(--ust-guvenli) + 72px);bottom:0;z-index:4}
+.hy-dok.geri{left:0;width:33%}.hy-dok.ileri{right:0;width:67%}
+.hy-gecis{position:absolute;inset:0;z-index:6;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--b-8);background:#000;opacity:0;pointer-events:none;transition:opacity .25s}
+.hy-gecis.ac{opacity:1}
+.hy-gecis .av{width:72px;height:72px;margin-bottom:var(--b-8);border-radius:var(--k-daire);background:#000 center/cover no-repeat;outline:2.5px solid var(--marka);outline-offset:3px}
+.hy-gecis b{font-size:18px}
+.hy-gecis small{font-size:13px;color:rgba(255,255,255,.66)}
+.hy .k-bos{min-height:844px;justify-content:center;padding-top:0;padding-bottom:0}
+.hy .k-bos .sure{width:100%;max-width:280px;margin-top:var(--b-16);display:grid;gap:var(--b-8);font-size:12.5px;color:var(--metin-3)}
+.hy-isk{position:absolute;left:var(--kenar);right:var(--kenar);bottom:calc(var(--alt-guvenli) + var(--b-32))}
+@media (prefers-reduced-motion:reduce){.hy,.hy-gecis{transition:none}}
+</style>
+</head>
+<body data-durum="acik" data-ec="acik">
+<div class="hy" id="hy"></div>
+<script>
+(function(){
+  document.documentElement.setAttribute('data-tema', 'koyu'); /* tam ekran medya: iki temada koyu */
+  var H = D.hikayeler, Q = K.q, DUR = K.durum, hy = document.getElementById('hy');
+  var ki = Math.max(0, H.map(function(h){ return h.kod; }).indexOf(Q.get('kat') || (DUR === 'bos' ? 'kampus' : 'gundem')));
+  var hi = DUR === 'dur' ? 1 : 0, t0 = 0, gecen = 0, durdu = false, SURE = 6000;
+  function kapat(){ var g = Q.get('geri'); location.href = g ? K.KOK + decodeURIComponent(g) : K.git('ana'); }
+  function izle(kod){ try { var a = JSON.parse(sessionStorage.getItem('dada-hikaye-izlenen') || '[]'); if (a.indexOf(kod) < 0) a.push(kod); sessionStorage.setItem('dada-hikaye-izlenen', JSON.stringify(a)); } catch (x) {} }
+  function ust(k, cz, alt){ return '<div class="hy-u" id="ust"><div class="hy-cz" id="cz">' + cz + '</div><div class="hy-s"><span class="k-avatar">' + K.I(k.ikon) + '</span><span class="t"><b>' + k.kat + '</b><small class="k-sayac foto">' + alt + '</small></span>' +
+    (DUR === 'hata' || DUR === 'bos' || DUR === 'yukleniyor' || (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? '' : K.ikonBtn({ ikon: 'fa-pause', etiket: 'Duraklat', id: 'dur' })) + K.ikonBtn({ ikon: 'fa-xmark', etiket: 'Kapat', attr: 'data-hy-kapat' }) + '</div></div>'; }
+  hy.addEventListener('click', function(ev){ if (ev.target.closest('[data-hy-kapat]')) kapat(); });
+
+  /* ---------- haller ---------- */
+  var hataTur = DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? 'cevrimdisi' : '';
+  if (DUR === 'yukleniyor') {
+    var c = ''; for (var j = 0; j < 5; j++) c += '<i class="k-isk koyu" style="flex:1;height:3px"></i>';
+    hy.innerHTML = '<div class="hy-u"><div class="hy-cz">' + c + '</div><div class="hy-s"><i class="k-isk koyu daire" style="width:36px;height:36px"></i><span class="t k-isk-grup" style="gap:var(--b-8);"><i class="k-isk koyu" style="width:96px;height:14px"></i><i class="k-isk koyu" style="width:64px;height:11px"></i></span>' + K.ikonBtn({ ikon: 'fa-xmark', etiket: 'Kapat', attr: 'data-hy-kapat' }) + '</div></div>' +
+      '<div class="hy-isk k-isk-grup" role="status" aria-label="Yükleniyor"><i class="k-isk koyu" style="width:96px;height:24px"></i><i class="k-isk koyu" style="width:100%;height:28px"></i><i class="k-isk koyu" style="width:78%;height:28px"></i><i class="k-isk koyu" style="width:40%;height:12px"></i></div>';
+    return;
+  }
+  if (hataTur) { hy.innerHTML = ust(H[ki], '', 'Bugün') + K.hata({ tur: hataTur, tam: true }); hy.querySelector('.k-bos').style.minHeight = '844px'; return; }
+  if (DUR === 'bos') {
+    var k = H[ki], s = H[(ki + 1) % H.length];
+    hy.innerHTML = ust(k, '', 'Bugün') + K.bos({ ikon: k.ikon, baslik: 'Bugün ' + k.kat + ' hikâyesi yok', aciklama: 'Yeni haberler geldikçe ' + k.kat + ' hikâyesi burada belirir.',
+      eylem: { metin: 'Sıradaki: ' + s.kat, ikon: 'fa-forward', href: K.git('hikaye', 'kat=' + s.kod + (Q.get('geri') ? '&geri=' + encodeURIComponent(Q.get('geri')) : '')) }, ikinci: { metin: 'Kapat', attr: 'data-hy-kapat' },
+      ek: '<div class="sure">' + K.ilerleme(40) + '<span>' + s.kat + ' hikâyesi birazdan açılır</span></div>' });
+    return;
+  }
+
+  /* ---------- görüntüleyici ---------- */
+  hy.innerHTML = '<div id="kart"></div>' + ust(H[ki], '', '') +
+    '<button class="hy-dok geri" id="dGeri" type="button" aria-label="Önceki haber"></button><button class="hy-dok ileri" id="dIleri" type="button" aria-label="Sonraki haber"></button>' +
+    '<div class="hy-gecis" id="gecis"><span class="av" id="gAv"></span><b id="gAd"></b><small>Sıradaki kategori</small></div>';
+  if (DUR === 'cevrimdisi') hy.classList.add('cd');
+  var $ = function(i){ return document.getElementById(i); };
+  function ciz(){
+    var k = H[ki], h = k.haberler[hi];
+    $('kart').innerHTML = '<article class="hy-k" style="background-image:' + G(h.g) + '"><div class="hy-ic">' + K.katEt(k.kat, k.ikon, { foto: true }) + '<h1>' + h.baslik + '</h1>' + K.meta([h.yazar, h.sure], 'foto') + '</div></article>';
+    $('cz').innerHTML = k.haberler.map(function(_, i){ return '<span><i style="width:' + (i < hi ? 100 : 0) + '%"></i></span>'; }).join('');
+    $('ust').querySelector('.k-avatar').innerHTML = K.I(k.ikon);
+    $('ust').querySelector('.t b').textContent = k.kat;
+    $('ust').querySelector('.t small').textContent = 'Bugün · ' + (hi + 1) + ' / ' + k.haberler.length;
+    gecen = 0; t0 = performance.now();
+  }
+  function ileri(){
+    var k = H[ki];
+    if (hi < k.haberler.length - 1) { hi++; ciz(); return; }
+    izle(k.kod);
+    if (ki < H.length - 1) {
+      var s = H[ki + 1], g = $('gecis');
+      $('gAv').style.backgroundImage = G(s.g); $('gAd').textContent = s.kat;
+      g.classList.add('ac'); durdu = true;
+      setTimeout(function(){ ki++; hi = 0; ciz(); g.classList.remove('ac'); durdu = false; }, 650);
+    } else kapat();
+  }
+  function geri(){ if (hi > 0) { hi--; ciz(); } else if (ki > 0) { ki--; hi = H[ki].haberler.length - 1; ciz(); } else { gecen = 0; t0 = performance.now(); } }
+  function don(t){
+    if (!durdu) { var p = Math.min(1, (gecen + t - t0) / SURE), c = document.querySelectorAll('#cz i')[hi]; if (c) c.style.width = (p * 100) + '%'; if (p >= 1) ileri(); }
+    requestAnimationFrame(don);
+  }
+  function duraklat(v){
+    if (v && !durdu) { gecen += performance.now() - t0; durdu = true; } else if (!v && durdu) { t0 = performance.now(); durdu = false; }
+    hy.classList.toggle('dur', durdu);
+    var b = $('dur'); b.innerHTML = K.I(durdu ? 'fa-play' : 'fa-pause'); b.setAttribute('aria-label', durdu ? 'Sürdür' : 'Duraklat');
+  }
+  $('dur').addEventListener('click', function(){ duraklat(!durdu); });
+  /* dokun: ileri / geri · basılı tut: dur (üst bilgi soluklaşır) · aşağı çek: kapat */
+  var bas = null, uzun = null, y0 = 0, cekiyor = false;
+  ['dGeri', 'dIleri'].forEach(function(id){
+    var el = $(id);
+    el.addEventListener('pointerdown', function(ev){ bas = { id: id, t: Date.now() }; y0 = ev.clientY; cekiyor = false; uzun = setTimeout(function(){ duraklat(true); }, 220); el.setPointerCapture(ev.pointerId); });
+    el.addEventListener('pointermove', function(ev){ if (!bas) return; var dy = ev.clientY - y0; if (dy > 12) { cekiyor = true; clearTimeout(uzun); duraklat(true); hy.classList.add('cek'); hy.style.transform = 'translateY(' + dy + 'px) scale(' + Math.max(.86, 1 - dy / 1600) + ')'; } });
+    el.addEventListener('pointerup', function(ev){
+      clearTimeout(uzun); if (!bas) return; var dy = ev.clientY - y0, kisa = Date.now() - bas.t < 220;
+      hy.classList.remove('cek');
+      if (cekiyor) { if (dy > 140) { hy.style.transform = 'translateY(110%)'; setTimeout(kapat, 220); } else { hy.style.transform = ''; duraklat(false); } }
+      else if (kisa) { duraklat(false); (bas.id === 'dIleri' ? ileri : geri)(); }
+      else duraklat(false);
+      bas = null;
+    });
+  });
+  addEventListener('keydown', function(ev){ if (ev.key === 'ArrowRight') ileri(); if (ev.key === 'ArrowLeft') geri(); if (ev.key === 'Escape') kapat(); if (ev.key === ' ') duraklat(!durdu); });
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) SURE = 9000;
+  ciz();
+  if (DUR === 'dur') { gecen = SURE * .45; durdu = true; duraklat(true); hy.classList.add('dur'); document.querySelectorAll('#cz i')[hi].style.width = '45%'; }
+  requestAnimationFrame(don);
+  if (DUR === 'cevrimdisi') {
+    var bt = K.toast('Çevrimdışısın · önbellekteki hikâye', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+})();
+</script>
+<script>
+  /* Yeniden dene: düğmede gösterge, sonra hal kalkar */
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+</script>
+</body>
+</html>

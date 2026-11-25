@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Arama sonuçları</title>
+<!--
+  ARAMA SONUÇLARI · E-107–E-115 · kök: Liste.
+  Yapı: arama çubuğu (sorgu dolu) → sonuç sayısı + Süzgeç → tür sekmeleri (sitedeki tür şeridi: Tümü · Haberler · Videolar · Yazarlar · Konular; yapışkan)
+  → Dada'ya sor çağrısı → sonuçlar: haber ve video liste satırı (liste kartıyla aynı .k-satir; video süresi başta), yazar satırı, konu çipleri.
+  Parametreler: ?sekme=haberler|videolar|yazarlar|konular · ?durum=suzgec (alt sayfa: tarih, bölüm, sıralama; Temizle · Uygula) | oneri ("deprm" → Bunu mu demek istedin?)
+    | tur-bos (süzgeç "Bugün": Videolar'da sonuç yok, Tümü'nde sayı) | yukleniyor | daha-fazla (&hal=son|hata; Haberler sekmesi) | bos | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0) · ?tema=koyu
+  Veri (satır içinde): public arama.html ("deprem" için 224 sonuç: 186 haber, 24 video, 6 yazar, 8 konu). Görsel: konteyner (deprem bölgesi); öteki sonuçlar görselsiz (kütüphanede uygun görsel yok).
+  Varsayımlar (onaylanmadı): "Bugün" süzgecinde sayılar sözlük tarihlerinden (23 Kas: 1 haber, 0 video; yazar ve konu tarihe bağlı değil); boş arama sorgusu örnek.
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* KİT ADAYI (düzeltme): üst çubuktaki arama alanının girdisi 41 px kalıyor (alan 44, çerçeve 1,5); girdi 44 px dokunma alanı alır */
+.k-ub.ara .k-ara input{height:44px}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), Q = K.q, DUR = K.durum, hal = Q.get('hal');
+  /* kaynak: dadahaber-prototip/arama.html */
+  var HAB = [{ alt: 'Gündem', saat: '23 Kas', baslik: 'Hatay ve Kahramanmaraş’ta 4 bin kalıcı konut daha teslim edildi', yazar: 'Sibel Arslan', sure: '3 dk', izlenme: '10,6 B', g: 'konteyner' },
+    { alt: 'Toplum', saat: '22 Kas', baslik: 'AFAD, deprem çantası hazırlığı için güncel listeyi yayımladı', yazar: 'Mehmet Koçak', sure: '2 dk', izlenme: '8,4 B' },
+    { alt: 'Kişisel Finans', saat: '22 Kas', baslik: 'Zorunlu deprem sigortasında 2027 primleri belli oldu', yazar: 'Sibel Arslan', sure: '3 dk', izlenme: '12,0 B', ikon: 'fa-chart-column' },
+    { alt: 'Üniversiteler', saat: '21 Kas', baslik: 'Deprem bölgesindeki üniversitelerde kalıcı kampüs inşaatı sürüyor', yazar: 'Mehmet Koçak', sure: '4 dk', izlenme: '5,1 B', ikon: 'fa-graduation-cap' }];
+  var VID = [{ alt: 'Gündem', saat: '21 Kas', sure: '2:25', baslik: 'Deprem bölgesinde kalıcı konut teslimleri sürüyor', yazar: 'Sibel Arslan', izlenme: '10,3 B' },
+    { alt: 'Gündem', saat: '20 Kas', sure: '1:40', baslik: 'İstanbul\'da okullarda deprem tatbikatı yapıldı', yazar: 'Mehmet Koçak', izlenme: '7,8 B' },
+    { alt: 'Kampüs', saat: '19 Kas', sure: '3:52', baslik: 'Deprem bölgesinden üniversiteye: üç öğrencinin hikâyesi', yazar: 'Selin Koç', izlenme: '6,2 B' },
+    { alt: 'Gündem', saat: '18 Kas', sure: '2:58', baslik: 'Kentsel dönüşümde riskli yapı tespiti nasıl yapılıyor', yazar: 'Ayşe Yıldız', izlenme: '9,0 B' }];
+  var YAZ = [['Sibel Arslan', 'Saha Muhabiri'], ['Mehmet Koçak', 'Gündem Editörü'], ['Ayşe Yıldız', 'Haber Müdürü'], ['Nazlı Öztürk', 'Kişisel Finans Muhabiri'], ['Gülşen Ateş', 'Sağlık Muhabiri'], ['İrem Su', 'Bilim ve Çevre Muhabiri']];
+  var KON = ['Deprem', 'Kalıcı Konut', 'AFAD', 'Kentsel Dönüşüm', 'Deprem Sigortası', 'Hatay', 'Kahramanmaraş', 'Afet Hazırlığı'];
+  var BUGUN = DUR === 'tur-bos';
+  var SAY = BUGUN ? [15, 1, 0, 6, 8] : [224, 186, 24, 6, 8];
+  var SEK = ['Tümü', 'Haberler', 'Videolar', 'Yazarlar', 'Konular'];
+  var sekme = BUGUN ? 2 : DUR === 'daha-fazla' ? 1 : Math.max(0, ['tumu', 'haberler', 'videolar', 'yazarlar', 'konular'].indexOf(Q.get('sekme')));
+  var sorgu = DUR === 'oneri' ? 'deprm' : DUR === 'bos' ? 'Kartal kentsel dönüşüm' : 'deprem';
+
+  function haber(h){ return K.satir(h, { ikon: h.ikon }); }
+  function video(v){ return K.satir({ tur: 'Video', alt: v.alt, saat: v.saat, baslik: v.baslik, yazar: K.vid(v.sure), sure: v.yazar, izlenme: v.izlenme }, { href: K.git('videoDetay') }); }
+  function yazar(y){ return K.yazarSatir({ ad: y[0], unvan: y[1] }).replace('<a href=', '<a class="k-dk44" href='); }
+  function konular(){ return '<div class="k-ic"><div class="k-cip-izgara">' + KON.map(function(k){ return '<a class="k-cip" href="' + K.git('etiket') + '">' + K.I('fa-hashtag') + k + '</a>'; }).join('') + '</div></div>'; }
+  function blok(i, baslik, ikon, ic){ return '<section class="k-bl sik">' + K.bb({ baslik: baslik, ikon: ikon, sayi: SAY[i], baglanti: { metin: 'Tümünü Gör' } }).replace('<a>', '<a data-sekme-git="' + i + '">') + ic + '</section>'; }
+  function liste(i){
+    if (i === 0) return blok(1, 'Haberler', 'fa-newspaper', '<div class="k-satirlar">' + (BUGUN ? HAB.slice(0, 1) : HAB.slice(0, 3)).map(haber).join('') + '</div>') +
+      (BUGUN ? '' : blok(2, 'Videolar', 'fa-circle-play', '<div class="k-satirlar">' + VID.slice(0, 2).map(video).join('') + '</div>')) +
+      blok(3, 'Yazarlar', 'fa-feather-pointed', '<div class="k-satirlar">' + YAZ.slice(0, 3).map(yazar).join('') + '</div>') + blok(4, 'Konular', 'fa-hashtag', konular());
+    if (i === 1) return '<div class="k-satirlar">' + (BUGUN ? HAB.slice(0, 1) : HAB).map(haber).join('') +
+      (DUR === 'daha-fazla' ? (hal === 'son' || hal === 'hata' ? '' : K.iskelet('satir', 1)) + K.dahaFazla(hal === 'son' || hal === 'hata' ? hal : 'yukleniyor') : '') + '</div>';
+    if (i === 2) return BUGUN ? K.bos({ ikon: 'fa-circle-play', baslik: 'Bugün eklenen video yok', aciklama: '“' + sorgu + '” için bugün video yayımlanmadı. Tümü\'nde ' + SAY[0] + ' sonuç var.', eylem: { metin: 'Tümü\'ne bak · ' + SAY[0], attr: 'data-sekme-git="0"' }, ikinci: { metin: 'Süzgeci kaldır', attr: 'data-suzgec-kaldir' } })
+      : '<div class="k-satirlar">' + VID.map(video).join('') + '</div>';
+    if (i === 3) return '<div class="k-satirlar">' + YAZ.map(yazar).join('') + '</div>';
+    return '<div class="k-bl sik">' + konular() + '</div>';
+  }
+  var sayi = '<div class="k-ic" style="display:flex;align-items:center;justify-content:space-between;gap:var(--b-12);padding-top:var(--b-12);padding-bottom:var(--b-8)"><span class="k-sayac">“' + (DUR === 'oneri' ? 'deprem' : sorgu) + '” için ' + SAY[0] + ' sonuç</span>' +
+    K.btn({ metin: BUGUN ? 'Süzgeç · 1' : 'Süzgeç', ikon: 'fa-sliders', boy: 'kucuk', tur: BUGUN ? '' : 'sade', secili: BUGUN || undefined, attr: 'data-sayfa="suzgec"' }) + '</div>';
+  var sekmeler = '<div style="position:sticky;top:var(--k-ub-h);z-index:60;background:var(--zemin)">' + K.sekmeler(SEK.map(function(s, i){ return { metin: s, sayi: SAY[i] }; }), sekme) + '</div>';
+  var cagri = '<div class="k-ic k-bl sik">' + K.cagri({ ikon: 'fa-wand-magic-sparkles', baslik: 'Bir soru mu sormak istiyorsun?', aciklama: 'Dada, haberlerimizden yanıtlasın', eylem: { metin: 'Dada\'ya sor', href: K.git('dadayaSor') } }) + '</div>';
+  var oneri = DUR === 'oneri' ? '<div class="k-ic" style="padding-top:var(--b-12)">' + K.serit({ tur: 'uyari', ikon: 'fa-circle-question', metin: 'Bunu mu demek istedin? <b>deprem</b>', alt: '“deprm” yerine “deprem” sonuçları gösteriliyor', eylem: '“deprm” ara' }) + '</div>' : '';
+  var suzCip = BUGUN ? '<div class="k-ray s8" style="padding-bottom:var(--b-8)">' + K.cip('Bugün', { secili: true, ikon: 'fa-calendar-day', attr: 'data-suzgec-kaldir aria-label="Bugün süzgecini kaldır"' }) + '</div>' : '';
+
+  var hata = DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? 'cevrimdisi' : '';
+  var ic;
+  if (hata) ic = K.hata({ tur: hata });
+  else if (DUR === 'yukleniyor') ic = sekmeler + '<div class="k-satirlar k-bl sik">' + K.iskelet('satir', 5) + '</div>';
+  else if (DUR === 'bos') ic = K.bos(Object.assign({}, K.BOS.sonuc, { aciklama: '“' + sorgu + '” için haber bulamadık. Başka bir kelimeyle ara ya da sorunu Dada\'ya sor.' })) +
+    '<section class="k-bl sik">' + K.bb({ baslik: 'Gündemdekiler', ikon: 'fa-arrow-trend-up' }) + '<div class="k-ic">' + ['Kar Yağışı', 'Bütçe 2027', D.detay.etiketler[0], 'Deprem', 'Gümrük Birliği'].map(function(x){ return K.oneri({ tur: 'gundem', metin: x }); }).join('') + '</div></section>';
+  else ic = oneri + sayi + suzCip + sekmeler + (sekme === 0 ? cagri : '') + '<div id="sonuc">' + liste(sekme) + '</div>';
+  e.innerHTML = '<div class="k-ust-bosluk"></div>' + ic + '<div class="k-son yalin"></div>';
+  K.ustCubuk({ tur: 'ara', geri: true, ara: { deger: sorgu, ses: !hata }, golgeli: true });
+  if (DUR === 'suzgec') K.sayfa('suzgec', { acik: true });
+  if (DUR === 'daha-fazla' && !document.documentElement.classList.contains('tam')) e.scrollTop = e.scrollHeight;
+  if (DUR === 'cevrimdisi' && !hata) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  /* sekme: sonuç yerinde değişir (Tümü'nde Dada'ya sor çağrısı) */
+  function sekmeGit(i){ sekme = i; var s = e.querySelectorAll('.k-sekmeler button'); s.forEach(function(b, j){ b.setAttribute('aria-selected', j === i); });
+    var c = e.querySelector('.k-cagri'); if (c) c.parentNode.style.display = i === 0 ? '' : 'none';
+    document.getElementById('sonuc').innerHTML = liste(i); }
+  e.addEventListener('click', function(ev){ var b = ev.target.closest('.k-sekmeler button'); if (b) sekmeGit([].indexOf.call(b.parentNode.children, b));
+    var g = ev.target.closest('[data-sekme-git]'); if (g) { ev.preventDefault(); sekmeGit(+g.getAttribute('data-sekme-git')); }
+    if (ev.target.closest('[data-suzgec-kaldir]')) { var q = new URLSearchParams(location.search); q.delete('durum'); location.search = q.toString(); } });
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'hal', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

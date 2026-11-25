@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Canlı Gündem</title>
+<!--
+  CANLI GÜNDEM (canlı olaylar listesi) · E-083–E-089 · kök: Liste (alt çubukta "Bölümler"; Keşfet › Anlık).
+  Yapı: büyük başlık → "Anlık" çip şeridi (Keşfet › Anlık ekranları, Canlı Gündem seçili) → Şu An Takipte (canlı önce; kitin olay/canlı kartı .k-olay:
+  görsel başlık, Canlı kapsülü, son iki giriş saatiyle, altta tür ve Takip et) → Takibi Kapananlar (liste satırı, "Sona erdi").
+  Parametreler: ?durum=yukleniyor | yenileniyor (&hal=cekiliyor|birak|bitti) | daha-fazla (&hal=son|hata) | bos (şu an canlı yok; sona erenler altta) | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0) · ?uye=0 · ?tema=koyu · ?calan=1
+  Veri (satır içinde): public canli-gundem.html (3 canlı, 3 sona eren), girişler dakika-dakika.html, dakika-dakika-butce.html, canli-yayin.html.
+  Varsayımlar (onaylanmadı): komisyon anlatımının görseli kütüphanede yok (iki TBMM görseli yan yana gelmesin diye görselsiz, koyu başlık); arşivde sayfa sonu "Hepsi bu kadar".
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), Q = K.q, DUR = K.durum, hal = Q.get('hal');
+  /* kaynak: dadahaber-prototip/canli-gundem.html + anlatım sayfalarının son girişleri */
+  var CANLI = [
+    { tur: 'Dakika Dakika', ikon: 'fa-tower-broadcast', kat: 'Gündem', baslik: 'Marmara\'da yoğun kar yağışı: gelişmeler dakika dakika', g: 'kar-istanbul', alt: '10 gelişme · son 16.05', izlenme: '64,3 B', href: K.git('canliAnlatim'),
+      son: [['16.05', 'İstanbul Valiliği: okullar yarın da tatil'], ['15.20', 'Havalimanlarında 46 sefer iptal edildi']] },
+    { tur: 'Dakika Dakika', ikon: 'fa-tower-broadcast', kat: 'Siyaset', baslik: 'TBMM\'de 2027 bütçesi görüşmeleri: gelişmeler dakika dakika', alt: '8 gelişme · son 15.42', izlenme: '21,7 B', href: K.git('canliAnlatim'),
+      son: [['15.42', 'Muhalefet partileri adına ilk konuşmalar tamamlandı'], ['15.05', 'Emekli aylıklarına ilişkin önerge reddedildi']] },
+    { tur: 'Canlı Yayın', ikon: 'fa-video', kat: 'Siyaset', baslik: '2027 bütçesinin görüşmeleri Genel Kurul\'da başladı', g: 'tbmm', alt: '13.00\'ten beri · 4,8 B izleyici', izlenme: '4,8 B', href: K.u('ekranlar/icerik/canli-yayin.html'),
+      son: [['15.42', 'Muhalefet partileri adına ilk konuşmalar tamamlandı'], ['15.05', 'Bakan, faiz giderleri tahminini açıkladı']] }
+  ];
+  var BITEN = [
+    { tur: 'Sona erdi', alt: 'Dünya', saat: '22 Kas', baslik: 'Türkiye–AB yüksek düzeyli diyalog toplantısı: dakika dakika', yazar: 'Kaan Yücel', sure: '17.40\'ta kapandı', izlenme: '15,3 B', g: 'bruksel', href: K.git('canliAnlatim', 'durum=bitti') },
+    { tur: 'Sona erdi', alt: 'Siyaset', saat: '22 Kas', baslik: 'Plan ve Bütçe Komisyonu\'nda son gün oturumu', yazar: 'Ozan Er', sure: '19.20\'de kapandı', izlenme: '7,1 B', href: K.u('ekranlar/icerik/canli-yayin.html', 'durum=yayin-yok') },
+    { tur: 'Sona erdi', alt: 'Dünya', saat: '21 Kas', baslik: 'BM İklim Konferansı kapanış oturumu', yazar: 'Ozan Er', sure: '22.05\'te kapandı', izlenme: '41,5 B', href: K.u('ekranlar/icerik/canli-yayin.html', 'durum=yayin-yok') }
+  ];
+  /* Keşfet › Anlık (DADAHABER-10) */
+  var ANLIK = [['Son Dakika', K.git('sonDakika')], ['Canlı Gündem', K.git('canliGundem')], ['Canlı Yayın', K.u('ekranlar/icerik/canli-yayin.html')], ['Dakika Dakika', K.git('canliAnlatim')], ['Bugün Ne Oldu?', K.u('ekranlar/icerik/bugun-ne-oldu.html')], ['Gündem Takvimi', K.git('takvim')], ['Güncellenen Haberler', K.u('ekranlar/icerik/guncellenen-haberler.html')]];
+  var cipler = '<div class="k-ray s8" style="padding-bottom:var(--b-8)">' + ANLIK.map(function(x){ return '<a class="k-cip' + (x[0] === 'Canlı Gündem' ? ' is-secili' : '') + '" href="' + x[1] + '"' + (x[0] === 'Canlı Gündem' ? ' aria-current="page"' : '') + '>' + x[0] + '</a>'; }).join('') + '</div>';
+
+  /* kitin olay/canlı kartı (.k-olay) — K.olay() Gelişen Olaylar verisine bağlı olduğu için aynı yapı burada canlı veriyle kurulur */
+  function kart(c){
+    return '<article class="k-olay tam"><a class="k-olay-b" href="' + c.href + '"' + (c.g ? ' style="background-image:' + G(c.g) + '"' : '') + '><span class="us">' + K.canli() + K.katEt(c.kat, K.ikon(c.kat === 'Siyaset' ? 'Gündem' : c.kat), { foto: true }) + '</span>' +
+      '<span><h3>' + c.baslik + '</h3><small>' + c.alt + '</small></span></a>' +
+      '<ol>' + c.son.map(function(x){ return '<li><time>' + x[0] + '</time><h4>' + x[1] + '</h4></li>'; }).join('') + '</ol>' +
+      '<div class="k-olay-a"><span>' + K.I(c.ikon) + c.tur + '</span>' + K.btn({ metin: 'Takip et', ikon: 'fa-plus', secili: false, attr: 'data-takip' }) + '</div></article>'; }
+  function canlilar(){ return '<section class="k-bl sik">' + K.bb({ baslik: 'Şu An Takipte', canli: true, sayi: CANLI.length }) + '<div class="k-ic" style="display:grid;gap:var(--b-16)">' + CANLI.map(kart).join('') + '</div></section>'; }
+  function bitenler(ek){ return '<section class="k-bl">' + K.bb({ baslik: 'Takibi Kapananlar', ikon: 'fa-box-archive', sayi: BITEN.length }) + '<div class="k-satirlar">' + BITEN.map(function(x){ return K.satir(x, { href: x.href }); }).join('') + (ek || '') + '</div></section>'; }
+  function isk(){ var o = ''; for (var i = 0; i < 2; i++) o += '<div class="k-isk-grup"><i class="k-isk kart" style="width:100%;height:118px"></i><i class="k-isk" style="width:90%;height:15px"></i><i class="k-isk" style="width:70%;height:15px"></i></div>';
+    return '<div class="k-ic k-bl sik" role="status" aria-label="Yükleniyor" style="display:grid;gap:var(--b-24)">' + o + '</div><div class="k-satirlar k-bl">' + K.iskelet('satir', 2) + '</div>'; }
+
+  var bas = '<div class="k-ust-bosluk"></div>' + (DUR === 'yenileniyor' ? K.yenile(['cekiliyor', 'birak', 'bitti'].indexOf(hal) > -1 ? hal : 'yenileniyor') : '') + '<div class="k-bbas"><h1>Canlı Gündem</h1><p>Canlı takip ettiğimiz başlıklar tek yerde</p></div>' + cipler;
+  var hata = DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? 'cevrimdisi' : '';
+  var ic;
+  if (hata) ic = K.hata({ tur: hata });
+  else if (DUR === 'yukleniyor') ic = isk();
+  else if (DUR === 'bos') ic = K.bos({ ikon: 'fa-tower-broadcast', baslik: 'Şu an canlı anlatım yok', aciklama: 'Yeni bir canlı anlatım ya da yayın başlayınca burada görünür.' }) + bitenler(K.dahaFazla('son'));
+  else if (DUR === 'daha-fazla') ic = canlilar() + bitenler((hal === 'son' || hal === 'hata' ? '' : K.iskelet('satir', 1)) + K.dahaFazla(hal === 'son' || hal === 'hata' ? hal : 'yukleniyor').replace(/haber/, 'anlatım'));
+  else ic = canlilar() + bitenler(K.dahaFazla('son'));
+  e.innerHTML = bas + ic + '<div class="k-son"></div>';
+
+  K.ustCubuk({ geri: true, baslik: 'Canlı Gündem', buyuk: true, eylemler: ['ara'] });
+  K.altCubuk('bolum');
+  K.oynatici();
+  K.cekmece();
+  if (DUR === 'daha-fazla' && !document.documentElement.classList.contains('tam')) e.scrollTop = e.scrollHeight;
+  if (DUR === 'cevrimdisi' && !hata) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  K.cekYenile(e);
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'hal', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

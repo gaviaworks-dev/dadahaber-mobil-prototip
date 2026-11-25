@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Son Dakika</title>
+<!--
+  SON DAKİKA · E-096–E-103 · kök: Liste (alt çubukta "Bölümler"; Keşfet › Anlık).
+  Yapı: büyük başlık → "Anlık" çip şeridi (Son Dakika seçili) → Son Dakika bildirimleri çağrısı → gün ayraçlı saatli satırlar (kitin .k-sd-satir; ilk saat kırmızı; saat 14.30 biçimi).
+  Üst çubukta sıralama (En yeni · En çok okunan · En eski; public sayfanın seçenekleri).
+  Parametreler: ?durum=yeni (3 yeni haber hapı; dokununca başa ve eklenir) | yukleniyor | yenileniyor (&hal=cekiliyor|birak|bitti) | daha-fazla (&hal=son|hata)
+    | bos (gece yarısından sonra: bugün yok, dünküler altta) | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0) · ?uye=0 · ?tema=koyu · ?calan=1
+  Veri (satır içinde): public son-dakika.html (Bugün 13, Dün 6, Cumartesi 1; "64 haber son 48 saatte").
+  Varsayımlar (onaylanmadı): bildirim çağrısı Bildirim tercihlerine gider; misafirde de görünür.
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), Q = K.q, DUR = K.durum, hal = Q.get('hal');
+  /* kaynak: dadahaber-prototip/son-dakika.html */
+  var GUN = [
+    { ad: 'Bugün', tarih: '23 Kasım 2026', L: [['16.05', 'Gündem', 'İstanbul Valiliği: okullar 24 Kasım\'da da tatil', '1 dk'], ['15.42', 'Siyaset', 'Bütçe görüşmelerinde muhalefet grupları adına ilk konuşmalar tamamlandı', '2 dk'],
+      ['15.20', 'Gündem', 'Havalimanlarında kar nedeniyle 46 iç hat seferi iptal edildi', '1 dk'], ['14.40', 'Gündem', 'Kuzey Marmara Otoyolu\'nda ağır tonajlı araç geçişine kısıtlama', '1 dk'],
+      ['14.05', 'Gündem', 'Asgari ücret görüşmelerinde ilk toplantı 4 Aralık\'ta yapılacak', '2 dk'], ['14.00', 'Finans', 'Merkez Bankası politika faizini yüzde 42,5\'te sabit tuttu', '2 dk'],
+      ['13.48', 'Spor', 'Millî takımın aday kadrosu açıklandı', '2 dk'], ['13.35', 'Siyaset', '2027 bütçe açığının milli gelire oranı yüzde 3,1 olarak öngörüldü', '2 dk'],
+      ['13.20', 'Savunma', 'KAAN\'ın ikinci prototipi test uçuşunda', '2 dk'], ['12.30', 'Finans', 'Borsa İstanbul öğle saatlerinde yüzde 0,4 ekside', '1 dk'],
+      ['12.25', 'Gündem', 'Kocaeli ve Sakarya\'da da eğitime bir gün ara verildi', '1 dk'], ['11.30', 'Gündem', 'AFAD\'dan sürücülere kış lastiği ve zincir uyarısı', '1 dk'], ['10.00', 'Finans', 'Dolar/TL güne 34,52 seviyesinde başladı', '1 dk']] },
+    { ad: 'Dün', tarih: '22 Kasım 2026', L: [['19.05', 'Siyaset', 'Plan ve Bütçe Komisyonu\'nda bütçe görüşmeleri tamamlandı', '2 dk'], ['18.30', 'Kampüs', 'ÖSYM 2027 sınav takvimini yayımladı', '3 dk'],
+      ['16.30', 'Finans', 'Kredi kartında asgari ödeme oranı ocakta değişmeyecek', '2 dk'], ['16.15', 'Spor', 'Federasyon ara transfer dönemi tarihlerini duyurdu', '2 dk'],
+      ['14.15', 'Gündem', 'Meteoroloji\'den Marmara için turuncu kodlu kar uyarısı', '1 dk'], ['11.20', 'Savunma', 'Savunma sanayii 2027 yatırım programı sanayicilere sunuldu', '3 dk']] },
+    { ad: 'Cumartesi', tarih: '21 Kasım 2026', L: [['22.10', 'Dünya', 'BM İklim Konferansı\'nda sonuç metni kabul edildi', '3 dk']] }
+  ];
+  var YENI = DUR === 'yeni' ? 3 : 0;
+  var ANLIK = [['Son Dakika', K.git('sonDakika')], ['Canlı Gündem', K.git('canliGundem')], ['Canlı Yayın', K.u('ekranlar/icerik/canli-yayin.html')], ['Dakika Dakika', K.git('canliAnlatim')], ['Bugün Ne Oldu?', K.u('ekranlar/icerik/bugun-ne-oldu.html')], ['Gündem Takvimi', K.git('takvim')], ['Güncellenen Haberler', K.u('ekranlar/icerik/guncellenen-haberler.html')]];
+  var cipler = '<div class="k-ray s8" style="padding-bottom:var(--b-8)">' + ANLIK.map(function(x){ return '<a class="k-cip' + (x[0] === 'Son Dakika' ? ' is-secili" aria-current="page' : '') + '" href="' + x[1] + '">' + x[0] + '</a>'; }).join('') + '</div>';
+  var cagri = '<div class="k-ic k-bl sik">' + K.cagri({ ikon: 'fa-bell', baslik: 'Son Dakika bildirimleri', aciklama: 'Gündemi değiştiren gelişmeler, anında', eylem: { metin: 'Aç', href: K.git('bildirimTercih') } }) + '</div>';
+
+  function gunler(bas, ek){
+    var ilk = true;
+    return '<div class="k-satirlar k-bl sik">' + GUN.slice(bas || 0).map(function(g, gi){
+      var L = gi === 0 && !bas ? g.L.slice(YENI) : g.L;
+      return '<div class="k-ayrac"><span>' + g.ad + '</span><span>' + g.tarih + '</span></div><div>' + L.map(function(x){ var s = K.sdSatir({ saat: x[0], kat: x[1], baslik: x[2], sure: x[3] }, ilk && !bas); ilk = false; return s; }).join('') + '</div>'; }).join('') + (ek || '') + '</div>';
+  }
+  function iskSatir(n){ var o = ''; for (var i = 0; i < n; i++) o += '<div style="display:grid;grid-template-columns:50px minmax(0,1fr);gap:var(--b-12);padding:var(--b-12) 0;border-top:1px solid var(--cizgi)"><i class="k-isk" style="width:40px;height:14px"></i><span class="k-isk-grup" style="gap:var(--b-8);"><i class="k-isk" style="width:100%;height:15px"></i><i class="k-isk" style="width:72%;height:15px"></i><i class="k-isk" style="width:30%;height:11px"></i></span></div>'; return '<div role="status" aria-label="Yükleniyor">' + o + '</div>'; }
+  function isk(){ return '<div class="k-satirlar k-bl sik"><div class="k-isk-grup" style="padding:var(--b-24) 0 var(--b-8)"><i class="k-isk" style="width:30%;height:13px"></i></div>' + iskSatir(7) + '</div>'; }
+
+  var bas = '<div class="k-ust-bosluk"></div>' + (DUR === 'yenileniyor' ? K.yenile(['cekiliyor', 'birak', 'bitti'].indexOf(hal) > -1 ? hal : 'yenileniyor') : '') +
+    '<div class="k-bbas"><h1>Son Dakika</h1><p>Gelişmeler geldiği sırayla, saatiyle ve kaynağıyla</p></div>' + cipler;
+  var hata = DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? 'cevrimdisi' : '';
+  var ic;
+  if (hata) ic = K.hata({ tur: hata });
+  else if (DUR === 'yukleniyor') ic = isk();
+  else if (DUR === 'bos') ic = K.bos({ ikon: 'fa-bolt', baslik: 'Bugün henüz son dakika yok', aciklama: 'Gece yarısından sonra gelen gelişmeler burada görünür. Dünkü son dakikalar aşağıda.' }) + gunler(1, K.dahaFazla('son'));
+  else if (DUR === 'daha-fazla') ic = cagri + gunler(0, (hal === 'son' || hal === 'hata' ? '' : iskSatir(1)) + K.dahaFazla(hal === 'son' || hal === 'hata' ? hal : 'yukleniyor'));
+  else ic = cagri + gunler(0);
+  e.innerHTML = bas + ic + '<div class="k-son"></div>';
+
+  K.ustCubuk({ geri: true, baslik: 'Son Dakika', buyuk: true, eylemler: hata || DUR === 'yukleniyor' ? ['ara'] : ['ara', { ikon: 'fa-arrow-down-wide-short', etiket: 'Sırala', attr: 'data-sd-sirala' }] });
+  K.altCubuk('bolum');
+  K.oynatici();
+  K.cekmece();
+  K.cekYenile(e);
+  document.addEventListener('click', function(ev){ var t = ev.target.closest('[data-sd-sirala]'); if (!t) return; ev.preventDefault(); ev.stopPropagation();
+    K.menu({ hedef: t, ogeler: [{ baslik: 'Sırala' }, { metin: 'En yeni', ikon: 'fa-clock', secili: true }, { metin: 'En çok okunan', ikon: 'fa-fire', secili: false }, { metin: 'En eski', ikon: 'fa-clock-rotate-left', secili: false }] }); }, true);
+  if (DUR === 'daha-fazla' && !document.documentElement.classList.contains('tam')) e.scrollTop = e.scrollHeight;
+  /* yeni haber: okur yerinde kalır; hap dokununca başa çıkılır ve yeni satırlar eklenir */
+  if (YENI) {
+    document.body.insertAdjacentHTML('beforeend', K.yeniHap(YENI + ' yeni haber', 'acik k-dk44'));
+    var hap = document.querySelector('.k-yeni-hap');
+    hap.addEventListener('click', function(){ YENI = 0; var g = e.querySelector('.k-satirlar.k-bl'); g.outerHTML = gunler(0); hap.classList.remove('acik'); });
+    if (!document.documentElement.classList.contains('tam')) e.scrollTop = 420;
+  }
+  if (DUR === 'cevrimdisi' && !hata) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'hal', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

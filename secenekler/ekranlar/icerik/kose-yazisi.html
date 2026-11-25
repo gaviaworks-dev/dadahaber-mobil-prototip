@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Köşe yazısı</title>
+<!--
+  KÖŞE YAZISI · E-068–E-073 · kök: Detay (yazar önde gelen biçimi).
+  Detay kökünün iskeleti kit bileşenleriyle: kapak (.k-kapak.detay) + üstüne binen panel (.k-yaprak, sarı şerit) + yüzen okuma çubuğu (K.okuma).
+  Farkı: kapakta yazar başlıktan ÖNCE gelir (baş harf dairesi, ad, unvan, Takip et); tür etiketi "Görüş"; 15 sn · 1 dk sekmeleri ve hikâye modu yok
+  (köşe yazısının özeti ve kartları veride yok); metin sonunda görüş notu, alıntı, yazar satırı, Yazarın Diğer Yazıları.
+  Parametreler: ?uye=0 (Takip et → "bu cihazda takip ediliyor" paneli, C30 varsayımı) · ?durum=yukleniyor | hata (&hata=zaman-asimi) | bulunamadi (&hata=kaldirildi) | cevrimdisi (önbellekteki yazı; &onbellek=0 → önbellek yok)
+  Veri: D.koseYazilari[0] (Aylin Sezer) + public kose-yazisi.html (spot, saatler, metin, kaynaklar, etiketler, 3 yorum, yazarın diğer yazıları), satır içinde.
+  Varsayımlar (onaylanmadı): kapak görseli D.koseYazilari[0].g (yks); metindeki ara görsel ("okuma salonu") kütüphanede olmadığı için konmadı; alıntı metnin son cümlesinden.
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), Q = K.q, DUR = K.durum, k = D.koseYazilari[0];
+  /* kaynak: dadahaber-prototip/kose-yazisi.html (Aylin Sezer, 23 Kasım 2026) */
+  var Y = {
+    spot: 'Sınav haftalarında gece boyunca açık kalan kütüphanelerin önündeki kuyruk, gençlerin çalışacak sakin bir yer bulmakta ne kadar zorlandığını gösteriyor. Bu uygulamanın kalıcı olması gerekiyor.',
+    tarih: '23 Kasım 2026', saat: '07.00', guncelleme: '09.30', sure: k.sure, izlenme: '14,9 B',
+    govde: [
+      { p: 'Geçen hafta gece yarısına doğru bir üniversite kütüphanesinin önünden geçtim. Kapıda, içeride yer açılmasını bekleyen otuz kadar öğrenci vardı. Kimi ayakta not okuyor, kimi telefonundan ders videosu izliyordu. O kuyruğu görünce, sınav haftalarında açılan gece salonlarını hâlâ bir istisna gibi konuşmamızın ne kadar yanlış olduğunu düşündüm.' },
+      { p: 'Bu öğrencilerin çoğu evde çalışabilecek bir oda bulamadığı için orada. Kalabalık bir evde, paylaşılan bir yurt odasında ya da kirası ancak bölünerek ödenebilen bir dairede sessiz bir köşe bulmak sanıldığı kadar kolay değil. Kütüphane, onlar için bir masa ve bir prizden fazlası; dikkatin dağılmadığı tek yer.' },
+      { h: 'Kuyruk bize ne anlatıyor?' },
+      { p: 'Kütüphane istatistiklerine baktığımda, salonların doluluk oranının sınav dönemlerinde yüzde yüzü aştığını, yani kapasitenin üzerinde öğrencinin sırayla yer kullandığını görüyorum. Bu tablo bir yoğunluk anından değil, yapısal bir eksiklikten söz ediyor. Talep yalnızca birkaç hafta artmıyor; o haftalarda görünür hale geliyor.' },
+      { p: 'Bana göre sorun yalnızca üniversitelerin değil. Belediye kütüphaneleri çoğu zaman akşam erken saatte kapanıyor, hafta sonu kısa çalışıyor. Oysa üniversiteye hazırlanan liseli de, işten sonra sınava çalışan genç de akşam saatlerinde yer arıyor. Gün boyu çalışan biri için kütüphanenin en çok ihtiyaç duyulduğu saat, tam da kapandığı saat.' },
+      { a: 'Gece de açık kalmaları bir lütuf değil; bu ihtiyacı görmemizin en somut yolu.' },
+      { h: 'Kalıcı bir düzen mümkün' },
+      { p: 'Gece çalışmanın maliyetli olduğunu biliyorum: personel, güvenlik, ısınma. Ama bazı şehirlerde denenen modeller bu maliyetin yönetilebildiğini gösteriyor. Gece saatlerinde salonların yalnızca bir bölümünü açık tutmak, giriş için öğrenci kartı ya da kütüphane kartı istemek ve aydınlatmayı kullanılan alanla sınırlamak, giderleri ciddi biçimde azaltabiliyor.' },
+      { p: 'Üniversite ve belediyelerin bu konuda birlikte çalışmasını, aynı mahalledeki kütüphanelerin çalışma saatlerini birbirini tamamlayacak şekilde planlamasını öneriyorum. Bir kütüphane sabah erken açılırken diğeri gece geç saate kadar açık kalabilir. Böylece hiçbir kurum yükü tek başına taşımaz, gençler de her saatte gidebilecekleri bir yer bilir.' },
+      { p: 'Kütüphaneleri hâlâ kitap ödünç alınan yerler olarak görmeye devam edersek bu kuyrukları her dönem yeniden konuşacağız. Oysa onlar, şehrin gençlere sunabileceği en sakin ve en eşit kamusal alanlardan biri. Gece de açık kalmaları bir lütuf değil; bu ihtiyacı görmemizin en somut yolu.' }
+    ],
+    kaynaklar: [{ kurum: 'Türkiye İstatistik Kurumu', aciklama: 'Kütüphane İstatistikleri, 2025' }, { kurum: 'Yükseköğretim Kurulu', aciklama: 'Üniversite kütüphaneleri kullanım verileri, 2025-2026 akademik yılı' }, { kurum: 'Kütüphaneler ve Yayımlar Genel Müdürlüğü', aciklama: 'Halk kütüphaneleri çalışma saatleri ve hizmet standartları' }],
+    etiketler: ['Kütüphane', 'Üniversite', 'Gençlik', 'Kent Yaşamı'],
+    yorumlar: [{ ad: 'İrem Kaplan', rozet: 'Düzenli okur', zaman: '2 saat önce', metin: 'Aynı mahalledeki kütüphanelerin saatlerini birbirini tamamlayacak şekilde planlama önerisi çok mantıklı. Bizim ilçede üçü de aynı saatte kapanıyor.', begeni: 24 },
+      { ad: 'Oğuz Bayram', rozet: 'Okur', zaman: '4 saat önce', metin: 'Maliyet kısmına da değinmeniz iyi olmuş. Bu konu genellikle yalnızca talep tarafından konuşuluyor.', begeni: 11 },
+      { ad: 'Dada Haber Editör', rozet: 'Editör', zaman: '1 saat önce', metin: 'Teşekkürler. Okurlarımızdan gelen önerilerle şehirlerdeki kütüphane çalışma saatlerini karşılaştıran bir veri haberi hazırlıyoruz.', begeni: 6 }],
+    diger: [{ baslik: 'Şehirde yürünebilir bir akşam neden bu kadar zor?', sure: '5 dk', saat: '21 Kas', izlenme: '9,3 B' }, { baslik: 'Gençlerin kira yükünü konuşurken atladığımız şey', sure: '6 dk', saat: '18 Kas', izlenme: '17,8 B' },
+      { baslik: 'Okuma alışkanlığı tek başına kazanılmıyor', sure: '5 dk', saat: '14 Kas', izlenme: '8,1 B' }, { baslik: 'Toplu taşımada gece seferleri bir şehir için ne anlama gelir?', sure: '4 dk', saat: '11 Kas', izlenme: '7,6 B' }]
+  };
+  var GORUS = 'fa-feather-pointed';
+
+  var hata = DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : DUR === 'bulunamadi' ? (Q.get('hata') === 'kaldirildi' ? 'kaldirildi' : 'bulunamadi') : (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? 'cevrimdisi' : '';
+  if (hata) {
+    e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: hata }) + '<div class="k-son yalin"></div>';
+    K.ustCubuk({ geri: true, eylemler: [] });
+    bagla(); return;
+  }
+  if (DUR === 'yukleniyor') {
+    e.innerHTML = K.iskelet('detay') + '<div class="k-son okuma"></div>';
+    K.ustCubuk({ tur: 'foto', geri: true, eylemler: ['kaydet'] });
+    document.body.removeAttribute('data-durum');
+    K.okuma().classList.add('is-pasif'); okumaAyar();
+    return;
+  }
+
+  var takip = K.btn({ metin: 'Takip et', ikon: 'fa-plus', boy: 'kucuk', tur: 'cam', secili: false, attr: 'data-takip data-yazar-takip' });
+  var kapak = '<header class="k-kapak detay" style="background-image:' + G(k.g) + '">' + K.katEt('Görüş', GORUS, { foto: true }) +
+    '<div class="k-imza foto">' + K.avatar(k.ad, 'm', 'koyu') + '<span class="t"><b>' + k.ad + '</b><small>' + k.unvan + '</small></span><span style="margin-left:auto">' + takip + '</span></div>' +
+    '<h1>' + k.baslik + '</h1></header>';
+  var govde = Y.govde.map(function(b){ return b.p ? '<p>' + b.p + '</p>' : b.h ? '<h2>' + b.h + '</h2>' : '<div class="k-alinti">' + K.I('fa-quote-left') + '<p>' + b.a + '</p><cite>' + k.ad + ' · ' + k.unvan + '</cite></div>'; }).join('');
+  var cevrim = DUR === 'cevrimdisi';
+  var panel = '<div class="k-yaprak"><div class="k-ic" style="padding-top:var(--b-24)">' +
+    (cevrim ? '<div style="margin-bottom:var(--b-16)">' + K.serit({ tur: 'koyu', ikon: 'fa-plug-circle-xmark', metin: 'Çevrimdışı okuyorsun', alt: 'İndirdiğin yazı · yorumlar bağlantı gelince açılır' }) + '</div>' : '') +
+    K.zamanSatir({ tarih: Y.tarih, saat: Y.saat, guncelleme: Y.guncelleme, sure: Y.sure }) + '<p class="k-spot" style="margin-top:var(--b-12)">' + Y.spot + '</p>' +
+    '<article class="k-govde" style="margin-top:var(--b-24)">' + govde + '</article>' +
+    '<p class="k-not" style="margin-top:0">' + K.I('fa-circle-info') + 'Bu yazı yazarın görüşüdür; Dada Haber\'in yayın çizgisini bağlamaz.</p></div>' +
+    '<section class="k-bl">' + K.kaynaklar(Y.kaynaklar) + '</section>' +
+    '<section class="k-bl">' + K.bb({ baslik: 'Konular', ikon: 'fa-hashtag' }) + K.cipler(Y.etiketler.map(function(t){ return { metin: t, ikon: 'fa-plus' }; }), -1, { tek: false }) + '</section>' +
+    '<section class="k-bl">' + K.bb({ baslik: 'Yazar', ikon: GORUS, baglanti: { metin: 'Bütün yazarlar', href: K.git('yazarlar') } }) + '<div class="k-satirlar">' + K.yazarSatir({ ad: k.ad, unvan: k.unvan }).replace('data-takip', 'data-takip data-yazar-takip').replace('<a href=', '<a class="k-dk44" href=') + '</div></section>' +
+    '<section class="k-bl k-ic" id="yorumlar">' + (cevrim ? K.bb({ baslik: 'Yorumlar', ikon: 'fa-comment', sayi: Y.yorumlar.length, yalin: true }) + K.serit({ ikon: 'fa-comment', metin: 'Yorumlar kapalı', alt: 'Bağlantı gelince okuyup yazabilirsin' }) : K.yorumlar({ Y: Y.yorumlar })) + '</section>' +
+    '<section class="k-bl">' + K.bb({ baslik: 'Yazarın Diğer Yazıları', ikon: 'fa-newspaper', baglanti: { metin: 'Tümü', href: K.git('yazar') } }) + '<div class="k-satirlar">' +
+      Y.diger.map(function(x){ return K.satir({ alt: 'Görüş', saat: x.saat, baslik: x.baslik, yazar: k.ad, sure: x.sure, izlenme: x.izlenme }, { ikon: GORUS, href: K.git('kose') }); }).join('') + '</div></section>' +
+    '<div class="k-son okuma"></div></div>';
+  e.innerHTML = kapak + panel;
+  K.ustCubuk({ tur: 'foto', geri: true, baslik: k.baslik, eylemler: ['kaydet'], gorsel: k.g, ilerleme: true, esik: 280 });
+  K.okuma(); okumaAyar();
+  if (cevrim) { var kb = document.querySelector('.k-ub [data-kaydet]'); if (kb) kb.setAttribute('aria-pressed', 'true'); document.querySelector('.k-okuma [data-yorumlara]').classList.add('is-pasif'); }
+
+  /* okuma çubuğu: köşe yazısının sesi ve yorum sayısı; hikâye modu yok (yazının kartları veride yok) */
+  function okumaAyar(){ var o = document.querySelector('.k-okuma'); if (!o) return;
+    var h = o.querySelector('.hmd'); if (h) h.remove();
+    o.querySelector('.dinle').innerHTML = K.I('fa-headphones') + 'Dinle · ' + Y.sure;
+    var y = o.querySelector('[data-yorumlara]'); y.setAttribute('aria-label', 'Yorumlar, ' + Y.yorumlar.length); y.querySelector('.k-rozet').textContent = Y.yorumlar.length;
+    y.addEventListener('click', function(){ var s = document.getElementById('yorumlar'); if (s) e.scrollTo({ top: s.offsetTop - 120, behavior: 'smooth' }); }); }
+
+  /* misafir: yazarı takip cihazda tutulur (C30 varsayımı) → bilgi paneli; kitin takip düğmesi davranışından önce yakalanır */
+  document.addEventListener('click', function(ev){ var t = ev.target.closest('[data-yazar-takip]'); if (!t || K.uye) return;
+    ev.preventDefault(); ev.stopPropagation(); t.setAttribute('aria-pressed', 'true'); t.innerHTML = K.I('fa-check') + '<span>Takipte</span>';
+    K.sayfa({ baslik: 'Bu cihazda takip ediliyor', alt: 'Giriş yaparsan her cihazında görürsün', kapat: false,
+      icerik: K.serit({ ikon: 'fa-mobile-screen', metin: k.ad + ' yazdıkça haber veririz', alt: 'Uygulamayı silersen takibin de gider.' }),
+      eylemler: [{ metin: 'Şimdi değil', tur: 'sade', attr: 'data-kapat' }, { metin: 'Giriş yap', ikon: 'fa-right-to-bracket', tur: 'birincil', href: K.git('giris') }] });
+  }, true);
+  bagla();
+  function bagla(){ document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); }); }
+})();
+</script>
+</body>
+</html>
