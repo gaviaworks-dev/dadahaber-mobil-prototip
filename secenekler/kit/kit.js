@@ -614,7 +614,7 @@
       h = { gHtml: g ? g.style.backgroundImage : '', baslik: b ? b.textContent : '', us: us ? us.outerHTML : '', meta: me ? me.outerHTML : '' }; }
     h = h || { baslik: D.detay.baslik, g: D.detay.g };
     var gs = h.gHtml ? ' style="background-image:' + h.gHtml.replace(/"/g, '\'') + '"' : bg(h.g);
-    var ogeler = tur === 'akis' ? [['Sesi aç', 'fa-volume-high'], ['Altyazı', 'fa-closed-captioning']] : [['Kaydet', 'fa-bookmark', 'data-kaydet-baglam'], ['Paylaş', 'fa-share-nodes', 'data-sayfa="paylas"'], ['Dinle · ' + D.detay.dinle, 'fa-play', 'data-spiker']];
+    var ogeler = tur === 'akis' ? [['Sesi aç', 'fa-volume-high'], ['Altyazı', 'fa-closed-captioning']] : [['Kaydet', 'fa-bookmark', 'data-kaydet-baglam'], ['Paylaş', 'fa-share-nodes', 'data-sayfa="paylas"'], ['Dinle · ' + D.detay.dinle, 'fa-headphones', 'data-dinle']];
     var m = ekle(yer, '<div class="k-baglam" role="dialog" aria-label="Seçenekler"><div class="k-baglam-k"><div class="gr"' + gs + '></div><div class="ic">' + (h.us || '') + '<h3>' + h.baslik + '</h3>' + (h.meta || '') + '</div></div>' +
       '<div class="k-baglam-l">' + ogeler.map(function(x){ return '<button type="button" data-kapat ' + (x[2] || '') + '>' + x[0] + I(x[1]) + '</button>'; }).join('') + '</div></div>');
     var c = katman(m, null, yer, o.acik);

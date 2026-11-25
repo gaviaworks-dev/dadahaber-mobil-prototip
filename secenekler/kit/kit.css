@@ -1081,7 +1081,7 @@ html[data-tema="koyu"] .k-isk{background-image:linear-gradient(90deg,var(--yuzey
 .k-mo.okuma-ustu{bottom:calc(var(--alt-guvenli) + 66px)}
 .k-mo.yerinde{position:relative;left:auto;right:auto;bottom:auto;transform:none;opacity:1;pointer-events:auto}
 .k-mo .yuz{width:42px;height:42px;border-radius:var(--k-ic);background-size:cover;background-position:center;flex:none}
-.k-mo .t{flex:1;min-width:0;line-height:1.2}
+.k-mo .t{flex:1;min-width:0;line-height:1.2;min-height:44px;display:flex;flex-direction:column;justify-content:center}
 .k-mo .t b{display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .k-mo .t small{display:flex;align-items:center;gap:var(--ikon-bosluk);font-size:12px;color:rgba(255,255,255,.66);white-space:nowrap;overflow:hidden}
 .k-dalga{display:inline-flex;gap:var(--b-4);align-items:flex-end;height:10px;flex:none}
