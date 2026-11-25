@@ -42,6 +42,9 @@
   ];
   /* K44 kural 8: önceki baskıya, başlıklarından görseli olan ilk konunun görseli (KAYNAK.txt): bütçe → TBMM, enflasyon → Merkez Bankası, kış lastiği → karlı yol, YKS → sınav salonu,
      Süper Lig → stat, uydu → anten, kar uyarısı → karlı İstanbul, sağlık taraması → tarama */
+  /* K48 saat (sırayla Günün 5'i haberleri): sözlük haberler[] aynı başlık — 15.00, 13.10, 15.35, 22 Kas; "YKS 2027 başvuru tarihleri belli oldu" sözlükte yok → public gunun-5-i.html baskı saati 07.00.
+     Not: baskı 07.00 olduğu hâlde sözlükte ilk üç haberin saati baskıdan sonra (kaynak çelişkisi, olduğu gibi). */
+  var G5_SAAT = ['15.00', '13.10', '15.35', '22 Kas', D.gunun5.baski];
   function onceki(x){ return K.satir({ alt: 'Günün 5\'i', saat: x[0], baslik: x[1], yazar: x[2], sure: x[3], izlenme: x[4], g: x[5] }, { ikon: 'fa-sun', href: K.u(BU) }); }
 
   /* bugünün baskısı */
@@ -56,7 +59,7 @@
     eylem: { metin: 'Önceki günlere bak', tur: 'sade', href: K.u(BU, 'durum=arsiv') } }) : '';
   var secici = '<div class="k-segment-kap">' + K.segment([{ metin: 'Okuyarak', alt: G5.okuma }, { metin: 'Dinleyerek', alt: G5.dinleme }], 0) + '</div>';
   var okuma = '<div class="k-satirlar" data-panel="0">' + G5.liste.map(function(x, i){ var ok = i < OKUNAN;
-    return K.satir({ tur: x.no, alt: x.kat, baslik: x.baslik, sure: x.sure, izlenme: ok ? 'Okundu' : '', g: x.g }, { durum: ok ? 'okundu' : '' }); }).join('') + '</div>';
+    return K.satir({ tur: x.no, alt: x.kat, saat: G5_SAAT[i], baslik: x.baslik, sure: x.sure, izlenme: ok ? 'Okundu' : '', g: x.g }, { durum: ok ? 'okundu' : '' }); }).join('') + '</div>';
   var dinleme = '<div class="k-ic" data-panel="1" hidden>' + K.btn({ metin: 'Beşini art arda dinle · ' + G5.dinleme, ikon: 'fa-headphones', tur: 'birincil', boy: 'buyuk', tam: true, attr: 'data-spiker style="margin-top:var(--b-8)"' }) +
     G5.liste.map(function(x){ return K.podcastSatir({ seri: 'Günün 5\'i', no: x.no, baslik: x.baslik, sure: x.ses, konuk: x.kat, g: x.g }); }).join('').split(K.git('podcastBolum')).join(K.git('dinle')) + '</div>';
   var son = '<div class="k-ic"><div class="k-dahafazla son"><b>Bugünlük bu kadar</b></div><div class="k-dahafazla" style="padding-top:0">Sonraki baskı yarın ' + G5.baski + '\'de</div></div>';

@@ -53,6 +53,8 @@
     kaynak: [{ kurum: 'Karayolları Genel Müdürlüğü', aciklama: '1. Bölge Müdürlüğü ihale ilanı · 23 Kasım 2026' }, { kurum: 'Elektronik Kamu Alımları Platformu', aciklama: 'İhale kayıt numarası 2026/1458721' }],
     ayni: [['İhale', 'fa-gavel', 'Sakarya bağlantı yolunda köprü genleşme derzlerinin yenilenmesi işi', '16 Ara'], ['İhale', 'fa-gavel', 'Kış dönemi için yol tuzu alımı ihale edilecek', '2 Ara'],
       ['Satış', 'fa-tag', 'Kullanım dışı iş makineleri açık artırmayla satılacak', '10 Ara'], ['Personel', 'fa-user-plus', 'Bölge müdürlüğüne 18 sürekli işçi alınacak', '8 Ara']] };
+  /* K48 saat: "Aynı Kurumun İlanları" yayın saati, sözlük haberler[] aynı başlık (23 Kasım) */
+  var AYNI_SAAT = ['07.15', '06.55', '13.55', '09.30'];
   /* kalan süre: şimdi 23 Kasım 16.05 → son teklif 9 Aralık 10.30 */
   var kalan = Math.floor((new Date(2026, 11, 9, 10, 30) - new Date(2026, 10, 23, 16, 5)) / 864e5);
   var LISTE = K.u('ekranlar/icerik/resmi-ilanlar.html'), DETAY = K.u('ekranlar/icerik/resmi-ilan.html');
@@ -67,7 +69,7 @@
   var kaynak = '<section class="k-bl sik">' + K.kaynaklar(IL.kaynak) + '</section>';
   var ayni = '<section class="k-bl">' + K.bb({ baslik: 'Aynı Kurumun İlanları', ikon: 'fa-building-columns', not: 'KGM' }) +
     (DUR === 'bos' ? K.bos({ ikon: 'fa-building-columns', baslik: 'Bu kurumun başka ilanı yok', aciklama: 'Kurumun yeni ilanı gelince burada görünür.', eylem: { metin: 'Bütün ilanlar', tur: 'sade', href: LISTE } })
-      : '<div class="k-satirlar">' + IL.ayni.map(function(x){ return K.satir({ alt: x[0], ikon: x[1], baslik: x[2], yazar: 'KGM', sure: 'Son gün ' + x[3] }, { href: DETAY }); }).join('') + '</div>') + '</section>';
+      : '<div class="k-satirlar">' + IL.ayni.map(function(x, i){ return K.satir({ alt: x[0], ikon: x[1], saat: AYNI_SAAT[i], baslik: x[2], yazar: 'KGM', sure: 'Son gün ' + x[3] }, { href: DETAY }); }).join('') + '</div>') + '</section>';
   var bul = K.bos({ hata: true, ikon: 'fa-file-circle-xmark', baslik: 'Bu ilan bulunamadı', aciklama: 'İlanın süresi dolmuş, idare ilanı geri çekmiş ya da bağlantı değişmiş olabilir.', eylem: { metin: 'Resmî İlanlar', ikon: 'fa-file-contract', href: LISTE } });
 
   if (DUR === 'yukleniyor') e.innerHTML = '<div class="k-ust-bosluk"></div><div class="k-ic" style="padding-top:var(--b-16)">' + K.iskelet('metin', 6) + '</div><div class="k-ic" style="padding-top:var(--b-32)">' + K.iskelet('metin', 10) + '</div><div class="k-son yalin"></div>';

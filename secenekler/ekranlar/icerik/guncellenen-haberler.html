@@ -41,11 +41,11 @@
     ['11.15', 'Kadın', 'Nafaka düzenlemesine ilişkin kanun teklifi', 'Teklifin Meclis Başkanlığı\'na sunulan metninden ilgili maddeler eklendi.', 2, '22 Kas 10.40', 'TBMM'],
     ['10.30', 'Dünya', 'Doğu Akdeniz enerji hattı için ortak protokol', 'Dışişleri Bakanlığı\'nın protokole ilişkin yazılı açıklaması eklendi.', 1, '22 Kas 15.45', 'Dışişleri Bakanlığı']
   ];
-  /* K44 kural 2 + 8: saatle başlayan çizelge; görsel sağda (kitin K.cizelge düzeni). Konuya uygun görsel (KAYNAK.txt); akaryakıt, konut kredisi ve enerji hattına uygun görsel yok, yazılı */
+  /* K44 kural 2 + 8: saatle başlayan çizelge; görsel sağda (kitin K.cizelge düzeni). Konuya uygun görsel (KAYNAK.txt); akaryakıt, konut kredisi ve enerji hattı K48 ile kitin K.gorsel eşlemesinden */
   var GOR = { 'Kar nedeniyle okulların tatil edildiği iller': 'kar-istanbul', 'TBMM\'de 2027 bütçesinin tümü üzerindeki görüşmeler': 'tbmm', 'İstanbul havalimanlarında kar nedeniyle iptal edilen seferler': 'kar-sokak',
     'Merkez Bankası politika faizini yüzde 42,5\'te sabit tuttu': 'faiz', 'KYK burs ve kredi ödeme takvimi': 'osym', 'Millî takımın aralık kampı aday kadrosu': 'milli',
     'Deprem bölgesinde kalıcı konut teslimleri': 'konteyner', 'Yerli hava savunma sisteminin ikinci teslimatı': 'kaan', 'Nafaka düzenlemesine ilişkin kanun teklifi': 'tbmm' };
-  function satir(x, i){ var g = GOR[x[2]];
+  function satir(x, i){ var g = GOR[x[2]] || K.gorsel({ baslik: x[2], kat: x[1] }); /* K48: görselsiz satır yok; eşlemede olmayana kitin konu eşlemesi (K.gorsel) */
     return '<div class="k-cz' + (i === 0 ? ' ilk' : '') + '"><span class="sa">' + x[0] + '</span><span class="ci"></span><span class="no"></span><a class="' + (g ? '' : 'yazi') + '" href="' + K.git('detay') + '"><div>' +
       '<h3>' + x[2] + '</h3></div>' + (g ? '<div class="gr" style="background-image:' + G(g) + '"></div>' : '') +
       /* başlık görselin yanında; "Ne değişti?" ve bilgi satırları tam genişlikte altta */

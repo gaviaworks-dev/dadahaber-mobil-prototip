@@ -6,6 +6,7 @@
 <title>Kısa bildirim</title>
 <!-- Dada Haber Mobil · KISA BİLDİRİMLER (E-573–E-581). Alt çubuğun (mini oynatıcı açıksa onun) üstünde, tek satır; geri al 4 sn (geri sayım çizgisi), öteki 3 sn.
      Bu ekranda bildirim incelenebilsin diye kalıcı gösterilir (geri sayım çizgisi döngüde). Arka plan: Gündem listesi (alt çubuklu); yorum bildirimi haber detayında (okuma çubuğunun üstünde).
+     K48: liste satırında kaydet düğmesi yok; "Kaydedildi" satıra uzun basınca açılan menüden (ya da detaydan) gelir → arka planda o satır basılı hâlde, düğmesiz.
      Sorgu: ?tur=kaydedildi E-573 Kaydedildi · Okunacaklar (klasör adı; misafirde "Bu cihazda") · Geri al (varsayılan)
             ?tur=kaldirildi E-574 Kaydedilenlerden çıkarıldı · Geri al
             ?tur=kopyalandi E-575 Bağlantı kopyalandı
@@ -30,10 +31,10 @@
 (function(){
   var e = document.getElementById('ekran'), TUR = K.q.get('tur') || 'kaydedildi', L = D.liste, TAM = document.documentElement.classList.contains('tam');
 
-  /* arka plan A: liste kökü (Gündem), kit parçalarıyla; o.kayitli = kaydet düğmesi basılı satır */
+  /* arka plan A: liste kökü (Gündem), kit parçalarıyla; o.basili = uzun basma menüsünden kaydedilen satır (basılı hâl, K48: satırda kaydet yok); o.indir = indirilen satır */
   function arkaListe(o){ o = o || {};
     e.innerHTML = '<header class="k-kapak" style="background-image:' + G('tbmm') + '"><h1>' + L.bolum + '</h1><p>' + L.aciklama + '</p></header><div class="k-yaprak"><div class="k-cip-satiri">' + K.cipler(L.altKonular, 0) + K.gorunum() + '</div>' +
-      '<div class="k-satirlar">' + L.haberler.slice(0, 6).map(function(h, i){ return K.satir(h, { kaydedildi: o.kayitli === i, indir: o.indir === i ? 'indirildi' : null }); }).join('') + '</div><div class="k-son"></div></div>';
+      '<div class="k-satirlar">' + L.haberler.slice(0, 6).map(function(h, i){ return K.satir(h, { basili: o.basili === i, indir: o.indir === i ? 'indirildi' : null }); }).join('') + '</div><div class="k-son"></div></div>';
     K.ustCubuk({ tur: 'foto', geri: true, baslik: L.bolum, eylemler: ['ara', 'paylas'], gorsel: 'tbmm' });
     K.altCubuk('bolum'); }
   /* arka plan B: haber detayı (yorumlar bölümüne inilmiş) */
@@ -43,11 +44,11 @@
     K.okuma(); }
 
   var TT = {
-    kaydedildi: ['Kaydedildi', { ikon: 'fa-bookmark', geriAl: true, alt: K.uye ? 'Okunacaklar' : 'Bu cihazda', eylem: 'Geri al' }, { kayitli: 0 }],
+    kaydedildi: ['Kaydedildi', { ikon: 'fa-bookmark', geriAl: true, alt: K.uye ? 'Okunacaklar' : 'Bu cihazda', eylem: 'Geri al' }, { basili: 0 }],
     kaldirildi: ['Kaydedilenlerden çıkarıldı', { ikon: 'fa-bookmark', geriAl: true }, {}],
     kopyalandi: ['Bağlantı kopyalandı', { ikon: 'fa-link' }, {}],
     takip: ['Takip ediliyor', { ikon: 'fa-heart', alt: D.uye.takip[1] + ' · ana sayfanda öne çıkar', eylem: 'Bildirim aç' }, {}],
-    indirildi: ['Çevrimdışı okumaya indirildi', { tur: 'basari' }, { kayitli: 0, indir: 0 }],
+    indirildi: ['Çevrimdışı okumaya indirildi', { tur: 'basari' }, { indir: 0 }],
     cevrimdisi: ['Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler' }, {}],
     baglandi: ['Bağlantı geri geldi', { bant: true, tur: 'basari' }, {}],
     yorum: ['Yorumun gönderildi', { tur: 'basari', alt: 'Denetimden sonra yayınlanır' }, null],

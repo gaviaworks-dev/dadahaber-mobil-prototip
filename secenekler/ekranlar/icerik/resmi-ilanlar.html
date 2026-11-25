@@ -37,10 +37,13 @@
     ['kiralama', "Antalya Havalimanı'nda ticari alan kiralama ihalesi", 'DHMİ', '7 Ara'],
     ['personel', 'İŞKUR 400 iş ve meslek danışmanı alımı için başvuru açtı', 'İŞKUR', '6 Ara'],
     ['ihale', 'Kamu kurumları için toplu kırtasiye alımı ihalesi', 'DMO', '4 Ara']];
+  /* K48 saat: sözlük haberler[] aynı başlık (ilanların yayın saati; hepsi 23 Kasım) — IL sırasıyla */
+  var SAAT = ['15.40', '12.00', '07.40', '13.50', '07.40', '14.40', '10.40', '11.45', '11.00', '10.05', '07.30', '15.45'];
+  IL.forEach(function(x, i){ x.saat = SAAT[i]; });
   var TOPLAM = '1.284', DETAY = K.u('ekranlar/icerik/resmi-ilan.html');
   function tb(k){ return TUR.filter(function(t){ return t[0] === k; })[0]; }
   function satir(x){ var t = tb(x[0]);
-    return K.satir({ alt: t[1], ikon: t[2], baslik: x[1], yazar: x[2], sure: 'Son gün ' + x[3] }, { href: DETAY }).replace('<a class="k-satir', '<a data-tur="' + x[0] + '" class="k-satir'); }
+    return K.satir({ alt: t[1], ikon: t[2], saat: x.saat, baslik: x[1], yazar: x[2], sure: 'Son gün ' + x[3] }, { href: DETAY }).replace('<a class="k-satir', '<a data-tur="' + x[0] + '" class="k-satir'); }
 
   var BOS = DUR === 'bos', SEC = BOS ? 'kiralama' : (Q.get('tur') || ''), si = Math.max(0, TUR.map(function(t){ return t[0]; }).indexOf(SEC));
   var HATA = DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? 'cevrimdisi' : '';
