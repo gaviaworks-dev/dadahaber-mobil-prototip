@@ -18,15 +18,15 @@ Kaynaklar: `CLAUDE.md` (çalışma sırası 4), `docs/ekran-envanteri.md` (ilk t
 
 | Bölüm | Satır | Ekran satırı | Hal satırı (tür: durum) | Dosya (yeni) | Kök dosyasında satır | ✓ |
 |---|---|---|---|---|---|---|
-| İçerik | 482 | 129 | 353 | 63 | 59 | 482 |
+| İçerik | 581 | 181 | 400 | 69 | 59 | 581 |
 | Durumlar | 20 | 0 | 20 | 6 | 0 | 20 |
 | Giriş | 34 | 13 | 21 | 9 | 0 | 34 |
 | Hesap | 79 | 42 | 37 | 21 | 0 | 79 |
 | Sistem | 64 | 47 | 17 | 17 | 0 | 64 |
-| **Toplam** | **679** | **231** | **448** | **116** | **59** | **679** |
+| **Toplam** | **778** | **283** | **495** | **122** | **59** | **778** |
 
 Kök dosyaları (4): `hibrit/akis.html`, `hibrit/detay.html`, `hibrit/kok.html`, `hibrit/liste.html`. Kök dosyasındaki işaretsiz satırlar (yeni haller) yayılımda tek bir takım üyesine verilir; o süre boyunca kök dosyalarının tek yazarı odur (K34).
-Sistem bölümündeki 2 "aday" satırı (Canlı Etkinlik, widget) kapsam kararı bekler; sayıma dahil değildir. Güncelleme 2026-11-25: 6 dalga bitti, 679 satırın hepsi üretildi ve ölçüldü (6. dalga K41 ile eklenen 75 satır dahil).
+Sistem bölümündeki 2 "aday" satırı (Canlı Etkinlik, widget) kapsam kararı bekler; sayıma dahil değildir. Güncelleme 2026-11-25: 6 dalga bitti, 679 satırın hepsi üretildi ve ölçüldü (6. dalga K41 ile eklenen 75 satır, 7. dalga spor ve borsa 99 satır dahil).
 
 ## 1 · İçerik
 
@@ -448,13 +448,13 @@ Her içerik ekranı, alt ekranı ve o ekrana ait haller. Liste ve detayların y�
 
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
-| E-345 | Piyasalar · Piyasa Ekranı | içerik | Servis | `piyasa-ekrani.html` | Liste | Sekmeler: Piyasa Ekranı, Döviz, Altın, Borsa, Kripto Para, Faiz Oranları, Akaryakıt; tablolar kap içinde kayar | `ekranlar/icerik/piyasalar.html` | ✓ |
-| E-346 | Piyasalar · Döviz | içerik | Servis | `doviz.html` | Liste | Kur tablosu + çevirici (D1 kalıbı) | `ekranlar/icerik/piyasalar.html?sekme=doviz` | ✓ |
-| E-347 | Piyasalar · Altın | içerik | Servis | `altin.html` | Liste | Tablo | `ekranlar/icerik/piyasalar.html?sekme=altin` | ✓ |
-| E-348 | Piyasalar · Borsa | içerik | Servis | `borsa.html` | Liste | Hisse tablosu, aramalı | `ekranlar/icerik/piyasalar.html?sekme=borsa` | ✓ |
-| E-349 | Piyasalar · Kripto Para | içerik | Servis | `kripto-para.html` | Liste | Tablo + çevirici | `ekranlar/icerik/piyasalar.html?sekme=kripto` | ✓ |
-| E-350 | Piyasalar · Faiz Oranları | içerik | Servis | `faiz-oranlari.html` | Liste | Tablo | `ekranlar/icerik/piyasalar.html?sekme=faiz` | ✓ |
-| E-351 | Piyasalar · Akaryakıt Fiyatları | içerik | Servis | `akaryakit-fiyatlari.html` | Liste | İl seçici (şehir seç alt sayfası) + tablo | `ekranlar/icerik/piyasalar.html?sekme=akaryakit` | ✓ |
+| E-345 | Piyasalar · Piyasa Ekranı | içerik | Servis | `piyasa-ekrani.html` | Liste | Süzgeç çipleri; her satır ayrıntı açar; haberler | `ekranlar/icerik/piyasalar.html` | ✓ |
+| E-346 | Piyasalar · Döviz | içerik | Servis | `doviz.html` | Liste | 8 kur, gün içi; çevirici; takvim; haberler | `ekranlar/icerik/piyasalar.html?sekme=doviz` | ✓ |
+| E-347 | Piyasalar · Altın | içerik | Servis | `altin.html` | Liste | 8 tür; Altın hesaplayıcı; haberler | `ekranlar/icerik/piyasalar.html?sekme=altin` | ✓ |
+| E-348 | Piyasalar · Borsa | içerik | Servis | `borsa.html` | Liste | Endeksler; Günün Hareketlileri; 50 hisse, arama ve sıralama; satır hisse ekranını açar; haberler | `ekranlar/icerik/piyasalar.html?sekme=borsa` | ✓ |
+| E-349 | Piyasalar · Kripto Para | içerik | Servis | `kripto-para.html` | Liste | 50 kripto, arama ve sıralama; çevirici; haberler | `ekranlar/icerik/piyasalar.html?sekme=kripto` | ✓ |
+| E-350 | Piyasalar · Faiz Oranları | içerik | Servis | `faiz-oranlari.html` | Liste | 3 tablo; Kredi hesaplayıcı; haberler | `ekranlar/icerik/piyasalar.html?sekme=faiz` | ✓ |
+| E-351 | Piyasalar · Akaryakıt | içerik | Servis | `akaryakit-fiyatlari.html` | Liste | İl seçici; tablo; Yakıt maliyeti; haberler | `ekranlar/icerik/piyasalar.html?sekme=akaryakit` | ✓ |
 | E-352 | Piyasalar · çevirici alt sayfası | sistem | Servis | `doviz.html` (çevirici) | Liste | Tutar + iki birim; sayısal klavye | `ekranlar/icerik/piyasalar.html?sekme=doviz&durum=cevirici` | ✓ |
 | E-353 | Piyasalar · yükleniyor | durum | Servis | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/piyasalar.html?durum=yukleniyor` | ✓ |
 | E-354 | Piyasalar · aşağı çekip yenileme | durum | Servis | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/piyasalar.html?durum=yenileniyor` | ✓ |
@@ -476,7 +476,7 @@ Her içerik ekranı, alt ekranı ve o ekrana ait haller. Liste ve detayların y�
 | E-370 | Namaz Vakitleri · yükleniyor | durum | Servis | `durumlar.html` (iskelet) | — | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/namaz-vakitleri.html?durum=yukleniyor` | ✓ |
 | E-371 | Namaz Vakitleri · hata | durum | Servis | `500.html` | — | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/namaz-vakitleri.html?durum=hata` | ✓ |
 | E-372 | Namaz Vakitleri · çevrimdışı | durum | Servis | `cevrimdisi.html` | — | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/namaz-vakitleri.html?durum=cevrimdisi` | ✓ |
-| E-373 | Canlı Skor | içerik | Spor | `canli-skor.html` | Liste | Branş sekmeleri, canlı önce, takımlarım üstte | `ekranlar/icerik/canli-skor.html` | ✓ |
+| E-373 | Canlı Skor | içerik | Spor | `canli-skor.html` | Liste | Spor merkezi: tarih şeridi (Dün · Bugün · Yarın), süzgeç (Canlı · Biten · Başlayacak · Takip ettiklerim), branş segmenti, liglere göre katlanır gruplar; maç → maç detayı | `ekranlar/icerik/canli-skor.html` | ✓ |
 | E-374 | Canlı Skor · yükleniyor | durum | Spor | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/canli-skor.html?durum=yukleniyor` | ✓ |
 | E-375 | Canlı Skor · aşağı çekip yenileme | durum | Spor | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/canli-skor.html?durum=yenileniyor` | ✓ |
 | E-376 | Canlı Skor · boş | durum | Spor | `durumlar.html` (boş) | Liste | Şu an canlı maç yok; günün fikstürü | `ekranlar/icerik/canli-skor.html?durum=bos` | ✓ |
@@ -491,20 +491,20 @@ Her içerik ekranı, alt ekranı ve o ekrana ait haller. Liste ve detayların y�
 | E-385 | Fikstür · boş | durum | Spor | `durumlar.html` (boş) | Liste | Bu hafta maç yok | `ekranlar/icerik/fikstur.html?durum=bos` | ✓ |
 | E-386 | Fikstür · hata | durum | Spor | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/fikstur.html?durum=hata` | ✓ |
 | E-387 | Fikstür · çevrimdışı | durum | Spor | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/fikstur.html?durum=cevrimdisi` | ✓ |
-| E-388 | Takımlar | içerik | Spor | `takimlar.html` | Liste | Takım ızgarası; takımlarım işaretli | `ekranlar/icerik/takimlar.html` | ✓ |
+| E-388 | Takımlar | içerik | Spor | `takimlar.html` | Liste | Dört takım kendi sayfasını, öteki takımlar vurgulu puan durumunu açar | `ekranlar/icerik/takimlar.html` | ✓ |
 | E-389 | Takımlar · yükleniyor | durum | Spor | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/takimlar.html?durum=yukleniyor` | ✓ |
 | E-390 | Takımlar · hata | durum | Spor | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/takimlar.html?durum=hata` | ✓ |
 | E-391 | Takımlar · çevrimdışı | durum | Spor | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/takimlar.html?durum=cevrimdisi` | ✓ |
-| E-392 | Takım sayfası · üye | içerik | Spor | `galatasaray.html`, `fenerbahce.html` … | Liste | Profil başlığı, Takip et, haberler, fikstür, puan | `ekranlar/icerik/takim.html` | ✓ |
+| E-392 | Takım sayfası · üye | içerik | Spor | `galatasaray.html`, `fenerbahce.html` … | Liste | Sekmeli takım sayfası: Özet · Maçlar · Kadro · Puan durumu · Haberler | `ekranlar/icerik/takim.html` | ✓ |
 | E-393 | Takım sayfası · misafir | içerik | Spor | `galatasaray.html` … | Liste | Takip et → tetik paneli | `ekranlar/icerik/takim.html?uye=0` | ✓ |
 | E-394 | Takım sayfası · yükleniyor | durum | Spor | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/takim.html?durum=yukleniyor` | ✓ |
 | E-395 | Takım sayfası · aşağı çekip yenileme | durum | Spor | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/takim.html?durum=yenileniyor` | ✓ |
 | E-396 | Takım sayfası · sayfa sonu yükleme | durum | Spor | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/takim.html?durum=daha-fazla` | ✓ |
 | E-397 | Takım sayfası · hata | durum | Spor | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/takim.html?durum=hata` | ✓ |
 | E-398 | Takım sayfası · çevrimdışı | durum | Spor | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/takim.html?durum=cevrimdisi` | ✓ |
-| E-399 | Maç detayı · başlamadı | içerik | Spor | `mac-detay.html` | Detay | Saat, kadrolar, son maçlar | `ekranlar/icerik/mac-detay.html?durum=once` | ✓ |
-| E-400 | Maç detayı · canlı | içerik | Spor | `mac-detay.html` | Detay | Skor, dakika, maç anlatımı (yeni üstte), istatistik | `ekranlar/icerik/mac-detay.html` | ✓ |
-| E-401 | Maç detayı · bitti | durum | Spor | `mac-detay.html` | Detay | Sonuç, özet, maç haberi bağlantısı | `ekranlar/icerik/mac-detay.html?durum=bitti` | ✓ |
+| E-399 | Maç detayı · başlamadı | içerik | Spor | `mac-detay.html` | Detay | Sekmeli maç merkezi: Anlatım · İstatistik · Kadrolar · Puan durumu · Rekabet | `ekranlar/icerik/mac-detay.html?durum=once` | ✓ |
+| E-400 | Maç detayı · canlı | içerik | Spor | `mac-detay.html` | Detay | Sekmeli maç merkezi: Anlatım · İstatistik · Kadrolar · Puan durumu · Rekabet | `ekranlar/icerik/mac-detay.html` | ✓ |
+| E-401 | Maç detayı · bitti | durum | Spor | `mac-detay.html` | Detay | Sekmeli maç merkezi: Anlatım · İstatistik · Kadrolar · Puan durumu · Rekabet | `ekranlar/icerik/mac-detay.html?durum=bitti` | ✓ |
 | E-402 | Maç detayı · yükleniyor | durum | Spor | `durumlar.html` (iskelet) | Detay | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/mac-detay.html?durum=yukleniyor` | ✓ |
 | E-403 | Maç detayı · aşağı çekip yenileme | durum | Spor | — | Detay | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/mac-detay.html?durum=yenileniyor` | ✓ |
 | E-404 | Maç detayı · hata | durum | Spor | `500.html` | Detay | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/mac-detay.html?durum=hata` | ✓ |
@@ -590,6 +590,115 @@ Sitede üretilmiş, kapsam kararı bekleyen (B-24, B-25, B-26, B-12) bölümler 
 | E-677 | Dada Ailesi · yükleniyor | durum | Kurumsal | `durumlar.html` (iskelet) | — | Satır iskeleti | `ekranlar/icerik/dada-ailesi.html?durum=yukleniyor` | ✓ |
 | E-678 | Dada Ailesi · hata | durum | Kurumsal | `500.html` | — | Sunucu hatası ya da zaman aşımı; Yeniden dene | `ekranlar/icerik/dada-ailesi.html?durum=hata` | ✓ |
 | E-679 | Dada Ailesi · çevrimdışı | durum | Kurumsal | `cevrimdisi.html` | — | Liste + bant; dokununca "Bağlantı yok" | `ekranlar/icerik/dada-ailesi.html?durum=cevrimdisi` | ✓ |
+
+### Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)
+
+| ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
+|---|---|---|---|---|---|---|---|---|
+| E-682 | Canlı Skor · misafir | içerik | Spor | `canli-skor.html` | Liste | Takımların → Takımını seç · Giriş yap | `ekranlar/icerik/canli-skor.html?uye=0` | ✓ |
+| E-683 | Canlı Skor · dün | içerik | Spor | `canli-skor.html` | Liste | Gün sekmesi, biten maçlar lige göre | `ekranlar/icerik/canli-skor.html?gun=dun` | ✓ |
+| E-684 | Canlı Skor · yarın | içerik | Spor | `canli-skor.html` | Liste | Başlayacak maçlar lige göre | `ekranlar/icerik/canli-skor.html?gun=yarin` | ✓ |
+| E-685 | Canlı Skor · basketbol | içerik | Spor | `basketbol.html` | Liste | Branş segmenti | `ekranlar/icerik/canli-skor.html?spor=basketbol` | ✓ |
+| E-686 | Canlı Skor · voleybol | içerik | Spor | `voleybol.html` | Liste | Branş segmenti | `ekranlar/icerik/canli-skor.html?spor=voleybol` | ✓ |
+| E-687 | Canlı Skor · diğer (tenis, e-spor) | içerik | Spor | `canli-skor.html` | Liste | Lig başlığı bağlantısız | `ekranlar/icerik/canli-skor.html?spor=diger` | ✓ |
+| E-688 | Canlı Skor · süzgeç canlı | durum | Spor | — | Liste | Yalnız canlı maçlar | `ekranlar/icerik/canli-skor.html?suz=canli` | ✓ |
+| E-689 | Canlı Skor · süzgeç biten | durum | Spor | — | Liste | Maç sonu | `ekranlar/icerik/canli-skor.html?suz=biten` | ✓ |
+| E-690 | Canlı Skor · süzgeç başlayacak | durum | Spor | — | Liste | Saatli maçlar | `ekranlar/icerik/canli-skor.html?suz=baslayacak` | ✓ |
+| E-691 | Canlı Skor · takip ettiklerim · üye | durum | Spor | — | Liste | Takımın maçları; yoksa boş + Takımlarını yönet | `ekranlar/icerik/canli-skor.html?suz=takip` | ✓ |
+| E-692 | Canlı Skor · takip ettiklerim · misafir | durum | Spor | — | Liste | Giriş çağrısı | `ekranlar/icerik/canli-skor.html?suz=takip&uye=0` | ✓ |
+| E-693 | Lig · puan durumu · üye | içerik | Spor | `super-lig.html`, `puan-durumu.html` | Liste | Takip et, Lig değiştir, 5 sekme, takımın satırı vurgulu | `ekranlar/icerik/lig.html?lig=super-lig` | ✓ |
+| E-694 | Lig · misafir | içerik | Spor | `super-lig.html` | Liste | Takip et → tetik paneli | `ekranlar/icerik/lig.html?uye=0` | ✓ |
+| E-695 | Lig · iç saha | içerik | Spor | `super-lig.html` | Liste | Genel · İç · Dış | `ekranlar/icerik/lig.html?gor=ic` | ✓ |
+| E-696 | Lig · fikstür | içerik | Spor | `fikstur.html` | Liste | Gün ayraçlı yaklaşan maçlar | `ekranlar/icerik/lig.html?sekme=fikstur` | ✓ |
+| E-697 | Lig · sonuçlar | içerik | Spor | `fikstur.html` | Liste | Canlı + maç sonu, yeni üstte | `ekranlar/icerik/lig.html?sekme=sonuclar` | ✓ |
+| E-698 | Lig · istatistik | içerik | Spor | — | Liste | Takım istatistikleri, kulüp golcüleri; gol krallığı veri yok | `ekranlar/icerik/lig.html?sekme=istatistik` | ✓ |
+| E-699 | Lig · haberler | içerik | Spor | `super-lig.html` | Liste | K44 satırları | `ekranlar/icerik/lig.html?sekme=haberler` | ✓ |
+| E-700 | Lig · kupa (tablo yok) | içerik | Spor | `avrupa-ligleri.html` | Liste | Varsayılan Fikstür; Puan boş hal | `ekranlar/icerik/lig.html?lig=sampiyonlar-ligi` | ✓ |
+| E-701 | Lig · basketbol | içerik | Spor | `basketbol.html` | Liste | Beraberliksiz tablo | `ekranlar/icerik/lig.html?lig=bsl` | ✓ |
+| E-702 | Lig · voleybol fikstür | içerik | Spor | `voleybol.html` | Liste | — | `ekranlar/icerik/lig.html?lig=sultanlar&sekme=fikstur` | ✓ |
+| E-703 | Lig · takım vurgulu | içerik | Spor | `takimlar.html` | Liste | Takımlar'dan gelen satır vurgusu | `ekranlar/icerik/lig.html?vurgu=KON` | ✓ |
+| E-704 | Lig · Lig değiştir alt sayfası | sistem | Spor | — | Liste | Branş grupları, seçili tik | `ekranlar/icerik/lig.html?ac=lig` | ✓ |
+| E-705 | Lig · yükleniyor | durum | Spor | `durumlar.html` | Liste | İskelet | `ekranlar/icerik/lig.html?durum=yukleniyor` | ✓ |
+| E-706 | Lig · yenileme | durum | Spor | — | Liste | Çek → bırak → güncel | `ekranlar/icerik/lig.html?durum=yenileniyor` | ✓ |
+| E-707 | Lig · boş | durum | Spor | `durumlar.html` | Liste | Yaklaşan maç yok | `ekranlar/icerik/lig.html?durum=bos` | ✓ |
+| E-708 | Lig · hata | durum | Spor | `500.html` | Liste | Yeniden dene | `ekranlar/icerik/lig.html?durum=hata` | ✓ |
+| E-709 | Lig · çevrimdışı | durum | Spor | `cevrimdisi.html` | Liste | Bant; önbellek yoksa tam ekran | `ekranlar/icerik/lig.html?durum=cevrimdisi` | ✓ |
+| E-710 | Lig · bulunamadı | durum | Spor | `404.html` | Liste | Bilinmeyen lig | `ekranlar/icerik/lig.html?durum=bulunamadi` | ✓ |
+| E-711 | Branş · basketbol | içerik | Spor | `basketbol.html` | Liste | Ligler, skorlar, fikstür, puan, transfer, haberler | `ekranlar/icerik/brans.html?brans=basketbol` | ✓ |
+| E-712 | Branş · voleybol | içerik | Spor | `voleybol.html` | Liste | Ligler, skorlar, fikstür, puan, transfer, haberler | `ekranlar/icerik/brans.html?brans=voleybol` | ✓ |
+| E-713 | Branş · futbol | içerik | Spor | `futbol.html` | Liste | Ligler, skorlar, fikstür, puan, transfer, haberler | `ekranlar/icerik/brans.html?brans=futbol` | ✓ |
+| E-714 | Branş · yukleniyor | durum | Spor | standart | Liste | Standart hal (boş = bugün maç yok) | `ekranlar/icerik/brans.html?durum=yukleniyor` | ✓ |
+| E-715 | Branş · yenileniyor | durum | Spor | standart | Liste | Standart hal (boş = bugün maç yok) | `ekranlar/icerik/brans.html?durum=yenileniyor` | ✓ |
+| E-716 | Branş · bos | durum | Spor | standart | Liste | Standart hal (boş = bugün maç yok) | `ekranlar/icerik/brans.html?durum=bos` | ✓ |
+| E-717 | Branş · hata | durum | Spor | standart | Liste | Standart hal (boş = bugün maç yok) | `ekranlar/icerik/brans.html?durum=hata` | ✓ |
+| E-718 | Branş · cevrimdisi | durum | Spor | standart | Liste | Standart hal (boş = bugün maç yok) | `ekranlar/icerik/brans.html?durum=cevrimdisi` | ✓ |
+| E-719 | Branş · bulunamadi | durum | Spor | standart | Liste | Standart hal (boş = bugün maç yok) | `ekranlar/icerik/brans.html?durum=bulunamadi` | ✓ |
+| E-720 | Transfer | içerik | Spor | `transfer.html` | Liste | Dönem şeridi, branş segmenti, durum çipleri, hareketler, haberler | `ekranlar/icerik/transfer.html` | ✓ |
+| E-721 | Transfer · basketbol | içerik | Spor | `basketbol.html` | Liste | Branş süzgeci | `ekranlar/icerik/transfer.html?brans=basketbol` | ✓ |
+| E-722 | Transfer · Avrupa · resmî | içerik | Spor | `avrupa-ligleri.html` | Liste | Süzgeç | `ekranlar/icerik/transfer.html?brans=avrupa&suz=resmi` | ✓ |
+| E-723 | Transfer · yukleniyor | durum | Spor | standart | Liste | Standart hal (boş = süzgeçte hareket yok) | `ekranlar/icerik/transfer.html?durum=yukleniyor` | ✓ |
+| E-724 | Transfer · yenileniyor | durum | Spor | standart | Liste | Standart hal (boş = süzgeçte hareket yok) | `ekranlar/icerik/transfer.html?durum=yenileniyor` | ✓ |
+| E-725 | Transfer · bos | durum | Spor | standart | Liste | Standart hal (boş = süzgeçte hareket yok) | `ekranlar/icerik/transfer.html?durum=bos` | ✓ |
+| E-726 | Transfer · hata | durum | Spor | standart | Liste | Standart hal (boş = süzgeçte hareket yok) | `ekranlar/icerik/transfer.html?durum=hata` | ✓ |
+| E-727 | Transfer · cevrimdisi | durum | Spor | standart | Liste | Standart hal (boş = süzgeçte hareket yok) | `ekranlar/icerik/transfer.html?durum=cevrimdisi` | ✓ |
+| E-728 | Millî Takım · üye | içerik | Spor | `milli-takim.html` | Liste | Takip et, branş çipleri, maçlar, haberler | `ekranlar/icerik/milli-takim.html` | ✓ |
+| E-729 | Millî Takım · misafir | içerik | Spor | `milli-takim.html` | Liste | Takip et → tetik | `ekranlar/icerik/milli-takim.html?uye=0` | ✓ |
+| E-730 | Millî Takım · basketbol | içerik | Spor | `milli-takim.html` | Liste | Süzgeç | `ekranlar/icerik/milli-takim.html?suz=basketbol` | ✓ |
+| E-731 | Millî Takım · yukleniyor | durum | Spor | standart | Liste | Standart hal (boş = yaklaşan maç yok) | `ekranlar/icerik/milli-takim.html?durum=yukleniyor` | ✓ |
+| E-732 | Millî Takım · yenileniyor | durum | Spor | standart | Liste | Standart hal (boş = yaklaşan maç yok) | `ekranlar/icerik/milli-takim.html?durum=yenileniyor` | ✓ |
+| E-733 | Millî Takım · bos | durum | Spor | standart | Liste | Standart hal (boş = yaklaşan maç yok) | `ekranlar/icerik/milli-takim.html?durum=bos` | ✓ |
+| E-734 | Millî Takım · hata | durum | Spor | standart | Liste | Standart hal (boş = yaklaşan maç yok) | `ekranlar/icerik/milli-takim.html?durum=hata` | ✓ |
+| E-735 | Millî Takım · cevrimdisi | durum | Spor | standart | Liste | Standart hal (boş = yaklaşan maç yok) | `ekranlar/icerik/milli-takim.html?durum=cevrimdisi` | ✓ |
+| E-736 | Avrupa Ligleri | içerik | Spor | `avrupa-ligleri.html` | Liste | Ligler, kupalar, skorlar, ŞL fikstürü, transfer, haberler | `ekranlar/icerik/avrupa-ligleri.html` | ✓ |
+| E-737 | Avrupa Ligleri · yukleniyor | durum | Spor | standart | Liste | Standart hal (boş = bugün maç yok) | `ekranlar/icerik/avrupa-ligleri.html?durum=yukleniyor` | ✓ |
+| E-738 | Avrupa Ligleri · yenileniyor | durum | Spor | standart | Liste | Standart hal (boş = bugün maç yok) | `ekranlar/icerik/avrupa-ligleri.html?durum=yenileniyor` | ✓ |
+| E-739 | Avrupa Ligleri · bos | durum | Spor | standart | Liste | Standart hal (boş = bugün maç yok) | `ekranlar/icerik/avrupa-ligleri.html?durum=bos` | ✓ |
+| E-740 | Avrupa Ligleri · hata | durum | Spor | standart | Liste | Standart hal (boş = bugün maç yok) | `ekranlar/icerik/avrupa-ligleri.html?durum=hata` | ✓ |
+| E-741 | Avrupa Ligleri · cevrimdisi | durum | Spor | standart | Liste | Standart hal (boş = bugün maç yok) | `ekranlar/icerik/avrupa-ligleri.html?durum=cevrimdisi` | ✓ |
+| E-742 | Takım · Fenerbahçe | içerik | Spor | `fenerbahce.html` | Liste | Koyu kapak, 5 sekme | `ekranlar/icerik/takim.html?takim=fenerbahce` | ✓ |
+| E-743 | Takım · Beşiktaş | içerik | Spor | `besiktas.html` | Liste | Koyu kapak, 5 sekme | `ekranlar/icerik/takim.html?takim=besiktas` | ✓ |
+| E-744 | Takım · Trabzonspor | içerik | Spor | `trabzonspor.html` | Liste | Koyu kapak, 5 sekme | `ekranlar/icerik/takim.html?takim=trabzonspor` | ✓ |
+| E-745 | Takım · misafir (Beşiktaş) | içerik | Spor | `besiktas.html` | Liste | Takip et → tetik | `ekranlar/icerik/takim.html?takim=besiktas&uye=0` | ✓ |
+| E-746 | Takım · maçlar | içerik | Spor | `galatasaray.html` | Liste | Son 4 + fikstür 3 | `ekranlar/icerik/takim.html?sekme=maclar` | ✓ |
+| E-747 | Takım · kadro | içerik | Spor | `galatasaray.html` | Liste | 12 oyuncu tablosu | `ekranlar/icerik/takim.html?sekme=kadro` | ✓ |
+| E-748 | Takım · puan durumu | içerik | Spor | `galatasaray.html` | Liste | Genel · İç · Dış | `ekranlar/icerik/takim.html?sekme=puan` | ✓ |
+| E-749 | Takım · haberler | içerik | Spor | `galatasaray.html` | Liste | K44 satırları | `ekranlar/icerik/takim.html?sekme=haberler` | ✓ |
+| E-750 | Takım · bulunamadı | durum | Spor | `404.html` | Liste | Bilinmeyen takım | `ekranlar/icerik/takim.html?durum=bulunamadi` | ✓ |
+| E-751 | Maç detayı · puan durumu | içerik | Spor | `mac-detay.html` | Detay | İki takımın satırı vurgulu | `ekranlar/icerik/mac-detay.html?sekme=puan` | ✓ |
+| E-752 | Maç detayı · rekabet | içerik | Spor | `mac-detay.html` | Detay | Form + aralarındaki maçlar veri yok + haber | `ekranlar/icerik/mac-detay.html?sekme=rekabet` | ✓ |
+| E-753 | Maç detayı · bitti · rekabet | içerik | Spor | `mac-detay.html` | Detay | Özet · Kadrolar · Puan · Rekabet | `ekranlar/icerik/mac-detay.html?durum=bitti&sekme=rekabet` | ✓ |
+| E-754 | Maç detayı · başlamadı · puan durumu | içerik | Spor | `mac-detay.html` | Detay | Kadrolar · Rekabet · Puan | `ekranlar/icerik/mac-detay.html?durum=once&sekme=puan` | ✓ |
+
+### Borsa, hisse ve piyasa sekmeleri (K43 · 7. dalga)
+
+| ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
+|---|---|---|---|---|---|---|---|---|
+| E-755 | Piyasalar · Borsa · sıralı | durum | Servis | `borsa.html` (Artan) | Liste | Artan · Azalan · Hacim çipi | `ekranlar/icerik/piyasalar.html?sekme=borsa&sira=artan` | ✓ |
+| E-756 | Piyasalar · Borsa · arama sonucu | durum | Servis | `borsa.html` (arama) | Liste | Kod ya da şirket adıyla süzülür | `ekranlar/icerik/piyasalar.html?sekme=borsa&ara=holding` | ✓ |
+| E-757 | Piyasalar · Borsa · bütün liste | durum | Servis | `borsa.html` | Liste | 50 satırın hepsi | `ekranlar/icerik/piyasalar.html?sekme=borsa&tum=1` | ✓ |
+| E-758 | Piyasalar · Borsa · yükleniyor | durum | Servis | `durumlar.html` | Liste | İskelet | `ekranlar/icerik/piyasalar.html?sekme=borsa&durum=yukleniyor` | ✓ |
+| E-759 | Piyasalar · Borsa · çevrimdışı | durum | Servis | `cevrimdisi.html` | Liste | Son veri + bant | `ekranlar/icerik/piyasalar.html?sekme=borsa&durum=cevrimdisi` | ✓ |
+| E-760 | Piyasalar · Kripto · sıralı | durum | Servis | `kripto-para.html` | Liste | Piyasa değeri · Artan · Azalan | `ekranlar/icerik/piyasalar.html?sekme=kripto&sira=azalan` | ✓ |
+| E-761 | Piyasalar · Kripto · boş arama | durum | Servis | `kripto-para.html` | Liste | Sonuç yok + Aramayı temizle | `ekranlar/icerik/piyasalar.html?sekme=kripto&durum=bos` | ✓ |
+| E-762 | Piyasalar · Kripto çevirici | sistem | Servis | `kripto-para.html` | Liste | Alt sayfa | `ekranlar/icerik/piyasalar.html?sekme=kripto&durum=cevirici` | ✓ |
+| E-763 | Piyasalar · Altın hesaplayıcı | sistem | Servis | `altin.html` | Liste | Alt sayfa | `ekranlar/icerik/piyasalar.html?sekme=altin&durum=cevirici` | ✓ |
+| E-764 | Piyasalar · Kredi hesaplayıcı | sistem | Servis | `faiz-oranlari.html` | Liste | Alt sayfa | `ekranlar/icerik/piyasalar.html?sekme=faiz&durum=cevirici` | ✓ |
+| E-765 | Piyasalar · Yakıt maliyeti | sistem | Servis | `akaryakit-fiyatlari.html` | Liste | Alt sayfa | `ekranlar/icerik/piyasalar.html?sekme=akaryakit&durum=cevirici` | ✓ |
+| E-766 | Hisse detayı | içerik | Servis | `enstruman-detay.html` (borsa.html satırı) | Detay | Fiyat, değişim, hacim; Takip et · Fiyat alarmı; gün içi aralık; geçmiş veri yok; künye; endeksler; öteki hisseler; Borsa haberleri | `ekranlar/icerik/hisse.html?kod=THYAO` | ✓ |
+| E-767 | Hisse detayı · misafir | durum | Servis | — | Detay | Takip ve alarm giriş paneli açar | `ekranlar/icerik/hisse.html?kod=THYAO&uye=0` | ✓ |
+| E-768 | Hisse detayı · fiyat alarmı | sistem | Servis | — | Detay | Üstüne çıkınca / altına inince, hedef fiyat | `ekranlar/icerik/hisse.html?kod=THYAO&durum=alarm` | ✓ |
+| E-769 | Hisse detayı · alarm · misafir | sistem | Servis | — | Detay | Giriş yap · Üye ol · Şimdi değil | `ekranlar/icerik/hisse.html?kod=THYAO&uye=0&durum=alarm` | ✓ |
+| E-770 | Hisse detayı · yükleniyor | durum | Servis | `durumlar.html` | Detay | İskelet | `ekranlar/icerik/hisse.html?kod=THYAO&durum=yukleniyor` | ✓ |
+| E-771 | Hisse detayı · boş | durum | Servis | `durumlar.html` | Detay | İlgili haber yok | `ekranlar/icerik/hisse.html?kod=THYAO&durum=bos` | ✓ |
+| E-772 | Hisse detayı · hata | durum | Servis | `500.html` | Detay | Sunucu hatası, zaman aşımı | `ekranlar/icerik/hisse.html?kod=THYAO&durum=hata` | ✓ |
+| E-773 | Hisse detayı · çevrimdışı | durum | Servis | `cevrimdisi.html` | Detay | Bant; önbellek yoksa tam ekran | `ekranlar/icerik/hisse.html?kod=THYAO&durum=cevrimdisi` | ✓ |
+| E-774 | Hisse detayı · bulunamadı | durum | Servis | `404.html` | Detay | Bilinmeyen kod; Borsa'ya dön | `ekranlar/icerik/hisse.html?kod=THYAO&durum=bulunamadi` | ✓ |
+| E-775 | Enstrüman · kripto | içerik | Servis | `enstruman-detay.html` | Detay | $ fiyat, TL, aralık, sıra | `ekranlar/icerik/enstruman.html?kod=btc` | ✓ |
+| E-776 | Enstrüman · endeks | içerik | Servis | `enstruman-detay.html` | Detay | Açılış, hacim, önceki | `ekranlar/icerik/enstruman.html?kod=xu030` | ✓ |
+| E-777 | Enstrüman · altın türü | içerik | Servis | `enstruman-detay.html` | Detay | Alış/satış, aralık | `ekranlar/icerik/enstruman.html?kod=ceyrek-altin` | ✓ |
+| E-778 | Enstrüman · emtia | içerik | Servis | `enstruman-detay.html` | Detay | Son, aralık, önceki | `ekranlar/icerik/enstruman.html?kod=brent` | ✓ |
+| E-779 | Enstrüman · fiyat alarmı | sistem | Servis | — | Detay | Üye alt sayfası; misafirde giriş paneli | `ekranlar/icerik/enstruman.html?durum=alarm` | ✓ |
+| E-780 | Enstrüman · boş | durum | Servis | `durumlar.html` | Detay | İlgili haber yok | `ekranlar/icerik/enstruman.html?kod=btc&durum=bos` | ✓ |
 
 ## 2 · Durumlar
 

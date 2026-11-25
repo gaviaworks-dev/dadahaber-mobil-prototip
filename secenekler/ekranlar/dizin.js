@@ -2830,7 +2830,7 @@ window.DIZIN = [
 },
 {
 "id": "E-351",
-"ad": "Piyasalar · Akaryakıt Fiyatları",
+"ad": "Piyasalar · Akaryakıt",
 "tur": "içerik",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/piyasalar.html?sekme=akaryakit",
@@ -3858,6 +3858,798 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler, araçlar, Kadın özel, Dada Ailesi (K41 · 6. dalga)",
 "dosya": "ekranlar/icerik/dada-ailesi.html?durum=cevrimdisi",
+"ok": true
+},
+{
+"id": "E-682",
+"ad": "Canlı Skor · misafir",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/canli-skor.html?uye=0",
+"ok": true
+},
+{
+"id": "E-683",
+"ad": "Canlı Skor · dün",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/canli-skor.html?gun=dun",
+"ok": true
+},
+{
+"id": "E-684",
+"ad": "Canlı Skor · yarın",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/canli-skor.html?gun=yarin",
+"ok": true
+},
+{
+"id": "E-685",
+"ad": "Canlı Skor · basketbol",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/canli-skor.html?spor=basketbol",
+"ok": true
+},
+{
+"id": "E-686",
+"ad": "Canlı Skor · voleybol",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/canli-skor.html?spor=voleybol",
+"ok": true
+},
+{
+"id": "E-687",
+"ad": "Canlı Skor · diğer (tenis, e-spor)",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/canli-skor.html?spor=diger",
+"ok": true
+},
+{
+"id": "E-688",
+"ad": "Canlı Skor · süzgeç canlı",
+"tur": "durum",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/canli-skor.html?suz=canli",
+"ok": true
+},
+{
+"id": "E-689",
+"ad": "Canlı Skor · süzgeç biten",
+"tur": "durum",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/canli-skor.html?suz=biten",
+"ok": true
+},
+{
+"id": "E-690",
+"ad": "Canlı Skor · süzgeç başlayacak",
+"tur": "durum",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/canli-skor.html?suz=baslayacak",
+"ok": true
+},
+{
+"id": "E-691",
+"ad": "Canlı Skor · takip ettiklerim · üye",
+"tur": "durum",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/canli-skor.html?suz=takip",
+"ok": true
+},
+{
+"id": "E-692",
+"ad": "Canlı Skor · takip ettiklerim · misafir",
+"tur": "durum",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/canli-skor.html?suz=takip&uye=0",
+"ok": true
+},
+{
+"id": "E-693",
+"ad": "Lig · puan durumu · üye",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/lig.html?lig=super-lig",
+"ok": true
+},
+{
+"id": "E-694",
+"ad": "Lig · misafir",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/lig.html?uye=0",
+"ok": true
+},
+{
+"id": "E-695",
+"ad": "Lig · iç saha",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/lig.html?gor=ic",
+"ok": true
+},
+{
+"id": "E-696",
+"ad": "Lig · fikstür",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/lig.html?sekme=fikstur",
+"ok": true
+},
+{
+"id": "E-697",
+"ad": "Lig · sonuçlar",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/lig.html?sekme=sonuclar",
+"ok": true
+},
+{
+"id": "E-698",
+"ad": "Lig · istatistik",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/lig.html?sekme=istatistik",
+"ok": true
+},
+{
+"id": "E-699",
+"ad": "Lig · haberler",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/lig.html?sekme=haberler",
+"ok": true
+},
+{
+"id": "E-700",
+"ad": "Lig · kupa (tablo yok)",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/lig.html?lig=sampiyonlar-ligi",
+"ok": true
+},
+{
+"id": "E-701",
+"ad": "Lig · basketbol",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/lig.html?lig=bsl",
+"ok": true
+},
+{
+"id": "E-702",
+"ad": "Lig · voleybol fikstür",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/lig.html?lig=sultanlar&sekme=fikstur",
+"ok": true
+},
+{
+"id": "E-703",
+"ad": "Lig · takım vurgulu",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/lig.html?vurgu=KON",
+"ok": true
+},
+{
+"id": "E-704",
+"ad": "Lig · Lig değiştir alt sayfası",
+"tur": "sistem",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/lig.html?ac=lig",
+"ok": true
+},
+{
+"id": "E-705",
+"ad": "Lig · yükleniyor",
+"tur": "durum",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/lig.html?durum=yukleniyor",
+"ok": true
+},
+{
+"id": "E-706",
+"ad": "Lig · yenileme",
+"tur": "durum",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/lig.html?durum=yenileniyor",
+"ok": true
+},
+{
+"id": "E-707",
+"ad": "Lig · boş",
+"tur": "durum",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/lig.html?durum=bos",
+"ok": true
+},
+{
+"id": "E-708",
+"ad": "Lig · hata",
+"tur": "durum",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/lig.html?durum=hata",
+"ok": true
+},
+{
+"id": "E-709",
+"ad": "Lig · çevrimdışı",
+"tur": "durum",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/lig.html?durum=cevrimdisi",
+"ok": true
+},
+{
+"id": "E-710",
+"ad": "Lig · bulunamadı",
+"tur": "durum",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/lig.html?durum=bulunamadi",
+"ok": true
+},
+{
+"id": "E-711",
+"ad": "Branş · basketbol",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/brans.html?brans=basketbol",
+"ok": true
+},
+{
+"id": "E-712",
+"ad": "Branş · voleybol",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/brans.html?brans=voleybol",
+"ok": true
+},
+{
+"id": "E-713",
+"ad": "Branş · futbol",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/brans.html?brans=futbol",
+"ok": true
+},
+{
+"id": "E-714",
+"ad": "Branş · yukleniyor",
+"tur": "durum",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/brans.html?durum=yukleniyor",
+"ok": true
+},
+{
+"id": "E-715",
+"ad": "Branş · yenileniyor",
+"tur": "durum",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/brans.html?durum=yenileniyor",
+"ok": true
+},
+{
+"id": "E-716",
+"ad": "Branş · bos",
+"tur": "durum",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/brans.html?durum=bos",
+"ok": true
+},
+{
+"id": "E-717",
+"ad": "Branş · hata",
+"tur": "durum",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/brans.html?durum=hata",
+"ok": true
+},
+{
+"id": "E-718",
+"ad": "Branş · cevrimdisi",
+"tur": "durum",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/brans.html?durum=cevrimdisi",
+"ok": true
+},
+{
+"id": "E-719",
+"ad": "Branş · bulunamadi",
+"tur": "durum",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/brans.html?durum=bulunamadi",
+"ok": true
+},
+{
+"id": "E-720",
+"ad": "Transfer",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/transfer.html",
+"ok": true
+},
+{
+"id": "E-721",
+"ad": "Transfer · basketbol",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/transfer.html?brans=basketbol",
+"ok": true
+},
+{
+"id": "E-722",
+"ad": "Transfer · Avrupa · resmî",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/transfer.html?brans=avrupa&suz=resmi",
+"ok": true
+},
+{
+"id": "E-723",
+"ad": "Transfer · yukleniyor",
+"tur": "durum",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/transfer.html?durum=yukleniyor",
+"ok": true
+},
+{
+"id": "E-724",
+"ad": "Transfer · yenileniyor",
+"tur": "durum",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/transfer.html?durum=yenileniyor",
+"ok": true
+},
+{
+"id": "E-725",
+"ad": "Transfer · bos",
+"tur": "durum",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/transfer.html?durum=bos",
+"ok": true
+},
+{
+"id": "E-726",
+"ad": "Transfer · hata",
+"tur": "durum",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/transfer.html?durum=hata",
+"ok": true
+},
+{
+"id": "E-727",
+"ad": "Transfer · cevrimdisi",
+"tur": "durum",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/transfer.html?durum=cevrimdisi",
+"ok": true
+},
+{
+"id": "E-728",
+"ad": "Millî Takım · üye",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/milli-takim.html",
+"ok": true
+},
+{
+"id": "E-729",
+"ad": "Millî Takım · misafir",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/milli-takim.html?uye=0",
+"ok": true
+},
+{
+"id": "E-730",
+"ad": "Millî Takım · basketbol",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/milli-takim.html?suz=basketbol",
+"ok": true
+},
+{
+"id": "E-731",
+"ad": "Millî Takım · yukleniyor",
+"tur": "durum",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/milli-takim.html?durum=yukleniyor",
+"ok": true
+},
+{
+"id": "E-732",
+"ad": "Millî Takım · yenileniyor",
+"tur": "durum",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/milli-takim.html?durum=yenileniyor",
+"ok": true
+},
+{
+"id": "E-733",
+"ad": "Millî Takım · bos",
+"tur": "durum",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/milli-takim.html?durum=bos",
+"ok": true
+},
+{
+"id": "E-734",
+"ad": "Millî Takım · hata",
+"tur": "durum",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/milli-takim.html?durum=hata",
+"ok": true
+},
+{
+"id": "E-735",
+"ad": "Millî Takım · cevrimdisi",
+"tur": "durum",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/milli-takim.html?durum=cevrimdisi",
+"ok": true
+},
+{
+"id": "E-736",
+"ad": "Avrupa Ligleri",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/avrupa-ligleri.html",
+"ok": true
+},
+{
+"id": "E-737",
+"ad": "Avrupa Ligleri · yukleniyor",
+"tur": "durum",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/avrupa-ligleri.html?durum=yukleniyor",
+"ok": true
+},
+{
+"id": "E-738",
+"ad": "Avrupa Ligleri · yenileniyor",
+"tur": "durum",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/avrupa-ligleri.html?durum=yenileniyor",
+"ok": true
+},
+{
+"id": "E-739",
+"ad": "Avrupa Ligleri · bos",
+"tur": "durum",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/avrupa-ligleri.html?durum=bos",
+"ok": true
+},
+{
+"id": "E-740",
+"ad": "Avrupa Ligleri · hata",
+"tur": "durum",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/avrupa-ligleri.html?durum=hata",
+"ok": true
+},
+{
+"id": "E-741",
+"ad": "Avrupa Ligleri · cevrimdisi",
+"tur": "durum",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/avrupa-ligleri.html?durum=cevrimdisi",
+"ok": true
+},
+{
+"id": "E-742",
+"ad": "Takım · Fenerbahçe",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/takim.html?takim=fenerbahce",
+"ok": true
+},
+{
+"id": "E-743",
+"ad": "Takım · Beşiktaş",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/takim.html?takim=besiktas",
+"ok": true
+},
+{
+"id": "E-744",
+"ad": "Takım · Trabzonspor",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/takim.html?takim=trabzonspor",
+"ok": true
+},
+{
+"id": "E-745",
+"ad": "Takım · misafir (Beşiktaş)",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/takim.html?takim=besiktas&uye=0",
+"ok": true
+},
+{
+"id": "E-746",
+"ad": "Takım · maçlar",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/takim.html?sekme=maclar",
+"ok": true
+},
+{
+"id": "E-747",
+"ad": "Takım · kadro",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/takim.html?sekme=kadro",
+"ok": true
+},
+{
+"id": "E-748",
+"ad": "Takım · puan durumu",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/takim.html?sekme=puan",
+"ok": true
+},
+{
+"id": "E-749",
+"ad": "Takım · haberler",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/takim.html?sekme=haberler",
+"ok": true
+},
+{
+"id": "E-750",
+"ad": "Takım · bulunamadı",
+"tur": "durum",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/takim.html?durum=bulunamadi",
+"ok": true
+},
+{
+"id": "E-751",
+"ad": "Maç detayı · puan durumu",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/mac-detay.html?sekme=puan",
+"ok": true
+},
+{
+"id": "E-752",
+"ad": "Maç detayı · rekabet",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/mac-detay.html?sekme=rekabet",
+"ok": true
+},
+{
+"id": "E-753",
+"ad": "Maç detayı · bitti · rekabet",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/mac-detay.html?durum=bitti&sekme=rekabet",
+"ok": true
+},
+{
+"id": "E-754",
+"ad": "Maç detayı · başlamadı · puan durumu",
+"tur": "içerik",
+"alt": "Spor merkezi (Maçkolik tarzı yapı, K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/mac-detay.html?durum=once&sekme=puan",
+"ok": true
+},
+{
+"id": "E-755",
+"ad": "Piyasalar · Borsa · sıralı",
+"tur": "durum",
+"alt": "Borsa, hisse ve piyasa sekmeleri (K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/piyasalar.html?sekme=borsa&sira=artan",
+"ok": true
+},
+{
+"id": "E-756",
+"ad": "Piyasalar · Borsa · arama sonucu",
+"tur": "durum",
+"alt": "Borsa, hisse ve piyasa sekmeleri (K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/piyasalar.html?sekme=borsa&ara=holding",
+"ok": true
+},
+{
+"id": "E-757",
+"ad": "Piyasalar · Borsa · bütün liste",
+"tur": "durum",
+"alt": "Borsa, hisse ve piyasa sekmeleri (K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/piyasalar.html?sekme=borsa&tum=1",
+"ok": true
+},
+{
+"id": "E-758",
+"ad": "Piyasalar · Borsa · yükleniyor",
+"tur": "durum",
+"alt": "Borsa, hisse ve piyasa sekmeleri (K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/piyasalar.html?sekme=borsa&durum=yukleniyor",
+"ok": true
+},
+{
+"id": "E-759",
+"ad": "Piyasalar · Borsa · çevrimdışı",
+"tur": "durum",
+"alt": "Borsa, hisse ve piyasa sekmeleri (K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/piyasalar.html?sekme=borsa&durum=cevrimdisi",
+"ok": true
+},
+{
+"id": "E-760",
+"ad": "Piyasalar · Kripto · sıralı",
+"tur": "durum",
+"alt": "Borsa, hisse ve piyasa sekmeleri (K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/piyasalar.html?sekme=kripto&sira=azalan",
+"ok": true
+},
+{
+"id": "E-761",
+"ad": "Piyasalar · Kripto · boş arama",
+"tur": "durum",
+"alt": "Borsa, hisse ve piyasa sekmeleri (K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/piyasalar.html?sekme=kripto&durum=bos",
+"ok": true
+},
+{
+"id": "E-762",
+"ad": "Piyasalar · Kripto çevirici",
+"tur": "sistem",
+"alt": "Borsa, hisse ve piyasa sekmeleri (K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/piyasalar.html?sekme=kripto&durum=cevirici",
+"ok": true
+},
+{
+"id": "E-763",
+"ad": "Piyasalar · Altın hesaplayıcı",
+"tur": "sistem",
+"alt": "Borsa, hisse ve piyasa sekmeleri (K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/piyasalar.html?sekme=altin&durum=cevirici",
+"ok": true
+},
+{
+"id": "E-764",
+"ad": "Piyasalar · Kredi hesaplayıcı",
+"tur": "sistem",
+"alt": "Borsa, hisse ve piyasa sekmeleri (K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/piyasalar.html?sekme=faiz&durum=cevirici",
+"ok": true
+},
+{
+"id": "E-765",
+"ad": "Piyasalar · Yakıt maliyeti",
+"tur": "sistem",
+"alt": "Borsa, hisse ve piyasa sekmeleri (K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/piyasalar.html?sekme=akaryakit&durum=cevirici",
+"ok": true
+},
+{
+"id": "E-766",
+"ad": "Hisse detayı",
+"tur": "içerik",
+"alt": "Borsa, hisse ve piyasa sekmeleri (K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/hisse.html?kod=THYAO",
+"ok": true
+},
+{
+"id": "E-767",
+"ad": "Hisse detayı · misafir",
+"tur": "durum",
+"alt": "Borsa, hisse ve piyasa sekmeleri (K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/hisse.html?kod=THYAO&uye=0",
+"ok": true
+},
+{
+"id": "E-768",
+"ad": "Hisse detayı · fiyat alarmı",
+"tur": "sistem",
+"alt": "Borsa, hisse ve piyasa sekmeleri (K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/hisse.html?kod=THYAO&durum=alarm",
+"ok": true
+},
+{
+"id": "E-769",
+"ad": "Hisse detayı · alarm · misafir",
+"tur": "sistem",
+"alt": "Borsa, hisse ve piyasa sekmeleri (K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/hisse.html?kod=THYAO&uye=0&durum=alarm",
+"ok": true
+},
+{
+"id": "E-770",
+"ad": "Hisse detayı · yükleniyor",
+"tur": "durum",
+"alt": "Borsa, hisse ve piyasa sekmeleri (K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/hisse.html?kod=THYAO&durum=yukleniyor",
+"ok": true
+},
+{
+"id": "E-771",
+"ad": "Hisse detayı · boş",
+"tur": "durum",
+"alt": "Borsa, hisse ve piyasa sekmeleri (K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/hisse.html?kod=THYAO&durum=bos",
+"ok": true
+},
+{
+"id": "E-772",
+"ad": "Hisse detayı · hata",
+"tur": "durum",
+"alt": "Borsa, hisse ve piyasa sekmeleri (K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/hisse.html?kod=THYAO&durum=hata",
+"ok": true
+},
+{
+"id": "E-773",
+"ad": "Hisse detayı · çevrimdışı",
+"tur": "durum",
+"alt": "Borsa, hisse ve piyasa sekmeleri (K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/hisse.html?kod=THYAO&durum=cevrimdisi",
+"ok": true
+},
+{
+"id": "E-774",
+"ad": "Hisse detayı · bulunamadı",
+"tur": "durum",
+"alt": "Borsa, hisse ve piyasa sekmeleri (K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/hisse.html?kod=THYAO&durum=bulunamadi",
+"ok": true
+},
+{
+"id": "E-775",
+"ad": "Enstrüman · kripto",
+"tur": "içerik",
+"alt": "Borsa, hisse ve piyasa sekmeleri (K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/enstruman.html?kod=btc",
+"ok": true
+},
+{
+"id": "E-776",
+"ad": "Enstrüman · endeks",
+"tur": "içerik",
+"alt": "Borsa, hisse ve piyasa sekmeleri (K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/enstruman.html?kod=xu030",
+"ok": true
+},
+{
+"id": "E-777",
+"ad": "Enstrüman · altın türü",
+"tur": "içerik",
+"alt": "Borsa, hisse ve piyasa sekmeleri (K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/enstruman.html?kod=ceyrek-altin",
+"ok": true
+},
+{
+"id": "E-778",
+"ad": "Enstrüman · emtia",
+"tur": "içerik",
+"alt": "Borsa, hisse ve piyasa sekmeleri (K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/enstruman.html?kod=brent",
+"ok": true
+},
+{
+"id": "E-779",
+"ad": "Enstrüman · fiyat alarmı",
+"tur": "sistem",
+"alt": "Borsa, hisse ve piyasa sekmeleri (K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/enstruman.html?durum=alarm",
+"ok": true
+},
+{
+"id": "E-780",
+"ad": "Enstrüman · boş",
+"tur": "durum",
+"alt": "Borsa, hisse ve piyasa sekmeleri (K43 · 7. dalga)",
+"dosya": "ekranlar/icerik/enstruman.html?kod=btc&durum=bos",
 "ok": true
 }
 ]
