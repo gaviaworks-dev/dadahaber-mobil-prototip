@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Sayfa sonu</title>
+<!-- Dada Haber Mobil · SAYFA SONU (E-424–E-426). Bütün listelerde aynı çalışan "daha fazla" hali; örnek liste Gündem (D.liste). Sitede sayfalama var, uygulamada sonsuz kaydırma.
+     Sorgu: (yok) E-424 son kartın altında bir satır iskeleti + "Daha fazla haber yükleniyor"
+            | ?durum=son (E-425) "Hepsi bu kadar" + Başa dön | ?durum=hata (E-426) satır içi "Daha fazla haber yüklenemedi" + Yeniden dene · ?uye=0 · ?tema=koyu
+     Ekran açılınca listenin sonuna kaydırılır (denetim kipinde ?tam=1 bütün sayfa görünür). Yeniden dene → yükleniyor → (prototipte başka haber yok) hepsi bu kadar.
+     Bileşenler: K.dahaFazla(hal), K.iskelet('satir'). -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var DUR = K.durum, e = document.getElementById('ekran'), TAM = document.documentElement.classList.contains('tam');
+  function son(h){ return h === 'son' || h === 'hata' ? K.dahaFazla(h) : K.iskelet('satir', 1) + K.dahaFazla('yukleniyor'); }
+  e.innerHTML = '<div class="k-ust-bosluk"></div><div class="k-satirlar">' + D.liste.haberler.map(function(h){ return K.satir(h); }).join('') +
+    '<div id="ss">' + son(DUR) + '</div></div><div class="k-son"></div>';
+  K.ustCubuk({ geri: true, baslik: 'Gündem', eylemler: ['ara'] });
+  K.altCubuk('bolum');
+  K.oynatici();
+  if (!TAM) e.scrollTop = e.scrollHeight;
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    var ss = document.getElementById('ss'); ss.innerHTML = son('yukleniyor'); if (!TAM) e.scrollTop = e.scrollHeight;
+    setTimeout(function(){ ss.innerHTML = son('son'); }, 1400); });
+})();
+</script>
+</body>
+</html>

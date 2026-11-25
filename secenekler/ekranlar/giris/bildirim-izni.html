@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Bildirim izni</title>
+<!-- Dada Haber Mobil · BİLDİRİM İZNİ (E-431–E-433). Değer önce, izin sonra: uygulama içi ön ekran sistem penceresinden önce gelir (kit K.izin).
+     Sorgu: (yok) E-431 ön ekran: ne gelecek (Son Dakika, takımın maçı, günün baskıları), Bildirimleri aç · Şimdi değil
+            | ?durum=sistem (E-432) ön ekranın üstünde işletim sistemi penceresi (iOS görünümü; yalnız görünüm notu)
+            | reddedildi (E-433) Bildirimler kapalı: Ayarlar yolu, uygulama bildirimsiz devam eder · ?tema=koyu
+     Akış: Bildirimleri aç → sistem penceresi → İzin Ver: konu seçimi (kısa bildirim "Bildirimler açık") · İzin Verme: reddedildi. Şimdi değil → konu seçimi.
+     Platform notu: Android 13+ (POST_NOTIFICATIONS) sistem penceresi kendi biçiminde: alttan kart, "İzin ver" / "İzin verme"; Android 12 ve öncesinde izin istenmez, ön ekran atlanır.
+     iOS'ta reddedilen izin bir daha sorulamaz; bu yüzden ön ekran sistem penceresinden önce gelir. "Şimdi değil" bekleyen #5 (onaylanmadı).
+     Varsayım (onaylanmadı): akıştaki yeri tanıtımdan sonra, konu seçiminden önce. -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var DUR = K.durum, e = document.getElementById('ekran'), YOL = 'ekranlar/giris/bildirim-izni.html';
+  var red = DUR === 'reddedildi';
+  e.innerHTML = K.izin({ tur: 'bildirim', red: red });
+  var a = e.querySelectorAll('.k-izin .a .k-btn');
+  /* ana eylem: ön ekranda sistem penceresini açar; reddedildide telefonun Ayarlar'ına gider */
+  a[0].addEventListener('click', function(){ if (red) K.toast('Telefonun Ayarlar uygulaması açılıyor', { ikon: 'fa-gear' }); else sistem(); });
+  /* Şimdi değil: uygulama izin olmadan devam eder → konu seçimi */
+  a[1].addEventListener('click', function(){ location.href = K.git('konuSecimi'); });
+
+  function sistem(){
+    document.body.insertAdjacentHTML('beforeend', '<div class="k-perde acik"></div><div class="k-sistem" role="alertdialog" aria-label="Bildirim izni"><div class="t"><b>"Dada Haber" Size Bildirim Göndermek İstiyor</b>' +
+      '<p>Bildirimler uyarılar, sesler ve simge etiketleri içerebilir. Bunlar Ayarlar\'dan yapılandırılabilir.</p></div><div class="a"><button type="button" data-izin="0">İzin Verme</button><button type="button" data-izin="1">İzin Ver</button></div></div>');
+    document.querySelectorAll('[data-izin]').forEach(function(b){ b.addEventListener('click', function(){
+      if (b.getAttribute('data-izin') === '1') location.href = K.git('konuSecimi', 'bildirim=1');
+      else location.href = K.u(YOL, 'durum=reddedildi'); }); });
+  }
+  if (DUR === 'sistem') sistem();
+})();
+</script>
+</body>
+</html>

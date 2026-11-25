@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Sosyal hesapla giriş</title>
+<!-- Dada Haber Mobil · SOSYAL HESAPLA GİRİŞ (E-456–E-460). Giriş / Üye ol ekranındaki Apple · Google · Facebook düğmelerinden.
+     Sorgu: (yok) E-456 yönlendiriliyor: giriş ekranında sağlayıcı düğmesinde gösterge + işletim sistemi penceresi (iOS kimlik doğrulama oturumu; yalnız görünüm notu)
+              &saglayici=google (varsayılan) | facebook | apple — Apple'da pencere yerine sistemin kendi "Apple ile giriş" sayfası açılır, burada yalnız düğmede gösterge
+            | ?durum=iptal (E-457) kullanıcı vazgeçti: giriş ekranına sessiz dönüş (mesaj yok)
+            | hata (E-458) sağlayıcıya ulaşılamadı: şerit + başka yolla dene
+            | bagla (E-459) bu e-posta kayıtlı: şifreyle doğrula ve bağla (public hesap-bagla.html)
+            | onay (E-460) ilk sosyal girişte Kullanım Koşulları ve Aydınlatma onayı (public uye-ol.html onayları) · ?tema=koyu
+     App Store 4.8: üçüncü taraf girişi sunan uygulama "Apple ile giriş"i de sunar; Apple düğmesi en üstte ve ötekilerle aynı boyda.
+     Platform notu: Android'de Google girişi Credential Manager alt sayfasıyla (hesap seçici) açılır; Facebook ve Apple Chrome Custom Tab ile.
+     Sağlayıcı işaretleri fa-brands (K37: K32 istisnası, onay bekler). Varsayım (onaylanmadı): sosyal girişte e-posta doğrulanmış sayılır, onaydan sonra konu seçimine geçilir. -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* yerleşim (bileşen biçimi değil): giriş ekranıyla aynı */
+.fm{padding-top:var(--b-8)}
+.fm>.k-serit{margin-bottom:var(--b-24)}
+.fm .sag{display:flex;justify-content:flex-end;margin-top:var(--b-4)}
+.fm .gb{margin-top:var(--b-16)}
+.fm .ab{display:flex;justify-content:center;align-items:center;gap:var(--b-4);margin-top:var(--b-16);font-size:14px;color:var(--metin-3)}
+.fm .on{margin-top:var(--b-16)}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var DUR = K.durum, e = document.getElementById('ekran'), YOL = 'ekranlar/giris/sosyal-giris.html';
+  var SAG = { google: ['Google', 'fa-google', 'google.com'], facebook: ['Facebook', 'fa-facebook-f', 'facebook.com'], apple: ['Apple', 'fa-apple', 'appleid.apple.com'] };
+  var sq = SAG[K.q.get('saglayici')] ? K.q.get('saglayici') : 'google', S = SAG[sq];
+  var EP = 'ece.yilmaz@eposta.com'; /* kaynak: public hesap-bagla.html */
+  var bek = !DUR;
+  function sos(k, tur){ var s = SAG[k], y = bek && k === sq;
+    return K.btn({ metin: y ? 'Yönlendiriliyor' : s[0] + ' ile devam et', ikon: 'fa-brands ' + s[1], tur: tur, durum: y ? 'yukleniyor' : null, pasif: bek && !y, attr: y ? '' : 'data-sag="' + k + '"' }); }
+  function sosyal(){ return '<div class="k-sosyal">' + sos('apple', 'ikincil') + sos('google', 'sade') + sos('facebook', 'sade') + '</div>'; }
+  function onaylar(){ return K.onay('<a class="k-dk44" href="' + K.git('yasal') + '">Kullanım Koşulları</a>\'nı ve <a class="k-dk44" href="' + K.git('yasal') + '">Aydınlatma Metni</a>\'ni okudum.') +
+    K.onay('<a class="k-dk44" href="' + K.git('yasal') + '">Açık Rıza Metni</a>\'ni onaylıyorum.', { alt: 'İsteğe bağlı; ana sayfanı sana göre düzenlemek için.' }) +
+    K.onay('Sabah bültenini e-postayla almak istiyorum.', { alt: 'İsteğe bağlı; istediğin zaman ayrılabilirsin.' }); }
+  var h, baslik = 'Giriş yap';
+
+  if (DUR === 'bagla') {
+    baslik = 'Hesapları bağla';
+    h = '<header class="k-bbas"><h1>Hesaplarını bağla</h1><p>' + S[0] + ' ile giriş yapmak istediğin e-posta adresiyle zaten bir Dada Haber hesabın var.</p></header><div class="k-ic fm">' +
+      K.serit({ ikon: 'fa-brands ' + S[1], metin: EP, alt: S[0] + ' hesabını bağlamak için şifreni bir kez gir.' }) +
+      K.alan({ etiket: 'E-posta', tur: 'email', ikon: 'fa-envelope', deger: EP, pasif: true }) +
+      K.alan({ etiket: 'Şifre', tur: 'password', ikon: 'fa-lock', yer: 'Dada Haber şifren', odak: true, oto: 'current-password' }) +
+      '<div class="sag"><a class="k-bag" href="' + K.u('ekranlar/giris/sifremi-unuttum.html') + '">Şifremi unuttum</a></div>' +
+      '<div class="gb">' + K.btn({ metin: 'Hesapları bağla', ikon: 'fa-link', tur: 'birincil', boy: 'buyuk', tam: true, attr: 'id="gon" data-sonra="ana"' }) + '</div>' +
+      '<p class="k-not">' + K.I('fa-circle-info') + 'Kaydettiklerin, takip listen ve okuma serin olduğu gibi kalır. Bağlantıyı Hesabım\'dan kaldırabilirsin.</p></div>';
+  } else if (DUR === 'onay') {
+    baslik = 'Son bir adım';
+    h = '<header class="k-bbas"><h1>Son bir adım</h1><p>' + S[0] + ' hesabınla Dada Haber hesabın oluşturuluyor. Devam etmek için kullanım koşullarını onayla.</p></header><div class="k-ic fm">' +
+      K.serit({ ikon: 'fa-brands ' + S[1], metin: EP, alt: S[0] + ' hesabı' }) +
+      '<div class="on">' + onaylar() + '</div>' +
+      '<div class="gb">' + K.btn({ metin: 'Devam et', tur: 'birincil', boy: 'buyuk', tam: true, attr: 'id="gon" data-sonra="konu"' }) + '</div>' +
+      '<div class="ab">' + K.btn({ metin: 'Vazgeç', tur: 'metin', href: K.git('giris') }).replace('k-btn metin', 'k-btn metin notr') + '</div></div>';
+  } else {
+    /* giriş ekranı (giris.html ile aynı düzen) */
+    var serit = DUR === 'hata' ? K.serit({ tur: 'hata', ikon: 'fa-triangle-exclamation', metin: S[0] + '\'a ulaşılamadı', alt: 'Başka bir yolla giriş yap ya da biraz sonra yeniden dene.' }) : '';
+    h = '<header class="k-bbas"><h1>Giriş yap</h1><p>Kaydettiklerin, takip ettiklerin ve bildirim tercihlerin hesabında seni bekliyor.</p></header><div class="k-ic fm">' + serit + sosyal() +
+      '<div class="k-veya">veya e-postayla</div>' +
+      K.alan({ etiket: 'E-posta', tur: 'email', ikon: 'fa-envelope', yer: 'ornek@eposta.com', pasif: bek, oto: 'email' }) +
+      K.alan({ etiket: 'Şifre', tur: 'password', ikon: 'fa-lock', yer: 'Şifren', pasif: bek, oto: 'current-password' }) +
+      '<div class="sag"><a class="k-bag" href="' + K.u('ekranlar/giris/sifremi-unuttum.html') + '">Şifremi unuttum</a></div>' +
+      '<div class="gb">' + K.btn({ metin: 'Giriş yap', ikon: 'fa-right-to-bracket', tur: 'birincil', boy: 'buyuk', tam: true, pasif: bek, href: bek ? null : K.git('giris') }) + '</div>' +
+      '<p class="ab">Hesabın yok mu?<a class="k-bag k-dk44" href="' + K.git('uyeOl') + '">Üye ol</a></p></div>';
+  }
+  e.innerHTML = '<div class="k-ust-bosluk"></div>' + h + '<div class="k-son yalin"></div>';
+  K.ustCubuk({ geri: true, baslik: baslik, buyuk: true });
+
+  /* E-456: sağlayıcının kimlik doğrulama penceresi (iOS); Apple'da sistemin kendi sayfası */
+  if (bek && sq !== 'apple') {
+    document.body.insertAdjacentHTML('beforeend', '<div class="k-perde acik"></div><div class="k-sistem" role="alertdialog" aria-label="Giriş izni"><div class="t"><b>"Dada Haber" Giriş Yapmak İçin "' + S[2] + '" Alanını Kullanmak İstiyor</b>' +
+      '<p>Bu, uygulamanın ve web sitesinin sizinle ilgili bilgileri paylaşmasına izin verir.</p></div><div class="a"><button type="button" data-y="iptal">Vazgeç</button><button type="button" data-y="onay">Sürdür</button></div></div>');
+    document.querySelectorAll('[data-y]').forEach(function(b){ b.addEventListener('click', function(){ location.href = K.u(YOL, 'durum=' + b.getAttribute('data-y') + '&saglayici=' + sq); }); });
+  }
+  /* başka sağlayıcıya dokununca yeniden yönlendirme */
+  e.addEventListener('click', function(ev){ var b = ev.target.closest('[data-sag]'); if (b) location.href = K.u(YOL, 'saglayici=' + b.getAttribute('data-sag')); });
+  var gb = document.getElementById('gon');
+  if (gb) gb.addEventListener('click', function(){ gb.classList.add('is-yukleniyor'); gb.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Bekleyin</span>';
+    setTimeout(function(){ location.href = gb.getAttribute('data-sonra') === 'konu' ? K.git('konuSecimi') : K.git('ana', 'uye=1'); }, 1200); });
+})();
+</script>
+</body>
+</html>

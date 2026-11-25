@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Yakında</title>
+<!-- Dada Haber Mobil · YAKINDA (E-420). Özellik henüz açık değil: özellik adı, kısa açıklama, "Hazır olunca haber ver" anahtarı, yayındaki bölümlere geçiş çipleri.
+     Sorgu: ?tema=koyu · ?uye=0 (misafirde de anahtar çalışır: haber cihaz bildirimiyle gelir)
+     Kaynak: public yakinda.html (metin yapısı, bölüm çipleri). Örnek özellik: Finans › Ekonomi Araçları (public ekonomi-araclari.html açıklaması);
+     sitede var, uygulamanın ekran listesinde yok. Varsayım (onaylanmadı): hangi özelliğin "yakında" gösterileceği ve metni panelden gelir.
+     İtme ekranı (menü ya da bölümden açılır); alt çubukta Bölümler seçili. -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* yerleşim (bileşen biçimi değil) */
+.yk .k-bos{padding-bottom:0}
+.yk .k-bos .k-kat{margin-top:var(--b-16)}
+.yk .k-bos h2{margin-top:var(--b-8)}
+.yk .k-grup-b{margin:var(--b-32) var(--kenar) var(--b-12)}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran');
+  /* kaynak: public ekonomi-araclari.html ("Kur, kredi, enflasyon ve maaş hesaplama araçları"), yakinda.html */
+  var bos = K.bos({ ikon: 'fa-hourglass-half', baslik: 'Ekonomi Araçları çok yakında', aciklama: 'Kur, kredi, enflasyon ve maaş hesaplama araçlarını hazırlıyoruz. Açıldığında haber vermemizi istersen anahtarı aç.' })
+    .replace('<h2>', K.katEt('Finans') + '<h2>');
+  e.innerHTML = '<div class="k-ust-bosluk"></div><div class="yk">' + bos +
+    K.grup('', [{ ikon: 'fa-bell', baslik: 'Hazır olunca haber ver', alt: 'Açıldığında tek bir bildirim göndeririz', sag: 'anahtar', on: false }]) +
+    '<span class="k-grup-b">Yayındaki bölümler</span>' +
+    '<div class="k-ray s8" role="group" aria-label="Bölümler">' + D.bolumler.map(function(b){ return K.cip(b.ad, { ikon: b.ikon, attr: 'data-href="' + K.git('liste') + '"' }); }).join('') + '</div>' +
+    '</div><div class="k-son"></div>';
+  K.ustCubuk({ geri: true, baslik: 'Ekonomi Araçları' });
+  K.altCubuk('bolum');
+  K.oynatici();
+  e.querySelector('.k-anahtar input').addEventListener('change', function(){
+    K.toast(this.checked ? 'Açılınca haber vereceğiz' : 'Hatırlatma kapatıldı', { tur: this.checked ? 'basari' : 'bilgi', ikon: 'fa-bell' }); });
+})();
+</script>
+</body>
+</html>

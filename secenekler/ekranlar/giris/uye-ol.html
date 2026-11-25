@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Üye ol</title>
+<!-- Dada Haber Mobil · ÜYE OL (E-443–E-446). İtme ekranı (geri), alt çubuk yok; giriş ekranıyla aynı kalıp.
+     Sıra: Apple · Google · Facebook ile devam et → "veya e-postayla" → Ad soyad, E-posta, Şifre (göster/gizle + güç) → onaylar → Üye ol → "Zaten üye misin? Giriş yap".
+     Onaylar: Kullanım Koşulları + Aydınlatma Metni (zorunlu) · Açık Rıza (isteğe bağlı, kişiselleştirme) · Sabah bülteni (isteğe bağlı).
+     Sorgu: (yok) E-443 boş form | ?durum=hata (E-444) geçersiz e-posta, zayıf şifre, zorunlu onay eksik | kayitli (E-445) e-posta zaten kayıtlı: Giriş yap · Şifremi unuttum
+            | gonderiliyor (E-446) düğmede gösterge, alanlar kilitli · ?tema=koyu
+     Kaynak: public uye-ol.html (alanlar, onay metinleri, "Üyelik ücretsizdir; okumak için hesap gerekmez."). Başarılı kayıt → E-posta doğrulama (eposta-dogrulama.html).
+     Varsayımlar (onaylanmadı): Açık Rıza ayrı onay kutusu (public formda yok; ekran listesi istiyor); şifre kuralı "en az 8 karakter, bir rakam" (kit yardım metni). -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* yerleşim (bileşen biçimi değil) */
+.fm{padding-top:var(--b-8)}
+.fm .on{margin-top:var(--b-16)}
+.fm .on .k-alan-y{margin-top:0}
+.fm .kay{margin-top:var(--b-12)}
+.fm .kay .k-btn-grup{margin-top:var(--b-8)}
+.fm .gb{margin-top:var(--b-16)}
+.fm .ab{display:flex;justify-content:center;align-items:center;gap:var(--b-4);margin-top:var(--b-16);font-size:14px;color:var(--metin-3)}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var DUR = K.durum, e = document.getElementById('ekran'), TAM = document.documentElement.classList.contains('tam');
+  var EP = 'ece.yilmaz@eposta.com', AD = 'Ece Yılmaz'; /* kaynak: public uye-ol.html örnek değerleri */
+  var hata = DUR === 'hata', kay = DUR === 'kayitli', gon = DUR === 'gonderiliyor', dolu = hata || kay || gon;
+  function sos(ad, ikon, tur){ return K.btn({ metin: ad + ' ile devam et', ikon: 'fa-brands ' + ikon, tur: tur, pasif: gon, href: gon ? null : K.u('ekranlar/giris/sosyal-giris.html', 'saglayici=' + ad.toLowerCase()) }); }
+
+  var onay = K.onay('<a class="k-dk44" href="' + K.git('yasal') + '">Kullanım Koşulları</a>\'nı ve <a class="k-dk44" href="' + K.git('yasal') + '">Aydınlatma Metni</a>\'ni okudum.', { secili: kay || gon, hata: hata, pasif: gon }) +
+    (hata ? '<div class="k-alan is-hata"><p class="k-alan-y">' + K.I('fa-circle-exclamation') + '<span>Devam etmek için bu onay gerekli.</span></p></div>' : '') +
+    K.onay('<a class="k-dk44" href="' + K.git('yasal') + '">Açık Rıza Metni</a>\'ni onaylıyorum.', { alt: 'İsteğe bağlı; ana sayfanı sana göre düzenlemek için.', secili: kay || gon, pasif: gon }) +
+    K.onay('Sabah bültenini e-postayla almak istiyorum.', { alt: 'İsteğe bağlı; istediğin zaman ayrılabilirsin.', pasif: gon });
+
+  e.innerHTML = '<div class="k-ust-bosluk"></div><header class="k-bbas"><h1>Üye ol</h1><p>Üyelik ücretsizdir; okumak için hesap gerekmez. Hesabınla haberleri kaydet, konuları takip et.</p></header>' +
+    '<div class="k-ic fm"><div class="k-sosyal">' + sos('Apple', 'fa-apple', 'ikincil') + sos('Google', 'fa-google', 'sade') + sos('Facebook', 'fa-facebook-f', 'sade') + '</div>' +
+    '<div class="k-veya">veya e-postayla</div><div id="form">' +
+    K.alan({ etiket: 'Ad soyad', ikon: 'fa-user', yer: 'Adın ve soyadın', deger: dolu ? AD : '', pasif: gon, oto: 'name' }) +
+    K.alan({ etiket: 'E-posta', tur: 'email', ikon: 'fa-envelope', yer: 'ornek@eposta.com', deger: hata ? 'ece.yilmaz@' : dolu ? EP : '', pasif: gon, oto: 'email',
+      hata: hata ? 'Geçerli bir e-posta adresi yaz.' : kay ? 'Bu e-postayla bir hesap var.' : null }) +
+    (kay ? '<div class="kay"><div class="k-btn-grup">' + K.btn({ metin: 'Giriş yap', ikon: 'fa-right-to-bracket', tur: 'ikincil', href: K.git('giris') }) +
+      K.btn({ metin: 'Şifremi unuttum', tur: 'sade', href: K.u('ekranlar/giris/sifremi-unuttum.html') }) + '</div></div>' : '') +
+    K.alan({ etiket: 'Şifre', tur: 'password', ikon: 'fa-lock', yer: 'En az 8 karakter', deger: hata ? 'dada' : dolu ? 'dadahaber2026' : '', pasif: gon, oto: 'new-password',
+      hata: hata ? 'Şifre çok kısa; en az 8 karakter ve bir rakam.' : null, yardim: hata ? null : 'En az 8 karakter; bir rakam.', guc: hata ? 1 : dolu ? 3 : null }) +
+    '<div class="on">' + onay + '</div></div>' +
+    '<div class="gb">' + K.btn({ metin: gon ? 'Hesap oluşturuluyor' : 'Üye ol', tur: 'birincil', boy: 'buyuk', tam: true, durum: gon ? 'yukleniyor' : null, attr: 'id="gon"' }) + '</div>' +
+    '<p class="ab">Zaten üye misin?<a class="k-bag" href="' + K.git('giris') + '">Giriş yap</a></p>' +
+    '</div><div class="k-son yalin"></div>';
+  K.ustCubuk({ geri: true, baslik: 'Üye ol', buyuk: true });
+
+  if ((hata || kay) && !TAM) e.scrollTop = document.getElementById('form').offsetTop - 140;
+  var gb = document.getElementById('gon');
+  gb.addEventListener('click', function(){ gb.classList.add('is-yukleniyor'); gb.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Hesap oluşturuluyor</span>';
+    e.querySelectorAll('.k-alan,.k-onay').forEach(function(a){ a.classList.add('is-pasif'); });
+    setTimeout(function(){ location.href = K.u('ekranlar/giris/eposta-dogrulama.html'); }, 1200); });
+})();
+</script>
+</body>
+</html>

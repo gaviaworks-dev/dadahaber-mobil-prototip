@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Şifremi unuttum</title>
+<!-- Dada Haber Mobil · ŞİFREMİ UNUTTUM (E-447–E-451). İtme ekranı (geri), alt çubuk yok; giriş ekranlarıyla aynı kalıp.
+     Sorgu: ?adim=eposta (E-447, varsayılan) e-posta alanı + Bağlantı gönder | gonderildi (E-448) "E-postanı kontrol et", E-posta uygulamasını aç, sayaçlı Yeniden gönder
+            | yeni (E-449) bağlantıdan uygulamaya (derin bağlantı) yeni şifre iki kez | tamam (E-450) şifre değişti + Giriş yap
+            | gecersiz (E-451) bağlantının süresi dolmuş ya da kullanılmış: Yeni bağlantı iste · ?tema=koyu
+     Kaynak: public sifremi-unuttum.html, sifre-gonderildi.html, sifre-yeni.html, sifre-baglanti-gecersiz.html (metinler; bağlantı 30 dk geçerli, tek kullanımlık; maskeli adres e***@eposta.com).
+     Derin bağlantı: e-postadaki bağlantı uygulama yüklüyse bu ekranı ?adim=yeni ile açar (iOS Universal Links, Android App Links); yüklü değilse public sifre-yeni.html.
+     Varsayım (onaylanmadı): yeniden gönderme sayacı 60 sn; "E-posta uygulamasını aç" cihazın varsayılan posta uygulamasını açar. -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* yerleşim (bileşen biçimi değil) */
+.fm{padding-top:var(--b-8)}
+.fm .gb{margin-top:var(--b-24)}
+.fm .k-onay{margin-top:var(--b-12)}
+.fm .ab{display:flex;justify-content:center;margin-top:var(--b-8)}
+/* sonuç halleri: üst çubukla alt güvenli alan arasında dikey ortalı */
+.hk{min-height:calc(100% - var(--k-ub-h) - var(--alt-guvenli));display:flex;flex-direction:column;justify-content:center}
+.hk .k-bos{padding-top:var(--b-24)}
+.hk .k-not{max-width:280px;margin-top:var(--b-24);text-align:left}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var ADIM = K.q.get('adim') || 'eposta', e = document.getElementById('ekran');
+  var MASK = 'e***@eposta.com', EP = 'ece.yilmaz@eposta.com'; /* kaynak: public sifre-gonderildi.html, sifremi-unuttum.html */
+  var YOL = 'ekranlar/giris/sifremi-unuttum.html';
+  function sonuc(o){ return '<div class="hk">' + K.bos(o) + '</div>'; }
+  var h, baslik = 'Şifremi unuttum';
+  if (ADIM === 'gonderildi') {
+    h = sonuc({ ikon: 'fa-envelope-open-text', baslik: 'E-postanı kontrol et', aciklama: MASK + ' adresine bir bağlantı gönderdik. Bağlantı 30 dakika geçerli ve yalnızca bir kez kullanılabilir.',
+      eylem: { metin: 'E-posta uygulamasını aç', ikon: 'fa-envelope', attr: 'data-toast="E-posta uygulaması açılıyor"' }, ikinci: { metin: 'Yeniden gönder · 0:59', tur: 'metin', pasif: true, attr: 'id="yg"' },
+      ek: '<p class="k-not">' + K.I('fa-circle-info') + 'E-posta gelmedi mi? Gereksiz klasörünü de kontrol et.</p>' });
+  } else if (ADIM === 'tamam') {
+    h = sonuc({ ikon: 'fa-circle-check', baslik: 'Şifren değişti', aciklama: 'Yeni şifrenle giriş yapabilirsin. Diğer cihazlardaki oturumların kapatıldı.',
+      eylem: { metin: 'Giriş yap', ikon: 'fa-right-to-bracket', href: 'giris' } });
+  } else if (ADIM === 'gecersiz') {
+    baslik = 'Bağlantı geçersiz';
+    h = sonuc({ hata: true, ikon: 'fa-link-slash', baslik: 'Bu bağlantı artık geçerli değil', aciklama: 'Şifre sıfırlama bağlantılarının süresi 30 dakikadır ve yalnızca bir kez kullanılabilir. ' + MASK + ' adresine yeni bir bağlantı gönderebiliriz.',
+      eylem: { metin: 'Yeni bağlantı gönder', ikon: 'fa-paper-plane', href: K.u(YOL, 'adim=gonderildi') }, ikinci: { metin: 'Giriş ekranına dön', href: 'giris' } });
+  } else if (ADIM === 'yeni') {
+    baslik = 'Yeni şifre';
+    h = '<header class="k-bbas"><h1>Yeni şifreni belirle</h1><p>Bağlantın doğrulandı. ' + MASK + ' hesabı için yeni bir şifre belirle.</p></header><div class="k-ic fm">' +
+      K.alan({ etiket: 'Yeni şifre', tur: 'password', ikon: 'fa-lock', deger: 'Dadahaber2026', oto: 'new-password', yardim: 'En az 8 karakter; bir rakam ve bir büyük harf önerilir.', guc: 4 }) +
+      K.alan({ etiket: 'Yeni şifre (tekrar)', tur: 'password', ikon: 'fa-lock', deger: 'Dadahaber2026', oto: 'new-password', basari: 'Şifreler eşleşiyor.' }) +
+      K.onay('Diğer cihazlardaki oturumlarımı kapat', { secili: true }) +
+      '<div class="gb">' + K.btn({ metin: 'Şifreyi kaydet', tur: 'birincil', boy: 'buyuk', tam: true, attr: 'id="gon" data-sonra="adim=tamam" data-metin="Kaydediliyor"' }) + '</div></div>';
+  } else {
+    h = '<header class="k-bbas"><h1>Şifremi unuttum</h1><p>E-posta adresini yaz; şifreni yenilemen için 30 dakika geçerli bir bağlantı gönderelim.</p></header><div class="k-ic fm">' +
+      K.alan({ etiket: 'E-posta', tur: 'email', ikon: 'fa-envelope', yer: 'ornek@eposta.com', deger: EP, odak: true, oto: 'email' }) +
+      '<div class="gb">' + K.btn({ metin: 'Bağlantı gönder', ikon: 'fa-paper-plane', tur: 'birincil', boy: 'buyuk', tam: true, attr: 'id="gon" data-sonra="adim=gonderildi" data-metin="Gönderiliyor"' }) + '</div>' +
+      '<div class="ab"><a class="k-bag" href="' + K.git('giris') + '">Giriş ekranına dön</a></div></div>';
+  }
+  e.innerHTML = '<div class="k-ust-bosluk"></div>' + h + '<div class="k-son yalin"></div>';
+  var buyuk = ADIM === 'eposta' || ADIM === 'yeni';
+  K.ustCubuk({ geri: true, baslik: baslik, buyuk: buyuk });
+
+  /* gönder/kaydet: düğmede gösterge, sonra sıradaki adım */
+  var gb = document.getElementById('gon');
+  if (gb) gb.addEventListener('click', function(){ gb.classList.add('is-yukleniyor'); gb.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>' + gb.getAttribute('data-metin') + '</span>';
+    e.querySelectorAll('.k-alan,.k-onay').forEach(function(a){ a.classList.add('is-pasif'); });
+    setTimeout(function(){ location.href = K.u(YOL, gb.getAttribute('data-sonra')); }, 1200); });
+  /* yeniden gönder sayacı */
+  var yg = document.getElementById('yg');
+  if (yg) { var s = 59; var z = setInterval(function(){ s--; if (s > 0) { yg.querySelector('span').textContent = 'Yeniden gönder · 0:' + ('0' + s).slice(-2); return; }
+    clearInterval(z); yg.removeAttribute('disabled'); yg.querySelector('span').textContent = 'Yeniden gönder'; }, 1000);
+    yg.addEventListener('click', function(){ K.toast('Bağlantı yeniden gönderildi', { tur: 'basari', alt: MASK }); }); }
+})();
+</script>
+</body>
+</html>

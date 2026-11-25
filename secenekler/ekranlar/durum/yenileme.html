@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Yenileme</title>
+<!-- Dada Haber Mobil · AŞAĞI ÇEKEREK YENİLEME (E-421–E-423). Bütün listelerde aynı çalışan ortak etkileşim; örnek liste Gündem (D.liste).
+     Sorgu: (yok) E-421 aşamalar sırayla oynar: çekiliyor → bırak → yenileniyor → "Güncel · 16.05" → kapanır (döngü)
+              &hal=cekiliyor|birak|yenileniyor|bitti tek aşamada durur
+            | ?durum=yeni-icerik (E-422) liste aşağı kaydırılmışken "3 yeni haber" hapı; dokununca başa döner ve yeniler
+            | ?durum=hata (E-423) yenileme başarısız: eski içerik yerinde kalır, "Yenilenemedi" kısa bildirimi (Yeniden dene) · ?uye=0 · ?tema=koyu
+     Bileşenler: K.yenile(hal), K.yeniHap(), K.toast(). Gösterge içerikle birlikte aşağı iner (iOS UIRefreshControl, Android SwipeRefreshLayout davranışı aynı yerde).
+     Haptik: "bırak" eşiği geçilince hafif dokunsal titreşim (iOS UIImpactFeedbackGenerator light, Android HapticFeedbackConstants.CONTEXT_CLICK); tarayıcıda gösterilemez. -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* yerleşim (bileşen biçimi değil): göstergenin yeri; içerik onunla birlikte aşağı iner */
+.yg{height:76px;overflow:hidden;transition:height .3s var(--k-egri)}
+.yg.kapali{height:0}
+.yg .k-yenile.cekiliyor .ic{transform:rotate(var(--don,0deg))}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var DUR = K.durum, HAL = K.q.get('hal'), e = document.getElementById('ekran'), TAM = document.documentElement.classList.contains('tam');
+  var liste = '<div class="k-satirlar">' + D.liste.haberler.map(function(h){ return K.satir(h); }).join('') + '</div>';
+  var acik = !DUR && true;
+  e.innerHTML = '<div class="k-ust-bosluk"></div><div class="yg' + (acik ? '' : ' kapali') + '" id="yg">' + K.yenile(HAL || 'cekiliyor') + '</div>' + liste + '<div class="k-son"></div>';
+  K.ustCubuk({ geri: true, baslik: 'Gündem', eylemler: ['ara'] });
+  K.altCubuk('bolum');
+  K.oynatici();
+  var yg = document.getElementById('yg');
+
+  function hal(h){ yg.innerHTML = K.yenile(h); }
+  /* yenileme oynatımı: gösterge açılır, yenileniyor, güncel, kapanır */
+  function yenile(bitince){ yg.classList.remove('kapali'); hal('yenileniyor');
+    setTimeout(function(){ hal('bitti'); setTimeout(function(){ yg.classList.add('kapali'); if (bitince) bitince(); }, 800); }, 1200); }
+
+  if (!DUR && !HAL) {
+    /* E-421: aşamalar döngüde */
+    var A = ['cekiliyor', 'cekiliyor2', 'birak', 'yenileniyor', 'bitti', 'kapali'], i = 0;
+    (function adim(){ var a = A[i % A.length];
+      if (a === 'kapali') yg.classList.add('kapali'); else { yg.classList.remove('kapali'); hal(a === 'cekiliyor2' ? 'cekiliyor' : a); if (a === 'cekiliyor2') yg.style.setProperty('--don', '120deg'); else yg.style.removeProperty('--don'); }
+      i++; setTimeout(adim, a === 'yenileniyor' ? 1200 : 800); })();
+  }
+  if (DUR === 'yeni-icerik') {
+    if (!TAM) e.scrollTop = 620;
+    document.body.insertAdjacentHTML('beforeend', K.yeniHap('3 yeni haber', 'acik'));
+    var hp = document.querySelector('.k-yeni-hap');
+    hp.addEventListener('click', function(){ hp.classList.remove('acik'); setTimeout(function(){ yenile(); }, 350); });
+  }
+  if (DUR === 'hata') {
+    var t = K.toast('Yenilenemedi', { tur: 'hata', alt: 'Eski haberler gösteriliyor.', eylem: 'Yeniden dene', sure: 0,
+      eylemFn: function(){ yenile(); } });
+    t.querySelector('button').classList.add('k-dk44');
+  }
+})();
+</script>
+</body>
+</html>

@@ -8,17 +8,22 @@
   AÇILIŞ (splash) · kök dili: marka sarısı tam ekran, ortada "dada" logosu, altta ince yükleniyor çubuğu.
   Parametreler:
     ?durum=yukleniyor  (varsayılan) logo + yükleniyor çubuğu + o anki baskının adı
-    ?tema=koyu         koyu zemin, sarı logo (cerceve.js)
-  (?durum=guncelleme bu dosyada değil; başka bir ekranın işi.)
+    ?durum=cevrimdisi  (E-428) bağlantı yok: logo yerinde; altta "Bağlantı yok" + Kaydedilenleri oku (doğrudan çevrimdışı okuma) · Yeniden dene
+    ?durum=guncelleme  (E-429) sürüm denetimi zorunlu güncelleme buldu: logo yerinde; altta "Yeni sürüm gerekli" + Güncelle → E-416 (durum/guncelleme.html)
+    ?tema=koyu         koyu zemin (cerceve.js)
+  Bütün hallerde beyaz "dada" logosu aynı yerde (K35); hal değişince yalnız alt bölüm değişir (çubuk yerine mesaj ve düğmeler, başparmak bölgesinde).
+  Gerçek uygulamada güncelleme halinde açılış, E-416 tam ekranına yumuşak geçişle döner; prototipte Güncelle düğmesi o ekranı açar.
   Notlar: iOS'ta sistemin durağan açılış görüntüsü yalnız zemin + logodur; çubuk ve baskı satırı uygulama yüklendikten sonra
   aynı zeminde belirir (geçiş görünmez). Android 12+ sistem açılış API'si: simge + zemin rengi aynı.
   Görsel yolu: bu klasör iki kat derinde, G() yerine ../../../assets kullanılır.
 -->
 <link rel="stylesheet" href="../../_ortak/cerceve.css">
 <link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
 <script src="../../_ortak/icerik.js"></script>
 <script src="../../_ortak/cerceve.js"></script>
 <script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
 <style>
 :root{--ac-zemin:var(--marka);--ac-yazi:var(--siyah);--ac-iz:rgba(18,18,18,.14);--ac-dolu:var(--siyah);
   --ac-logo:url("../../../assets/gorsel/logo/dada-beyaz.svg")}
@@ -27,10 +32,15 @@ html[data-tema="koyu"]{--ac-zemin:var(--siyah);--ac-yazi:var(--metin);--ac-iz:rg
 html,body{background:var(--ac-zemin)}
 .ekran{background:var(--ac-zemin);color:var(--ac-yazi);display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
 .ac-logo{width:168px;aspect-ratio:2942/991;background:var(--ac-logo) center/contain no-repeat} /* sistem açılış görüntüsüyle aynı yerde, girişsiz: geçiş görünmez */
-.ac-alt{position:absolute;left:var(--kenar);right:var(--kenar);bottom:calc(var(--alt-guvenli) + 40px);display:flex;flex-direction:column;align-items:center;gap:14px}
+.ac-alt{position:absolute;left:var(--kenar);right:var(--kenar);bottom:calc(var(--alt-guvenli) + var(--b-40));display:flex;flex-direction:column;align-items:center;gap:var(--b-12)}
 .ac-cubuk{width:72px;height:3px;border-radius:var(--k-cubuk);background:var(--ac-iz);overflow:hidden;position:relative}
 .ac-cubuk::after{content:"";position:absolute;top:0;bottom:0;left:0;width:40%;border-radius:var(--k-cubuk);background:var(--ac-dolu);animation:kos 1.2s -.5s ease-in-out infinite}
 .ac-baski{display:inline-flex;align-items:center;gap:var(--ikon-bosluk);font-size:13px;font-weight:var(--y-orta);opacity:.72;white-space:nowrap}
+/* hal: bağlantı yok / güncelleme gerekli — çubuk yerine mesaj + düğmeler (kit düğmeleri; sarı zeminde ikincil koyu) */
+.ac-alt.hal{bottom:calc(var(--alt-guvenli) + var(--b-16));gap:0;text-align:center}
+.ac-alt.hal b{display:block;font-size:17px;font-weight:var(--y-kalin)}
+.ac-alt.hal p{margin:var(--b-4) 0 var(--b-16);font-size:14px;line-height:1.45;opacity:.8;max-width:300px}
+.ac-alt.hal .k-btn.metin{color:var(--ac-yazi);opacity:.8}
 @keyframes kos{0%{transform:translateX(-100%)}100%{transform:translateX(250%)}}
 </style>
 </head>
@@ -47,6 +57,19 @@ html,body{background:var(--ac-zemin)}
   /* o anki baskı (K16): Sabah 07.00 · Öğleden Sonra 16.00 · Akşam 19.00; "şimdi" D.simdi.saat */
   var s = parseFloat(D.simdi.saat), b = s >= 19 ? ['Akşam', 'fa-moon'] : s >= 16 ? ['Öğleden Sonra', 'fa-sun'] : ['Sabah', 'fa-mug-hot'];
   document.getElementById('baski').innerHTML = '<i class="fa-solid ' + b[1] + '"></i>' + b[0] + ' Baskısı hazırlanıyor';
+  /* E-428 · E-429: alt bölüm mesaj + düğmelerle değişir; logo yerinde kalır */
+  var DUR = K.durum, alt = document.querySelector('.ac-alt');
+  if (DUR === 'cevrimdisi' || DUR === 'guncelleme') {
+    var cd = DUR === 'cevrimdisi';
+    document.getElementById('ekran').removeAttribute('aria-busy');
+    alt.className = 'ac-alt hal';
+    alt.innerHTML = '<b>' + (cd ? 'Bağlantı yok' : 'Yeni sürüm gerekli') + '</b><p>' + (cd ? 'İnternete bağlanınca haberler yenilenir. Bu arada kaydettiğin haberleri okuyabilirsin.' : 'Dada Haber\'i kullanmaya devam etmek için uygulamayı güncelle.') + '</p>' +
+      K.btn({ metin: cd ? 'Kaydedilenleri oku' : 'Güncelle', ikon: cd ? 'fa-bookmark' : 'fa-download', tur: 'ikincil', boy: 'buyuk', tam: true, href: cd ? K.git('kaydedilenler') : K.u('ekranlar/durum/guncelleme.html', 'durum=zorunlu') }) +
+      (cd ? K.btn({ metin: 'Yeniden dene', ikon: 'fa-rotate-right', tur: 'metin', tam: true, attr: 'data-yeniden' }) : '');
+    var y = alt.querySelector('[data-yeniden]');
+    if (y) y.addEventListener('click', function(){ y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+      setTimeout(function(){ location.href = K.u('ekranlar/giris/acilis.html'); }, 1200); });
+  }
   /* durum çubuğu: sarı zeminde koyu, koyu temada açık */
   document.addEventListener('DOMContentLoaded', function(){
     var koyu = document.documentElement.getAttribute('data-tema') === 'koyu';

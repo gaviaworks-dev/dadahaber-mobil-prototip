@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Bakım</title>
+<!-- Dada Haber Mobil · BAKIM MODU (E-418–E-419). Uygulama düzeyi tam ekran (panel Site Ayarları › bakım modu; public bakim.html).
+     Sorgu: (yok) E-418 bakımda: logo, K.hata('bakim'), tahmini bitiş saati, Yeniden dene, Kaydedilenleri oku (çevrimdışı kopyalar okunabilir)
+            | ?durum=bitti (E-419) Yeniden dene sonrası: "Yeniden yayındayız", ana sayfa yükleniyor → Ana sayfaya geç · ?tema=koyu
+     Yeniden dene: düğmede gösterge (1,2 sn), sonra ?durum=bitti. Prototipte bitti hali kendiliğinden ana sayfaya geçmez (galeri önizlemesi bozulmasın); düğmeyle geçer.
+     Varsayım (onaylanmadı): tahmini bitiş saati panelden girilir; örnek 16.30 (sözlükteki "şimdi" 16.05). -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* yerleşim (bileşen biçimi değil): uygulama düzeyi tam ekran; logo üstte, şablon dikey ortada */
+.tam-d{min-height:100%;display:flex;flex-direction:column;padding:var(--ust-guvenli) 0 calc(var(--alt-guvenli) + var(--b-24))}
+.tam-d .lg{display:flex;justify-content:center;padding-top:var(--b-24)}
+.tam-d .k-bos{flex:1;justify-content:center;padding-top:0}
+.tam-d .k-bos .k-etiket{margin-top:var(--b-16)}
+.tam-d .k-don{margin-top:var(--b-24)}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var BITTI = K.durum === 'bitti', e = document.getElementById('ekran');
+  var h;
+  if (BITTI) h = K.bos({ ikon: 'fa-circle-check', baslik: 'Yeniden yayındayız', aciklama: 'Bakım tamamlandı. Kaldığın yerden devam edebilirsin.',
+    eylem: { metin: 'Ana sayfaya geç', href: 'ana' }, ek: '<span class="k-don">' + K.I('fa-circle-notch', 'fa-spin') + 'Ana sayfa yükleniyor</span>' });
+  else h = K.hata({ tur: 'bakim' }).replace('</p>', '</p>' + K.etiket('Tahmini bitiş · 16.30'));
+  e.innerHTML = '<div class="tam-d"><div class="lg"><span class="logo" role="img" aria-label="Dada Haber"></span></div>' + h + '</div>';
+
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ location.href = K.u('ekranlar/durum/bakim.html', 'durum=bitti'); }, 1200); });
+})();
+</script>
+</body>
+</html>

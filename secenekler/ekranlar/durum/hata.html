@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Hata</title>
+<!-- Dada Haber Mobil · TEK HATA ŞABLONU (E-407–E-415). Ekrandan bağımsız tam ekran hata: kabuk yerinde (üst çubuk, gerekirse alt çubuk), içerik yerine K.hata().
+     Sorgu: ?durum=cevrimdisi (E-407) | sunucu (E-408, varsayılan) | zaman-asimi (E-409) | yeniden-deneniyor (E-410; &hal=ikinci → ikinci başarısızlık, "Daha sonra dene")
+            | bulunamadi (E-411) | kaldirildi (E-412) | uygulamada-yok (E-413) | cok-istek (E-414; sayaç 0:30 → 0:00, sonra düğme açılır) | erisim-yok (E-415) · ?uye=0 · ?tema=koyu
+     Kabuk: bağlantı/sunucu halleri sekme düzeyinde (logo + hesap, alt çubukta Ana Sayfa seçili; ör. ana sayfa açılamadı).
+            İçerik halleri (bulunamadı, kaldırıldı, uygulamada yok, erişim yok) bir haber bağlantısından açılır: geri düğmeli itme ekranı, alt çubuk yok.
+     Yeniden dene: düğmede gösterge (1,2 sn); bağlantı/sunucu/zaman aşımında ikinci başarısızlıkta açıklama değişir ve "Daha sonra dene" çıkar (E-410).
+     Platform notu: Android'de geri hareketi sistem geri tuşu/hareketi; kabuk aynı. -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* yerleşim (bileşen biçimi değil): hata şablonu üst çubukla alt çubuk arasında dikey ortalı */
+.hk{min-height:calc(100% - var(--k-ub-h) - var(--k-ac-h));display:flex;flex-direction:column;justify-content:center}
+.hk.itme{min-height:calc(100% - var(--k-ub-h) - var(--alt-guvenli))}
+.hk .k-bos{padding-top:var(--b-24)}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var DUR = K.durum || 'sunucu', HAL = K.q.get('hal'), e = document.getElementById('ekran');
+  /* sorgu adı → kit hata türü */
+  var TUR = { cevrimdisi: 'cevrimdisi', sunucu: 'sunucu', 'zaman-asimi': 'zaman-asimi', 'yeniden-deneniyor': 'zaman-asimi', bulunamadi: 'bulunamadi',
+    kaldirildi: 'kaldirildi', 'uygulamada-yok': 'web', 'cok-istek': 'cok-istek', 'erisim-yok': 'erisim' };
+  var tur = TUR[DUR] || 'sunucu', ITME = ['bulunamadi', 'kaldirildi', 'web', 'erisim'].indexOf(tur) > -1;
+  var IKINCI = { cevrimdisi: 'Hâlâ bağlantı yok. Wi-Fi ya da mobil veriyi kontrol et; bu arada indirdiğin haberleri okuyabilirsin.',
+    sunucu: 'Sorun sürüyor. Ekibimiz ilgileniyor; birkaç dakika sonra yeniden dene.', 'zaman-asimi': 'Yanıt yine gecikti. Bağlantın düzelince yeniden dene.' };
+
+  function ciz(o){ o = o || {};
+    var h;
+    if (o.ikinci && IKINCI[tur]) {
+      /* ikinci başarısızlık: açıklama değişir, "Daha sonra dene" ana eylem olur, Yeniden dene metin düğmesine iner */
+      var x = Object.assign({}, K.HATA[tur], { hata: true, aciklama: IKINCI[tur], kod: null });
+      x.eylem = tur === 'cevrimdisi' ? { metin: 'Kaydedilenleri oku', href: 'kaydedilenler' } : { metin: 'Daha sonra dene', href: 'ana' };
+      x.ikinci = { metin: 'Yeniden dene', ikon: 'fa-rotate-right', attr: 'data-yeniden' };
+      h = K.bos(x);
+    } else h = K.hata({ tur: tur, deneniyor: o.deneniyor });
+    e.innerHTML = '<div class="k-ust-bosluk"></div><div class="hk' + (ITME ? ' itme' : '') + '">' + h + '</div><div class="k-son' + (ITME ? ' yalin' : '') + '"></div>';
+    sayac(); }
+
+  /* E-414: kısa bekleme sayacı; süre bitince düğme açılır */
+  var zam;
+  function sayac(){ if (tur !== 'cok-istek') return; clearInterval(zam);
+    var b = e.querySelector('.k-bos-a .k-btn'), s = 30;
+    zam = setInterval(function(){ s--; if (s > 0) { b.querySelector('span').textContent = 'Yeniden dene · 0:' + (s < 10 ? '0' : '') + s; return; }
+      clearInterval(zam); b.removeAttribute('disabled'); b.setAttribute('data-yeniden', ''); b.innerHTML = K.I('fa-rotate-right') + '<span>Yeniden dene</span>'; }, 1000); }
+
+  ciz({ deneniyor: DUR === 'yeniden-deneniyor' && HAL !== 'ikinci', ikinci: DUR === 'yeniden-deneniyor' && HAL === 'ikinci' });
+
+  if (ITME) K.ustCubuk({ geri: true });
+  else { K.ustCubuk({ logo: true, eylemler: ['ara', 'hesap'] }); K.altCubuk('ana'); K.oynatici(); }
+
+  /* Yeniden dene: düğmede gösterge; prototipte ikinci deneme de başarısız olur (E-410) */
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ if (IKINCI[tur]) ciz({ ikinci: true }); else location.href = K.git('ana'); }, 1200); });
+})();
+</script>
+</body>
+</html>

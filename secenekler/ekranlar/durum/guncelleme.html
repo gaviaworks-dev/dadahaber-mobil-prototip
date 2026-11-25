@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Güncelleme</title>
+<!-- Dada Haber Mobil · UYGULAMA GÜNCELLEMESİ (E-416–E-417). Uygulama düzeyi durum.
+     Sorgu: ?durum=zorunlu (E-416, varsayılan) tam ekran, kapatılamaz: logo, K.hata('guncelleme'), "Güncelle" → mağaza
+            | onerilen (E-417) ana sayfanın üstünde alt sayfa K.sayfa('guncelle'): Güncelle · Sonra · ?tema=koyu
+     Platform notu: "Güncelle" iOS'ta App Store'daki uygulama sayfasını, Android'de Google Play'i açar (Android'de Play Core uygulama içi güncelleme penceresi de kullanılabilir;
+     zorunlu hal "immediate", önerilen hal "flexible" akışına karşılık gelir). Zorunlu halde geri hareketi ekranı kapatmaz.
+     Panel: en düşük desteklenen sürüm ve önerilen sürüm panelden (Uygulama ayarları) yönetilir. -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* yerleşim (bileşen biçimi değil): uygulama düzeyi tam ekran; logo üstte, şablon dikey ortada (kit vitrini "Güncelleme zorunlu" düzeni) */
+.tam-d{min-height:100%;display:flex;flex-direction:column;padding:var(--ust-guvenli) 0 calc(var(--alt-guvenli) + var(--b-24))}
+.tam-d .lg{display:flex;justify-content:center;padding-top:var(--b-24)}
+.tam-d .k-bos{flex:1;justify-content:center;padding-top:0}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var DUR = K.durum || 'zorunlu', e = document.getElementById('ekran');
+  if (DUR === 'onerilen') {
+    /* arkada ana sayfanın üst kısmı: logo çubuğu + Son Dakika satırları (aynı içerik) */
+    e.innerHTML = '<div class="k-ust-bosluk"></div><div class="k-ic">' + K.bb({ baslik: 'Son Dakika', canli: true, yalin: true, baglanti: { metin: 'Tümü', href: K.git('sonDakika') } }) + '</div>' +
+      '<div class="k-satirlar">' + D.liste.haberler.slice(0, 5).map(function(h){ return K.satir(h); }).join('') + '</div><div class="k-son"></div>';
+    K.ustCubuk({ logo: true, eylemler: ['ara', 'hesap'] });
+    K.altCubuk('ana');
+    K.oynatici();
+    var s = K.sayfa('guncelle', { acik: true });
+    s.el.querySelector('.k-sayfa-a .birincil').setAttribute('data-toast', 'App Store açılıyor');
+  } else {
+    var h = Object.assign({}, K.HATA.guncelleme, { kod: 'Bu sürüm artık desteklenmiyor · App Store\'da açılır' });
+    e.innerHTML = '<div class="tam-d"><div class="lg"><span class="logo" role="img" aria-label="Dada Haber"></span></div>' + K.bos(h) + '</div>';
+    e.querySelector('.k-bos-a .k-btn').setAttribute('data-toast', 'App Store açılıyor');
+  }
+})();
+</script>
+</body>
+</html>

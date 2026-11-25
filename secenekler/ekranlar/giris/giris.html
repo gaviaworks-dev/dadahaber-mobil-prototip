@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Giriş yap</title>
+<!-- Dada Haber Mobil · GİRİŞ (E-438–E-442). İtme ekranı (geri), alt çubuk yok. Büyük başlık kaydırınca üst çubuğa küçülür.
+     Sıra: Apple · Google · Facebook ile devam et (App Store 4.8: Apple ile giriş en üstte) → "veya e-postayla" → E-posta, Şifre (göster/gizle) → Şifremi unuttum → Giriş yap → Üye ol · Misafir olarak devam et.
+     Sorgu: (yok) E-438 boş form | ?durum=hata (E-439) hatalı şifre: alan altında tek satır | kilitli (E-440) çok deneme: şerit + sayaçlı bekleme + Şifreni sıfırla
+            | gonderiliyor (E-441) düğmede gösterge, alanlar kilitli | cevrimdisi (E-442) "Giriş için bağlantı gerekli" şeridi, düğmeler pasif · ?tema=koyu
+     Kaynak: public giris.html (metinler: "Kaydettiklerin, takip ettiklerin ve bildirim tercihlerin hesabında seni bekliyor.", "Misafir olarak devam et"); örnek adres public formdaki ece.yilmaz@eposta.com.
+     Varsayımlar (onaylanmadı): sayfa mı alt sayfa mı (B-15) açık; burada tam sayfa. Kilit süresi 15 dk. "Beni hatırla" uygulamada yok (oturum açık kalır).
+     Sosyal düğmelerde sağlayıcı işaretleri fa-brands (K37: K32 istisnası, onay bekler). -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* yerleşim (bileşen biçimi değil) */
+.fm{padding-top:var(--b-8)}
+.fm>.k-serit{margin-bottom:var(--b-24)}
+.fm .sag{display:flex;justify-content:flex-end;margin-top:var(--b-4)}
+.fm .gb{margin-top:var(--b-8)}
+.fm .ab{display:flex;justify-content:center;align-items:center;gap:var(--b-4);margin-top:var(--b-16);font-size:14px;color:var(--metin-3)}
+.fm .ms{margin-top:var(--b-4)}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var DUR = K.durum, e = document.getElementById('ekran'), TAM = document.documentElement.classList.contains('tam');
+  var EP = 'ece.yilmaz@eposta.com'; /* kaynak: public giris.html örnek adresi */
+  var gon = DUR === 'gonderiliyor', kil = DUR === 'kilitli', cd = DUR === 'cevrimdisi', dolu = gon || kil || DUR === 'hata';
+  var serit = kil ? K.serit({ tur: 'hata', ikon: 'fa-lock', metin: 'Çok fazla hatalı deneme', alt: 'Güvenliğin için e-postayla girişi 15 dakika durdurduk.', eylem: 'Şifreni sıfırla' })
+    : cd ? K.serit({ tur: 'uyari', ikon: 'fa-plug-circle-xmark', metin: 'Giriş için bağlantı gerekli', alt: 'İnternete bağlanınca yeniden dene; haberleri okumaya devam edebilirsin.' }) : '';
+  var sosyalPasif = gon || cd;
+  function sos(ad, ikon, tur){ return K.btn({ metin: ad + ' ile devam et', ikon: 'fa-brands ' + ikon, tur: tur, pasif: sosyalPasif, href: sosyalPasif ? null : K.u('ekranlar/giris/sosyal-giris.html', 'saglayici=' + ad.toLowerCase()) }); }
+
+  e.innerHTML = '<div class="k-ust-bosluk"></div><header class="k-bbas"><h1>Giriş yap</h1><p>Kaydettiklerin, takip ettiklerin ve bildirim tercihlerin hesabında seni bekliyor.</p></header>' +
+    '<div class="k-ic fm">' + serit +
+    '<div class="k-sosyal">' + sos('Apple', 'fa-apple', 'ikincil') + sos('Google', 'fa-google', 'sade') + sos('Facebook', 'fa-facebook-f', 'sade') + '</div>' +
+    '<div class="k-veya">veya e-postayla</div><div id="eposta">' +
+    K.alan({ etiket: 'E-posta', tur: 'email', ikon: 'fa-envelope', yer: 'ornek@eposta.com', deger: dolu ? EP : '', pasif: gon || cd, oto: 'email' }) +
+    K.alan({ etiket: 'Şifre', tur: 'password', ikon: 'fa-lock', yer: 'Şifren', deger: dolu ? 'dadahaber' : '', pasif: gon || kil || cd, oto: 'current-password',
+      hata: DUR === 'hata' ? 'E-posta ya da şifre hatalı.' : null }) +
+    '</div><div class="sag"><a class="k-bag" href="' + K.u('ekranlar/giris/sifremi-unuttum.html') + '">Şifremi unuttum</a></div>' +
+    '<div class="gb">' + K.btn({ metin: gon ? 'Giriş yapılıyor' : kil ? 'Yeniden dene · 14:59' : 'Giriş yap', ikon: 'fa-right-to-bracket', tur: 'birincil', boy: 'buyuk', tam: true,
+      durum: gon ? 'yukleniyor' : null, pasif: kil || cd, attr: 'id="gir"' }) + '</div>' +
+    '<p class="ab">Hesabın yok mu?<a class="k-bag k-dk44" href="' + K.git('uyeOl') + '">Üye ol</a></p>' +
+    '<div class="ms">' + K.btn({ metin: 'Misafir olarak devam et', tur: 'metin', tam: true, href: K.git('ana', 'uye=0') }).replace('k-btn metin', 'k-btn metin notr') + '</div>' +
+    '</div><div class="k-son yalin"></div>';
+  K.ustCubuk({ geri: true, baslik: 'Giriş yap', buyuk: true });
+
+  /* hatalı şifre: forma kaydır; kilitli: sayaç */
+  if (DUR === 'hata' && !TAM) e.scrollTop = document.getElementById('eposta').offsetTop - 140;
+  if (kil) { var s = 899, g = document.getElementById('gir');
+    setInterval(function(){ s = Math.max(0, s - 1); g.querySelector('span').textContent = 'Yeniden dene · ' + Math.floor(s / 60) + ':' + ('0' + s % 60).slice(-2); }, 1000);
+    e.querySelector('.k-serit button').addEventListener('click', function(){ location.href = K.u('ekranlar/giris/sifremi-unuttum.html'); }); }
+  /* Giriş yap: düğmede gösterge, sonra üye ana sayfa */
+  var gb = document.getElementById('gir');
+  gb.addEventListener('click', function(){ gb.classList.add('is-yukleniyor'); gb.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Giriş yapılıyor</span>';
+    e.querySelectorAll('.k-alan').forEach(function(a){ a.classList.add('is-pasif'); });
+    setTimeout(function(){ location.href = K.git('ana', 'uye=1'); }, 1200); });
+})();
+</script>
+</body>
+</html>

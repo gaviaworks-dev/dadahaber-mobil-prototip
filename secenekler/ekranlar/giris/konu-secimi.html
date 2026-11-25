@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Konu seçimi</title>
+<!-- Dada Haber Mobil · KİŞİSELLEŞTİRME: KONU, TAKIM, ŞEHİR (E-434–E-437). Tanıtım / bildirim izni / e-posta doğrulamadan sonra; üç adım, her adımda Atla.
+     Sorgu: ?adim=konu (E-434, varsayılan) 8 bölüm ve alt konuları çip (DADAHABER-10 §2; bölüm başına 8 çip + "n konu daha")
+            | takim (E-435) Galatasaray, Fenerbahçe, Beşiktaş, Trabzonspor, Süper Lig, Avrupa Ligleri (DADAHABER-10 Spor › Takımlar) + "Takım tutmuyorum"
+            | sehir (E-436) Konumumu kullan ya da listeden (Haber ürettiğimiz iller, public sehirler.html)
+            | ?durum=hazirlaniyor (E-437) "Ana sayfan hazırlanıyor" kısa geçiş → ana sayfa · ?uye=0 misafir (hiçbir şey seçili gelmez) · ?bildirim=1 (izin verildi bildirimi) · ?tema=koyu
+     Üye örneği: D.uye.takip (Galatasaray, Faiz, İstanbul, Savunma Sanayii) seçili gelir: "Faiz" → Finans › Faiz Oranları çipi; "Savunma Sanayii" → Savunma sütun başlığı çipi
+     (DADAHABER-10'da alt madde olarak kaldırıldı, sütun olarak var); Galatasaray takım adımında; İstanbul hem Gündem çipinde hem şehir adımında.
+     Keşfet'te yalnız konu sütunları (Teknoloji ve Bilim, Sağlık ve Yaşam, Kültür ve Sanat); Anlık, Keşfet Formatları, Medya ve Arşiv konu değil, biçim olduğu için alınmadı.
+     Varsayımlar (onaylanmadı): en az seçim sayısı karar bekliyor, zorunlu tutulmadı (public metin "en az üç konu" öneri olarak); adım sırası konu → takım → şehir;
+     hazırlanıyor hali kendiliğinden geçmez (galeri önizlemesi bozulmasın), 1,8 sn sonra "Ana sayfaya git" açılır.
+     KİT ADAYI: .ks-alt (alt eylem çubuğu) — çok adımlı akışta ana eylem başparmak bölgesinde sabit; kitte karşılığı yok (yalnız alt sayfa eylemleri .k-sayfa-a var). -->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* KİT ADAYI: alt eylem çubuğu (.ks-alt) — çok adımlı akışlarda (konu seçimi, tanıtım sonrası) ana eylem başparmak bölgesinde sabit durur; içerik altından kayar. Yalnız değişkenler. */
+.ks-alt{position:absolute;left:0;right:0;bottom:0;z-index:60;padding:var(--b-12) var(--kenar) calc(var(--alt-guvenli) + var(--b-8));background:var(--zemin);border-top:1px solid var(--cizgi)}
+.ks-bosluk{height:calc(var(--alt-guvenli) + var(--b-40) + var(--b-32))}
+/* yerleşim (bileşen biçimi değil) */
+.ad-il{padding:var(--b-8) var(--kenar) var(--b-4)}
+.kb{padding-top:var(--b-24)}
+.kb .k-bb{margin-bottom:var(--b-8)}
+.k-takimlar{margin-top:var(--b-8)}
+.tt{display:flex;justify-content:center;margin-top:var(--b-16)}
+.sh .k-ara{margin-top:var(--b-16)}
+.sh .k-grup{margin:var(--b-8) 0 0}
+.sh .k-grup-b{margin-top:var(--b-24)}
+.k-ub .k-btn.metin{margin-right:var(--b-8)}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var ADIM = K.q.get('adim') || 'konu', DUR = K.durum, e = document.getElementById('ekran'), U = K.uye;
+  var YOL = 'ekranlar/giris/konu-secimi.html';
+  /* kaynak: docs/kaynak/DADAHABER-10-kategori-ve-medya-yapisi.md §2 (alt kategoriler; sıra bölüm içinde konu ağırlığına göre) */
+  var KONU = {
+    'Gündem': ['Siyaset', 'Toplum', 'Hukuk', 'Güvenlik', 'Çevre ve Afet', 'Yerel Haberler', 'İstanbul', 'Ankara', 'İzmir', 'Şehirler', 'Özel Haber', 'Araştırma'],
+    'Spor': ['Futbol', 'Basketbol', 'Voleybol', 'Transfer', 'Millî Takım', 'Motor Sporları', 'Tenis', 'Atletizm', 'Bisiklet', 'Olimpiyatlar', 'E-Spor'],
+    'Finans': ['Döviz', 'Altın', 'Borsa', 'Faiz Oranları', 'Enflasyon', 'Kişisel Finans', 'Kripto Para', 'Akaryakıt Fiyatları', 'Türkiye Ekonomisi', 'Dünya Ekonomisi', 'Bankacılık', 'Çalışma Hayatı', 'Enerji', 'Gayrimenkul', 'Otomotiv', 'Girişimcilik'],
+    'Kadın': ['Kadın Gündemi', 'Kadın Hakları', 'Kadın ve Çalışma Hayatı', 'Başarı Hikâyeleri', 'Kadın Sağlığı', 'Anne ve Çocuk', 'Hamilelik', 'Ev ve Yaşam', 'Moda', 'Güzellik', 'Astroloji'],
+    'Savunma': ['Savunma Sanayii', 'Millî Projeler', 'İHA ve SİHA', 'Hava Platformları', 'Deniz Platformları', 'Kara Sistemleri', 'Füze ve Roket Sistemleri', 'Millî Güvenlik', 'Sınır Güvenliği', 'NATO', 'Savunma Teknolojileri', 'İhracat ve Anlaşmalar'],
+    'Dünya': ['Avrupa', 'Orta Doğu', 'Amerika', 'Asya Pasifik', 'Balkanlar', 'Kafkasya', 'Türk Dünyası', 'Afrika', 'Diplomasi', 'Küresel Siyaset', 'Savaş ve Çatışmalar', 'Göç'],
+    'Kampüs': ['YKS', 'KPSS', 'ALES ve YDS', 'Sınav Takvimi', 'Üniversiteler', 'Burslar', 'Yurtlar', 'Staj', 'Kariyer', 'Gençlerin Gündemi'],
+    'Keşfet': ['Teknoloji', 'Yapay Zekâ', 'Bilim', 'Uzay', 'İklim', 'Sağlık', 'Seyahat', 'Gastronomi', 'Sinema', 'Dizi', 'Müzik', 'Kitap', 'Siber Güvenlik', 'Oyun', 'Beslenme', 'Tiyatro']
+  };
+  /* üye örneği: D.uye.takip → çip adları */
+  var ESLE = { 'Faiz': 'Faiz Oranları' }, SEC = U ? D.uye.takip.map(function(t){ return ESLE[t] || t; }) : [];
+  /* kaynak: public araclar/ornek_veri.json puan_tablosu (kodlar); DADAHABER-10 Spor › Takımlar */
+  var TAKIM = [{ kod: 'GS', ad: 'Galatasaray' }, { kod: 'FB', ad: 'Fenerbahçe' }, { kod: 'BJK', ad: 'Beşiktaş' }, { kod: 'TS', ad: 'Trabzonspor' },
+    { kod: K.I('fa-trophy'), ad: 'Süper Lig' }, { kod: K.I('fa-earth-europe'), ad: 'Avrupa Ligleri' }];
+  /* kaynak: public sehirler.html "Haber Ürettiğimiz İller" (plaka sırası) */
+  var SEHIR = [['06', 'Ankara'], ['25', 'Erzurum'], ['26', 'Eskişehir'], ['27', 'Gaziantep'], ['33', 'Mersin'], ['34', 'İstanbul'], ['35', 'İzmir'], ['42', 'Konya'], ['61', 'Trabzon'], ['65', 'Van']];
+  var NO = { konu: 1, takim: 2, sehir: 3 }[ADIM] || 1, SONRA = { konu: 'adim=takim', takim: 'adim=sehir', sehir: 'durum=hazirlaniyor' }[ADIM];
+
+  function ilerleme(n){ var s = ''; for (var i = 1; i <= 3; i++) s += '<i' + (i <= n ? ' class="on"' : '') + '></i>'; return '<div class="ad-il"><div class="k-ilerleme adim" style="--n:3" role="progressbar" aria-valuemin="1" aria-valuemax="3" aria-valuenow="' + n + '">' + s + '</div></div>'; }
+  function bas(h, p){ return '<header class="k-bbas"><h1>' + h + '</h1><p>' + p + '</p></header>'; }
+  function alt(metin){ return '<div class="ks-alt">' + K.btn({ metin: metin, tur: 'birincil', boy: 'buyuk', tam: true, href: K.u(YOL, SONRA), attr: 'id="devam"' }) + '</div>'; }
+
+  /* ---------- E-437 · hazırlanıyor ---------- */
+  if (DUR === 'hazirlaniyor') {
+    var L = U ? [['fa-heart', 'Konular', SEC.filter(function(x){ return x !== 'Galatasaray'; }).join(', ')], ['fa-futbol', 'Takımın', 'Galatasaray'], ['fa-location-dot', 'Şehrin', D.hava.sehir + ' · hava ve namaz vakti']]
+      : [['fa-heart', 'Konular', 'Seçtiğin konular öne çıkar'], ['fa-futbol', 'Takımın', 'Maç ve transfer haberleri'], ['fa-location-dot', 'Şehrin', 'Hava, namaz vakti ve yerel haberler']];
+    e.innerHTML = '<section class="k-izin"><span class="ik">' + K.I('fa-house') + '</span><h1>Ana sayfan hazırlanıyor</h1><p>Seçimlerine göre haberleri diziyoruz. Bunları istediğin zaman Tercihler\'den değiştirebilirsin.</p><ul>' +
+      L.map(function(x, i){ return '<li>' + K.I(i < 2 ? 'fa-check' : 'fa-circle-notch fa-spin') + '<span><b>' + x[1] + '</b><small class="tek">' + x[2] + '</small></span></li>'; }).join('') + '</ul>' +
+      '<div class="a">' + K.btn({ metin: 'Hazırlanıyor', tur: 'birincil', boy: 'buyuk', tam: true, durum: 'yukleniyor', attr: 'id="git"' }) + '</div></section>';
+    setTimeout(function(){ var li = e.querySelectorAll('.k-izin li > i')[2]; li.className = 'fa-solid fa-check';
+      var g = document.getElementById('git'); g.outerHTML = K.btn({ metin: 'Ana sayfaya git', tur: 'birincil', boy: 'buyuk', tam: true, href: K.git('ana') }); }, 1800);
+    return;
+  }
+
+  var h = '<div class="k-ust-bosluk"></div>' + ilerleme(NO);
+  if (ADIM === 'takim') {
+    h += bas('Takımını seç', 'Takımının maç ve transfer haberleri öne çıkar; canlı maçını ana sayfanda görürsün.') +
+      '<div class="k-ic"><div class="k-takimlar">' + TAKIM.map(function(t){ return K.takim({ kod: t.kod, ad: t.ad, secili: SEC.indexOf(t.ad) > -1 }); }).join('') + '</div>' +
+      '<div class="tt">' + K.btn({ metin: 'Takım tutmuyorum', tur: 'metin', href: K.u(YOL, 'adim=sehir') }).replace('k-btn metin', 'k-btn metin notr') + '</div></div>' + '<div class="ks-bosluk"></div>' + alt('Devam');
+  } else if (ADIM === 'sehir') {
+    h += bas('Şehrini seç', 'Hava durumu, namaz vakitleri ve yerel haberler için kullanılır.') +
+      '<div class="k-ic sh">' + K.grup('', [{ ikon: 'fa-location-arrow', baslik: 'Konumumu kullan', alt: 'Konumun kaydedilmez', attr: 'data-toast="Konum izni istenecek"' }]) +
+      K.ara({ yer: 'Şehir ara', ses: false }) + '<span class="k-grup-b">Haber ürettiğimiz iller</span>' +
+      SEHIR.map(function(s){ return K.secim('sehir', s[1], { satir: true, secili: U && s[1] === D.hava.sehir }); }).join('') + '</div>' + '<div class="ks-bosluk"></div>' + alt('Bitir');
+  } else {
+    h += bas('İlgi alanlarını seç', 'Seçtiğin konular ana sayfanda öne çıkar. En az üç konu seçersen ana sayfan daha isabetli olur.') +
+      D.bolumler.map(function(b){ var l = KONU[b.ad] || [], n = l.filter(function(x){ return SEC.indexOf(x) > -1; }).length;
+        return '<section class="kb k-ic" data-bolum="' + b.ad + '">' + K.bb({ baslik: b.ad, ikon: b.ikon, yalin: true, not: n ? n + ' seçili' : '' }) + '<div class="k-cip-izgara">' +
+          l.map(function(x, i){ return K.cip(x, { secili: SEC.indexOf(x) > -1, attr: i >= 8 ? 'hidden' : '' }); }).join('') +
+          (l.length > 8 ? '<button type="button" class="k-cip" data-daha>' + K.I('fa-plus') + (l.length - 8) + ' konu daha</button>' : '') + '</div></section>'; }).join('') +
+      '<div class="ks-bosluk"></div>' + alt('Devam');
+  }
+  e.innerHTML = h;
+  var ub = K.ustCubuk({ geri: true, baslik: { konu: 'Konular', takim: 'Takım', sehir: 'Şehir' }[ADIM] || 'Konular', buyuk: true });
+  /* Atla: adımı geçer (son adımda hazırlanıyor) */
+  ub.querySelector('.k-ub-s').insertAdjacentHTML('beforeend', K.btn({ metin: 'Atla', tur: 'metin', href: K.u(YOL, SONRA) }).replace('k-btn metin', 'k-btn metin notr'));
+
+  /* konu: sayaçlar ve "n konu daha" */
+  function say(){ if (ADIM !== 'konu' && ADIM) return; var top = 0;
+    e.querySelectorAll('.kb').forEach(function(s){ var n = s.querySelectorAll('.k-cip[aria-pressed="true"]:not([data-daha])').length; top += n;
+      var bb = s.querySelector('.k-bb'), not = bb.querySelector('.not'); if (!not) { bb.insertAdjacentHTML('beforeend', '<span class="not"></span>'); not = bb.querySelector('.not'); } not.textContent = n ? n + ' seçili' : ''; });
+    var d = document.getElementById('devam'); if (d) d.querySelector('span').textContent = top ? 'Devam · ' + top + ' konu' : 'Devam'; }
+  e.addEventListener('click', function(ev){ var d = ev.target.closest('[data-daha]');
+    if (d) { d.parentNode.querySelectorAll('.k-cip[hidden]').forEach(function(c){ c.removeAttribute('hidden'); }); d.remove(); return; }
+    if (ev.target.closest('.k-cip')) setTimeout(say, 0); });
+  say();
+  if (K.q.get('bildirim') === '1') K.toast('Bildirimler açık', { tur: 'basari', ikon: 'fa-bell', alt: 'Tercihlerini Hesabım\'dan değiştirebilirsin' });
+})();
+</script>
+</body>
+</html>
