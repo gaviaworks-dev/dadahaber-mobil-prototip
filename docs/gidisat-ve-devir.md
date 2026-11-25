@@ -19,6 +19,7 @@ Tarih: 2026-11-25 · Depo: `dadahaber-mobil-prototip` · Canlı: `secenekler/ekr
 - **Kit yayılım sırasında değişti, önceki dalgalar yeniden ölçülmedi.** Değişiklikler çoğunlukla dokunma alanı büyütme ve küçük hatalardı (podcast oynatın Spiker'ı başlatması, uzun basma menüsünde Dinle, mini oynatıcı başlığı, iskelet rengi). Bozulma beklenmez ama kanıtlanmadı.
 - **Kitte olmayan bileşenler ekran içinde yazıldı, bazıları iki kez ya da daha fazla** (aşağıdaki listede "tekrar"). Kitte eksik bileşen, ekip yazmadan önce kite eklenmeliydi; paralel ekiplerde bu kural yürümedi.
 - Toplantı içi düzeltmeler (marka logosu, Dinle/Spiker ayrımı, mini oynatıcının her ekranda açık görünmesi) kökte ve kitte yapıldı; kökten kite akan tek kaynak düzeni bu yüzden işe yaradı.
+- **Aynı ekranın halleri (yükleniyor, boş, hata, çevrimdışı, misafir) kitte bir kez çizilmeliydi; 600 ekrana tek tek dağıtmak boşa emek oldu.** Sonraki mobil prototipte sıra: kökler → UI kit (her bileşen ve her hali kitte) → sitenin envanteriyle satır satır eşli tam ekran listesi → HTML'de yalnızca düzeni farklı ekranlar → Flutter.
 
 ## 3. Flutter'a devir
 
