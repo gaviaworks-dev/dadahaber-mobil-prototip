@@ -114,8 +114,10 @@
 .mc a.tm i{font-size:10px}
 .mf{margin-top:16px;padding-top:12px;border-top:1px solid var(--cizgi)}
 .mf .ms span{font-size:14.5px}
-.mf .ky{margin-top:4px;display:flex;flex-wrap:wrap;gap:0 14px;padding:0 10px;font-size:12.5px;color:var(--metin-3)}
-.mf .ky a{min-height:44px;display:inline-flex;align-items:center}
+/* kurumsal bağlantılar: tek satır, yana kayan şerit (Beyar) */
+.mf .mf-bag{margin:4px calc(-1 * var(--kenar)) 0;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:0 var(--kenar);scroll-padding-inline:var(--kenar)}
+.mf .mf-bag::-webkit-scrollbar{display:none}
+.mf .mf-bag a{flex:none;min-height:44px;padding:0 12px;border-radius:var(--k-ic);background:var(--zemin-2);display:inline-flex;align-items:center;font-size:13px;color:var(--metin-2);white-space:nowrap}
 /* ---------- zebra bantlar ---------- */
 .bant{padding:26px 0}
 .bant.ton{background:var(--zemin-2);--kart:var(--yuzey)}
@@ -328,7 +330,7 @@
       '<span class="mt">Dinle ve izle</span>' + sat('fa-headphones', 'Haber Dinle', '<span class="cn"><span class="canli-nokta"></span>Yayında</span>') + sat('fa-mobile-screen-button', 'Akış', '<em>12 video</em>') + sat('fa-podcast', 'Podcast') + sat('fa-circle-play', 'Video Haber') + sat('fa-camera', 'Foto Fokus') + sat('fa-chart-pie', 'İnfografik') +
       '<span class="mt">Dada</span>' + sat('fa-feather-pointed', 'Yazarlar') + sat('fa-bolt', 'Son Dakika') + sat('fa-calendar-day', 'Gündem Takvimi') + sat('fa-message', 'Görüş Bildir') + '</nav>' +
     '<div class="mf"><a class="ms"><i class="fa-solid fa-circle-half-stroke"></i><span>Görünüm: <b>Sistem</b></span><i class="fa-solid fa-chevron-down cv"></i></a><a class="ms"><i class="fa-solid fa-font"></i><span>Yazı boyutu: <b>Orta</b></span><i class="fa-solid fa-chevron-down cv"></i></a>' +
-      '<div class="ky"><a>Hakkımızda</a><a>Künye</a><a>İletişim</a><a>Gizlilik Politikası</a></div></div></div>';
+      '<div class="mf-bag"><a>Hakkımızda</a><a>Künye</a><a>İletişim</a><a>Gizlilik Politikası</a></div></div></div>';
   document.addEventListener('click', function(ev){
     if (ev.target.closest('[data-menu]')) document.body.classList.add('menu-acik');
     if (ev.target.closest('[data-menu-kapat]') || ev.target.id === 'perde-m') document.body.classList.remove('menu-acik');
