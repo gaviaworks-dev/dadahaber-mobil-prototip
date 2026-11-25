@@ -537,10 +537,10 @@
      yukarı kaydırınca üst çubuk görselli daralır. Sayfa adı → konuya uygun fotoğraf (yoksa koyu marka zemini). Sayfa betiklerinden sonra uygulanır. ---------- */
   var BANNER = { 'bolumler': 'kar-istanbul', 'afet': 'konteyner', 'trafik': 'metro', 'ekonomi-araclari': 'borsa', 'resmi-ilanlar': 'ankara-kar', 'piyasalar': 'borsa',
     'son-dakika': 'kar-istanbul', 'canli-gundem': 'tbmm', 'canli-yayin': 'spiker-kare', 'haber-dinle': 'spiker-kare', 'canli-skor': 'antrenman', 'puan-durumu': 'superlig',
-    'fikstur': 'kulup', 'takimlar': 'kulup', 'namaz-vakitleri': 'balikci', 'arsiv': 'yks', 'bana-etkisi': 'carsi', 'bugun-ne-oldu': 'kar-istanbul', 'dada-baglam': 'ab-meclis',
+    'fikstur': 'superlig', 'takimlar': 'antrenman', 'namaz-vakitleri': 'balikci', 'arsiv': 'yks', 'bana-etkisi': 'carsi', 'bugun-ne-oldu': 'kar-istanbul', 'dada-baglam': 'ab-meclis',
     'dada-dogrula': 'tarama', 'dada-ozet': 'veri-merkezi', 'farkli-bakislar': 'ab-meclis', 'guncellenen-haberler': 'asgari', 'sakin-akis': 'balikci', 'takvim': 'tbmm',
-    'veri-ve-harita': 'veri-merkezi', 'kesfet': 'veri-merkezi', 'yazarlar': '', 'hamilelik': '', 'astroloji': '', 'dada-ailesi': '', 'senin-icin': '', 'transfer': 'kulup',
-    'lig': 'superlig', 'brans': 'basket', 'milli-takim': 'milli', 'avrupa-ligleri': 'superlig', 'podcast': '', 'video': '', 'foto-fokus': 'balon', 'infografik': 'veri-merkezi' };
+    'veri-ve-harita': 'veri-merkezi', 'kesfet': 'veri-merkezi', 'yazarlar': '', 'hamilelik': '', 'astroloji': '', 'dada-ailesi': '', 'senin-icin': '', 'transfer': 'antrenman',
+    'lig': 'superlig', 'milli-takim': 'milli', 'avrupa-ligleri': 'superlig', 'podcast': '', 'video': '', 'foto-fokus': 'balon', 'infografik': 'veri-merkezi' };
   K.banner = function(){
     var m = location.pathname.match(/ekranlar\/icerik\/([a-z0-9-]+)\.html$/); if (!m || !(m[1] in BANNER)) return;
     var bb = document.querySelector('.ekran .k-bbas'), e = document.querySelector('.ekran'); if (!bb || !e || bb.closest('.k-kapak')) return;
