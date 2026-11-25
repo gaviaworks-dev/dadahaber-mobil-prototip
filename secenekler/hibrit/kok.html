@@ -224,7 +224,7 @@
         return '<a href="' + d + '" style="background-image:' + G(m.g) + '"><span class="et"><i class="fa-solid ' + m.ikon + '"></i>' + m.kat + '<span>· ' + m.sure + '</span></span><h2>' + m.baslik + '</h2>' +
           '<span class="yz"><span class="av">' + m.yazar.charAt(0) + '</span>' + m.yazar + '</span></a>'; }).join('') + '</div>' +
       '<div class="hero-ust"><div class="sr"><span class="logo" role="img" aria-label="Dada Haber"></span>' +
-        '<a class="dd" aria-label="Ara"><i class="fa-solid fa-magnifying-glass"></i></a><a class="dd" aria-label="Bildirimler"><i class="fa-solid fa-bell"></i></a>' +
+        '<a class="dd" aria-label="Ara"><i class="fa-solid fa-magnifying-glass"></i></a>' +
         (H.uye ? '<a class="dd av" aria-label="Hesabım">' + D.uye.ad.charAt(0) + '</a>' : '<a class="gir"><i class="fa-solid fa-right-to-bracket"></i>Giriş yap</a>') + MENU_D + '</div>' +
         '<div class="gun">' + gun + '</div><h1>İyi günler' + (H.uye ? ', ' + D.uye.ad : '') + '</h1>' +
         '<span class="ebr"><i class="fa-solid ' + bk.ikon + '"></i>' + bk.ad + '<em>· sonraki ' + bk.sonraki + '</em></span></div>' +
@@ -310,7 +310,7 @@
   var hr = document.getElementById('hr'), nk = document.getElementById('nk').children, sy = document.getElementById('sy'), e = document.getElementById('ekran');
   hr.addEventListener('scroll', function(){ var i = Math.round(hr.scrollLeft / hr.clientWidth); [].forEach.call(nk, function(x, j){ x.className = j === i ? 'on' : ''; }); sy.textContent = (i + 1) + ' / ' + D.manset.length; }, { passive: true });
   document.getElementById('ustk').innerHTML = '<span class="logo" role="img" aria-label="Dada Haber"></span><span class="bk"><i class="fa-solid ' + bk.ikon + '"></i>' + bk.kisa + '</span>' +
-    '<a class="dd" aria-label="Ara"><i class="fa-solid fa-magnifying-glass"></i></a><a class="dd" aria-label="Bildirimler"><i class="fa-solid fa-bell"></i></a>' + (H.uye ? '<a class="dd av" aria-label="Hesabım">' + D.uye.ad.charAt(0) + '</a>' : '<a class="dd" aria-label="Giriş yap"><i class="fa-solid fa-right-to-bracket"></i></a>') + MENU_D;
+    '<a class="dd" aria-label="Ara"><i class="fa-solid fa-magnifying-glass"></i></a>' + (H.uye ? '<a class="dd av" aria-label="Hesabım">' + D.uye.ad.charAt(0) + '</a>' : '<a class="dd" aria-label="Giriş yap"><i class="fa-solid fa-right-to-bracket"></i></a>') + MENU_D;
   /* menü (K31): Dada Gastro ortak menüsünün yapısı: sağdan çekmece; hesap kartı; ikonlu, açılır alt başlıklı liste; altta ayar ve kurumsal.
      Alt başlıklar DADAHABER-10'dan (her bölümün ilk sütunu). */
   var ALT = { 'Gündem': ['Siyaset', 'Toplum', 'Hukuk', 'Güvenlik', 'Çevre ve Afet', 'Yerel Haberler'], 'Spor': ['Futbol', 'Basketbol', 'Voleybol', 'Canlı Skor', 'Puan Durumu', 'Transfer'],
