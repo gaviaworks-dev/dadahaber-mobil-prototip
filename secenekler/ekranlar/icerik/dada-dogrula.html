@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Dada Doğrula</title>
+<!--
+  DADA DOĞRULA · E-259–E-265 · merkez kök: Liste (büyük başlık, alt çubukta "Bölümler") · inceleme detayı kök: Detay (okuma çubuğu, alt çubuk yok).
+  Merkez: büyük başlık → karar etiketi süzgeci (çipler; satırlar yerinde süzülür) → öne çıkan inceleme (geniş kart, karar etiketi + "İncelendi · 3 kaynak") →
+  Son İncelemeler (186) → İddia gönder (çağrı kutusu → alt sayfa formu) → Karar etiketleri (6) → İnceleme nasıl yapılıyor? (adımlar).
+  Detay (?inceleme=1): görselli kapak yok (sitede temsilî fotoğraf) → başlık, yazar, bilgi satırı, açıklama, tek teyit gösterimi "İncelendi · 3 kaynak" →
+  Dada Doğrula kararı kartı (3 madde) → İddia (alıntı) → Bulgular → "Neden yanıltıcı? · Karar değişebilir mi?" seçici (yerinde, K18) → Kaynaklar → Yorumlar → İlgili İçerikler.
+  Parametreler: ?inceleme=1 · ?durum=yukleniyor | daha-fazla (&hal=son|hata) | hata (&hata=zaman-asimi) | bulunamadi | cevrimdisi (&onbellek=0) · ?uye=0 · ?tema=koyu · ?calan=1
+  Kaynak: public dada-dogrula.html (karar etiketleri ve açıklamaları, son incelemeler, iddia formu, inceleme adımları) ve dada-dogrula-inceleme.html (metin, kaynaklar, yorumlar, ilgili içerikler aynen).
+  Varsayımlar (onaylanmadı): karar etiketi renkleri (Doğru yeşil, Yanlış kırmızı, Yanıltıcı ve Eksik sarı, ötekiler gri) ve ikonları bu ekranda seçildi;
+  "İncelendi · N kaynak" yalnız kaynak sayısı bilinen incelemede (sitede listede sayı yok).
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), Q = K.q, DUR = K.durum, I = K.I, HAL = Q.get('hal'), INC = Q.get('inceleme') === '1';
+  var BU = 'ekranlar/icerik/dada-dogrula.html', ac = K.u(BU, 'inceleme=1');
+  /* kaynak: public dada-dogrula.html "Bir İddiayı Nasıl Değerlendiriyoruz?" */
+  var KARAR = { 'Doğru': ['yesil', 'fa-circle-check', 'Kaynaklarla uyumlu'], 'Yanlış': ['kirmizi', 'fa-circle-xmark', 'Kanıtlar çürütüyor'], 'Yanıltıcı': ['sari', 'fa-triangle-exclamation', 'Doğru veri, yanlış sonuç'],
+    'Eksik': ['sari', 'fa-puzzle-piece', 'Önemli bağlam atlanmış'], 'Doğrulanamadı': ['', 'fa-circle-question', 'Yeterli kanıt yok'], 'Bağlam dışı': ['', 'fa-calendar-xmark', 'Başka zamandan, başka yerden'] };
+  function etiket(k){ var x = KARAR[k]; return K.etiket(k, { tur: x[0], ikon: x[1] }); }
+  /* kaynak: public dada-dogrula.html "Son İncelemeler" (186; ilk sayfa) */
+  var LISTE = [['Yanıltıcı', 'Asgari ücrete ocakta yüzde 60 zam yapılacağı iddiası', 'Kerem Aksoy', '2 dk', '21,3 B'],
+    ['Bağlam dışı', 'Kar altındaki köprü görüntüsünün bu hafta çekildiği iddiası', 'İrem Su', '4 dk', '14,3 B'],
+    ['Yanlış', 'Kış lastiği zorunluluğunun kaldırıldığı iddiası', 'İrem Su', '2 dk', '7,6 B'],
+    ['Doğru', 'Organ bağışı kayıtlarının bu yıl yüzde 12 arttığı bilgisi', 'Ozan Er', '6 dk', '12,9 B'],
+    ['Eksik', 'Kira artışlarının yavaşladığına dair paylaşılan grafik', 'Ozan Er', '4 dk', '6,2 B'],
+    ['Doğrulanamadı', 'YKS\'de soru sayısının azaltılacağı iddiası', 'Nilay Ersoy', '2 dk', '11,5 B'],
+    ['Yanlış', 'Bankaların hesaplara yeni bir işlem ücreti getirdiği mesajı', 'İrem Su', '5 dk', '4,8 B'],
+    ['Doğru', 'Yerli uydunun ilk görüntüleri gönderdiği bilgisi', 'İrem Su', '3 dk', '10,1 B']];
+  function satir(x, i){ return '<a class="k-satir yazi" data-karar="' + x[0] + '" href="' + (i === 0 ? ac : K.git('detay')) + '"><div>' + etiket(x[0]) + '<h3>' + x[1] + '</h3><div class="k-ab">' + K.meta([x[2], x[3], x[4]]) + K.kaydet() + '</div></div></a>'; }
+
+  /* ---------- merkez ---------- */
+  var bas = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Dada Doğrula</h1><p>Gündemdeki iddiaları kaynağıyla inceliyor, kararımızı gerekçesiyle açıklıyoruz</p></div>';
+  var suzgec = '<div class="k-ray s8" data-tek style="padding-bottom:var(--b-8)">' + K.cip('Tümü', { secili: true, attr: 'data-suz=""' }) +
+    Object.keys(KARAR).map(function(k){ return K.cip(k, { ikon: KARAR[k][1], attr: 'data-suz="' + k + '"' }); }).join('') + '</div>';
+  var one = '<div class="k-ic" style="padding-top:var(--b-16)"><a class="k-kart-genis" href="' + ac + '"><div class="gr" style="background-image:' + G('asgari') + '"></div>' +
+    '<div style="display:flex;align-items:center;gap:var(--b-8);margin-top:var(--b-12)">' + etiket('Yanıltıcı') + K.etiket('İncelendi · 3 kaynak', { ikon: 'fa-building-columns' }) + '</div>' +
+    '<h2>Asgari ücrete ocakta yüzde 60 zam yapılacağı iddiası yanıltıcı</h2><div class="k-ab">' + K.meta(['Kerem Aksoy', '4 dk', '11.40 Güncellendi']) + K.kaydet() + '</div></a></div>';
+  var liste = '<section class="k-bl">' + K.bb({ baslik: 'Son İncelemeler', ikon: 'fa-clipboard-check', sayi: 186 }) + '<div class="k-satirlar">' + LISTE.slice(1).map(function(x, i){ return satir(x, i + 1); }).join('') +
+    (DUR === 'daha-fazla' ? (HAL === 'son' || HAL === 'hata' ? '' : K.iskelet('satir', 1)) + K.dahaFazla(HAL === 'son' || HAL === 'hata' ? HAL : 'yukleniyor') : '') + '</div></section>';
+  var gonder = '<section class="k-bl"><div class="k-ic">' + K.cagri({ ikon: 'fa-paper-plane', baslik: 'İddia gönder', aciklama: 'Gördüğün bir iddiayı bize ilet; ekibimiz öncelik sırasına göre inceler.', eylem: { metin: 'Gönder', attr: 'data-iddia' } }) + '</div></section>';
+  var etiketler = '<section class="k-bl">' + K.bb({ baslik: 'Karar Etiketleri', ikon: 'fa-tags' }) + '<div class="k-ic"><div class="k-grup-k">' +
+    Object.keys(KARAR).map(function(k){ return '<div class="k-ayar">' + etiket(k) + '<span class="t"><small>' + KARAR[k][2] + '</small></span></div>'; }).join('') + '</div></div></section>';
+  var nasil = '<section class="k-bl">' + K.bb({ baslik: 'İnceleme Nasıl Yapılıyor?', ikon: 'fa-microscope' }) + '<div class="k-ic">' +
+    K.adimlar([['Kaynağa gidiyoruz', 'İddianın ilk çıktığı yeri ve tarihini buluyoruz.'], ['Resmî veriyle karşılaştırıyoruz', 'Kurum açıklaması, istatistik ve belgelerle eşleştiriyoruz.'],
+      ['İkinci editör okuyor', 'Karar etiketi iki editörün onayıyla veriliyor.'], ['Yeni bilgiyle güncelliyoruz', 'Karar değişirse sayfada değişiklik kaydı tutuluyor.']]) + '</div></section>';
+
+  /* ---------- inceleme detayı ---------- */
+  var YORUM = [{ ad: 'Okan Tekin', rozet: 'Okur', zaman: '1 saat önce', metin: 'Aile grubunda bu görseli ben de gördüm, linki paylaştım. Kaynak listesi ikna edici.', begeni: 14 },
+    { ad: 'Dada Haber Editör', rozet: 'Editör', zaman: '40 dakika önce', metin: 'Teşekkürler. Benzer görselleri "İddia gönder" formundan bize iletebilirsiniz.', begeni: 5 }];
+  var KAYNAK = [{ kurum: 'Çalışma ve Sosyal Güvenlik Bakanlığı', aciklama: 'Asgari Ücret Tespit Komisyonu toplantı duyurusu · 22 Kasım 2026' },
+    { kurum: 'İşçi konfederasyonu basın birimi', aciklama: 'Yazılı yanıt · 22 Kasım 2026' }, { kurum: 'Resmî Gazete', aciklama: 'Asgari Ücret Yönetmeliği, komisyonun çalışma usulü' }];
+  var ILGILI = [{ alt: 'Gündem', baslik: 'Asgari ücret görüşmelerinde ilk toplantı 4 Aralık\'ta yapılacak', yazar: 'Hakan Uysal', sure: '3 dk', izlenme: '24,6 B', g: 'asgari' },
+    { alt: 'Dada Bağlam', ikon: 'fa-folder-open', baslik: 'Asgari ücret: kim, ne istiyor?', yazar: 'Nazlı Öztürk', sure: '3 dk', izlenme: '6,9 B' },
+    { alt: 'Bağlam dışı', ikon: 'fa-calendar-xmark', baslik: 'Kar altındaki köprü görüntüsünün bu hafta çekildiği iddiası', yazar: 'İrem Su', sure: '4 dk', izlenme: '14,3 B' },
+    { alt: 'Yanlış', ikon: 'fa-circle-xmark', baslik: 'Kış lastiği zorunluluğunun kaldırıldığı iddiası', yazar: 'İrem Su', sure: '2 dk', izlenme: '7,6 B' }];
+  var dBas = '<div class="k-ust-bosluk"></div><div class="k-ic" style="padding-top:var(--b-8)">' + K.katEt('Dada Doğrula', 'fa-clipboard-check', { ek: 'İnceleme' }) +
+    '<h1 style="margin-top:var(--b-12);font-size:31px;line-height:1.1;letter-spacing:-.028em">Asgari ücrete ocakta yüzde 60 zam yapılacağı iddiası yanıltıcı</h1>' +
+    '<div class="k-imza">' + K.avatar('Kerem Aksoy', 'm') + '<span class="t"><b>Kerem Aksoy</b><small>Doğrulama Editörü</small></span></div>' +
+    '<div style="margin-top:var(--b-16)">' + K.zamanSatir({ tarih: '23 Kasım 2026', saat: '11.10', guncelleme: '11.40', sure: '4 dk' }) + '</div>' +
+    '<p class="k-spot" style="margin-top:var(--b-16)">Sosyal medyada paylaşılan görseldeki oran, geçen yılın talep metninden alınmış. Bu yılın komisyon süreci henüz başlamadı ve resmî bir oran açıklanmadı.</p>' +
+    '<div style="display:flex;gap:var(--b-8);margin-top:var(--b-16)">' + K.etiket('İncelendi · 3 kaynak', { tur: 'koyu', ikon: 'fa-building-columns' }) + '</div>' +
+    '<div style="margin-top:var(--b-24)">' + K.bolumKart({ ikon: 'fa-triangle-exclamation', baslik: 'Dada Doğrula kararı: Yanıltıcı', icerik: K.madde(['Paylaşılan yüzde 60 oranı, işçi konfederasyonlarından birinin geçen yılki talebine ait.',
+      'Bu yılın komisyon süreci henüz başlamadı; ilk toplantı 4 Aralık\'ta yapılacak.', 'Resmî bir oran açıklanmadı; karar yıl sonunda komisyonda verilecek.']).replace('class="k-madde"', 'class="k-madde" style="margin-top:0"') }) + '</div>' +
+    '<div class="k-govde" style="margin-top:var(--b-8)"><h2>İddia</h2><div class="k-alinti">' + I('fa-quote-left') + '<p>Asgari ücrete ocakta yüzde 60 zam yapılacak, rakam kesinleşti</p><cite>Sosyal medyada 20 Kasım\'dan bu yana paylaşılan görsel</cite></div>' +
+    '<p>Görsel, bir haber sitesinin tasarımını taklit eden bir şablonla hazırlanmış ve 48 saatte 30 binden fazla kez paylaşılmış.</p>' +
+    '<h2>Bulgular</h2><p>Görseldeki yüzde 60 oranının kaynağını aradık. Bu oran, bir işçi konfederasyonunun geçen yıl aralık ayında açıkladığı talep metninde geçiyor. Aynı konfederasyonun bu yıl için henüz bir talep açıklamadığını, kurumun basın biriminden yazılı olarak teyit ettik.</p>' +
+    '<p>Çalışma ve Sosyal Güvenlik Bakanlığının 22 Kasım tarihli duyurusuna göre Asgari Ücret Tespit Komisyonu ilk toplantısını 4 Aralık\'ta yapacak. Duyuruda herhangi bir artış oranından söz edilmiyor. Geçmiş yıllarda da oran, komisyonun son toplantısında açıklanmıştı.</p>' +
+    '<p>Görselde kullanılan tasarım, var olan bir haber sitesinin başlık yapısına benziyor; ancak o sitenin arşivinde bu başlıkla bir haber bulunmuyor. Bu nedenle iddiayı, gerçek bir talep oranının bağlamından koparılıp kesinleşmiş karar gibi sunulması gerekçesiyle <b>yanıltıcı</b> olarak değerlendirdik.</p></div></div>';
+  var dSec = '<div class="k-segment-kap">' + K.segment(['Neden yanıltıcı?', 'Karar değişebilir mi?'], 0, { ince: true }) + '</div>' +
+    '<div class="k-ic" data-panel="0">' + K.bolumKart({ ikon: 'fa-circle-question', baslik: 'Neden "yanlış" değil de "yanıltıcı"?', icerik: '<p class="duz">Yüzde 60 oranı uydurma değil; gerçek bir talep metninde geçiyor. Yanıltıcı olan, bu oranın kesinleşmiş bir karar gibi sunulması.</p>' }) + '</div>' +
+    '<div class="k-ic" data-panel="1" hidden>' + K.bolumKart({ ikon: 'fa-rotate', baslik: 'Karar değişebilir mi?', icerik: '<p class="duz">Komisyon bir oran açıklarsa bu inceleme güncellenir ve değişiklik sayfanın sonunda kayıt altına alınır.</p>' }) + '</div>';
+  var dAlt = '<section class="k-bl">' + K.kaynaklar(KAYNAK) + '</section>' +
+    '<section class="k-bl">' + K.bb({ baslik: 'Konuları Takip Et', ikon: 'fa-heart' }) + '<div class="k-ray s8">' + ['Dada Doğrula', 'Asgari Ücret', 'Sosyal Medya'].map(function(t){ return K.cip(t, { ikon: 'fa-plus' }); }).join('') + '</div></section>' +
+    '<section class="k-bl"><div class="k-ic">' + K.yorumlar({ Y: YORUM }) + '</div></section>' +
+    '<section class="k-bl">' + K.bb({ baslik: 'İlgili İçerikler', ikon: 'fa-layer-group' }) + '<div class="k-satirlar">' + ILGILI.map(function(h){ return K.satir(h); }).join('') + '</div></section>';
+
+  var hata = DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : DUR === 'bulunamadi' ? 'bulunamadi' : (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? 'cevrimdisi' : '';
+  if (DUR === 'yukleniyor') e.innerHTML = INC ? '<div class="k-ust-bosluk"></div><div class="k-ic" style="padding-top:var(--b-8)"><div class="k-isk-grup"><i class="k-isk" style="width:38%;height:14px"></i><i class="k-isk" style="height:30px"></i><i class="k-isk" style="height:30px"></i><i class="k-isk" style="width:64%;height:30px"></i></div>' +
+      '<div style="margin-top:var(--b-24)"><i class="k-isk kart" style="height:180px"></i></div><div style="margin-top:var(--b-24)">' + K.iskelet('metin', 6) + '</div></div><div class="k-son okuma"></div>'
+    : bas + '<div class="k-ic"><i class="k-isk kontrol" style="height:220px"></i></div><div class="k-satirlar">' + K.iskelet('satir', 4) + '</div><div class="k-son"></div>';
+  else if (hata) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: hata }) + '<div class="k-son' + (INC ? ' yalin' : '') + '"></div>';
+  else if (INC) e.innerHTML = dBas + dSec + dAlt + '<div class="k-son okuma"></div>';
+  else e.innerHTML = bas + suzgec + one + liste + gonder + etiketler + nasil + '<div class="k-son"></div>';
+
+  if (INC) {
+    K.ustCubuk({ geri: K.u(BU), baslik: 'Dada Doğrula', eylemler: ['kaydet'] });
+    if (!hata) { var ok = K.okuma();
+      ok.querySelector('.dinle').innerHTML = I('fa-headphones') + 'Dinle';
+      var yb = ok.querySelector('[data-yorumlara]'); yb.setAttribute('aria-label', 'Yorumlar, ' + YORUM.length); yb.querySelector('.k-rozet').textContent = YORUM.length; }
+  } else {
+    K.ustCubuk({ geri: K.git('kesfet'), baslik: 'Dada Doğrula', buyuk: !hata, eylemler: ['ara'] });
+    K.altCubuk('bolum');
+  }
+  K.oynatici();
+
+  /* karar süzgeci: satırlar yerinde süzülür */
+  e.addEventListener('click', function(ev){ var c = ev.target.closest('[data-suz]'); if (!c) return; var k = c.getAttribute('data-suz');
+    e.querySelectorAll('[data-karar]').forEach(function(s){ s.hidden = !!k && s.getAttribute('data-karar') !== k; });
+    var one2 = e.querySelector('.k-kart-genis'); if (one2) one2.parentNode.hidden = !!k && k !== 'Yanıltıcı'; });
+  e.addEventListener('click', function(ev){ var b = ev.target.closest('.k-segment button'); if (!b) return;
+    var i = [].indexOf.call(b.parentNode.children, b);
+    e.querySelectorAll('[data-panel]').forEach(function(p){ p.hidden = +p.getAttribute('data-panel') !== i; }); });
+  /* İddia gönder: alt sayfa formu (kit alanları) */
+  document.addEventListener('click', function(ev){ if (!ev.target.closest('[data-iddia]')) return;
+    K.sayfa({ baslik: 'İddia gönder', alt: 'Sosyal medyada, mesaj gruplarında ya da haberlerde gördüğün bir iddia',
+      icerik: '<div style="display:grid;gap:var(--b-16)">' + K.alan({ etiket: 'İddia ya da bağlantı', yer: 'İddianın metnini ya da paylaşımın bağlantısını yaz' }) + K.alan({ etiket: 'Nerede gördün?', yer: 'Sosyal medya, mesaj, haber' }) +
+        K.alan({ etiket: 'E-posta (isteğe bağlı)', tur: 'email', yer: 'ornek@eposta.com' }) + K.onay('Sonuç yayımlandığında e-postayla haber ver.') + '</div>',
+      eylemler: [{ metin: 'İddiayı gönder', ikon: 'fa-paper-plane', tur: 'birincil', attr: 'data-kapat data-toast="İddian alındı · Teşekkürler"' }] }); });
+  document.addEventListener('click', function(ev){ if (ev.target.closest('[data-yorumlara]')) { var y = e.querySelector('.k-yorum-oz'); if (y) e.scrollTo({ top: y.offsetTop - 160, behavior: 'smooth' }); } });
+  if (DUR === 'daha-fazla' && !document.documentElement.classList.contains('tam')) { var sl = e.querySelector('.k-dahafazla'); if (sl) e.scrollTop = sl.offsetTop - 500; }
+  if (DUR === 'cevrimdisi' && !hata) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'hal', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

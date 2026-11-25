@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Veri ve Harita</title>
+<!--
+  VERİ VE HARİTA · E-270–E-273 · kök: Detay (haftanın veri yazısı) · format sayfası olduğu için alt çubuk yerinde, "Bölümler" seçili.
+  Yapı: büyük başlık → bu haftanın verisi (başlık, künye) → Grafik · Tablo seçici (yerinde değişir, K18): çubuk grafik ya da kitin tablosu (kap içinde yatay kayar, ilk sütun yapışık) →
+  Bu Haftanın Verileri (sayı kartları rayı; kitin piyasa kartı kalıbı, İnfografik'e açılır) → Veri ve Harita Haberleri (138).
+  Parametreler: ?durum=yukleniyor | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0 → önbellek yok) · ?gorunum=tablo · ?uye=0 · ?tema=koyu · ?calan=1
+  Kaynak: public veri-ve-harita.html (kira tablosu ve oranlar, dört infografiğin rakamları, haber listesi aynen; TÜİK, TİM, ODMD).
+  Varsayımlar (onaylanmadı): il haritası verisi yok (sitede de tablo); haritanın yerini çubuk grafik tutar. Haberlerden yalnız yenilenebilir enerjiye uygun görsel var.
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* KİT ADAYI: çubuk grafik satırı — ad · kitin kalın ilerleme çubuğu (.k-ilerleme.kalin) · değer; veri yazıları ve infografik özetleri için */
+.vh-cubuk{display:grid;grid-template-columns:76px minmax(0,1fr) 48px;align-items:center;gap:var(--b-12);min-height:40px;font-size:14px}
+.vh-cubuk span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--metin-2)}
+.vh-cubuk b{text-align:right;font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), Q = K.q, DUR = K.durum, I = K.I;
+  /* kaynak: public veri-ve-harita.html — TÜİK, Kira Endeksi ve Gelir ve Yaşam Koşulları Araştırması · Ekim 2026 */
+  var KIRA = [['İstanbul', '24.850', 74, '%41'], ['Ankara', '17.200', 68, '%36'], ['İzmir', '19.400', 61, '%38'], ['Bursa', '14.900', 55, '%33'], ['Antalya', '21.300', 52, '%35'], ['Konya', '11.600', 49, '%29']];
+  var SAYI = [['Asgari ücret · 2025', '22.104 TL', '2015\'te 1.000 TL', 'TÜİK · 22.11.2026'], ['Kira · İstanbul', '%74', 'Yıllık artış', 'TÜİK · 21.11.2026'],
+    ['İhracat · Otomotiv', '%17', '2025 payı', 'TİM · 20.11.2026'], ['Elektrikli araç', '42 bin', '3. çeyrek satış', 'ODMD · 19.11.2026']];
+  /* kaynak: public veri-ve-harita.html "Veri ve Harita Haberleri" (138; ilk sayfa) */
+  var HABER = [['Kira artışı büyükşehirlerde yavaşlıyor: il il son veriler', 'Ozan Er', '5 dk', '8,1 B'], ['İşsizlik oranı ekimde yüzde 8,6 oldu', 'Nilay Ersoy', '3 dk', '13,4 B'],
+    ['Konut satışları ekimde yüzde 12 arttı: en çok satış yapılan iller', 'Ozan Er', '6 dk', '6,7 B'], ['Yenilenebilir enerjinin elektrik üretimindeki payı yüzde 58\'e ulaştı', 'Ozan Er', '3 dk', '12,0 B', 'ruzgar', '22 Kas'],
+    ['Müze ziyaretçi sayısı yılın ilk on ayında 28 milyona ulaştı', 'Nilay Ersoy', '2 dk', '13,9 B', '', '22 Kas'], ['Trafik kazalarında can kaybı yılın ilk dokuz ayında yüzde 8 azaldı', 'Ozan Er', '5 dk', '11,3 B', '', '22 Kas'],
+    ['Barajlardaki doluluk oranları: büyükşehirler karşılaştırması', 'İrem Su', '3 dk', '3,9 B', '', '21 Kas'], ['Otomotiv ihracatı ekimde 3,4 milyar dolar oldu', 'İrem Su', '4 dk', '9,2 B', '', '21 Kas']];
+
+  var TAB = Q.get('gorunum') === 'tablo' ? 1 : 0;
+  var bas = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Veri ve Harita</h1><p>Gündemi resmî veriler, tablolar ve infografiklerle okumak için</p></div>';
+  var konu = '<div class="k-ic" style="padding-top:var(--b-8)">' + K.etiket('Rakamlarla gündem', { tur: 'sari', ikon: 'fa-map-location-dot' }) +
+    '<h2 style="margin-top:var(--b-12);font-size:23px;line-height:1.18;letter-spacing:-.02em">Büyükşehirlerde kira artışı tek tabloda</h2>' + K.meta(['TÜİK · Ekim 2026', '08.30 Güncellendi', '10,2 B']) + '</div>';
+  var secici = '<div class="k-segment-kap" style="margin-top:var(--b-8)">' + K.segment(['Grafik', 'Tablo'], TAB, { ince: true }) + '</div>';
+  var grafik = '<div class="k-ic" data-panel="0"' + (TAB ? ' hidden' : '') + '><p class="k-grup-b" style="margin-top:var(--b-4)">Yıllık kira artışı</p>' +
+    KIRA.map(function(k){ return '<div class="vh-cubuk"><span>' + k[0] + '</span>' + K.ilerleme(k[2], 'kalin') + '<b>%' + k[2] + '</b></div>'; }).join('') + '</div>';
+  var tablo = '<div class="k-ic" data-panel="1"' + (TAB ? '' : ' hidden') + '>' +
+    K.tablo({ cls: 'sol', sutunlar: ['İl', 'Ortalama kira (TL)', 'Yıllık artış', 'Kiracı hane oranı'], satirlar: KIRA.map(function(k){ return [k[0], k[1], '%' + k[2], k[3]]; }), vurgu: 0 }) + '</div>';
+  var not = '<div class="k-ic"><p class="k-not">' + I('fa-circle-info') + 'Kaynak: TÜİK, Kira Endeksi ve Gelir ve Yaşam Koşulları Araştırması · Ekim 2026</p></div>';
+  var sayilar = '<section class="k-bl">' + K.bb({ baslik: 'Bu Haftanın Verileri', ikon: 'fa-chart-pie', baglanti: { metin: 'İnfografikler', href: K.git('infografik') } }) + '<div class="k-ray s10">' +
+    SAYI.map(function(s){ return '<a class="k-py" href="' + K.git('infografik') + '"><small>' + s[0] + '</small><b>' + s[1] + '</b><em>' + s[2] + '</em><small style="margin-top:var(--b-8)">' + s[3] + '</small></a>'; }).join('') + '</div></section>';
+  var haber = '<section class="k-bl">' + K.bb({ baslik: 'Veri ve Harita Haberleri', ikon: 'fa-map-location-dot', sayi: 138 }) + '<div class="k-satirlar">' +
+    HABER.map(function(h){ return K.satir({ alt: 'Veri ve Harita', saat: h[5] || '23 Kas', baslik: h[0], yazar: h[1], sure: h[2], izlenme: h[3], g: h[4] }, { ikon: 'fa-map-location-dot' }); }).join('') + '</div></section>';
+
+  var hata = DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? 'cevrimdisi' : '';
+  if (DUR === 'yukleniyor') e.innerHTML = bas + '<div class="k-ic"><div class="k-isk-grup"><i class="k-isk" style="width:40%;height:24px"></i><i class="k-isk" style="height:24px"></i><i class="k-isk" style="width:56%;height:13px"></i></div>' +
+    '<div style="margin-top:var(--b-24)"><i class="k-isk kontrol" style="height:44px"></i></div><div class="k-isk-grup" style="margin-top:var(--b-24)">' +
+    [90, 82, 74, 66, 60, 56].map(function(w){ return '<i class="k-isk" style="width:' + w + '%;height:22px"></i>'; }).join('') + '</div></div><div class="k-son"></div>';
+  else if (hata) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: hata }) + '<div class="k-son"></div>';
+  else e.innerHTML = bas + konu + secici + grafik + tablo + not + sayilar + haber + '<div class="k-son"></div>';
+
+  K.ustCubuk({ geri: K.git('kesfet'), baslik: 'Veri ve Harita', buyuk: !hata, eylemler: ['paylas'] });
+  K.altCubuk('bolum');
+  K.oynatici();
+  e.addEventListener('click', function(ev){ var b = ev.target.closest('.k-segment button'); if (!b) return;
+    var i = [].indexOf.call(b.parentNode.children, b);
+    e.querySelectorAll('[data-panel]').forEach(function(p){ p.hidden = +p.getAttribute('data-panel') !== i; }); });
+  if (DUR === 'cevrimdisi' && !hata) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

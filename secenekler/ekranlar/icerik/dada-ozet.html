@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Dada Özet</title>
+<!--
+  DADA ÖZET · E-233–E-239 · kök: Liste (büyük başlık) · alt çubukta "Bölümler" seçili.
+  Yapı: büyük başlık → "Yapay zekâ ile özetlendi" etiketi → yapışkan derinlik seçici 15 sn · 1 dk · Tam metin (K17; içerik yerinde değişir, K18) →
+  6 konu kartı (kitin bölüm kartı: madde ya da paragraf + "Kaynak haber" satırı) → Özeti Çıkarılan Haberler (412).
+  Parametreler: ?durum=yukleniyor | yenileniyor (&hal=cekiliyor|birak|bitti) | daha-fazla (&hal=son|hata) | bos | hata (&hata=zaman-asimi)
+    | cevrimdisi (&onbellek=0 → önbellek yok) · ?derinlik=0|1|2 açılış sekmesi · ?uye=0 · ?tema=koyu · ?calan=1
+  Kaynak: public dada-ozet.html (15 sn, 1 dk ve tam metin katmanları, "Dada Özet Haberleri"); Süper Lig kaynağı D.bolumler Spor (sitede listede yok).
+  Varsayımlar (onaylanmadı): AI etiketi sayfada bir kez, derinlik seçicinin üstünde (panel: Dada Özet AI ile üretilir); kaynak haber görselleri konuya uygun haber görselleri.
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), Q = K.q, DUR = K.durum, I = K.I, HAL = Q.get('hal');
+  /* kaynak: public dada-ozet.html (üç katman aynen) */
+  var OZ = [
+    { konu: 'Asgari ücret komisyonu', kat: 'Gündem',
+      s15: ['Komisyon ilk kez 4 Aralık\'ta toplanıyor.', 'Karar yıl sonuna kadar bekleniyor.'],
+      d1: ['Asgari Ücret Tespit Komisyonu ilk toplantısını 4 Aralık\'ta Ankara\'da yapacak.', 'İşçi tarafı enflasyon artı refah payı, işveren tarafı maliyet desteği istiyor.', 'Komisyonun yıl sonuna kadar en az dört kez toplanması bekleniyor.', 'Yeni ücret 1 Ocak 2027\'den itibaren geçerli olacak.'],
+      tam: ['Çalışma ve Sosyal Güvenlik Bakanlığının 22 Kasım tarihli duyurusuna göre komisyon ilk toplantısını 4 Aralık Perşembe günü yapacak. İlk toplantının ağırlıklı olarak veri paylaşımına ayrılması bekleniyor.', 'Geçen yıl karar dördüncü toplantıda, aralık ayının son haftasında açıklanmıştı. Belirlenecek ücret yaklaşık 7 milyon çalışanı doğrudan ilgilendiriyor.'],
+      h: { baslik: 'Asgari ücret görüşmelerinde ilk toplantı 4 Aralık\'ta yapılacak', yazar: 'Hakan Uysal', sure: '3 dk', g: 'asgari' } },
+    { konu: 'Faiz kararı', kat: 'Finans',
+      s15: ['Merkez Bankası politika faizini yüzde 42,5\'te sabit tuttu.', 'Sonraki karar 18 Aralık\'ta açıklanacak.'],
+      d1: ['Politika faizi üst üste ikinci toplantıda yüzde 42,5\'te sabit kaldı.', 'Karar metninde enflasyonun ana eğiliminin gerilediği belirtildi.', 'Piyasalarda kararın ardından sınırlı hareket görüldü.', 'Yılın son toplantısı 18 Aralık\'ta yapılacak.'],
+      tam: ['Merkez Bankası Para Politikası Kurulu, politika faizini yüzde 42,5\'te sabit tuttu. Kurul, sıkı para politikası duruşunun dezenflasyon süreci belirginleşene kadar korunacağını vurguladı.', 'Ekonomistlerin büyük bölümü kararın beklentilere uygun olduğunu değerlendiriyor. Yılın son faiz kararı 18 Aralık\'ta açıklanacak.'],
+      h: { baslik: 'Merkez Bankası faiz kararının ardından piyasalarda ilk tepki', yazar: 'Ozan Er', sure: '6 dk', g: 'borsa' } },
+    { konu: 'AB göç paketi', kat: 'Dünya',
+      s15: ['AB dışişleri bakanları paketin taslağını görüştü.', 'Oylama ocak ayına bırakıldı.'],
+      d1: ['AB dışişleri bakanları göç ve sığınma paketinin taslağını Brüksel\'de görüştü.', 'Üye ülkeler arasında yük paylaşımı konusunda uzlaşma sağlanamadı.', 'Oylama ocak ayına bırakıldı.', 'Paket, Türkiye ile mali işbirliği başlığını da içeriyor.'],
+      tam: ['Avrupa Birliği dışişleri bakanları, göç ve sığınma paketinin son taslağını Brüksel\'deki toplantıda ele aldı. Yük paylaşımı mekanizması üzerindeki görüş ayrılıkları nedeniyle oylama ertelendi.', 'Taslakta, göç alanında komşu ülkelerle mali işbirliğinin sürdürülmesine ilişkin bir bölüm de yer alıyor.'],
+      h: { baslik: 'AB göç paketinde oylama ocak ayına kaldı', yazar: 'Nilay Ersoy', sure: '2 dk', g: 'ab-goc' } },
+    { konu: 'Kış ve ulaşım', kat: 'Gündem',
+      s15: ['Doğu illerinde 214 köy yolu kar nedeniyle kapandı.', 'Kış lastiği zorunluluğu 1 Aralık\'ta başlıyor.'],
+      d1: ['Doğu ve Kuzeydoğu Anadolu\'da 214 köy yolu kar nedeniyle ulaşıma kapandı.', 'Karayolları ekipleri ana yollarda ulaşımın sürdüğünü bildirdi.', 'Kış lastiği zorunluluğu 1 Aralık\'ta başlıyor.', 'Meteoroloji hafta boyunca soğuk havanın sürmesini bekliyor.'],
+      tam: ['Valiliklerin açıklamalarına göre Erzurum, Kars, Ardahan ve Ağrı\'da toplam 214 köy yolu kar nedeniyle kapandı. Ekiplerin yolları gün içinde açması bekleniyor.', 'Ticari araçlar için kış lastiği zorunluluğu 1 Aralık\'ta başlıyor ve 1 Nisan\'a kadar sürüyor.'],
+      h: { baslik: 'Doğu illerinde kar nedeniyle 214 köy yolu ulaşıma kapandı', yazar: 'Ozan Er', sure: '3 dk', g: 'koy-yolu' } },
+    { konu: 'YKS 2027', kat: 'Kampüs',
+      s15: ['Başvurular 4 Ocak\'ta başlıyor.', 'Sınav tarihi 19-20 Haziran olarak açıklandı.'],
+      d1: ['YKS 2027 başvuruları 3 Şubat\'ta başlayıp 27 Şubat\'ta bitecek.', 'Sınav 19-20 Haziran\'da yapılacak.', 'Geç başvuru günleri şubat ayında açıklanacak.', 'Sınav içeriğinde değişiklik yapılmadı.'],
+      tam: ['ÖSYM\'nin yayımladığı takvime göre YKS 2027 başvuruları 3-27 Şubat tarihleri arasında alınacak. Sınav 19 ve 20 Haziran\'da üç oturum olarak yapılacak.', 'Kurum, soru sayısı ve oturum düzeninde bu yıl değişiklik yapılmadığını açıkladı.'],
+      h: { baslik: 'YKS 2027 başvuruları 3 Şubat\'ta başlayacak', yazar: 'Nilay Ersoy', sure: '5 dk', g: 'yks' } },
+    { konu: 'Süper Lig', kat: 'Spor',
+      s15: ['13. haftanın ardından zirvede iki puan fark var.', 'Derbi 30 Kasım Pazar 20.00\'de oynanacak.'],
+      d1: ['13. haftanın ardından lider ile takipçisi arasındaki fark iki puan.', 'Haftanın en golcü maçı deplasmanda 4-2 bitti.', 'Derbi 30 Kasım Pazar 20.00\'de oynanacak.', 'Ligde millî ara öncesi son hafta tamamlandı.'],
+      tam: ['Süper Lig\'de 13. hafta tamamlandı; zirvedeki iki takım arasındaki fark iki puana indi. Haftanın en çok gol atılan maçı deplasmanda 4-2 sona erdi.', 'Ligin en çok beklenen karşılaşması olan derbi 30 Kasım Pazar günü 20.00\'de oynanacak.'],
+      h: { baslik: D.bolumler[1].haberler[0].baslik, yazar: D.bolumler[1].haberler[0].yazar, sure: D.bolumler[1].haberler[0].sure, g: D.bolumler[1].haberler[0].g } }
+  ];
+  /* kaynak: public dada-ozet.html "Dada Özet Haberleri" (412 haber; ilk sayfa) */
+  var HABER = [
+    { saat: '23 Kas', baslik: 'Asgari ücret görüşmelerinde ilk toplantı 4 Aralık\'ta yapılacak', yazar: 'Hakan Uysal', sure: '3 dk', izlenme: '24,6 B', g: 'asgari' },
+    { saat: '23 Kas', baslik: 'Merkez Bankası faiz kararının ardından piyasalarda ilk tepki', yazar: 'Ozan Er', sure: '6 dk', izlenme: '11,5 B', g: 'borsa' },
+    { saat: '23 Kas', baslik: 'Kış lastiği zorunluluğu 1 Aralık\'ta başlıyor: kimleri kapsıyor?', yazar: 'İrem Su', sure: '3 dk', izlenme: '14,1 B', g: 'kar-sokak' },
+    { saat: '22 Kas', baslik: 'AB göç paketinde oylama ocak ayına kaldı', yazar: 'Nilay Ersoy', sure: '2 dk', izlenme: '10,1 B', g: 'ab-goc' },
+    { saat: '22 Kas', baslik: 'YKS 2027 başvuruları 3 Şubat\'ta başlayacak', yazar: 'Nilay Ersoy', sure: '5 dk', izlenme: '3,4 B', g: 'yks' },
+    { saat: '22 Kas', baslik: 'Doğu illerinde kar nedeniyle 214 köy yolu ulaşıma kapandı', yazar: 'Ozan Er', sure: '3 dk', izlenme: '8,7 B', g: 'koy-yolu' },
+    { saat: '23 Kas', baslik: 'Hazine aralık dönemi iç borçlanma programını yayımladı', yazar: 'Nazlı Öztürk', sure: '3 dk', izlenme: '14,0 B' },
+    { saat: '21 Kas', baslik: 'Okullarda ikinci dönem takvimi kesinleşti', yazar: 'Nilay Ersoy', sure: '4 dk', izlenme: '7,3 B' }
+  ];
+
+  var DER = Math.min(2, Math.max(0, +Q.get('derinlik') || 0));
+  function kart(o, i, d){
+    var ic = d === 2 ? o.tam.map(function(p, j){ return '<p class="duz"' + (j ? ' style="margin-top:var(--b-12)"' : '') + '>' + p + '</p>'; }).join('') : K.madde(d ? o.d1 : o.s15).replace('class="k-madde"', 'class="k-madde" style="margin-top:0"');
+    var h = { baslik: o.h.baslik, yazar: o.h.yazar, sure: o.h.sure, g: o.h.g };
+    return K.bolumKart({ ikon: K.ikon(o.kat), baslik: o.konu, sira: i + 1, toplam: OZ.length, icerik: ic + '<span class="k-grup-b">Kaynak haber</span>' + K.satir(h, { tur: 'kisa' }) });
+  }
+  var bas = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Dada Özet</h1><p>Günün haberleri 15 saniyede, 1 dakikada ya da tam metinle</p></div>';
+  var ai = '<div class="k-ic"><span class="k-ai">' + I('fa-wand-magic-sparkles') + 'Yapay zekâ ile özetlendi</span>' + K.meta([D.simdi.tarih, '08.05 Güncellendi', OZ.length + ' konu']) + '</div>';
+  var secici = '<div class="k-segment-kap">' + K.segment([{ metin: '15 sn', alt: '2 madde' }, { metin: '1 dk', alt: '4 madde' }, { metin: 'Tam metin', alt: '2 paragraf' }], DER) + '</div>';
+  var paneller = [0, 1, 2].map(function(d){ return '<div class="k-ic" data-panel="' + d + '"' + (d === DER ? '' : ' hidden') + '><div style="display:grid;gap:var(--b-12)">' + OZ.map(function(o, i){ return kart(o, i, d); }).join('') + '</div></div>'; }).join('');
+  var haber = '<section class="k-bl">' + K.bb({ baslik: 'Özeti Çıkarılan Haberler', ikon: 'fa-gauge-high', sayi: 412 }) + '<div class="k-satirlar">' + HABER.map(function(h){ return K.satir(h); }).join('') +
+    (DUR === 'daha-fazla' ? (HAL === 'son' || HAL === 'hata' ? '' : K.iskelet('satir', 1)) + K.dahaFazla(HAL === 'son' || HAL === 'hata' ? HAL : 'yukleniyor') : '') + '</div></section>';
+
+  var hata = DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? 'cevrimdisi' : '';
+  if (DUR === 'yukleniyor') e.innerHTML = bas + '<div class="k-ic"><div class="k-isk-grup">' + K.iskelet('metin', 1).replace('100%', '52%') + '</div><div style="margin-top:var(--b-16)"><i class="k-isk kontrol" style="height:54px"></i></div>' +
+    '<div style="margin-top:var(--b-12)"><i class="k-isk kart" style="height:188px"></i></div><div style="margin-top:var(--b-12)"><i class="k-isk kart" style="height:188px"></i></div></div><div class="k-son"></div>';
+  else if (hata) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: hata }) + '<div class="k-son"></div>';
+  else if (DUR === 'bos') e.innerHTML = bas + K.bos({ ikon: 'fa-gauge-high', baslik: 'Bugünün özetleri henüz hazır değil', aciklama: 'Özetler gün boyunca haberler yayımlandıkça eklenir.', eylem: { metin: 'Günün 5\'ine geç', href: K.git('gununBesi') } }) + '<div class="k-son"></div>';
+  else e.innerHTML = bas + ai + secici + paneller + haber + '<div class="k-son"></div>';
+  if (DUR === 'yenileniyor') e.querySelector('.k-ust-bosluk').insertAdjacentHTML('afterend', K.yenile(['cekiliyor', 'birak', 'bitti'].indexOf(HAL) > -1 ? HAL : 'yenileniyor'));
+
+  K.ustCubuk({ geri: K.git('kesfet'), baslik: 'Dada Özet', buyuk: !hata, eylemler: ['paylas'] });
+  K.altCubuk('bolum');
+  K.oynatici();
+  if (!DUR) K.cekYenile(e);
+
+  /* 15 sn · 1 dk · Tam metin: içerik yerinde değişir (K18) */
+  e.addEventListener('click', function(ev){ var b = ev.target.closest('.k-segment button'); if (!b) return;
+    var i = [].indexOf.call(b.parentNode.children, b);
+    e.querySelectorAll('[data-panel]').forEach(function(p){ p.hidden = +p.getAttribute('data-panel') !== i; }); });
+  if (DUR === 'daha-fazla' && !document.documentElement.classList.contains('tam')) e.scrollTop = e.scrollHeight;
+  if (DUR === 'cevrimdisi' && !hata) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'hal', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

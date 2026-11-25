@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Sakin Akış</title>
+<!--
+  SAKİN AKIŞ · E-274–E-279 · kök: Liste (büyük başlık) · alt çubukta "Bölümler" seçili.
+  Yapı: büyük başlık → durum şeridi (Sakin Akış açık; Son Dakika bildirimleri susturuldu · Ayarlar) → Sabah ve Akşam Özeti (iki grup, saat ayracıyla) →
+  İyi Gelen Haberler (214; görselsiz, sakin satırlar). Üst çubukta ayar düğmesi alt sayfayı açar.
+  Ayar alt sayfası: sarsıcı görselleri gizle, Son Dakika bildirimlerini sustur (uygulamada bildirim davranışını da değiştirir), günde iki özet,
+  hareketli içerikleri durdur; "Dışarıda bırakılan konular" (bölüm çipleri).
+  Parametreler: ?durum=ayar | yukleniyor | daha-fazla (&hal=son|hata) | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0 → önbellek yok) · ?uye=0 · ?tema=koyu · ?calan=1
+  Kaynak: public sakin-akis.html (sabah ve akşam özeti, dört ayar ve açıklamaları, "İyi Gelen Haberler" aynen).
+  Varsayımlar (onaylanmadı): "Konu dışarıda bırak" bölüm çipleriyle seçilir (sitede bu ayar yok, ekran listesinde var); başlangıçta hiçbir konu dışarıda değil;
+  misafirde ayarlar cihazda tutulur (C30 varsayımı).
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), Q = K.q, DUR = K.durum, I = K.I, HAL = Q.get('hal');
+  /* kaynak: public sakin-akis.html "Sabah ve Akşam Özeti" */
+  var OZET = [['Sabah özeti', '23 Kasım · 07.30', [['Gündem', 'Marmara\'da kar nedeniyle 14 ilde okullar tatil', '3 dk'], ['Finans', 'Piyasalar güne faiz kararı beklentisiyle başlıyor', '2 dk'], ['Sağlık', 'Aile hekimliğinde akşam randevusu dönemi başlıyor', '2 dk']]],
+    ['Akşam özeti', '22 Kasım · 19.00', [['Dünya', 'AB göç paketinde oylama ocağa kaldı', '3 dk'], ['Kampüs', 'YKS 2027 başvuru tarihleri belli oldu', '2 dk'], ['Kitap', 'Kitap fuarı 780 bin ziyaretçiyle kapandı', '2 dk']]]];
+  /* kaynak: public sakin-akis.html "İyi Gelen Haberler" (214; ilk sayfa); Çözüm/Olumlu türü yalnız sitede yazanlarda */
+  var IYI = [['', 'Kıyı köylerinde gönüllüler 40 kilometre sahili temizledi', 'İrem Su', '6 dk', '11,8 B'], ['Çözüm', 'Mahalle kütüphaneleri gece açık kalmaya başladı', 'Ozan Er', '4 dk', '5,1 B'],
+    ['Olumlu', 'Organ bağışı kayıtları bu yıl yüzde 12 arttı', 'İrem Su', '2 dk', '10,4 B'], ['Çözüm', 'Gıda israfına karşı askıda yemek uygulaması genişletildi', 'İrem Su', '5 dk', '3,7 B', '22 Kas'],
+    ['', 'Emekli öğretmenler köy okullarında gönüllü ders veriyor', 'Nilay Ersoy', '3 dk', '9,0 B', '22 Kas'], ['', 'Endemik bitki tohumları gen bankasında koruma altına alındı', 'Nilay Ersoy', '6 dk', '14,3 B', '22 Kas'],
+    ['', 'Engelli ziyaretçiler için dokunsal müze rehberleri hazırlandı', 'İrem Su', '4 dk', '11,1 B', '21 Kas'], ['', 'Kent bostanlarında yetişen sebzeler aşevlerine gönderiliyor', 'Nilay Ersoy', '2 dk', '12,9 B', '21 Kas']];
+
+  var bas = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Sakin Akış</h1><p>Bildirimsiz, sarsıcı görüntüsüz, günde iki özetle haber</p></div>';
+  var serit = '<div class="k-ic"><div class="k-serit uyari">' + I('fa-leaf') + '<span><b>Sakin Akış açık</b><small>Son Dakika bildirimleri susturuldu</small></span><button type="button" data-sakin>Ayarlar</button></div></div>';
+  var ozet = '<section class="k-bl sik">' + K.bb({ baslik: 'Sabah ve Akşam Özeti', ikon: 'fa-leaf' }) + '<div class="k-satirlar">' + OZET.map(function(o){
+    return '<div class="k-ayrac" style="padding-top:var(--b-8)"><span>' + o[0] + '</span><span>' + o[1] + '</span></div>' +
+      o[2].map(function(x){ return K.satir({ alt: x[0], baslik: x[1], sure: x[2] }); }).join(''); }).join('') + '</div></section>';
+  var iyi = '<section class="k-bl">' + K.bb({ baslik: 'İyi Gelen Haberler', ikon: 'fa-seedling', sayi: 214 }) + '<div class="k-satirlar">' +
+    IYI.map(function(x){ return K.satir({ tur: x[0], alt: 'Sakin Akış', saat: x[5], baslik: x[1], yazar: x[2], sure: x[3], izlenme: x[4] }, { ikon: 'fa-leaf' }); }).join('') +
+    (DUR === 'daha-fazla' ? (HAL === 'son' || HAL === 'hata' ? '' : K.iskelet('satir', 1)) + K.dahaFazla(HAL === 'son' || HAL === 'hata' ? HAL : 'yukleniyor') : '') + '</div></section>';
+
+  var hata = DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? 'cevrimdisi' : '';
+  if (DUR === 'yukleniyor') e.innerHTML = bas + '<div class="k-ic"><i class="k-isk kontrol" style="height:56px"></i></div><div class="k-satirlar" style="padding-top:var(--b-16)">' + K.iskelet('satir', 5) + '</div><div class="k-son"></div>';
+  else if (hata) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: hata }) + '<div class="k-son"></div>';
+  else e.innerHTML = bas + serit + ozet + iyi + '<div class="k-son"></div>';
+
+  K.ustCubuk({ geri: K.git('kesfet'), baslik: 'Sakin Akış', buyuk: !hata, eylemler: [{ ikon: 'fa-sliders', etiket: 'Sakin Akış ayarları', attr: 'data-sakin' }] });
+  K.altCubuk('bolum');
+  K.oynatici();
+
+  /* ayar alt sayfası (kit: grup, ayar satırı, anahtar, çip) */
+  function ayar(acik){
+    return K.sayfa({ baslik: 'Sakin Akış ayarları', alt: 'Uygulamada bildirim davranışını da değiştirir', acik: acik,
+      icerik: K.grup('', [{ ikon: 'fa-eye-slash', baslik: 'Sarsıcı görselleri gizle', alt: 'Kaza, afet ve şiddet görüntüleri bulanık gelir', sag: 'anahtar', on: true },
+          { ikon: 'fa-bell-slash', baslik: 'Son Dakika\'yı sustur', alt: 'Yalnızca sabah ve akşam özeti bildirimi gelir', sag: 'anahtar', on: true },
+          { ikon: 'fa-sun', baslik: 'Günde iki özet', alt: 'Sabah 07.30 ve akşam 19.00', sag: 'anahtar', on: true },
+          { ikon: 'fa-pause', baslik: 'Hareketli içerikleri durdur', alt: 'Video ve şeritler kendiliğinden oynamaz', sag: 'anahtar', on: false }],
+          K.uye ? '' : 'Giriş yapmadan seçtiklerin yalnız bu cihazda tutulur.').replace('k-grup"', 'k-grup" style="margin:0"') +
+        '<p class="k-sayfa-b">Dışarıda bırakılan konular</p><div class="k-cip-izgara">' + D.bolumler.map(function(b){ return K.cip(b.ad, { ikon: b.ikon }); }).join('') + '</div>',
+      eylemler: [{ metin: 'Kaydet', tur: 'birincil', attr: 'data-kapat data-toast="Sakin Akış ayarların kaydedildi"' }] });
+  }
+  if (DUR === 'ayar' && !hata) ayar(true);
+  document.addEventListener('click', function(ev){ if (ev.target.closest('[data-sakin]')) ayar(); });
+  if (DUR === 'daha-fazla' && !document.documentElement.classList.contains('tam')) e.scrollTop = e.scrollHeight;
+  if (DUR === 'cevrimdisi' && !hata) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'hal', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

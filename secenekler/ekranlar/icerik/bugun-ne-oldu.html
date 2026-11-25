@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Bugün Ne Oldu?</title>
+<!--
+  BUGÜN NE OLDU? · E-240–E-245 · kök: Liste (büyük başlık; çizelge kalıbı) · alt çubukta "Bölümler" seçili.
+  Yapı: büyük başlık → gün şeridi (son 7 gün, bugün seçili; kitin .k-gunler/.k-gun'u) → gün başlığı (.k-cz-gun) →
+  saatli özetler (kitin canlı anlatım girişi .k-cg: saat, çizgi, başlık, iki cümlelik özet; altında kategori · kaynak), saat ayracı (.k-cz-dl) → günün kapanışı.
+  Parametreler: ?durum=yukleniyor | yenileniyor (&hal=cekiliyor|birak|bitti) | bos (seçilen günde özet yok) | hata (&hata=zaman-asimi)
+    | cevrimdisi (&onbellek=0 → önbellek yok) · ?uye=0 · ?tema=koyu · ?calan=1
+  Kaynak: public bugun-ne-oldu.html (12 gelişme, saat, özet, kategori ve kaynak aynen; saat sırasına dizildi).
+  Varsayımlar (onaylanmadı): gün şeridi geçmiş 7 günü gösterir (sitede 17–23 Kasım); en yeni gelişme kırmızı noktalı; üç gelişmede konuya uygun haber görseli;
+  bir gelişmeye dokununca haber detayı açılır.
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), Q = K.q, DUR = K.durum, I = K.I, HAL = Q.get('hal');
+  /* kaynak: public bugun-ne-oldu.html (23 Kasım 2026 Pazartesi · 12 gelişme) */
+  var X = [
+    ['16.05', 'İstanbul Valiliği: okullar yarın da tatil', 'Kar yağışının yarın öğle saatlerine kadar sürmesi beklendiği için İstanbul\'da bütün okullarda eğitime bir gün daha ara verildi.', 'Gündem', 'İstanbul Valiliği', 'kar-istanbul'],
+    ['15.42', 'Bütçe görüşmelerinde siyasi parti gruplarının ilk konuşmaları tamamlandı', 'TBMM Genel Kurulu\'nda 2027 bütçesinin tümü üzerindeki görüşmeler sürüyor; grup konuşmalarının ardından bakanlıkların bütçelerine geçilecek.', 'Siyaset', 'TBMM'],
+    ['15.20', 'İstanbul havalimanlarında kar nedeniyle 46 sefer iptal edildi', 'İptaller ağırlıkla iç hat seferlerinde. Havayolu şirketleri yolculara uçuş durumunu yola çıkmadan kontrol etmelerini önerdi.', 'Gündem', 'DHMİ'],
+    ['14.40', 'Kuzey Marmara Otoyolu\'nda ağır tonajlı araç geçişine kısıtlama', 'Kısıtlama yağış sona erene kadar sürecek. Tırlar için Kınalı ve Akyazı yönlerinde bekleme alanları açıldı.', 'Gündem', 'Karayolları Genel Müdürlüğü'],
+    ['14.05', 'Asgari ücret tespit komisyonu ilk toplantısını 4 Aralık\'ta yapacak', 'Komisyon, işçi ve işveren temsilcilerinin taleplerini ilk toplantıda dinleyecek; yeni tutarın aralık sonunda açıklanması bekleniyor.', 'Finans', 'Çalışma ve Sosyal Güvenlik Bakanlığı'],
+    ['14.00', 'Merkez Bankası politika faizini yüzde 42,5\'te sabit tuttu', 'Para Politikası Kurulu olağanüstü toplantısında, enflasyon beklentilerindeki iyileşmenin sürdüğünü ancak sıkı duruşun korunacağını açıkladı.', 'Finans', 'TCMB', 'faiz'],
+    ['13.48', 'Millî takımın aralık kampı aday kadrosu açıklandı', 'Aday kadroda 31 oyuncu yer aldı; kamp 8 Aralık\'ta Antalya\'da başlayacak.', 'Spor', 'TFF'],
+    ['13.20', 'KAAN\'ın ikinci prototipi ilk test uçuşunu gerçekleştirdi', 'Uçuş yaklaşık 40 dakika sürdü. Test programının gelecek yıl boyunca iki prototiple sürdürülmesi planlanıyor.', 'Savunma', 'TUSAŞ', 'kaan'],
+    ['12.25', 'Kocaeli ve Sakarya\'da da okullar tatil edildi', 'İki ilin valilikleri, kar yağışı ve buzlanma nedeniyle yarın da eğitime ara verildiğini duyurdu.', 'Gündem', 'Kocaeli ve Sakarya valilikleri'],
+    ['11.40', 'ÖSYM, 2027 YKS başvuru tarihlerini açıkladı', 'Başvurular 6 Şubat\'ta başlayıp 2 Mart\'ta sona erecek; sınav haziranın üçüncü haftasında yapılacak.', 'Kampüs', 'ÖSYM'],
+    ['11.30', 'AFAD\'dan sürücülere kış lastiği ve zincir uyarısı', 'AFAD, zorunlu olmadıkça yola çıkılmamasını ve araçta battaniye, su ve yedek şarj bulundurulmasını istedi.', 'Gündem', 'AFAD'],
+    ['10.15', 'AB dışişleri bakanları göç paketinde uzlaşıya varamadı', 'Brüksel\'deki toplantıda sığınma başvurularının paylaşımı konusunda görüş ayrılığı sürdü; konu aralıktaki zirveye kaldı.', 'Dünya', 'AB Konseyi']
+  ];
+  var GUN = [['Sal', 17], ['Çar', 18], ['Per', 19], ['Cum', 20], ['Cmt', 21], ['Paz', 22], ['Pzt', 23]];
+  var SEC = DUR === 'bos' ? 0 : 6;
+  var serit = '<div class="k-ray k-gunler serbest" data-tek-gun style="padding-top:var(--b-8)">' + GUN.map(function(g, i){
+    return '<button type="button" class="k-gun' + (g[1] === 23 ? ' bugun' : '') + '" aria-selected="' + (i === SEC) + '" data-gun="' + i + '">' + g[0] + '<b>' + g[1] + '</b></button>'; }).join('') + '</div>';
+  var dl = '', cz = X.map(function(x, i){ var sa = x[0].split('.')[0] + '.00', ay = '';
+    if (sa !== dl) { dl = sa; ay = '<div class="k-cz-dl"><b>' + sa + '</b></div>'; }
+    var g = K.canliGiris({ saat: x[0], baslik: x[1], metin: x[2], g: x[5], yeni: i === 0 }).replace('</p>', '</p>' + K.meta([x[3], 'Kaynak: ' + x[4]]));
+    return ay + '<a href="' + K.git('detay') + '" style="display:block">' + g + '</a>'; }).join('');
+  var bas = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Bugün Ne Oldu?</h1><p>Günün öne çıkan gelişmeleri tek listede</p></div>';
+  var gun = function(t, n){ return '<div class="k-cz-gun"><span>' + t + '</span><small>' + n + '</small></div>'; };
+  var liste = '<div class="k-ic">' + gun('Bugün', D.simdi.tarih.replace(' 2026', '') + ' ' + D.simdi.gun + ' · ' + X.length + ' gelişme') + cz +
+    '<div class="k-dahafazla son"><b>Günün kapanışı 19.00\'da</b></div></div>';
+
+  var hata = DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? 'cevrimdisi' : '';
+  if (DUR === 'yukleniyor') e.innerHTML = bas + serit + '<div class="k-satirlar" style="padding-top:var(--b-16)">' + K.iskelet('satir', 5) + '</div><div class="k-son"></div>';
+  else if (hata) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: hata }) + '<div class="k-son"></div>';
+  else if (DUR === 'bos') e.innerHTML = bas + serit + '<div class="k-ic">' + gun('17 Kasım', 'Salı') + '</div>' +
+    K.bos({ ikon: 'fa-moon', baslik: 'Bu gün için özet yok', aciklama: 'Seçtiğin günde öne çıkan gelişmeler derlenmedi.', eylem: { metin: 'Bugüne dön', tur: 'sade', href: K.u('ekranlar/icerik/bugun-ne-oldu.html') } }) + '<div class="k-son"></div>';
+  else e.innerHTML = bas + serit + liste + '<div class="k-son"></div>';
+  if (DUR === 'yenileniyor') e.querySelector('.k-ust-bosluk').insertAdjacentHTML('afterend', K.yenile(['cekiliyor', 'birak', 'bitti'].indexOf(HAL) > -1 ? HAL : 'yenileniyor'));
+  /* seçili gün görünür yerde: şerit sona kayar */
+  var rs = e.querySelector('.k-gunler'); if (rs && SEC === 6) rs.scrollLeft = rs.scrollWidth;
+
+  K.ustCubuk({ geri: K.git('kesfet'), baslik: 'Bugün Ne Oldu?', buyuk: !hata, eylemler: ['paylas'] });
+  K.altCubuk('bolum');
+  K.oynatici();
+  if (!DUR) K.cekYenile(e);
+  if (DUR === 'cevrimdisi' && !hata) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'hal', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

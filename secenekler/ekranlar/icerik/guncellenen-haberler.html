@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Güncellenen Haberler</title>
+<!--
+  GÜNCELLENEN HABERLER · E-246–E-252 · kök: Liste (büyük başlık; çizelge kalıbı) · alt çubukta "Bölümler" seçili.
+  Yapı: büyük başlık → "Son 48 saat · 38 haber" ayracı → saat sütunlu satırlar (kitin çizelgesi .k-cz: güncelleme saati, çizgi, nokta) →
+  her satırda başlık, "Ne değişti" notu (kitin madde kutusu .k-madde, güncelleme ikonu fa-rotate) ve künye (güncelleme sayısı · ilk yayın · kaynak).
+  Parametreler: ?durum=yukleniyor | yenileniyor (&hal=cekiliyor|birak|bitti) | daha-fazla (&hal=son|hata) | bos | hata (&hata=zaman-asimi)
+    | cevrimdisi (&onbellek=0 → önbellek yok) · ?uye=0 · ?tema=koyu · ?calan=1
+  Kaynak: public guncellenen-haberler.html (12 satır; başlık, "Ne değişti", güncelleme sayısı, ilk yayın, kaynak aynen).
+  Varsayımlar (onaylanmadı): satırlar görselsiz (not kutusu dar sütunda okunur kalsın diye); en son güncellenen sarı noktalı; satıra dokununca haber detayı.
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), Q = K.q, DUR = K.durum, I = K.I, HAL = Q.get('hal');
+  /* kaynak: public guncellenen-haberler.html (38 haber son 48 saatte güncellendi; ilk sayfa) — [saat, kategori (yalnız sitede yazanlar; satırda gösterilmez), başlık, ne değişti, sayı, ilk yayın, kaynak] */
+  var X = [
+    ['15.58', 'Gündem', 'Kar nedeniyle okulların tatil edildiği iller', 'İstanbul Valiliği\'nin yarın için verdiği tatil kararı eklendi; tatil ilan edilen il sayısı 14\'ten 15\'e çıktı.', 5, '23 Kas 07.40', 'valilikler'],
+    ['15.42', 'Siyaset', 'TBMM\'de 2027 bütçesinin tümü üzerindeki görüşmeler', 'Siyasi parti gruplarının ilk tur konuşmalarından öne çıkan başlıklar eklendi.', 3, '23 Kas 10.05', 'TBMM'],
+    ['15.30', 'Gündem', 'İstanbul havalimanlarında kar nedeniyle iptal edilen seferler', 'İptal edilen sefer sayısı 32\'den 46\'ya güncellendi; yarın için planlanan ek seferler eklendi.', 4, '23 Kas 09.20', 'DHMİ'],
+    ['15.05', 'Finans', 'Merkez Bankası politika faizini yüzde 42,5\'te sabit tuttu', 'Para Politikası Kurulu karar metninden gerekçe paragrafları ve piyasaların ilk tepkisi eklendi.', 2, '23 Kas 14.00', 'TCMB'],
+    ['14.50', 'Finans', 'Akaryakıt indirimi sonrası illere göre benzin fiyatları', 'Ankara ve İzmir fiyatları dağıtıcı şirketlerin güncel listesine göre düzeltildi.', 2, '22 Kas 23.10', 'EPDK'],
+    ['14.20', 'Kampüs', 'KYK burs ve kredi ödeme takvimi', 'Aralık ödemesinin tarihi bakanlığın resmî duyurusuyla teyit edilerek eklendi.', 1, '22 Kas 18.30', 'Gençlik ve Spor Bakanlığı'],
+    ['13.55', 'Spor', 'Millî takımın aralık kampı aday kadrosu', 'Sakatlığı nedeniyle kadrodan çıkarılan oyuncunun yerine çağrılan isim eklendi.', 1, '23 Kas 13.48', 'TFF'],
+    ['13.30', 'Gündem', 'Deprem bölgesinde kalıcı konut teslimleri', 'İl bazındaki teslim sayıları bakanlığın 23 Kasım tarihli verisiyle yenilendi.', 3, '21 Kas 12.30', 'Çevre, Şehircilik ve İklim Değişikliği Bakanlığı'],
+    ['12.40', 'Finans', 'Bankalara göre konut kredisi faiz oranları', 'Tabloya iki bankanın yeni oranları eklendi; bir bankanın vade seçenekleri düzeltildi.', 2, '22 Kas 11.00', 'bankaların duyuruları'],
+    ['11.50', 'Savunma', 'Yerli hava savunma sisteminin ikinci teslimatı', 'Millî Savunma Bakanlığı\'nın teslimata ilişkin açıklaması eklendi.', 1, '22 Kas 16.20', 'Millî Savunma Bakanlığı'],
+    ['11.15', 'Kadın', 'Nafaka düzenlemesine ilişkin kanun teklifi', 'Teklifin Meclis Başkanlığı\'na sunulan metninden ilgili maddeler eklendi.', 2, '22 Kas 10.40', 'TBMM'],
+    ['10.30', 'Dünya', 'Doğu Akdeniz enerji hattı için ortak protokol', 'Dışişleri Bakanlığı\'nın protokole ilişkin yazılı açıklaması eklendi.', 1, '22 Kas 15.45', 'Dışişleri Bakanlığı']
+  ];
+  function satir(x, i){
+    return '<div class="k-cz' + (i === 0 ? ' ilk' : '') + '"><span class="sa">' + x[0] + '</span><span class="ci"></span><span class="no"></span><a class="yazi" href="' + K.git('detay') + '"><div>' +
+      '<h3>' + x[2] + '</h3>' +
+      '<ul class="k-madde" style="margin-top:var(--b-12)"><li>' + I('fa-rotate') + '<span><b>Ne değişti?</b> ' + x[3] + '</span></li></ul>' +
+      K.meta([x[4] + ' güncelleme', 'İlk yayın ' + x[5]]) + K.meta(['Kaynak: ' + x[6]]).replace('k-meta"', 'k-meta" style="margin-top:var(--b-4)"') + '</div></a></div>';
+  }
+  var bas = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Güncellenen Haberler</h1><p>Yayından sonra yeni bilgi eklenen ya da düzeltilen haberler</p></div>';
+  var liste = '<div class="k-ic"><div class="k-ayrac" style="padding-top:var(--b-8)"><span>Son 48 saat</span><span>38 haber</span></div>' + X.map(satir).join('') +
+    (DUR === 'daha-fazla' ? (HAL === 'son' || HAL === 'hata' ? '' : K.iskelet('satir', 1)) + K.dahaFazla(HAL === 'son' || HAL === 'hata' ? HAL : 'yukleniyor') : '') + '</div>';
+
+  var hata = DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? 'cevrimdisi' : '';
+  if (DUR === 'yukleniyor') e.innerHTML = bas + '<div class="k-satirlar">' + K.iskelet('satir', 5) + '</div><div class="k-son"></div>';
+  else if (hata) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: hata }) + '<div class="k-son"></div>';
+  else if (DUR === 'bos') e.innerHTML = bas + K.bos({ ikon: 'fa-rotate', baslik: 'Son 48 saatte güncellenen haber yok', aciklama: 'Bir haber yayından sonra değişince ne değiştiğiyle birlikte burada görünür.', eylem: { metin: 'Son Dakika\'ya geç', href: K.git('sonDakika') } }) + '<div class="k-son"></div>';
+  else e.innerHTML = bas + liste + '<div class="k-son"></div>';
+  if (DUR === 'yenileniyor') e.querySelector('.k-ust-bosluk').insertAdjacentHTML('afterend', K.yenile(['cekiliyor', 'birak', 'bitti'].indexOf(HAL) > -1 ? HAL : 'yenileniyor'));
+
+  K.ustCubuk({ geri: K.git('kesfet'), baslik: 'Güncellenen Haberler', buyuk: !hata, eylemler: ['ara'] });
+  K.altCubuk('bolum');
+  K.oynatici();
+  if (!DUR) K.cekYenile(e);
+  if (DUR === 'daha-fazla' && !document.documentElement.classList.contains('tam')) e.scrollTop = e.scrollHeight;
+  if (DUR === 'cevrimdisi' && !hata) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'hal', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

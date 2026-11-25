@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Bugün Senin İçin</title>
+<!--
+  BUGÜN SENİN İÇİN (tam liste) · E-299–E-306 · kök: Liste (büyük başlık) · ana sayfadaki "Bugün Senin İçin" kutusunun devamı; alt çubukta "Ana Sayfa" seçili.
+  Üye: büyük başlık → takip çipleri süzgeç (Tümü + D.uye.takip; satırlar yerinde süzülür) + Düzenle → takımın canlı maçı (Galatasaray takibi) →
+  takip edilen konu, takım, şehir ve yazar haberleri (satırın üst satırında nedeni: kalp + takip adı).
+  Misafir (?uye=0): konu seç çağrısı (bölüm çipleri, Konu seç, Giriş yap) → bu cihazdaki tercihler (C30 varsayımı).
+  Parametreler: ?uye=0 · ?durum=yukleniyor | yenileniyor (&hal=cekiliyor|birak|bitti) | daha-fazla (&hal=son|hata) | bos | hata (&hata=zaman-asimi)
+    | cevrimdisi (&onbellek=0 → önbellek yok) · ?tema=koyu · ?calan=1
+  Kaynak: D.seninIcin ve D.uye.takip (kök ana sayfa kutusu); takiplerle eşleşen öteki haberler D'den seçildi, yeni haber yok:
+    İstanbul → D.liste.haberler[0] ve [8], Savunma Sanayii → D.bolumler Savunma[1], Faiz → D.koseYazilari[1] (köşe yazısı), Galatasaray → D.mac.
+  Varsayımlar (onaylanmadı): canlı maç kutusu listenin başında (takım takibi); misafirin tercihleri cihazda; "Düzenle" Tercihler ekranını açar.
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), Q = K.q, DUR = K.durum, I = K.I, HAL = Q.get('hal');
+  var T = D.uye.takip, L = D.liste.haberler, SV = K.bolum('Savunma').haberler[1], KY = D.koseYazilari[1];
+  /* takip → haber (D.seninIcin + D'den eşleşenler) */
+  var S = D.seninIcin.map(function(x){ return { neden: x.neden, h: { baslik: x.h.baslik, yazar: x.h.yazar, sure: x.h.sure, g: x.h.g } }; });
+  S.splice(2, 0, { neden: 'İstanbul', h: { baslik: L[0].baslik, yazar: L[0].yazar, sure: L[0].sure, izlenme: L[0].izlenme, g: L[0].g } });
+  S.push({ neden: 'Savunma Sanayii', h: { baslik: SV.baslik, yazar: SV.yazar, sure: SV.sure, izlenme: SV.izlenme, g: SV.g } });
+  S.push({ neden: 'Faiz', h: { baslik: KY.baslik, yazar: KY.ad, sure: 'Köşe yazısı', g: KY.g }, kose: true });
+  S.push({ neden: 'İstanbul', h: { baslik: L[8].baslik, yazar: L[8].yazar, sure: L[8].sure, izlenme: L[8].izlenme } });
+
+  var bas = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Bugün Senin İçin</h1><p>' + (K.uye ? D.uye.ad + ' · takip ettiğin ' + T.length + ' konu, takım ve şehir' : 'Takip ettiğin konular burada toplanır') + '</p></div>';
+  var cipler = '<div class="k-ray s8" data-tek>' + K.cip('Tümü', { secili: true, sayi: DUR === 'bos' ? null : S.length, attr: 'data-suz=""' }) +
+    T.map(function(t){ return K.cip(t, { ikon: 'fa-heart', sayi: DUR === 'bos' ? null : S.filter(function(x){ return x.neden === t; }).length, attr: 'data-suz="' + t + '"' }); }).join('') +
+    '<a class="k-cip" href="' + K.git('tercihler') + '">' + I('fa-pen') + 'Düzenle</a></div>';
+  var mac = '<div class="k-ic" data-neden="Galatasaray" style="padding-top:var(--b-16)">' + K.mac() + '</div>';
+  var liste = '<div class="k-satirlar">' + S.map(function(x){ return K.satir(Object.assign({ alt: x.neden, ikon: 'fa-heart' }, x.h), { href: x.kose ? K.git('kose') : K.git('detay') }).replace('<a class="k-satir', '<a data-neden="' + x.neden + '" class="k-satir'); }).join('') +
+    (DUR === 'daha-fazla' ? (HAL === 'son' || HAL === 'hata' ? '' : K.iskelet('satir', 1)) + K.dahaFazla(HAL === 'son' || HAL === 'hata' ? HAL : 'yukleniyor') : '') + '</div>';
+  var misafir = '<div class="k-ic">' + K.bolumKart({ ikon: 'fa-heart', baslik: 'Konu seç, haberlerin sana göre gelsin', icerik:
+      '<p class="duz">Takım, şehir ya da konu seç; seçtiklerinle ilgili haberler burada ve ana sayfanda öne çıksın.</p>' +
+      '<div class="k-cip-izgara" style="margin-top:var(--b-16)">' + D.bolumler.map(function(b){ return K.cip(b.ad, { ikon: b.ikon }); }).join('') + '</div>' +
+      '<div class="k-btn-grup" style="margin-top:var(--b-16)">' + K.btn({ metin: 'Konu seç', ikon: 'fa-plus', tur: 'birincil', href: K.git('konuSecimi') }) + K.btn({ metin: 'Giriş yap', ikon: 'fa-right-to-bracket', tur: 'sade', href: K.git('giris') }) + '</div>' }) + '</div>' +
+    K.grup('Bu cihazdaki tercihler', [{ ikon: 'fa-location-dot', baslik: 'Şehrin', sag: 'deger', deger: D.hava.sehir, attr: 'data-sayfa="sehir"' }, { ikon: 'fa-futbol', baslik: 'Takımın', sag: 'deger', deger: 'Seç', href: K.git('konuSecimi') },
+      { ikon: 'fa-heart', baslik: 'Konular', sag: 'deger', deger: 'Seç', href: K.git('konuSecimi') }], 'Giriş yapmadan seçtiklerin yalnız bu cihazda tutulur; giriş yaparsan hesabına aktarılır.');
+
+  var hata = DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? 'cevrimdisi' : '';
+  if (DUR === 'yukleniyor') e.innerHTML = bas + '<div class="k-ic"><div style="display:flex;gap:var(--b-8)">' + [72, 120, 72].map(function(w){ return '<i class="k-isk" style="width:' + w + 'px;height:36px;flex:none"></i>'; }).join('') + '</div></div>' +
+    '<div class="k-satirlar" style="padding-top:var(--b-8)">' + K.iskelet('satir', 5) + '</div><div class="k-son"></div>';
+  else if (hata) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: hata }) + '<div class="k-son"></div>';
+  else if (!K.uye) e.innerHTML = bas + misafir + '<div class="k-son"></div>';
+  else if (DUR === 'bos') e.innerHTML = bas + cipler + K.bos('senin') + '<div class="k-son"></div>';
+  else e.innerHTML = bas + cipler + mac + liste + '<div class="k-son"></div>';
+  if (DUR === 'yenileniyor') e.querySelector('.k-ust-bosluk').insertAdjacentHTML('afterend', K.yenile(['cekiliyor', 'birak', 'bitti'].indexOf(HAL) > -1 ? HAL : 'yenileniyor'));
+
+  K.ustCubuk({ geri: K.git('ana'), baslik: 'Bugün Senin İçin', buyuk: !hata, eylemler: K.uye ? ['ayarlar'] : [] });
+  K.altCubuk('ana');
+  K.oynatici();
+  if (!DUR && K.uye) K.cekYenile(e);
+
+  /* takip çipi süzgeci: satırlar yerinde süzülür */
+  e.addEventListener('click', function(ev){ var c = ev.target.closest('[data-suz]'); if (!c) return; var k = c.getAttribute('data-suz');
+    e.querySelectorAll('[data-neden]').forEach(function(s){ s.hidden = !!k && s.getAttribute('data-neden') !== k; }); });
+  if (DUR === 'daha-fazla' && !document.documentElement.classList.contains('tam')) e.scrollTop = e.scrollHeight;
+  if (DUR === 'cevrimdisi' && !hata) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'hal', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

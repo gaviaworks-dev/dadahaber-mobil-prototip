@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Farklı Bakışlar</title>
+<!--
+  FARKLI BAKIŞLAR · E-266–E-269 · kök: Detay (haftanın konusu bir karşılaştırma yazısı) · format sayfası olduğu için alt çubuk yerinde, "Bölümler" seçili.
+  Yapı: büyük başlık → bu haftanın konusu (başlık, künye) → bakış seçici Türkiye basını · Dünya basını · Uzman görüşü (yerinde değişir, K18; sütunlar yan yana sığmadığı için sekme) →
+  kaynak karşılaştırma tablosu (kitin tablosu; kap içinde yatay kayar, ilk sütun yapışık) → Önceki Konular (48).
+  Parametreler: ?durum=yukleniyor | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0 → önbellek yok) · ?bakis=0|1|2 · ?uye=0 · ?tema=koyu · ?calan=1
+  Kaynak: public farkli-bakislar.html (konu, üç bakış metni, tablo, arşiv aynen). Konuya uygun görsel yok: görselsiz.
+  Varsayımlar (onaylanmadı): tablodaki "Ton" sütunu durum etiketiyle renklenir (Olumlu yeşil, Temkinli sarı, Eleştirel kırmızı, Nötr gri).
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), Q = K.q, DUR = K.durum, I = K.I;
+  /* kaynak: public farkli-bakislar.html "Bu haftanın konusu" */
+  var BAKIS = [
+    ['fa-flag', 'Türkiye basını', 'Türkiye', '6 haber', 'Bir ulusal gazete ve iki ekonomi sitesi, pilot uygulamanın verimlilik sonuçlarına odaklandı. Haberlerde çalışan memnuniyetindeki artış ve işverenlerin maliyet kaygısı birlikte yer aldı.', '6 haber · 20-22 Kasım'],
+    ['fa-earth-europe', 'Dünya basını', 'Dünya', '4 haber', 'Bir Avrupa haber ajansı ile bir iş dergisi, Türkiye\'deki pilotu Avrupa\'daki benzer denemelerle karşılaştırdı. Öne çıkan soru, hizmet sektöründe modelin uygulanabilirliği oldu.', '4 haber · 21-22 Kasım'],
+    ['fa-user-graduate', 'Uzman görüşü', 'Uzman', '3 görüşme', 'Görüştüğümüz bir çalışma ekonomisti, sonuçların yalnızca beyaz yakalı ofislerde ölçüldüğünü hatırlattı. Bir sendika temsilcisi ise yasal düzenleme olmadan modelin yaygınlaşmayacağını söyledi.', '3 görüşme · 22 Kasım']
+  ];
+  var TON = { 'Olumlu': 'yesil', 'Temkinli': 'sari', 'Nötr': '', 'Eleştirel': 'kirmizi' };
+  var TABLO = [['Bir ulusal gazete', 'Türkiye basını', 'Verimlilik', 'Pilot şirket raporu', 'Olumlu'], ['Bir ekonomi sitesi', 'Türkiye basını', 'İşveren maliyeti', 'Odalar birliği anketi', 'Temkinli'],
+    ['Bir Avrupa haber ajansı', 'Dünya basını', 'Avrupa ile karşılaştırma', 'Üç ülkenin pilot verisi', 'Nötr'], ['Bir iş dergisi', 'Dünya basını', 'Hizmet sektörü', 'Sektör görüşmeleri', 'Temkinli'],
+    ['Çalışma ekonomisti', 'Uzman', 'Ölçüm yöntemi', 'Akademik çalışma', 'Eleştirel']];
+  /* kaynak: public farkli-bakislar.html "Farklı Bakışlar Arşivi" (48; ilk sayfa) */
+  var ARSIV = [['Kış lastiği zorunluluğu: yol güvenliği mi, ek maliyet mi?', 'Nilay Ersoy', '4 dk', '4,4 B', 'Geçen hafta'], ['Yapay zekâ etiketi: şeffaflık mı, sansür kaygısı mı?', 'Nilay Ersoy', '2 dk', '9,7 B', 'İki hafta önce'],
+    ['Kampüste kısa dönem staj: fırsat mı, ucuz emek mi?', 'Ozan Er', '5 dk', '3,0 B', 'Üç hafta önce'], ['Kademeli su tarifesi: tasarruf mu, yük mü?', 'İrem Su', '3 dk', '8,3 B'],
+    ['Elektrikli otomobil vergisi: teşvik mi, gelir kaybı mı?', 'Nilay Ersoy', '6 dk', '13,6 B'], ['Uzaktan çalışma: üretkenlik verileri ne söylüyor?', 'İrem Su', '4 dk', '6,9 B'],
+    ['Okullarda telefon yasağı: veliler ve öğretmenler ne diyor?', 'Ozan Er', '2 dk', '12,2 B'], ['Sokak hayvanları düzenlemesi: üç farklı yaklaşım', 'Ozan Er', '5 dk', '5,5 B']];
+
+  var SEC = Math.min(2, Math.max(0, +Q.get('bakis') || 0));
+  var bas = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Farklı Bakışlar</h1><p>Aynı konuyu Türkiye ve dünya basını ile uzmanlar nasıl görüyor?</p></div>';
+  var konu = '<div class="k-ic" style="padding-top:var(--b-8)">' + K.etiket('Bu haftanın konusu', { tur: 'sari', ikon: 'fa-scale-balanced' }) +
+    '<h2 style="margin-top:var(--b-12);font-size:23px;line-height:1.18;letter-spacing:-.02em">Dört günlük çalışma haftası: üç bakış, bir tablo</h2>' + K.meta(['13 içerik incelendi', '10.10 Güncellendi', '8,7 B']) + '</div>';
+  var secici = '<div class="k-segment-kap" style="margin-top:var(--b-8)">' + K.segment(BAKIS.map(function(b){ return { metin: b[2], alt: b[3] }; }), SEC) + '</div>';
+  var paneller = BAKIS.map(function(b, i){ return '<div class="k-ic" data-panel="' + i + '"' + (i === SEC ? '' : ' hidden') + '>' +
+    K.bolumKart({ ikon: b[0], baslik: b[1], sira: i + 1, toplam: 3, icerik: '<p class="duz">' + b[4] + '</p><p class="not">' + b[5] + '</p>' }) + '</div>'; }).join('');
+  var tablo = '<section class="k-bl">' + K.bb({ baslik: 'Kaynak Karşılaştırması', ikon: 'fa-newspaper' }) + '<div class="k-ic">' +
+    K.tablo({ sutunlar: ['Kaynak', 'Grup', 'Ana vurgu', 'Dayandığı veri', 'Ton'], satirlar: TABLO.map(function(r){ return [r[0], r[1], r[2], r[3], K.etiket(r[4], { tur: TON[r[4]] })]; }) }) +
+    '<p class="k-not">' + I('fa-circle-info') + '20-22 Kasım 2026 arasında yayımlanan 13 içerik incelendi.</p></div></section>';
+  var arsiv = '<section class="k-bl">' + K.bb({ baslik: 'Önceki Konular', ikon: 'fa-scale-balanced', sayi: 48 }) + '<div class="k-satirlar">' +
+    ARSIV.map(function(a){ return K.satir({ tur: a[4], alt: 'Farklı Bakışlar', baslik: a[0], yazar: a[1], sure: a[2], izlenme: a[3] }, { ikon: 'fa-scale-balanced' }); }).join('') + '</div></section>';
+
+  var hata = DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? 'cevrimdisi' : '';
+  if (DUR === 'yukleniyor') e.innerHTML = bas + '<div class="k-ic"><div class="k-isk-grup"><i class="k-isk" style="width:44%;height:24px"></i><i class="k-isk" style="height:24px"></i><i class="k-isk" style="width:70%;height:24px"></i></div>' +
+    '<div style="margin-top:var(--b-24)"><i class="k-isk kontrol" style="height:54px"></i></div><div style="margin-top:var(--b-12)"><i class="k-isk kart" style="height:200px"></i></div>' +
+    '<div style="margin-top:var(--b-24)">' + K.iskelet('metin', 5) + '</div></div><div class="k-son"></div>';
+  else if (hata) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: hata }) + '<div class="k-son"></div>';
+  else e.innerHTML = bas + konu + secici + paneller + tablo + arsiv + '<div class="k-son"></div>';
+
+  K.ustCubuk({ geri: K.git('kesfet'), baslik: 'Farklı Bakışlar', buyuk: !hata, eylemler: ['paylas'] });
+  K.altCubuk('bolum');
+  K.oynatici();
+  e.addEventListener('click', function(ev){ var b = ev.target.closest('.k-segment button'); if (!b) return;
+    var i = [].indexOf.call(b.parentNode.children, b);
+    e.querySelectorAll('[data-panel]').forEach(function(p){ p.hidden = +p.getAttribute('data-panel') !== i; }); });
+  if (DUR === 'cevrimdisi' && !hata) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

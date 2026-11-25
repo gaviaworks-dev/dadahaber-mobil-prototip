@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Arşiv</title>
+<!--
+  ARŞİV · E-293–E-298 · kök: Liste (büyük başlık) · alt çubukta "Bölümler" seçili (Keşfet › Medya ve Arşiv).
+  Yapı: büyük başlık → tarih seçici düğmesi (alt sayfa: ay çipleri + gün çipleri, kitin alt sayfası ve çipleri) → son 7 günün şeridi (kitin .k-gun'u) →
+  gün ayracı (tarih · haber sayısı) → o günün haberleri (liste satırı) → sayfa sonu.
+  Parametreler: ?durum=yukleniyor | daha-fazla (&hal=son|hata) | bos (seçilen tarihte haber yok) | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0 → önbellek yok)
+    · ?sayfa=tarih (tarih seçici açık) · ?uye=0 · ?tema=koyu · ?calan=1
+  Kaynak: public arsiv.html (21 Kasım 2026 haberleri, 142 haber; aylar ve günler aynen).
+  Varsayımlar (onaylanmadı): seçili gün 21 Kasım (sitedeki örnek); boş durum örneği 1 Kasım 2026; satır görselleri konuya uygun haber görselleri (uygunu olmayan satır görselsiz).
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), Q = K.q, DUR = K.durum, I = K.I, HAL = Q.get('hal'), BOS = DUR === 'bos';
+  /* kaynak: public arsiv.html "21 Kasım 2026 haberleri" (142 haber; ilk sayfa) */
+  var X = [['Siyaset', 'Bütçe görüşmelerinde ikinci tur Plan ve Bütçe Komisyonu\'nda başladı', 'Ayşe Yıldız', '4 dk', '12,7 B', 'tbmm'],
+    ['Enflasyon', 'Kasım ayı fiyat beklenti anketinin ilk sonuçları paylaşıldı', 'Hakan Uysal', '3 dk', '8,0 B'],
+    ['Avrupa', 'AB dışişleri bakanları göç paketini Brüksel\'de görüştü', 'Zeynep Ak', '3 dk', '23,1 B', 'ab-goc'],
+    ['Futbol', 'Süper Lig\'de 13. haftanın açılış maçında gol çıkmadı', 'Mehmet Koçak', '2 dk', '24,4 B', 'superlig'],
+    ['Burslar', 'KYK burs ödemeleri hesaplara aktarılmaya başlandı', 'Ayşe Yıldız', '2 dk', '30,2 B'],
+    ['Toplum', 'Meteoroloji Marmara için kar uyarısı yaptı', 'Mehmet Koçak', '2 dk', '19,5 B', 'kar-sokak'],
+    ['Savunma Teknolojileri', 'İnsansız deniz aracı açık deniz testine çıktı', 'Hakan Uysal', '4 dk', '11,3 B', 'ida'],
+    ['Kadın Hakları', 'Kadına yönelik şiddetle mücadelede yeni eylem planı taslağı paylaşıldı', 'Mehmet Koçak', '5 dk', '7,6 B'],
+    ['Borsa', 'Borsa İstanbul haftayı yüzde 1,8 yükselişle kapattı', 'Mehmet Koçak', '2 dk', '9,8 B', 'borsa'],
+    ['Gündem', 'Deprem bölgesinde kalıcı konut teslimleri sürüyor', 'Sibel Arslan', '2 dk', '10,3 B', 'konteyner'],
+    ['Diplomasi', 'Dışişleri Bakanı Balkan turunun ilk durağında temaslarda bulundu', 'Mehmet Koçak', '3 dk', '5,4 B'],
+    ['Toplum', 'Grip aşısı için ikinci randevu dönemi açıldı', 'Ayşe Yıldız', '2 dk', '13,9 B']];
+  var AY = ['Kasım 2026', 'Ekim 2026', 'Eylül 2026', 'Ağustos 2026', 'Temmuz 2026', 'Haziran 2026', 'Mayıs 2026', 'Nisan 2026', 'Mart 2026', 'Şubat 2026', 'Ocak 2026', 'Aralık 2025'];
+  var GA = ['Pzt', 'Paz', 'Cmt', 'Cum', 'Per', 'Çar', 'Sal'], GUNLER = [];
+  for (var d = 23; d >= 1; d--) GUNLER.push([d, GA[(23 - d) % 7]]);
+  var IK = { 'Siyaset': 'fa-landmark', 'Futbol': 'fa-futbol', 'Borsa': 'fa-chart-column', 'Enflasyon': 'fa-chart-column', 'Avrupa': 'fa-earth-europe', 'Diplomasi': 'fa-earth-europe',
+    'Savunma Teknolojileri': 'fa-shield-halved', 'Kadın Hakları': 'fa-person-dress', 'Burslar': 'fa-graduation-cap' };
+
+  var TARIH = BOS ? '1 Kasım 2026 Pazar' : '21 Kasım 2026 Cumartesi';
+  var bas = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Arşiv</h1><p>Yayımladığımız bütün haberler, gün gün</p></div>';
+  var secici = '<div class="k-ic">' + K.btn({ metin: TARIH, ikon: 'fa-calendar-day', sagIkon: 'fa-chevron-down', tur: 'sade', tam: true, attr: 'data-tarih' }) + '</div>';
+  var serit = BOS ? '' : '<div class="k-ray k-gunler serbest" data-tek-gun style="padding-top:var(--b-12)">' + GUNLER.slice(0, 7).reverse().map(function(g){
+    return '<button type="button" class="k-gun' + (g[0] === 23 ? ' bugun' : '') + '" aria-selected="' + (g[0] === 21) + '">' + g[1] + '<b>' + g[0] + '</b></button>'; }).join('') + '</div>';
+  var liste = '<div class="k-satirlar"><div class="k-ayrac" style="padding-top:var(--b-16)"><span>' + TARIH + '</span><span>142 haber</span></div>' +
+    X.map(function(x){ return K.satir({ alt: x[0], saat: '21 Kas', baslik: x[1], yazar: x[2], sure: x[3], izlenme: x[4], g: x[5] }, { ikon: IK[x[0]] }); }).join('') +
+    (DUR === 'daha-fazla' ? (HAL === 'son' || HAL === 'hata' ? '' : K.iskelet('satir', 1)) + K.dahaFazla(HAL === 'son' || HAL === 'hata' ? HAL : 'yukleniyor') : '') + '</div>';
+
+  var hata = DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? 'cevrimdisi' : '';
+  if (DUR === 'yukleniyor') e.innerHTML = bas + secici + serit + '<div class="k-satirlar" style="padding-top:var(--b-16)">' + K.iskelet('satir', 5) + '</div><div class="k-son"></div>';
+  else if (hata) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: hata }) + '<div class="k-son"></div>';
+  else if (BOS) e.innerHTML = bas + secici + K.bos({ ikon: 'fa-box-archive', baslik: 'Bu tarihte haber yok', aciklama: 'Seçtiğin günde yayımlanmış haber bulunmuyor. Başka bir gün seç.', eylem: { metin: 'Tarih seç', ikon: 'fa-calendar-day', attr: 'data-tarih' } }) + '<div class="k-son"></div>';
+  else e.innerHTML = bas + secici + serit + liste + '<div class="k-son"></div>';
+
+  K.ustCubuk({ geri: K.git('kesfet'), baslik: 'Arşiv', buyuk: !hata, eylemler: ['ara'] });
+  K.altCubuk('bolum');
+  K.oynatici();
+
+  /* tarih seçici alt sayfası: ay ve gün (kit çipleri, tek seçim) */
+  function tarih(acik){
+    return K.sayfa({ baslik: 'Tarih seç', alt: 'Arşiv Aralık 2025\'ten bugüne', acik: acik,
+      icerik: '<p class="k-sayfa-b">Ay</p>' + K.cipler(AY, 0).replace('k-ray s8"', 'k-ray s8" style="margin:0 calc(-1 * var(--b-24));padding:0 var(--b-24)"') +
+        '<p class="k-sayfa-b">Gün</p><div class="k-cip-izgara" data-tek>' + GUNLER.map(function(g){ return K.cip(g[0] + ' ' + g[1], { secili: g[0] === (BOS ? 1 : 21) }); }).join('') + '</div>',
+      eylemler: [{ metin: 'Haberleri göster', tur: 'birincil', attr: 'data-kapat' }] });
+  }
+  if (Q.get('sayfa') === 'tarih' && !hata) tarih(true);
+  document.addEventListener('click', function(ev){ if (ev.target.closest('[data-tarih]')) tarih(); });
+  if (DUR === 'daha-fazla' && !document.documentElement.classList.contains('tam')) e.scrollTop = e.scrollHeight;
+  if (DUR === 'cevrimdisi' && !hata) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'hal', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Günün 5'i</title>
+<!--
+  GÜNÜN 5'İ · E-226–E-232 · kök: Liste (görselli başlık = baskının ilk haberi + içerik paneli) · alt çubukta "Bölümler" seçili.
+  Yapı: baskı satırı (tarih · 07.00) → tek cümlelik özet → okundu ilerlemesi → Okuyarak · Dinleyerek seçici (yerinde değişir, K18 sekme mantığı) →
+  5 haber (okunan soluk) ya da 5 sesli özet + "Beşini art arda dinle" → "Bugünlük bu kadar" → Önceki Günler (3 satır, Arşiv'e bağlantı).
+  Parametreler: ?durum=bitti (5/5 okundu, okuma serisi, sonraki baskı) | arsiv (önceki baskılar) | yukleniyor | hata (&hata=zaman-asimi)
+    | cevrimdisi (otomatik indirilmiş baskı okunur; &onbellek=0 → indirilmemiş, bağlantı yok) · ?uye=0 misafir (ilerleme cihazda) · ?tema=koyu · ?calan=1
+  Kaynak: D.gunun5 (public gunun-5-i.html, 07.00 baskısı); önceki baskılar public gunun-5-i.html "Önceki Günler" (aynen).
+  Varsayımlar (onaylanmadı): örnek üye ilk iki haberi okumuş; misafirin ilerlemesi cihazda tutulur (C30 varsayımı); okuma serisi baskı bitince bir artar;
+  sesli özet satırı kitin podcast satırı, Haber Dinle'ye açılır.
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), Q = K.q, DUR = K.durum, I = K.I, G5 = D.gunun5;
+  var BITTI = DUR === 'bitti', OKUNAN = BITTI ? 5 : 2;
+  var BU = 'ekranlar/icerik/gunun-5i.html';
+  /* kaynak: public gunun-5-i.html "Önceki Günler" (365 baskı; ilk sayfa) */
+  var ONCEKI = [
+    ['22 Kas', '22 Kasım: bütçe görüşmeleri, kira verisi, Kafkasya\'da enerji hattı', 'İrem Su', '4 dk', '9,9 B'],
+    ['21 Kas', '21 Kasım: enflasyon beklentisi, kitap fuarı, millî takım kadrosu', 'İrem Su', '2 dk', '3,2 B'],
+    ['20 Kas', '20 Kasım: Hazine ihaleleri, kış lastiği, AB zirvesi hazırlığı', 'Nilay Ersoy', '5 dk', '8,5 B'],
+    ['19 Kas', '19 Kasım: işsizlik verisi, organ bağışı, YKS takvimi', 'Nilay Ersoy', '3 dk', '13,8 B'],
+    ['18 Kas', '18 Kasım: konut satışları, deprem tatbikatı, Süper Lig', 'Nilay Ersoy', '6 dk', '7,1 B'],
+    ['17 Kas', '17 Kasım: memur zammı takvimi, uydu testleri, iklim raporu', 'İrem Su', '4 dk', '12,4 B'],
+    ['16 Kas', '16 Kasım: hafta sonu özeti, kar uyarısı, sınav sonuçları', 'İrem Su', '2 dk', '5,7 B'],
+    ['15 Kas', '15 Kasım: ihracat rakamları, sağlık taraması, festival', 'İrem Su', '5 dk', '11,0 B']
+  ];
+  function onceki(x){ return K.satir({ alt: 'Günün 5\'i', saat: x[0], baslik: x[1], yazar: x[2], sure: x[3], izlenme: x[4] }, { ikon: 'fa-sun', href: K.u(BU) }); }
+
+  /* bugünün baskısı */
+  var kalan = G5.liste.slice(OKUNAN).reduce(function(t, x){ return t + parseInt(x.sure, 10); }, 0);
+  var kapak = '<header class="k-kapak" style="background-image:' + G(G5.liste[0].g) + '"><h1>Günün 5\'i</h1><p>' + D.simdi.tarih.replace(' 2026', '') + ' ' + D.simdi.gun + ' · ' + G5.baski + ' baskısı</p></header>';
+  var ust = '<div class="k-ic" style="padding-top:var(--b-24)"><p class="k-spot">' + G5.alt + '</p>' +
+    '<div class="k-ab" style="margin-top:var(--b-16)">' + K.meta([OKUNAN + ' / 5 okundu', BITTI ? 'Baskı tamam' : 'Kalan ' + kalan + ' dk']) + '</div>' +
+    '<div style="margin-top:var(--b-8)">' + K.ilerleme(OKUNAN / 5 * 100, 'kalin') + '</div>' +
+    (K.uye ? '' : '<div class="k-serit" style="margin-top:var(--b-16)">' + I('fa-mobile-screen') + '<span><b>İlerlemen bu cihazda</b><small>Giriş yaparsan her cihazda kaldığın yerden sürer.</small></span><a href="' + K.git('giris') + '">Giriş yap</a></div>') +
+    (DUR === 'cevrimdisi' ? '<div class="k-serit basari" style="margin-top:var(--b-16)">' + I('fa-circle-check') + '<span><b>Bu baskı indirildi</b><small>Bağlantı yokken de okuyabilirsin.</small></span></div>' : '') + '</div>';
+  var bitti = BITTI ? K.bos({ ikon: 'fa-fire', baslik: 'Bugünün 5\'i tamam', aciklama: (K.uye ? 'Okuma serin ' + (D.uye.seri + 1) + ' gün oldu. ' : '') + 'Sonraki baskı yarın ' + G5.baski + '\'de.',
+    eylem: { metin: 'Önceki günlere bak', tur: 'sade', href: K.u(BU, 'durum=arsiv') } }) : '';
+  var secici = '<div class="k-segment-kap">' + K.segment([{ metin: 'Okuyarak', alt: G5.okuma }, { metin: 'Dinleyerek', alt: G5.dinleme }], 0) + '</div>';
+  var okuma = '<div class="k-satirlar" data-panel="0">' + G5.liste.map(function(x, i){ var ok = i < OKUNAN;
+    return K.satir({ tur: x.no, alt: x.kat, baslik: x.baslik, sure: x.sure, izlenme: ok ? 'Okundu' : '', g: x.g }, { durum: ok ? 'okundu' : '' }); }).join('') + '</div>';
+  var dinleme = '<div class="k-ic" data-panel="1" hidden>' + K.btn({ metin: 'Beşini art arda dinle · ' + G5.dinleme, ikon: 'fa-headphones', tur: 'birincil', boy: 'buyuk', tam: true, attr: 'data-spiker style="margin-top:var(--b-8)"' }) +
+    G5.liste.map(function(x){ return K.podcastSatir({ seri: 'Günün 5\'i', no: x.no, baslik: x.baslik, sure: x.ses, konuk: x.kat, g: x.g }); }).join('').split(K.git('podcastBolum')).join(K.git('dinle')) + '</div>';
+  var son = '<div class="k-ic"><div class="k-dahafazla son"><b>Bugünlük bu kadar</b></div><div class="k-dahafazla" style="padding-top:0">Sonraki baskı yarın ' + G5.baski + '\'de</div></div>';
+  var arsiv = '<section class="k-bl">' + K.bb({ baslik: 'Önceki Günler', ikon: 'fa-sun', baglanti: { metin: 'Arşiv', href: K.u(BU, 'durum=arsiv') } }) + '<div class="k-satirlar">' + ONCEKI.slice(0, 3).map(onceki).join('') + '</div></section>';
+
+  var hata = DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? 'cevrimdisi' : '';
+  var ARSIV = DUR === 'arsiv';
+  if (DUR === 'yukleniyor') e.innerHTML = K.iskelet('liste') + '<div class="k-son"></div>';
+  else if (hata) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: hata }) + '<div class="k-son"></div>';
+  else if (ARSIV) e.innerHTML = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Önceki Günler</h1><p>Günün 5\'i arşivi · 365 baskı</p></div>' +
+    '<div class="k-satirlar">' + ONCEKI.map(onceki).join('') + '</div>' + K.dahaFazla('yukleniyor') + '<div class="k-son"></div>';
+  else e.innerHTML = kapak + '<div class="k-yaprak">' + ust + bitti + secici + okuma + dinleme + son + arsiv + '<div class="k-son"></div></div>';
+
+  if (ARSIV) K.ustCubuk({ geri: K.git('gununBesi'), baslik: 'Önceki Günler', buyuk: true, eylemler: ['ara'] });
+  else if (hata) { K.ustCubuk({ geri: K.git('kesfet'), baslik: 'Günün 5\'i', eylemler: ['paylas'] }); document.body.removeAttribute('data-durum'); }
+  else K.ustCubuk({ tur: 'foto', geri: K.git('kesfet'), baslik: 'Günün 5\'i', gorsel: G5.liste[0].g, eylemler: ['paylas'], dar: DUR === 'yukleniyor' });
+  K.altCubuk('bolum');
+  K.oynatici();
+
+  /* Okuyarak · Dinleyerek: içerik yerinde değişir */
+  e.addEventListener('click', function(ev){ var b = ev.target.closest('.k-segment button'); if (!b) return;
+    var i = [].indexOf.call(b.parentNode.children, b);
+    e.querySelectorAll('[data-panel]').forEach(function(p){ p.hidden = +p.getAttribute('data-panel') !== i; }); });
+  if (DUR === 'cevrimdisi' && !hata) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

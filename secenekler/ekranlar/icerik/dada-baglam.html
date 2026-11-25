@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Dada Bağlam</title>
+<!--
+  DADA BAĞLAM · E-253–E-258 · dosya listesi kök: Liste (büyük başlık, alt çubukta "Bölümler") · dosya detayı kök: Detay (okuma çubuğu, alt çubuk yok).
+  Liste: büyük başlık → öne çıkan dosya (kitin bölüm kartı + kronoloji .k-adimlar + "Dosyayı aç") → Bütün Dosyalar (24).
+  Detay (?dosya=1): görselsiz başlık (dosyanın fotoğrafı görsellerimizde yok) → yazar, bilgi satırı, açıklama, giriş →
+  Zaman çizgisi · Taraflar · Sözlük seçicisi (içerik yerinde değişir, K18) → Kaynaklar şeridi → konu takip çipleri → Yorumlar → İlgili İçerikler.
+  Parametreler: ?dosya=1 · ?durum=yukleniyor | hata (&hata=zaman-asimi) | bulunamadi | cevrimdisi (&onbellek=0 → önbellek yok) · ?uye=0 · ?tema=koyu · ?calan=1
+  Kaynak: public dada-baglam.html (dosya listesi, öne çıkan dosyanın kronolojisi) ve dada-baglam-dosya.html (metin, zaman çizgisi, taraflar, sözlük, kaynaklar, etiketler, yorumlar, ilgili içerikler aynen).
+  Varsayımlar (onaylanmadı): okuma çubuğundaki yorum sayısı ve Dinle etiketi bu dosyaya göre yazılır (dinleme süresi sitede yok); sözlük kitin akordeonu.
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), Q = K.q, DUR = K.durum, I = K.I, DOSYA = Q.get('dosya') === '1';
+  var BU = 'ekranlar/icerik/dada-baglam.html';
+  /* kaynak: public dada-baglam-dosya.html */
+  var KRON = [['Mart 2025', 'Yağış ortalamanın altında kaldı', 'Kış yağışları uzun yıllar ortalamasının yüzde 30 altında ölçüldü; barajlara giriş azaldı.'],
+    ['Haziran 2025', 'Tasarruf çağrısı yapıldı', 'Su idaresi, yaz aylarında bahçe sulaması ve araç yıkamasında kısıtlamaya gitti.'],
+    ['Eylül 2025', 'Doluluk yüzde 40\'ın altına indi', 'Barajlardaki aktif doluluk son on yılın en düşük eylül değerine geriledi.'],
+    ['Aralık 2025', 'Kuraklık eylem planı açıklandı', 'Plan; kayıp-kaçak oranını düşürme, gri su kullanımı ve yeni iletim hatlarını içeriyor.'],
+    ['Mart 2026', 'İletim hattı ihalesi yapıldı', 'Komşu havzadan su taşıyacak 62 kilometrelik hattın ihalesi tamamlandı.'],
+    ['Temmuz 2026', 'Kademeli tarife başladı', 'Yüksek tüketimli konutlar için kademeli su tarifesi yürürlüğe girdi.'],
+    ['Ekim 2026', 'Tüketim yüzde 7 azaldı', 'Su idaresi, kişi başı günlük tüketimin bir yılda yüzde 7 azaldığını açıkladı.'],
+    ['22 Kasım 2026', 'Doluluk yüzde 38\'de', 'Kasım yağışlarına rağmen aktif doluluk yüzde 38 ile geçen yılın gerisinde.']];
+  var TARAF = [['fa-droplet', 'Su idaresi', 'Kayıp-kaçak oranını yüzde 18\'e indirmeyi ve yeni iletim hattını 2027\'de devreye almayı hedefliyor.', 'Kuraklık eylem planı · Aralık 2025'],
+    ['fa-landmark', 'Merkezî yönetim', 'Havzalar arası su aktarımını ve tarımda damla sulamayı destekleyen bütçeyi artırdı.', 'Bütçe gerekçesi · Ekim 2026'],
+    ['fa-user-graduate', 'Uzmanlar', 'Talep yönetimi olmadan yeni kaynakların yetmeyeceğini, gri su kullanımının yaygınlaşması gerektiğini söylüyor.', 'Üniversite raporu · Eylül 2026']];
+  var SOZLUK = [['Aktif doluluk', 'Barajda kullanılabilir durumdaki suyun toplam kapasiteye oranı. Ölü hacim bu hesaba girmez.'],
+    ['Ölü hacim', 'Baraj gövdesinin altında kalan ve pompalanamayan su miktarı.'],
+    ['Kayıp-kaçak oranı', 'Şebekeye verilen su ile aboneye ulaşan su arasındaki farkın yüzdesi.'],
+    ['Gri su', 'Lavabo ve duştan gelen, arıtılarak sulama ya da rezervuarda yeniden kullanılabilen su.'],
+    ['Kademeli tarife', 'Tüketim arttıkça metreküp fiyatının yükseldiği fiyatlandırma.']];
+  var KAYNAK = [{ kurum: 'İstanbul su idaresi', aciklama: 'Baraj doluluk oranları, günlük veri · 22 Kasım 2026' }, { kurum: 'Meteoroloji Genel Müdürlüğü', aciklama: 'Bölgesel yağış raporu, Ekim 2026' },
+    { kurum: 'Kuraklık eylem planı', aciklama: 'Su idaresi meclis kararı, Aralık 2025' }];
+  var YORUM = [{ ad: 'Gül Erdem', rozet: 'Düzenli okur', zaman: '3 saat önce', metin: 'Zaman çizgisi çok işe yaradı; tarife değişikliğinin ne zaman başladığını hiç bilmiyordum.', begeni: 9 },
+    { ad: 'Dada Haber Editör', rozet: 'Editör', zaman: '2 saat önce', metin: 'Teşekkürler. Doluluk verisi açıklandıkça dosyanın son satırını güncelliyoruz.', begeni: 3 }];
+  var ILGILI = [{ alt: 'Dada Bağlam', baslik: 'Emisyon ticaret sistemi nedir, kimleri kapsar?', yazar: 'İrem Su', sure: '6 dk', izlenme: '5,3 B' },
+    { alt: 'İklim', baslik: 'Barajlardaki doluluk oranı İstanbul\'da yüzde 38\'e geriledi', yazar: 'Ayşe Yıldız', sure: '3 dk', izlenme: '11,7 B' },
+    { alt: 'İklim', baslik: 'Konya Ovası\'nda yeraltı suyu seviyesi bir yılda 3 metre düştü', yazar: 'Ozan Er', sure: '2 dk', izlenme: '3,9 B' },
+    { alt: 'Veri ve Harita', baslik: 'Büyükşehirlerde su tüketimi tek tabloda', yazar: 'Ozan Er', sure: '5 dk', izlenme: '9,2 B' }];
+  /* kaynak: public dada-baglam.html "Dada Bağlam Dosyaları" (24 dosya; ilk sayfa) */
+  var DOSYALAR = [['İstanbul\'un su sorunu: barajlardan musluğa', 'İrem Su', '5 dk', '12,4 B'], ['Asgari ücret: kim, ne istiyor?', 'Nazlı Öztürk', '3 dk', '6,9 B', 'asgari'],
+    ['Faiz kararı cebine nasıl yansır?', 'İrem Su', '6 dk', '12,2 B', 'faiz'], ['KAAN programı: prototipten seri üretime takvim', 'Mert Yalın', '4 dk', '5,5 B', 'kaan'],
+    ['AB göç paketi: Türkiye için ne değişir?', 'Hande Polat', '2 dk', '10,8 B', 'ab-goc'], ['YKS 2027 rehberi: başvurudan tercihe', 'Ozan Er', '5 dk', '4,1 B', 'yks'],
+    ['Deprem bölgesinde konut: rakamlarla iki yıl', 'Kerem Aksoy', '3 dk', '9,4 B', 'konteyner'], ['Emisyon ticaret sistemi nedir, kimleri kapsar?', 'İrem Su', '6 dk', '5,3 B'],
+    ['Kira artışlarında yeni dönem: neler değişti?', 'Ozan Er', '4 dk', '8,0 B'], ['Avrupa\'nın yapay zekâ yasası neyi düzenliyor?', 'İrem Su', '2 dk', '13,3 B'],
+    ['Elektrikli araç şarj ağı: nerede, ne kadar?', 'İrem Su', '5 dk', '6,6 B'], ['Doğu Akdeniz enerji hattı: taraflar ve takvim', 'İrem Su', '3 dk', '11,9 B']];
+  var BASLIK = 'İstanbul\'un su sorunu: barajlardan musluğa bir yıl';
+  var ac = K.u(BU, 'dosya=1');
+
+  function kron(l){ return K.adimlar(l.map(function(k){ return [k[0], '<strong>' + k[1] + '.</strong> ' + k[2]]; })); }
+  /* liste */
+  var one = '<div class="k-ic">' + K.bolumKart({ ikon: 'fa-folder-open', baslik: 'Öne çıkan dosya', icerik:
+      '<a href="' + ac + '" style="display:block"><h3 style="font-size:20px;line-height:1.2;letter-spacing:-.015em">' + BASLIK + '</h3>' + K.meta(['İrem Su', '5 dk', '09.20 Güncellendi']) + '</a>' +
+      '<div style="margin-top:var(--b-16)">' + kron([KRON[0], KRON[1], KRON[3], KRON[7]]) + '</div>' + K.btn({ metin: 'Dosyayı aç', sagIkon: 'fa-chevron-right', tur: 'ikincil', tam: true, href: ac }) }) + '</div>';
+  var tum = '<section class="k-bl">' + K.bb({ baslik: 'Bütün Dosyalar', ikon: 'fa-folder-open', sayi: 24 }) + '<div class="k-satirlar">' +
+    DOSYALAR.map(function(d, i){ return K.satir({ baslik: d[0], yazar: d[1], sure: d[2], izlenme: d[3], g: d[4] }, { href: i === 0 ? ac : K.git('detay') }); }).join('') + '</div></section>';
+  var listeBas = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Dada Bağlam</h1><p>Uzun süren konuları baştan anlatan dosyalar: zaman çizgisi, taraflar ve sözlük</p></div>';
+
+  /* dosya detayı */
+  var dBas = '<div class="k-ust-bosluk"></div><div class="k-ic" style="padding-top:var(--b-8)">' + K.katEt('Dada Bağlam', 'fa-folder-open', { ek: 'Dosya' }) +
+    '<h1 style="margin-top:var(--b-12);font-size:31px;line-height:1.1;letter-spacing:-.028em">' + BASLIK + '</h1>' +
+    '<div class="k-imza">' + K.avatar('İrem Su', 'm') + '<span class="t"><b>İrem Su</b><small>Bilim ve Çevre Muhabiri</small></span></div>' +
+    '<div style="margin-top:var(--b-16)">' + K.zamanSatir({ tarih: '22 Kasım 2026', saat: '10.30', guncelleme: '09.20', sure: '7 dk' }) + '</div>' +
+    '<p class="k-spot" style="margin-top:var(--b-16)">Barajlarda doluluk iki yıldır normalin altında. Kuraklığın nasıl başladığını, alınan önlemleri ve tarafların görüşlerini zaman çizgisi ve sözlükle anlatıyoruz.</p>' +
+    '<div class="k-govde" style="margin-top:var(--b-16)"><p>İstanbul\'un içme suyunu sağlayan barajlarda doluluk iki yıldır mevsim normallerinin altında seyrediyor. Bu dosya, sorunun nasıl başladığını, hangi adımların atıldığını ve önümüzdeki dönemde neyin değişeceğini tek yerde topluyor.</p></div></div>';
+  var dSec = '<div class="k-segment-kap">' + K.segment(['Zaman çizgisi', 'Taraflar', 'Sözlük'], 0, { ince: true }) + '</div>';
+  var dPan = '<div class="k-ic" data-panel="0" style="padding-top:var(--b-8)">' + kron(KRON) + '</div>' +
+    '<div class="k-ic" data-panel="1" hidden><p class="k-spot" style="font-size:var(--mb);margin-bottom:var(--b-16)">Konunun üç ana tarafı aynı hedefte buluşuyor: tüketimi azaltmak ve kaynakları çeşitlendirmek. Öncelik sırası ise farklı.</p>' +
+      TARAF.map(function(t, i){ return '<div' + (i ? ' style="margin-top:var(--b-12)"' : '') + '>' + K.bolumKart({ ikon: t[0], baslik: t[1], icerik: '<p class="duz">' + t[2] + '</p><p class="not">' + t[3] + '</p>' }) + '</div>'; }).join('') + '</div>' +
+    '<div class="k-ic" data-panel="2" hidden>' + SOZLUK.map(function(s, i){ return K.akordeon(s[0], s[1], i === 0); }).join('') + '</div>';
+  var dAlt = '<section class="k-bl">' + K.kaynaklar(KAYNAK) + '</section>' +
+    '<section class="k-bl">' + K.bb({ baslik: 'Konuları Takip Et', ikon: 'fa-heart' }) + '<div class="k-ray s8">' + ['Kuraklık', 'Barajlar', 'İstanbul', 'İklim'].map(function(t){ return K.cip(t, { ikon: 'fa-plus', secili: K.uye && t === 'İstanbul' }); }).join('') + '</div></section>' +
+    '<section class="k-bl"><div class="k-ic">' + K.yorumlar({ Y: YORUM }) + '</div></section>' +
+    '<section class="k-bl">' + K.bb({ baslik: 'İlgili İçerikler', ikon: 'fa-layer-group' }) + '<div class="k-satirlar">' + ILGILI.map(function(h){ return K.satir(h, { ikon: 'fa-folder-open' }); }).join('') + '</div></section>';
+
+  var hata = DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : DUR === 'bulunamadi' ? 'bulunamadi' : (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? 'cevrimdisi' : '';
+  if (DUR === 'yukleniyor') e.innerHTML = DOSYA ? '' : listeBas + '<div class="k-ic"><i class="k-isk kart" style="height:320px"></i></div><div class="k-satirlar">' + K.iskelet('satir', 3) + '</div><div class="k-son"></div>';
+  else if (hata) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: hata }) + '<div class="k-son' + (DOSYA ? ' yalin' : '') + '"></div>';
+  else if (DOSYA) e.innerHTML = dBas + dSec + dPan + dAlt + '<div class="k-son okuma"></div>';
+  else e.innerHTML = listeBas + one + tum + '<div class="k-son"></div>';
+  if (DUR === 'yukleniyor' && DOSYA) e.innerHTML = '<div class="k-ust-bosluk"></div><div class="k-ic" style="padding-top:var(--b-8)"><div class="k-isk-grup">' +
+    '<i class="k-isk" style="width:38%;height:14px"></i><i class="k-isk" style="height:30px"></i><i class="k-isk" style="height:30px"></i><i class="k-isk" style="width:64%;height:30px"></i></div>' +
+    '<div class="k-imza"><i class="k-isk daire" style="width:44px;height:44px"></i><span class="k-isk-grup" style="flex:1"><i class="k-isk" style="width:40%;height:14px"></i><i class="k-isk" style="width:56%;height:11px"></i></span></div>' +
+    '<div style="margin-top:var(--b-24)">' + K.iskelet('metin', 8) + '</div></div><div class="k-son okuma"></div>';
+
+  if (DOSYA) {
+    K.ustCubuk({ geri: K.u(BU), baslik: 'Dada Bağlam', eylemler: ['kaydet'] });
+    if (!hata) { var ok = K.okuma();
+      ok.querySelector('.dinle').innerHTML = I('fa-headphones') + 'Dinle';
+      var yb = ok.querySelector('[data-yorumlara]'); yb.setAttribute('aria-label', 'Yorumlar, ' + YORUM.length); yb.querySelector('.k-rozet').textContent = YORUM.length; }
+  } else {
+    K.ustCubuk({ geri: K.git('kesfet'), baslik: 'Dada Bağlam', buyuk: !hata, eylemler: ['ara'] });
+    K.altCubuk('bolum');
+  }
+  K.oynatici();
+
+  /* Zaman çizgisi · Taraflar · Sözlük: içerik yerinde değişir (K18) */
+  e.addEventListener('click', function(ev){ var b = ev.target.closest('.k-segment button'); if (!b) return;
+    var i = [].indexOf.call(b.parentNode.children, b);
+    e.querySelectorAll('[data-panel]').forEach(function(p){ p.hidden = +p.getAttribute('data-panel') !== i; }); });
+  document.addEventListener('click', function(ev){ if (ev.target.closest('[data-yorumlara]')) { var y = e.querySelector('.k-yorum-oz'); if (y) e.scrollTo({ top: y.offsetTop - 160, behavior: 'smooth' }); } });
+  if (DUR === 'cevrimdisi' && !hata) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

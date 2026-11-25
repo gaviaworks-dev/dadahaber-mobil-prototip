@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Keşfet</title>
+<!--
+  KEŞFET MERKEZİ · E-222–E-225 · kök: Liste (görselli başlık + içerik paneli) · alt çubukta "Bölümler" seçili (Keşfet sekizinci bölüm).
+  Yapı (DADAHABER-10 › Keşfet): Keşfet Formatları (8 döşeme: 7 format + Bana Etkisi, public kesfet.html sekmeleri) → Günün 5'i rayı →
+  Anlık (7 satır) → Konular (Teknoloji ve Bilim, Sağlık ve Yaşam, Kültür ve Sanat) → Medya ve Arşiv (çipler) → Keşfet'ten Haberler.
+  Parametreler: ?durum=yukleniyor | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0 → önbellek yok) · ?uye=0 · ?tema=koyu · ?calan=1
+  Kaynak: public kesfet.html (format açıklamaları, künyeler, "Keşfet'ten Haberler"), D.gunun5.
+  Varsayımlar (onaylanmadı): başlık görseli Keşfet bölümünün ilk haber görseli (akm, liste kökündeki Keşfet ile aynı); format ikonları bu ekranda seçildi
+  (Dada Özet fa-gauge-high, Günün 5'i fa-sun, Dada Bağlam fa-folder-open, Dada Doğrula fa-clipboard-check, Farklı Bakışlar fa-scale-balanced,
+  Veri ve Harita fa-map-location-dot, Sakin Akış fa-leaf, Bana Etkisi fa-user, Bugün Ne Oldu? fa-moon) ve öteki Keşfet ekranlarında aynı.
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+<style>
+/* KİT ADAYI: format döşemesi — iki sütunlu ızgara; ikon kutusu .k-bolum-satir .bi ile, zemin ve köşe .k-ky ile aynı (--k-yuzey, --k-kontrol); künye tek satır */
+.kf-izgara{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--b-12);padding:0 var(--kenar)}
+.kf{display:flex;flex-direction:column;min-height:148px;padding:var(--b-16);border-radius:var(--k-kontrol);background:var(--k-yuzey);transition:transform .14s var(--k-egri)}
+.kf:active{transform:scale(.975)}
+.kf .bi{width:40px;height:40px;border-radius:var(--k-ic);display:grid;place-items:center;background:var(--marka-25);color:var(--marka-metin);font-size:15px;flex:none}
+.kf b{display:block;margin-top:var(--b-12);font-size:15.5px;line-height:1.2;letter-spacing:-.01em}
+.kf small{margin-top:var(--b-4);font-size:12.5px;line-height:1.35;color:var(--metin-2);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.kf em{margin-top:auto;padding-top:var(--b-8);font-style:normal;font-size:12px;color:var(--metin-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+</style>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), Q = K.q, DUR = K.durum, I = K.I;
+  function sayfa(ad){ return K.u('ekranlar/icerik/' + ad + '.html'); }
+
+  /* kaynak: public kesfet.html "Formatlar, Anlık Akış ve Konular" (açıklama ve künye aynen) */
+  var FORMAT = [
+    ['fa-gauge-high', 'Dada Özet', 'Günün haberleri 15 saniyede, 1 dakikada ya da tam metinle.', 'Her gün güncellenir', sayfa('dada-ozet')],
+    ['fa-sun', 'Günün 5\'i', 'Bugünü anlamak için bilmen gereken beş haber.', 'Her sabah 07.00', K.git('gununBesi')],
+    ['fa-folder-open', 'Dada Bağlam', 'Uzun süren konuları zaman çizgisi ve sözlükle anlatan dosyalar.', '24 dosya', sayfa('dada-baglam')],
+    ['fa-clipboard-check', 'Dada Doğrula', 'Gündemdeki iddiaları kaynağıyla inceler, kararını açıklar.', '6 karar etiketi', sayfa('dada-dogrula')],
+    ['fa-scale-balanced', 'Farklı Bakışlar', 'Aynı konuyu Türkiye ve dünya basını ile uzmanlar nasıl görüyor?', 'Haftalık', sayfa('farkli-bakislar')],
+    ['fa-map-location-dot', 'Veri ve Harita', 'Gündemi rakamlar, tablolar ve infografiklerle okumak için.', 'Resmî veri', sayfa('veri-ve-harita')],
+    ['fa-leaf', 'Sakin Akış', 'Bildirimsiz, sarsıcı görüntüsüz, günde iki özetle haber.', 'Kişisel ayar', sayfa('sakin-akis')],
+    ['fa-user', 'Bana Etkisi', 'Öğrenci, çalışan, emekli ya da kiracı için ne değişti?', '6 profil', sayfa('bana-etkisi')]
+  ];
+  var ANLIK = [
+    ['fa-bolt', 'Son Dakika', 'Teyit edilmiş gelişmeler, saat sırasıyla', K.git('sonDakika')],
+    ['fa-tower-broadcast', 'Canlı Gündem', 'Süren olayları tek sayfada izle', K.git('canliGundem')],
+    ['fa-video', 'Canlı Yayın', 'Basın toplantıları ve oturumlar', sayfa('canli-yayin')],
+    ['fa-stopwatch', 'Dakika Dakika', 'Seçim, maç ve oturumların anlatımı', K.git('canliAnlatim')],
+    ['fa-moon', 'Bugün Ne Oldu?', 'Günün kapanışı, tek listede', sayfa('bugun-ne-oldu')],
+    ['fa-calendar-day', 'Gündem Takvimi', 'Bu haftanın verileri ve tarihleri', K.git('takvim', 'tur=gundem')],
+    ['fa-rotate', 'Güncellenen Haberler', 'Yayından sonra değişen haberler', sayfa('guncellenen-haberler')]
+  ];
+  var KONU = [
+    ['fa-microchip', 'Teknoloji ve Bilim', 'Teknoloji, Yapay Zekâ, Bilim · 8 alt sayfa'],
+    ['fa-heart-pulse', 'Sağlık ve Yaşam', 'Sağlık, Beslenme, Seyahat · 6 alt sayfa'],
+    ['fa-masks-theater', 'Kültür ve Sanat', 'Sinema, Dizi, Müzik, Kitap · 7 alt sayfa']
+  ];
+  var MEDYA = [['fa-circle-play', 'Video Haber', K.git('video')], ['fa-camera', 'Foto Fokus', K.git('fotoFokus')], ['fa-chart-pie', 'İnfografik', K.git('infografik')],
+    ['fa-podcast', 'Podcast', K.git('podcast')], ['fa-headphones', 'Haber Dinle', K.git('dinle')], ['fa-feather-pointed', 'Yazarlar', K.git('yazarlar')], ['fa-box-archive', 'Arşiv', sayfa('arsiv')]];
+  /* kaynak: public kesfet.html "Keşfet'ten Haberler" (1538 haber; ilk sayfa). Konuya uygun görsel yok: yazılı satır */
+  var HABER = [
+    { alt: 'Yapay Zekâ', baslik: 'Yapay zekâ ile üretilen içeriklere etiket zorunluluğu için taslak hazırlandı', yazar: 'İrem Su', sure: '6 dk', izlenme: '11,5 B' },
+    { alt: 'Sağlık', baslik: 'Aile hekimliğinde randevu sistemine akşam saatleri ekleniyor', yazar: 'Nilay Ersoy', sure: '5 dk', izlenme: '7,8 B' },
+    { alt: 'Sinema', baslik: 'Yerli filmlerin gişedeki payı bu yıl yüzde 46\'ya ulaştı', yazar: 'İrem Su', sure: '3 dk', izlenme: '13,1 B' },
+    { alt: 'Uzay', saat: '22 Kas', baslik: 'Yerli haberleşme uydusunun yörünge testleri tamamlandı', yazar: 'Nilay Ersoy', sure: '6 dk', izlenme: '10,3 B' },
+    { alt: 'Seyahat', saat: '22 Kas', baslik: 'Kış sezonunda yurt içi uçuş sayısı geçen yıla göre yüzde 9 arttı', yazar: 'Kerem Aksoy', sure: '4 dk', izlenme: '11,7 B' },
+    { alt: 'İklim', saat: '22 Kas', baslik: 'Ekim ayı ölçümlerde son 50 yılın en sıcak ekimi olarak kaydedildi', yazar: 'Ozan Er', sure: '2 dk', izlenme: '13,1 B' },
+    { alt: 'Kitap', saat: '22 Kas', baslik: 'İstanbul kitap fuarı bu yıl 780 bin ziyaretçiyle kapandı', yazar: 'Ozan Er', sure: '5 dk', izlenme: '14,1 B' }
+  ];
+
+  var G5 = D.gunun5;
+  var kapak = '<header class="k-kapak" style="background-image:' + G('akm') + '"><h1>Keşfet</h1><p>Formatlar, anlık akış ve konular</p></header>';
+  var formatlar = '<section class="k-bl sik">' + K.bb({ baslik: 'Keşfet Formatları', ikon: 'fa-compass', sayi: FORMAT.length }) + '<div class="kf-izgara">' +
+    FORMAT.map(function(f){ return '<a class="kf" href="' + f[4] + '"><span class="bi">' + I(f[0]) + '</span><b>' + f[1] + '</b><small>' + f[2] + '</small><em>' + f[3] + '</em></a>'; }).join('') + '</div></section>';
+  var bes = '<section class="k-bl">' + K.bb({ baslik: 'Günün 5\'i', ikon: 'fa-sun', baglanti: { metin: 'Tümü', href: K.git('gununBesi') } }) +
+    K.ray(G5.liste.map(function(x){ return K.kartK({ baslik: x.baslik, g: x.g, yazar: x.no + ' · ' + x.kat, sure: x.sure }, { href: K.git('gununBesi') }); }).join('')) + '</section>';
+  function satir(x){ return '<a class="k-bolum-satir" href="' + x[3] + '"><span class="bi">' + I(x[0]) + '</span><span class="t"><b>' + x[1] + '</b><small>' + x[2] + '</small></span>' + I('fa-chevron-right') + '</a>'; }
+  var anlik = '<section class="k-bl">' + K.bb({ baslik: 'Anlık', ikon: 'fa-bolt' }) + '<div class="k-satirlar">' + ANLIK.map(satir).join('') + '</div></section>';
+  var konu = '<section class="k-bl">' + K.bb({ baslik: 'Konular', ikon: 'fa-shapes' }) + '<div class="k-satirlar">' +
+    KONU.map(function(k){ return satir([k[0], k[1], k[2], K.u('hibrit/liste.html', 'bolum=kesfet')]); }).join('') + '</div></section>';
+  var medya = '<section class="k-bl">' + K.bb({ baslik: 'Medya ve Arşiv', ikon: 'fa-circle-play' }) + '<div class="k-ray s8">' +
+    MEDYA.map(function(m){ return K.cip(m[1], { ikon: m[0], attr: 'data-href="' + m[2] + '"' }); }).join('') + '</div></section>';
+  var haber = '<section class="k-bl">' + K.bb({ baslik: 'Keşfet\'ten Haberler', ikon: 'fa-newspaper', sayi: '1.538' }) + '<div class="k-satirlar">' +
+    HABER.map(function(h){ return K.satir(h, { ikon: 'fa-compass' }); }).join('') + '</div><div class="k-ic">' +
+    K.btn({ metin: 'Bütün Keşfet haberleri', sagIkon: 'fa-chevron-right', tur: 'sade', tam: true, href: K.u('hibrit/liste.html', 'bolum=kesfet'), attr: 'style="margin-top:var(--b-16)"' }) + '</div></section>';
+
+  var hata = DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? 'cevrimdisi' : '';
+  if (DUR === 'yukleniyor') e.innerHTML = K.iskelet('liste') + '<div class="k-son"></div>';
+  else if (hata) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: hata }) + '<div class="k-son"></div>';
+  else e.innerHTML = kapak + '<div class="k-yaprak">' + formatlar + bes + anlik + konu + medya + haber + '<div class="k-son"></div></div>';
+
+  if (hata) K.ustCubuk({ geri: K.git('bolumler'), baslik: 'Keşfet', eylemler: ['ara'] });
+  else K.ustCubuk({ tur: 'foto', geri: K.git('bolumler'), baslik: 'Keşfet', gorsel: 'akm', eylemler: ['ara'], dar: DUR === 'yukleniyor' });
+  if (hata) document.body.removeAttribute('data-durum');
+  K.altCubuk('bolum');
+  K.oynatici();
+  if (DUR === 'cevrimdisi' && !hata) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>

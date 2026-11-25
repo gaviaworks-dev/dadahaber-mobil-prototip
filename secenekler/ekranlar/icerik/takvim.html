@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Takvim</title>
+<!--
+  TAKVİM · E-286–E-292 · kök: Liste (büyük başlık; çizelge kalıbı) · alt çubukta "Bölümler" seçili. Üç takvim tek kalıp:
+    ?tur=gundem (varsayılan) Gündem Takvimi (Keşfet) · ?tur=ekonomik Ekonomik Takvim (Finans) · ?tur=sinav Sınav Takvimi (Kampüs).
+  Yapı: büyük başlık → gün şeridi (gündem ve ekonomik; kitin .k-gunler, dokununca o günün etkinlikleri) → süzgeç çipleri (konu / ülke / sınav) →
+  gün ya da dönem ayracı (.k-ayrac) → saat sütunlu etkinlik satırları (kitin çizelgesi .k-cz): konu · kurum, başlık, ayrıntı, önem etiketi, Takvime ekle (B-25) → kaynak notu.
+  Parametreler: ?tur=gundem|ekonomik|sinav · ?durum=yukleniyor | bos (seçilen günde etkinlik yok) | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0 → önbellek yok)
+    · ?uye=0 · ?tema=koyu · ?calan=1
+  Kaynak: public gundem-takvimi.html, ekonomik-takvim.html, sinav-takvimi.html (etkinlik, saat, kurum, ayrıntı, önem, notlar aynen).
+  Varsayımlar (onaylanmadı): önem etiketi renkleri (Önemli ve Yüksek sarı, Orta gri; sınavda Sınav sarı, Sonuç yeşil); gün şeridinde seçim yokken bütün takvim görünür;
+  "Takvime ekle" telefonun takvimine ekler ve kısa bildirim gösterir; sınav takviminde gün şeridi yok (aylara yayılıyor).
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<link rel="stylesheet" href="../../kit/kit.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<script src="../../kit/kit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+(function(){
+  var e = document.getElementById('ekran'), Q = K.q, DUR = K.durum, I = K.I;
+  var TUR = ['ekonomik', 'sinav'].indexOf(Q.get('tur')) > -1 ? Q.get('tur') : 'gundem';
+  var IK = { 'Ekonomi': 'fa-chart-column', 'Siyaset': 'fa-landmark', 'Spor': 'fa-futbol', 'Toplum': 'fa-people-group', 'Dünya': 'fa-earth-europe', 'Ulaşım': 'fa-car', 'Sağlık': 'fa-heart-pulse',
+    'Eğitim': 'fa-graduation-cap', 'Çalışma hayatı': 'fa-briefcase', 'Türkiye': 'fa-flag', 'ABD': 'fa-earth-americas', 'Euro Bölgesi': 'fa-earth-europe' };
+  var ONEM = { 'Önemli': 'sari', 'Yüksek': 'sari', 'Orta': '', 'Sınav': 'sari', 'Sonuç': 'yesil', 'Başvuru': '', 'Tercih': '' };
+  var GUNAD = { 23: '23 Kasım Pazartesi', 24: '24 Kasım Salı', 25: '25 Kasım Çarşamba', 26: '26 Kasım Perşembe', 27: '27 Kasım Cuma', 28: '28 Kasım Cumartesi', 101: '1 Aralık Salı', 102: '2 Aralık Çarşamba', 103: '3 Aralık Perşembe', 104: '4 Aralık Cuma', 105: '5 Aralık Cumartesi' };
+  /* [grup (gün kodu ya da dönem), saat ya da tarih, konu, kurum, başlık, ayrıntı, önem, süzgeç] */
+  var T = {
+    /* kaynak: public gundem-takvimi.html "Önümüzdeki Günler" (23 Kasım – 4 Aralık) */
+    gundem: { baslik: 'Gündem Takvimi', aciklama: 'Önümüzdeki günlerin açıklama, toplantı ve etkinlik takvimi', geri: K.git('kesfet'), gunSerit: true,
+      suzgec: ['Tümü', 'Finans', 'Siyaset', 'Eğitim', 'Dünya', 'Spor', 'Toplum', 'Sağlık', 'Türkiye', 'Çalışma Hayatı'],
+      not: 'Takvim, kurumların duyurduğu tarihlere dayanır; değişiklik olursa güncellenir.',
+      X: [[23, '10.00', 'Ekonomi', 'TÜİK', 'Tüketici güven endeksi · Kasım', 'Önceki 84,1', 'Önemli', 'Finans'], [23, '14.00', 'Siyaset', 'TBMM', 'Genel Kurul\'da bütçe görüşmeleri', 'Bakanlık bütçeleri', 'Önemli', 'Siyaset'],
+        [24, '20.45', 'Spor', 'Şampiyonlar Ligi', 'Galatasaray – Atlético Madrid', '5. hafta', '', 'Spor'], [25, '10.00', 'Toplum', '', 'Kadına Yönelik Şiddete Karşı Uluslararası Mücadele Günü', 'Etkinlikler 81 ilde', 'Önemli', 'Toplum'],
+        [25, '14.00', 'Ekonomi', 'TCMB', 'Para Politikası Kurulu faiz kararı', 'Beklenti %42,50', 'Önemli', 'Finans'], [26, '10.00', 'Dünya', 'AB', 'Dışişleri Konseyi toplantısı', 'Brüksel', '', 'Dünya'],
+        [26, '20.00', 'Spor', 'Basketbol', 'Türkiye – Macaristan', 'Dünya Kupası elemeleri', '', 'Spor'], [101, '00.00', 'Ulaşım', '', 'Kış lastiği uygulaması başlıyor', 'Ticari araçlar için 1 Nisan\'a kadar', 'Önemli', 'Türkiye'],
+        [101, '09.00', 'Sağlık', '', 'Dünya AIDS Günü', 'Ücretsiz test noktaları açılıyor', '', 'Sağlık'], [102, '10.00', 'Eğitim', 'ÖSYM', '2027 YKS başvuru kılavuzu yayımlanıyor', 'Başvurular şubatta', '', 'Eğitim'],
+        [103, '10.00', 'Ekonomi', 'TÜİK', 'Kasım ayı enflasyon verisi', 'Önceki yıllık %31,2', 'Önemli', 'Finans'], [104, '11.00', 'Çalışma hayatı', '', 'Asgari Ücret Tespit Komisyonu ilk toplantısı', 'Ankara', 'Önemli', 'Çalışma Hayatı']] },
+    /* kaynak: public ekonomik-takvim.html "Bu Hafta" ve "Gelecek Hafta" (23 Kasım 2026, 08.30 itibarıyla) */
+    ekonomik: { baslik: 'Ekonomik Takvim', aciklama: 'Veri açıklamaları, faiz kararları ve piyasayı etkileyecek tarihler', geri: K.u('hibrit/liste.html', 'bolum=finans'), gunSerit: true,
+      suzgec: ['Tümü', 'Türkiye', 'ABD', 'Euro Bölgesi'],
+      not: 'Saatler Türkiye saatiyle. Beklenti, piyasa katılımcıları anketinin ortanca değeridir. Bu sayfadaki oran ve yorumlar yatırım danışmanlığı kapsamında değildir.',
+      X: [[23, '10.00', 'Türkiye', '', 'Tüketici Güven Endeksi · Kasım', 'Önceki 84,1 · Beklenti 85,0', 'Yüksek'], [23, '14.00', 'Türkiye', 'TCMB', 'Para Politikası Kurulu · Faiz kararı', 'Açıklandı %42,50 · Beklenti %42,50', 'Yüksek'],
+        [23, '15.30', 'ABD', '', 'Haftalık işsizlik başvuruları', 'Önceki 231 bin · Beklenti 228 bin', 'Orta'], [24, '10.00', 'Türkiye', '', 'Kapasite Kullanım Oranı · Kasım', 'Önceki %74,2 · Beklenti %74,5', 'Orta'],
+        [24, '18.00', 'ABD', '', 'Tüketici Güven Endeksi · Kasım', 'Önceki 98,7 · Beklenti 99,5', 'Orta'], [26, '16.30', 'ABD', '', 'Çekirdek PCE fiyat endeksi · Ekim', 'Önceki %2,7 · Beklenti %2,8', 'Yüksek'],
+        [27, '12.00', 'Euro Bölgesi', '', 'Öncü İmalat PMI', 'Önceki 49,8 · Beklenti 50,1', 'Orta'], [28, '10.00', 'Türkiye', '', 'Dış ticaret dengesi · Ekim', 'Önceki -6,9 milyar $ · Beklenti -6,4 milyar $', 'Orta'],
+        [101, '10.00', 'Türkiye', '', 'GSYH · 3. çeyrek (yıllık)', 'Önceki %4,8 · Beklenti %3,9', 'Yüksek'], [101, '10.00', 'Türkiye', '', 'İSO İmalat PMI · Kasım', 'Önceki 47,9 · Beklenti 48,3', 'Orta'],
+        [103, '10.00', 'Türkiye', '', 'TÜFE · Kasım (yıllık)', 'Önceki %32,9 · Beklenti %31,8', 'Yüksek'], [105, '16.30', 'ABD', '', 'Tarım dışı istihdam · Kasım', 'Önceki 142 bin · Beklenti 165 bin', 'Yüksek']] },
+    /* kaynak: public sinav-takvimi.html (ÖSYM 2027 sınav takvimi) */
+    sinav: { baslik: 'Sınav Takvimi', aciklama: 'ÖSYM sınavlarının başvuru, sınav ve sonuç tarihleri', geri: K.u('hibrit/liste.html', 'bolum=kampus'), gunSerit: false,
+      suzgec: ['Tümü', 'YKS', 'KPSS', 'ALES ve YDS'],
+      not: 'Tarihler ÖSYM\'nin yayımladığı 2027 sınav takvimine dayanır. Değişiklikler ÖSYM duyurularıyla güncellenir.',
+      X: [['Aralık 2026', 'Bugün', 'e-YDS', '23.59', '2026-e-YDS/12 İngilizce başvuruları', 'Son gün · Sınav 6 Ara', 'Başvuru', 'ALES ve YDS'], ['Aralık 2026', '1 Ara', 'KPSS', '10.00', 'KPSS-2026/7 tercih dönemi', 'Tercih 1–8 Ara · Sonuç 18 Ara', 'Tercih', 'KPSS'],
+        ['Aralık 2026', '6 Ara', 'e-YDS', '10.15', '2026-e-YDS/12 İngilizce sınavı', 'Sonuç 10 Ara', 'Sınav', 'ALES ve YDS'], ['Aralık 2026', '18 Ara', 'YÖKDİL', '14.00', '2026-YÖKDİL/2 sonuçları', 'Sonuçlar aday işlemleri sisteminde', 'Sonuç', 'ALES ve YDS'],
+        ['Ocak – Mart 2027', '26 Oca', 'YÖKDİL', '10.00', '2027-YÖKDİL/1 başvuruları', 'Başvuru 26 Oca–3 Şub · Sınav 21 Mar', 'Başvuru', 'ALES ve YDS'], ['Ocak – Mart 2027', '5 Şub', 'YKS', '10.00', '2027-YKS başvuruları', 'Başvuru 5–27 Şub · Geç başvuru 6–8 Mar', 'Başvuru', 'YKS'],
+        ['Ocak – Mart 2027', '14 Mar', 'YDS', '10.15', '2027-YDS/1 sınavı', 'Başvuru 10–18 Şub · Sonuç 2 Nis', 'Sınav', 'ALES ve YDS'], ['Nisan – Temmuz 2027', '3 May', 'KPSS', '10.00', '2027-KPSS Lisans başvuruları', 'Başvuru 3–12 May · Sınav 18 Tem', 'Başvuru', 'KPSS'],
+        ['Nisan – Temmuz 2027', '9 May', 'ALES', '10.15', '2027-ALES/1 sınavı', 'Başvuru 7–15 Nis · Sonuç 27 May', 'Sınav', 'ALES ve YDS'], ['Nisan – Temmuz 2027', '19 Haz', 'YKS', '10.15', 'YKS 1. oturum · TYT', 'AYT ve YDT 20 Haziran\'da', 'Sınav', 'YKS'],
+        ['Nisan – Temmuz 2027', '20 Haz', 'YKS', '10.15', 'YKS 2. ve 3. oturum · AYT, YDT', 'Sonuç 17 Tem', 'Sınav', 'YKS'], ['Nisan – Temmuz 2027', '18 Tem', 'KPSS', '10.15', '2027-KPSS Lisans GY-GK oturumu', 'ÖABT 19 Tem · Sonuç 12 Ağu', 'Sınav', 'KPSS']] }
+  }[TUR];
+
+  function ayrac(g){ if (TUR === 'sinav') return '<div class="k-ayrac"><span>' + g + '</span><span></span></div>';
+    var hafta = TUR === 'ekonomik' ? (g < 100 ? 'Bu hafta' : 'Gelecek hafta') : '';
+    return '<div class="k-ayrac" data-ayrac="' + g + '"><span>' + (g === 23 ? 'Bugün' : GUNAD[g]) + '</span><span>' + (g === 23 ? GUNAD[g] : hafta) + '</span></div>'; }
+  function satir(x, i){ var sinav = TUR === 'sinav', kat = x[2], kurum = sinav ? '' : x[3], sa = sinav ? (x[1] === 'Bugün' ? '23' : x[1].split(' ')[0]) : x[1];
+    var ust = '<span class="k-ustsatir">' + K.katEt(kat, sinav ? 'fa-graduation-cap' : IK[kat]) + (kurum ? '<span class="nk">·</span><span class="s">' + kurum + '</span>' : '') + (sinav ? '<span class="nk">·</span><span class="s">' + x[1] + ' · ' + x[3] + '</span>' : '') + '</span>';
+    return '<div class="k-cz' + (i === 0 ? ' ilk' : '') + '" data-gun="' + x[0] + '" data-f="' + (x[7] || kat) + '"><span class="sa">' + sa + '</span><span class="ci"></span><span class="no"></span><div><div>' + ust +
+      '<h3>' + x[4] + '</h3><div class="k-ab">' + K.meta([x[5]]) + (x[6] ? K.etiket(x[6], { tur: ONEM[x[6]] }) : '') + '</div></div>' +
+      K.ikonBtn({ ikon: 'fa-calendar-plus', etiket: 'Takvime ekle', secili: false, attr: 'data-takvim' }) + '</div></div>'; }
+  var dl = null, liste = T.X.map(function(x, i){ var a = x[0] !== dl ? ayrac(x[0]) : ''; dl = x[0]; return a + satir(x, i); }).join('');
+
+  var BOS = DUR === 'bos';
+  var bas = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>' + T.baslik + '</h1><p>' + T.aciklama + '</p></div>';
+  var gunler = T.gunSerit ? K.gunler({ secili: BOS ? 6 : -1 }) : '';
+  var suzgec = '<div class="k-ray s8" data-tek style="padding-top:var(--b-12)">' + T.suzgec.map(function(s, i){ return K.cip(s, { secili: i === 0, attr: 'data-suz="' + (i ? s : '') + '"' }); }).join('') + '</div>';
+  var not = '<p class="k-not">' + I('fa-circle-info') + '<span>' + T.not + '</span></p>';
+  var bosB = K.bos({ ikon: 'fa-calendar-day', baslik: 'Seçilen günde etkinlik yok', aciklama: 'Başka bir gün seç ya da bütün takvime bak.', eylem: { metin: 'Bütün takvim', tur: 'sade', attr: 'data-tum' } });
+
+  var hata = DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? 'cevrimdisi' : '';
+  if (DUR === 'yukleniyor') e.innerHTML = bas + gunler + '<div class="k-satirlar" style="padding-top:var(--b-16)">' + K.iskelet('satir', 5).replace(/<i class="k-isk" style="width:88px;height:88px"><\/i>/g, '<i class="k-isk daire" style="width:44px;height:44px;justify-self:end"></i>') + '</div><div class="k-son"></div>';
+  else if (hata) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: hata }) + '<div class="k-son"></div>';
+  else e.innerHTML = bas + gunler + suzgec + '<div data-liste' + (BOS ? ' hidden' : '') + '><div class="k-ic">' + liste + not + '</div></div><div data-bos' + (BOS ? '' : ' hidden') + '>' + bosB + '</div><div class="k-son"></div>';
+
+  var sg = e.querySelector('.k-gun[aria-selected="true"]'); if (sg) sg.parentNode.scrollLeft = sg.parentNode.scrollWidth;
+  K.ustCubuk({ geri: T.geri, baslik: T.baslik, buyuk: !hata, eylemler: ['paylas'] });
+  K.altCubuk('bolum');
+  K.oynatici();
+
+  /* süzgeç: gün (şeritten) ve konu (çiplerden); boşsa boş durum */
+  var gun = BOS ? 27 : null, konu = '';
+  function suz(){ var n = 0;
+    e.querySelectorAll('.k-cz').forEach(function(r){ var g = +r.getAttribute('data-gun'), v = (gun == null || g === gun) && (!konu || r.getAttribute('data-f') === konu); r.hidden = !v; if (v) n++; });
+    e.querySelectorAll('[data-ayrac]').forEach(function(a){ var g = +a.getAttribute('data-ayrac'); a.hidden = ![].some.call(e.querySelectorAll('.k-cz[data-gun="' + g + '"]'), function(r){ return !r.hidden; }); });
+    var l = e.querySelector('[data-liste]'), b = e.querySelector('[data-bos]'); if (l) { l.hidden = !n; b.hidden = !!n; } }
+  e.addEventListener('click', function(ev){ var t = ev.target, x;
+    if ((x = t.closest('.k-gun'))) { gun = +x.querySelector('b').textContent; suz(); }
+    if ((x = t.closest('[data-suz]'))) { konu = x.getAttribute('data-suz'); suz(); }
+    if (t.closest('[data-tum]')) { gun = null; konu = ''; e.querySelectorAll('.k-gun').forEach(function(g){ g.setAttribute('aria-selected', 'false'); }); suz(); }
+    if ((x = t.closest('[data-takvim]'))) { var on = x.getAttribute('aria-pressed') !== 'true'; x.setAttribute('aria-pressed', on);
+      if (on) K.toast('Takvimine eklendi', { tur: 'basari', ikon: 'fa-calendar-check', geriAl: true, eylemFn: function(){ x.setAttribute('aria-pressed', 'false'); } }); } });
+  if (DUR === 'cevrimdisi' && !hata) {
+    var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
+    bt.querySelector('button').classList.add('k-dk44');
+  }
+  document.addEventListener('click', function(ev){ var y = ev.target.closest('[data-yeniden]'); if (!y) return;
+    y.classList.add('is-yukleniyor'); y.innerHTML = I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
+    setTimeout(function(){ var q = new URLSearchParams(location.search); ['durum', 'hata', 'onbellek'].forEach(function(x){ q.delete(x); }); location.search = q.toString(); }, 1200); });
+})();
+</script>
+</body>
+</html>
