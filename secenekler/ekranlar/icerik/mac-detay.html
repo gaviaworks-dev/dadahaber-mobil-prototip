@@ -4,7 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=390,initial-scale=1">
 <title>Galatasaray – Fenerbahçe</title>
-<!-- Dada Haber Mobil · MAÇ DETAYI (E-399–E-406). Detay kökünden (kendi düzeni, kit bileşenleri): düz üst çubuk, skor kutusu (kit maç kutusu, her iki temada koyu), künye satırı.
+<!-- Dada Haber Mobil · MAÇ DETAYI (E-399–E-406). Detay kökünden (kendi düzeni, kit bileşenleri): düz üst çubuk, skor kutusu (kit maç kutusu, her iki temada koyu; maç başında
+     armalar büyük (K.arma l), arma üstte ad altta; takım → takım sayfası), künye satırı. Takımlar her yerde arma ile (puan tablosu s, son maçlar xs).
      Maç merkezi (Maçkolik tarzı yapı): yapışkan sekmeler (yerinde değişir, kaydırma değil; K18), altında maçla ilgili haberler (K44 satırı).
      Canlı (varsayılan): Anlatım · İstatistik · Kadrolar · Puan Durumu · Rekabet. Bitti (?durum=bitti): Özet (goller, maç haberi) · Kadrolar · Puan Durumu · Rekabet.
      Başlamadı (?durum=once): Kadrolar (ilk 11) · Rekabet · Puan Durumu. Puan Durumu: Süper Lig tablosu, iki takımın satırı vurgulu (maç öncesi, 13 hafta).
@@ -35,9 +36,8 @@
 .sp-lig-ac i{font-size:12px;transition:transform .2s}
 .sp-lig.kapali .sp-lig-ac i{transform:rotate(-90deg)}
 .sp-lig.kapali .sp-lig-l{display:none}
-/* KİT ADAYI: transfer satırı — kulüp kısaltması (puan tablosundaki daire), hareket, kulüp, durum etiketi (Resmî · Görüşme · Söylenti); satırın tamamı habere gider */
+/* KİT ADAYI: transfer satırı — kulüp arması (K.arma m), hareket, kulüp, durum etiketi (Resmî · Görüşme · Söylenti); satırın tamamı habere gider */
 .sp-tr{display:flex;align-items:center;gap:var(--b-12);min-height:68px;padding:var(--b-12) 0;border-bottom:1px solid var(--cizgi);color:inherit}
-.sp-tr .ar{width:40px;height:40px;flex:none;border-radius:var(--k-daire);display:grid;place-items:center;font-size:11px;font-weight:var(--y-kalin);color:#fff;background:var(--k-koyu)}
 .sp-tr .t{flex:1;min-width:0;display:flex;flex-direction:column;gap:var(--b-4)}
 .sp-tr b{font-size:15px;font-weight:var(--y-kalin);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .sp-tr small{font-size:12.5px;color:var(--metin-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -45,6 +45,9 @@
 /* yapışkan denetim bandı (branş segmenti + gün sekmeleri) */
 .sp-yapis{position:sticky;top:var(--k-ub-h);z-index:60;background:var(--zemin)}
 .sp-sw{padding:var(--b-12) var(--kenar) 0}
+/* maç başı: kit maç kutusunda büyük arma (l) üstte, ad altta (dar sütunda ad kısalmasın) */
+.md-kutu .k-mac .tk,.md-kutu .k-mac .tk.sag{flex-direction:column;justify-content:center;text-align:center;min-height:var(--dokun)}
+.md-kutu .k-mac .tk b{max-width:100%}
 </style>
 </head>
 <body>
@@ -91,19 +94,19 @@
 
   function kadro(ad, l){ return '<div class="k-ayrac"><span>' + ad + '</span><span>İlk 11</span></div>' + K.tablo({ sutunlar: ['Oyuncu', 'No', 'Mevki'], satirlar: l }); }
   function kadrolar(){ return kadro(m.ev, GS11) + kadro(m.dep, FB11); }
-  function sonMaclar(ad){ return '<div class="k-ayrac"><span>' + ad + '</span><span>Son 3 maç</span></div>' + SON[ad].map(function(x){ return K.skor({ dk: 'MS', ev: x[1], skor: x[2], dep: x[3], kazanan: x[4] }); }).join(''); }
+  function sonMaclar(ad){ return '<div class="k-ayrac"><span>' + ad + '</span><span>Son 3 maç</span></div>' + SON[ad].map(function(x){ return SPOR.skorHam({ dk: 'MS', ev: x[1], skor: x[2], dep: x[3], kazanan: x[4] }); }).join(''); }
   function bolum(bb, ic){ return '<section class="k-bl sik">' + K.bb(bb) + '<div class="k-ic">' + ic + '</div></section>'; }
   function haberler(l, bb){ return '<section class="k-bl sik">' + K.bb(bb) + '<div class="k-satirlar">' + l.map(function(h){ return K.satir(h); }).join('') + '</div></section>'; }
 
-  /* skor kutusu: kitin maç kutusu; sayfanın kendisi olduğu için bağlantısı kaldırılır */
-  var kutu = '<div class="k-ic" style="padding-top:var(--b-8)">' + K.mac({ hal: KIP === 'once' ? 'baslamadi' : KIP, saat: '14.45' }).replace(/ href="[^"]*"/, '') +
+  /* skor kutusu: kitin maç kutusu; sayfanın kendisi olduğu için bağlantı değil (div) */
+  var kutu = '<div class="k-ic md-kutu" style="padding-top:var(--b-8)">' + K.mac({ hal: KIP === 'once' ? 'baslamadi' : KIP, saat: '14.45' }).replace(/ href="[^"]*"/, '').replace(/^<a /, '<div ').replace(/<\/a>$/, '</div>').replace(/k-arma m\b/g, 'k-arma l') +
     K.meta(KIP === 'once' ? ['İstanbul', 'Hakem Cem Arıkan', 'Başlama 14.45'] : ['İstanbul', 'Hakem Cem Arıkan', '51.840 seyirci']) + '</div>';
 
   /* sekmeler: maç haline göre (Maçkolik tarzı maç merkezi) */
   var AD = { anlatim: 'Anlatım', istatistik: 'İstatistik', kadrolar: 'Kadrolar', puan: 'Puan Durumu', rekabet: 'Rekabet', ozet: 'Özet' };
   var SEK = KIP === 'canli' ? ['anlatim', 'istatistik', 'kadrolar', 'puan', 'rekabet'] : KIP === 'bitti' ? ['ozet', 'kadrolar', 'puan', 'rekabet'] : ['kadrolar', 'rekabet', 'puan'];
   var sk = Math.max(0, SEK.indexOf(Q.get('sekme')));
-  function puan(){ var t = SPOR.tablo('super-lig', m.evKod); t = t.replace(/<tr>(<td><span class="tk"><em>\d+<\/em><span class="ar">FB<\/span>)/, '<tr class="is-vurgu">$1');
+  function puan(){ var t = SPOR.tablo('super-lig', m.evKod);
     return '<div data-tablo>' + t + '</div><p class="k-not">' + K.I('fa-circle-info') + '<span>Süper Lig, 13 hafta sonunda · maç öncesi durum; ' + (KIP === 'bitti' ? 'maç sonucu işlenince güncellenir' : 'maç bitince güncellenir') + '</span></p>'; }
   function rekabet(){ return '<div style="padding-top:var(--b-16)">' + K.serit({ ikon: 'fa-circle-info', metin: 'Aralarındaki maçların listesi yok', alt: 'Karşılaşma geçmişi sitede tablo olarak yayımlanmıyor; özeti aşağıdaki haberde.' }) + '</div>' +
     '<div class="k-satirlar" style="margin:0 calc(-1 * var(--kenar))">' + K.satir(X[4]) + '</div>' + sonMaclar(m.ev) + sonMaclar(m.dep); }
@@ -128,6 +131,10 @@
 
   /* sekmeler yerinde değişir (kaydırma değil) */
   SPOR.tabloBagla(e.querySelector('[data-tablo]'), 'super-lig');
+  /* puan tablosunda iki takımın satırı vurgulu */
+  e.querySelectorAll('[data-tablo] tbody tr').forEach(function(tr){ var a = tr.querySelector('.tk'); a = a ? a.lastChild.textContent : ''; if (a === m.ev || a === m.dep) tr.classList.add('is-vurgu'); });
+  /* maç başında takım → takım sayfası */
+  e.querySelectorAll('.md-kutu .k-mac .tk').forEach(function(t){ var a = t.querySelector('b'), h = a && SPOR.takimHref(a.textContent); if (h) { t.setAttribute('data-href', h); t.setAttribute('role', 'link'); t.style.cursor = 'pointer'; } });
   e.addEventListener('click', function(ev){ var b = ev.target.closest('.sp-yapis .k-sekmeler button'); if (!b) return;
     var i = [].indexOf.call(b.parentNode.querySelectorAll('button'), b);
     e.querySelectorAll('[data-panel]').forEach(function(p){ p.hidden = +p.getAttribute('data-panel') !== i; }); });

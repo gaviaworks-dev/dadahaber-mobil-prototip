@@ -5,7 +5,9 @@
    Uydurma yok. Tarih kuralı: maç günü public fikstür, takım sayfası ya da haber tarihinden; tarihi sitede yazmayan maç (Avrupa kupalarının 4. haftası,
    Süper Lig 11-12. hafta, La Liga 14. hafta) yalnız lig ve takım sayfasında hafta adıyla görünür, gün şeridine girmez (gizli sıralama anahtarı).
    Haber satırı görselleri (K44 kural 8): haberin kendi görseli sözlükte yok; konusuna en yakın anahtar (futbol: superlig, antrenman, milli; basketbol: basket;
-   voleybol: voleybol). Tenis ve e-spor haberine uygun görsel yok → yazı satırı. */
+   voleybol: voleybol). Tenis ve e-spor haberine uygun görsel yok → yazı satırı.
+   TAKIM ARMASI (Yasin Bey, 25 Kasım): harfli daire kalktı; skor satırı, puan tablosu, transfer satırı kitteki tek bileşenle (K.arma; tablo s, skor satırı xs,
+   transfer m). Kişiler (tenis oyuncuları) takım değildir → arma yok. Skor satırında armanın yerleşimi kitte yok → aşağıdaki KİT ADAYI biçimi (spor-css). */
 (function(){
   var AY = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
   var GUN = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'], GK = ['Paz', 'Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt'];
@@ -142,6 +144,8 @@
       ['SAM', 'Samsunspor', 'Kanat transferi resmîleşti', 'Resmî'], ['GÖZ', 'Göztepe', 'Stoper için görüşme sürüyor', 'Görüşme'], ['BAŞ', 'Başakşehir', 'Orta sahayla sözleşme uzadı', 'Resmî'], ['KON', 'Konyaspor', 'Forvet için Almanya iddiası', 'Söylenti']],
     basketbol: [['FBB', 'Fenerbahçe Beko', 'Fenerbahçe Beko\'ya yeni uzun oyuncu', 'Görüşme'], ['AEF', 'Anadolu Efes', 'Anadolu Efes guard rotasyonu için imza attı', 'Resmî'], ['BJK', 'Beşiktaş', 'Beşiktaş kısa süreli sözleşmeyle pivot aldı', 'Resmî'], ['TTK', 'Türk Telekom', 'Türk Telekom\'da başantrenör için iki aday', 'Söylenti']],
     voleybol: [['VKF', 'VakıfBank', 'VakıfBank\'a ara transferde pasör takviyesi', 'Görüşme'], ['FEN', 'Fenerbahçe Medicana', 'Fenerbahçe Medicana orta oyuncuyla sözleşme uzattı', 'Resmî'], ['HAL', 'Halkbank', 'Halkbank\'ta yabancı smaçörle yollar ayrıldı', 'Resmî'], ['ECZ', 'Eczacıbaşı', 'Eczacıbaşı libero için Avrupa\'dan iki ismi izliyor', 'Söylenti']],
+    /* kaynak: public super-lig.html "Transfer" kutusu (4 hareket) */
+    'super-lig': [['FB', 'Fenerbahçe', 'Orta saha için Portekiz\'den teklif', 'Görüşme'], ['GS', 'Galatasaray', 'Sol bek transferinde imzalar atıldı', 'Resmî'], ['TS', 'Trabzonspor', 'Genç forvet kiralık gönderildi', 'Resmî'], ['BJK', 'Beşiktaş', 'Kaleci için iki aday listede', 'Söylenti']],
     avrupa: [['RMA', 'Real Madrid', 'Real Madrid sağ bek için ocak ayını bekliyor', 'Söylenti'], ['MUN', 'Manchester United', 'Manchester United orta saha transferini açıkladı', 'Resmî'], ['JUV', 'Juventus', 'Juventus forvet için Premier Lig\'den teklif aldı', 'Görüşme'], ['BAY', 'Bayern München', 'Bayern genç stoperin sözleşmesini uzattı', 'Resmî']]
   };
   var TDURUM = { 'Resmî': ['fa-file-signature', 'yesil'], 'Görüşme': ['fa-handshake', 'sari'], 'Söylenti': ['fa-comment-dots', ''] };
@@ -226,16 +230,32 @@
       ['Transfer', 'Trabzonspor genç forvetini sezon sonuna kadar kiraladı', 'Gizem Aktaş', '2 dk', '9,6 B', '07.20'], ['Altyapı', 'Trabzonspor altyapısından üç oyuncu A takıma yükseldi', 'Burak Tan', '3 dk', '6,7 B', '22 Kas'],
       ['Sağlık', 'Trabzonspor\'da sakat oyuncuların dönüş tarihi netleşti', 'Gizem Aktaş', '2 dk', '4,8 B', '22 Kas'], ['Tesis', 'Kulüp tesislerinde zemin yenileme tamamlandı', 'Burak Tan', '3 dk', '14,2 B', '22 Kas'],
       ['Kadın futbolu', 'Kadın takımı Süper Lig\'de ikinci sıraya yükseldi', 'Emre Sönmez', '4 dk', '9,6 B', '21 Kas'], ['Kulüp', 'Trabzonspor kombine satışlarını ikinci yarı için açtı', 'Burak Tan', '2 dk', '8,1 B', '21 Kas']]),
+    /* kaynak: public takimlar.html "Tüm Takım Haberleri" (8) */
     takimlar: H([['Galatasaray', 'Galatasaray derbi öncesi son antrenmanını yaptı', 'Burak Tan', '3 dk', '14,2 B', '15.10'], ['Fenerbahçe', 'Fenerbahçe\'de iki oyuncu sağlık kontrolünden geçti', 'Burak Tan', '4 dk', '9,6 B', '10.45'],
-      ['Beşiktaş', 'Beşiktaş\'ta yeni stadyum yönetimi göreve başladı', 'Burak Tan', '3 dk', '8,1 B', '14.00'], ['Trabzonspor', 'Trabzonspor altyapısından üç oyuncu A takıma yükseldi', 'Burak Tan', '3 dk', '6,7 B', '22 Kas']])
+      ['Beşiktaş', 'Beşiktaş\'ta yeni stadyum yönetimi göreve başladı', 'Burak Tan', '3 dk', '8,1 B', '14.00'], ['Trabzonspor', 'Trabzonspor altyapısından üç oyuncu A takıma yükseldi', 'Burak Tan', '3 dk', '6,7 B', '22 Kas'],
+      ['Samsunspor', 'Samsunspor\'da ikinci yarı kombine satışları başladı', 'Gizem Aktaş', '5 dk', '5,9 B', '22 Kas'], ['Göztepe', 'Göztepe yeni antrenman tesisinin temelini attı', 'Gizem Aktaş', '2 dk', '4,8 B', '22 Kas'],
+      ['Kocaelispor', 'Kocaelispor\'un teknik ekibine yardımcı antrenör katıldı', 'Gizem Aktaş', '3 dk', '3,6 B', '21 Kas'], ['Eyüpspor', 'Eyüpspor kadın futbol takımı kuracağını açıkladı', 'Emre Sönmez', '4 dk', '2,9 B', '21 Kas']]),
+    /* kaynak: public puan-durumu.html "Tüm Lig Haberleri" (8) */
+    'puan-durumu': H([['Süper Lig', 'Süper Lig\'de 13 hafta sonunda zirvede fark iki puan', 'Murat Tekin', '5 dk', '14,2 B', '10.30'], ['Süper Lig', 'Küme düşme hattında üç takımı iki puan ayırıyor', 'Emre Sönmez', '2 dk', '4,8 B', '10.50'],
+      ['Basketbol', 'Fenerbahçe Beko tek mağlubiyetle liderliğini sürdürüyor', 'Gizem Aktaş', '3 dk', '3,6 B', '15.45'], ['Voleybol', 'Sultanlar Ligi\'nde VakıfBank namağlup ilerliyor', 'Murat Tekin', '4 dk', '2,9 B', '22 Kas'],
+      ['1. Lig', '1. Lig\'de ilk iki sıra için dört takım yarışıyor', 'Burak Tan', '3 dk', '14,2 B', '22 Kas'], ['Premier Lig', 'Premier Lig\'de Arsenal üç puan önde', 'Burak Tan', '4 dk', '9,6 B', '22 Kas'],
+      ['Kural', 'Süper Lig\'de puan eşitliğinde ikili averaj uygulanıyor', 'Gizem Aktaş', '2 dk', '8,1 B', '21 Kas'], ['Efeler Ligi', 'Efeler Ligi\'nde ilk dört sıra iki puanlık aralıkta', 'Gizem Aktaş', '3 dk', '6,7 B', '21 Kas']]),
+    /* kaynak: public fikstur.html "Maç Önü Haberleri" (8) */
+    fikstur: H([['15. hafta', 'Süper Lig\'de 15. hafta cuma akşamı Kayseri\'de başlıyor', 'Emre Sönmez', '2 dk', '14,2 B', '09.55'], ['Fenerbahçe', 'Fenerbahçe–Trabzonspor maçının bilet satışı başladı', 'Murat Tekin', '3 dk', '3,6 B', '07.50'],
+      ['Galatasaray', 'Başakşehir–Galatasaray maçı için güvenlik toplantısı yapıldı', 'Burak Tan', '4 dk', '2,9 B', '08.10'], ['Türkiye Kupası', 'Türkiye Kupası grup aşaması kurası yapıldı', 'Burak Tan', '3 dk', '14,2 B', '22 Kas'],
+      ['Beşiktaş', 'Beşiktaş Samsunspor maçına iki eksikle hazırlanıyor', 'Gizem Aktaş', '4 dk', '9,6 B', '22 Kas'], ['TFF', 'Ocak ayı fikstüründe Avrupa kupası haftaları için düzenleme yapıldı', 'Gizem Aktaş', '2 dk', '8,1 B', '22 Kas'],
+      ['Konyaspor', 'Konyaspor–Kasımpaşa maçı pazartesi akşamı oynanacak', 'Murat Tekin', '3 dk', '6,7 B', '21 Kas'], ['Antalyaspor', 'Antalya\'da yağış uyarısı sonrası zemin kontrolü yapıldı', 'Emre Sönmez', '5 dk', '5,9 B', '21 Kas']])
   };
   /* bölüm başına haber toplamı (public sayfaların "n haber bu bölümde" sayısı) */
-  var TOPLAM = { futbol: 186, basketbol: 142, voleybol: 118, avrupa: 210, milli: 74, transfer: 136, canli: 312, 'super-lig': 164 };
+  var TOPLAM = { futbol: 186, basketbol: 142, voleybol: 118, avrupa: 210, milli: 74, transfer: 136, canli: 312, 'super-lig': 164, takimlar: 164, 'puan-durumu': 128, fikstur: 96 };
 
   /* ---------- yardımcılar ---------- */
   function kazanan(m){ if (m.hal !== 'm') return null; var p = m.skor.split(' – '); return +p[0] > +p[1] ? 'ev' : +p[0] < +p[1] ? 'dep' : null; }
   /* takım adı iç span'da: uzun ad kitin skor satırında üç noktayla kısalır */
-  function skor(m, o){ o = o || {}; return K.skor({ dk: m.hal === 'b' ? m.dk : m.dk, ev: '<span>' + m.ev + '</span>', dep: '<span>' + m.dep + '</span>', skor: m.skor, canli: m.hal === 'c', kazanan: kazanan(m) }); }
+  function skor(m, o){ return skorHam({ dk: m.dk, ev: m.ev, dep: m.dep, skor: m.skor, canli: m.hal === 'c', kazanan: kazanan(m), kisi: m.lig === 'davis' }); }
+  /* kitin skor satırı + arma: ev armadan önce ad, deplasman armadan sonra ad (arma skora bakar); kişi (tenis) armasız */
+  function skorHam(o){ var a = function(ad){ return o.kisi ? '' : K.arma(ad, 'xs'); };
+    return K.skor({ dk: o.dk, ev: '<span>' + o.ev + '</span>' + a(o.ev), dep: a(o.dep) + '<span>' + o.dep + '</span>', skor: o.skor, canli: o.canli, kazanan: o.kazanan }); }
   function ligHref(k){ var l = LIG[k]; if (!l || l.b === 'diger') return ''; if (l.milli) return K.u('ekranlar/icerik/milli-takim.html'); return K.u('ekranlar/icerik/lig.html', 'lig=' + k); }
   function takimHref(ad){ return SAYFA[ad] ? K.u('ekranlar/icerik/takim.html', 'takim=' + SAYFA[ad]) : ''; }
   function sirala(l, ters){ return l.slice().sort(function(a, b){ return ters ? b.t - a.t : a.t - b.t; }); }
@@ -261,14 +281,18 @@
       if (o.gor && o.gor !== 'genel') t.sort(function(a, b){ return (3 * b.G + b.B) - (3 * a.G + a.B) || (b.A - b.Y) - (a.A - a.Y) || b.A - a.A; });
       if (o.ilk) t = t.slice(0, o.ilk); return K.puanTablosu(t, vurgu); }
     var v = -1, R = (o.ilk ? T.slice(0, o.ilk) : T).map(function(x, i){ if (x[1] === vurgu) v = i; var av = x[5] - x[6];
-      return ['<span class="tk"><em>' + (i + 1) + '</em><span class="ar">' + x[1] + '</span>' + x[0] + '</span>', x[2], x[3], x[4], (av > 0 ? '+' : '') + av, x[7]]; });
+      return ['<span class="tk"><em>' + (i + 1) + '</em>' + K.arma(x[0], 's', x[1]) + x[0] + '</span>', x[2], x[3], x[4], (av > 0 ? '+' : '') + av, x[7]]; });
     return K.tablo({ sutunlar: ['Takım', 'O', 'G', 'M', 'AV', 'P'], satirlar: R, vurgu: v, sonKalin: true }); }
   /* puan tablosunda satır → takım sayfası (yalnız sayfası olan dört kulüp; futbol tablolarında) */
   function tabloBagla(kap, k){ if (!kap || LIG[k].b !== 'futbol') return; kap.querySelectorAll('tbody tr').forEach(function(tr){ var ad = tr.querySelector('.tk'); ad = ad ? ad.lastChild.textContent : '';
       var h = takimHref(ad); if (h) { tr.setAttribute('data-href', h); tr.style.cursor = 'pointer'; } }); }
+  /* aynı sayfanın sekmesine giden bağlantı (?sekme=x): sekmeli ekranda yerinde açılır; href gerçek adres kalır (ölü bağlantı yok) */
+  function sekmeHref(yol, ek, sekme){ return K.u(yol, (ek ? ek + '&' : '') + 'sekme=' + sekme); }
+  function sekmeYakala(e, ac){ e.addEventListener('click', function(ev){ var a = ev.target.closest('a[href*="sekme="]'); if (!a) return;
+    var u = new URL(a.href, location.href); if (u.pathname !== location.pathname) return; ev.preventDefault(); ac(u.searchParams.get('sekme')); }); }
   /* transfer satırı (KİT ADAYI sp-tr) */
   function transfer(r){ var d = TDURUM[r[3]];
-    return '<a class="sp-tr" href="' + K.git('detay') + '"><span class="ar">' + r[0] + '</span><span class="t"><b>' + r[2] + '</b><small>' + r[1] + '</small></span>' + K.etiket(r[3], { tur: d[1], ikon: d[0] }) + '</a>'; }
+    return '<a class="sp-tr" href="' + K.git('detay') + '">' + K.arma(r[1], 'm', r[0]) + '<span class="t"><b>' + r[2] + '</b><small>' + r[1] + '</small></span>' + K.etiket(r[3], { tur: d[1], ikon: d[0] }) + '</a>'; }
   function haberler(l){ return '<div class="k-satirlar">' + l.map(function(h){ return K.satir(h); }).join('') + '</div>'; }
   /* takımın maçları (futbol) */
   function takimMaclari(ad){ return M.filter(function(m){ return m.b === 'futbol' && (m.ev === ad || m.dep === ad); }); }
@@ -278,5 +302,9 @@
 
   window.SPOR = { BUGUN: BUGUN, LIG: LIG, SIRA: SIRA, BRANS: BRANS, M: M, TAKIM: TAKIM, SAYFA: SAYFA, TRANSFER: TRANSFER, TDURUM: TDURUM, HABER: HABER, TOPLAM: TOPLAM,
     tarih: tarih, gunKisa: gunKisa, ligIkon: ligIkon, skor: skor, kazanan: kazanan, ligHref: ligHref, takimHref: takimHref, sirala: sirala, ligGrup: ligGrup, ligGruplari: ligGruplari,
-    gunListe: gunListe, tablo: tablo, tabloBagla: tabloBagla, transfer: transfer, haberler: haberler, takimMaclari: takimMaclari };
+    gunListe: gunListe, tablo: tablo, tabloBagla: tabloBagla, transfer: transfer, haberler: haberler, takimMaclari: takimMaclari, skorHam: skorHam, sekmeHref: sekmeHref, sekmeYakala: sekmeYakala };
+  /* KİT ADAYI: skor satırında arma (kitin K.skor'unda takım hücresi yalnız metin). Ad kısalırsa arma kırpılmaz; ev hücresi sağa, deplasman sola yaslı. */
+  var css = '.k-skor .ev,.k-skor .dp{display:flex;align-items:center;gap:var(--ikon-bosluk);min-width:0}.k-skor .ev{justify-content:flex-end}' +
+    '.k-skor .ev>span:not(.k-arma),.k-skor .dp>span:not(.k-arma){min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}';
+  var st = document.createElement('style'); st.id = 'spor-css'; st.textContent = css; document.head.appendChild(st);
 })();

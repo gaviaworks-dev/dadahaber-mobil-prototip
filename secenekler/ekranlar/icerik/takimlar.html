@@ -4,11 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=390,initial-scale=1">
 <title>Takımlar</title>
-<!-- Dada Haber Mobil · TAKIMLAR (E-388–E-391). Liste kökünden: büyük başlık, Süper Lig'in 18 takımı ızgarada (kit takım hücresi), üyenin takımı işaretli (Galatasaray);
+<!-- Dada Haber Mobil · TAKIMLAR (E-388–E-391). Liste kökünden: görselli banner (K43, K.banner), Süper Lig'in 18 takımı ızgarada (kit takım hücresi, K.arma l), üyenin takımı işaretli (Galatasaray);
      misafirde üstte "Takımını seç · Giriş yap" çağrısı, işaret yok. Sayfası olan dört kulübün (public'te bağlantılı: Galatasaray, Fenerbahçe, Beşiktaş, Trabzonspor)
-     hücresi takım sayfasını (takim.html?takim=…) açar; öteki 14 takımın sitede sayfası yok → hücre Süper Lig puan durumunu o takımın satırı vurgulu açar (lig.html?vurgu=KOD). Altta Kulüp Gündemi (K44 satırı).
+     hücresi takım sayfasını (takim.html?takim=…) açar; öteki 14 takımın sitede sayfası yok → hücre Süper Lig puan durumunu o takımın satırı vurgulu açar (lig.html?vurgu=KOD).
+     Site sırası (public takimlar.html: banner → Takımlar → Tüm Takım Haberleri): ızgaranın ardından Takım Haberleri (sitedeki 8 haber, K44 satırı).
      Sorgu: ?uye=0 · ?durum=yukleniyor | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0)
-     Veri: sözlük puan_tablosu takımları ve kodları (public takimlar.html ile aynı sıra). -->
+     Veri: sözlük puan_tablosu takımları ve kodları (public takimlar.html ile aynı sıra); haberler spor.js (public takimlar.html). -->
 <link rel="stylesheet" href="../../_ortak/cerceve.css">
 <link rel="stylesheet" href="../../_ortak/marka.css">
 <link rel="stylesheet" href="../../kit/kit.css">
@@ -32,7 +33,7 @@
   var bas = '<div class="k-bbas"><h1>Takımlar</h1><p>Süper Lig · 2026-27 · kulüp sayfaları ve haberleri</p></div>';
   var govde = (K.uye ? '' : '<div class="k-ic">' + K.cagri({ ikon: 'fa-futbol', baslik: 'Takımını seç', aciklama: 'Takımının maçları ve haberleri ana sayfanda öne çıksın.', eylem: { metin: 'Giriş yap', href: K.git('giris') } }) + '</div>') +
     '<section class="k-bl sik">' + K.bb({ baslik: 'Süper Lig', ikon: 'fa-futbol', sayi: T.length, not: K.uye ? 'İşaretli: takımın' : '' }) + '<div class="k-ic">' + izgara + '</div></section>' +
-    '<section class="k-bl">' + K.bb({ baslik: 'Kulüp Gündemi', ikon: 'fa-newspaper', sayi: 164 }) + SPOR.haberler(SPOR.HABER.takimlar) + '</section>';
+    '<section class="k-bl">' + K.bb({ baslik: 'Takım Haberleri', ikon: 'fa-newspaper', sayi: SPOR.TOPLAM.takimlar, not: 'En yeni' }) + SPOR.haberler(SPOR.HABER.takimlar) + '</section>';
 
   var DUZ = DUR === 'hata' || DUR === 'bulunamadi' || (DUR === 'cevrimdisi' && Q.get('onbellek') === '0');
   if (DUR === 'yukleniyor') e.innerHTML = '<div class="k-ust-bosluk"></div>' + bas + '<div class="k-ic" style="padding-top:var(--b-16)">' + K.iskelet('metin', 16) + '</div><div class="k-son"></div>';

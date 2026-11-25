@@ -9,6 +9,7 @@
      Son Hareketler (transfer satırı: kulüp kısaltması, hareket, kulüp, durum etiketi → haber), Transfer Haberleri (K44 satırı).
      Sorgu: ?brans=futbol|basketbol|voleybol|avrupa · ?suz=tumu|resmi|gorusme|soylenti · ?uye=0 (fark yok)
             ?durum=yukleniyor | yenileniyor (&hal=cekiliyor|birak|bitti) | bos (süzgeçte hareket yok) | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0)
+     Transfer satırında kulüp arması (K.arma m; harfli daire kalktı). Site sırası (banner → Transfer → Tüm Transfer Haberleri) zaten aynı.
      Veri: spor.js (public transfer.html: 8 hareket ve haberler; basketbol, voleybol, avrupa-ligleri sayfalarının Transfer kutuları). Sitede oyuncu adı ve bonservis yok; satırda olmayan bilgi yazılmadı. -->
 <link rel="stylesheet" href="../../_ortak/cerceve.css">
 <link rel="stylesheet" href="../../_ortak/marka.css">
@@ -31,9 +32,8 @@
 .sp-lig-ac i{font-size:12px;transition:transform .2s}
 .sp-lig.kapali .sp-lig-ac i{transform:rotate(-90deg)}
 .sp-lig.kapali .sp-lig-l{display:none}
-/* KİT ADAYI: transfer satırı — kulüp kısaltması (puan tablosundaki daire), hareket, kulüp, durum etiketi (Resmî · Görüşme · Söylenti); satırın tamamı habere gider */
+/* KİT ADAYI: transfer satırı — kulüp arması (K.arma m), hareket, kulüp, durum etiketi (Resmî · Görüşme · Söylenti); satırın tamamı habere gider */
 .sp-tr{display:flex;align-items:center;gap:var(--b-12);min-height:68px;padding:var(--b-12) 0;border-bottom:1px solid var(--cizgi);color:inherit}
-.sp-tr .ar{width:40px;height:40px;flex:none;border-radius:var(--k-daire);display:grid;place-items:center;font-size:11px;font-weight:var(--y-kalin);color:#fff;background:var(--k-koyu)}
 .sp-tr .t{flex:1;min-width:0;display:flex;flex-direction:column;gap:var(--b-4)}
 .sp-tr b{font-size:15px;font-weight:var(--y-kalin);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .sp-tr small{font-size:12.5px;color:var(--metin-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}

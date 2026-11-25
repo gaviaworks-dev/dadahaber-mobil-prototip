@@ -4,10 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=390,initial-scale=1">
 <title>Fikstür</title>
-<!-- Dada Haber Mobil · FİKSTÜR (E-383–E-387). Liste kökünden: büyük başlık, hafta seçici (segment; dokununca yerinde değişir), gün ayraçları, skor satırları
-     (oynanan: skor, kazanan kalın · canlı: dakika kırmızı, koyu skor · oynanmayan: saat ve "–"). Bugün ayracı işaretli.
+<!-- Dada Haber Mobil · FİKSTÜR (E-383–E-387). Liste kökünden: görselli banner (K43, K.banner), hafta seçici (segment; dokununca yerinde değişir), gün ayraçları, skor satırları
+     (takımlar arma ile, K.arma xs; oynanan: skor, kazanan kalın · canlı: dakika kırmızı, koyu skor · oynanmayan: saat ve "–"; satır → maç detayı). Bugün ayracı işaretli.
+     Site sırası (public fikstur.html: banner → Fikstür → Maç Önü Haberleri): programın ardından Maç Önü Haberleri (sitedeki 8 haber, K44 satırı).
      Sorgu: ?hafta=13|14|15|16 (varsayılan 14, içinde bulunulan hafta) · ?durum=yukleniyor | bos | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0)
-     Veri: public fikstur.html (Süper Lig 2026-27, 13–16. hafta). -->
+     Veri: spor.js (public fikstur.html: Süper Lig 2026-27, 13–16. hafta, günleriyle; haberler public fikstur.html). -->
 <link rel="stylesheet" href="../../_ortak/cerceve.css">
 <link rel="stylesheet" href="../../_ortak/marka.css">
 <link rel="stylesheet" href="../../kit/kit.css">
@@ -15,38 +16,20 @@
 <script src="../../_ortak/cerceve.js"></script>
 <script src="../../_ortak/icerik-ek.js"></script>
 <script src="../../kit/kit.js"></script>
+<script src="spor.js"></script>
 </head>
 <body>
 <div class="ekran" id="ekran"></div>
 <script>
 (function(){
   var Q = K.q, DUR = K.durum, e = document.getElementById('ekran');
-  /* kaynak: public fikstur.html · gün → [saat ya da dakika, ev, skor ("–" oynanmadı), deplasman] */
-  var F = {
-    13: [['Cuma 13 Kasım', [['20.00', 'Samsunspor', '1 – 0', 'Antalyaspor']]],
-         ['Cumartesi 14 Kasım', [['14.30', 'Konyaspor', '2 – 1', 'Rizespor'], ['17.00', 'Beşiktaş', '2 – 2', 'Trabzonspor'], ['20.00', 'Fenerbahçe', '3 – 1', 'Göztepe']]],
-         ['Pazar 15 Kasım', [['14.30', 'Alanyaspor', '0 – 0', 'Kasımpaşa'], ['17.00', 'Başakşehir', '2 – 1', 'Amedspor'], ['19.00', 'Kayserispor', '0 – 3', 'Galatasaray']]],
-         ['Pazartesi 16 Kasım', [['19.00', 'Kocaelispor', '1 – 1', 'Eyüpspor'], ['20.00', 'Gaziantep FK', '2 – 0', 'Gençlerbirliği']]]],
-    14: [['Cuma 20 Kasım', [['20.00', 'Rizespor', '1 – 0', 'Kocaelispor']]],
-         ['Cumartesi 21 Kasım', [['14.30', 'Gaziantep FK', '2 – 2', 'Alanyaspor'], ['17.00', 'Trabzonspor', '1 – 1', 'Başakşehir'], ['20.00', 'Samsunspor', '2 – 0', 'Göztepe']]],
-         ['Pazar 22 Kasım', [['14.30', 'Amedspor', '1 – 0', 'Kayserispor'], ['17.00', 'Eyüpspor', '0 – 2', 'Beşiktaş'], ['20.00', 'Gençlerbirliği', '1 – 3', 'Antalyaspor']]],
-         ['Pazartesi 23 Kasım', [['67\'', 'Galatasaray', '2 – 1', 'Fenerbahçe', 1], ['20.00', 'Kasımpaşa', '–', 'Konyaspor']]]],
-    15: [['Cuma 27 Kasım', [['20.00', 'Kayserispor', '–', 'Rizespor']]],
-         ['Cumartesi 28 Kasım', [['14.30', 'Gençlerbirliği', '–', 'Kocaelispor'], ['17.00', 'Beşiktaş', '–', 'Samsunspor'], ['20.00', 'Fenerbahçe', '–', 'Trabzonspor']]],
-         ['Pazar 29 Kasım', [['14.30', 'Göztepe', '–', 'Eyüpspor'], ['17.00', 'Antalyaspor', '–', 'Amedspor'], ['19.00', 'Başakşehir', '–', 'Galatasaray']]],
-         ['Pazartesi 30 Kasım', [['19.00', 'Alanyaspor', '–', 'Gaziantep FK'], ['20.00', 'Konyaspor', '–', 'Kasımpaşa']]]],
-    16: [['Cuma 4 Aralık', [['20.00', 'Trabzonspor', '–', 'Göztepe']]],
-         ['Cumartesi 5 Aralık', [['14.30', 'Kocaelispor', '–', 'Kayserispor'], ['17.00', 'Eyüpspor', '–', 'Alanyaspor'], ['20.00', 'Galatasaray', '–', 'Konyaspor']]],
-         ['Pazar 6 Aralık', [['14.30', 'Rizespor', '–', 'Gençlerbirliği'], ['17.00', 'Amedspor', '–', 'Gaziantep FK'], ['19.00', 'Samsunspor', '–', 'Fenerbahçe']]],
-         ['Pazartesi 7 Aralık', [['19.00', 'Kasımpaşa', '–', 'Başakşehir'], ['20.00', 'Antalyaspor', '–', 'Beşiktaş']]]]
-  };
+  var S = SPOR;
   var H = [13, 14, 15, 16], hafta = H.indexOf(+Q.get('hafta')) > -1 ? +Q.get('hafta') : 14, BOS = DUR === 'bos';
-  function kz(s){ var p = s.split(' – '); if (p.length < 2) return null; return +p[0] > +p[1] ? 'ev' : +p[0] < +p[1] ? 'dep' : null; }
   function program(h){
     if (BOS) return K.bos({ ikon: 'fa-calendar-day', baslik: 'Bu hafta maç yok', aciklama: 'Haftanın programı açıklanınca maçlar burada görünür.', eylem: { metin: 'Sıradaki haftaya geç', ikon: 'fa-arrow-right', tur: 'sade', attr: 'data-ileri' } });
-    return '<div class="k-ic">' + F[h].map(function(g){ var bugun = g[0] === 'Pazartesi 23 Kasım', n = g[1].length;
-      return '<div class="k-ayrac"><span>' + g[0] + '</span><span>' + (bugun ? 'Bugün · ' : '') + n + ' maç</span></div>' +
-        g[1].map(function(m){ return K.skor({ dk: m[0], ev: m[1], skor: m[2], dep: m[3], canli: !!m[4], kazanan: m[4] ? null : kz(m[2]) }); }).join(''); }).join('') + '</div>'; }
+    var l = S.sirala(S.M.filter(function(m){ return m.lig === 'super-lig' && m.hafta === h + '. hafta' && !m.gizli; }));
+    return '<div class="k-ic">' + S.gunListe(l) + '</div>'; }
+  var haber = '<section class="k-bl">' + K.bb({ baslik: 'Maç Önü Haberleri', ikon: 'fa-newspaper', sayi: S.TOPLAM.fikstur, not: 'En yeni' }) + S.haberler(S.HABER.fikstur) + '</section>';
 
   var bas = '<div class="k-bbas"><h1>Fikstür</h1><p>Süper Lig · 2026-27</p></div>';
   var sec = '<div class="k-segment-kap">' + K.segment(H.map(function(x){ return x + '. hafta'; }), H.indexOf(hafta)) + '</div>';
@@ -54,7 +37,7 @@
   var DUZ = DUR === 'hata' || DUR === 'bulunamadi' || (DUR === 'cevrimdisi' && Q.get('onbellek') === '0');
   if (DUR === 'yukleniyor') e.innerHTML = '<div class="k-ust-bosluk"></div>' + bas + sec + '<div class="k-ic">' + K.iskelet('metin', 14) + '</div><div class="k-son"></div>';
   else if (DUZ) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: DUR === 'bulunamadi' ? 'bulunamadi' : DUR === 'cevrimdisi' ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') }) + '<div class="k-son"></div>';
-  else e.innerHTML = '<div class="k-ust-bosluk"></div>' + bas + sec + '<div data-program>' + program(hafta) + '</div><div class="k-son"></div>';
+  else e.innerHTML = '<div class="k-ust-bosluk"></div>' + bas + sec + '<div data-program>' + program(hafta) + '</div>' + haber + '<div class="k-son"></div>';
 
   K.ustCubuk({ geri: true, baslik: 'Fikstür', buyuk: !DUZ, eylemler: DUZ ? [] : [{ ikon: 'fa-ranking-star', etiket: 'Puan durumu', href: K.git('puanDurumu') }] });
   K.altCubuk('bolum');

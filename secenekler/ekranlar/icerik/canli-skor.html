@@ -10,6 +10,7 @@
      (üye: takımın canlı maçı; misafir: Takımını seç · Giriş yap). Altta Maç Haberleri.
      Sorgu: ?gun=dun|bugun|yarin|20…29 (Kasım günü) · ?spor=futbol|basketbol|voleybol|diger · ?suz=tumu|canli|biten|baslayacak|takip · ?uye=0 misafir
             ?durum=yukleniyor | yenileniyor (&hal=cekiliyor|birak|bitti) | bos (şu an canlı maç yok; günün maçları) | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0)
+     Takımlar arma ile (K.arma: skor satırı xs, Takımların maç kutusu kitten); tenis oyuncuları kişi → arma yok. Site sırası (banner → Canlı Maçlar ve Son Skorlar → Maç Haberleri) zaten aynı.
      Veri: spor.js (public canli-skor.html, fikstur.html, futbol/basketbol/voleybol/avrupa-ligleri/milli-takim sayfaları; haberler sözlük saatleriyle). Takımın maçı D.mac (K.mac).
      Varsayım: bütün maç satırları örnek maç detayını açar (sitede tek maç detayı var: Galatasaray–Fenerbahçe). -->
 <link rel="stylesheet" href="../../_ortak/cerceve.css">
@@ -33,9 +34,8 @@
 .sp-lig-ac i{font-size:12px;transition:transform .2s}
 .sp-lig.kapali .sp-lig-ac i{transform:rotate(-90deg)}
 .sp-lig.kapali .sp-lig-l{display:none}
-/* KİT ADAYI: transfer satırı — kulüp kısaltması (puan tablosundaki daire), hareket, kulüp, durum etiketi (Resmî · Görüşme · Söylenti); satırın tamamı habere gider */
+/* KİT ADAYI: transfer satırı — kulüp arması (K.arma m), hareket, kulüp, durum etiketi (Resmî · Görüşme · Söylenti); satırın tamamı habere gider */
 .sp-tr{display:flex;align-items:center;gap:var(--b-12);min-height:68px;padding:var(--b-12) 0;border-bottom:1px solid var(--cizgi);color:inherit}
-.sp-tr .ar{width:40px;height:40px;flex:none;border-radius:var(--k-daire);display:grid;place-items:center;font-size:11px;font-weight:var(--y-kalin);color:#fff;background:var(--k-koyu)}
 .sp-tr .t{flex:1;min-width:0;display:flex;flex-direction:column;gap:var(--b-4)}
 .sp-tr b{font-size:15px;font-weight:var(--y-kalin);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .sp-tr small{font-size:12.5px;color:var(--metin-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
