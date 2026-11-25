@@ -157,10 +157,9 @@ body:not(.cizelge) .cizelge-kip{display:none}
 .ad b{display:block;margin-top:var(--b-12);font-size:15px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ad p{margin-top:var(--b-4);font-size:12.5px;line-height:1.35;color:var(--metin-2);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .ad small{margin-top:auto;padding-top:var(--b-8);font-size:12.5px;color:var(--metin-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-/* KİT ADAYI: transfer kartı — kulüp arması (.k-tablo .ar ölçüsü), kulüp adı, durum etiketi (.k-etiket), iki satırlık başlık */
+/* KİT ADAYI: transfer kartı — kulüp arması (K.arma m), kulüp adı, durum etiketi (.k-etiket), iki satırlık başlık */
 .trk{width:256px;display:flex;flex-direction:column;padding:var(--b-16);border-radius:var(--k-kontrol);background:var(--k-yuzey)}
 .trk .u{display:flex;align-items:center;gap:var(--b-8)}
-.trk .ar{width:32px;height:32px;border-radius:var(--k-daire);display:grid;place-items:center;font-size:11px;font-weight:var(--y-kalin);color:#fff;background:var(--k-koyu);flex:none}
 .trk .t{flex:1;min-width:0;font-size:13.5px;font-weight:var(--y-kalin);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .trk h4{margin-top:var(--b-12);font-size:15px;line-height:1.3;font-weight:var(--y-kalin);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 /* KİT ADAYI: tarih satırı — ekranlar/icerik/takvim.html satırının kısa hali: gün kutusu (bugün sarı), konu · saat, başlık, ayrıntı, takvim etiketi */
@@ -197,7 +196,7 @@ body:not(.cizelge) .cizelge-kip{display:none}
 <div class="cb">
   <a class="dd cam" id="geri" aria-label="Geri"><i class="fa-solid fa-chevron-left"></i></a>
   <span class="orta" id="orta"></span>
-  <span class="sag"><a class="dd cam" aria-label="Ara"><i class="fa-solid fa-magnifying-glass"></i></a><a class="dd cam" aria-label="Paylaş"><i class="fa-solid fa-share-nodes"></i></a></span>
+  <span class="sag"><a class="dd cam" id="ara" aria-label="Ara"><i class="fa-solid fa-magnifying-glass"></i></a><a class="dd cam" data-sayfa="paylas" aria-label="Paylaş"><i class="fa-solid fa-share-nodes"></i></a></span>
 </div>
 <script>
 (function(){
@@ -381,9 +380,22 @@ body:not(.cizelge) .cizelge-kip{display:none}
   }
   var GUNDEM = L === D.liste, X = L.haberler, SECILI = 0, ALT = null;
   /* alt konu seçili (tek katman, DADAHABER-10) ve tür süzgeci (tür kategori değil; DADAHABER-10 §3) */
-  var KONUAD = { siyaset: 'Siyaset', sehirler: 'Yerel', teknoloji: 'Teknoloji' };
-  if (KONU && EK[KONU] && KONUAD[KONU]) { X = EK[KONU].h; SECILI = Math.max(0, L.altKonular.indexOf(KONUAD[KONU])); ALT = { ad: KONU === 'sehirler' ? 'Şehirler' : KONUAD[KONU], t: EK[KONU].t }; }
-  else if (TUR === 'analiz' && GUNDEM) { X = EK.analiz.h; ALT = { ad: 'Analiz', t: EK.analiz.t, tur: true }; }
+  /* K46: alt konu çipinin adresi kitteki tek eşlemeden (K.altYol). Özel sayfası olan alt başlık o sayfaya gider; olmayan bu listeyi ?konu= ile açar
+     (menü ve Bölümler de aynı adresi verir). Adresteki konu, adresi o konuyu veren çipi seçer. */
+  function cipKonu(k){ var u = K.altYol(k, L.bolum); return /hibrit\/liste\.html/.test(u) ? new URL(u, location.href).searchParams.get('konu') : null; }
+  if (KONU === 'sehirler') KONU = 'yerel'; /* eski adres (dizin): Yerel çipi */
+  if (KONU === 'analiz' && GUNDEM) TUR = 'analiz'; /* Analiz çipi tür süzgecini açar */
+  var KONUEK = { siyaset: 'siyaset', yerel: 'sehirler', teknoloji: 'teknoloji' }; /* sözlükte o günün haberleri ayrıca derlenmiş alt konular */
+  /* yedek: özel sayfası olan alt başlığın "Haberleri · Tümü" bağlantısı da bu listeyi ?konu=<çip adının kodu> ile açar (kitteki kodla ile aynı kural); çipin href'i değişmez */
+  function kodla(x){ return String(x).toLocaleLowerCase('tr').replace(/ı/g, 'i').replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ş/g, 's').replace(/ö/g, 'o').replace(/ç/g, 'c').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
+  var KONUAD = KONU ? L.altKonular.filter(function(k){ return cipKonu(k) === KONU; })[0] || L.altKonular.filter(function(k, i){ return i > 0 && kodla(k) === KONU; })[0] : null, KX;
+  if (TUR === 'analiz' && GUNDEM) { X = EK.analiz.h; SECILI = Math.max(0, L.altKonular.indexOf('Analiz')); ALT = { ad: 'Analiz', t: EK.analiz.t, tur: true }; }
+  else if (KONUAD && KONUEK[KONU] && EK[KONUEK[KONU]]) { X = EK[KONUEK[KONU]].h; SECILI = L.altKonular.indexOf(KONUAD); ALT = { ad: KONU === 'yerel' ? 'Şehirler' : KONUAD, t: EK[KONUEK[KONU]].t }; }
+  else if (KONUAD) {
+    /* öteki alt konular: bölümün o alt konuya (ya da türe) ait haberleri; sözlükte o gün haberi yoksa çip seçili, bölümün bütün haberleri kalır */
+    SECILI = L.altKonular.indexOf(KONUAD); KX = X.filter(function(h){ return h.alt === KONUAD || h.tur === KONUAD; });
+    if (KX.length) { X = KX; ALT = { ad: KONUAD, t: KX.length }; }
+  }
   if (DUR === 'bos') SECILI = Math.max(0, L.altKonular.indexOf('Hukuk'));
   var C = { one: 'ray', olay: GUNDEM && !ALT ? 6 : -1, olayBicim: 'ray' }, AY = H.AY, d = H.detay(), XG = D.liste.haberler;
   var GOR = L.g || 'tbmm';
@@ -391,6 +403,7 @@ body:not(.cizelge) .cizelge-kip{display:none}
   document.getElementById('orta').textContent = L.bolum;
   document.querySelector('.cb').style.setProperty('--ust-g', G(GOR));
   document.getElementById('geri').href = H.ana();
+  document.getElementById('ara').href = K.git('arama');
   /* üst satır (K35): tür (Canlı kapsül, Son Dakika kırmızı) · kategori etiketi · saat; tür alt konuyla aynıysa gösterilmez */
   function mt(h, saatsiz){
     var t = h.tur && h.tur !== h.alt ? h.tur : '', p = [];
@@ -409,13 +422,13 @@ body:not(.cizelge) .cizelge-kip{display:none}
   ];
   function olay(o, j){
     var tkp = C.takip && j === 0;
-    return '<article class="olay"><a class="olay-b" href="' + d + '" style="background-image:' + G(o.g) + '"><span class="us">' + (o.canli ? H.canli() : '') + (tkp ? '<span class="e tkp"><i class="fa-solid fa-check"></i>Takipte</span>' : '') + '</span>' +
+    return '<article class="olay"><a class="olay-b" href="' + K.git('gelisenOlay') + '" style="background-image:' + G(o.g) + '"><span class="us">' + (o.canli ? H.canli() : '') + (tkp ? '<span class="e tkp"><i class="fa-solid fa-check"></i>Takipte</span>' : '') + '</span>' +
       '<span><h3>' + o.ad + '</h3><small>' + o.i.length + ' gelişme · son ' + XG[o.i[0]].saat + '</small></span></a>' +
       '<ol class="gel">' + o.i.slice(0, 2).map(function(k){ var x = XG[k]; return '<li><time>' + x.saat + '</time><h4 class="iki">' + x.baslik + '</h4></li>'; }).join('') + '</ol>' +
       '<div class="olay-a"><span><i class="fa-solid fa-folder-open"></i>Olay dosyası</span><button type="button" data-olay-takip class="' + (tkp ? 'acik' : '') + '">' + (tkp ? '<i class="fa-solid fa-check"></i>Takipte' : '<i class="fa-solid fa-plus"></i>Takip et') + '</button></div></article>';
   }
   var olaylar = C.takip ? OLAY : [OLAY[1], OLAY[0], OLAY[2]];
-  var go = '<section class="go liste-kip"><div class="bb"><h2><span class="bi"><i class="fa-solid fa-folder-open"></i></span>Gelişen Olaylar</h2><a>' + (C.takip ? 'Takip ettiklerin önce' : '5 olay') + '<i class="fa-solid fa-chevron-right"></i></a></div>' +
+  var go = '<section class="go liste-kip"><div class="bb"><h2><span class="bi"><i class="fa-solid fa-folder-open"></i></span>Gelişen Olaylar</h2><span class="not">' + (C.takip ? 'Takip ettiklerin önce' : '5 olay') + '</span></div>' + /* bütün olaylar ekranı yok: sayı yalnız bilgi */
     (C.olayBicim === 'ray' ? '<div class="ol-r ks">' + olaylar.map(olay).join('') + '</div>'
                            : '<div class="ol-d">' + olaylar.slice(0, 2).map(olay).join('') + '</div><div class="go-t"><a>Bütün olaylar · 5<i class="fa-solid fa-chevron-right"></i></a></div>') + '</section>';
 
@@ -445,7 +458,7 @@ body:not(.cizelge) .cizelge-kip{display:none}
   function sekmeli(adlar, paneller){ return '<div data-sg><div class="k-ic">' + K.segment(adlar, 0, { ince: true }) + '</div>' + paneller.map(function(p, i){ return '<div class="sg-p"' + (i ? ' hidden' : '') + '>' + p + '</div>'; }).join('') + '</div>'; }
   /* tarih satırı: [gün, ay, bugün mü, üst satır, başlık, ayrıntı, etiket, etiket türü] */
   function tarihSat(x, h){ return '<a class="tr-s" href="' + h + '"><span class="gn' + (x[2] ? ' bugun' : '') + '"><b>' + x[0] + '</b><small>' + x[1] + '</small></span><span class="t"><small>' + x[3] + '</small><b>' + x[4] + '</b><span>' + x[5] + '</span></span>' + (x[6] ? K.etiket(x[6], { tur: x[7] }) : '') + '</a>'; }
-  function takimHucre(i, kod, ad){ return '<span class="tk"><em>' + (i + 1) + '</em><span class="ar">' + kod + '</span>' + ad + '</span>'; }
+  function takimHucre(i, kod, ad){ return '<span class="tk"><em>' + (i + 1) + '</em>' + K.arma(ad, 's', kod) + ad + '</span>'; } /* takım arması kitten (K.puanTablosu ile aynı boy) */
 
   /* SPOR · kaynak: public spor.html › "Canlı Maçlar ve Son Skorlar" (4 maç; büyük maç D.mac), "Puan Durumu" (üç lig, ilk dört; Süper Lig EK.puan),
      "Fikstür · Bu hafta", "Transfer · Son hareketler", üst bölüm bağlantılarındaki takımlar. Skor, saat, durum ve etiketler aynen. */
@@ -462,28 +475,28 @@ body:not(.cizelge) .cizelge-kip{display:none}
   };
   function sporCanli(){
     var dal = [['Tümü', '', 4], ['Futbol', 'futbol', 2], ['Basketbol', 'basketbol', 1], ['Voleybol', 'voleybol', 1]];
-    return bl(K.bb({ baslik: 'Canlı Skor', canli: true, baglanti: { metin: 'Bütün maçlar', href: SY('canli-skor') } }) +
+    return bl(K.bb({ baslik: 'Canlı Skor', canli: true, baglanti: { metin: 'Bütün maçlar', href: K.altYol('Canlı Skor') } }) +
       '<div class="k-ray s8" data-tek data-dal-sec role="group" aria-label="Dal">' + dal.map(function(x, i){ return K.cip(x[0], { secili: i === 0, sayi: x[2], attr: 'data-dal="' + x[1] + '"' }); }).join('') + '</div>' +
       '<div class="k-ic sk-l"><div data-dal="futbol" class="ust16">' + K.mac() + '</div>' + SPOR.skor.map(function(s){ return '<div data-dal="' + s[0] + '">' + lg(s[1], s[2]) + K.skor(s[3]) + '</div>'; }).join('') + '</div>');
   }
   function sporPuan(){
     var bsl = K.tablo({ sutunlar: ['Takım', 'O', 'G', 'M', 'AV', 'P'], satirlar: SPOR.bsl.map(function(t, i){ return [takimHucre(i, t[1], t[0]), t[2], t[3], t[4], t[5], t[6]]; }), sonKalin: true });
     var sul = K.tablo({ sutunlar: ['Takım', 'O', 'G', 'M', 'P'], satirlar: SPOR.sul.map(function(t, i){ return [takimHucre(i, t[1], t[0]), t[2], t[3], t[4], t[7]]; }), sonKalin: true }); /* set averajı (AS, VS) tam tabloda */
-    return bl(K.bb({ baslik: 'Puan Durumu', ikon: 'fa-trophy', baglanti: { metin: 'Tümü', href: SY('puan-durumu') } }) +
-      sekmeli(['Süper Lig', 'Basketbol', 'Voleybol'], ['<div class="k-ic">' + K.puanTablosu(EK.puan, D.mac.evKod) + bag('Süper Lig sayfası', SY('lig', 'lig=super-lig')) + '</div>',
-        '<div class="k-ic">' + bsl + bag('Bütün tablo', SY('puan-durumu')) + '</div>', '<div class="k-ic">' + sul + bag('Bütün tablo', SY('puan-durumu')) + '</div>']));
+    return bl(K.bb({ baslik: 'Puan Durumu', ikon: 'fa-trophy', baglanti: { metin: 'Tümü', href: K.altYol('Puan Durumu') } }) +
+      sekmeli(['Süper Lig', 'Basketbol', 'Voleybol'], ['<div class="k-ic">' + K.puanTablosu(EK.puan, D.mac.evKod) + bag('Süper Lig sayfası', K.altYol('Süper Lig')) + '</div>',
+        '<div class="k-ic">' + bsl + bag('Bütün tablo', K.altYol('Puan Durumu')) + '</div>', '<div class="k-ic">' + sul + bag('Bütün tablo', K.altYol('Puan Durumu')) + '</div>']));
   }
-  function sporFikstur(){ return bl(K.bb({ baslik: 'Fikstür', ikon: 'fa-calendar-day', sayi: 'Bu hafta', baglanti: { metin: 'Tümü', href: SY('fikstur') } }) +
+  function sporFikstur(){ return bl(K.bb({ baslik: 'Fikstür', ikon: 'fa-calendar-day', sayi: 'Bu hafta', baglanti: { metin: 'Tümü', href: K.altYol('Fikstür') } }) +
     '<div class="k-ic">' + SPOR.fikstur.map(function(g, j){ return '<div class="lg"' + (j ? '' : ' style="padding-top:0"') + '><span>' + g[0] + '</span></div>' + g[1].map(function(m){ return K.skor({ dk: m[0], ev: m[1], skor: '–', dep: m[2] }); }).join(''); }).join('') + '</div>'); }
-  function sporTransfer(){ return bl(K.bb({ baslik: 'Transfer', ikon: 'fa-right-left', baglanti: { metin: 'Tümü', href: SY('transfer') } }) +
-    K.ray(SPOR.transfer.map(function(t){ return '<a class="trk" href="' + SY('transfer') + '"><span class="u"><span class="ar">' + t[0] + '</span><span class="t">' + t[1] + '</span>' + K.etiket(t[3], { tur: t[4] }) + '</span><h4>' + t[2] + '</h4></a>'; }).join(''), 's10')); }
-  function sporTakim(){ return bl(K.bb({ baslik: 'Takımlar', ikon: 'fa-shirt', baglanti: { metin: 'Tümü', href: SY('takimlar') } }) +
-    K.ray(SPOR.takim.map(function(t){ return '<a class="k-takim tkm" href="' + SY('takim', 'takim=' + t[2]) + '"><span class="ar">' + t[0] + '</span><span>' + t[1] + '</span></a>'; }).join(''), 's10')); }
+  function sporTransfer(){ return bl(K.bb({ baslik: 'Transfer', ikon: 'fa-right-left', baglanti: { metin: 'Tümü', href: K.altYol('Transfer') } }) +
+    K.ray(SPOR.transfer.map(function(t){ return '<a class="trk" href="' + K.altYol('Transfer') + '"><span class="u">' + K.arma(t[1], 'm', t[0]) + '<span class="t">' + t[1] + '</span>' + K.etiket(t[3], { tur: t[4] }) + '</span><h4>' + t[2] + '</h4></a>'; }).join(''), 's10')); }
+  function sporTakim(){ return bl(K.bb({ baslik: 'Takımlar', ikon: 'fa-shirt', baglanti: { metin: 'Tümü', href: K.altYol('Takımlar') } }) +
+    K.ray(SPOR.takim.map(function(t){ return '<a class="k-takim tkm" href="' + K.altYol(t[1]) + '">' + K.arma(t[1], 'l', t[0]) + '<span>' + t[1] + '</span></a>'; }).join(''), 's10')); }
 
   /* FİNANS · kaynak: public finans.html › "Piyasalar, Faiz, Takvim" (Faiz ve Akaryakıt sekmeleri, Ekonomik Takvim), yatırım uyarısı; ekonomi-araclari.html görev satırı.
      Piyasa kutuları D.piyasa (ana sayfayla aynı değerler). */
   var FIN = {
-    sekme: { 'Dolar': 'doviz', 'Euro': 'doviz', 'Gram altın': 'altin', 'BIST 100': 'borsa' },
+    enstruman: { 'Dolar': 'dolar', 'Euro': 'euro', 'Gram altın': 'gram-altin', 'BIST 100': 'xu100' }, /* ana sayfa piyasa şeridiyle aynı (K46) */
     faiz: [['TCMB politika faizi (1 hafta repo)', '%42,50', 'Sabit', ''], ['TLREF (gecelik)', '%42,36', '−0,05 puan', 'd'], ['2 yıllık gösterge tahvil', '%38,74', '−0,22 puan', 'd'],
            ['10 yıllık gösterge tahvil', '%29,85', '+0,06 puan', 'y'], ['Mevduat, 92 güne kadar (ortalama)', '%44,10', '−0,25 puan', 'd']],
     yakit: [['Benzin (95 oktan)', '43,18 TL', '▲ 0,25 TL', 'y'], ['Motorin', '44,72 TL', 'Değişmedi', ''], ['LPG (otogaz)', '27,42 TL', 'Değişmedi', ''], ['Brent petrol (varil)', '74,82 $', '▼ %1,12', 'd']],
@@ -495,17 +508,17 @@ body:not(.cizelge) .cizelge-kip{display:none}
   function yon(m, y){ return y ? '<span class="k-yon ' + y + '">' + m + '</span>' : m; }
   function finPiyasa(){
     var p = D.piyasa;
-    var py = K.ray(p.liste.map(function(x){ return '<a class="k-py" href="' + SY('piyasalar', 'sekme=' + (FIN.sekme[x.ad] || 'ekran')) + '"><small>' + x.ad + '</small><b>' + x.deger + '</b><em class="' + x.yon + '">' + (x.yon === 'y' ? '▲' : '▼') + ' %' + x.degisim + '</em></a>'; }).join(''), 's10') +
+    var py = K.ray(p.liste.map(function(x){ return '<a class="k-py" href="' + SY('enstruman', FIN.enstruman[x.ad] ? 'kod=' + FIN.enstruman[x.ad] : '') + '"><small>' + x.ad + '</small><b>' + x.deger + '</b><em class="' + x.yon + '">' + (x.yon === 'y' ? '▲' : '▼') + ' %' + x.degisim + '</em></a>'; }).join(''), 's10') +
       '<div class="k-ic"><p class="k-not">' + I('fa-clock') + '<span>Güncelleme ' + p.guncelleme + ' · ' + p.not + '</span></p></div>';
     var fz = '<div class="k-ic">' + K.tablo({ sutunlar: ['Gösterge', 'Oran', 'Değişim'], satirlar: FIN.faiz.map(function(r){ return [r[0], r[1], yon(r[2], r[3])]; }), cls: 'sol fz' }) +
-      '<p class="k-not">' + I('fa-circle-info') + '<span>Yıllık basit oran · 23 Kasım 2026, 14.05 itibarıyla</span></p>' + bag('Bütün oranlar', SY('piyasalar', 'sekme=faiz')) + '</div>';
+      '<p class="k-not">' + I('fa-circle-info') + '<span>Yıllık basit oran · 23 Kasım 2026, 14.05 itibarıyla</span></p>' + bag('Bütün oranlar', K.altYol('Faiz Oranları')) + '</div>';
     var yk = '<div class="k-ic">' + K.tablo({ sutunlar: ['Ürün', 'Fiyat', 'Değişim'], satirlar: FIN.yakit.map(function(r){ return [r[0], r[1], yon(r[2], r[3])]; }), cls: 'sol fz' }) +
-      '<p class="k-not">' + I('fa-circle-info') + '<span>İstanbul (Avrupa) pompa fiyatı · 23 Kasım 2026, 06.00 itibarıyla</span></p>' + bag('İllere göre fiyatlar', SY('piyasalar', 'sekme=akaryakit')) + '</div>';
-    return bl(K.bb({ baslik: 'Piyasalar', ikon: 'fa-chart-column', baglanti: { metin: 'Piyasa ekranı', href: SY('piyasalar', 'sekme=ekran') } }) + sekmeli(['Piyasalar', 'Faiz', 'Akaryakıt'], [py, fz, yk]) +
+      '<p class="k-not">' + I('fa-circle-info') + '<span>İstanbul (Avrupa) pompa fiyatı · 23 Kasım 2026, 06.00 itibarıyla</span></p>' + bag('İllere göre fiyatlar', K.altYol('Akaryakıt Fiyatları')) + '</div>';
+    return bl(K.bb({ baslik: 'Piyasalar', ikon: 'fa-chart-column', baglanti: { metin: 'Piyasa ekranı', href: K.altYol('Piyasa Ekranı') } }) + sekmeli(['Piyasalar', 'Faiz', 'Akaryakıt'], [py, fz, yk]) +
       '<div class="ust16"><a class="k-ky" href="' + SY('ekonomi-araclari') + '"><span class="ik">' + I('fa-calculator') + '</span><span class="t"><small>Ekonomi araçları</small><b>Kur, kredi ve maaş hesaplama</b></span>' + I('fa-chevron-right') + '</a></div>' +
       '<div class="k-ic"><p class="k-not">' + I('fa-circle-info') + '<span>Fiyat, oran ve yorumlar yatırım danışmanlığı kapsamında değildir; veriler 15 dakika gecikmelidir.</span></p></div>');
   }
-  function finTakvim(){ var h = K.git('takvim', 'tur=ekonomik');
+  function finTakvim(){ var h = K.altYol('Ekonomik Takvim');
     return bl(K.bb({ baslik: 'Ekonomik Takvim', ikon: 'fa-calendar-day', sayi: 'Bu hafta', baglanti: { metin: 'Tümü', href: h } }) + '<div class="k-ic">' + FIN.takvim.map(function(x){ return tarihSat(x, h); }).join('') + '</div>'); }
 
   /* GÜNDEM · public afet-acil-durum.html / trafik-ulasim.html "Servisler" menüsü: hava ve namaz D'den; afet: "Son depremler" (Sındırgı 4,1 · 13.52); trafik ve takvim: sayfa görev satırları */
@@ -528,7 +541,7 @@ body:not(.cizelge) .cizelge-kip{display:none}
                ['1', 'Ara', 0, 'KPSS · 10.00', 'KPSS-2026/7 tercih dönemi', 'Tercih 1–8 Ara · Sonuç 18 Ara', 'Tercih', ''],
                ['6', 'Ara', 0, 'e-YDS · 10.15', '2026-e-YDS/12 İngilizce sınavı', 'Sonuç 10 Ara', 'Sınav', 'sari'],
                ['18', 'Ara', 0, 'YÖKDİL · 14.00', '2026-YÖKDİL/2 sonuçları', 'Sonuçlar aday işlemleri sisteminde', 'Sonuç', 'yesil']];
-  function kampusSinav(){ var h = K.git('takvim', 'tur=sinav'), kalan = Math.round((new Date(2027, 5, 19) - new Date(2026, 10, 23)) / 864e5);
+  function kampusSinav(){ var h = K.altYol('Sınav Takvimi'), kalan = Math.round((new Date(2027, 5, 19) - new Date(2026, 10, 23)) / 864e5);
     return bl(K.bb({ baslik: 'Sınav Takvimi', ikon: 'fa-calendar-day', baglanti: { metin: 'Tümü', href: h } }) + '<div class="k-ic"><a class="gs" href="' + h + '"><span class="t"><small>YKS 1. oturum · TYT</small><b>19 Haziran 2027 Cumartesi</b></span>' +
       '<span class="n"><b>' + kalan + '</b><small>gün kaldı</small></span></a>' + SINAV.map(function(x){ return tarihSat(x, h); }).join('') + '</div>'); }
 
@@ -581,16 +594,15 @@ body:not(.cizelge) .cizelge-kip{display:none}
   });
   cz += '</div>';
 
-  /* alt konu çiplerinden araç ekranı olanlar doğrudan o ekrana gider (public'te de ayrı sayfa) */
-  var CIPYOL = { 'Canlı Skor': SY('canli-skor'), 'Puan Durumu': SY('puan-durumu'), 'Transfer': SY('transfer'), 'Piyasa Ekranı': SY('piyasalar', 'sekme=ekran'), 'Döviz': SY('piyasalar', 'sekme=doviz'),
-    'Altın': SY('piyasalar', 'sekme=altin'), 'Borsa': SY('piyasalar', 'sekme=borsa'), 'Dada Özet': SY('dada-ozet'), 'Günün 5\'i': K.git('gununBesi') };
+  /* alt konu çipleri: Tümü bölüm listesine, ötekiler kitteki eşlemeye (K.altYol; özel sayfa ya da bu liste ?konu=) */
+  function cipYol(k, i){ return i === 0 ? K.bolumYol(L.bolum) : K.altYol(k, L.bolum); }
   var bas = '<header class="buyuk" style="background-image:' + G(GOR) + '"><h1>' + L.bolum + '</h1><p>' + L.aciklama + '</p></header>';
-  var cr = '<nav class="cr" aria-label="Alt konular ve görünüm"><div class="ks">' + L.altKonular.map(function(k, i){ return '<a class="cp' + (i === SECILI ? ' etkin' : '') + '"' + (CIPYOL[k] ? ' href="' + CIPYOL[k] + '"' : '') + '>' + k + '</a>'; }).join('') + '</div>' +
+  var cr = '<nav class="cr" aria-label="Alt konular ve görünüm"><div class="ks">' + L.altKonular.map(function(k, i){ return '<a class="cp' + (i === SECILI ? ' etkin' : '') + '" href="' + cipYol(k, i) + '"' + (i === SECILI ? ' aria-current="page"' : '') + '>' + k + '</a>'; }).join('') + '</div>' +
     '<div class="gc" role="group" aria-label="Görünüm"><button type="button" data-kip="liste" aria-pressed="true" aria-label="Liste"><i class="fa-solid fa-newspaper"></i></button><button type="button" data-kip="cizelge" aria-pressed="false" aria-label="Çizelge"><i class="fa-solid fa-clock"></i></button></div></nav>';
   /* tür süzgeci (kit çipleri, tek seçim) ve şehir seç (kit alt sayfası, E-551) */
   var ek = '';
   if (ALT && ALT.tur) ek = '<div class="k-ray s8" data-tek style="padding-top:var(--b-12)" aria-label="Tür">' + ['Bütün türler', 'Analiz', 'Uzman Görüşü', 'Araştırma'].map(function(t){ return K.cip(t, { secili: t === 'Analiz' }); }).join('') + '</div>';
-  if (KONU === 'sehirler' && ALT) ek = '<div class="k-ic" style="padding-top:var(--b-12)">' + K.btn({ metin: 'Bütün şehirler', ikon: 'fa-location-dot', sagIkon: 'fa-chevron-down', tur: 'sade', attr: 'data-sayfa="sehir"' }) + '</div>';
+  if (KONU === 'yerel' && ALT) ek = '<div class="k-ic" style="padding-top:var(--b-12)">' + K.btn({ metin: 'Bütün şehirler', ikon: 'fa-location-dot', sagIkon: 'fa-chevron-down', tur: 'sade', attr: 'data-sayfa="sehir"' }) + '</div>';
 
   var o = '';
   o += bas + '<div class="yaprak">' + cr + ek;
@@ -612,7 +624,6 @@ body:not(.cizelge) .cizelge-kip{display:none}
   document.addEventListener('click', function(ev){
     var b = ev.target.closest('[data-kip]'); if (b) kip(b.dataset.kip);
     var k = ev.target.closest('.kay'); if (k) { ev.preventDefault(); var kon = k.classList.toggle('on'); k.setAttribute('aria-pressed', kon); return; }
-    var c = ev.target.closest('.cp'); if (c) document.querySelectorAll('.cp').forEach(function(x){ x.classList.toggle('etkin', x === c); });
     var t = ev.target.closest('[data-olay-takip]'); if (t) { var a = t.classList.toggle('acik'); t.innerHTML = a ? '<i class="fa-solid fa-check"></i>Takipte' : '<i class="fa-solid fa-plus"></i>Takip et'; }
   });
   /* bölüm araçları: sekmeli blokta panel geçişi (segment görünümü kitte); Canlı Skor'da dal süzgeci */

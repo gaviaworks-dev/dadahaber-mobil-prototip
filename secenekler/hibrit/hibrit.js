@@ -87,7 +87,7 @@
   };
   B.hikaye = function(){ return '<div class="hk-yer" data-hikaye-serit style="padding-top:12px"></div>'; };
   B.sd = function(v){
-    var S = D.sonDakika, lt = H.liste('kip=cizelge');
+    var S = D.sonDakika, lt = window.K && H.kok ? K.git('sonDakika') : H.liste('kip=cizelge'); /* kökte Son Dakika ekranı */
     var bb = '<div class="bb"><h2><span class="sdn canli-nokta"></span>Son Dakika</h2><a href="' + lt + '">Tümü<i class="fa-solid fa-chevron-right"></i></a></div>';
     if (v === 'tek') {
       return '<div class="sd-tek" data-sd-tek><span class="et"><span class="canli-nokta"></span>SON DAKİKA</span><span class="ak">' +
@@ -168,11 +168,13 @@
       D.akis.liste.map(function(v){ return '<a href="' + H.u('akis.html') + '" style="background-image:' + G(v.g) + '"><span class="s"><i class="fa-solid fa-play"></i>' + v.sure + '</span><small><i class="fa-solid ' + H.ikon(v.kat) + '"></i>' + v.kat + '</small><b>' + v.baslik + '</b></a>'; }).join('') + '</div></section>';
   };
   /* AS-F kutuları */
+  /* takım arması kitten (K.arma, Yasin Bey 25 Kasım); kitin yüklenmediği eski hibrit önizlemesinde (ana.html) kısa kodlu daire */
+  function ar(ad, kod){ return window.K && K.arma ? K.arma(ad, 'm', kod) : '<span class="ar">' + kod + '</span>'; }
   B.mac = function(ic){
     var m = D.mac;
     var h = '<a class="kt mac' + (ic ? ' gen' : '') + '"' + (window.K ? ' href="' + K.u('ekranlar/icerik/mac-detay.html') + '"' : '') + '><div class="u">' + H.canli() + '<span>' + m.lig + '</span></div>' +
-      '<div class="s"><span class="tk"><span class="ar">' + m.evKod + '</span><b>' + m.ev + '</b></span><span class="sk"><b>' + m.skor + '</b><small>' + m.dakika + '</small></span>' +
-      '<span class="tk sag"><span class="ar">' + m.depKod + '</span><b>' + m.dep + '</b></span></div></a>';
+      '<div class="s"><span class="tk">' + ar(m.ev, m.evKod) + '<b>' + m.ev + '</b></span><span class="sk"><b>' + m.skor + '</b><small>' + m.dakika + '</small></span>' +
+      '<span class="tk sag">' + ar(m.dep, m.depKod) + '<b>' + m.dep + '</b></span></div></a>';
     return ic ? h : '<div class="kt-tek">' + h + '</div>';
   };
   B.senin = function(v){

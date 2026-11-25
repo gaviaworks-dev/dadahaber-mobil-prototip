@@ -208,7 +208,8 @@ html[data-tema="koyu"]{--koyu-y:var(--yuzey-2);--koyu-y2:#2D2D32}
 .mac .s{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:6px;margin-top:12px}
 .mac .tk{display:flex;align-items:center;gap:8px;min-width:0}
 .mac .tk.sag{flex-direction:row-reverse}
-.mac .ar{width:32px;height:32px;border-radius:var(--k-daire);display:grid;place-items:center;font-size:11px;font-weight:var(--y-kalin);flex:none;background:rgba(255,255,255,.12)}
+.mac .ar{width:32px;height:32px;border-radius:var(--k-daire);display:grid;place-items:center;font-size:11px;font-weight:var(--y-kalin);flex:none;background:rgba(255,255,255,.12)} /* yalnız kitsiz ana.html; kökte K.arma */
+.mac .k-arma .kk{stroke:rgba(255,255,255,.28)} /* koyu kutuda arma kenarı (kitteki .k-mac ile aynı) */
 .mac .tk b{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mac .sk{text-align:center}
 .mac .sk b{display:block;font-size:30px;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.1}

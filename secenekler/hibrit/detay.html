@@ -285,7 +285,7 @@ html[data-tema="koyu"] .boy input{accent-color:var(--marka)}
     '<p class="ozet-p">' + d.govde[0].p + '</p><p class="ozet-p">' + d.govde[1].p + '</p>' +
     '<button class="gec" type="button" data-git="2">Haberin tamamını oku<i class="fa-solid fa-arrow-right"></i></button></section>';
   var p2 = '<section class="panel" data-p="2"><article class="metin"><div class="govde">' + govde + '</div><p class="altyazi">Kapak: ' + d.altyazi + '</p></article></section>';
-  var kyn = '<section class="kyn"><div class="bb"><h2><span class="bi"><i class="fa-solid fa-building-columns"></i></span>Kaynaklar<small>· ' + d.kaynaklar.length + '</small></h2></div><div class="ks">' + d.kaynaklar.map(function(k){ return '<a><i class="fa-solid fa-file-lines"></i><span class="t"><b>' + k.kurum + '</b><span>' + k.aciklama + '</span></span></a>'; }).join('') + '</div></section>';
+  var kyn = '<section class="kyn"><div class="bb"><h2><span class="bi"><i class="fa-solid fa-building-columns"></i></span>Kaynaklar<small>· ' + d.kaynaklar.length + '</small></h2></div><div class="ks">' + d.kaynaklar.map(function(k){ return '<a' + (k.url ? ' href="' + k.url + '" target="_blank" rel="noopener"' : ' href="#" data-dis="' + k.kurum + '"') /* K47: dış kaynak (kit K.kaynaklar ile aynı) */ + '><i class="fa-solid fa-file-lines"></i><span class="t"><b>' + k.kurum + '</b><span>' + k.aciklama + '</span></span></a>'; }).join('') + '</div></section>';
   /* yorumlar (K31): Dada Gastro detay-v2 yorum yapısının aynısı; yıldız yerine haberde okur özeti */
   function yrm(y){
     return '<article class="rv"><div class="rv-h"><span class="av">' + y.ad.charAt(0) + '</span><div class="rv-w"><b>' + y.ad + '</b><span class="rv-m"><i class="fa-solid fa-award"></i>' + y.rozet + '<span class="nk">·</span>' + y.zaman + '</span></div></div>' +
@@ -308,7 +308,7 @@ html[data-tema="koyu"] .boy input{accent-color:var(--marka)}
     : '<button class="rv-btn" type="button"><i class="fa-solid fa-right-to-bracket"></i><span>Yorum yapmak için giriş yap</span></button><p class="rv-not"><i class="fa-solid fa-circle-info"></i>Habere yorum yazmak ve yorumlara katılmak için Dada Haber hesabına giriş yapman gerekiyor. Yorumları okumak serbest.</p>';
   var suz = '<div class="rv-f ks"><button class="on" type="button">Tümü <span>' + Y.length + '</span></button><button type="button">En çok beğenilen</button><button type="button">Editör yanıtı <span>1</span></button><button type="button">Düzenli okur <span>' + (rozet['Düzenli okur'] || 0) + '</span></button></div>';
   var alt = '<div class="ortak-alt"><section class="blk rvs" id="yorumlar"><div class="bb"><h2><span class="bi"><i class="fa-solid fa-comment"></i></span>Yorumlar<small>· ' + Y.length + '</small></h2></div>' + ozet + yaz + suz + yorumlar +
-    '<a class="tum-y">Bütün yorumları oku<i class="fa-solid fa-chevron-right"></i></a></section>' +
+    '<a class="tum-y" href="' + K.git('yorumlar') + '">Bütün yorumları oku<i class="fa-solid fa-chevron-right"></i></a></section>' +
     '<section class="blk ilgili"><div class="bb"><h2><span class="bi"><i class="fa-solid fa-newspaper"></i></span>Sıradaki Haberler</h2></div>' + d.ilgili.map(function(x){ return '<a href="' + H.detay() + '"><div><h3>' + x.baslik + '</h3>' + H.meta([yazari(x.baslik), x.sure]) + '</div><div class="gr" style="background-image:' + G(x.g) + '"></div></a>'; }).join('') + '</section></div>';
   /* kapaksız (E-050): düz üst çubuk, başlık zeminde, panel binmesi yok (kit .k-bbas, .k-imza) */
   if (KAPAKSIZ) {
