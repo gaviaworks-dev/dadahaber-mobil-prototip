@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Hibrit · Ana sayfa</title>
+<link rel="stylesheet" href="../_ortak/cerceve.css">
+<link rel="stylesheet" href="../_ortak/marka.css">
+<link rel="stylesheet" href="../_ortak/hikaye.css">
+<link rel="stylesheet" href="hibrit.css">
+<script src="../_ortak/icerik.js"></script>
+<script src="../_ortak/cerceve.js"></script>
+<script src="../_ortak/icerik-ek.js"></script>
+<script src="hibrit.js"></script>
+</head>
+<body>
+<div class="ekran" id="ekran"></div>
+<script>
+/* Ana sayfa: blok sırası ve ağırlığı HB[n].ana'dan (hibrit.js). Hikâye şeridi ortak bileşen; Spiker mini oynatıcı alt çubuğun üstünde. */
+(function(){
+  document.title = H.cfg.kod + ' · ' + H.cfg.ad + ' · Ana sayfa';
+  H.anaCiz(document.getElementById('ekran'));
+  H.altCubuk('ana');
+  H.oynatici();
+  H.raylar();
+})();
+</script>
+<script src="../_ortak/hikaye.js"></script>
+</body>
+</html>

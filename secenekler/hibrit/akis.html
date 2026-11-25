@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Hibrit · Akış</title>
+<link rel="stylesheet" href="../_ortak/cerceve.css">
+<link rel="stylesheet" href="../_ortak/marka.css">
+<link rel="stylesheet" href="hibrit.css">
+<script src="../_ortak/icerik.js"></script>
+<script src="../_ortak/cerceve.js"></script>
+<script src="../_ortak/icerik-ek.js"></script>
+<script src="hibrit.js"></script>
+<style>
+/* Akış sekmesi = kart destesi (AS-D): tam ekran kartlar, dikey kaydırmada kart kart. Kartta kaydet ve paylaş yok (Beyar).
+   Bütün hibritlerde aynı. Akış videoları sesli olduğu için Spiker burada duraklar; mini oynatıcı gösterilmez. */
+.ekran{scroll-snap-type:y mandatory;background:#000}
+html.tam .ekran{scroll-snap-type:none}
+.ust-a{position:absolute;left:0;right:0;top:var(--ust-guvenli);z-index:70;height:52px;padding:0 8px 0 var(--kenar);display:flex;align-items:center;gap:10px;color:#fff;pointer-events:none}
+.ust-a>*{pointer-events:auto}
+.ust-a h1{font-size:22px;letter-spacing:-.02em}
+.ust-a small{font-size:13px;color:rgba(255,255,255,.75);white-space:nowrap}
+.ust-a .ses{margin-left:auto;width:44px;height:44px;border-radius:var(--k-daire);display:grid;place-items:center;font-size:16px;background:var(--cam);border:1px solid var(--cam-cizgi);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:#fff}
+.ust-a::before{content:"";position:absolute;left:0;right:0;top:calc(-1 * var(--ust-guvenli));height:calc(var(--ust-guvenli) + 110px);background:linear-gradient(180deg,rgba(0,0,0,.6),rgba(0,0,0,0));z-index:-1;pointer-events:none}
+.kart{position:relative;height:844px;scroll-snap-align:start;scroll-snap-stop:always;overflow:hidden;color:#fff}
+.kart>.gr{position:absolute;inset:0}
+.kart::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.72) 68%,rgba(0,0,0,.92) 100%)}
+.kart-ic{position:absolute;left:0;right:0;bottom:calc(var(--ac-h) + 22px);z-index:2;padding:0 56px 0 var(--kenar)}
+.cip{display:inline-flex;align-items:center;gap:var(--ikon-bosluk);height:30px;padding:0 10px;border-radius:var(--k-ic);background:var(--cam);border:1px solid var(--cam-cizgi);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);font-size:12px;font-weight:var(--y-kalin);letter-spacing:.1em;text-transform:uppercase}
+.cip i{color:var(--marka)}
+.kart h2{margin-top:12px;font-size:26px;line-height:1.14;letter-spacing:-.02em;text-wrap:pretty}
+.meta-a{margin-top:12px;display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,.78);white-space:nowrap}
+.meta-a i{color:var(--marka);font-size:11px}
+.git{margin-top:16px;height:48px;width:100%;border-radius:var(--k-kart);background:#fff;color:var(--siyah);font-size:15px;font-weight:var(--y-kalin);display:flex;align-items:center;justify-content:center;gap:var(--ikon-bosluk)}
+.oy{position:absolute;left:var(--kenar);right:var(--kenar);bottom:calc(var(--ac-h) + 8px);z-index:3;height:3px;border-radius:var(--k-cubuk);background:rgba(255,255,255,.25);overflow:hidden}
+.oy i{display:block;height:100%;width:38%;background:var(--marka)}
+.sira{position:absolute;right:16px;top:calc(var(--ust-guvenli) + 64px);z-index:3;display:flex;flex-direction:column;gap:5px;align-items:center}
+.sira i{display:block;width:4px;height:16px;border-radius:var(--k-cubuk);background:rgba(255,255,255,.35)}
+.sira i.ok{background:var(--marka);height:26px}
+.sira b{margin-top:4px;font-size:11px;letter-spacing:.04em}
+/* yükleniyor kartı */
+.yuk{position:relative;height:844px;scroll-snap-align:start;background:#141414;display:flex;flex-direction:column;justify-content:flex-end;padding:0 var(--kenar) calc(var(--ac-h) + 22px)}
+.yuk i{display:block;border-radius:var(--k-ic);background:linear-gradient(90deg,#1E1E22 30%,#2A2A2E 50%,#1E1E22 70%);background-size:300% 100%;animation:pari 1.4s linear infinite}
+.yuk .a{width:110px;height:30px}.yuk .b{height:26px;margin-top:14px}.yuk .c{height:26px;width:70%;margin-top:10px}.yuk .d{height:48px;margin-top:20px;border-radius:var(--k-kart)}
+.yuk p{position:absolute;left:0;right:0;top:46%;text-align:center;font-size:14px;color:rgba(255,255,255,.6)}
+@keyframes pari{from{background-position:100% 0}to{background-position:-100% 0}}
+</style>
+</head>
+<body data-durum="acik" data-ec="acik">
+<div class="ust-a"><h1>Akış</h1><small id="say"></small><button class="ses" type="button" aria-label="Sesi aç"><i class="fa-solid fa-volume-xmark"></i></button></div>
+<main class="ekran" id="ekran" aria-label="Akış videoları"></main>
+<script>
+(function(){
+  var A = D.akis, L = A.liste;
+  document.title = 'Akış · ' + H.cfg.kod;
+  document.getElementById('say').textContent = 'Günün ' + A.toplam + ' videosu';
+  document.getElementById('ekran').innerHTML = L.map(function(v, i){
+    var s = L.map(function(_, j){ return '<i class="' + (j === i ? 'ok' : '') + '"></i>'; }).join('');
+    return '<article class="kart"><div class="gr" data-g="' + v.g + '"></div><div class="sira" aria-hidden="true">' + s + '<b class="tnum">' + (i + 1) + '/' + A.toplam + '</b></div>' +
+      '<div class="kart-ic"><span class="cip"><i class="fa-solid fa-play"></i>' + v.kat + '</span><h2>' + v.baslik + '</h2>' +
+      '<div class="meta-a"><span class="ik"><i class="fa-solid fa-clock"></i>' + v.sure + '</span>' + (v.izlenme ? '<span class="ay"></span><span class="ik"><i class="fa-solid fa-eye"></i>' + v.izlenme + '</span>' : '') + '</div>' +
+      '<a class="git" href="' + H.detay() + '">Habere git<i class="fa-solid fa-arrow-right"></i></a></div><div class="oy"><i style="width:' + (i === 0 ? 38 : 0) + '%"></i></div></article>';
+  }).join('') + '<section class="yuk" aria-label="Yükleniyor"><p>Sıradaki videolar yükleniyor</p><i class="a"></i><i class="b"></i><i class="c"></i><i class="d"></i></section>';
+  H.altCubuk('akis', true);
+})();
+</script>
+</body>
+</html>
