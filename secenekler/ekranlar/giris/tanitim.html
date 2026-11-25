@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>Tanıtım</title>
+<!--
+  TANITIM (onboarding) · kök dili: kok.html hero'su (tam genişlik görsel, alt köşesi yuvarlak, altında 3px marka sarısı hilal şerit),
+  altında metin paneli; ilerleme noktaları, sağ üstte "Atla", başparmak bölgesinde "Devam" (son adımda "Başla" + "Giriş yap").
+  Dört adım uygulamanın güçlü yanlarını anlatır (değer önce, izin sonra; bildirim izni ve konu seçimi ayrı ekranlar):
+    1 Günün baskıları (K16: Sabah 07.00 · Öğleden Sonra 16.00 · Akşam 19.00)   görsel: balikci (Foto Fokus "Boğaz'da sabah")
+    2 Dada Özet derinliği (K17: 15 sn · 1 dk · Tam metin)                      görsel: asgari (özeti gösterilen manşet haberi)
+    3 Haber Dinle + Dada Spiker + Akış (9:16 kısa video)                       görsel: kar-sokak (Akış'ın ilk videosu)
+    4 Kişiselleştirme (Bugün Senin İçin, takip, takım)                         görsel: milli (futbol; takımın canlı maçı)
+  Parametreler:
+    ?adim=1..4   açılacak adım (varsayılan 1); yana kaydırma ya da Devam ile ilerler
+    ?tema=koyu   koyu tema (cerceve.js)
+  Görsel yolu: bu klasör iki kat derinde, G() yerine yerel GG() (../../../assets) kullanılır; ortak dosyalara dokunulmadı.
+  Varsayımlar (onaylanmadı): Atla ve Başla misafir ana sayfaya gider; Giriş yap ekranı henüz yok (#).
+-->
+<link rel="stylesheet" href="../../_ortak/cerceve.css">
+<link rel="stylesheet" href="../../_ortak/marka.css">
+<script src="../../_ortak/icerik.js"></script>
+<script src="../../_ortak/cerceve.js"></script>
+<script src="../../_ortak/icerik-ek.js"></script>
+<style>
+:root{--hero-y:468px}
+.ekran{overflow:hidden;background:var(--zemin)}
+.logo{background-image:url("../../../assets/gorsel/logo/dada.svg")}
+.cam{background:var(--cam);border:1px solid var(--cam-cizgi);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);color:#fff}
+
+/* ---------- adımlar: yana kayan ray ---------- */
+.ray{position:absolute;inset:0;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain}
+.ray::-webkit-scrollbar{display:none}
+.ad{position:relative;flex:none;width:100%;height:100%;scroll-snap-align:start;scroll-snap-stop:always}
+
+/* hero: kok.html ile aynı kalıp (alt köşe --k-kart, altında 3px hilal) */
+.hero-k{position:relative;padding-bottom:3px}
+.hilal{position:absolute;inset:0;border-bottom-left-radius:var(--k-kart);border-bottom-right-radius:var(--k-kart);background:var(--marka)}
+.hero{position:relative;z-index:1;height:var(--hero-y);overflow:hidden;border-bottom-left-radius:var(--k-kart);border-bottom-right-radius:var(--k-kart);background:var(--siyah) center/cover no-repeat;color:#fff}
+.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.58) 0%,rgba(0,0,0,.08) 30%,rgba(0,0,0,.08) 44%,rgba(0,0,0,.78) 100%)}
+.hero>*{position:relative}
+.sahne{position:absolute;left:var(--kenar);right:var(--kenar);bottom:20px}
+
+/* metin paneli */
+.pn{padding:24px var(--kenar) 0}
+.pn .et{height:24px;display:flex;align-items:center;gap:var(--ikon-bosluk);font-size:13px;font-weight:var(--y-kalin);color:var(--marka-metin);white-space:nowrap}
+.pn h1{margin-top:10px;font-size:28px;line-height:1.12;letter-spacing:-.025em;text-wrap:balance}
+.pn p{margin-top:12px;font-size:15.5px;line-height:1.5;color:var(--metin-2);text-wrap:pretty}
+
+/* sabit katman: üst (logo + Atla), noktalar, alt düğmeler */
+.ust{position:absolute;left:0;right:0;top:var(--ust-guvenli);z-index:5;height:48px;padding:0 var(--kenar);display:flex;align-items:center;justify-content:space-between}
+.ust .logo{height:25px}
+.atla{height:44px;padding:0 16px;border-radius:var(--k-ic);font-size:14px;font-weight:var(--y-kalin);display:inline-flex;align-items:center;transition:opacity .2s}
+.atla.gizli{opacity:0;pointer-events:none}
+.nk{position:absolute;right:var(--kenar);top:calc(var(--hero-y) + 3px + 24px);z-index:5;height:24px;display:flex;align-items:center;gap:6px}
+.nk span{width:14px;height:24px;display:grid;place-items:center;transition:width .25s} /* yalnız gösterge: kaydırma ve Devam ilerletir (44px altı dokunma hedefi yok) */
+.nk span i{display:block;width:6px;height:6px;border-radius:var(--k-cubuk);background:var(--cizgi);transition:width .25s,background .25s}
+.nk span.on{width:28px}
+.nk span.on i{width:20px;background:var(--marka)}
+html[data-tema="koyu"] .nk span i{background:rgba(255,255,255,.22)}
+html[data-tema="koyu"] .nk span.on i{background:var(--marka)}
+.alt{position:absolute;left:var(--kenar);right:var(--kenar);bottom:calc(var(--alt-guvenli) + 10px);z-index:5;display:flex;flex-direction:column;gap:8px}
+.bt{height:52px;border-radius:var(--k-ic);display:flex;align-items:center;justify-content:center;gap:var(--ikon-bosluk);font-size:16px;font-weight:var(--y-kalin);white-space:nowrap}
+.bt.a{background:var(--marka);color:var(--siyah)}
+.bt.a i{font-size:14px}
+.bt.b{height:48px;border:1px solid var(--cizgi);color:var(--metin);background:var(--zemin)}
+.bt.b[hidden]{display:none}
+
+/* ---------- sahneler (görselin üstündeki örnek arayüz) ---------- */
+.kc{padding:8px;border-radius:var(--k-kart)} /* iç içe köşe: 16 = 8 iç + 8 boşluk */
+.kc .ust-s{padding:4px 6px 0;display:flex;align-items:center;gap:var(--ikon-bosluk);font-size:12.5px;font-weight:var(--y-orta);color:rgba(255,255,255,.78);white-space:nowrap}
+.kc .ust-s b{color:#fff}
+.kc .ust-s i{color:var(--marka);font-size:12px}
+/* 1 · baskılar */
+.sg3{margin-top:8px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.sg3 span{min-height:72px;padding:8px 4px;border-radius:var(--k-ic);background:rgba(255,255,255,.1);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center}
+.sg3 span i{font-size:14px;color:var(--marka)}
+.sg3 span b{font-size:13px;white-space:nowrap}
+.sg3 span small{font-size:12px;color:rgba(255,255,255,.72);font-variant-numeric:tabular-nums}
+.sg3 span.on{background:var(--marka);color:var(--siyah)}
+.sg3 span.on i{color:var(--siyah)}
+.sg3 span.on small{color:rgba(18,18,18,.7)}
+.sg3 span.so{opacity:.55}
+/* 2 · derinlik */
+.dr{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.dr span{height:36px;border-radius:var(--k-ic);background:rgba(255,255,255,.1);display:grid;place-items:center;font-size:13px;font-weight:var(--y-kalin);color:rgba(255,255,255,.82);white-space:nowrap}
+.dr span.on{background:var(--marka);color:var(--siyah)}
+.kc h3{margin-top:10px;padding:0 6px;font-size:15px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.md{list-style:none;margin-top:8px;padding:0 6px 6px;display:flex;flex-direction:column;gap:6px}
+.md li{display:flex;align-items:center;gap:var(--ikon-bosluk);font-size:13.5px;color:rgba(255,255,255,.88);min-width:0}
+.md li i{flex:none;width:18px;height:18px;border-radius:var(--k-daire);background:var(--marka);color:var(--siyah);font-style:normal;font-size:10.5px;font-weight:var(--y-kalin);display:grid;place-items:center}
+.md li span{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* 3 · Akış + Spiker */
+.ak{display:flex;flex-direction:column;align-items:flex-start}
+.ak .ec2{display:inline-flex;align-items:center;gap:var(--ikon-bosluk);height:28px;padding:0 10px;border-radius:var(--k-ic);font-size:12px;font-weight:var(--y-kalin);white-space:nowrap}
+.ak .ec2 i{color:var(--marka)}
+.ak .ec2 em{font-style:normal;font-weight:var(--y-orta);color:rgba(255,255,255,.78)}
+.ak h2{margin-top:8px;font-size:20px;line-height:1.18;letter-spacing:-.015em;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ak .ilr{margin-top:12px;width:100%;height:3px;border-radius:var(--k-cubuk);background:rgba(255,255,255,.28);overflow:hidden}
+.ak .ilr i{display:block;width:38%;height:100%;border-radius:var(--k-cubuk);background:#fff}
+.sp{margin-top:12px;width:100%;display:flex;align-items:center;gap:12px;padding:8px;border-radius:var(--k-kart)} /* 16 = 8 + 8 */
+.sp .yz{flex:none;width:44px;height:44px;border-radius:var(--k-ic);background-size:cover;background-position:center 20%}
+.sp .t{flex:1;min-width:0}
+.sp .t b{display:block;font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp .t small{display:flex;align-items:center;gap:6px;margin-top:2px;font-size:12.5px;color:rgba(255,255,255,.75);white-space:nowrap}
+.sp .t small i{color:var(--marka);font-size:11px}
+.sp .oy{flex:none;width:44px;height:44px;border-radius:var(--k-daire);background:var(--marka);color:var(--siyah);display:grid;place-items:center;font-size:15px}
+/* 4 · kişisel */
+.mc{margin-top:8px;display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:var(--k-ic);background:rgba(255,255,255,.1)}
+.mc .tk{display:flex;align-items:center;gap:var(--ikon-bosluk);font-size:14px;font-weight:var(--y-kalin);white-space:nowrap}
+.mc .tk span{width:30px;height:30px;border-radius:var(--k-daire);background:#fff;color:var(--siyah);display:grid;place-items:center;font-size:11px}
+.mc .sk{font-size:20px;font-weight:var(--y-kalin);font-variant-numeric:tabular-nums;white-space:nowrap}
+.mc .dk{margin-left:auto;display:inline-flex;align-items:center;gap:var(--ikon-bosluk);font-size:12.5px;font-weight:var(--y-kalin);color:#fff;white-space:nowrap}
+.cp{margin:8px -8px 0;padding:0 8px;gap:6px}
+.cp span{height:32px;padding:0 10px;border-radius:var(--k-ic);display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:var(--y-kalin);white-space:nowrap;background:rgba(255,255,255,.12);color:#fff}
+.cp span i{font-size:11px}
+.cp span.on{background:var(--marka);color:var(--siyah)}
+.cp::after{content:"";flex:0 0 6px}
+</style>
+</head>
+<body data-durum="acik">
+<main class="ekran" id="ekran">
+  <div class="ray" id="ray" aria-live="polite"></div>
+  <header class="ust">
+    <span class="logo" role="img" aria-label="Dada Haber"></span>
+    <a class="atla cam" id="atla" href="../../hibrit/kok.html?uye=0">Atla</a>
+  </header>
+  <div class="nk" id="nk" aria-hidden="true"></div>
+  <div class="alt">
+    <a class="bt a" id="ileri" href="#"><span id="ileri-y">Devam</span><i class="fa-solid fa-arrow-right"></i></a>
+    <a class="bt b" id="gir" href="#" hidden>Giriş yap</a>
+  </div>
+</main>
+<script>
+(function(){
+  /* bu klasör iki kat derinde: görsel yolu yerel */
+  function GG(ad){ return "url('../../../assets/gorsel/haber/" + ad + ".jpg')"; }
+  var s = parseFloat(D.simdi.saat), mac = D.mac, ak = D.akis.liste[0], sp = D.spiker;
+  var bks = [['Sabah', '07.00', 'fa-mug-hot', 7], ['Öğleden Sonra', '16.00', 'fa-sun', 16], ['Akşam', '19.00', 'fa-moon', 19]];
+  var simdiki = bks.filter(function(b){ return s >= b[3]; }).pop() || bks[0];
+
+  var ADIM = [
+    { g: 'balikci', et: ['fa-newspaper', 'Günün baskıları'], h: 'Gün boyu üç baskı',
+      p: 'Sabah, öğleden sonra ve akşam: her baskıda gündemin o anki hali, okunacak sırayla. Kaçırdığın baskı ana sayfada seni bekler.',
+      sahne: '<div class="kc cam"><div class="ust-s"><i class="fa-solid fa-calendar-day"></i>' + '<span>' + D.simdi.gun + ', ' + D.simdi.tarih.replace(/ \d{4}$/, '') + ' · <b>' + D.simdi.saat + '</b></span></div><div class="sg3">' +
+        bks.map(function(b){ var c = b === simdiki ? 'on' : (b[3] > s ? 'so' : ''); return '<span class="' + c + '"><i class="fa-solid ' + b[2] + '"></i><b>' + b[0] + '</b><small>' + b[1] + '</small></span>'; }).join('') + '</div></div>' },
+    { g: D.detay.g, et: ['fa-bolt', 'Dada Özet'], h: 'Vaktin kadar oku',
+      p: 'Her haber üç derinlikte: 15 saniyede üç madde, 1 dakikada özet ya da tam metin. Aralarında tek dokunuşla geçersin.',
+      sahne: '<div class="kc cam"><div class="dr"><span class="on">15 sn</span><span>1 dk</span><span>Tam metin</span></div><h3>' + D.detay.baslik + '</h3><ul class="md">' +
+        D.detay.ozet.map(function(m, i){ return '<li><i>' + (i + 1) + '</i><span>' + m + '</span></li>'; }).join('') + '</ul></div>' },
+    { g: ak.g, et: ['fa-headphones', 'Haber Dinle · Akış'], h: 'Dinle ya da izle',
+      p: 'Dada Spiker günün bültenini okur, her haberi sesli dinlersin. Akış’ta günün kısa videoları dikey ve tam ekran.',
+      sahne: '<div class="ak"><span class="ec2 cam"><i class="fa-solid fa-play"></i>Akış<em>· ' + ak.kat + ' · ' + ak.sure + '</em></span><h2>' + ak.baslik + '</h2><span class="ilr"><i></i></span>' +
+        '<div class="sp cam"><span class="yz" style="background-image:' + GG(sp.gorsel) + '"></span><span class="t"><b>' + sp.bulten + '</b><small><i class="fa-solid fa-microphone"></i>Dada Spiker · ' + sp.sure + '</small></span><span class="oy" aria-hidden="true"><i class="fa-solid fa-play"></i></span></div></div>' },
+    { g: 'milli', et: ['fa-star', 'Bugün Senin İçin'], h: 'Gündemini sen kur',
+      p: 'Konularını, şehrini ve takımını seç; ana sayfa seninle açılsın, takımın sahadayken skor önünde dursun.',
+      sahne: '<div class="kc cam"><div class="ust-s"><i class="fa-solid fa-star"></i><span class="tek"><b>Bugün Senin İçin</b> · ' + mac.lig + '</span></div>' +
+        '<div class="mc"><span class="tk"><span>' + mac.evKod + '</span></span><span class="sk">' + mac.skor + '</span><span class="tk"><span>' + mac.depKod + '</span></span><span class="dk"><span class="canli-nokta"></span>' + mac.dakika + '</span></div>' +
+        '<div class="cp ks">' + D.uye.takip.map(function(t, i){ return '<span class="' + (i < 2 ? 'on' : '') + '"><i class="fa-solid ' + (i < 2 ? 'fa-check' : 'fa-plus') + '"></i>' + t + '</span>'; }).join('') + '</div></div>' }
+  ];
+
+  var ray = document.getElementById('ray'), nk = document.getElementById('nk');
+  ray.innerHTML = ADIM.map(function(a, i){
+    return '<section class="ad" aria-label="Adım ' + (i + 1) + ' / ' + ADIM.length + '"><div class="hero-k"><span class="hilal" aria-hidden="true"></span>' +
+      '<div class="hero" style="background-image:' + GG(a.g) + '"><div class="sahne" aria-hidden="true">' + a.sahne + '</div></div></div>' +
+      '<div class="pn"><span class="et"><i class="fa-solid ' + a.et[0] + '"></i>' + a.et[1] + '</span><h1>' + a.h + '</h1><p>' + a.p + '</p></div></section>';
+  }).join('');
+  nk.innerHTML = ADIM.map(function(a, i){ return '<span><i></i></span>'; }).join('');
+
+  var ileri = document.getElementById('ileri'), ileriY = document.getElementById('ileri-y'), gir = document.getElementById('gir'), atla = document.getElementById('atla');
+  var simdi = -1;
+  function goster(i){
+    if (i === simdi) return; simdi = i;
+    [].forEach.call(nk.children, function(b, j){ b.classList.toggle('on', j === i); });
+    var son = i === ADIM.length - 1;
+    ileriY.textContent = son ? 'Başla' : 'Devam';
+    ileri.querySelector('i').style.display = son ? 'none' : '';
+    ileri.setAttribute('href', son ? atla.getAttribute('href') : '#');
+    gir.hidden = !son;
+    atla.classList.toggle('gizli', son);
+  }
+  function git(i, yumusak){ ray.scrollTo({ left: i * ray.clientWidth, behavior: yumusak ? 'smooth' : 'auto' }); goster(i); }
+  ray.addEventListener('scroll', function(){ goster(Math.round(ray.scrollLeft / ray.clientWidth)); }, { passive: true });
+  ileri.addEventListener('click', function(e){ if (simdi < ADIM.length - 1){ e.preventDefault(); git(simdi + 1, true); } });
+
+  var q = parseInt(new URLSearchParams(location.search).get('adim'), 10);
+  var bas = q >= 1 && q <= ADIM.length ? q - 1 : 0;
+  goster(bas);
+  requestAnimationFrame(function(){ git(bas, false); });
+})();
+</script>
+</body>
+</html>
