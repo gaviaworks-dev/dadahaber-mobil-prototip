@@ -54,21 +54,21 @@ Her içerik ekranı, alt ekranı ve o ekrana ait haller. Liste ve detayların y�
 
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
-| E-013 | Kategori hikâye görüntüleyici | içerik | Hikâye | — | Hikâye modu | Tam ekran; ilerleme çizgileri, dokun ileri/geri, basılı tut dur, aşağı çek kapat, kategori bitince sıradaki; kartta düğme yok (K13). Önceki deneme `hikaye/hikaye.html` | `ekranlar/icerik/hikaye.html` |   |
-| E-014 | Kategori hikâye · duraklatıldı | durum | Hikâye | — | Hikâye modu | Basılı tutunca; ilerleme durur, üst bilgi soluklaşır | `ekranlar/icerik/hikaye.html?durum=dur` |   |
-| E-015 | Kategori hikâye · bugün hikâye yok | durum | Hikâye | — | Hikâye modu | Kategoride bugün haber yok → sıradaki kategoriye geç | `ekranlar/icerik/hikaye.html?durum=bos` |   |
-| E-016 | Kategori hikâye · yükleniyor | durum | Hikâye | `durumlar.html` (iskelet) | Hikâye modu | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/hikaye.html?durum=yukleniyor` |   |
-| E-017 | Kategori hikâye · hata | durum | Hikâye | `500.html` | Hikâye modu | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/hikaye.html?durum=hata` |   |
-| E-018 | Kategori hikâye · çevrimdışı | durum | Hikâye | `cevrimdisi.html` | Hikâye modu | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/hikaye.html?durum=cevrimdisi` |   |
+| E-013 | Kategori hikâye görüntüleyici | içerik | Hikâye | — | Hikâye modu | Tam ekran; ilerleme çizgileri, dokun ileri/geri, basılı tut dur, aşağı çek kapat, kategori bitince sıradaki; kartta düğme yok (K13). Önceki deneme `hikaye/hikaye.html` | `ekranlar/icerik/hikaye.html` | ✓ |
+| E-014 | Kategori hikâye · duraklatıldı | durum | Hikâye | — | Hikâye modu | Basılı tutunca; ilerleme durur, üst bilgi soluklaşır | `ekranlar/icerik/hikaye.html?durum=dur` | ✓ |
+| E-015 | Kategori hikâye · bugün hikâye yok | durum | Hikâye | — | Hikâye modu | Kategoride bugün haber yok → sıradaki kategoriye geç | `ekranlar/icerik/hikaye.html?durum=bos` | ✓ |
+| E-016 | Kategori hikâye · yükleniyor | durum | Hikâye | `durumlar.html` (iskelet) | Hikâye modu | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/hikaye.html?durum=yukleniyor` | ✓ |
+| E-017 | Kategori hikâye · hata | durum | Hikâye | `500.html` | Hikâye modu | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/hikaye.html?durum=hata` | ✓ |
+| E-018 | Kategori hikâye · çevrimdışı | durum | Hikâye | `cevrimdisi.html` | Hikâye modu | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/hikaye.html?durum=cevrimdisi` | ✓ |
 
 ### Bölümler ve liste (kök)
 
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
-| E-019 | Bölümler sekmesi (bölüm dizini) | içerik | Bölümler | `tum-kategoriler.html` | Liste | 8 bölüm ve alt başlıkları (DADAHABER-10 sütunları), Dinle ve izle girişleri; alt çubukta "Bölümler" | `ekranlar/icerik/bolumler.html` |   |
-| E-020 | Bölümler sekmesi · yükleniyor | durum | Bölümler | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/bolumler.html?durum=yukleniyor` |   |
-| E-021 | Bölümler sekmesi · hata | durum | Bölümler | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/bolumler.html?durum=hata` |   |
-| E-022 | Bölümler sekmesi · çevrimdışı | durum | Bölümler | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/bolumler.html?durum=cevrimdisi` |   |
+| E-019 | Bölümler sekmesi (bölüm dizini) | içerik | Bölümler | `tum-kategoriler.html` | Liste | 8 bölüm ve alt başlıkları (DADAHABER-10 sütunları), Dinle ve izle girişleri; alt çubukta "Bölümler" | `ekranlar/icerik/bolumler.html` | ✓ |
+| E-020 | Bölümler sekmesi · yükleniyor | durum | Bölümler | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/bolumler.html?durum=yukleniyor` | ✓ |
+| E-021 | Bölümler sekmesi · hata | durum | Bölümler | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/bolumler.html?durum=hata` | ✓ |
+| E-022 | Bölümler sekmesi · çevrimdışı | durum | Bölümler | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/bolumler.html?durum=cevrimdisi` | ✓ |
 | E-023 | Bölüm listesi · Gündem | içerik | Liste | `gundem.html` | Liste | Görselli başlık (200px), alt konu sekmeleri, Liste ↔ Çizelge; K21, K27 | `hibrit/liste.html` | ✓ |
 | E-024 | Bölüm listesi · çizelge görünümü | içerik | Liste | — | Liste | Saat sırası, gün ayracı (LS-C) | `hibrit/liste.html?kip=cizelge` | ✓ |
 | E-025 | Bölüm listesi · daralan başlık | durum | Liste | — | Liste | Kaydırınca görselli üst çubuk (K30) | `hibrit/liste.html?dar=1` | ✓ |
@@ -110,102 +110,102 @@ Her içerik ekranı, alt ekranı ve o ekrana ait haller. Liste ve detayların y�
 | E-056 | Haber detayı · bulunamadı | durum | Detay | `404.html`, `410.html` | Detay | İçerik kaldırıldı ya da bulunamadı; bölüme dön, arama | `hibrit/detay.html?durum=bulunamadi` | ✓ |
 | E-057 | Haber detayı · çevrimdışı | durum | Detay | `cevrimdisi.html` | Detay | İndirilmemiş haber: kabuk + "Bağlantı yok" + Yeniden dene | `hibrit/detay.html?durum=cevrimdisi` | ✓ |
 | E-605 | Haber detayı · Dinle çalıyor | durum | Haber detayı | — | Detay | Okuma çubuğundaki Dinle haberi sesli okur; mini oynatıcı okuma çubuğunun üstünde, kulaklık ikonu ve haber başlığıyla; Spiker'dan ayrı (K39) | `hibrit/detay.html?calan=dinle` | ✓ |
-| E-058 | Yorumlar (tümü) · üye | içerik | Detay | `haber-detay.html` (yorumlar) | Detay | Özet kartı, süzgeç çipleri (Tümü · En çok beğenilen · Editör yanıtları), Beğen · Yanıtla · Bildir (K31) | `ekranlar/icerik/yorumlar.html` |   |
-| E-059 | Yorumlar (tümü) · misafir | içerik | Detay | `haber-detay.html` | Detay | "Yorum yapmak için giriş yap"; Beğen ve Yanıtla tetik paneli açar | `ekranlar/icerik/yorumlar.html?uye=0` |   |
-| E-060 | Yorumlar · yorum yaz | sistem | Detay | `haber-detay.html` (yorum alanı) | Detay | Alt sayfa, klavye açık; kurallar notu; gönderiliyor | `ekranlar/icerik/yorumlar.html?durum=yaz` |   |
-| E-061 | Yorumlar · yanıtla | sistem | Detay | — | Detay | Yanıtlanan yorum alıntısıyla alt sayfa | `ekranlar/icerik/yorumlar.html?durum=yanitla` |   |
-| E-062 | Yorumlar · gönderildi | durum | Detay | — | Detay | "Yorumlar denetim sonrası yayınlanır" kısa bildirimi; yorum soluk "onay bekliyor" | `ekranlar/icerik/yorumlar.html?durum=gonderildi` |   |
-| E-063 | Yorumlar · yükleniyor | durum | Detay | `durumlar.html` (iskelet) | Detay | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/yorumlar.html?durum=yukleniyor` |   |
-| E-064 | Yorumlar · sayfa sonu yükleme | durum | Detay | — (sitede sayfalama) | Detay | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/yorumlar.html?durum=daha-fazla` |   |
-| E-065 | Yorumlar · boş | durum | Detay | `durumlar.html` (boş) | Detay | Henüz yorum yok; "İlk yorumu sen yaz" | `ekranlar/icerik/yorumlar.html?durum=bos` |   |
-| E-066 | Yorumlar · hata | durum | Detay | `500.html` | Detay | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/yorumlar.html?durum=hata` |   |
-| E-067 | Yorumlar · çevrimdışı | durum | Detay | `cevrimdisi.html` | Detay | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/yorumlar.html?durum=cevrimdisi` |   |
-| E-068 | Köşe yazısı | içerik | Detay | `kose-yazisi.html` | Detay | Yazar başlıklı detay (baş harf dairesi, unvan, Takip et); yazarın diğer yazıları | `ekranlar/icerik/kose-yazisi.html` |   |
-| E-069 | Köşe yazısı · misafir | içerik | Detay | `kose-yazisi.html` | Detay | Yazarı takip et → tetik paneli (C30 varsayımı: cihazda tutulur) | `ekranlar/icerik/kose-yazisi.html?uye=0` |   |
-| E-070 | Köşe yazısı · yükleniyor | durum | Detay | `durumlar.html` (iskelet) | Detay | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/kose-yazisi.html?durum=yukleniyor` |   |
-| E-071 | Köşe yazısı · hata | durum | Detay | `500.html` | Detay | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/kose-yazisi.html?durum=hata` |   |
-| E-072 | Köşe yazısı · bulunamadı | durum | Detay | `404.html`, `410.html` | Detay | İçerik kaldırıldı ya da bulunamadı; bölüme dön, arama | `ekranlar/icerik/kose-yazisi.html?durum=bulunamadi` |   |
-| E-073 | Köşe yazısı · çevrimdışı | durum | Detay | `cevrimdisi.html` | Detay | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/kose-yazisi.html?durum=cevrimdisi` |   |
+| E-058 | Yorumlar (tümü) · üye | içerik | Detay | `haber-detay.html` (yorumlar) | Detay | Özet kartı, süzgeç çipleri (Tümü · En çok beğenilen · Editör yanıtları), Beğen · Yanıtla · Bildir (K31) | `ekranlar/icerik/yorumlar.html` | ✓ |
+| E-059 | Yorumlar (tümü) · misafir | içerik | Detay | `haber-detay.html` | Detay | "Yorum yapmak için giriş yap"; Beğen ve Yanıtla tetik paneli açar | `ekranlar/icerik/yorumlar.html?uye=0` | ✓ |
+| E-060 | Yorumlar · yorum yaz | sistem | Detay | `haber-detay.html` (yorum alanı) | Detay | Alt sayfa, klavye açık; kurallar notu; gönderiliyor | `ekranlar/icerik/yorumlar.html?durum=yaz` | ✓ |
+| E-061 | Yorumlar · yanıtla | sistem | Detay | — | Detay | Yanıtlanan yorum alıntısıyla alt sayfa | `ekranlar/icerik/yorumlar.html?durum=yanitla` | ✓ |
+| E-062 | Yorumlar · gönderildi | durum | Detay | — | Detay | "Yorumlar denetim sonrası yayınlanır" kısa bildirimi; yorum soluk "onay bekliyor" | `ekranlar/icerik/yorumlar.html?durum=gonderildi` | ✓ |
+| E-063 | Yorumlar · yükleniyor | durum | Detay | `durumlar.html` (iskelet) | Detay | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/yorumlar.html?durum=yukleniyor` | ✓ |
+| E-064 | Yorumlar · sayfa sonu yükleme | durum | Detay | — (sitede sayfalama) | Detay | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/yorumlar.html?durum=daha-fazla` | ✓ |
+| E-065 | Yorumlar · boş | durum | Detay | `durumlar.html` (boş) | Detay | Henüz yorum yok; "İlk yorumu sen yaz" | `ekranlar/icerik/yorumlar.html?durum=bos` | ✓ |
+| E-066 | Yorumlar · hata | durum | Detay | `500.html` | Detay | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/yorumlar.html?durum=hata` | ✓ |
+| E-067 | Yorumlar · çevrimdışı | durum | Detay | `cevrimdisi.html` | Detay | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/yorumlar.html?durum=cevrimdisi` | ✓ |
+| E-068 | Köşe yazısı | içerik | Detay | `kose-yazisi.html` | Detay | Yazar başlıklı detay (baş harf dairesi, unvan, Takip et); yazarın diğer yazıları | `ekranlar/icerik/kose-yazisi.html` | ✓ |
+| E-069 | Köşe yazısı · misafir | içerik | Detay | `kose-yazisi.html` | Detay | Yazarı takip et → tetik paneli (C30 varsayımı: cihazda tutulur) | `ekranlar/icerik/kose-yazisi.html?uye=0` | ✓ |
+| E-070 | Köşe yazısı · yükleniyor | durum | Detay | `durumlar.html` (iskelet) | Detay | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/kose-yazisi.html?durum=yukleniyor` | ✓ |
+| E-071 | Köşe yazısı · hata | durum | Detay | `500.html` | Detay | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/kose-yazisi.html?durum=hata` | ✓ |
+| E-072 | Köşe yazısı · bulunamadı | durum | Detay | `404.html`, `410.html` | Detay | İçerik kaldırıldı ya da bulunamadı; bölüme dön, arama | `ekranlar/icerik/kose-yazisi.html?durum=bulunamadi` | ✓ |
+| E-073 | Köşe yazısı · çevrimdışı | durum | Detay | `cevrimdisi.html` | Detay | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/kose-yazisi.html?durum=cevrimdisi` | ✓ |
 
 ### Canlı
 
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
-| E-074 | Canlı anlatım (Dakika Dakika) · sürüyor | içerik | Canlı | `dakika-dakika.html`, `dakika-dakika-butce.html` | Detay | Canlı rozeti, özet, saatli girişler yeni üstte, kilit anlar; sıçrama yok | `ekranlar/icerik/canli-anlatim.html` |   |
-| E-075 | Canlı anlatım · yeni giriş şeridi | durum | Canlı | — | Detay | "N yeni gelişme" hapı; dokununca başa | `ekranlar/icerik/canli-anlatim.html?durum=yeni` |   |
-| E-076 | Canlı anlatım · kilit anlar | durum | Canlı | `dakika-dakika.html` | Detay | Yalnız öne çıkan girişler süzgeci | `ekranlar/icerik/canli-anlatim.html?durum=kilit` |   |
-| E-077 | Canlı anlatım · sona erdi | durum | Canlı | `dakika-dakika-zirve.html` | Detay | Sona erdi rozeti, özet başta, girişler eskiden yeniye | `ekranlar/icerik/canli-anlatim.html?durum=bitti` |   |
-| E-078 | Canlı anlatım · yükleniyor | durum | Canlı | `durumlar.html` (iskelet) | Detay | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/canli-anlatim.html?durum=yukleniyor` |   |
-| E-079 | Canlı anlatım · aşağı çekip yenileme | durum | Canlı | — | Detay | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/canli-anlatim.html?durum=yenileniyor` |   |
-| E-080 | Canlı anlatım · hata | durum | Canlı | `500.html` | Detay | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/canli-anlatim.html?durum=hata` |   |
-| E-081 | Canlı anlatım · bulunamadı | durum | Canlı | `404.html`, `410.html` | Detay | İçerik kaldırıldı ya da bulunamadı; bölüme dön, arama | `ekranlar/icerik/canli-anlatim.html?durum=bulunamadi` |   |
-| E-082 | Canlı anlatım · çevrimdışı | durum | Canlı | `cevrimdisi.html` | Detay | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/canli-anlatim.html?durum=cevrimdisi` |   |
-| E-083 | Canlı Gündem (canlı olaylar listesi) | içerik | Canlı | `canli-gundem.html`, `canli.html` | Liste | Canlı ve sona eren anlatımlar; canlı önce | `ekranlar/icerik/canli-gundem.html` |   |
-| E-084 | Canlı Gündem · yükleniyor | durum | Canlı | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/canli-gundem.html?durum=yukleniyor` |   |
-| E-085 | Canlı Gündem · aşağı çekip yenileme | durum | Canlı | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/canli-gundem.html?durum=yenileniyor` |   |
-| E-086 | Canlı Gündem · sayfa sonu yükleme | durum | Canlı | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/canli-gundem.html?durum=daha-fazla` |   |
-| E-087 | Canlı Gündem · boş | durum | Canlı | `durumlar.html` (boş) | Liste | Şu an canlı anlatım yok; sona erenler altta | `ekranlar/icerik/canli-gundem.html?durum=bos` |   |
-| E-088 | Canlı Gündem · hata | durum | Canlı | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/canli-gundem.html?durum=hata` |   |
-| E-089 | Canlı Gündem · çevrimdışı | durum | Canlı | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/canli-gundem.html?durum=cevrimdisi` |   |
-| E-090 | Canlı Yayın · yayında | içerik | Canlı | `canli-yayin.html` | Detay | Oynatıcı (oran korunur), yayın akışı, sona erenler | `ekranlar/icerik/canli-yayin.html` |   |
-| E-091 | Canlı Yayın · yayın yok | durum | Canlı | `canli-yayin.html` | Detay | Sıradaki yayın saati; sona eren yayınlar | `ekranlar/icerik/canli-yayin.html?durum=yayin-yok` |   |
-| E-092 | Canlı Yayın · mobil veri uyarısı | durum | Canlı | — | Detay | Mobil veride otomatik oynatma kapalı; dokun oynat | `ekranlar/icerik/canli-yayin.html?durum=mobil-veri` |   |
-| E-093 | Canlı Yayın · yükleniyor | durum | Canlı | `durumlar.html` (iskelet) | Detay | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/canli-yayin.html?durum=yukleniyor` |   |
-| E-094 | Canlı Yayın · hata | durum | Canlı | `500.html` | Detay | Yayın açılamadı; Yeniden dene | `ekranlar/icerik/canli-yayin.html?durum=hata` |   |
-| E-095 | Canlı Yayın · çevrimdışı | durum | Canlı | `cevrimdisi.html` | Detay | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/canli-yayin.html?durum=cevrimdisi` |   |
-| E-096 | Son Dakika | içerik | Canlı | `son-dakika.html` | Liste | Saatli satır, gün ayracı, saat 14.30 biçimi | `ekranlar/icerik/son-dakika.html` |   |
-| E-097 | Son Dakika · yeni haber geldi | durum | Canlı | — | Liste | "N yeni haber" hapı üstte; dokununca başa ve yenile | `ekranlar/icerik/son-dakika.html?durum=yeni` |   |
-| E-098 | Son Dakika · yükleniyor | durum | Canlı | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/son-dakika.html?durum=yukleniyor` |   |
-| E-099 | Son Dakika · aşağı çekip yenileme | durum | Canlı | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/son-dakika.html?durum=yenileniyor` |   |
-| E-100 | Son Dakika · sayfa sonu yükleme | durum | Canlı | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/son-dakika.html?durum=daha-fazla` |   |
-| E-101 | Son Dakika · boş | durum | Canlı | `durumlar.html` (boş) | Liste | Bugün son dakika yok (gece yarısından sonra); dünküler altta | `ekranlar/icerik/son-dakika.html?durum=bos` |   |
-| E-102 | Son Dakika · hata | durum | Canlı | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/son-dakika.html?durum=hata` |   |
-| E-103 | Son Dakika · çevrimdışı | durum | Canlı | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/son-dakika.html?durum=cevrimdisi` |   |
+| E-074 | Canlı anlatım (Dakika Dakika) · sürüyor | içerik | Canlı | `dakika-dakika.html`, `dakika-dakika-butce.html` | Detay | Canlı rozeti, özet, saatli girişler yeni üstte, kilit anlar; sıçrama yok | `ekranlar/icerik/canli-anlatim.html` | ✓ |
+| E-075 | Canlı anlatım · yeni giriş şeridi | durum | Canlı | — | Detay | "N yeni gelişme" hapı; dokununca başa | `ekranlar/icerik/canli-anlatim.html?durum=yeni` | ✓ |
+| E-076 | Canlı anlatım · kilit anlar | durum | Canlı | `dakika-dakika.html` | Detay | Yalnız öne çıkan girişler süzgeci | `ekranlar/icerik/canli-anlatim.html?durum=kilit` | ✓ |
+| E-077 | Canlı anlatım · sona erdi | durum | Canlı | `dakika-dakika-zirve.html` | Detay | Sona erdi rozeti, özet başta, girişler eskiden yeniye | `ekranlar/icerik/canli-anlatim.html?durum=bitti` | ✓ |
+| E-078 | Canlı anlatım · yükleniyor | durum | Canlı | `durumlar.html` (iskelet) | Detay | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/canli-anlatim.html?durum=yukleniyor` | ✓ |
+| E-079 | Canlı anlatım · aşağı çekip yenileme | durum | Canlı | — | Detay | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/canli-anlatim.html?durum=yenileniyor` | ✓ |
+| E-080 | Canlı anlatım · hata | durum | Canlı | `500.html` | Detay | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/canli-anlatim.html?durum=hata` | ✓ |
+| E-081 | Canlı anlatım · bulunamadı | durum | Canlı | `404.html`, `410.html` | Detay | İçerik kaldırıldı ya da bulunamadı; bölüme dön, arama | `ekranlar/icerik/canli-anlatim.html?durum=bulunamadi` | ✓ |
+| E-082 | Canlı anlatım · çevrimdışı | durum | Canlı | `cevrimdisi.html` | Detay | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/canli-anlatim.html?durum=cevrimdisi` | ✓ |
+| E-083 | Canlı Gündem (canlı olaylar listesi) | içerik | Canlı | `canli-gundem.html`, `canli.html` | Liste | Canlı ve sona eren anlatımlar; canlı önce | `ekranlar/icerik/canli-gundem.html` | ✓ |
+| E-084 | Canlı Gündem · yükleniyor | durum | Canlı | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/canli-gundem.html?durum=yukleniyor` | ✓ |
+| E-085 | Canlı Gündem · aşağı çekip yenileme | durum | Canlı | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/canli-gundem.html?durum=yenileniyor` | ✓ |
+| E-086 | Canlı Gündem · sayfa sonu yükleme | durum | Canlı | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/canli-gundem.html?durum=daha-fazla` | ✓ |
+| E-087 | Canlı Gündem · boş | durum | Canlı | `durumlar.html` (boş) | Liste | Şu an canlı anlatım yok; sona erenler altta | `ekranlar/icerik/canli-gundem.html?durum=bos` | ✓ |
+| E-088 | Canlı Gündem · hata | durum | Canlı | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/canli-gundem.html?durum=hata` | ✓ |
+| E-089 | Canlı Gündem · çevrimdışı | durum | Canlı | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/canli-gundem.html?durum=cevrimdisi` | ✓ |
+| E-090 | Canlı Yayın · yayında | içerik | Canlı | `canli-yayin.html` | Detay | Oynatıcı (oran korunur), yayın akışı, sona erenler | `ekranlar/icerik/canli-yayin.html` | ✓ |
+| E-091 | Canlı Yayın · yayın yok | durum | Canlı | `canli-yayin.html` | Detay | Sıradaki yayın saati; sona eren yayınlar | `ekranlar/icerik/canli-yayin.html?durum=yayin-yok` | ✓ |
+| E-092 | Canlı Yayın · mobil veri uyarısı | durum | Canlı | — | Detay | Mobil veride otomatik oynatma kapalı; dokun oynat | `ekranlar/icerik/canli-yayin.html?durum=mobil-veri` | ✓ |
+| E-093 | Canlı Yayın · yükleniyor | durum | Canlı | `durumlar.html` (iskelet) | Detay | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/canli-yayin.html?durum=yukleniyor` | ✓ |
+| E-094 | Canlı Yayın · hata | durum | Canlı | `500.html` | Detay | Yayın açılamadı; Yeniden dene | `ekranlar/icerik/canli-yayin.html?durum=hata` | ✓ |
+| E-095 | Canlı Yayın · çevrimdışı | durum | Canlı | `cevrimdisi.html` | Detay | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/canli-yayin.html?durum=cevrimdisi` | ✓ |
+| E-096 | Son Dakika | içerik | Canlı | `son-dakika.html` | Liste | Saatli satır, gün ayracı, saat 14.30 biçimi | `ekranlar/icerik/son-dakika.html` | ✓ |
+| E-097 | Son Dakika · yeni haber geldi | durum | Canlı | — | Liste | "N yeni haber" hapı üstte; dokununca başa ve yenile | `ekranlar/icerik/son-dakika.html?durum=yeni` | ✓ |
+| E-098 | Son Dakika · yükleniyor | durum | Canlı | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/son-dakika.html?durum=yukleniyor` | ✓ |
+| E-099 | Son Dakika · aşağı çekip yenileme | durum | Canlı | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/son-dakika.html?durum=yenileniyor` | ✓ |
+| E-100 | Son Dakika · sayfa sonu yükleme | durum | Canlı | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/son-dakika.html?durum=daha-fazla` | ✓ |
+| E-101 | Son Dakika · boş | durum | Canlı | `durumlar.html` (boş) | Liste | Bugün son dakika yok (gece yarısından sonra); dünküler altta | `ekranlar/icerik/son-dakika.html?durum=bos` | ✓ |
+| E-102 | Son Dakika · hata | durum | Canlı | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/son-dakika.html?durum=hata` | ✓ |
+| E-103 | Son Dakika · çevrimdışı | durum | Canlı | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/son-dakika.html?durum=cevrimdisi` | ✓ |
 
 ### Arama
 
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
-| E-104 | Arama girişi | içerik | Arama | arama penceresi (uc-search-modal) | — | Klavye açık; son aramalar, gündemdekiler, mikrofon düğmesi | `ekranlar/icerik/arama.html` |   |
-| E-105 | Arama · yazarken öneriler | durum | Arama | arama penceresi | — | Haber, yazar, etiket önerileri; eşleşen kısım kalın | `ekranlar/icerik/arama.html?durum=yaziyor` |   |
-| E-106 | Arama · son arama yok | durum | Arama | — | — | Geçmiş boş: yalnız gündemdekiler | `ekranlar/icerik/arama.html?durum=bos` |   |
-| E-107 | Arama sonuçları | içerik | Arama | `arama.html` | Liste | Tür sekmeleri (sitedeki tür şeridi), sonuç kartları; liste kartıyla aynı | `ekranlar/icerik/arama-sonuc.html` |   |
-| E-108 | Arama sonuçları · süzgeç alt sayfası | sistem | Arama | `arama.html` (süzgeç) | Liste | Tarih, bölüm, sıralama; Uygula · Temizle | `ekranlar/icerik/arama-sonuc.html?durum=suzgec` |   |
-| E-109 | Arama sonuçları · yazım önerisi | durum | Arama | `arama.html` | Liste | "Bunu mu demek istedin?" + düzeltilmiş sonuçlar | `ekranlar/icerik/arama-sonuc.html?durum=oneri` |   |
-| E-110 | Arama sonuçları · bu türde sonuç yok | durum | Arama | `durumlar.html` | Liste | Seçili sekmede yok; Tümü'nde sayı | `ekranlar/icerik/arama-sonuc.html?durum=tur-bos` |   |
-| E-111 | Arama sonuçları · yükleniyor | durum | Arama | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/arama-sonuc.html?durum=yukleniyor` |   |
-| E-112 | Arama sonuçları · sayfa sonu yükleme | durum | Arama | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/arama-sonuc.html?durum=daha-fazla` |   |
-| E-113 | Arama sonuçları · boş | durum | Arama | `durumlar.html` (boş) | Liste | Sonuç yok: aramayı değiştir, Dada'ya Sor'a sor, gündemdekiler | `ekranlar/icerik/arama-sonuc.html?durum=bos` |   |
-| E-114 | Arama sonuçları · hata | durum | Arama | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/arama-sonuc.html?durum=hata` |   |
-| E-115 | Arama sonuçları · çevrimdışı | durum | Arama | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/arama-sonuc.html?durum=cevrimdisi` |   |
-| E-116 | Dada'ya Sor · başlangıç | içerik | Arama | `dadaya-sor.html` | — | Örnek sorular; soru alanı; B-16 (arama ile birleşik kutu) açık | `ekranlar/icerik/dadaya-sor.html` |   |
-| E-117 | Dada'ya Sor · yanıt yazılıyor | durum | Arama | `dadaya-sor.html` | — | Yanıt akarak gelir; durdur | `ekranlar/icerik/dadaya-sor.html?durum=yaziyor` |   |
-| E-118 | Dada'ya Sor · yanıt | içerik | Arama | `dadaya-sor.html` | — | Her yanıtta kaynak haber bağlantıları; "AI ile hazırlandı" etiketi (panel AI kuralları) | `ekranlar/icerik/dadaya-sor.html?durum=yanit` |   |
-| E-119 | Dada'ya Sor · yanıt bulunamadı | durum | Arama | — | — | Haberlerde karşılığı yok; aramaya geç | `ekranlar/icerik/dadaya-sor.html?durum=bos` |   |
-| E-120 | Dada'ya Sor · hata | durum | Arama | `500.html` | — | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/dadaya-sor.html?durum=hata` |   |
-| E-121 | Dada'ya Sor · çevrimdışı | durum | Arama | `cevrimdisi.html` | — | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/dadaya-sor.html?durum=cevrimdisi` |   |
+| E-104 | Arama girişi | içerik | Arama | arama penceresi (uc-search-modal) | — | Klavye açık; son aramalar, gündemdekiler, mikrofon düğmesi | `ekranlar/icerik/arama.html` | ✓ |
+| E-105 | Arama · yazarken öneriler | durum | Arama | arama penceresi | — | Haber, yazar, etiket önerileri; eşleşen kısım kalın | `ekranlar/icerik/arama.html?durum=yaziyor` | ✓ |
+| E-106 | Arama · son arama yok | durum | Arama | — | — | Geçmiş boş: yalnız gündemdekiler | `ekranlar/icerik/arama.html?durum=bos` | ✓ |
+| E-107 | Arama sonuçları | içerik | Arama | `arama.html` | Liste | Tür sekmeleri (sitedeki tür şeridi), sonuç kartları; liste kartıyla aynı | `ekranlar/icerik/arama-sonuc.html` | ✓ |
+| E-108 | Arama sonuçları · süzgeç alt sayfası | sistem | Arama | `arama.html` (süzgeç) | Liste | Tarih, bölüm, sıralama; Uygula · Temizle | `ekranlar/icerik/arama-sonuc.html?durum=suzgec` | ✓ |
+| E-109 | Arama sonuçları · yazım önerisi | durum | Arama | `arama.html` | Liste | "Bunu mu demek istedin?" + düzeltilmiş sonuçlar | `ekranlar/icerik/arama-sonuc.html?durum=oneri` | ✓ |
+| E-110 | Arama sonuçları · bu türde sonuç yok | durum | Arama | `durumlar.html` | Liste | Seçili sekmede yok; Tümü'nde sayı | `ekranlar/icerik/arama-sonuc.html?durum=tur-bos` | ✓ |
+| E-111 | Arama sonuçları · yükleniyor | durum | Arama | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/arama-sonuc.html?durum=yukleniyor` | ✓ |
+| E-112 | Arama sonuçları · sayfa sonu yükleme | durum | Arama | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/arama-sonuc.html?durum=daha-fazla` | ✓ |
+| E-113 | Arama sonuçları · boş | durum | Arama | `durumlar.html` (boş) | Liste | Sonuç yok: aramayı değiştir, Dada'ya Sor'a sor, gündemdekiler | `ekranlar/icerik/arama-sonuc.html?durum=bos` | ✓ |
+| E-114 | Arama sonuçları · hata | durum | Arama | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/arama-sonuc.html?durum=hata` | ✓ |
+| E-115 | Arama sonuçları · çevrimdışı | durum | Arama | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/arama-sonuc.html?durum=cevrimdisi` | ✓ |
+| E-116 | Dada'ya Sor · başlangıç | içerik | Arama | `dadaya-sor.html` | — | Örnek sorular; soru alanı; B-16 (arama ile birleşik kutu) açık | `ekranlar/icerik/dadaya-sor.html` | ✓ |
+| E-117 | Dada'ya Sor · yanıt yazılıyor | durum | Arama | `dadaya-sor.html` | — | Yanıt akarak gelir; durdur | `ekranlar/icerik/dadaya-sor.html?durum=yaziyor` | ✓ |
+| E-118 | Dada'ya Sor · yanıt | içerik | Arama | `dadaya-sor.html` | — | Her yanıtta kaynak haber bağlantıları; "AI ile hazırlandı" etiketi (panel AI kuralları) | `ekranlar/icerik/dadaya-sor.html?durum=yanit` | ✓ |
+| E-119 | Dada'ya Sor · yanıt bulunamadı | durum | Arama | — | — | Haberlerde karşılığı yok; aramaya geç | `ekranlar/icerik/dadaya-sor.html?durum=bos` | ✓ |
+| E-120 | Dada'ya Sor · hata | durum | Arama | `500.html` | — | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/dadaya-sor.html?durum=hata` | ✓ |
+| E-121 | Dada'ya Sor · çevrimdışı | durum | Arama | `cevrimdisi.html` | — | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/dadaya-sor.html?durum=cevrimdisi` | ✓ |
 
 ### Video Haber
 
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
-| E-122 | Video Haber listesi | içerik | Video | `video.html` | Liste | Süzgeç: Tümü, Gündem, Finans, Spor, Dünya, Kadın, Savunma, Kampüs, Teknoloji; kartta tür etiketi (Anlık Gelişme, Sahadan, Açıklayıcı Video, Röportaj) ve süre | `ekranlar/icerik/video.html` |   |
-| E-123 | Video Haber · süzgeç seçili | durum | Video | `video.html?kategori=spor` | Liste | Kategori çipi seçili (eski kategori sayfası yerine) | `ekranlar/icerik/video.html?kategori=spor` |   |
-| E-124 | Video Haber listesi · yükleniyor | durum | Video | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/video.html?durum=yukleniyor` |   |
-| E-125 | Video Haber listesi · aşağı çekip yenileme | durum | Video | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/video.html?durum=yenileniyor` |   |
-| E-126 | Video Haber listesi · sayfa sonu yükleme | durum | Video | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/video.html?durum=daha-fazla` |   |
-| E-127 | Video Haber listesi · boş | durum | Video | `durumlar.html` (boş) | Liste | Bu kategoride video yok; Tümü'ne dön | `ekranlar/icerik/video.html?durum=bos` |   |
-| E-128 | Video Haber listesi · hata | durum | Video | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/video.html?durum=hata` |   |
-| E-129 | Video Haber listesi · çevrimdışı | durum | Video | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/video.html?durum=cevrimdisi` |   |
-| E-130 | Video detayı · oynatılıyor | içerik | Video | `video-detay.html` | Detay | Oynatıcı tam genişlik, başlık, ilişkili haber, sıradaki videolar | `ekranlar/icerik/video-detay.html` |   |
-| E-131 | Video detayı · denetimler | durum | Video | — | Detay | Dokununca: duraklat, ileri/geri 10 sn, altyazı, ses, tam ekran | `ekranlar/icerik/video-detay.html?durum=denetim` |   |
-| E-132 | Video detayı · yatay tam ekran | durum | Video | — | Detay | Telefon yatay; güvenli alanlar yanlarda | `ekranlar/icerik/video-detay.html?durum=tam-ekran` |   |
-| E-133 | Video detayı · resim içinde resim | durum | Video | — | Detay | Uygulamadan çıkınca küçük pencere (iOS/Android sistem davranışı) | `ekranlar/icerik/video-detay.html?durum=pip` |   |
-| E-134 | Video detayı · mobil veri uyarısı | durum | Video | — | Detay | Otomatik oynatma kapalı; dokun oynat | `ekranlar/icerik/video-detay.html?durum=mobil-veri` |   |
-| E-135 | Video detayı · yükleniyor | durum | Video | `durumlar.html` (iskelet) | Detay | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/video-detay.html?durum=yukleniyor` |   |
-| E-136 | Video detayı · hata | durum | Video | `500.html` | Detay | Video oynatılamadı; Yeniden dene | `ekranlar/icerik/video-detay.html?durum=hata` |   |
-| E-137 | Video detayı · bulunamadı | durum | Video | `404.html`, `410.html` | Detay | İçerik kaldırıldı ya da bulunamadı; bölüme dön, arama | `ekranlar/icerik/video-detay.html?durum=bulunamadi` |   |
-| E-138 | Video detayı · çevrimdışı | durum | Video | `cevrimdisi.html` | Detay | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/video-detay.html?durum=cevrimdisi` |   |
+| E-122 | Video Haber listesi | içerik | Video | `video.html` | Liste | Süzgeç: Tümü, Gündem, Finans, Spor, Dünya, Kadın, Savunma, Kampüs, Teknoloji; kartta tür etiketi (Anlık Gelişme, Sahadan, Açıklayıcı Video, Röportaj) ve süre | `ekranlar/icerik/video.html` | ✓ |
+| E-123 | Video Haber · süzgeç seçili | durum | Video | `video.html?kategori=spor` | Liste | Kategori çipi seçili (eski kategori sayfası yerine) | `ekranlar/icerik/video.html?kategori=spor` | ✓ |
+| E-124 | Video Haber listesi · yükleniyor | durum | Video | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/video.html?durum=yukleniyor` | ✓ |
+| E-125 | Video Haber listesi · aşağı çekip yenileme | durum | Video | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/video.html?durum=yenileniyor` | ✓ |
+| E-126 | Video Haber listesi · sayfa sonu yükleme | durum | Video | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/video.html?durum=daha-fazla` | ✓ |
+| E-127 | Video Haber listesi · boş | durum | Video | `durumlar.html` (boş) | Liste | Bu kategoride video yok; Tümü'ne dön | `ekranlar/icerik/video.html?durum=bos` | ✓ |
+| E-128 | Video Haber listesi · hata | durum | Video | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/video.html?durum=hata` | ✓ |
+| E-129 | Video Haber listesi · çevrimdışı | durum | Video | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/video.html?durum=cevrimdisi` | ✓ |
+| E-130 | Video detayı · oynatılıyor | içerik | Video | `video-detay.html` | Detay | Oynatıcı tam genişlik, başlık, ilişkili haber, sıradaki videolar | `ekranlar/icerik/video-detay.html` | ✓ |
+| E-131 | Video detayı · denetimler | durum | Video | — | Detay | Dokununca: duraklat, ileri/geri 10 sn, altyazı, ses, tam ekran | `ekranlar/icerik/video-detay.html?durum=denetim` | ✓ |
+| E-132 | Video detayı · yatay tam ekran | durum | Video | — | Detay | Telefon yatay; güvenli alanlar yanlarda | `ekranlar/icerik/video-detay.html?durum=tam-ekran` | ✓ |
+| E-133 | Video detayı · resim içinde resim | durum | Video | — | Detay | Uygulamadan çıkınca küçük pencere (iOS/Android sistem davranışı) | `ekranlar/icerik/video-detay.html?durum=pip` | ✓ |
+| E-134 | Video detayı · mobil veri uyarısı | durum | Video | — | Detay | Otomatik oynatma kapalı; dokun oynat | `ekranlar/icerik/video-detay.html?durum=mobil-veri` | ✓ |
+| E-135 | Video detayı · yükleniyor | durum | Video | `durumlar.html` (iskelet) | Detay | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/video-detay.html?durum=yukleniyor` | ✓ |
+| E-136 | Video detayı · hata | durum | Video | `500.html` | Detay | Video oynatılamadı; Yeniden dene | `ekranlar/icerik/video-detay.html?durum=hata` | ✓ |
+| E-137 | Video detayı · bulunamadı | durum | Video | `404.html`, `410.html` | Detay | İçerik kaldırıldı ya da bulunamadı; bölüme dön, arama | `ekranlar/icerik/video-detay.html?durum=bulunamadi` | ✓ |
+| E-138 | Video detayı · çevrimdışı | durum | Video | `cevrimdisi.html` | Detay | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/video-detay.html?durum=cevrimdisi` | ✓ |
 
 ### Akış (kök)
 
@@ -226,290 +226,290 @@ Her içerik ekranı, alt ekranı ve o ekrana ait haller. Liste ve detayların y�
 
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
-| E-149 | Foto Fokus listesi | içerik | Galeri | `foto-fokus.html` | Liste | Süzgeç: Tümü, Şehir, Toplum, Doğa ve İklim, Kültür ve Sanat, Spor, Savunma, Dünya; kartta kare sayısı | `ekranlar/icerik/foto-fokus.html` |   |
-| E-150 | Foto Fokus listesi · yükleniyor | durum | Galeri | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/foto-fokus.html?durum=yukleniyor` |   |
-| E-151 | Foto Fokus listesi · aşağı çekip yenileme | durum | Galeri | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/foto-fokus.html?durum=yenileniyor` |   |
-| E-152 | Foto Fokus listesi · sayfa sonu yükleme | durum | Galeri | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/foto-fokus.html?durum=daha-fazla` |   |
-| E-153 | Foto Fokus listesi · boş | durum | Galeri | `durumlar.html` (boş) | Liste | Bu temada galeri yok | `ekranlar/icerik/foto-fokus.html?durum=bos` |   |
-| E-154 | Foto Fokus listesi · hata | durum | Galeri | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/foto-fokus.html?durum=hata` |   |
-| E-155 | Foto Fokus listesi · çevrimdışı | durum | Galeri | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/foto-fokus.html?durum=cevrimdisi` |   |
-| E-156 | Galeri (Foto Fokus detayı) | içerik | Galeri | `foto-fokus-detay.html` | Detay | Albüm kapağı, kareler, altyazılar | `ekranlar/icerik/galeri.html` |   |
-| E-157 | Galeri · tam ekran görüntüleyici | içerik | Galeri | görüntüleyici (dh-gal) | — | Yana kaydır, kare sayacı, altyazı aç/kapa, aşağı çek kapat; detay kapağı da bunu kullanır | `ekranlar/icerik/galeri.html?durum=goruntule` |   |
-| E-158 | Galeri · yakınlaştırılmış | durum | Galeri | — | — | İki parmak / çift dokunuş; arayüz gizli | `ekranlar/icerik/galeri.html?durum=yakinlastir` |   |
-| E-159 | Galeri · yükleniyor | durum | Galeri | `durumlar.html` (iskelet) | Detay | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/galeri.html?durum=yukleniyor` |   |
-| E-160 | Galeri · hata | durum | Galeri | `500.html` | Detay | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/galeri.html?durum=hata` |   |
-| E-161 | Galeri · bulunamadı | durum | Galeri | `404.html`, `410.html` | Detay | İçerik kaldırıldı ya da bulunamadı; bölüme dön, arama | `ekranlar/icerik/galeri.html?durum=bulunamadi` |   |
-| E-162 | Galeri · çevrimdışı | durum | Galeri | `cevrimdisi.html` | Detay | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/galeri.html?durum=cevrimdisi` |   |
-| E-163 | İnfografik listesi | içerik | Galeri | `infografik.html` | Liste | Süzgeç: Tümü, Finans ve Ekonomi, Toplum ve Demografi, Enerji ve İklim, Savunma ve Teknoloji, Spor, Eğitim ve Kampüs, Dünya | `ekranlar/icerik/infografik.html` |   |
-| E-164 | İnfografik listesi · yükleniyor | durum | Galeri | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/infografik.html?durum=yukleniyor` |   |
-| E-165 | İnfografik listesi · aşağı çekip yenileme | durum | Galeri | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/infografik.html?durum=yenileniyor` |   |
-| E-166 | İnfografik listesi · sayfa sonu yükleme | durum | Galeri | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/infografik.html?durum=daha-fazla` |   |
-| E-167 | İnfografik listesi · boş | durum | Galeri | `durumlar.html` (boş) | Liste | Bu konuda infografik yok | `ekranlar/icerik/infografik.html?durum=bos` |   |
-| E-168 | İnfografik listesi · hata | durum | Galeri | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/infografik.html?durum=hata` |   |
-| E-169 | İnfografik listesi · çevrimdışı | durum | Galeri | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/infografik.html?durum=cevrimdisi` |   |
-| E-170 | İnfografik detayı | içerik | Galeri | `infografik-detay.html` | Detay | Görüntüleyici (galeriyle ortak), yakınlaştır; veri kaynağı ve dönem etiketi zorunlu (DADAHABER-10 §5) | `ekranlar/icerik/infografik-detay.html` |   |
-| E-171 | İnfografik detayı · yakınlaştırılmış | durum | Galeri | — | — | Tam ekran, kaydırarak gez | `ekranlar/icerik/infografik-detay.html?durum=yakinlastir` |   |
-| E-172 | İnfografik detayı · yükleniyor | durum | Galeri | `durumlar.html` (iskelet) | Detay | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/infografik-detay.html?durum=yukleniyor` |   |
-| E-173 | İnfografik detayı · hata | durum | Galeri | `500.html` | Detay | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/infografik-detay.html?durum=hata` |   |
-| E-174 | İnfografik detayı · bulunamadı | durum | Galeri | `404.html`, `410.html` | Detay | İçerik kaldırıldı ya da bulunamadı; bölüme dön, arama | `ekranlar/icerik/infografik-detay.html?durum=bulunamadi` |   |
-| E-175 | İnfografik detayı · çevrimdışı | durum | Galeri | `cevrimdisi.html` | Detay | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/infografik-detay.html?durum=cevrimdisi` |   |
+| E-149 | Foto Fokus listesi | içerik | Galeri | `foto-fokus.html` | Liste | Süzgeç: Tümü, Şehir, Toplum, Doğa ve İklim, Kültür ve Sanat, Spor, Savunma, Dünya; kartta kare sayısı | `ekranlar/icerik/foto-fokus.html` | ✓ |
+| E-150 | Foto Fokus listesi · yükleniyor | durum | Galeri | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/foto-fokus.html?durum=yukleniyor` | ✓ |
+| E-151 | Foto Fokus listesi · aşağı çekip yenileme | durum | Galeri | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/foto-fokus.html?durum=yenileniyor` | ✓ |
+| E-152 | Foto Fokus listesi · sayfa sonu yükleme | durum | Galeri | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/foto-fokus.html?durum=daha-fazla` | ✓ |
+| E-153 | Foto Fokus listesi · boş | durum | Galeri | `durumlar.html` (boş) | Liste | Bu temada galeri yok | `ekranlar/icerik/foto-fokus.html?durum=bos` | ✓ |
+| E-154 | Foto Fokus listesi · hata | durum | Galeri | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/foto-fokus.html?durum=hata` | ✓ |
+| E-155 | Foto Fokus listesi · çevrimdışı | durum | Galeri | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/foto-fokus.html?durum=cevrimdisi` | ✓ |
+| E-156 | Galeri (Foto Fokus detayı) | içerik | Galeri | `foto-fokus-detay.html` | Detay | Albüm kapağı, kareler, altyazılar | `ekranlar/icerik/galeri.html` | ✓ |
+| E-157 | Galeri · tam ekran görüntüleyici | içerik | Galeri | görüntüleyici (dh-gal) | — | Yana kaydır, kare sayacı, altyazı aç/kapa, aşağı çek kapat; detay kapağı da bunu kullanır | `ekranlar/icerik/galeri.html?durum=goruntule` | ✓ |
+| E-158 | Galeri · yakınlaştırılmış | durum | Galeri | — | — | İki parmak / çift dokunuş; arayüz gizli | `ekranlar/icerik/galeri.html?durum=yakinlastir` | ✓ |
+| E-159 | Galeri · yükleniyor | durum | Galeri | `durumlar.html` (iskelet) | Detay | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/galeri.html?durum=yukleniyor` | ✓ |
+| E-160 | Galeri · hata | durum | Galeri | `500.html` | Detay | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/galeri.html?durum=hata` | ✓ |
+| E-161 | Galeri · bulunamadı | durum | Galeri | `404.html`, `410.html` | Detay | İçerik kaldırıldı ya da bulunamadı; bölüme dön, arama | `ekranlar/icerik/galeri.html?durum=bulunamadi` | ✓ |
+| E-162 | Galeri · çevrimdışı | durum | Galeri | `cevrimdisi.html` | Detay | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/galeri.html?durum=cevrimdisi` | ✓ |
+| E-163 | İnfografik listesi | içerik | Galeri | `infografik.html` | Liste | Süzgeç: Tümü, Finans ve Ekonomi, Toplum ve Demografi, Enerji ve İklim, Savunma ve Teknoloji, Spor, Eğitim ve Kampüs, Dünya | `ekranlar/icerik/infografik.html` | ✓ |
+| E-164 | İnfografik listesi · yükleniyor | durum | Galeri | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/infografik.html?durum=yukleniyor` | ✓ |
+| E-165 | İnfografik listesi · aşağı çekip yenileme | durum | Galeri | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/infografik.html?durum=yenileniyor` | ✓ |
+| E-166 | İnfografik listesi · sayfa sonu yükleme | durum | Galeri | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/infografik.html?durum=daha-fazla` | ✓ |
+| E-167 | İnfografik listesi · boş | durum | Galeri | `durumlar.html` (boş) | Liste | Bu konuda infografik yok | `ekranlar/icerik/infografik.html?durum=bos` | ✓ |
+| E-168 | İnfografik listesi · hata | durum | Galeri | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/infografik.html?durum=hata` | ✓ |
+| E-169 | İnfografik listesi · çevrimdışı | durum | Galeri | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/infografik.html?durum=cevrimdisi` | ✓ |
+| E-170 | İnfografik detayı | içerik | Galeri | `infografik-detay.html` | Detay | Görüntüleyici (galeriyle ortak), yakınlaştır; veri kaynağı ve dönem etiketi zorunlu (DADAHABER-10 §5) | `ekranlar/icerik/infografik-detay.html` | ✓ |
+| E-171 | İnfografik detayı · yakınlaştırılmış | durum | Galeri | — | — | Tam ekran, kaydırarak gez | `ekranlar/icerik/infografik-detay.html?durum=yakinlastir` | ✓ |
+| E-172 | İnfografik detayı · yükleniyor | durum | Galeri | `durumlar.html` (iskelet) | Detay | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/infografik-detay.html?durum=yukleniyor` | ✓ |
+| E-173 | İnfografik detayı · hata | durum | Galeri | `500.html` | Detay | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/infografik-detay.html?durum=hata` | ✓ |
+| E-174 | İnfografik detayı · bulunamadı | durum | Galeri | `404.html`, `410.html` | Detay | İçerik kaldırıldı ya da bulunamadı; bölüme dön, arama | `ekranlar/icerik/infografik-detay.html?durum=bulunamadi` | ✓ |
+| E-175 | İnfografik detayı · çevrimdışı | durum | Galeri | `cevrimdisi.html` | Detay | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/infografik-detay.html?durum=cevrimdisi` | ✓ |
 
 ### Dinle: Haber Dinle, Spiker, Podcast
 
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
-| E-176 | Haber Dinle (Dinle sekmesi) | içerik | Ses | `haber-dinle.html` | Liste | Süzgeç: Tümü, Gündem, Finans, Spor, Dünya, Kadın, Savunma, Kampüs, Teknoloji; her içerikte ana kategori etiketi; Spiker yayında kartı. Sekmenin içeriği varsayım; en üstte Spiker kartı (yayında: canlı kart; değilse son bülten + sıradaki saat), altında sesli haberler; Dinle = haberin sesli okunması, Spiker ayrı ad ve ikon; yayındayken alt gezinmede Dinle'de canlı noktası (K39) | `ekranlar/icerik/haber-dinle.html` |   |
-| E-606 | Haber Dinle · Spiker yayında değil | durum | Ses | — | Liste | En üstte son bülten ve "Sıradaki bülten 19.00"; Dinle sekmesinde canlı noktası yok (K39) | `ekranlar/icerik/haber-dinle.html?spiker=0` |   |
-| E-177 | Haber Dinle · kategori seçili | durum | Ses | `haber-dinle.html?kategori=…` | Liste | Eski kategori sayfaları yerine süzgeç | `ekranlar/icerik/haber-dinle.html?kategori=finans` |   |
-| E-178 | Haber Dinle · yayın kuşağı: Sabah Özeti | içerik | Ses | `haber-dinle.html` (yayın kuşağı) | Liste | Kuşağın bültenleri; ikinci eksen süzgeci (DADAHABER-10 §4) | `ekranlar/icerik/haber-dinle.html?kusak=sabah-ozeti` |   |
-| E-179 | Haber Dinle · yayın kuşağı: Gün Ortası | içerik | Ses | `haber-dinle.html` (yayın kuşağı) | Liste | Kuşağın bültenleri; ikinci eksen süzgeci (DADAHABER-10 §4) | `ekranlar/icerik/haber-dinle.html?kusak=gun-ortasi` |   |
-| E-180 | Haber Dinle · yayın kuşağı: Akşam Bülteni | içerik | Ses | `haber-dinle.html` (yayın kuşağı) | Liste | Kuşağın bültenleri; ikinci eksen süzgeci (DADAHABER-10 §4) | `ekranlar/icerik/haber-dinle.html?kusak=aksam-bulteni` |   |
-| E-181 | Haber Dinle · yayın kuşağı: Hafta Özeti | içerik | Ses | `haber-dinle.html` (yayın kuşağı) | Liste | Kuşağın bültenleri; ikinci eksen süzgeci (DADAHABER-10 §4) | `ekranlar/icerik/haber-dinle.html?kusak=hafta-ozeti` |   |
-| E-182 | Haber Dinle · yükleniyor | durum | Ses | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/haber-dinle.html?durum=yukleniyor` |   |
-| E-183 | Haber Dinle · aşağı çekip yenileme | durum | Ses | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/haber-dinle.html?durum=yenileniyor` |   |
-| E-184 | Haber Dinle · sayfa sonu yükleme | durum | Ses | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/haber-dinle.html?durum=daha-fazla` |   |
-| E-185 | Haber Dinle · boş | durum | Ses | `durumlar.html` (boş) | Liste | Bu kuşağın bülteni henüz yayımlanmadı; yayın saati | `ekranlar/icerik/haber-dinle.html?durum=bos` |   |
-| E-186 | Haber Dinle · hata | durum | Ses | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/haber-dinle.html?durum=hata` |   |
-| E-187 | Haber Dinle · çevrimdışı | durum | Ses | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/haber-dinle.html?durum=cevrimdisi` |   |
-| E-188 | Haber Dinle bülten detayı | içerik | Ses | `haber-dinle-detay.html` | Detay | Oynatıcı, deşifre metni, bültendeki sesli haberler, hız, sıradaki | `ekranlar/icerik/haber-dinle-bulten.html` |   |
-| E-189 | Bülten detayı · çalıyor, deşifre izliyor | durum | Ses | — | Detay | Okunan cümle vurgulu; metne dokununca o ana atla | `ekranlar/icerik/haber-dinle-bulten.html?durum=caliyor` |   |
-| E-190 | Bülten detayı · yükleniyor | durum | Ses | `durumlar.html` (iskelet) | Detay | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/haber-dinle-bulten.html?durum=yukleniyor` |   |
-| E-191 | Bülten detayı · hata | durum | Ses | `500.html` | Detay | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/haber-dinle-bulten.html?durum=hata` |   |
-| E-192 | Bülten detayı · bulunamadı | durum | Ses | `404.html`, `410.html` | Detay | İçerik kaldırıldı ya da bulunamadı; bölüme dön, arama | `ekranlar/icerik/haber-dinle-bulten.html?durum=bulunamadi` |   |
-| E-193 | Bülten detayı · çevrimdışı | durum | Ses | `cevrimdisi.html` | Detay | İndirilmişse çalar; değilse bağlantı yok | `ekranlar/icerik/haber-dinle-bulten.html?durum=cevrimdisi` |   |
-| E-194 | Dada Spiker · yayında | içerik | Ses | sitede yüzen panel (A · Yüz Açık Alt Bant) | — | Tam ekran ses + video oynatıcı; sıradaki bültenler; küçült → mini oynatıcı; girişleri: hikâye şeridinin ilk dairesi ve Dinle sekmesi; uygulamada yüzen Spiker balonu yok (K39) | `ekranlar/icerik/spiker.html` |   |
-| E-195 | Dada Spiker · yalnız ses | durum | Ses | — | — | Görüntü kapalı, ses sürer (arka planda ve kilit ekranında) | `ekranlar/icerik/spiker.html?durum=ses` |   |
-| E-196 | Dada Spiker · yayın yok | durum | Ses | — | — | Sıradaki bülten saati; son bültenler | `ekranlar/icerik/spiker.html?durum=yayin-yok` |   |
-| E-197 | Dada Spiker · yükleniyor | durum | Ses | `durumlar.html` (iskelet) | — | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/spiker.html?durum=yukleniyor` |   |
-| E-198 | Dada Spiker · hata | durum | Ses | `500.html` | — | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/spiker.html?durum=hata` |   |
-| E-199 | Dada Spiker · çevrimdışı | durum | Ses | `cevrimdisi.html` | — | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/spiker.html?durum=cevrimdisi` |   |
-| E-200 | Podcast (programlar) | içerik | Ses | `podcast.html` | Liste | 7 program; periyot süzgeci: Tümü, Haftalık Yayınlar, Aylık Dosya, Özel Seri; kartta periyot rozeti | `ekranlar/icerik/podcast.html` |   |
-| E-201 | Podcast · periyot seçili | durum | Ses | `podcast.html` (süzgeç) | Liste | Ör. Aylık Dosya: Strateji ve Savunma Masası, Kültür Ajandası | `ekranlar/icerik/podcast.html?periyot=aylik` |   |
-| E-202 | Podcast · yükleniyor | durum | Ses | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/podcast.html?durum=yukleniyor` |   |
-| E-203 | Podcast · aşağı çekip yenileme | durum | Ses | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/podcast.html?durum=yenileniyor` |   |
-| E-204 | Podcast · boş | durum | Ses | `durumlar.html` (boş) | Liste | Bu periyotta program yok; Tümü'ne dön | `ekranlar/icerik/podcast.html?durum=bos` |   |
-| E-205 | Podcast · hata | durum | Ses | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/podcast.html?durum=hata` |   |
-| E-206 | Podcast · çevrimdışı | durum | Ses | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/podcast.html?durum=cevrimdisi` |   |
-| E-207 | Podcast programı (seri) · üye | içerik | Ses | `podcast-kategori.html` → `podcast.html?program=…` | Liste | Program başlığı, periyot rozeti, açıklama, Takip et, bölümler (yeni önce) | `ekranlar/icerik/podcast-program.html` |   |
-| E-208 | Podcast programı · misafir | içerik | Ses | — | Liste | Takip et → tetik paneli | `ekranlar/icerik/podcast-program.html?uye=0` |   |
-| E-209 | Podcast programı · yükleniyor | durum | Ses | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/podcast-program.html?durum=yukleniyor` |   |
-| E-210 | Podcast programı · aşağı çekip yenileme | durum | Ses | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/podcast-program.html?durum=yenileniyor` |   |
-| E-211 | Podcast programı · sayfa sonu yükleme | durum | Ses | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/podcast-program.html?durum=daha-fazla` |   |
-| E-212 | Podcast programı · boş | durum | Ses | `durumlar.html` (boş) | Liste | Özel seri: ilk bölüm yakında | `ekranlar/icerik/podcast-program.html?durum=bos` |   |
-| E-213 | Podcast programı · hata | durum | Ses | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/podcast-program.html?durum=hata` |   |
-| E-214 | Podcast programı · çevrimdışı | durum | Ses | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/podcast-program.html?durum=cevrimdisi` |   |
-| E-215 | Podcast bölümü | içerik | Ses | `podcast-detay.html` | Detay | Oynat, kaldığın yer, bölüm notları, ilişkili haber, İndir | `ekranlar/icerik/podcast-bolum.html` |   |
-| E-216 | Podcast bölümü · indiriliyor / indirildi | durum | Ses | — | Detay | İndirme halkası; indirildi işareti (çevrimdışı) | `ekranlar/icerik/podcast-bolum.html?durum=indirildi` |   |
-| E-217 | Podcast bölümü · kaldığın yerden | durum | Ses | `podcast-detay.html` | Detay | "Kaldığın yerden devam et"; ilerleme çubuğu | `ekranlar/icerik/podcast-bolum.html?durum=devam` |   |
-| E-218 | Podcast bölümü · yükleniyor | durum | Ses | `durumlar.html` (iskelet) | Detay | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/podcast-bolum.html?durum=yukleniyor` |   |
-| E-219 | Podcast bölümü · hata | durum | Ses | `500.html` | Detay | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/podcast-bolum.html?durum=hata` |   |
-| E-220 | Podcast bölümü · bulunamadı | durum | Ses | `404.html`, `410.html` | Detay | İçerik kaldırıldı ya da bulunamadı; bölüme dön, arama | `ekranlar/icerik/podcast-bolum.html?durum=bulunamadi` |   |
-| E-221 | Podcast bölümü · çevrimdışı | durum | Ses | `cevrimdisi.html` | Detay | İndirilmişse çalar; değilse bağlantı yok | `ekranlar/icerik/podcast-bolum.html?durum=cevrimdisi` |   |
+| E-176 | Haber Dinle (Dinle sekmesi) | içerik | Ses | `haber-dinle.html` | Liste | Süzgeç: Tümü, Gündem, Finans, Spor, Dünya, Kadın, Savunma, Kampüs, Teknoloji; her içerikte ana kategori etiketi; Spiker yayında kartı. Sekmenin içeriği varsayım; en üstte Spiker kartı (yayında: canlı kart; değilse son bülten + sıradaki saat), altında sesli haberler; Dinle = haberin sesli okunması, Spiker ayrı ad ve ikon; yayındayken alt gezinmede Dinle'de canlı noktası (K39) | `ekranlar/icerik/haber-dinle.html` | ✓ |
+| E-606 | Haber Dinle · Spiker yayında değil | durum | Ses | — | Liste | En üstte son bülten ve "Sıradaki bülten 19.00"; Dinle sekmesinde canlı noktası yok (K39) | `ekranlar/icerik/haber-dinle.html?spiker=0` | ✓ |
+| E-177 | Haber Dinle · kategori seçili | durum | Ses | `haber-dinle.html?kategori=…` | Liste | Eski kategori sayfaları yerine süzgeç | `ekranlar/icerik/haber-dinle.html?kategori=finans` | ✓ |
+| E-178 | Haber Dinle · yayın kuşağı: Sabah Özeti | içerik | Ses | `haber-dinle.html` (yayın kuşağı) | Liste | Kuşağın bültenleri; ikinci eksen süzgeci (DADAHABER-10 §4) | `ekranlar/icerik/haber-dinle.html?kusak=sabah-ozeti` | ✓ |
+| E-179 | Haber Dinle · yayın kuşağı: Gün Ortası | içerik | Ses | `haber-dinle.html` (yayın kuşağı) | Liste | Kuşağın bültenleri; ikinci eksen süzgeci (DADAHABER-10 §4) | `ekranlar/icerik/haber-dinle.html?kusak=gun-ortasi` | ✓ |
+| E-180 | Haber Dinle · yayın kuşağı: Akşam Bülteni | içerik | Ses | `haber-dinle.html` (yayın kuşağı) | Liste | Kuşağın bültenleri; ikinci eksen süzgeci (DADAHABER-10 §4) | `ekranlar/icerik/haber-dinle.html?kusak=aksam-bulteni` | ✓ |
+| E-181 | Haber Dinle · yayın kuşağı: Hafta Özeti | içerik | Ses | `haber-dinle.html` (yayın kuşağı) | Liste | Kuşağın bültenleri; ikinci eksen süzgeci (DADAHABER-10 §4) | `ekranlar/icerik/haber-dinle.html?kusak=hafta-ozeti` | ✓ |
+| E-182 | Haber Dinle · yükleniyor | durum | Ses | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/haber-dinle.html?durum=yukleniyor` | ✓ |
+| E-183 | Haber Dinle · aşağı çekip yenileme | durum | Ses | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/haber-dinle.html?durum=yenileniyor` | ✓ |
+| E-184 | Haber Dinle · sayfa sonu yükleme | durum | Ses | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/haber-dinle.html?durum=daha-fazla` | ✓ |
+| E-185 | Haber Dinle · boş | durum | Ses | `durumlar.html` (boş) | Liste | Bu kuşağın bülteni henüz yayımlanmadı; yayın saati | `ekranlar/icerik/haber-dinle.html?durum=bos` | ✓ |
+| E-186 | Haber Dinle · hata | durum | Ses | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/haber-dinle.html?durum=hata` | ✓ |
+| E-187 | Haber Dinle · çevrimdışı | durum | Ses | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/haber-dinle.html?durum=cevrimdisi` | ✓ |
+| E-188 | Haber Dinle bülten detayı | içerik | Ses | `haber-dinle-detay.html` | Detay | Oynatıcı, deşifre metni, bültendeki sesli haberler, hız, sıradaki | `ekranlar/icerik/haber-dinle-bulten.html` | ✓ |
+| E-189 | Bülten detayı · çalıyor, deşifre izliyor | durum | Ses | — | Detay | Okunan cümle vurgulu; metne dokununca o ana atla | `ekranlar/icerik/haber-dinle-bulten.html?durum=caliyor` | ✓ |
+| E-190 | Bülten detayı · yükleniyor | durum | Ses | `durumlar.html` (iskelet) | Detay | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/haber-dinle-bulten.html?durum=yukleniyor` | ✓ |
+| E-191 | Bülten detayı · hata | durum | Ses | `500.html` | Detay | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/haber-dinle-bulten.html?durum=hata` | ✓ |
+| E-192 | Bülten detayı · bulunamadı | durum | Ses | `404.html`, `410.html` | Detay | İçerik kaldırıldı ya da bulunamadı; bölüme dön, arama | `ekranlar/icerik/haber-dinle-bulten.html?durum=bulunamadi` | ✓ |
+| E-193 | Bülten detayı · çevrimdışı | durum | Ses | `cevrimdisi.html` | Detay | İndirilmişse çalar; değilse bağlantı yok | `ekranlar/icerik/haber-dinle-bulten.html?durum=cevrimdisi` | ✓ |
+| E-194 | Dada Spiker · yayında | içerik | Ses | sitede yüzen panel (A · Yüz Açık Alt Bant) | — | Tam ekran ses + video oynatıcı; sıradaki bültenler; küçült → mini oynatıcı; girişleri: hikâye şeridinin ilk dairesi ve Dinle sekmesi; uygulamada yüzen Spiker balonu yok (K39) | `ekranlar/icerik/spiker.html` | ✓ |
+| E-195 | Dada Spiker · yalnız ses | durum | Ses | — | — | Görüntü kapalı, ses sürer (arka planda ve kilit ekranında) | `ekranlar/icerik/spiker.html?durum=ses` | ✓ |
+| E-196 | Dada Spiker · yayın yok | durum | Ses | — | — | Sıradaki bülten saati; son bültenler | `ekranlar/icerik/spiker.html?durum=yayin-yok` | ✓ |
+| E-197 | Dada Spiker · yükleniyor | durum | Ses | `durumlar.html` (iskelet) | — | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/spiker.html?durum=yukleniyor` | ✓ |
+| E-198 | Dada Spiker · hata | durum | Ses | `500.html` | — | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/spiker.html?durum=hata` | ✓ |
+| E-199 | Dada Spiker · çevrimdışı | durum | Ses | `cevrimdisi.html` | — | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/spiker.html?durum=cevrimdisi` | ✓ |
+| E-200 | Podcast (programlar) | içerik | Ses | `podcast.html` | Liste | 7 program; periyot süzgeci: Tümü, Haftalık Yayınlar, Aylık Dosya, Özel Seri; kartta periyot rozeti | `ekranlar/icerik/podcast.html` | ✓ |
+| E-201 | Podcast · periyot seçili | durum | Ses | `podcast.html` (süzgeç) | Liste | Ör. Aylık Dosya: Strateji ve Savunma Masası, Kültür Ajandası | `ekranlar/icerik/podcast.html?periyot=aylik` | ✓ |
+| E-202 | Podcast · yükleniyor | durum | Ses | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/podcast.html?durum=yukleniyor` | ✓ |
+| E-203 | Podcast · aşağı çekip yenileme | durum | Ses | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/podcast.html?durum=yenileniyor` | ✓ |
+| E-204 | Podcast · boş | durum | Ses | `durumlar.html` (boş) | Liste | Bu periyotta program yok; Tümü'ne dön | `ekranlar/icerik/podcast.html?durum=bos` | ✓ |
+| E-205 | Podcast · hata | durum | Ses | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/podcast.html?durum=hata` | ✓ |
+| E-206 | Podcast · çevrimdışı | durum | Ses | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/podcast.html?durum=cevrimdisi` | ✓ |
+| E-207 | Podcast programı (seri) · üye | içerik | Ses | `podcast-kategori.html` → `podcast.html?program=…` | Liste | Program başlığı, periyot rozeti, açıklama, Takip et, bölümler (yeni önce) | `ekranlar/icerik/podcast-program.html` | ✓ |
+| E-208 | Podcast programı · misafir | içerik | Ses | — | Liste | Takip et → tetik paneli | `ekranlar/icerik/podcast-program.html?uye=0` | ✓ |
+| E-209 | Podcast programı · yükleniyor | durum | Ses | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/podcast-program.html?durum=yukleniyor` | ✓ |
+| E-210 | Podcast programı · aşağı çekip yenileme | durum | Ses | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/podcast-program.html?durum=yenileniyor` | ✓ |
+| E-211 | Podcast programı · sayfa sonu yükleme | durum | Ses | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/podcast-program.html?durum=daha-fazla` | ✓ |
+| E-212 | Podcast programı · boş | durum | Ses | `durumlar.html` (boş) | Liste | Özel seri: ilk bölüm yakında | `ekranlar/icerik/podcast-program.html?durum=bos` | ✓ |
+| E-213 | Podcast programı · hata | durum | Ses | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/podcast-program.html?durum=hata` | ✓ |
+| E-214 | Podcast programı · çevrimdışı | durum | Ses | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/podcast-program.html?durum=cevrimdisi` | ✓ |
+| E-215 | Podcast bölümü | içerik | Ses | `podcast-detay.html` | Detay | Oynat, kaldığın yer, bölüm notları, ilişkili haber, İndir | `ekranlar/icerik/podcast-bolum.html` | ✓ |
+| E-216 | Podcast bölümü · indiriliyor / indirildi | durum | Ses | — | Detay | İndirme halkası; indirildi işareti (çevrimdışı) | `ekranlar/icerik/podcast-bolum.html?durum=indirildi` | ✓ |
+| E-217 | Podcast bölümü · kaldığın yerden | durum | Ses | `podcast-detay.html` | Detay | "Kaldığın yerden devam et"; ilerleme çubuğu | `ekranlar/icerik/podcast-bolum.html?durum=devam` | ✓ |
+| E-218 | Podcast bölümü · yükleniyor | durum | Ses | `durumlar.html` (iskelet) | Detay | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/podcast-bolum.html?durum=yukleniyor` | ✓ |
+| E-219 | Podcast bölümü · hata | durum | Ses | `500.html` | Detay | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/podcast-bolum.html?durum=hata` | ✓ |
+| E-220 | Podcast bölümü · bulunamadı | durum | Ses | `404.html`, `410.html` | Detay | İçerik kaldırıldı ya da bulunamadı; bölüme dön, arama | `ekranlar/icerik/podcast-bolum.html?durum=bulunamadi` | ✓ |
+| E-221 | Podcast bölümü · çevrimdışı | durum | Ses | `cevrimdisi.html` | Detay | İndirilmişse çalar; değilse bağlantı yok | `ekranlar/icerik/podcast-bolum.html?durum=cevrimdisi` | ✓ |
 
 ### Keşfet ürünleri
 
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
-| E-222 | Keşfet merkezi | içerik | Keşfet | `kesfet.html` | Liste | Anlık, Teknoloji ve Bilim, Sağlık ve Yaşam, Kültür ve Sanat, Keşfet Formatları, Medya ve Arşiv (DADAHABER-10) | `ekranlar/icerik/kesfet.html` |   |
-| E-223 | Keşfet merkezi · yükleniyor | durum | Keşfet | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/kesfet.html?durum=yukleniyor` |   |
-| E-224 | Keşfet merkezi · hata | durum | Keşfet | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/kesfet.html?durum=hata` |   |
-| E-225 | Keşfet merkezi · çevrimdışı | durum | Keşfet | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/kesfet.html?durum=cevrimdisi` |   |
-| E-226 | Günün 5'i · bugünün baskısı | içerik | Keşfet | `gunun-5-i.html` | — | 5 haber, okundu ilerlemesi, Dinle; "bugünlük bu kadar" | `ekranlar/icerik/gunun-5i.html` |   |
-| E-227 | Günün 5'i · misafir | içerik | Keşfet | `gunun-5-i.html` | — | İlerleme cihazda (C30 varsayımı) | `ekranlar/icerik/gunun-5i.html?uye=0` |   |
-| E-228 | Günün 5'i · tamamlandı | durum | Keşfet | — | — | 5/5 okundu; okuma serisi işareti; sonraki baskı saati | `ekranlar/icerik/gunun-5i.html?durum=bitti` |   |
-| E-229 | Günün 5'i · arşiv | içerik | Keşfet | `gunun-5-i.html` (arşiv) | Liste | Önceki günlerin baskıları | `ekranlar/icerik/gunun-5i.html?durum=arsiv` |   |
-| E-230 | Günün 5'i · yükleniyor | durum | Keşfet | `durumlar.html` (iskelet) | — | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/gunun-5i.html?durum=yukleniyor` |   |
-| E-231 | Günün 5'i · hata | durum | Keşfet | `500.html` | — | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/gunun-5i.html?durum=hata` |   |
-| E-232 | Günün 5'i · çevrimdışı | durum | Keşfet | `cevrimdisi.html` | — | Otomatik indirilmişse okunur; değilse bağlantı yok | `ekranlar/icerik/gunun-5i.html?durum=cevrimdisi` |   |
-| E-233 | Dada Özet | içerik | Keşfet | `dada-ozet.html` | Liste | Özet akışı; 15 sn / 1 dk / tam metin derinliği; "AI ile özetlendi" + kaynak haber | `ekranlar/icerik/dada-ozet.html` |   |
-| E-234 | Dada Özet · yükleniyor | durum | Keşfet | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/dada-ozet.html?durum=yukleniyor` |   |
-| E-235 | Dada Özet · aşağı çekip yenileme | durum | Keşfet | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/dada-ozet.html?durum=yenileniyor` |   |
-| E-236 | Dada Özet · sayfa sonu yükleme | durum | Keşfet | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/dada-ozet.html?durum=daha-fazla` |   |
-| E-237 | Dada Özet · boş | durum | Keşfet | `durumlar.html` (boş) | Liste | Boş durum: ikon, tek cümle, tek eylem | `ekranlar/icerik/dada-ozet.html?durum=bos` |   |
-| E-238 | Dada Özet · hata | durum | Keşfet | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/dada-ozet.html?durum=hata` |   |
-| E-239 | Dada Özet · çevrimdışı | durum | Keşfet | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/dada-ozet.html?durum=cevrimdisi` |   |
-| E-240 | Bugün Ne Oldu? | içerik | Keşfet | `bugun-ne-oldu.html` | Liste | Tarih çipleri + saatli özet (çizelge kalıbı) | `ekranlar/icerik/bugun-ne-oldu.html` |   |
-| E-241 | Bugün Ne Oldu? · yükleniyor | durum | Keşfet | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/bugun-ne-oldu.html?durum=yukleniyor` |   |
-| E-242 | Bugün Ne Oldu? · aşağı çekip yenileme | durum | Keşfet | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/bugun-ne-oldu.html?durum=yenileniyor` |   |
-| E-243 | Bugün Ne Oldu? · boş | durum | Keşfet | `durumlar.html` (boş) | Liste | Seçilen günde özet yok | `ekranlar/icerik/bugun-ne-oldu.html?durum=bos` |   |
-| E-244 | Bugün Ne Oldu? · hata | durum | Keşfet | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/bugun-ne-oldu.html?durum=hata` |   |
-| E-245 | Bugün Ne Oldu? · çevrimdışı | durum | Keşfet | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/bugun-ne-oldu.html?durum=cevrimdisi` |   |
-| E-246 | Güncellenen Haberler | içerik | Keşfet | `guncellenen-haberler.html` | Liste | Her satırda "ne değişti" notu ve güncelleme saati | `ekranlar/icerik/guncellenen-haberler.html` |   |
-| E-247 | Güncellenen Haberler · yükleniyor | durum | Keşfet | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/guncellenen-haberler.html?durum=yukleniyor` |   |
-| E-248 | Güncellenen Haberler · aşağı çekip yenileme | durum | Keşfet | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/guncellenen-haberler.html?durum=yenileniyor` |   |
-| E-249 | Güncellenen Haberler · sayfa sonu yükleme | durum | Keşfet | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/guncellenen-haberler.html?durum=daha-fazla` |   |
-| E-250 | Güncellenen Haberler · boş | durum | Keşfet | `durumlar.html` (boş) | Liste | Boş durum: ikon, tek cümle, tek eylem | `ekranlar/icerik/guncellenen-haberler.html?durum=bos` |   |
-| E-251 | Güncellenen Haberler · hata | durum | Keşfet | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/guncellenen-haberler.html?durum=hata` |   |
-| E-252 | Güncellenen Haberler · çevrimdışı | durum | Keşfet | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/guncellenen-haberler.html?durum=cevrimdisi` |   |
-| E-253 | Dada Bağlam · dosyalar | içerik | Keşfet | `dada-baglam.html` | Liste | Dosya listesi | `ekranlar/icerik/dada-baglam.html` |   |
-| E-254 | Dada Bağlam · dosya detayı | içerik | Keşfet | `dada-baglam-dosya.html` | Detay | Özet + kronoloji (zaman çizelgesi), ilgili haberler | `ekranlar/icerik/dada-baglam.html?dosya=1` |   |
-| E-255 | Dada Bağlam · yükleniyor | durum | Keşfet | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/dada-baglam.html?durum=yukleniyor` |   |
-| E-256 | Dada Bağlam · hata | durum | Keşfet | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/dada-baglam.html?durum=hata` |   |
-| E-257 | Dada Bağlam · bulunamadı | durum | Keşfet | `404.html`, `410.html` | Liste | İçerik kaldırıldı ya da bulunamadı; bölüme dön, arama | `ekranlar/icerik/dada-baglam.html?durum=bulunamadi` |   |
-| E-258 | Dada Bağlam · çevrimdışı | durum | Keşfet | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/dada-baglam.html?durum=cevrimdisi` |   |
-| E-259 | Dada Doğrula · merkez | içerik | Keşfet | `dada-dogrula.html` | Liste | İncelemeler; tek teyit gösterimi "İncelendi · N kaynak" | `ekranlar/icerik/dada-dogrula.html` |   |
-| E-260 | Dada Doğrula · inceleme detayı | içerik | Keşfet | `dada-dogrula-inceleme.html` | Detay | İddia, inceleme, kaynaklar | `ekranlar/icerik/dada-dogrula.html?inceleme=1` |   |
-| E-261 | Dada Doğrula · yükleniyor | durum | Keşfet | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/dada-dogrula.html?durum=yukleniyor` |   |
-| E-262 | Dada Doğrula · sayfa sonu yükleme | durum | Keşfet | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/dada-dogrula.html?durum=daha-fazla` |   |
-| E-263 | Dada Doğrula · hata | durum | Keşfet | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/dada-dogrula.html?durum=hata` |   |
-| E-264 | Dada Doğrula · bulunamadı | durum | Keşfet | `404.html`, `410.html` | Liste | İçerik kaldırıldı ya da bulunamadı; bölüme dön, arama | `ekranlar/icerik/dada-dogrula.html?durum=bulunamadi` |   |
-| E-265 | Dada Doğrula · çevrimdışı | durum | Keşfet | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/dada-dogrula.html?durum=cevrimdisi` |   |
-| E-266 | Farklı Bakışlar | içerik | Keşfet | `farkli-bakislar.html` | Detay | Karşılaştırma; sütunlar yatay kayar ya da sekme | `ekranlar/icerik/farkli-bakislar.html` |   |
-| E-267 | Farklı Bakışlar · yükleniyor | durum | Keşfet | `durumlar.html` (iskelet) | Detay | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/farkli-bakislar.html?durum=yukleniyor` |   |
-| E-268 | Farklı Bakışlar · hata | durum | Keşfet | `500.html` | Detay | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/farkli-bakislar.html?durum=hata` |   |
-| E-269 | Farklı Bakışlar · çevrimdışı | durum | Keşfet | `cevrimdisi.html` | Detay | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/farkli-bakislar.html?durum=cevrimdisi` |   |
-| E-270 | Veri ve Harita | içerik | Keşfet | `veri-ve-harita.html` | Detay | Harita ve tablolar kap içinde kayar | `ekranlar/icerik/veri-ve-harita.html` |   |
-| E-271 | Veri ve Harita · yükleniyor | durum | Keşfet | `durumlar.html` (iskelet) | Detay | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/veri-ve-harita.html?durum=yukleniyor` |   |
-| E-272 | Veri ve Harita · hata | durum | Keşfet | `500.html` | Detay | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/veri-ve-harita.html?durum=hata` |   |
-| E-273 | Veri ve Harita · çevrimdışı | durum | Keşfet | `cevrimdisi.html` | Detay | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/veri-ve-harita.html?durum=cevrimdisi` |   |
-| E-274 | Sakin Akış | içerik | Keşfet | `sakin-akis.html` | Liste | Ayarlı akış; uygulamada bildirim davranışını da değiştirir | `ekranlar/icerik/sakin-akis.html` |   |
-| E-275 | Sakin Akış · ayar alt sayfası | sistem | Keşfet | `sakin-akis.html` (ayar) | Liste | Konu dışarıda bırak, bildirimleri sustur | `ekranlar/icerik/sakin-akis.html?durum=ayar` |   |
-| E-276 | Sakin Akış · yükleniyor | durum | Keşfet | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/sakin-akis.html?durum=yukleniyor` |   |
-| E-277 | Sakin Akış · sayfa sonu yükleme | durum | Keşfet | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/sakin-akis.html?durum=daha-fazla` |   |
-| E-278 | Sakin Akış · hata | durum | Keşfet | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/sakin-akis.html?durum=hata` |   |
-| E-279 | Sakin Akış · çevrimdışı | durum | Keşfet | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/sakin-akis.html?durum=cevrimdisi` |   |
-| E-280 | Bana Etkisi · üye | içerik | Keşfet | `bana-etkisi.html` | Liste | Profile göre haberler (Öğrenci, Çalışan, Emekli, Ev sahibi, Kiracı, Esnaf; panelle aynı) | `ekranlar/icerik/bana-etkisi.html` |   |
-| E-281 | Bana Etkisi · profil seçilmedi | durum | Keşfet | `bana-etkisi.html` | Liste | Misafir ya da profilsiz üye: profil seç çağrısı | `ekranlar/icerik/bana-etkisi.html?uye=0` |   |
-| E-282 | Bana Etkisi · yükleniyor | durum | Keşfet | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/bana-etkisi.html?durum=yukleniyor` |   |
-| E-283 | Bana Etkisi · boş | durum | Keşfet | `durumlar.html` (boş) | Liste | Boş durum: ikon, tek cümle, tek eylem | `ekranlar/icerik/bana-etkisi.html?durum=bos` |   |
-| E-284 | Bana Etkisi · hata | durum | Keşfet | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/bana-etkisi.html?durum=hata` |   |
-| E-285 | Bana Etkisi · çevrimdışı | durum | Keşfet | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/bana-etkisi.html?durum=cevrimdisi` |   |
-| E-286 | Takvim · Gündem Takvimi | içerik | Keşfet | `gundem-takvimi.html` | Liste | Gün şeridi, süzgeç, takvime ekle (B-25) | `ekranlar/icerik/takvim.html?tur=gundem` |   |
-| E-287 | Takvim · Ekonomik Takvim | içerik | Servis | `ekonomik-takvim.html` | Liste | Aynı takvim kalıbı; önem derecesi | `ekranlar/icerik/takvim.html?tur=ekonomik` |   |
-| E-288 | Takvim · Sınav Takvimi | içerik | Servis | `sinav-takvimi.html` | Liste | Aynı takvim kalıbı; YKS, KPSS, ALES ve YDS | `ekranlar/icerik/takvim.html?tur=sinav` |   |
-| E-289 | Takvim · yükleniyor | durum | Keşfet | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/takvim.html?durum=yukleniyor` |   |
-| E-290 | Takvim · boş | durum | Keşfet | `durumlar.html` (boş) | Liste | Seçilen günde etkinlik yok | `ekranlar/icerik/takvim.html?durum=bos` |   |
-| E-291 | Takvim · hata | durum | Keşfet | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/takvim.html?durum=hata` |   |
-| E-292 | Takvim · çevrimdışı | durum | Keşfet | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/takvim.html?durum=cevrimdisi` |   |
-| E-293 | Arşiv | içerik | Keşfet | `arsiv.html` | Liste | Tarih seçici (alt sayfa) + o günün haberleri | `ekranlar/icerik/arsiv.html` |   |
-| E-294 | Arşiv · yükleniyor | durum | Keşfet | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/arsiv.html?durum=yukleniyor` |   |
-| E-295 | Arşiv · sayfa sonu yükleme | durum | Keşfet | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/arsiv.html?durum=daha-fazla` |   |
-| E-296 | Arşiv · boş | durum | Keşfet | `durumlar.html` (boş) | Liste | Seçilen tarihte haber yok | `ekranlar/icerik/arsiv.html?durum=bos` |   |
-| E-297 | Arşiv · hata | durum | Keşfet | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/arsiv.html?durum=hata` |   |
-| E-298 | Arşiv · çevrimdışı | durum | Keşfet | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/arsiv.html?durum=cevrimdisi` |   |
+| E-222 | Keşfet merkezi | içerik | Keşfet | `kesfet.html` | Liste | Anlık, Teknoloji ve Bilim, Sağlık ve Yaşam, Kültür ve Sanat, Keşfet Formatları, Medya ve Arşiv (DADAHABER-10) | `ekranlar/icerik/kesfet.html` | ✓ |
+| E-223 | Keşfet merkezi · yükleniyor | durum | Keşfet | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/kesfet.html?durum=yukleniyor` | ✓ |
+| E-224 | Keşfet merkezi · hata | durum | Keşfet | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/kesfet.html?durum=hata` | ✓ |
+| E-225 | Keşfet merkezi · çevrimdışı | durum | Keşfet | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/kesfet.html?durum=cevrimdisi` | ✓ |
+| E-226 | Günün 5'i · bugünün baskısı | içerik | Keşfet | `gunun-5-i.html` | — | 5 haber, okundu ilerlemesi, Dinle; "bugünlük bu kadar" | `ekranlar/icerik/gunun-5i.html` | ✓ |
+| E-227 | Günün 5'i · misafir | içerik | Keşfet | `gunun-5-i.html` | — | İlerleme cihazda (C30 varsayımı) | `ekranlar/icerik/gunun-5i.html?uye=0` | ✓ |
+| E-228 | Günün 5'i · tamamlandı | durum | Keşfet | — | — | 5/5 okundu; okuma serisi işareti; sonraki baskı saati | `ekranlar/icerik/gunun-5i.html?durum=bitti` | ✓ |
+| E-229 | Günün 5'i · arşiv | içerik | Keşfet | `gunun-5-i.html` (arşiv) | Liste | Önceki günlerin baskıları | `ekranlar/icerik/gunun-5i.html?durum=arsiv` | ✓ |
+| E-230 | Günün 5'i · yükleniyor | durum | Keşfet | `durumlar.html` (iskelet) | — | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/gunun-5i.html?durum=yukleniyor` | ✓ |
+| E-231 | Günün 5'i · hata | durum | Keşfet | `500.html` | — | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/gunun-5i.html?durum=hata` | ✓ |
+| E-232 | Günün 5'i · çevrimdışı | durum | Keşfet | `cevrimdisi.html` | — | Otomatik indirilmişse okunur; değilse bağlantı yok | `ekranlar/icerik/gunun-5i.html?durum=cevrimdisi` | ✓ |
+| E-233 | Dada Özet | içerik | Keşfet | `dada-ozet.html` | Liste | Özet akışı; 15 sn / 1 dk / tam metin derinliği; "AI ile özetlendi" + kaynak haber | `ekranlar/icerik/dada-ozet.html` | ✓ |
+| E-234 | Dada Özet · yükleniyor | durum | Keşfet | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/dada-ozet.html?durum=yukleniyor` | ✓ |
+| E-235 | Dada Özet · aşağı çekip yenileme | durum | Keşfet | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/dada-ozet.html?durum=yenileniyor` | ✓ |
+| E-236 | Dada Özet · sayfa sonu yükleme | durum | Keşfet | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/dada-ozet.html?durum=daha-fazla` | ✓ |
+| E-237 | Dada Özet · boş | durum | Keşfet | `durumlar.html` (boş) | Liste | Boş durum: ikon, tek cümle, tek eylem | `ekranlar/icerik/dada-ozet.html?durum=bos` | ✓ |
+| E-238 | Dada Özet · hata | durum | Keşfet | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/dada-ozet.html?durum=hata` | ✓ |
+| E-239 | Dada Özet · çevrimdışı | durum | Keşfet | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/dada-ozet.html?durum=cevrimdisi` | ✓ |
+| E-240 | Bugün Ne Oldu? | içerik | Keşfet | `bugun-ne-oldu.html` | Liste | Tarih çipleri + saatli özet (çizelge kalıbı) | `ekranlar/icerik/bugun-ne-oldu.html` | ✓ |
+| E-241 | Bugün Ne Oldu? · yükleniyor | durum | Keşfet | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/bugun-ne-oldu.html?durum=yukleniyor` | ✓ |
+| E-242 | Bugün Ne Oldu? · aşağı çekip yenileme | durum | Keşfet | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/bugun-ne-oldu.html?durum=yenileniyor` | ✓ |
+| E-243 | Bugün Ne Oldu? · boş | durum | Keşfet | `durumlar.html` (boş) | Liste | Seçilen günde özet yok | `ekranlar/icerik/bugun-ne-oldu.html?durum=bos` | ✓ |
+| E-244 | Bugün Ne Oldu? · hata | durum | Keşfet | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/bugun-ne-oldu.html?durum=hata` | ✓ |
+| E-245 | Bugün Ne Oldu? · çevrimdışı | durum | Keşfet | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/bugun-ne-oldu.html?durum=cevrimdisi` | ✓ |
+| E-246 | Güncellenen Haberler | içerik | Keşfet | `guncellenen-haberler.html` | Liste | Her satırda "ne değişti" notu ve güncelleme saati | `ekranlar/icerik/guncellenen-haberler.html` | ✓ |
+| E-247 | Güncellenen Haberler · yükleniyor | durum | Keşfet | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/guncellenen-haberler.html?durum=yukleniyor` | ✓ |
+| E-248 | Güncellenen Haberler · aşağı çekip yenileme | durum | Keşfet | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/guncellenen-haberler.html?durum=yenileniyor` | ✓ |
+| E-249 | Güncellenen Haberler · sayfa sonu yükleme | durum | Keşfet | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/guncellenen-haberler.html?durum=daha-fazla` | ✓ |
+| E-250 | Güncellenen Haberler · boş | durum | Keşfet | `durumlar.html` (boş) | Liste | Boş durum: ikon, tek cümle, tek eylem | `ekranlar/icerik/guncellenen-haberler.html?durum=bos` | ✓ |
+| E-251 | Güncellenen Haberler · hata | durum | Keşfet | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/guncellenen-haberler.html?durum=hata` | ✓ |
+| E-252 | Güncellenen Haberler · çevrimdışı | durum | Keşfet | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/guncellenen-haberler.html?durum=cevrimdisi` | ✓ |
+| E-253 | Dada Bağlam · dosyalar | içerik | Keşfet | `dada-baglam.html` | Liste | Dosya listesi | `ekranlar/icerik/dada-baglam.html` | ✓ |
+| E-254 | Dada Bağlam · dosya detayı | içerik | Keşfet | `dada-baglam-dosya.html` | Detay | Özet + kronoloji (zaman çizelgesi), ilgili haberler | `ekranlar/icerik/dada-baglam.html?dosya=1` | ✓ |
+| E-255 | Dada Bağlam · yükleniyor | durum | Keşfet | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/dada-baglam.html?durum=yukleniyor` | ✓ |
+| E-256 | Dada Bağlam · hata | durum | Keşfet | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/dada-baglam.html?durum=hata` | ✓ |
+| E-257 | Dada Bağlam · bulunamadı | durum | Keşfet | `404.html`, `410.html` | Liste | İçerik kaldırıldı ya da bulunamadı; bölüme dön, arama | `ekranlar/icerik/dada-baglam.html?durum=bulunamadi` | ✓ |
+| E-258 | Dada Bağlam · çevrimdışı | durum | Keşfet | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/dada-baglam.html?durum=cevrimdisi` | ✓ |
+| E-259 | Dada Doğrula · merkez | içerik | Keşfet | `dada-dogrula.html` | Liste | İncelemeler; tek teyit gösterimi "İncelendi · N kaynak" | `ekranlar/icerik/dada-dogrula.html` | ✓ |
+| E-260 | Dada Doğrula · inceleme detayı | içerik | Keşfet | `dada-dogrula-inceleme.html` | Detay | İddia, inceleme, kaynaklar | `ekranlar/icerik/dada-dogrula.html?inceleme=1` | ✓ |
+| E-261 | Dada Doğrula · yükleniyor | durum | Keşfet | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/dada-dogrula.html?durum=yukleniyor` | ✓ |
+| E-262 | Dada Doğrula · sayfa sonu yükleme | durum | Keşfet | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/dada-dogrula.html?durum=daha-fazla` | ✓ |
+| E-263 | Dada Doğrula · hata | durum | Keşfet | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/dada-dogrula.html?durum=hata` | ✓ |
+| E-264 | Dada Doğrula · bulunamadı | durum | Keşfet | `404.html`, `410.html` | Liste | İçerik kaldırıldı ya da bulunamadı; bölüme dön, arama | `ekranlar/icerik/dada-dogrula.html?durum=bulunamadi` | ✓ |
+| E-265 | Dada Doğrula · çevrimdışı | durum | Keşfet | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/dada-dogrula.html?durum=cevrimdisi` | ✓ |
+| E-266 | Farklı Bakışlar | içerik | Keşfet | `farkli-bakislar.html` | Detay | Karşılaştırma; sütunlar yatay kayar ya da sekme | `ekranlar/icerik/farkli-bakislar.html` | ✓ |
+| E-267 | Farklı Bakışlar · yükleniyor | durum | Keşfet | `durumlar.html` (iskelet) | Detay | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/farkli-bakislar.html?durum=yukleniyor` | ✓ |
+| E-268 | Farklı Bakışlar · hata | durum | Keşfet | `500.html` | Detay | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/farkli-bakislar.html?durum=hata` | ✓ |
+| E-269 | Farklı Bakışlar · çevrimdışı | durum | Keşfet | `cevrimdisi.html` | Detay | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/farkli-bakislar.html?durum=cevrimdisi` | ✓ |
+| E-270 | Veri ve Harita | içerik | Keşfet | `veri-ve-harita.html` | Detay | Harita ve tablolar kap içinde kayar | `ekranlar/icerik/veri-ve-harita.html` | ✓ |
+| E-271 | Veri ve Harita · yükleniyor | durum | Keşfet | `durumlar.html` (iskelet) | Detay | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/veri-ve-harita.html?durum=yukleniyor` | ✓ |
+| E-272 | Veri ve Harita · hata | durum | Keşfet | `500.html` | Detay | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/veri-ve-harita.html?durum=hata` | ✓ |
+| E-273 | Veri ve Harita · çevrimdışı | durum | Keşfet | `cevrimdisi.html` | Detay | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/veri-ve-harita.html?durum=cevrimdisi` | ✓ |
+| E-274 | Sakin Akış | içerik | Keşfet | `sakin-akis.html` | Liste | Ayarlı akış; uygulamada bildirim davranışını da değiştirir | `ekranlar/icerik/sakin-akis.html` | ✓ |
+| E-275 | Sakin Akış · ayar alt sayfası | sistem | Keşfet | `sakin-akis.html` (ayar) | Liste | Konu dışarıda bırak, bildirimleri sustur | `ekranlar/icerik/sakin-akis.html?durum=ayar` | ✓ |
+| E-276 | Sakin Akış · yükleniyor | durum | Keşfet | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/sakin-akis.html?durum=yukleniyor` | ✓ |
+| E-277 | Sakin Akış · sayfa sonu yükleme | durum | Keşfet | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/sakin-akis.html?durum=daha-fazla` | ✓ |
+| E-278 | Sakin Akış · hata | durum | Keşfet | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/sakin-akis.html?durum=hata` | ✓ |
+| E-279 | Sakin Akış · çevrimdışı | durum | Keşfet | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/sakin-akis.html?durum=cevrimdisi` | ✓ |
+| E-280 | Bana Etkisi · üye | içerik | Keşfet | `bana-etkisi.html` | Liste | Profile göre haberler (Öğrenci, Çalışan, Emekli, Ev sahibi, Kiracı, Esnaf; panelle aynı) | `ekranlar/icerik/bana-etkisi.html` | ✓ |
+| E-281 | Bana Etkisi · profil seçilmedi | durum | Keşfet | `bana-etkisi.html` | Liste | Misafir ya da profilsiz üye: profil seç çağrısı | `ekranlar/icerik/bana-etkisi.html?uye=0` | ✓ |
+| E-282 | Bana Etkisi · yükleniyor | durum | Keşfet | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/bana-etkisi.html?durum=yukleniyor` | ✓ |
+| E-283 | Bana Etkisi · boş | durum | Keşfet | `durumlar.html` (boş) | Liste | Boş durum: ikon, tek cümle, tek eylem | `ekranlar/icerik/bana-etkisi.html?durum=bos` | ✓ |
+| E-284 | Bana Etkisi · hata | durum | Keşfet | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/bana-etkisi.html?durum=hata` | ✓ |
+| E-285 | Bana Etkisi · çevrimdışı | durum | Keşfet | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/bana-etkisi.html?durum=cevrimdisi` | ✓ |
+| E-286 | Takvim · Gündem Takvimi | içerik | Keşfet | `gundem-takvimi.html` | Liste | Gün şeridi, süzgeç, takvime ekle (B-25) | `ekranlar/icerik/takvim.html?tur=gundem` | ✓ |
+| E-287 | Takvim · Ekonomik Takvim | içerik | Servis | `ekonomik-takvim.html` | Liste | Aynı takvim kalıbı; önem derecesi | `ekranlar/icerik/takvim.html?tur=ekonomik` | ✓ |
+| E-288 | Takvim · Sınav Takvimi | içerik | Servis | `sinav-takvimi.html` | Liste | Aynı takvim kalıbı; YKS, KPSS, ALES ve YDS | `ekranlar/icerik/takvim.html?tur=sinav` | ✓ |
+| E-289 | Takvim · yükleniyor | durum | Keşfet | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/takvim.html?durum=yukleniyor` | ✓ |
+| E-290 | Takvim · boş | durum | Keşfet | `durumlar.html` (boş) | Liste | Seçilen günde etkinlik yok | `ekranlar/icerik/takvim.html?durum=bos` | ✓ |
+| E-291 | Takvim · hata | durum | Keşfet | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/takvim.html?durum=hata` | ✓ |
+| E-292 | Takvim · çevrimdışı | durum | Keşfet | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/takvim.html?durum=cevrimdisi` | ✓ |
+| E-293 | Arşiv | içerik | Keşfet | `arsiv.html` | Liste | Tarih seçici (alt sayfa) + o günün haberleri | `ekranlar/icerik/arsiv.html` | ✓ |
+| E-294 | Arşiv · yükleniyor | durum | Keşfet | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/arsiv.html?durum=yukleniyor` | ✓ |
+| E-295 | Arşiv · sayfa sonu yükleme | durum | Keşfet | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/arsiv.html?durum=daha-fazla` | ✓ |
+| E-296 | Arşiv · boş | durum | Keşfet | `durumlar.html` (boş) | Liste | Seçilen tarihte haber yok | `ekranlar/icerik/arsiv.html?durum=bos` | ✓ |
+| E-297 | Arşiv · hata | durum | Keşfet | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/arsiv.html?durum=hata` | ✓ |
+| E-298 | Arşiv · çevrimdışı | durum | Keşfet | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/arsiv.html?durum=cevrimdisi` | ✓ |
 
 ### Kişisel liste
 
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
-| E-299 | Bugün Senin İçin · üye | içerik | Kişisel | Hesabım › Genel Bakış · Gündemim | Liste | Takip edilen konu, takım, şehir, yazar haberleri; takip çipleri süzgeç | `ekranlar/icerik/senin-icin.html` |   |
-| E-300 | Bugün Senin İçin · misafir | içerik | Kişisel | `hesabim-misafir.html` | Liste | Konu seç çağrısı + Giriş yap; cihaz tercihleri (C30 varsayımı) | `ekranlar/icerik/senin-icin.html?uye=0` |   |
-| E-301 | Bugün Senin İçin · yükleniyor | durum | Kişisel | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/senin-icin.html?durum=yukleniyor` |   |
-| E-302 | Bugün Senin İçin · aşağı çekip yenileme | durum | Kişisel | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/senin-icin.html?durum=yenileniyor` |   |
-| E-303 | Bugün Senin İçin · sayfa sonu yükleme | durum | Kişisel | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/senin-icin.html?durum=daha-fazla` |   |
-| E-304 | Bugün Senin İçin · boş | durum | Kişisel | `durumlar.html` (boş) | Liste | Takip ettiğin konularda bugün haber yok; konu ekle | `ekranlar/icerik/senin-icin.html?durum=bos` |   |
-| E-305 | Bugün Senin İçin · hata | durum | Kişisel | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/senin-icin.html?durum=hata` |   |
-| E-306 | Bugün Senin İçin · çevrimdışı | durum | Kişisel | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/senin-icin.html?durum=cevrimdisi` |   |
+| E-299 | Bugün Senin İçin · üye | içerik | Kişisel | Hesabım › Genel Bakış · Gündemim | Liste | Takip edilen konu, takım, şehir, yazar haberleri; takip çipleri süzgeç | `ekranlar/icerik/senin-icin.html` | ✓ |
+| E-300 | Bugün Senin İçin · misafir | içerik | Kişisel | `hesabim-misafir.html` | Liste | Konu seç çağrısı + Giriş yap; cihaz tercihleri (C30 varsayımı) | `ekranlar/icerik/senin-icin.html?uye=0` | ✓ |
+| E-301 | Bugün Senin İçin · yükleniyor | durum | Kişisel | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/senin-icin.html?durum=yukleniyor` | ✓ |
+| E-302 | Bugün Senin İçin · aşağı çekip yenileme | durum | Kişisel | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/senin-icin.html?durum=yenileniyor` | ✓ |
+| E-303 | Bugün Senin İçin · sayfa sonu yükleme | durum | Kişisel | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/senin-icin.html?durum=daha-fazla` | ✓ |
+| E-304 | Bugün Senin İçin · boş | durum | Kişisel | `durumlar.html` (boş) | Liste | Takip ettiğin konularda bugün haber yok; konu ekle | `ekranlar/icerik/senin-icin.html?durum=bos` | ✓ |
+| E-305 | Bugün Senin İçin · hata | durum | Kişisel | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/senin-icin.html?durum=hata` | ✓ |
+| E-306 | Bugün Senin İçin · çevrimdışı | durum | Kişisel | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/senin-icin.html?durum=cevrimdisi` | ✓ |
 
 ### Yazar, etiket, kişi, gelişen olay
 
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
-| E-307 | Köşe yazarları (yazarlar dizini) | içerik | Yazar | `yazarlar.html` | Liste | Süzgeç şeridi; baş harf dairesi, ad, unvan, son yazı | `ekranlar/icerik/yazarlar.html` |   |
-| E-308 | Köşe yazarları · yükleniyor | durum | Yazar | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/yazarlar.html?durum=yukleniyor` |   |
-| E-309 | Köşe yazarları · aşağı çekip yenileme | durum | Yazar | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/yazarlar.html?durum=yenileniyor` |   |
-| E-310 | Köşe yazarları · boş | durum | Yazar | `durumlar.html` (boş) | Liste | Süzgeçte yazar yok | `ekranlar/icerik/yazarlar.html?durum=bos` |   |
-| E-311 | Köşe yazarları · hata | durum | Yazar | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/yazarlar.html?durum=hata` |   |
-| E-312 | Köşe yazarları · çevrimdışı | durum | Yazar | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/yazarlar.html?durum=cevrimdisi` |   |
-| E-313 | Yazar profili · üye | içerik | Yazar | `yazar.html` | Liste | Profil başlığı, Takip et, yazılar (yeni önce) | `ekranlar/icerik/yazar.html` |   |
-| E-314 | Yazar profili · misafir | içerik | Yazar | `yazar.html` | Liste | Takip et → tetik paneli | `ekranlar/icerik/yazar.html?uye=0` |   |
-| E-315 | Yazar profili · yükleniyor | durum | Yazar | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/yazar.html?durum=yukleniyor` |   |
-| E-316 | Yazar profili · sayfa sonu yükleme | durum | Yazar | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/yazar.html?durum=daha-fazla` |   |
-| E-317 | Yazar profili · boş | durum | Yazar | `durumlar.html` (boş) | Liste | Yazarın henüz yazısı yok | `ekranlar/icerik/yazar.html?durum=bos` |   |
-| E-318 | Yazar profili · hata | durum | Yazar | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/yazar.html?durum=hata` |   |
-| E-319 | Yazar profili · bulunamadı | durum | Yazar | `404.html`, `410.html` | Liste | İçerik kaldırıldı ya da bulunamadı; bölüme dön, arama | `ekranlar/icerik/yazar.html?durum=bulunamadi` |   |
-| E-320 | Yazar profili · çevrimdışı | durum | Yazar | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/yazar.html?durum=cevrimdisi` |   |
-| E-321 | Etiket · üye | içerik | Etiket | `etiket.html` | Liste | Etiket başlığı, Takip et, haberler | `ekranlar/icerik/etiket.html` |   |
-| E-322 | Etiket · misafir | içerik | Etiket | `etiket.html` | Liste | Takip et → tetik paneli (C30 varsayımı) | `ekranlar/icerik/etiket.html?uye=0` |   |
-| E-323 | Etiket · yükleniyor | durum | Etiket | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/etiket.html?durum=yukleniyor` |   |
-| E-324 | Etiket · aşağı çekip yenileme | durum | Etiket | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/etiket.html?durum=yenileniyor` |   |
-| E-325 | Etiket · sayfa sonu yükleme | durum | Etiket | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/etiket.html?durum=daha-fazla` |   |
-| E-326 | Etiket · boş | durum | Etiket | `durumlar.html` (boş) | Liste | Boş durum: ikon, tek cümle, tek eylem | `ekranlar/icerik/etiket.html?durum=bos` |   |
-| E-327 | Etiket · hata | durum | Etiket | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/etiket.html?durum=hata` |   |
-| E-328 | Etiket · çevrimdışı | durum | Etiket | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/etiket.html?durum=cevrimdisi` |   |
-| E-329 | Etiket · bulunamadı | durum | Etiket | `404.html`, `410.html` | Liste | İçerik kaldırıldı ya da bulunamadı; bölüme dön, arama | `ekranlar/icerik/etiket.html?durum=bulunamadi` |   |
-| E-330 | Kişi / kurum | içerik | Etiket | `kisi.html` | Liste | Kişi/kurum başlığı, Takip et, haberler | `ekranlar/icerik/kisi.html` |   |
-| E-331 | Kişi / kurum · yükleniyor | durum | Etiket | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/kisi.html?durum=yukleniyor` |   |
-| E-332 | Kişi / kurum · aşağı çekip yenileme | durum | Etiket | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/kisi.html?durum=yenileniyor` |   |
-| E-333 | Kişi / kurum · sayfa sonu yükleme | durum | Etiket | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/kisi.html?durum=daha-fazla` |   |
-| E-334 | Kişi / kurum · boş | durum | Etiket | `durumlar.html` (boş) | Liste | Boş durum: ikon, tek cümle, tek eylem | `ekranlar/icerik/kisi.html?durum=bos` |   |
-| E-335 | Kişi / kurum · hata | durum | Etiket | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/kisi.html?durum=hata` |   |
-| E-336 | Kişi / kurum · çevrimdışı | durum | Etiket | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/kisi.html?durum=cevrimdisi` |   |
-| E-337 | Kişi / kurum · bulunamadı | durum | Etiket | `404.html`, `410.html` | Liste | İçerik kaldırıldı ya da bulunamadı; bölüme dön, arama | `ekranlar/icerik/kisi.html?durum=bulunamadi` |   |
-| E-338 | Gelişen olay (konu) | içerik | Etiket | `konu.html` | Liste | Özet + kronoloji, Takip et; listedeki "Gelişen Olaylar" bloğundan (LS-D) | `ekranlar/icerik/gelisen-olay.html` |   |
-| E-339 | Gelişen olay · misafir | içerik | Etiket | `konu.html` | Liste | Takip et → tetik paneli | `ekranlar/icerik/gelisen-olay.html?uye=0` |   |
-| E-340 | Gelişen olay · yükleniyor | durum | Etiket | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/gelisen-olay.html?durum=yukleniyor` |   |
-| E-341 | Gelişen olay · aşağı çekip yenileme | durum | Etiket | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/gelisen-olay.html?durum=yenileniyor` |   |
-| E-342 | Gelişen olay · hata | durum | Etiket | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/gelisen-olay.html?durum=hata` |   |
-| E-343 | Gelişen olay · bulunamadı | durum | Etiket | `404.html`, `410.html` | Liste | İçerik kaldırıldı ya da bulunamadı; bölüme dön, arama | `ekranlar/icerik/gelisen-olay.html?durum=bulunamadi` |   |
-| E-344 | Gelişen olay · çevrimdışı | durum | Etiket | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/gelisen-olay.html?durum=cevrimdisi` |   |
+| E-307 | Köşe yazarları (yazarlar dizini) | içerik | Yazar | `yazarlar.html` | Liste | Süzgeç şeridi; baş harf dairesi, ad, unvan, son yazı | `ekranlar/icerik/yazarlar.html` | ✓ |
+| E-308 | Köşe yazarları · yükleniyor | durum | Yazar | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/yazarlar.html?durum=yukleniyor` | ✓ |
+| E-309 | Köşe yazarları · aşağı çekip yenileme | durum | Yazar | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/yazarlar.html?durum=yenileniyor` | ✓ |
+| E-310 | Köşe yazarları · boş | durum | Yazar | `durumlar.html` (boş) | Liste | Süzgeçte yazar yok | `ekranlar/icerik/yazarlar.html?durum=bos` | ✓ |
+| E-311 | Köşe yazarları · hata | durum | Yazar | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/yazarlar.html?durum=hata` | ✓ |
+| E-312 | Köşe yazarları · çevrimdışı | durum | Yazar | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/yazarlar.html?durum=cevrimdisi` | ✓ |
+| E-313 | Yazar profili · üye | içerik | Yazar | `yazar.html` | Liste | Profil başlığı, Takip et, yazılar (yeni önce) | `ekranlar/icerik/yazar.html` | ✓ |
+| E-314 | Yazar profili · misafir | içerik | Yazar | `yazar.html` | Liste | Takip et → tetik paneli | `ekranlar/icerik/yazar.html?uye=0` | ✓ |
+| E-315 | Yazar profili · yükleniyor | durum | Yazar | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/yazar.html?durum=yukleniyor` | ✓ |
+| E-316 | Yazar profili · sayfa sonu yükleme | durum | Yazar | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/yazar.html?durum=daha-fazla` | ✓ |
+| E-317 | Yazar profili · boş | durum | Yazar | `durumlar.html` (boş) | Liste | Yazarın henüz yazısı yok | `ekranlar/icerik/yazar.html?durum=bos` | ✓ |
+| E-318 | Yazar profili · hata | durum | Yazar | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/yazar.html?durum=hata` | ✓ |
+| E-319 | Yazar profili · bulunamadı | durum | Yazar | `404.html`, `410.html` | Liste | İçerik kaldırıldı ya da bulunamadı; bölüme dön, arama | `ekranlar/icerik/yazar.html?durum=bulunamadi` | ✓ |
+| E-320 | Yazar profili · çevrimdışı | durum | Yazar | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/yazar.html?durum=cevrimdisi` | ✓ |
+| E-321 | Etiket · üye | içerik | Etiket | `etiket.html` | Liste | Etiket başlığı, Takip et, haberler | `ekranlar/icerik/etiket.html` | ✓ |
+| E-322 | Etiket · misafir | içerik | Etiket | `etiket.html` | Liste | Takip et → tetik paneli (C30 varsayımı) | `ekranlar/icerik/etiket.html?uye=0` | ✓ |
+| E-323 | Etiket · yükleniyor | durum | Etiket | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/etiket.html?durum=yukleniyor` | ✓ |
+| E-324 | Etiket · aşağı çekip yenileme | durum | Etiket | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/etiket.html?durum=yenileniyor` | ✓ |
+| E-325 | Etiket · sayfa sonu yükleme | durum | Etiket | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/etiket.html?durum=daha-fazla` | ✓ |
+| E-326 | Etiket · boş | durum | Etiket | `durumlar.html` (boş) | Liste | Boş durum: ikon, tek cümle, tek eylem | `ekranlar/icerik/etiket.html?durum=bos` | ✓ |
+| E-327 | Etiket · hata | durum | Etiket | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/etiket.html?durum=hata` | ✓ |
+| E-328 | Etiket · çevrimdışı | durum | Etiket | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/etiket.html?durum=cevrimdisi` | ✓ |
+| E-329 | Etiket · bulunamadı | durum | Etiket | `404.html`, `410.html` | Liste | İçerik kaldırıldı ya da bulunamadı; bölüme dön, arama | `ekranlar/icerik/etiket.html?durum=bulunamadi` | ✓ |
+| E-330 | Kişi / kurum | içerik | Etiket | `kisi.html` | Liste | Kişi/kurum başlığı, Takip et, haberler | `ekranlar/icerik/kisi.html` | ✓ |
+| E-331 | Kişi / kurum · yükleniyor | durum | Etiket | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/kisi.html?durum=yukleniyor` | ✓ |
+| E-332 | Kişi / kurum · aşağı çekip yenileme | durum | Etiket | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/kisi.html?durum=yenileniyor` | ✓ |
+| E-333 | Kişi / kurum · sayfa sonu yükleme | durum | Etiket | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/kisi.html?durum=daha-fazla` | ✓ |
+| E-334 | Kişi / kurum · boş | durum | Etiket | `durumlar.html` (boş) | Liste | Boş durum: ikon, tek cümle, tek eylem | `ekranlar/icerik/kisi.html?durum=bos` | ✓ |
+| E-335 | Kişi / kurum · hata | durum | Etiket | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/kisi.html?durum=hata` | ✓ |
+| E-336 | Kişi / kurum · çevrimdışı | durum | Etiket | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/kisi.html?durum=cevrimdisi` | ✓ |
+| E-337 | Kişi / kurum · bulunamadı | durum | Etiket | `404.html`, `410.html` | Liste | İçerik kaldırıldı ya da bulunamadı; bölüme dön, arama | `ekranlar/icerik/kisi.html?durum=bulunamadi` | ✓ |
+| E-338 | Gelişen olay (konu) | içerik | Etiket | `konu.html` | Liste | Özet + kronoloji, Takip et; listedeki "Gelişen Olaylar" bloğundan (LS-D) | `ekranlar/icerik/gelisen-olay.html` | ✓ |
+| E-339 | Gelişen olay · misafir | içerik | Etiket | `konu.html` | Liste | Takip et → tetik paneli | `ekranlar/icerik/gelisen-olay.html?uye=0` | ✓ |
+| E-340 | Gelişen olay · yükleniyor | durum | Etiket | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/gelisen-olay.html?durum=yukleniyor` | ✓ |
+| E-341 | Gelişen olay · aşağı çekip yenileme | durum | Etiket | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/gelisen-olay.html?durum=yenileniyor` | ✓ |
+| E-342 | Gelişen olay · hata | durum | Etiket | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/gelisen-olay.html?durum=hata` | ✓ |
+| E-343 | Gelişen olay · bulunamadı | durum | Etiket | `404.html`, `410.html` | Liste | İçerik kaldırıldı ya da bulunamadı; bölüme dön, arama | `ekranlar/icerik/gelisen-olay.html?durum=bulunamadi` | ✓ |
+| E-344 | Gelişen olay · çevrimdışı | durum | Etiket | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/gelisen-olay.html?durum=cevrimdisi` | ✓ |
 
 ### Servisler
 
 | ID | Ekran / hal | Tür | Grup | Public karşılığı | Kök | Durumlar | Dosya | ✓ |
 |---|---|---|---|---|---|---|---|---|
-| E-345 | Piyasalar · Piyasa Ekranı | içerik | Servis | `piyasa-ekrani.html` | Liste | Sekmeler: Piyasa Ekranı, Döviz, Altın, Borsa, Kripto Para, Faiz Oranları, Akaryakıt; tablolar kap içinde kayar | `ekranlar/icerik/piyasalar.html` |   |
-| E-346 | Piyasalar · Döviz | içerik | Servis | `doviz.html` | Liste | Kur tablosu + çevirici (D1 kalıbı) | `ekranlar/icerik/piyasalar.html?sekme=doviz` |   |
-| E-347 | Piyasalar · Altın | içerik | Servis | `altin.html` | Liste | Tablo | `ekranlar/icerik/piyasalar.html?sekme=altin` |   |
-| E-348 | Piyasalar · Borsa | içerik | Servis | `borsa.html` | Liste | Hisse tablosu, aramalı | `ekranlar/icerik/piyasalar.html?sekme=borsa` |   |
-| E-349 | Piyasalar · Kripto Para | içerik | Servis | `kripto-para.html` | Liste | Tablo + çevirici | `ekranlar/icerik/piyasalar.html?sekme=kripto` |   |
-| E-350 | Piyasalar · Faiz Oranları | içerik | Servis | `faiz-oranlari.html` | Liste | Tablo | `ekranlar/icerik/piyasalar.html?sekme=faiz` |   |
-| E-351 | Piyasalar · Akaryakıt Fiyatları | içerik | Servis | `akaryakit-fiyatlari.html` | Liste | İl seçici (şehir seç alt sayfası) + tablo | `ekranlar/icerik/piyasalar.html?sekme=akaryakit` |   |
-| E-352 | Piyasalar · çevirici alt sayfası | sistem | Servis | `doviz.html` (çevirici) | Liste | Tutar + iki birim; sayısal klavye | `ekranlar/icerik/piyasalar.html?sekme=doviz&durum=cevirici` |   |
-| E-353 | Piyasalar · yükleniyor | durum | Servis | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/piyasalar.html?durum=yukleniyor` |   |
-| E-354 | Piyasalar · aşağı çekip yenileme | durum | Servis | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/piyasalar.html?durum=yenileniyor` |   |
-| E-355 | Piyasalar · boş | durum | Servis | `durumlar.html` (boş) | Liste | Aramada enstrüman bulunamadı | `ekranlar/icerik/piyasalar.html?durum=bos` |   |
-| E-356 | Piyasalar · hata | durum | Servis | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/piyasalar.html?durum=hata` |   |
-| E-357 | Piyasalar · çevrimdışı | durum | Servis | `cevrimdisi.html` | Liste | Son veri + son güncelleme saati notu | `ekranlar/icerik/piyasalar.html?durum=cevrimdisi` |   |
-| E-358 | Enstrüman detayı (kur, altın, hisse) | içerik | Servis | `enstruman-detay.html` | Detay | Değer, değişim, sade grafik (grafikle boğma), geçmiş tablo, ilgili haberler | `ekranlar/icerik/enstruman.html` |   |
-| E-359 | Enstrüman detayı · yükleniyor | durum | Servis | `durumlar.html` (iskelet) | Detay | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/enstruman.html?durum=yukleniyor` |   |
-| E-360 | Enstrüman detayı · hata | durum | Servis | `500.html` | Detay | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/enstruman.html?durum=hata` |   |
-| E-361 | Enstrüman detayı · bulunamadı | durum | Servis | `404.html`, `410.html` | Detay | İçerik kaldırıldı ya da bulunamadı; bölüme dön, arama | `ekranlar/icerik/enstruman.html?durum=bulunamadi` |   |
-| E-362 | Enstrüman detayı · çevrimdışı | durum | Servis | `cevrimdisi.html` | Detay | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/enstruman.html?durum=cevrimdisi` |   |
-| E-363 | Hava Durumu | içerik | Servis | `hava-durumu.html` | — | Şehir seçici, bugün, saatlik, 7 gün (yatay kayar) | `ekranlar/icerik/hava-durumu.html` |   |
-| E-364 | Hava Durumu · konum izni yok | durum | Servis | sitede konum reddi (C35) | — | Şehri elle seç; ayarlara git | `ekranlar/icerik/hava-durumu.html?durum=konum-yok` |   |
-| E-365 | Hava Durumu · yükleniyor | durum | Servis | `durumlar.html` (iskelet) | — | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/hava-durumu.html?durum=yukleniyor` |   |
-| E-366 | Hava Durumu · hata | durum | Servis | `500.html` | — | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/hava-durumu.html?durum=hata` |   |
-| E-367 | Hava Durumu · çevrimdışı | durum | Servis | `cevrimdisi.html` | — | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/hava-durumu.html?durum=cevrimdisi` |   |
-| E-368 | Namaz Vakitleri | içerik | Servis | `namaz-vakitleri.html` | — | Sıradaki vakit + kalan süre, günün vakitleri, aylık tablo (kayar) | `ekranlar/icerik/namaz-vakitleri.html` |   |
-| E-369 | Namaz Vakitleri · konum izni yok | durum | Servis | sitede konum reddi (C35) | — | Şehri elle seç | `ekranlar/icerik/namaz-vakitleri.html?durum=konum-yok` |   |
-| E-370 | Namaz Vakitleri · yükleniyor | durum | Servis | `durumlar.html` (iskelet) | — | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/namaz-vakitleri.html?durum=yukleniyor` |   |
-| E-371 | Namaz Vakitleri · hata | durum | Servis | `500.html` | — | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/namaz-vakitleri.html?durum=hata` |   |
-| E-372 | Namaz Vakitleri · çevrimdışı | durum | Servis | `cevrimdisi.html` | — | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/namaz-vakitleri.html?durum=cevrimdisi` |   |
-| E-373 | Canlı Skor | içerik | Spor | `canli-skor.html` | Liste | Branş sekmeleri, canlı önce, takımlarım üstte | `ekranlar/icerik/canli-skor.html` |   |
-| E-374 | Canlı Skor · yükleniyor | durum | Spor | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/canli-skor.html?durum=yukleniyor` |   |
-| E-375 | Canlı Skor · aşağı çekip yenileme | durum | Spor | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/canli-skor.html?durum=yenileniyor` |   |
-| E-376 | Canlı Skor · boş | durum | Spor | `durumlar.html` (boş) | Liste | Şu an canlı maç yok; günün fikstürü | `ekranlar/icerik/canli-skor.html?durum=bos` |   |
-| E-377 | Canlı Skor · hata | durum | Spor | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/canli-skor.html?durum=hata` |   |
-| E-378 | Canlı Skor · çevrimdışı | durum | Spor | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/canli-skor.html?durum=cevrimdisi` |   |
-| E-379 | Puan Durumu | içerik | Spor | `puan-durumu.html` | Liste | Lig seçici, sütun önceliği, takımın satırı vurgulu | `ekranlar/icerik/puan-durumu.html` |   |
-| E-380 | Puan Durumu · yükleniyor | durum | Spor | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/puan-durumu.html?durum=yukleniyor` |   |
-| E-381 | Puan Durumu · hata | durum | Spor | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/puan-durumu.html?durum=hata` |   |
-| E-382 | Puan Durumu · çevrimdışı | durum | Spor | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/puan-durumu.html?durum=cevrimdisi` |   |
-| E-383 | Fikstür | içerik | Spor | `fikstur.html` | Liste | Hafta seçici, maç satırları | `ekranlar/icerik/fikstur.html` |   |
-| E-384 | Fikstür · yükleniyor | durum | Spor | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/fikstur.html?durum=yukleniyor` |   |
-| E-385 | Fikstür · boş | durum | Spor | `durumlar.html` (boş) | Liste | Bu hafta maç yok | `ekranlar/icerik/fikstur.html?durum=bos` |   |
-| E-386 | Fikstür · hata | durum | Spor | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/fikstur.html?durum=hata` |   |
-| E-387 | Fikstür · çevrimdışı | durum | Spor | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/fikstur.html?durum=cevrimdisi` |   |
-| E-388 | Takımlar | içerik | Spor | `takimlar.html` | Liste | Takım ızgarası; takımlarım işaretli | `ekranlar/icerik/takimlar.html` |   |
-| E-389 | Takımlar · yükleniyor | durum | Spor | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/takimlar.html?durum=yukleniyor` |   |
-| E-390 | Takımlar · hata | durum | Spor | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/takimlar.html?durum=hata` |   |
-| E-391 | Takımlar · çevrimdışı | durum | Spor | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/takimlar.html?durum=cevrimdisi` |   |
-| E-392 | Takım sayfası · üye | içerik | Spor | `galatasaray.html`, `fenerbahce.html` … | Liste | Profil başlığı, Takip et, haberler, fikstür, puan | `ekranlar/icerik/takim.html` |   |
-| E-393 | Takım sayfası · misafir | içerik | Spor | `galatasaray.html` … | Liste | Takip et → tetik paneli | `ekranlar/icerik/takim.html?uye=0` |   |
-| E-394 | Takım sayfası · yükleniyor | durum | Spor | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/takim.html?durum=yukleniyor` |   |
-| E-395 | Takım sayfası · aşağı çekip yenileme | durum | Spor | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/takim.html?durum=yenileniyor` |   |
-| E-396 | Takım sayfası · sayfa sonu yükleme | durum | Spor | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/takim.html?durum=daha-fazla` |   |
-| E-397 | Takım sayfası · hata | durum | Spor | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/takim.html?durum=hata` |   |
-| E-398 | Takım sayfası · çevrimdışı | durum | Spor | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/takim.html?durum=cevrimdisi` |   |
-| E-399 | Maç detayı · başlamadı | içerik | Spor | `mac-detay.html` | Detay | Saat, kadrolar, son maçlar | `ekranlar/icerik/mac-detay.html?durum=once` |   |
-| E-400 | Maç detayı · canlı | içerik | Spor | `mac-detay.html` | Detay | Skor, dakika, maç anlatımı (yeni üstte), istatistik | `ekranlar/icerik/mac-detay.html` |   |
-| E-401 | Maç detayı · bitti | durum | Spor | `mac-detay.html` | Detay | Sonuç, özet, maç haberi bağlantısı | `ekranlar/icerik/mac-detay.html?durum=bitti` |   |
-| E-402 | Maç detayı · yükleniyor | durum | Spor | `durumlar.html` (iskelet) | Detay | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/mac-detay.html?durum=yukleniyor` |   |
-| E-403 | Maç detayı · aşağı çekip yenileme | durum | Spor | — | Detay | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/mac-detay.html?durum=yenileniyor` |   |
-| E-404 | Maç detayı · hata | durum | Spor | `500.html` | Detay | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/mac-detay.html?durum=hata` |   |
-| E-405 | Maç detayı · bulunamadı | durum | Spor | `404.html`, `410.html` | Detay | İçerik kaldırıldı ya da bulunamadı; bölüme dön, arama | `ekranlar/icerik/mac-detay.html?durum=bulunamadi` |   |
-| E-406 | Maç detayı · çevrimdışı | durum | Spor | `cevrimdisi.html` | Detay | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/mac-detay.html?durum=cevrimdisi` |   |
+| E-345 | Piyasalar · Piyasa Ekranı | içerik | Servis | `piyasa-ekrani.html` | Liste | Sekmeler: Piyasa Ekranı, Döviz, Altın, Borsa, Kripto Para, Faiz Oranları, Akaryakıt; tablolar kap içinde kayar | `ekranlar/icerik/piyasalar.html` | ✓ |
+| E-346 | Piyasalar · Döviz | içerik | Servis | `doviz.html` | Liste | Kur tablosu + çevirici (D1 kalıbı) | `ekranlar/icerik/piyasalar.html?sekme=doviz` | ✓ |
+| E-347 | Piyasalar · Altın | içerik | Servis | `altin.html` | Liste | Tablo | `ekranlar/icerik/piyasalar.html?sekme=altin` | ✓ |
+| E-348 | Piyasalar · Borsa | içerik | Servis | `borsa.html` | Liste | Hisse tablosu, aramalı | `ekranlar/icerik/piyasalar.html?sekme=borsa` | ✓ |
+| E-349 | Piyasalar · Kripto Para | içerik | Servis | `kripto-para.html` | Liste | Tablo + çevirici | `ekranlar/icerik/piyasalar.html?sekme=kripto` | ✓ |
+| E-350 | Piyasalar · Faiz Oranları | içerik | Servis | `faiz-oranlari.html` | Liste | Tablo | `ekranlar/icerik/piyasalar.html?sekme=faiz` | ✓ |
+| E-351 | Piyasalar · Akaryakıt Fiyatları | içerik | Servis | `akaryakit-fiyatlari.html` | Liste | İl seçici (şehir seç alt sayfası) + tablo | `ekranlar/icerik/piyasalar.html?sekme=akaryakit` | ✓ |
+| E-352 | Piyasalar · çevirici alt sayfası | sistem | Servis | `doviz.html` (çevirici) | Liste | Tutar + iki birim; sayısal klavye | `ekranlar/icerik/piyasalar.html?sekme=doviz&durum=cevirici` | ✓ |
+| E-353 | Piyasalar · yükleniyor | durum | Servis | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/piyasalar.html?durum=yukleniyor` | ✓ |
+| E-354 | Piyasalar · aşağı çekip yenileme | durum | Servis | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/piyasalar.html?durum=yenileniyor` | ✓ |
+| E-355 | Piyasalar · boş | durum | Servis | `durumlar.html` (boş) | Liste | Aramada enstrüman bulunamadı | `ekranlar/icerik/piyasalar.html?durum=bos` | ✓ |
+| E-356 | Piyasalar · hata | durum | Servis | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/piyasalar.html?durum=hata` | ✓ |
+| E-357 | Piyasalar · çevrimdışı | durum | Servis | `cevrimdisi.html` | Liste | Son veri + son güncelleme saati notu | `ekranlar/icerik/piyasalar.html?durum=cevrimdisi` | ✓ |
+| E-358 | Enstrüman detayı (kur, altın, hisse) | içerik | Servis | `enstruman-detay.html` | Detay | Değer, değişim, sade grafik (grafikle boğma), geçmiş tablo, ilgili haberler | `ekranlar/icerik/enstruman.html` | ✓ |
+| E-359 | Enstrüman detayı · yükleniyor | durum | Servis | `durumlar.html` (iskelet) | Detay | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/enstruman.html?durum=yukleniyor` | ✓ |
+| E-360 | Enstrüman detayı · hata | durum | Servis | `500.html` | Detay | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/enstruman.html?durum=hata` | ✓ |
+| E-361 | Enstrüman detayı · bulunamadı | durum | Servis | `404.html`, `410.html` | Detay | İçerik kaldırıldı ya da bulunamadı; bölüme dön, arama | `ekranlar/icerik/enstruman.html?durum=bulunamadi` | ✓ |
+| E-362 | Enstrüman detayı · çevrimdışı | durum | Servis | `cevrimdisi.html` | Detay | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/enstruman.html?durum=cevrimdisi` | ✓ |
+| E-363 | Hava Durumu | içerik | Servis | `hava-durumu.html` | — | Şehir seçici, bugün, saatlik, 7 gün (yatay kayar) | `ekranlar/icerik/hava-durumu.html` | ✓ |
+| E-364 | Hava Durumu · konum izni yok | durum | Servis | sitede konum reddi (C35) | — | Şehri elle seç; ayarlara git | `ekranlar/icerik/hava-durumu.html?durum=konum-yok` | ✓ |
+| E-365 | Hava Durumu · yükleniyor | durum | Servis | `durumlar.html` (iskelet) | — | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/hava-durumu.html?durum=yukleniyor` | ✓ |
+| E-366 | Hava Durumu · hata | durum | Servis | `500.html` | — | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/hava-durumu.html?durum=hata` | ✓ |
+| E-367 | Hava Durumu · çevrimdışı | durum | Servis | `cevrimdisi.html` | — | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/hava-durumu.html?durum=cevrimdisi` | ✓ |
+| E-368 | Namaz Vakitleri | içerik | Servis | `namaz-vakitleri.html` | — | Sıradaki vakit + kalan süre, günün vakitleri, aylık tablo (kayar) | `ekranlar/icerik/namaz-vakitleri.html` | ✓ |
+| E-369 | Namaz Vakitleri · konum izni yok | durum | Servis | sitede konum reddi (C35) | — | Şehri elle seç | `ekranlar/icerik/namaz-vakitleri.html?durum=konum-yok` | ✓ |
+| E-370 | Namaz Vakitleri · yükleniyor | durum | Servis | `durumlar.html` (iskelet) | — | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/namaz-vakitleri.html?durum=yukleniyor` | ✓ |
+| E-371 | Namaz Vakitleri · hata | durum | Servis | `500.html` | — | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/namaz-vakitleri.html?durum=hata` | ✓ |
+| E-372 | Namaz Vakitleri · çevrimdışı | durum | Servis | `cevrimdisi.html` | — | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/namaz-vakitleri.html?durum=cevrimdisi` | ✓ |
+| E-373 | Canlı Skor | içerik | Spor | `canli-skor.html` | Liste | Branş sekmeleri, canlı önce, takımlarım üstte | `ekranlar/icerik/canli-skor.html` | ✓ |
+| E-374 | Canlı Skor · yükleniyor | durum | Spor | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/canli-skor.html?durum=yukleniyor` | ✓ |
+| E-375 | Canlı Skor · aşağı çekip yenileme | durum | Spor | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/canli-skor.html?durum=yenileniyor` | ✓ |
+| E-376 | Canlı Skor · boş | durum | Spor | `durumlar.html` (boş) | Liste | Şu an canlı maç yok; günün fikstürü | `ekranlar/icerik/canli-skor.html?durum=bos` | ✓ |
+| E-377 | Canlı Skor · hata | durum | Spor | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/canli-skor.html?durum=hata` | ✓ |
+| E-378 | Canlı Skor · çevrimdışı | durum | Spor | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/canli-skor.html?durum=cevrimdisi` | ✓ |
+| E-379 | Puan Durumu | içerik | Spor | `puan-durumu.html` | Liste | Lig seçici, sütun önceliği, takımın satırı vurgulu | `ekranlar/icerik/puan-durumu.html` | ✓ |
+| E-380 | Puan Durumu · yükleniyor | durum | Spor | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/puan-durumu.html?durum=yukleniyor` | ✓ |
+| E-381 | Puan Durumu · hata | durum | Spor | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/puan-durumu.html?durum=hata` | ✓ |
+| E-382 | Puan Durumu · çevrimdışı | durum | Spor | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/puan-durumu.html?durum=cevrimdisi` | ✓ |
+| E-383 | Fikstür | içerik | Spor | `fikstur.html` | Liste | Hafta seçici, maç satırları | `ekranlar/icerik/fikstur.html` | ✓ |
+| E-384 | Fikstür · yükleniyor | durum | Spor | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/fikstur.html?durum=yukleniyor` | ✓ |
+| E-385 | Fikstür · boş | durum | Spor | `durumlar.html` (boş) | Liste | Bu hafta maç yok | `ekranlar/icerik/fikstur.html?durum=bos` | ✓ |
+| E-386 | Fikstür · hata | durum | Spor | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/fikstur.html?durum=hata` | ✓ |
+| E-387 | Fikstür · çevrimdışı | durum | Spor | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/fikstur.html?durum=cevrimdisi` | ✓ |
+| E-388 | Takımlar | içerik | Spor | `takimlar.html` | Liste | Takım ızgarası; takımlarım işaretli | `ekranlar/icerik/takimlar.html` | ✓ |
+| E-389 | Takımlar · yükleniyor | durum | Spor | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/takimlar.html?durum=yukleniyor` | ✓ |
+| E-390 | Takımlar · hata | durum | Spor | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/takimlar.html?durum=hata` | ✓ |
+| E-391 | Takımlar · çevrimdışı | durum | Spor | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/takimlar.html?durum=cevrimdisi` | ✓ |
+| E-392 | Takım sayfası · üye | içerik | Spor | `galatasaray.html`, `fenerbahce.html` … | Liste | Profil başlığı, Takip et, haberler, fikstür, puan | `ekranlar/icerik/takim.html` | ✓ |
+| E-393 | Takım sayfası · misafir | içerik | Spor | `galatasaray.html` … | Liste | Takip et → tetik paneli | `ekranlar/icerik/takim.html?uye=0` | ✓ |
+| E-394 | Takım sayfası · yükleniyor | durum | Spor | `durumlar.html` (iskelet) | Liste | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/takim.html?durum=yukleniyor` | ✓ |
+| E-395 | Takım sayfası · aşağı çekip yenileme | durum | Spor | — | Liste | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/takim.html?durum=yenileniyor` | ✓ |
+| E-396 | Takım sayfası · sayfa sonu yükleme | durum | Spor | — (sitede sayfalama) | Liste | Sayfa sonunda yükleniyor; hepsi bu kadar; yüklenemedi → yeniden dene | `ekranlar/icerik/takim.html?durum=daha-fazla` | ✓ |
+| E-397 | Takım sayfası · hata | durum | Spor | `500.html` | Liste | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/takim.html?durum=hata` | ✓ |
+| E-398 | Takım sayfası · çevrimdışı | durum | Spor | `cevrimdisi.html` | Liste | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/takim.html?durum=cevrimdisi` | ✓ |
+| E-399 | Maç detayı · başlamadı | içerik | Spor | `mac-detay.html` | Detay | Saat, kadrolar, son maçlar | `ekranlar/icerik/mac-detay.html?durum=once` | ✓ |
+| E-400 | Maç detayı · canlı | içerik | Spor | `mac-detay.html` | Detay | Skor, dakika, maç anlatımı (yeni üstte), istatistik | `ekranlar/icerik/mac-detay.html` | ✓ |
+| E-401 | Maç detayı · bitti | durum | Spor | `mac-detay.html` | Detay | Sonuç, özet, maç haberi bağlantısı | `ekranlar/icerik/mac-detay.html?durum=bitti` | ✓ |
+| E-402 | Maç detayı · yükleniyor | durum | Spor | `durumlar.html` (iskelet) | Detay | İskelet (shimmer); başlık çubuğu ve alt çubuk yerinde, kartlar gri blok | `ekranlar/icerik/mac-detay.html?durum=yukleniyor` | ✓ |
+| E-403 | Maç detayı · aşağı çekip yenileme | durum | Spor | — | Detay | Çekiliyor → bırak → yenileniyor → güncel; içerik yerinde kalır | `ekranlar/icerik/mac-detay.html?durum=yenileniyor` | ✓ |
+| E-404 | Maç detayı · hata | durum | Spor | `500.html` | Detay | Sunucu hatası ya da zaman aşımı; Yeniden dene, kabuk yerinde | `ekranlar/icerik/mac-detay.html?durum=hata` | ✓ |
+| E-405 | Maç detayı · bulunamadı | durum | Spor | `404.html`, `410.html` | Detay | İçerik kaldırıldı ya da bulunamadı; bölüme dön, arama | `ekranlar/icerik/mac-detay.html?durum=bulunamadi` | ✓ |
+| E-406 | Maç detayı · çevrimdışı | durum | Spor | `cevrimdisi.html` | Detay | Bağlantı yok; önbellekte varsa son içerik + "Çevrimdışısın" bandı, yoksa Kaydedilenler'e git | `ekranlar/icerik/mac-detay.html?durum=cevrimdisi` | ✓ |
 
 ## 2 · Durumlar
 

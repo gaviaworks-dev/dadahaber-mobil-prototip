@@ -114,7 +114,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Hikâye (ana sayfa şeridi)",
 "dosya": "ekranlar/icerik/hikaye.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-014",
@@ -122,7 +122,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Hikâye (ana sayfa şeridi)",
 "dosya": "ekranlar/icerik/hikaye.html?durum=dur",
-"ok": false
+"ok": true
 },
 {
 "id": "E-015",
@@ -130,7 +130,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Hikâye (ana sayfa şeridi)",
 "dosya": "ekranlar/icerik/hikaye.html?durum=bos",
-"ok": false
+"ok": true
 },
 {
 "id": "E-016",
@@ -138,7 +138,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Hikâye (ana sayfa şeridi)",
 "dosya": "ekranlar/icerik/hikaye.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-017",
@@ -146,7 +146,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Hikâye (ana sayfa şeridi)",
 "dosya": "ekranlar/icerik/hikaye.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-018",
@@ -154,7 +154,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Hikâye (ana sayfa şeridi)",
 "dosya": "ekranlar/icerik/hikaye.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-019",
@@ -162,7 +162,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Bölümler ve liste (kök)",
 "dosya": "ekranlar/icerik/bolumler.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-020",
@@ -170,7 +170,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Bölümler ve liste (kök)",
 "dosya": "ekranlar/icerik/bolumler.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-021",
@@ -178,7 +178,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Bölümler ve liste (kök)",
 "dosya": "ekranlar/icerik/bolumler.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-022",
@@ -186,7 +186,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Bölümler ve liste (kök)",
 "dosya": "ekranlar/icerik/bolumler.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-023",
@@ -482,7 +482,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Haber detayı (kök) ve türleri",
 "dosya": "ekranlar/icerik/yorumlar.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-059",
@@ -490,7 +490,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Haber detayı (kök) ve türleri",
 "dosya": "ekranlar/icerik/yorumlar.html?uye=0",
-"ok": false
+"ok": true
 },
 {
 "id": "E-060",
@@ -498,7 +498,7 @@ window.DIZIN = [
 "tur": "sistem",
 "alt": "Haber detayı (kök) ve türleri",
 "dosya": "ekranlar/icerik/yorumlar.html?durum=yaz",
-"ok": false
+"ok": true
 },
 {
 "id": "E-061",
@@ -506,7 +506,7 @@ window.DIZIN = [
 "tur": "sistem",
 "alt": "Haber detayı (kök) ve türleri",
 "dosya": "ekranlar/icerik/yorumlar.html?durum=yanitla",
-"ok": false
+"ok": true
 },
 {
 "id": "E-062",
@@ -514,7 +514,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Haber detayı (kök) ve türleri",
 "dosya": "ekranlar/icerik/yorumlar.html?durum=gonderildi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-063",
@@ -522,7 +522,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Haber detayı (kök) ve türleri",
 "dosya": "ekranlar/icerik/yorumlar.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-064",
@@ -530,7 +530,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Haber detayı (kök) ve türleri",
 "dosya": "ekranlar/icerik/yorumlar.html?durum=daha-fazla",
-"ok": false
+"ok": true
 },
 {
 "id": "E-065",
@@ -538,7 +538,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Haber detayı (kök) ve türleri",
 "dosya": "ekranlar/icerik/yorumlar.html?durum=bos",
-"ok": false
+"ok": true
 },
 {
 "id": "E-066",
@@ -546,7 +546,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Haber detayı (kök) ve türleri",
 "dosya": "ekranlar/icerik/yorumlar.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-067",
@@ -554,7 +554,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Haber detayı (kök) ve türleri",
 "dosya": "ekranlar/icerik/yorumlar.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-068",
@@ -562,7 +562,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Haber detayı (kök) ve türleri",
 "dosya": "ekranlar/icerik/kose-yazisi.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-069",
@@ -570,7 +570,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Haber detayı (kök) ve türleri",
 "dosya": "ekranlar/icerik/kose-yazisi.html?uye=0",
-"ok": false
+"ok": true
 },
 {
 "id": "E-070",
@@ -578,7 +578,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Haber detayı (kök) ve türleri",
 "dosya": "ekranlar/icerik/kose-yazisi.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-071",
@@ -586,7 +586,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Haber detayı (kök) ve türleri",
 "dosya": "ekranlar/icerik/kose-yazisi.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-072",
@@ -594,7 +594,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Haber detayı (kök) ve türleri",
 "dosya": "ekranlar/icerik/kose-yazisi.html?durum=bulunamadi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-073",
@@ -602,7 +602,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Haber detayı (kök) ve türleri",
 "dosya": "ekranlar/icerik/kose-yazisi.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-074",
@@ -610,7 +610,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Canlı",
 "dosya": "ekranlar/icerik/canli-anlatim.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-075",
@@ -618,7 +618,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Canlı",
 "dosya": "ekranlar/icerik/canli-anlatim.html?durum=yeni",
-"ok": false
+"ok": true
 },
 {
 "id": "E-076",
@@ -626,7 +626,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Canlı",
 "dosya": "ekranlar/icerik/canli-anlatim.html?durum=kilit",
-"ok": false
+"ok": true
 },
 {
 "id": "E-077",
@@ -634,7 +634,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Canlı",
 "dosya": "ekranlar/icerik/canli-anlatim.html?durum=bitti",
-"ok": false
+"ok": true
 },
 {
 "id": "E-078",
@@ -642,7 +642,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Canlı",
 "dosya": "ekranlar/icerik/canli-anlatim.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-079",
@@ -650,7 +650,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Canlı",
 "dosya": "ekranlar/icerik/canli-anlatim.html?durum=yenileniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-080",
@@ -658,7 +658,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Canlı",
 "dosya": "ekranlar/icerik/canli-anlatim.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-081",
@@ -666,7 +666,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Canlı",
 "dosya": "ekranlar/icerik/canli-anlatim.html?durum=bulunamadi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-082",
@@ -674,7 +674,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Canlı",
 "dosya": "ekranlar/icerik/canli-anlatim.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-083",
@@ -682,7 +682,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Canlı",
 "dosya": "ekranlar/icerik/canli-gundem.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-084",
@@ -690,7 +690,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Canlı",
 "dosya": "ekranlar/icerik/canli-gundem.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-085",
@@ -698,7 +698,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Canlı",
 "dosya": "ekranlar/icerik/canli-gundem.html?durum=yenileniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-086",
@@ -706,7 +706,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Canlı",
 "dosya": "ekranlar/icerik/canli-gundem.html?durum=daha-fazla",
-"ok": false
+"ok": true
 },
 {
 "id": "E-087",
@@ -714,7 +714,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Canlı",
 "dosya": "ekranlar/icerik/canli-gundem.html?durum=bos",
-"ok": false
+"ok": true
 },
 {
 "id": "E-088",
@@ -722,7 +722,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Canlı",
 "dosya": "ekranlar/icerik/canli-gundem.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-089",
@@ -730,7 +730,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Canlı",
 "dosya": "ekranlar/icerik/canli-gundem.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-090",
@@ -738,7 +738,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Canlı",
 "dosya": "ekranlar/icerik/canli-yayin.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-091",
@@ -746,7 +746,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Canlı",
 "dosya": "ekranlar/icerik/canli-yayin.html?durum=yayin-yok",
-"ok": false
+"ok": true
 },
 {
 "id": "E-092",
@@ -754,7 +754,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Canlı",
 "dosya": "ekranlar/icerik/canli-yayin.html?durum=mobil-veri",
-"ok": false
+"ok": true
 },
 {
 "id": "E-093",
@@ -762,7 +762,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Canlı",
 "dosya": "ekranlar/icerik/canli-yayin.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-094",
@@ -770,7 +770,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Canlı",
 "dosya": "ekranlar/icerik/canli-yayin.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-095",
@@ -778,7 +778,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Canlı",
 "dosya": "ekranlar/icerik/canli-yayin.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-096",
@@ -786,7 +786,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Canlı",
 "dosya": "ekranlar/icerik/son-dakika.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-097",
@@ -794,7 +794,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Canlı",
 "dosya": "ekranlar/icerik/son-dakika.html?durum=yeni",
-"ok": false
+"ok": true
 },
 {
 "id": "E-098",
@@ -802,7 +802,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Canlı",
 "dosya": "ekranlar/icerik/son-dakika.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-099",
@@ -810,7 +810,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Canlı",
 "dosya": "ekranlar/icerik/son-dakika.html?durum=yenileniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-100",
@@ -818,7 +818,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Canlı",
 "dosya": "ekranlar/icerik/son-dakika.html?durum=daha-fazla",
-"ok": false
+"ok": true
 },
 {
 "id": "E-101",
@@ -826,7 +826,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Canlı",
 "dosya": "ekranlar/icerik/son-dakika.html?durum=bos",
-"ok": false
+"ok": true
 },
 {
 "id": "E-102",
@@ -834,7 +834,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Canlı",
 "dosya": "ekranlar/icerik/son-dakika.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-103",
@@ -842,7 +842,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Canlı",
 "dosya": "ekranlar/icerik/son-dakika.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-104",
@@ -850,7 +850,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Arama",
 "dosya": "ekranlar/icerik/arama.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-105",
@@ -858,7 +858,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Arama",
 "dosya": "ekranlar/icerik/arama.html?durum=yaziyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-106",
@@ -866,7 +866,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Arama",
 "dosya": "ekranlar/icerik/arama.html?durum=bos",
-"ok": false
+"ok": true
 },
 {
 "id": "E-107",
@@ -874,7 +874,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Arama",
 "dosya": "ekranlar/icerik/arama-sonuc.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-108",
@@ -882,7 +882,7 @@ window.DIZIN = [
 "tur": "sistem",
 "alt": "Arama",
 "dosya": "ekranlar/icerik/arama-sonuc.html?durum=suzgec",
-"ok": false
+"ok": true
 },
 {
 "id": "E-109",
@@ -890,7 +890,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Arama",
 "dosya": "ekranlar/icerik/arama-sonuc.html?durum=oneri",
-"ok": false
+"ok": true
 },
 {
 "id": "E-110",
@@ -898,7 +898,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Arama",
 "dosya": "ekranlar/icerik/arama-sonuc.html?durum=tur-bos",
-"ok": false
+"ok": true
 },
 {
 "id": "E-111",
@@ -906,7 +906,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Arama",
 "dosya": "ekranlar/icerik/arama-sonuc.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-112",
@@ -914,7 +914,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Arama",
 "dosya": "ekranlar/icerik/arama-sonuc.html?durum=daha-fazla",
-"ok": false
+"ok": true
 },
 {
 "id": "E-113",
@@ -922,7 +922,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Arama",
 "dosya": "ekranlar/icerik/arama-sonuc.html?durum=bos",
-"ok": false
+"ok": true
 },
 {
 "id": "E-114",
@@ -930,7 +930,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Arama",
 "dosya": "ekranlar/icerik/arama-sonuc.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-115",
@@ -938,7 +938,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Arama",
 "dosya": "ekranlar/icerik/arama-sonuc.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-116",
@@ -946,7 +946,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Arama",
 "dosya": "ekranlar/icerik/dadaya-sor.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-117",
@@ -954,7 +954,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Arama",
 "dosya": "ekranlar/icerik/dadaya-sor.html?durum=yaziyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-118",
@@ -962,7 +962,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Arama",
 "dosya": "ekranlar/icerik/dadaya-sor.html?durum=yanit",
-"ok": false
+"ok": true
 },
 {
 "id": "E-119",
@@ -970,7 +970,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Arama",
 "dosya": "ekranlar/icerik/dadaya-sor.html?durum=bos",
-"ok": false
+"ok": true
 },
 {
 "id": "E-120",
@@ -978,7 +978,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Arama",
 "dosya": "ekranlar/icerik/dadaya-sor.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-121",
@@ -986,7 +986,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Arama",
 "dosya": "ekranlar/icerik/dadaya-sor.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-122",
@@ -994,7 +994,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Video Haber",
 "dosya": "ekranlar/icerik/video.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-123",
@@ -1002,7 +1002,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Video Haber",
 "dosya": "ekranlar/icerik/video.html?kategori=spor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-124",
@@ -1010,7 +1010,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Video Haber",
 "dosya": "ekranlar/icerik/video.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-125",
@@ -1018,7 +1018,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Video Haber",
 "dosya": "ekranlar/icerik/video.html?durum=yenileniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-126",
@@ -1026,7 +1026,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Video Haber",
 "dosya": "ekranlar/icerik/video.html?durum=daha-fazla",
-"ok": false
+"ok": true
 },
 {
 "id": "E-127",
@@ -1034,7 +1034,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Video Haber",
 "dosya": "ekranlar/icerik/video.html?durum=bos",
-"ok": false
+"ok": true
 },
 {
 "id": "E-128",
@@ -1042,7 +1042,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Video Haber",
 "dosya": "ekranlar/icerik/video.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-129",
@@ -1050,7 +1050,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Video Haber",
 "dosya": "ekranlar/icerik/video.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-130",
@@ -1058,7 +1058,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Video Haber",
 "dosya": "ekranlar/icerik/video-detay.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-131",
@@ -1066,7 +1066,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Video Haber",
 "dosya": "ekranlar/icerik/video-detay.html?durum=denetim",
-"ok": false
+"ok": true
 },
 {
 "id": "E-132",
@@ -1074,7 +1074,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Video Haber",
 "dosya": "ekranlar/icerik/video-detay.html?durum=tam-ekran",
-"ok": false
+"ok": true
 },
 {
 "id": "E-133",
@@ -1082,7 +1082,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Video Haber",
 "dosya": "ekranlar/icerik/video-detay.html?durum=pip",
-"ok": false
+"ok": true
 },
 {
 "id": "E-134",
@@ -1090,7 +1090,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Video Haber",
 "dosya": "ekranlar/icerik/video-detay.html?durum=mobil-veri",
-"ok": false
+"ok": true
 },
 {
 "id": "E-135",
@@ -1098,7 +1098,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Video Haber",
 "dosya": "ekranlar/icerik/video-detay.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-136",
@@ -1106,7 +1106,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Video Haber",
 "dosya": "ekranlar/icerik/video-detay.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-137",
@@ -1114,7 +1114,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Video Haber",
 "dosya": "ekranlar/icerik/video-detay.html?durum=bulunamadi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-138",
@@ -1122,7 +1122,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Video Haber",
 "dosya": "ekranlar/icerik/video-detay.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-139",
@@ -1210,7 +1210,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Foto Fokus ve İnfografik",
 "dosya": "ekranlar/icerik/foto-fokus.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-150",
@@ -1218,7 +1218,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Foto Fokus ve İnfografik",
 "dosya": "ekranlar/icerik/foto-fokus.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-151",
@@ -1226,7 +1226,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Foto Fokus ve İnfografik",
 "dosya": "ekranlar/icerik/foto-fokus.html?durum=yenileniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-152",
@@ -1234,7 +1234,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Foto Fokus ve İnfografik",
 "dosya": "ekranlar/icerik/foto-fokus.html?durum=daha-fazla",
-"ok": false
+"ok": true
 },
 {
 "id": "E-153",
@@ -1242,7 +1242,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Foto Fokus ve İnfografik",
 "dosya": "ekranlar/icerik/foto-fokus.html?durum=bos",
-"ok": false
+"ok": true
 },
 {
 "id": "E-154",
@@ -1250,7 +1250,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Foto Fokus ve İnfografik",
 "dosya": "ekranlar/icerik/foto-fokus.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-155",
@@ -1258,7 +1258,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Foto Fokus ve İnfografik",
 "dosya": "ekranlar/icerik/foto-fokus.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-156",
@@ -1266,7 +1266,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Foto Fokus ve İnfografik",
 "dosya": "ekranlar/icerik/galeri.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-157",
@@ -1274,7 +1274,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Foto Fokus ve İnfografik",
 "dosya": "ekranlar/icerik/galeri.html?durum=goruntule",
-"ok": false
+"ok": true
 },
 {
 "id": "E-158",
@@ -1282,7 +1282,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Foto Fokus ve İnfografik",
 "dosya": "ekranlar/icerik/galeri.html?durum=yakinlastir",
-"ok": false
+"ok": true
 },
 {
 "id": "E-159",
@@ -1290,7 +1290,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Foto Fokus ve İnfografik",
 "dosya": "ekranlar/icerik/galeri.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-160",
@@ -1298,7 +1298,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Foto Fokus ve İnfografik",
 "dosya": "ekranlar/icerik/galeri.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-161",
@@ -1306,7 +1306,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Foto Fokus ve İnfografik",
 "dosya": "ekranlar/icerik/galeri.html?durum=bulunamadi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-162",
@@ -1314,7 +1314,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Foto Fokus ve İnfografik",
 "dosya": "ekranlar/icerik/galeri.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-163",
@@ -1322,7 +1322,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Foto Fokus ve İnfografik",
 "dosya": "ekranlar/icerik/infografik.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-164",
@@ -1330,7 +1330,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Foto Fokus ve İnfografik",
 "dosya": "ekranlar/icerik/infografik.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-165",
@@ -1338,7 +1338,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Foto Fokus ve İnfografik",
 "dosya": "ekranlar/icerik/infografik.html?durum=yenileniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-166",
@@ -1346,7 +1346,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Foto Fokus ve İnfografik",
 "dosya": "ekranlar/icerik/infografik.html?durum=daha-fazla",
-"ok": false
+"ok": true
 },
 {
 "id": "E-167",
@@ -1354,7 +1354,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Foto Fokus ve İnfografik",
 "dosya": "ekranlar/icerik/infografik.html?durum=bos",
-"ok": false
+"ok": true
 },
 {
 "id": "E-168",
@@ -1362,7 +1362,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Foto Fokus ve İnfografik",
 "dosya": "ekranlar/icerik/infografik.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-169",
@@ -1370,7 +1370,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Foto Fokus ve İnfografik",
 "dosya": "ekranlar/icerik/infografik.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-170",
@@ -1378,7 +1378,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Foto Fokus ve İnfografik",
 "dosya": "ekranlar/icerik/infografik-detay.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-171",
@@ -1386,7 +1386,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Foto Fokus ve İnfografik",
 "dosya": "ekranlar/icerik/infografik-detay.html?durum=yakinlastir",
-"ok": false
+"ok": true
 },
 {
 "id": "E-172",
@@ -1394,7 +1394,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Foto Fokus ve İnfografik",
 "dosya": "ekranlar/icerik/infografik-detay.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-173",
@@ -1402,7 +1402,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Foto Fokus ve İnfografik",
 "dosya": "ekranlar/icerik/infografik-detay.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-174",
@@ -1410,7 +1410,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Foto Fokus ve İnfografik",
 "dosya": "ekranlar/icerik/infografik-detay.html?durum=bulunamadi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-175",
@@ -1418,7 +1418,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Foto Fokus ve İnfografik",
 "dosya": "ekranlar/icerik/infografik-detay.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-176",
@@ -1426,7 +1426,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/haber-dinle.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-606",
@@ -1434,7 +1434,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/haber-dinle.html?spiker=0",
-"ok": false
+"ok": true
 },
 {
 "id": "E-177",
@@ -1442,7 +1442,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/haber-dinle.html?kategori=finans",
-"ok": false
+"ok": true
 },
 {
 "id": "E-178",
@@ -1450,7 +1450,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/haber-dinle.html?kusak=sabah-ozeti",
-"ok": false
+"ok": true
 },
 {
 "id": "E-179",
@@ -1458,7 +1458,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/haber-dinle.html?kusak=gun-ortasi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-180",
@@ -1466,7 +1466,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/haber-dinle.html?kusak=aksam-bulteni",
-"ok": false
+"ok": true
 },
 {
 "id": "E-181",
@@ -1474,7 +1474,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/haber-dinle.html?kusak=hafta-ozeti",
-"ok": false
+"ok": true
 },
 {
 "id": "E-182",
@@ -1482,7 +1482,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/haber-dinle.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-183",
@@ -1490,7 +1490,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/haber-dinle.html?durum=yenileniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-184",
@@ -1498,7 +1498,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/haber-dinle.html?durum=daha-fazla",
-"ok": false
+"ok": true
 },
 {
 "id": "E-185",
@@ -1506,7 +1506,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/haber-dinle.html?durum=bos",
-"ok": false
+"ok": true
 },
 {
 "id": "E-186",
@@ -1514,7 +1514,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/haber-dinle.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-187",
@@ -1522,7 +1522,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/haber-dinle.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-188",
@@ -1530,7 +1530,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/haber-dinle-bulten.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-189",
@@ -1538,7 +1538,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/haber-dinle-bulten.html?durum=caliyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-190",
@@ -1546,7 +1546,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/haber-dinle-bulten.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-191",
@@ -1554,7 +1554,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/haber-dinle-bulten.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-192",
@@ -1562,7 +1562,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/haber-dinle-bulten.html?durum=bulunamadi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-193",
@@ -1570,7 +1570,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/haber-dinle-bulten.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-194",
@@ -1578,7 +1578,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/spiker.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-195",
@@ -1586,7 +1586,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/spiker.html?durum=ses",
-"ok": false
+"ok": true
 },
 {
 "id": "E-196",
@@ -1594,7 +1594,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/spiker.html?durum=yayin-yok",
-"ok": false
+"ok": true
 },
 {
 "id": "E-197",
@@ -1602,7 +1602,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/spiker.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-198",
@@ -1610,7 +1610,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/spiker.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-199",
@@ -1618,7 +1618,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/spiker.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-200",
@@ -1626,7 +1626,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/podcast.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-201",
@@ -1634,7 +1634,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/podcast.html?periyot=aylik",
-"ok": false
+"ok": true
 },
 {
 "id": "E-202",
@@ -1642,7 +1642,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/podcast.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-203",
@@ -1650,7 +1650,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/podcast.html?durum=yenileniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-204",
@@ -1658,7 +1658,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/podcast.html?durum=bos",
-"ok": false
+"ok": true
 },
 {
 "id": "E-205",
@@ -1666,7 +1666,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/podcast.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-206",
@@ -1674,7 +1674,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/podcast.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-207",
@@ -1682,7 +1682,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/podcast-program.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-208",
@@ -1690,7 +1690,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/podcast-program.html?uye=0",
-"ok": false
+"ok": true
 },
 {
 "id": "E-209",
@@ -1698,7 +1698,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/podcast-program.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-210",
@@ -1706,7 +1706,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/podcast-program.html?durum=yenileniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-211",
@@ -1714,7 +1714,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/podcast-program.html?durum=daha-fazla",
-"ok": false
+"ok": true
 },
 {
 "id": "E-212",
@@ -1722,7 +1722,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/podcast-program.html?durum=bos",
-"ok": false
+"ok": true
 },
 {
 "id": "E-213",
@@ -1730,7 +1730,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/podcast-program.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-214",
@@ -1738,7 +1738,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/podcast-program.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-215",
@@ -1746,7 +1746,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/podcast-bolum.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-216",
@@ -1754,7 +1754,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/podcast-bolum.html?durum=indirildi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-217",
@@ -1762,7 +1762,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/podcast-bolum.html?durum=devam",
-"ok": false
+"ok": true
 },
 {
 "id": "E-218",
@@ -1770,7 +1770,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/podcast-bolum.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-219",
@@ -1778,7 +1778,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/podcast-bolum.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-220",
@@ -1786,7 +1786,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/podcast-bolum.html?durum=bulunamadi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-221",
@@ -1794,7 +1794,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Dinle: Haber Dinle, Spiker, Podcast",
 "dosya": "ekranlar/icerik/podcast-bolum.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-222",
@@ -1802,7 +1802,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/kesfet.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-223",
@@ -1810,7 +1810,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/kesfet.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-224",
@@ -1818,7 +1818,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/kesfet.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-225",
@@ -1826,7 +1826,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/kesfet.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-226",
@@ -1834,7 +1834,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/gunun-5i.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-227",
@@ -1842,7 +1842,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/gunun-5i.html?uye=0",
-"ok": false
+"ok": true
 },
 {
 "id": "E-228",
@@ -1850,7 +1850,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/gunun-5i.html?durum=bitti",
-"ok": false
+"ok": true
 },
 {
 "id": "E-229",
@@ -1858,7 +1858,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/gunun-5i.html?durum=arsiv",
-"ok": false
+"ok": true
 },
 {
 "id": "E-230",
@@ -1866,7 +1866,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/gunun-5i.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-231",
@@ -1874,7 +1874,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/gunun-5i.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-232",
@@ -1882,7 +1882,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/gunun-5i.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-233",
@@ -1890,7 +1890,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/dada-ozet.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-234",
@@ -1898,7 +1898,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/dada-ozet.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-235",
@@ -1906,7 +1906,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/dada-ozet.html?durum=yenileniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-236",
@@ -1914,7 +1914,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/dada-ozet.html?durum=daha-fazla",
-"ok": false
+"ok": true
 },
 {
 "id": "E-237",
@@ -1922,7 +1922,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/dada-ozet.html?durum=bos",
-"ok": false
+"ok": true
 },
 {
 "id": "E-238",
@@ -1930,7 +1930,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/dada-ozet.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-239",
@@ -1938,7 +1938,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/dada-ozet.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-240",
@@ -1946,7 +1946,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/bugun-ne-oldu.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-241",
@@ -1954,7 +1954,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/bugun-ne-oldu.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-242",
@@ -1962,7 +1962,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/bugun-ne-oldu.html?durum=yenileniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-243",
@@ -1970,7 +1970,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/bugun-ne-oldu.html?durum=bos",
-"ok": false
+"ok": true
 },
 {
 "id": "E-244",
@@ -1978,7 +1978,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/bugun-ne-oldu.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-245",
@@ -1986,7 +1986,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/bugun-ne-oldu.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-246",
@@ -1994,7 +1994,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/guncellenen-haberler.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-247",
@@ -2002,7 +2002,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/guncellenen-haberler.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-248",
@@ -2010,7 +2010,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/guncellenen-haberler.html?durum=yenileniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-249",
@@ -2018,7 +2018,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/guncellenen-haberler.html?durum=daha-fazla",
-"ok": false
+"ok": true
 },
 {
 "id": "E-250",
@@ -2026,7 +2026,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/guncellenen-haberler.html?durum=bos",
-"ok": false
+"ok": true
 },
 {
 "id": "E-251",
@@ -2034,7 +2034,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/guncellenen-haberler.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-252",
@@ -2042,7 +2042,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/guncellenen-haberler.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-253",
@@ -2050,7 +2050,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/dada-baglam.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-254",
@@ -2058,7 +2058,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/dada-baglam.html?dosya=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-255",
@@ -2066,7 +2066,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/dada-baglam.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-256",
@@ -2074,7 +2074,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/dada-baglam.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-257",
@@ -2082,7 +2082,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/dada-baglam.html?durum=bulunamadi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-258",
@@ -2090,7 +2090,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/dada-baglam.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-259",
@@ -2098,7 +2098,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/dada-dogrula.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-260",
@@ -2106,7 +2106,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/dada-dogrula.html?inceleme=1",
-"ok": false
+"ok": true
 },
 {
 "id": "E-261",
@@ -2114,7 +2114,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/dada-dogrula.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-262",
@@ -2122,7 +2122,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/dada-dogrula.html?durum=daha-fazla",
-"ok": false
+"ok": true
 },
 {
 "id": "E-263",
@@ -2130,7 +2130,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/dada-dogrula.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-264",
@@ -2138,7 +2138,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/dada-dogrula.html?durum=bulunamadi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-265",
@@ -2146,7 +2146,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/dada-dogrula.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-266",
@@ -2154,7 +2154,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/farkli-bakislar.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-267",
@@ -2162,7 +2162,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/farkli-bakislar.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-268",
@@ -2170,7 +2170,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/farkli-bakislar.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-269",
@@ -2178,7 +2178,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/farkli-bakislar.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-270",
@@ -2186,7 +2186,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/veri-ve-harita.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-271",
@@ -2194,7 +2194,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/veri-ve-harita.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-272",
@@ -2202,7 +2202,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/veri-ve-harita.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-273",
@@ -2210,7 +2210,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/veri-ve-harita.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-274",
@@ -2218,7 +2218,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/sakin-akis.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-275",
@@ -2226,7 +2226,7 @@ window.DIZIN = [
 "tur": "sistem",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/sakin-akis.html?durum=ayar",
-"ok": false
+"ok": true
 },
 {
 "id": "E-276",
@@ -2234,7 +2234,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/sakin-akis.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-277",
@@ -2242,7 +2242,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/sakin-akis.html?durum=daha-fazla",
-"ok": false
+"ok": true
 },
 {
 "id": "E-278",
@@ -2250,7 +2250,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/sakin-akis.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-279",
@@ -2258,7 +2258,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/sakin-akis.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-280",
@@ -2266,7 +2266,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/bana-etkisi.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-281",
@@ -2274,7 +2274,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/bana-etkisi.html?uye=0",
-"ok": false
+"ok": true
 },
 {
 "id": "E-282",
@@ -2282,7 +2282,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/bana-etkisi.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-283",
@@ -2290,7 +2290,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/bana-etkisi.html?durum=bos",
-"ok": false
+"ok": true
 },
 {
 "id": "E-284",
@@ -2298,7 +2298,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/bana-etkisi.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-285",
@@ -2306,7 +2306,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/bana-etkisi.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-286",
@@ -2314,7 +2314,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/takvim.html?tur=gundem",
-"ok": false
+"ok": true
 },
 {
 "id": "E-287",
@@ -2322,7 +2322,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/takvim.html?tur=ekonomik",
-"ok": false
+"ok": true
 },
 {
 "id": "E-288",
@@ -2330,7 +2330,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/takvim.html?tur=sinav",
-"ok": false
+"ok": true
 },
 {
 "id": "E-289",
@@ -2338,7 +2338,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/takvim.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-290",
@@ -2346,7 +2346,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/takvim.html?durum=bos",
-"ok": false
+"ok": true
 },
 {
 "id": "E-291",
@@ -2354,7 +2354,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/takvim.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-292",
@@ -2362,7 +2362,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/takvim.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-293",
@@ -2370,7 +2370,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/arsiv.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-294",
@@ -2378,7 +2378,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/arsiv.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-295",
@@ -2386,7 +2386,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/arsiv.html?durum=daha-fazla",
-"ok": false
+"ok": true
 },
 {
 "id": "E-296",
@@ -2394,7 +2394,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/arsiv.html?durum=bos",
-"ok": false
+"ok": true
 },
 {
 "id": "E-297",
@@ -2402,7 +2402,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/arsiv.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-298",
@@ -2410,7 +2410,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Keşfet ürünleri",
 "dosya": "ekranlar/icerik/arsiv.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-299",
@@ -2418,7 +2418,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Kişisel liste",
 "dosya": "ekranlar/icerik/senin-icin.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-300",
@@ -2426,7 +2426,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Kişisel liste",
 "dosya": "ekranlar/icerik/senin-icin.html?uye=0",
-"ok": false
+"ok": true
 },
 {
 "id": "E-301",
@@ -2434,7 +2434,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Kişisel liste",
 "dosya": "ekranlar/icerik/senin-icin.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-302",
@@ -2442,7 +2442,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Kişisel liste",
 "dosya": "ekranlar/icerik/senin-icin.html?durum=yenileniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-303",
@@ -2450,7 +2450,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Kişisel liste",
 "dosya": "ekranlar/icerik/senin-icin.html?durum=daha-fazla",
-"ok": false
+"ok": true
 },
 {
 "id": "E-304",
@@ -2458,7 +2458,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Kişisel liste",
 "dosya": "ekranlar/icerik/senin-icin.html?durum=bos",
-"ok": false
+"ok": true
 },
 {
 "id": "E-305",
@@ -2466,7 +2466,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Kişisel liste",
 "dosya": "ekranlar/icerik/senin-icin.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-306",
@@ -2474,7 +2474,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Kişisel liste",
 "dosya": "ekranlar/icerik/senin-icin.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-307",
@@ -2482,7 +2482,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/yazarlar.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-308",
@@ -2490,7 +2490,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/yazarlar.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-309",
@@ -2498,7 +2498,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/yazarlar.html?durum=yenileniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-310",
@@ -2506,7 +2506,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/yazarlar.html?durum=bos",
-"ok": false
+"ok": true
 },
 {
 "id": "E-311",
@@ -2514,7 +2514,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/yazarlar.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-312",
@@ -2522,7 +2522,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/yazarlar.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-313",
@@ -2530,7 +2530,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/yazar.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-314",
@@ -2538,7 +2538,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/yazar.html?uye=0",
-"ok": false
+"ok": true
 },
 {
 "id": "E-315",
@@ -2546,7 +2546,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/yazar.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-316",
@@ -2554,7 +2554,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/yazar.html?durum=daha-fazla",
-"ok": false
+"ok": true
 },
 {
 "id": "E-317",
@@ -2562,7 +2562,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/yazar.html?durum=bos",
-"ok": false
+"ok": true
 },
 {
 "id": "E-318",
@@ -2570,7 +2570,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/yazar.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-319",
@@ -2578,7 +2578,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/yazar.html?durum=bulunamadi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-320",
@@ -2586,7 +2586,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/yazar.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-321",
@@ -2594,7 +2594,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/etiket.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-322",
@@ -2602,7 +2602,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/etiket.html?uye=0",
-"ok": false
+"ok": true
 },
 {
 "id": "E-323",
@@ -2610,7 +2610,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/etiket.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-324",
@@ -2618,7 +2618,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/etiket.html?durum=yenileniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-325",
@@ -2626,7 +2626,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/etiket.html?durum=daha-fazla",
-"ok": false
+"ok": true
 },
 {
 "id": "E-326",
@@ -2634,7 +2634,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/etiket.html?durum=bos",
-"ok": false
+"ok": true
 },
 {
 "id": "E-327",
@@ -2642,7 +2642,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/etiket.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-328",
@@ -2650,7 +2650,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/etiket.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-329",
@@ -2658,7 +2658,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/etiket.html?durum=bulunamadi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-330",
@@ -2666,7 +2666,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/kisi.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-331",
@@ -2674,7 +2674,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/kisi.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-332",
@@ -2682,7 +2682,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/kisi.html?durum=yenileniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-333",
@@ -2690,7 +2690,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/kisi.html?durum=daha-fazla",
-"ok": false
+"ok": true
 },
 {
 "id": "E-334",
@@ -2698,7 +2698,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/kisi.html?durum=bos",
-"ok": false
+"ok": true
 },
 {
 "id": "E-335",
@@ -2706,7 +2706,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/kisi.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-336",
@@ -2714,7 +2714,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/kisi.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-337",
@@ -2722,7 +2722,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/kisi.html?durum=bulunamadi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-338",
@@ -2730,7 +2730,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/gelisen-olay.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-339",
@@ -2738,7 +2738,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/gelisen-olay.html?uye=0",
-"ok": false
+"ok": true
 },
 {
 "id": "E-340",
@@ -2746,7 +2746,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/gelisen-olay.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-341",
@@ -2754,7 +2754,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/gelisen-olay.html?durum=yenileniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-342",
@@ -2762,7 +2762,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/gelisen-olay.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-343",
@@ -2770,7 +2770,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/gelisen-olay.html?durum=bulunamadi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-344",
@@ -2778,7 +2778,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Yazar, etiket, kişi, gelişen olay",
 "dosya": "ekranlar/icerik/gelisen-olay.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-345",
@@ -2786,7 +2786,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/piyasalar.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-346",
@@ -2794,7 +2794,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/piyasalar.html?sekme=doviz",
-"ok": false
+"ok": true
 },
 {
 "id": "E-347",
@@ -2802,7 +2802,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/piyasalar.html?sekme=altin",
-"ok": false
+"ok": true
 },
 {
 "id": "E-348",
@@ -2810,7 +2810,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/piyasalar.html?sekme=borsa",
-"ok": false
+"ok": true
 },
 {
 "id": "E-349",
@@ -2818,7 +2818,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/piyasalar.html?sekme=kripto",
-"ok": false
+"ok": true
 },
 {
 "id": "E-350",
@@ -2826,7 +2826,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/piyasalar.html?sekme=faiz",
-"ok": false
+"ok": true
 },
 {
 "id": "E-351",
@@ -2834,7 +2834,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/piyasalar.html?sekme=akaryakit",
-"ok": false
+"ok": true
 },
 {
 "id": "E-352",
@@ -2842,7 +2842,7 @@ window.DIZIN = [
 "tur": "sistem",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/piyasalar.html?sekme=doviz&durum=cevirici",
-"ok": false
+"ok": true
 },
 {
 "id": "E-353",
@@ -2850,7 +2850,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/piyasalar.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-354",
@@ -2858,7 +2858,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/piyasalar.html?durum=yenileniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-355",
@@ -2866,7 +2866,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/piyasalar.html?durum=bos",
-"ok": false
+"ok": true
 },
 {
 "id": "E-356",
@@ -2874,7 +2874,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/piyasalar.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-357",
@@ -2882,7 +2882,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/piyasalar.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-358",
@@ -2890,7 +2890,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/enstruman.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-359",
@@ -2898,7 +2898,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/enstruman.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-360",
@@ -2906,7 +2906,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/enstruman.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-361",
@@ -2914,7 +2914,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/enstruman.html?durum=bulunamadi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-362",
@@ -2922,7 +2922,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/enstruman.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-363",
@@ -2930,7 +2930,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/hava-durumu.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-364",
@@ -2938,7 +2938,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/hava-durumu.html?durum=konum-yok",
-"ok": false
+"ok": true
 },
 {
 "id": "E-365",
@@ -2946,7 +2946,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/hava-durumu.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-366",
@@ -2954,7 +2954,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/hava-durumu.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-367",
@@ -2962,7 +2962,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/hava-durumu.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-368",
@@ -2970,7 +2970,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/namaz-vakitleri.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-369",
@@ -2978,7 +2978,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/namaz-vakitleri.html?durum=konum-yok",
-"ok": false
+"ok": true
 },
 {
 "id": "E-370",
@@ -2986,7 +2986,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/namaz-vakitleri.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-371",
@@ -2994,7 +2994,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/namaz-vakitleri.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-372",
@@ -3002,7 +3002,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/namaz-vakitleri.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-373",
@@ -3010,7 +3010,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/canli-skor.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-374",
@@ -3018,7 +3018,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/canli-skor.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-375",
@@ -3026,7 +3026,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/canli-skor.html?durum=yenileniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-376",
@@ -3034,7 +3034,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/canli-skor.html?durum=bos",
-"ok": false
+"ok": true
 },
 {
 "id": "E-377",
@@ -3042,7 +3042,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/canli-skor.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-378",
@@ -3050,7 +3050,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/canli-skor.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-379",
@@ -3058,7 +3058,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/puan-durumu.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-380",
@@ -3066,7 +3066,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/puan-durumu.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-381",
@@ -3074,7 +3074,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/puan-durumu.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-382",
@@ -3082,7 +3082,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/puan-durumu.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-383",
@@ -3090,7 +3090,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/fikstur.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-384",
@@ -3098,7 +3098,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/fikstur.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-385",
@@ -3106,7 +3106,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/fikstur.html?durum=bos",
-"ok": false
+"ok": true
 },
 {
 "id": "E-386",
@@ -3114,7 +3114,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/fikstur.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-387",
@@ -3122,7 +3122,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/fikstur.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-388",
@@ -3130,7 +3130,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/takimlar.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-389",
@@ -3138,7 +3138,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/takimlar.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-390",
@@ -3146,7 +3146,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/takimlar.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-391",
@@ -3154,7 +3154,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/takimlar.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-392",
@@ -3162,7 +3162,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/takim.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-393",
@@ -3170,7 +3170,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/takim.html?uye=0",
-"ok": false
+"ok": true
 },
 {
 "id": "E-394",
@@ -3178,7 +3178,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/takim.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-395",
@@ -3186,7 +3186,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/takim.html?durum=yenileniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-396",
@@ -3194,7 +3194,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/takim.html?durum=daha-fazla",
-"ok": false
+"ok": true
 },
 {
 "id": "E-397",
@@ -3202,7 +3202,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/takim.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-398",
@@ -3210,7 +3210,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/takim.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-399",
@@ -3218,7 +3218,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/mac-detay.html?durum=once",
-"ok": false
+"ok": true
 },
 {
 "id": "E-400",
@@ -3226,7 +3226,7 @@ window.DIZIN = [
 "tur": "içerik",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/mac-detay.html",
-"ok": false
+"ok": true
 },
 {
 "id": "E-401",
@@ -3234,7 +3234,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/mac-detay.html?durum=bitti",
-"ok": false
+"ok": true
 },
 {
 "id": "E-402",
@@ -3242,7 +3242,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/mac-detay.html?durum=yukleniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-403",
@@ -3250,7 +3250,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/mac-detay.html?durum=yenileniyor",
-"ok": false
+"ok": true
 },
 {
 "id": "E-404",
@@ -3258,7 +3258,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/mac-detay.html?durum=hata",
-"ok": false
+"ok": true
 },
 {
 "id": "E-405",
@@ -3266,7 +3266,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/mac-detay.html?durum=bulunamadi",
-"ok": false
+"ok": true
 },
 {
 "id": "E-406",
@@ -3274,7 +3274,7 @@ window.DIZIN = [
 "tur": "durum",
 "alt": "Servisler",
 "dosya": "ekranlar/icerik/mac-detay.html?durum=cevrimdisi",
-"ok": false
+"ok": true
 }
 ]
 },
