@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', function(){
     '</head>', '<body>', '<div class="ekran" id="ekran"></div>', '<script>', "  var e = document.getElementById('ekran');",
     "  e.innerHTML = '<div class=\"k-ust-bosluk\"></div>' +", "    (K.durum === 'bos' ? K.bos('kaydedilen')",
     "     : K.durum === 'yukleniyor' ? '<div class=\"k-satirlar\">' + K.iskelet('satir', 5) + '</div>'",
-    "     : '<div class=\"k-satirlar\">' + D.liste.haberler.slice(0, 6).map(function(h){ return K.satir(h, { kaydedildi: true }); }).join('') + '</div>' + K.dahaFazla('son')) +",
+    "     : '<div class=\"k-satirlar\">' + D.liste.haberler.slice(0, 6).map(function(h){ return K.satir(h); }).join('') + '</div>' + K.dahaFazla('son')) +",
     "    '<div class=\"k-son\"></div>';", "  K.ustCubuk({ geri: true, baslik: 'Kaydedilenler', buyuk: false, eylemler: ['ara', 'daha'] });", "  K.altCubuk('hesap');", "  K.oynatici();", "  K.cekmece();", '<\/script>', '</body>', '</html>'].join('\n');
   BL.push(S('kullanim', 'fa-code', 'Kullanım', 'Bir ekran yalnız şu yedi dosyayı yükler (yollar <code>secenekler/ekranlar/&lt;grup&gt;/</code> içinden). Ekran dosyasına köşe, ağırlık ve gölge için sayı yazılmaz; bileşen biçimi yazılmaz, kit sınıfı ve K işlevi kullanılır. Yeni bileşen gerekiyorsa lidere sorulur.',
     ['<div class="v-bl"><h3>Yüklenecekler (sıra önemli)</h3><div class="v-kod">' + ESC(TPL.split('\n').slice(6, 13).join('\n')) + '</div></div>',

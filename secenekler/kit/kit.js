@@ -138,11 +138,16 @@
   K.rozet = function(n, cls){ return '<span class="k-rozet' + (cls ? ' ' + cls : '') + '">' + (n == null ? '' : n) + '</span>'; };
   K.noktalar = function(n, i, foto){ var s = ''; for (var j = 0; j < n; j++) s += '<i' + (j === i ? ' class="on"' : '') + '></i>'; return '<span class="k-noktalar' + (foto ? ' foto' : '') + '" aria-hidden="true">' + s + '</span>'; };
   K.avatar = function(ad, boy, cls, tam){ return '<span class="k-avatar' + (boy ? ' ' + boy : '') + (cls ? ' ' + cls : '') + '" aria-hidden="true">' + (tam || /koyu/.test(cls || '') ? K.bas(ad) : String(ad).charAt(0)) + '</span>'; };
+  /* K48: saati olmayan satır, ortak veride (window.D) aynı başlığı taşıyan kayıttan saati alır (sözlük kaynaklı; uydurma yok) */
+  var SAAT = null;
+  K.saatBul = function(b){ if (!b) return ''; if (!SAAT) { SAAT = {}; (function gez(o, d){ if (!o || d > 6) return; if (Array.isArray(o)) { o.forEach(function(x){ gez(x, d + 1); }); return; }
+      if (typeof o === 'object') { if (o.baslik && o.saat && !SAAT[o.baslik]) SAAT[o.baslik] = o.saat; Object.keys(o).forEach(function(k){ if (o[k] && typeof o[k] === 'object') gez(o[k], d + 1); }); } })(window.D, 0); }
+    return SAAT[b] || ''; };
   K.ustSatir = function(h, o){
     o = o || {}; var t = h.tur && h.tur !== h.alt ? h.tur : '', p = [];
     if (t === 'Canlı') p.push(K.canli()); else if (t === 'Son Dakika') p.push('<span class="k-tur"><span class="canli-nokta"></span>' + t + '</span>'); else if (t) p.push('<span class="tr">' + t + '</span>');
     var kat = h.alt || h.kat; if (kat) p.push(K.katEt(kat, o.ikon || h.ikon || K.ikon(h.kat || kat)));
-    if (!o.saatsiz && h.saat) p.push('<span class="s">' + h.saat + '</span>');
+    var saat = h.saat || K.saatBul(h.baslik); if (!o.saatsiz && saat) p.push('<span class="s">' + saat + '</span>');
     /* K44: sığmazsa ikinci satıra kırılmaz, yana kayar; o.sag (ör. süre ya da görüntülenme) sağa yaslanır, ikonlu */
     var sag = o.sag ? K.meta([o.sag]).replace('<div class="k-meta">', '<span class="sag">').replace(/<\/div>$/, '</span>') : '';
     return '<span class="k-ustsatir"><span class="sol">' + p.join('<span class="nk">·</span>') + '</span>' + sag + '</span>';
@@ -215,14 +220,63 @@
   K.kartK = function(h, o){ o = o || {}; return '<a class="k-kart-k" href="' + (o.href || K.git('detay')) + '"><div class="gr"' + bg(h.g) + '>' + medya(h) + '</div><h4>' + h.baslik + '</h4>' + K.meta([h.yazar, h.sure]) + '</a>'; };
   K.kartGenis = function(h, o){ o = o || {};
     return '<a class="k-kart-genis" href="' + (o.href || K.git('detay')) + '"><div class="gr"' + bg(h.g) + '>' + medya(h) + '</div>' + K.ustSatir(h, Object.assign({ sag: h.sure }, o)) + '<h2>' + h.baslik + '</h2><div class="k-ab">' + K.meta([h.yazar, h.izlenme]) + K.kaydet(o.kaydedildi) + '</div></a>'; };
+  var FOTO_BASLIK = {
+    "Beşiktaş Türk Telekom'u 84-80 geçti": 'basket', "Fenerbahçe Beko tek mağlubiyetle liderliğini sürdürüyor": 'basket', "Beşiktaş'ın kaleci listesinde iki isim öne çıkıyor": 'antrenman',
+    "Anadolu Efes THY Avrupa Ligi'nde Dörtlü Final biletini aldı": 'basket', "Fenerbahçe Beko çift maç haftasında iki galibiyet aldı": 'basket', "Galatasaray derbi öncesi son antrenmanını yaptı": 'antrenman',
+    "Galatasaray sol bek transferini KAP'a bildirdi": 'superlig',
+    "Kredi büyümesindeki yavaşlama reel sektöre nasıl yansıyor": 'kredi-karti', "Ethereum'da ağ güncellemesi öncesi işlem ücretleri düştü": 'veri-merkezi', "Fed tutanakları faiz indiriminde temkinli bir çizgiye işaret etti": 'borsa',
+    "Sabit faiz kararının ardından üç senaryo ve olası etkileri": 'faiz', "TMO buğday alım fiyatlarına ilişkin değerlendirme yaptı": 'carsi', "Fındık ihracatında sezonun ilk üç ayı değerlendirildi": 'carsi',
+    "Kars'ta peynir atölyesi kuran üç kadın ürünlerini Avrupa'ya gönderiyor": 'kadin-girisim', "Kış aylarında ev içi enerji tasarrufu için uzmanlardan beş öneri": 'ruzgar', "Hizmet sektöründe uzaktan çalışan kadınların payı artıyor": 'kadin-girisim',
+    "İnsansız deniz aracı Ege'de seyir testlerini tamamladı": 'ida', "Hürjet eğitim uçağında yer testlerinin ikinci aşaması başladı": 'kaan', "Millî muharip uçak projesinde motor entegrasyonu takvimi açıklandı": 'kaan',
+    "Savunma ve havacılık ihracatının ilk on ay verileri açıklandı": 'ida', "İnsansız savaş uçağının ikinci prototipi üretim hattına alındı": 'kaan', "SSB verilerine göre savunma ve havacılık ihracatı ekimde yüzde 18 arttı": 'kaan',
+    "Almanya'da çifte vatandaşlık başvuruları yılın ilk dokuz ayında ikiye katlandı": 'ab-goc', "Bosna-Hersek'te AB müzakere çerçevesi için ilk adım atıldı": 'bruksel', "ASEAN ülkeleri ortak dijital ödeme sistemi üzerinde anlaştı": 'kredi-karti',
+    "ODTÜ'de bahar dönemi ders kayıtları 2 Şubat'ta başlıyor": 'osym', "Liselerde birinci dönem ortak sınav tarihleri belli oldu": 'yks', "Ankara'da kariyer fuarı 3-4 Aralık'ta yapılacak": 'kulup',
+    "2027 YKS başvuruları için ÖSYM takvimi açıkladı": 'yks', "Ulusal münazara turnuvasının finali İzmir'de yapıldı": 'kulup', "Kariyer Kapısı'nda 3 bin kontenjanlı staj programı açıldı": 'osym',
+    "Konservatuvarlara başvurular bu yıl yüzde 17 arttı": 'akm', "Kamu hizmetlerinde yapay zekâ kullanımına ilişkin etik ilkeler yayımlandı": 'veri-merkezi', "Asgari ücret görüşmeleri bordroya ne zaman yansır?": 'asgari',
+    "Özel tiyatrolara yönelik destek başvuruları sonuçlandı": 'akm', "Kar altındaki köprü görüntüsünün bu hafta çekildiği iddiası": 'kar-sokak', "Yeni sezonda yayına giren tarihî dizi çekimleri Kapadokya'da sürüyor": 'balon',
+    "2027 bütçe açığının millî gelire oranı yüzde 3,1 olarak öngörüldü": 'tbmm', "Seçim kanunu değişikliği teklifi komisyonda kabul edildi": 'tbmm', "TBMM Genel Kurulu bütçe görüşmelerine başladı": 'tbmm',
+    "Plan ve Bütçe Komisyonu bakanlık bütçelerini görüşüyor": 'tbmm', "Asgari ücrete ara zam talebi Meclis gündeminde": 'asgari',
+    "İstanbul'da raylı sistemde gece seferleri hafta içine yayılıyor": 'metro', "Boğaz'da yoğun sis nedeniyle gemi trafiği geçici olarak durduruldu": 'balikci', "Trabzon'da heyelan riski olan mahallede tahliye tamamlandı": 'konteyner',
+    "Başkentte hava kalitesi ölçümlerinde kış dönemi uyarısı yapıldı": 'ankara-kar', "Erzurum ve Kars'ta kar yağışı bekleniyor": 'koy-yolu',
+    "Akıllı kent projelerinde trafik verisi belediyeler arasında paylaşılacak": 'veri-merkezi', "Yapay zekâ ile üretilen içerikte etiketleme rehberi taslağı görüşe açıldı": 'veri-merkezi',
+    "Konut çatılarında güneş paneli kurulumunda başvuru süreci sadeleşti": 'ruzgar', "E-devlet kapısına yeni kimlik doğrulama yöntemi ekleniyor": 'veri-merkezi',
+    "Fiber altyapıya erişen hane sayısı yılın ilk dokuz ayında yüzde 14 arttı": 'anten', "5G ihalesinin ikinci aşaması için şartname taslağı yayımlandı": 'anten', "Yerli yarı iletken tesisinde deneme üretimi başladı": 'veri-merkezi',
+    "Yeni yargı paketi neleri değiştirecek, madde madde açıklama": 'tbmm', "Asgari ücret görüşmelerinde hangi veriler masada": 'asgari', "Bütçe görüşmeleri nasıl işliyor, süreç ve takvim": 'tbmm'
+  };
+  /* K48 (Beyar): görselsiz liste satırı kalmaz. Sıra: haberin kendi görseli → başlığa göre seçilmiş fotoğraf (liste kökünden taşındı) → başlıktaki konu sözcüğü →
+     kategori/alt konu → bölüm. Hepsi assets/gorsel/haber/ (KAYNAK.txt) içindeki konuya uygun gerçek fotoğraflar; süs görseli yok. */
+  var FOTO_SOZ = [[/antrenman/, 'antrenman'], [/basketbol|basket|euroleague|bsl\b|potada|efes|beko/, 'basket'], [/voleybol|sultanlar|efeler|vakıfbank|eczacıbaşı/, 'voleybol'],
+    [/millî takım|milli takım|a millî|ay-yıldız/, 'milli'], [/maç|lig|gol|derbi|futbol|transfer|stad|teknik direktör|kulüp/, 'superlig'],
+    [/altın|ons|gümüş/, 'altin'], [/bitcoin|kripto|ethereum|stablecoin/, 'veri-merkezi'], [/borsa|bist|hisse|endeks|halka arz|temettü|şirket/, 'borsa'],
+    [/faiz|merkez bankası|tcmb|enflasyon|kur |dolar|euro|rezerv|tahvil|hazine/, 'faiz'], [/kredi kart|kredi|banka|kira|bütçe planı|tasarruf/, 'kredi-karti'],
+    [/asgari ücret|bordro|maaş|emekli/, 'asgari'], [/tbmm|meclis|bütçe|kanun|yargı|komisyon|seçim|bakan/, 'tbmm'],
+    [/deprem|afet|heyelan|konteyner|tahliye/, 'konteyner'], [/kar |kar yağış|kar uyar|kış|don |buzlanma|soğuk/, 'kar-sokak'],
+    [/metro|raylı|trafik|otoyol|ulaşım|sefer|havaliman|köprü/, 'metro'], [/köy yolu|kapanan yol/, 'koy-yolu'],
+    [/yks|kpss|ales|ösym|sınav|burs|kyk/, 'yks'], [/üniversite|öğrenci|kampüs|mezun|staj|kariyer/, 'osym'],
+    [/kaan|hürjet|uçak|siha|iha|hava savunma|füze|roket|tatbikat|savunma/, 'kaan'], [/enerji hattı|boru hattı|doğal gaz|elektrik|enerji|güneş|rüzgar/, 'ruzgar'], [/gemi|insansız deniz|fırkateyn|liman|deniz aracı/, 'ida'],
+    [/brüksel|avrupa birliği|\bab\b|nato|zirve|diplomasi/, 'bruksel'], [/göç|sığınmacı|vize/, 'ab-goc'],
+    [/5g|fiber|mobil hat|anten|internet/, 'anten'], [/yapay zek|veri|dijital|siber|teknoloji|yazılım|e-devlet|yarı iletken/, 'veri-merkezi'],
+    [/kadın|şiddet|eşitlik|anne/, 'kadin-girisim'], [/sağlık|aşı|hastane|tarama|grip|kanser|hekim/, 'tarama'],
+    [/tiyatro|konser|sanat|müze|festival|sinema|kitap|konservatuvar/, 'akm'], [/iklim|sıcak|kuraklık|baraj/, 'iklim'], [/enerji|güneş|rüzgar|elektrik|doğal gaz/, 'ruzgar'],
+    [/maden/, 'maden'], [/fındık|buğday|tarım|çarşı|market|gıda|fiyat|ihracat|ticaret/, 'carsi'], [/balık|boğaz/, 'balikci'], [/ankara|başkent/, 'ankara-kar'], [/istanbul/, 'kar-istanbul']];
+  var FOTO_KAT = { 'Gündem': 'kar-istanbul', 'Siyaset': 'tbmm', 'Hukuk': 'tbmm', 'Toplum': 'carsi', 'Güvenlik': 'ankara-kar', 'Çevre ve Afet': 'konteyner', 'Yerel Haberler': 'kar-istanbul',
+    'Spor': 'superlig', 'Futbol': 'superlig', 'Süper Lig': 'superlig', 'Basketbol': 'basket', 'Voleybol': 'voleybol', 'Transfer': 'antrenman', 'Millî Takım': 'milli',
+    'Finans': 'borsa', 'Borsa': 'borsa', 'Döviz': 'faiz', 'Altın': 'altin', 'Kripto Para': 'veri-merkezi', 'Faiz Oranları': 'faiz', 'Enflasyon': 'faiz', 'Kişisel Finans': 'kredi-karti', 'Ekonomi': 'faiz',
+    'Kadın': 'kadin-girisim', 'Savunma': 'kaan', 'Dünya': 'bruksel', 'Avrupa': 'bruksel', 'Kampüs': 'yks', 'Keşfet': 'veri-merkezi', 'Teknoloji': 'veri-merkezi', 'Bilim': 'veri-merkezi',
+    'Sağlık': 'tarama', 'Kültür ve Sanat': 'akm', 'İklim': 'iklim', 'Bülten': 'kar-istanbul' };
+  K.gorsel = function(h){ if (!h) return ''; if (h.g) return h.g; if (FOTO_BASLIK[h.baslik]) return FOTO_BASLIK[h.baslik];
+    var t = (' ' + (h.baslik || '') + ' ').toLocaleLowerCase('tr'); for (var i = 0; i < FOTO_SOZ.length; i++) if (FOTO_SOZ[i][0].test(t)) return FOTO_SOZ[i][1];
+    var k = h.alt || h.kat; if (FOTO_KAT[k]) return FOTO_KAT[k]; var b = D.bolumler.filter(function(x){ return x.ad === h.kat || (K.ALT[x.ad] || []).indexOf(k) > -1; })[0];
+    return b && FOTO_KAT[b.ad] ? FOTO_KAT[b.ad] : 'kar-istanbul'; };
   K.satir = function(h, o){ o = o || {};
-    var kisa = o.tur === 'kisa', g = h.g && o.gorsel !== false;
+    var kisa = o.tur === 'kisa', g = o.gorsel === false ? '' : K.gorsel(h);
     var cls = 'k-satir' + (kisa ? ' kisa' : '') + (g ? '' : ' yazi') + (o.durum ? ' is-' + o.durum : '') + (o.secim ? ' is-secim' : '') + (o.basili ? ' is-basili' : '');
     var gov = kisa ? '<div><h3>' + h.baslik + '</h3>' + K.meta([h.yazar, h.sure]) + '</div>'
-      : '<div>' + K.ustSatir(h, o) + '<h3>' + h.baslik + '</h3><div class="k-ab">' + K.meta([h.yazar, h.sure, h.izlenme]) + (o.indir ? K.indir(o.indir) : '') + (o.kaydet === false ? '' : K.kaydet(o.kaydedildi)) + '</div>' +
+      : '<div>' + K.ustSatir(h, o) + '<h3>' + h.baslik + '</h3><div class="k-ab">' + K.meta([h.yazar, h.sure, h.izlenme]) + (o.indir ? K.indir(o.indir) : '') + (o.kaydet === true || o.kaydedildi === true ? K.kaydet(o.kaydedildi) : '') + '</div>' +
         (o.durum === 'bekliyor' ? K.etiket('Onay bekliyor', { ikon: 'fa-hourglass-half' }) : '') + '</div>';
-    /* K44 (Yasin Bey): görsel solda; yanında kategori/il · saat, altında başlık, altında yazar ve ikonlu bilgiler + kaydet. Çizelge istisna (görsel sağda). */
-    return '<a class="' + cls + '" href="' + (o.href || K.git('detay')) + '">' + (o.secim ? K.onay('', { secili: o.secili }) : '') + (g ? '<div class="gr"' + bg(h.g) + '>' + (o.md ? K.md(o.md) : '') + '</div>' : '') + gov + '</a>';
+    /* K44 (Yasin Bey): görsel solda; yanında kategori/il · saat, altında başlık, altında yazar ve ikonlu bilgiler. Çizelge istisna (görsel sağda).
+       K48 (Beyar): satırda kaydet yok (detayda ve uzun basma menüsünde); yalnız Kaydedilenler bağlamı (kayıtlı satır: { kaydedildi: true } ya da { kaydet: true }) düğmeyi gösterir, orada kayıttan çıkarır. Görsel her satırda (K.gorsel). */
+    return '<a class="' + cls + '" href="' + (o.href || K.git('detay')) + '">' + (o.secim ? K.onay('', { secili: o.secili }) : '') + (g ? '<div class="gr"' + bg(g) + '>' + (o.md ? K.md(o.md) : '') + '</div>' : '') + gov + '</a>';
   };
   K.kartVideo = function(v, o){ o = o || {};
     return '<a class="k-kart-v' + (o.yatay ? ' yatay' : '') + '" href="' + (o.href || K.git('videoDetay')) + '"><div class="gr"' + bg(v.g) + '>' + K.md(v.sure) + '</div><div>' +
@@ -269,11 +323,12 @@
     return '<nav class="k-hk' + (o.kucuk ? ' kucuk' : '') + (o.koyu ? ' koyu' : '') + '" aria-label="Kategori hikâyeleri">' + spk + s.map(function(h){ var g = gor(h);
       return '<a class="k-hk-o' + (g ? ' gor' : '') + '" href="' + K.git('hikaye', 'kat=' + h.kod + '&geri=' + geri) + '" aria-label="' + h.kat + ' hikâyesi' + (g ? ', görüldü' : '') + '"><span class="k-hk-f"' + bg(h.g) + '>' + I(h.ikon) + '</span><span class="k-hk-a">' + h.kat + '</span></a>'; }).join('') + '</nav>'; };
   K.sd = function(s, ilk){ return '<a class="k-sd' + (ilk ? ' ilk' : '') + '" href="' + K.git('detay') + '"><time>' + s.saat + '<span>' + s.kat + '</span></time><p>' + s.baslik + '</p></a>'; };
-  K.sdSatir = function(s, ilk){ return '<a class="k-sd-satir' + (ilk ? ' ilk' : '') + '" href="' + K.git('detay') + '"><time>' + s.saat + '</time><div><p>' + s.baslik + '</p><small>' + s.kat + ' · ' + s.sure + '</small></div></a>'; };
+  /* K48: çizelge satırı (saat başta) → görsel sağda (K44 istisnası), bilgi satırı ikonlu (K.meta) */
+  K.sdSatir = function(s, ilk){ return '<a class="k-sd-satir' + (ilk ? ' ilk' : '') + '" href="' + K.git('detay') + '"><time>' + s.saat + '</time><div><p>' + s.baslik + '</p>' + K.meta([s.kat, s.sure]) + '</div><span class="gr"' + bg(K.gorsel({ g: s.g, baslik: s.baslik, kat: s.kat })) + '></span></a>'; };
   K.bolumSatir = function(b){ return '<a class="k-bolum-satir" href="' + K.git('liste') + '"><span class="bi">' + I(b.ikon) + '</span><span class="t"><b>' + b.ad + '</b><small>' + b.haberler[0].baslik + '</small></span>' + I('fa-chevron-right') + '</a>'; };
   /* K44: köşe yazısı satırı aynı mantık: solda yazarın görseli, yanında ad · unvan ve ikonlu bilgiler, altında yazının başlığı */
   K.koseSatir = function(k, o){ o = o || {}; return '<a class="k-kose-satir" href="' + (o.href || K.git('kose')) + '"><span class="k-avatar l koyu">' + K.bas(k.ad) + '</span><span class="t"><span class="u"><b>' + k.ad + '</b><small>' + k.unvan + '</small></span>' +
-      '<h3>' + k.baslik + '</h3>' + K.meta([o.tarih, k.sure, o.izlenme]) + '</span>' + (o.kaydet === false ? '' : K.kaydet(o.kaydedildi)) + '</a>'; };
+      '<h3>' + k.baslik + '</h3>' + K.meta([o.tarih || k.saat, k.sure, o.izlenme || k.izlenme]) + '</span>' + (o.kaydet === true ? K.kaydet(o.kaydedildi) : '') + '</a>'; };
   K.yazarSatir = function(k, o){ o = o || {}; return '<div class="k-yazar-satir"><span class="k-avatar m koyu">' + K.bas(k.ad) + '</span><a href="' + K.git('yazar') + '"><b>' + k.ad + '</b><small>' + k.unvan + '</small>' + (k.baslik ? '<p>' + k.baslik + '</p>' : '') + '</a>' +
     K.btn({ metin: o.takip ? 'Takipte' : 'Takip et', ikon: o.takip ? 'fa-check' : 'fa-plus', boy: 'kucuk', tur: o.takip ? '' : 'sade', secili: !!o.takip, attr: 'data-takip' }) + '</div>'; };
   K.bildirim = function(o){ var g = o.g;
@@ -371,7 +426,7 @@
   K.cizelge = function(X, o){ o = o || {}; var s = '<div class="k-ic"><div class="k-cz-gun"><span>' + (o.gun || 'Bugün') + '</span><small>' + D.simdi.tarih.replace(' 2026', '') + ' ' + D.simdi.gun + (o.toplam ? ' · ' + o.toplam + ' haber' : '') + '</small></div>', dl = '';
     X.forEach(function(h, i){ var sa = h.saat.split('.')[0] + '.00', v = h.tur === 'Canlı' || h.tur === 'Son Dakika';
       if (sa !== dl) { dl = sa; s += '<div class="k-cz-dl"><b>' + sa + '</b></div>'; }
-      s += '<div class="k-cz' + (i === 0 ? ' ilk' : '') + (v ? ' vur' : '') + '"><span class="sa">' + h.saat + '</span><span class="ci"></span><span class="no"></span><a class="' + (h.g ? '' : 'yazi') + '" href="' + K.git('detay') + '"><div>' + K.ustSatir(h, { saatsiz: true, ikon: o.ikon }) + '<h3>' + h.baslik + '</h3>' + K.meta([h.yazar, h.sure, h.izlenme]) + '</div>' + (h.g ? '<div class="gr"' + bg(h.g) + '></div>' : '') + '</a></div>'; });
+      s += '<div class="k-cz' + (i === 0 ? ' ilk' : '') + (v ? ' vur' : '') + '"><span class="sa">' + h.saat + '</span><span class="ci"></span><span class="no"></span><a href="' + K.git('detay') + '"><div>' + K.ustSatir(h, { saatsiz: true, ikon: o.ikon }) + '<h3>' + h.baslik + '</h3>' + K.meta([h.yazar, h.sure, h.izlenme]) + '</div>' + '<div class="gr"' + bg(K.gorsel(h)) + '></div>' + '</a></div>'; });
     return s + '</div>'; };
   K.adimlar = function(l){ return '<ol class="k-adimlar">' + l.map(function(x){ return '<li><b>' + x[0] + '</b><span>' + x[1] + '</span></li>'; }).join('') + '</ol>'; };
   K.canliGiris = function(o){ return '<div class="k-cg' + (o.kilit ? ' kilit' : '') + (o.yeni ? ' yeni' : '') + '"><span class="sa">' + o.saat + '</span><span class="ci"></span><span class="no"></span><div>' +
@@ -658,7 +713,7 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function(){ K.banner(); }); else setTimeout(function(){ K.banner(); }, 0);
   /* K45 (Beyar): gövde metni iki yana yaslı. 3 satırı geçen, ortalanmamış paragraflar ve metin blokları; son satır sola, Türkçe heceleme. İçerik değiştikçe (sekme, durum) yeniden bakılır. */
   K.yasla = function(kok){ (kok || document).querySelectorAll('.ekran p, .k-yaprak p, .hm p').forEach(function(p){
-      if (p.classList.contains('k-yasla') || p.closest('.k-ac,.k-ub,.k-okuma,.k-toast,.k-mo,button,a.k-btn')) return;
+      if (p.classList.contains('k-yasla') || p.closest('.k-ac,.k-ub,.k-okuma,.k-toast,.k-mo,button,a.k-btn,.k-sd-satir,.k-sd')) return; /* çizelge başlıkları başlıktır, yaslanmaz (K48) */
       var cs = getComputedStyle(p); if (cs.textAlign === 'center' || cs.textAlign === 'right' || cs.textAlign === 'end' || cs.whiteSpace === 'nowrap') return;
       var lh = parseFloat(cs.lineHeight) || parseFloat(cs.fontSize) * 1.4; if (p.getBoundingClientRect().height > lh * 2.6) p.classList.add('k-yasla'); }); };
   (function(){ var zm; function bak(){ clearTimeout(zm); zm = setTimeout(function(){ K.yasla(); }, 60); }
