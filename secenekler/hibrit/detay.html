@@ -122,41 +122,46 @@
 .etiket{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:0 calc(-1 * var(--kenar));padding:0 var(--kenar)}
 .etiket::-webkit-scrollbar{display:none}
 .etiket a{flex:none;height:38px;padding:0 14px;display:inline-flex;align-items:center;border-radius:var(--k-ic);border:1px solid var(--cizgi);font-size:14px;white-space:nowrap}
-.yorumlar .eb{display:block;font-size:12px;font-weight:var(--y-kalin);letter-spacing:.1em;text-transform:uppercase;color:var(--marka-metin)}
-.blk.yorumlar>h2{margin-top:4px;font-size:calc(var(--mb) + 4px);letter-spacing:-.015em;text-transform:none}
-.bilgi{margin-top:12px;display:grid;grid-template-columns:20px minmax(0,1fr);gap:10px;padding:12px 14px;border-radius:var(--k-ic);background:var(--marka-25)}
-.bilgi>i{color:var(--marka-metin);font-size:15px;margin-top:2px}
-.bilgi p{font-size:13.5px;line-height:1.45;color:var(--metin-2)}
-.bilgi b{display:block;font-size:14px;color:var(--metin);margin-bottom:2px}
-.gir2{margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.gir2 a{height:46px;border-radius:var(--k-ic);display:grid;place-items:center;font-size:14.5px;font-weight:var(--y-kalin);border:1.5px solid var(--metin)}
-.gir2 a.a{background:var(--metin);color:var(--zemin)}
-.yaz{margin-top:10px;display:flex;align-items:center;gap:10px;height:52px;padding:0 6px 0 8px;border-radius:var(--k-ic);border:1px solid var(--cizgi);color:var(--metin-3);font-size:15px}
-.yaz span:not(.av){flex:1}
-.yaz .av{width:34px;height:34px;font-size:13px}
-.yaz i.g{width:40px;height:40px;border-radius:var(--k-ic);background:var(--metin);color:var(--zemin);display:grid;place-items:center;font-size:13px}
-.ys-c{gap:8px;margin:14px calc(-1 * var(--kenar)) 4px;padding:0 var(--kenar)}
-.ys-c button{flex:none;height:36px;padding:0 12px;border-radius:var(--k-ic);border:1px solid var(--cizgi);font-size:13.5px;font-weight:var(--y-kalin);white-space:nowrap;color:var(--metin-2)}
-.ys-c button.on{background:var(--metin);border-color:var(--metin);color:var(--zemin)}
-.y-k{padding:14px 0;border-bottom:1px solid var(--cizgi)}
-.yorum .ys{display:flex;align-items:center;gap:10px;min-width:0}
-.yorum .ad{min-width:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.yorum .ad b{font-size:14.5px;white-space:nowrap}
-.yorum time{margin-left:auto;font-size:12.5px;color:var(--metin-3);white-space:nowrap}
-.yorum .av{width:34px;height:34px;font-size:13px;background:var(--zemin-2);color:var(--metin)}
-.yorum .rz{font-size:11px;font-weight:var(--y-kalin);color:var(--metin-3);background:var(--zemin-2);padding:2px 8px;border-radius:var(--k-ic);white-space:nowrap}
-.yorum .rz.ed{color:var(--siyah);background:var(--marka)}
-.yorum p{margin-top:8px;font-size:calc(var(--mb) - 2px);line-height:1.5}
-.ye{margin-top:6px;display:flex;gap:4px;margin-left:-8px}
-.ye button{height:36px;padding:0 8px;border-radius:var(--k-ic);display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:var(--y-kalin);color:var(--metin-3)}
-.ye button i{font-size:12px}
-.ye button span{color:var(--metin-2)}
-.ye button.on{color:var(--azalis)}
-.ye .bl-d{margin-left:auto}
-.yorum.yanit{margin:10px 0 0 22px;padding:12px 14px;border-left:3px solid var(--marka);border-radius:0 var(--k-ic) var(--k-ic) 0;background:var(--zemin-2)}
-.yorum.yanit .av{background:var(--marka);color:var(--siyah)}
-.okuma .yr{position:relative}
-.okuma .yr small{position:absolute;top:6px;right:4px;min-width:18px;height:18px;padding:0 4px;border-radius:var(--k-cubuk);background:var(--marka);color:var(--siyah);font-size:10.5px;font-weight:var(--y-kalin);display:grid;place-items:center}
+/* yorumlar: Dada Gastro detay-v2 yorum yapısı */
+.blk.rvs>h2{font-size:calc(var(--mb) + 4px);letter-spacing:-.015em;text-transform:none;margin-bottom:14px}
+.rv-oz{display:grid;grid-template-columns:118px minmax(0,1fr);gap:16px;align-items:center;padding:16px;border:1px solid var(--cizgi);border-radius:var(--k-kontrol)}
+.rv-s{text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px;padding-right:16px;border-right:1px solid var(--cizgi)}
+.rv-s b{font-size:34px;line-height:1;letter-spacing:-.02em}
+.rv-s small{font-size:12px;color:var(--metin-3);white-space:nowrap}
+.rv-s small.ok{margin-top:4px;color:var(--metin-2);font-weight:var(--y-kalin);display:inline-flex;align-items:center;gap:5px}
+.rv-s small.ok i{color:var(--marka-metin)}
+.rv-bar{list-style:none;display:grid;gap:8px}
+.rv-bar li{display:grid;grid-template-columns:86px minmax(0,1fr) 16px;gap:8px;align-items:center;font-size:12px;color:var(--metin-2);white-space:nowrap}
+.rv-bar .tr{height:6px;border-radius:var(--k-cubuk);background:var(--zemin-2);overflow:hidden}
+.rv-bar .tr i{display:block;height:100%;border-radius:var(--k-cubuk);background:var(--marka)}
+.rv-bar .n{text-align:right;color:var(--metin-3)}
+.rv-btn{margin-top:14px;width:100%;height:52px;border-radius:var(--k-kontrol);background:var(--marka);color:var(--siyah);display:flex;align-items:center;justify-content:center;gap:var(--ikon-bosluk);font-size:15.5px;font-weight:var(--y-kalin)}
+.rv-not{margin-top:10px;display:flex;gap:8px;font-size:12.5px;line-height:1.45;color:var(--metin-3)}
+.rv-not i{margin-top:2px;color:var(--marka-metin)}
+.rv-f{gap:8px;margin:16px calc(-1 * var(--kenar)) 2px;padding:0 var(--kenar)}
+.rv-f button{flex:none;height:38px;padding:0 12px;border-radius:var(--k-ic);border:1px solid var(--cizgi);background:var(--zemin);font-size:13.5px;font-weight:var(--y-orta);white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+.rv-f button span{color:var(--metin-3)}
+.rv-f button.on{background:var(--marka-25);border-color:var(--marka);color:var(--marka-metin);font-weight:var(--y-kalin)}
+.rv-f button.on span{color:inherit}
+.rv{padding:18px 0;border-bottom:1px solid var(--cizgi)}
+.rv-h{display:flex;align-items:center;gap:12px}
+.rv-h .av{width:40px;height:40px;font-size:15px;background:var(--zemin);color:var(--metin-2);border:1px solid var(--cizgi);flex:none}
+.rv-w{min-width:0}
+.rv-w b{display:block;font-size:15px}
+.rv-m{display:flex;align-items:center;gap:5px;font-size:12.5px;color:var(--metin-3);white-space:nowrap}
+.rv-m i{color:var(--marka-metin);font-size:11px}
+.rv-m .nk{margin:0 2px}
+.rv>p{margin-top:10px;font-size:calc(var(--mb) - 1px);line-height:1.55}
+.rv-a{margin-top:8px;display:flex;gap:18px;margin-left:-6px}
+.rv-a button{min-height:40px;padding:0 6px;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:var(--y-orta);color:var(--metin-2)}
+.rv-a button i{font-size:12.5px;color:var(--metin-3)}
+.rv-a button b{font-weight:var(--y-kalin)}
+.rv-a button.on,.rv-a button.on i{color:var(--marka-metin)}
+.rv-y{margin-top:10px;padding:14px 16px;border-radius:var(--k-kontrol);background:var(--zemin-2)}
+.rv-y b{display:flex;align-items:center;gap:8px;font-size:14.5px}
+.rv-y .own{display:inline-flex;align-items:center;gap:5px;color:var(--marka-metin);font-size:13px}
+.rv-y p{margin-top:6px;font-size:calc(var(--mb) - 2px);line-height:1.5;color:var(--metin-2)}
+.rv-y small{display:block;margin-top:6px;font-size:12px;color:var(--metin-3)}
 .tum-y{margin-top:6px;display:flex;align-items:center;justify-content:space-between;min-height:48px;font-size:14px;font-weight:var(--y-kalin)}
 .ilgili a{display:grid;grid-template-columns:minmax(0,1fr) 76px;gap:14px;align-items:center;padding:14px 0;border-top:1px solid var(--cizgi)}
 .ilgili h3{font-size:calc(var(--mb) - 1px);line-height:1.3}
@@ -273,23 +278,27 @@ html[data-tema="koyu"] .boy input{accent-color:var(--marka)}
     '<button class="gec" type="button" data-git="2">Haberin tamamını oku<i class="fa-solid fa-arrow-right"></i></button></section>';
   var p2 = '<section class="panel" data-p="2"><article class="metin"><div class="govde">' + govde + '</div><p class="altyazi" style="padding:0">Kapak: ' + d.altyazi + '</p></article></section>';
   var kyn = '<section class="kyn"><h2>Kaynaklar · ' + d.kaynaklar.length + '</h2><div class="ks">' + d.kaynaklar.map(function(k){ return '<a><i class="fa-solid fa-file-lines"></i><span style="display:block;margin:0;color:inherit"><b>' + k.kurum + '</b><span>' + k.aciklama + '</span></span></a>'; }).join('') + '</div></section>';
-  /* yorumlar (K30): Dada Gastro yorum yapısı: bilgilendirme notu, yaz, süzgeç, beğen · yanıtla · bildir, editör yanıtı yorumun altında */
-  function yrm(y, yanit){
-    return '<article class="yorum' + (yanit ? ' yanit' : '') + '"><div class="ys"><span class="av">' + y.ad.charAt(0) + '</span><span class="ad"><b>' + y.ad + '</b>' +
-      (y.rozet ? '<span class="rz' + (y.rozet === 'Editör' ? ' ed' : '') + '">' + (yanit ? 'Editör yanıtı' : y.rozet) + '</span>' : '') + '</span><time>' + y.zaman + '</time></div><p>' + y.metin + '</p>' +
-      '<div class="ye"><button type="button" data-begen><i class="fa-solid fa-heart"></i>Beğen<span class="tnum">' + y.begeni + '</span></button><button type="button"><i class="fa-solid fa-reply"></i>Yanıtla</button>' +
-      '<button type="button" class="bl-d" aria-label="Yorumu bildir"><i class="fa-solid fa-flag"></i>Bildir</button></div></article>';
+  /* yorumlar (K31): Dada Gastro detay-v2 yorum yapısının aynısı; yıldız yerine haberde okur özeti */
+  function yrm(y){
+    return '<article class="rv"><div class="rv-h"><span class="av">' + y.ad.charAt(0) + '</span><div class="rv-w"><b>' + y.ad + '</b><span class="rv-m"><i class="fa-solid fa-award"></i>' + y.rozet + '<span class="nk">·</span>' + y.zaman + '</span></div></div>' +
+      '<p>' + y.metin + '</p><div class="rv-a"><button type="button" data-begen><i class="fa-solid fa-thumbs-up"></i><span>Beğen</span><b class="tnum">' + y.begeni + '</b></button>' +
+      '<button type="button"><i class="fa-solid fa-flag"></i><span>Bildir</span></button><button type="button"><i class="fa-solid fa-comment"></i><span>Yanıtla</span></button></div>';
   }
-  var Y = d.yorumlar, yorumlar = '';
-  Y.forEach(function(y, i){ if (y.rozet === 'Editör') return; var sonraki = Y[i + 1]; yorumlar += '<div class="y-k">' + yrm(y) + (sonraki && sonraki.rozet === 'Editör' ? yrm(sonraki, true) : '') + '</div>'; });
-  var not = H.uye
-    ? '<div class="bilgi"><i class="fa-solid fa-circle-info"></i><p><b>Yorum kuralları</b>Yorumlar yayından önce editörlerce incelenir. Hakaret, kişisel bilgi ve reklam içeren yorumlar yayımlanmaz. Uygunsuz bir yorumu "Bildir" ile iletebilirsin.</p></div>' +
-      '<a class="yaz"><span class="av">' + D.uye.ad.charAt(0) + '</span><span>Yorumunu yaz…</span><i class="fa-solid fa-paper-plane g"></i></a>'
-    : '<div class="bilgi"><i class="fa-solid fa-circle-info"></i><p><b>Yorum yapmak için giriş yap</b>Habere yorum yazmak ve yorumlara katılmak için Dada Haber hesabına giriş yapman gerekiyor. Yorumları okumak serbest.</p></div>' +
-      '<div class="gir2"><a class="a">Giriş Yap</a><a class="b">Üye Ol</a></div>';
-  var alt = '<div class="ortak-alt"><section class="blk yorumlar" id="yorumlar"><span class="eb">Okurlar ne diyor?</span><h2>Yorumlar (' + d.yorumSayisi + ')</h2>' + not +
-    '<div class="ys-c ks"><button class="on" type="button">Tümü (' + d.yorumSayisi + ')</button><button type="button">En çok beğenilen</button><button type="button">Editör yanıtları (1)</button></div>' + yorumlar +
-    '<a class="tum-y">Bütün yorumları oku · ' + d.yorumSayisi + '<i class="fa-solid fa-chevron-right"></i></a></section>' +
+  var Y = d.yorumlar, yorumlar = '', begeni = 0, rozet = {};
+  Y.forEach(function(y, i){
+    begeni += y.begeni; rozet[y.rozet] = (rozet[y.rozet] || 0) + 1;
+    if (y.rozet === 'Editör') return;
+    var r = Y[i + 1] && Y[i + 1].rozet === 'Editör' ? Y[i + 1] : null;
+    yorumlar += yrm(y) + (r ? '<div class="rv-y"><b>Dada Haber <span class="own"><i class="fa-solid fa-pen-nib"></i>Editör</span></b><p>' + r.metin + '</p><small>' + r.zaman + '</small></div>' : '') + '</article>';
+  });
+  var ozet = '<div class="rv-oz"><div class="rv-s"><b class="tnum">' + Y.length + '</b><small>yorum</small><small class="ok"><i class="fa-solid fa-thumbs-up"></i>' + begeni + ' beğeni</small><small>1 editör yanıtı</small></div>' +
+    '<ul class="rv-bar">' + Object.keys(rozet).map(function(k){ return '<li><span>' + k + '</span><span class="tr"><i style="width:' + (rozet[k] / Y.length * 100) + '%"></i></span><span class="n tnum">' + rozet[k] + '</span></li>'; }).join('') + '</ul></div>';
+  var yaz = H.uye
+    ? '<button class="rv-btn" type="button"><i class="fa-solid fa-pen"></i><span>Yorum yaz</span></button><p class="rv-not"><i class="fa-solid fa-circle-info"></i>Yorumlar denetim sonrası yayınlanır.</p>'
+    : '<button class="rv-btn" type="button"><i class="fa-solid fa-right-to-bracket"></i><span>Yorum yapmak için giriş yap</span></button><p class="rv-not"><i class="fa-solid fa-circle-info"></i>Habere yorum yazmak ve yorumlara katılmak için Dada Haber hesabına giriş yapman gerekiyor. Yorumları okumak serbest.</p>';
+  var suz = '<div class="rv-f ks"><button class="on" type="button">Tümü <span>' + Y.length + '</span></button><button type="button">En çok beğenilen</button><button type="button">Editör yanıtı <span>1</span></button><button type="button">Düzenli okur <span>' + (rozet['Düzenli okur'] || 0) + '</span></button></div>';
+  var alt = '<div class="ortak-alt"><section class="blk rvs" id="yorumlar"><h2>Yorumlar (' + Y.length + ')</h2>' + ozet + yaz + suz + yorumlar +
+    '<a class="tum-y">Bütün yorumları oku<i class="fa-solid fa-chevron-right"></i></a></section>' +
     '<section class="blk ilgili"><h2>Sıradaki Haberler</h2>' + d.ilgili.map(function(x){ return '<a href="' + H.detay() + '"><div><h3>' + x.baslik + '</h3><small>' + x.kat + ' · ' + x.sure + '</small></div><div class="gr" style="background-image:' + G(x.g) + '"></div></a>'; }).join('') + '</section></div>';
   $('e').innerHTML = kapak + '<div class="yaprak">' + basAlt + seg + p0 + p1 + p2 + bolumler + kyn + alt + '<div class="dip"></div></div>';
   $('okuma').innerHTML = '<button class="dinle" type="button"><i class="fa-solid fa-play"></i>Dinle · ' + d.dinle + '</button>' +
