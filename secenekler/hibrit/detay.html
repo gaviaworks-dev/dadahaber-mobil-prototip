@@ -19,7 +19,7 @@
    ya da yana kaydırınca yerinde değişir, aşağı kaydırma yok) → kaynaklar yatay şerit (vurgusuz) → yorum → sıradaki haberler.
    "Hikâye modunda oku" sayfaya serpiştirilir: açıklamanın altında, 15 sn sonunda, tam metnin ortasında, bölümlerin sonunda ve okuma çubuğunda.
    ?derinlik=15sn|1dk|tam · ?bolum=bana|neden|sonra · ?kay=px · ?mod=hikaye (?kart=n, ?dur=1) · ?aa=1 yazı ayarı açık. */
-:root{--mb:17.5px}
+:root{--mb:17px} /* yazı ölçeği (K29): okuma metni --mb; öne çıkan +2; ara başlık +4; ikincil -2. Aa ayarı hepsini birlikte büyütür */
 .ust-d{position:absolute;left:0;right:0;top:0;z-index:70;height:calc(var(--ust-guvenli) + 52px);padding:var(--ust-guvenli) 12px 0;display:flex;align-items:center;gap:8px;transition:background .25s,border-color .25s;border-bottom:1px solid transparent}
 .ust-d .d{width:44px;height:44px;border-radius:var(--k-daire);display:grid;place-items:center;font-size:16px;color:#fff;background:var(--cam);border:1px solid var(--cam-cizgi);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);flex:none;transition:background .25s,color .25s}
 .ust-d .bt{flex:1;min-width:0;font-size:15px;font-weight:var(--y-kalin);text-align:center;opacity:0;transition:opacity .25s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -67,12 +67,12 @@
 .ai{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:var(--y-orta);color:var(--metin-3);white-space:nowrap}
 .ai i{color:var(--marka-metin)}
 .madde{list-style:none;margin-top:12px;display:grid;gap:10px}
-.madde li{display:grid;grid-template-columns:28px 1fr;gap:12px;padding:16px;border-radius:var(--k-kart);background:var(--zemin-2);font-size:17px;line-height:1.45;font-weight:var(--y-orta)}
+.madde li{display:grid;grid-template-columns:28px 1fr;gap:12px;padding:16px;border-radius:var(--k-kart);background:var(--zemin-2);font-size:var(--mb);line-height:1.5;font-weight:var(--y-orta)}
 .madde li i{width:28px;height:28px;border-radius:var(--k-daire);background:var(--marka);color:var(--siyah);display:grid;place-items:center;font-size:12px}
 .etkisi{margin-top:10px;display:grid;grid-template-columns:28px 1fr;gap:12px;padding:16px;border-radius:var(--k-kart);background:var(--marka-25)}
 .etkisi>i{width:28px;height:28px;border-radius:var(--k-daire);background:var(--siyah);color:var(--marka);display:grid;place-items:center;font-size:12px}
 .etkisi b{display:block;font-size:12.5px;color:var(--marka-metin);letter-spacing:.06em;text-transform:uppercase}
-.etkisi p{margin-top:4px;font-size:16px;line-height:1.45;font-weight:var(--y-kalin)}
+.etkisi p{margin-top:4px;font-size:var(--mb);line-height:1.45;font-weight:var(--y-kalin)}
 .gec{margin-top:16px;width:100%;height:52px;border-radius:var(--k-kart);border:1.5px solid var(--metin);display:flex;align-items:center;justify-content:center;gap:var(--ikon-bosluk);font-size:15px;font-weight:var(--y-kalin)}
 /* K18 bölüm sekmeleri (HD-C bölümleri): içerik yerinde değişir */
 .bl{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:0 calc(-1 * var(--kenar));padding:2px var(--kenar) 12px;scroll-padding-inline:var(--kenar)}
@@ -86,12 +86,11 @@
 .bk>section.etkin{display:block;animation:gel .24s ease}
 .kb{display:flex;align-items:center;gap:12px;margin-bottom:12px}
 .kb .ik{width:38px;height:38px;border-radius:var(--k-kontrol);background:var(--marka);color:var(--siyah);display:grid;place-items:center;font-size:15px;flex:none}
-.kb h2{font-size:19px;letter-spacing:-.015em}
+.kb h2{font-size:calc(var(--mb) + 2px);letter-spacing:-.015em}
 .kb .sy{margin-left:auto;font-size:12px;color:var(--metin-3);white-space:nowrap}
-.bk .duz{font-size:16.5px;line-height:1.55}
-.bk .buyuk{font-size:21px;line-height:1.38;font-weight:var(--y-kalin);letter-spacing:-.015em}
+.bk .duz{font-size:var(--mb);line-height:1.6}
+.bk .buyuk{font-size:calc(var(--mb) + 2px);line-height:1.45;font-weight:var(--y-kalin);letter-spacing:-.015em}
 .bk .madde{margin-top:14px}
-.bk .madde li{background:var(--yuzey);font-size:15.5px;padding:14px}
 .cizelge{list-style:none;position:relative}
 .cizelge li{position:relative;padding:0 0 16px 30px}
 .cizelge li::before{content:"";position:absolute;left:6px;top:6px;width:12px;height:12px;border-radius:var(--k-daire);border:3px solid var(--marka);background:var(--zemin-2)}
@@ -99,8 +98,8 @@
 .cizelge li:last-child::after{display:none}
 .cizelge li:last-child::before{background:var(--marka)}
 .cizelge b{display:block;font-size:13px;color:var(--marka-metin)}
-.cizelge span{display:block;margin-top:2px;font-size:15.5px;line-height:1.45;font-weight:var(--y-orta)}
-.bk .not{margin-top:6px;font-size:14.5px;line-height:1.5;color:var(--metin-2)}
+.cizelge span{display:block;margin-top:2px;font-size:calc(var(--mb) - 1px);line-height:1.45;font-weight:var(--y-orta)}
+.bk .not{margin-top:6px;font-size:calc(var(--mb) - 2px);line-height:1.5;color:var(--metin-2)}
 .sir{margin-top:16px;width:100%;min-height:48px;padding:0 6px 0 14px;border-radius:var(--k-kontrol);background:var(--yuzey);display:flex;align-items:center;gap:var(--ikon-bosluk);font-size:14px;color:var(--metin-3);text-align:left}
 .sir b{color:var(--metin)}
 .sir>i{margin-left:auto;width:36px;height:36px;border-radius:var(--k-ic);background:var(--metin);color:var(--zemin);display:grid;place-items:center;font-size:12px}
@@ -109,7 +108,7 @@
 .nokta i.on{width:18px;background:var(--metin)}
 .govde{margin-top:24px}
 .govde p{margin-bottom:20px}
-.govde h2{font-size:21px;line-height:1.25;letter-spacing:-.015em;margin:30px 0 12px}
+.govde h2{font-size:calc(var(--mb) + 4px);line-height:1.25;letter-spacing:-.015em;margin:30px 0 12px}
 .govde figure{margin:28px calc(-1 * var(--kenar))}
 .govde figure .gr{height:240px}
 .govde figcaption{padding:10px var(--kenar) 0;font-size:12.5px;line-height:1.45;color:var(--metin-3)}
@@ -124,13 +123,21 @@
 .etiket::-webkit-scrollbar{display:none}
 .etiket a{flex:none;height:38px;padding:0 14px;display:inline-flex;align-items:center;border-radius:var(--k-kontrol);border:1px solid var(--cizgi);font-size:14px;white-space:nowrap}
 .yorum{display:block;padding:16px;border-radius:var(--k-kart);background:var(--zemin-2)}
+.yorum+.yorum{margin-top:10px}
+.yorum .rz{font-size:11.5px;font-weight:var(--y-kalin);color:var(--marka-metin);background:var(--marka-25);padding:2px 8px;border-radius:var(--k-ic)}
+.yaz{margin-top:12px;display:flex;align-items:center;gap:10px;height:52px;padding:0 6px 0 16px;border-radius:var(--k-kart);border:1px solid var(--cizgi);color:var(--metin-3);font-size:15px}
+.yaz span{flex:1}
+.yaz i.g{width:40px;height:40px;border-radius:var(--k-kontrol);background:var(--metin);color:var(--zemin);display:grid;place-items:center;font-size:13px}
+.tum-y{margin-top:6px;display:flex;align-items:center;justify-content:space-between;min-height:44px;font-size:14px;font-weight:var(--y-kalin)}
+.okuma .yr{position:relative}
+.okuma .yr small{position:absolute;top:6px;right:4px;min-width:18px;height:18px;padding:0 4px;border-radius:var(--k-cubuk);background:var(--marka);color:var(--siyah);font-size:10.5px;font-weight:var(--y-kalin);display:grid;place-items:center}
 .yorum .ys{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--metin-3)}
 .yorum .ys b{color:var(--metin);font-size:14px}
 .yorum .av{width:30px;height:30px;font-size:12px;background:var(--marka-25);color:var(--marka-metin)}
-.yorum p{margin-top:10px;font-size:15px;line-height:1.5}
+.yorum p{margin-top:10px;font-size:calc(var(--mb) - 2px);line-height:1.5}
 .yorum .tum{margin-top:12px;display:flex;align-items:center;justify-content:space-between;font-size:14px;font-weight:var(--y-kalin);min-height:44px}
 .ilgili a{display:grid;grid-template-columns:minmax(0,1fr) 76px;gap:14px;align-items:center;padding:14px 0;border-top:1px solid var(--cizgi)}
-.ilgili h3{font-size:15.5px;line-height:1.3}
+.ilgili h3{font-size:calc(var(--mb) - 1px);line-height:1.3}
 .ilgili small{display:block;margin-top:6px;font-size:12.5px;color:var(--metin-3)}
 .ilgili .gr{width:76px;height:76px;border-radius:var(--k-kontrol)}
 .ortak-alt{padding:0 var(--kenar)}
@@ -193,7 +200,7 @@ html[data-tema="koyu"] .boy input{accent-color:var(--marka)}
 <div class="sayfa" role="dialog" aria-label="Yazı ayarı">
   <div class="tut"></div>
   <h2>Yazı Boyutu</h2>
-  <div class="boy"><span style="font-size:14px">A</span><input id="boy" type="range" min="15" max="22" step="0.5" value="17.5" aria-label="Yazı boyutu"><span style="font-size:22px">A</span></div>
+  <div class="boy"><span style="font-size:14px">A</span><input id="boy" type="range" min="15" max="22" step="0.5" value="17" aria-label="Yazı boyutu"><span style="font-size:22px">A</span></div>
 </div>
 <script>
 (function(){
@@ -243,13 +250,14 @@ html[data-tema="koyu"] .boy input{accent-color:var(--marka)}
     '<button class="gec" type="button" data-git="2">Haberin tamamını oku<i class="fa-solid fa-arrow-right"></i></button></section>';
   var p2 = '<section class="panel" data-p="2"><article class="metin"><div class="govde">' + govde + '</div><p class="altyazi" style="padding:0">Kapak: ' + d.altyazi + '</p></article></section>';
   var kyn = '<section class="kyn"><h2>Kaynaklar · ' + d.kaynaklar.length + '</h2><div class="ks">' + d.kaynaklar.map(function(k){ return '<a><i class="fa-solid fa-file-lines"></i><span style="display:block;margin:0;color:inherit"><b>' + k.kurum + '</b><span>' + k.aciklama + '</span></span></a>'; }).join('') + '</div></section>';
-  var y = d.yorumlar[0];
-  var alt = '<div class="ortak-alt"><section class="blk"><h2>Yorumlar · ' + d.yorumSayisi + '</h2><a class="yorum"><div class="ys"><span class="av">' + y.ad.charAt(0) + '</span><b>' + y.ad + '</b>' + y.zaman + '</div><p>' + y.metin + '</p><span class="tum">Bütün yorumları oku<i class="fa-solid fa-chevron-right"></i></span></a></section>' +
+  var yorumlar = d.yorumlar.map(function(y){ return '<a class="yorum"><div class="ys"><span class="av">' + y.ad.charAt(0) + '</span><b>' + y.ad + '</b>' + (y.rozet ? '<span class="rz">' + y.rozet + '</span>' : '') + '<span style="margin-left:auto">' + y.zaman + '</span></div><p>' + y.metin + '</p></a>'; }).join('');
+  var alt = '<div class="ortak-alt"><section class="blk" id="yorumlar"><h2>Yorumlar · ' + d.yorumSayisi + '</h2>' + yorumlar +
+    '<a class="yaz"><span>Yorumunu yaz…</span><i class="fa-solid fa-paper-plane g"></i></a><a class="tum-y">Bütün yorumları oku · ' + d.yorumSayisi + '<i class="fa-solid fa-chevron-right"></i></a></section>' +
     '<section class="blk ilgili"><h2>Sıradaki Haberler</h2>' + d.ilgili.map(function(x){ return '<a href="' + H.detay() + '"><div><h3>' + x.baslik + '</h3><small>' + x.kat + ' · ' + x.sure + '</small></div><div class="gr" style="background-image:' + G(x.g) + '"></div></a>'; }).join('') + '</section></div>';
   $('e').innerHTML = kapak + '<div class="yaprak">' + basAlt + seg + p0 + p1 + p2 + bolumler + kyn + alt + '<div class="dip"></div></div>';
   $('okuma').innerHTML = '<button class="dinle" type="button"><i class="fa-solid fa-play"></i>Dinle · ' + d.dinle + '</button>' +
     '<button class="hmd" type="button" ' + HMD + ' aria-label="Hikâye modunda oku"><i class="fa-solid fa-layer-group"></i></button>' +
-    '<button type="button" aria-label="Paylaş"><i class="fa-solid fa-share-nodes"></i></button><button class="aa" type="button" aria-label="Yazı boyutu" id="aa">Aa</button>';
+    '<button class="yr" type="button" id="yrd" aria-label="Yorumlar, ' + d.yorumSayisi + '"><i class="fa-solid fa-comment"></i><small>' + d.yorumSayisi + '</small></button><button type="button" aria-label="Paylaş"><i class="fa-solid fa-share-nodes"></i></button><button class="aa" type="button" aria-label="Yazı boyutu" id="aa">Aa</button>';
 
   var e = $('e'), segK = e.querySelector('.seg-kap');
   /* derinlik değişince içerik yerinde değişir; sekmeler üste yapışmışsa yeni içeriğin başı sekmelerin hemen altında kalır */
@@ -293,6 +301,7 @@ html[data-tema="koyu"] .boy input{accent-color:var(--marka)}
   e.addEventListener('scroll', kaydir, { passive: true });
   window.HikayeModuKapandi = kaydir;
   $('kaydet').addEventListener('click', function(){ var on = this.getAttribute('aria-pressed') !== 'true'; this.setAttribute('aria-pressed', on); this.classList.toggle('on', on); });
+  $('yrd').addEventListener('click', function(){ var y = $('yorumlar'); e.scrollTop = y.offsetTop + y.offsetParent.offsetTop - 120; });
   $('aa').addEventListener('click', function(){ document.body.classList.add('aa-acik'); });
   $('perde').addEventListener('click', function(){ document.body.classList.remove('aa-acik'); });
   $('boy').addEventListener('input', function(){ document.documentElement.style.setProperty('--mb', this.value + 'px'); });
@@ -300,6 +309,7 @@ html[data-tema="koyu"] .boy input{accent-color:var(--marka)}
   derinlik({ '1dk': 1, 'tam': 2 }[Q.get('derinlik')] || 0);
   bolum(Math.max(0, BL.map(function(b){ return b.k; }).indexOf(Q.get('bolum'))));
   if (Q.get('kay')) { e.scrollTop = +Q.get('kay'); kaydir(); }
+  if (Q.get('boy')) { document.documentElement.style.setProperty('--mb', Q.get('boy') + 'px'); $('boy').value = Q.get('boy'); }
   if (Q.get('aa') === '1') document.body.classList.add('aa-acik');
   if (Q.get('mod') === 'hikaye') HikayeModu.ac(+Q.get('kart') || 1);
 })();
