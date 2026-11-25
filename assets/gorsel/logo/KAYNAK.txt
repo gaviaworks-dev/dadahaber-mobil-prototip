@@ -1,0 +1,2 @@
+
+dadahaber-beyaz.png: Dada Haber logosu, beyaz (public dadahaber-prototip assets/gorsel/logo/logo-white.png; Beyar: açılışta beyaz Dada Haber logosu). 2026-11-25.
