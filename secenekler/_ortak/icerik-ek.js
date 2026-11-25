@@ -84,13 +84,15 @@
     return { kod: KOD[b.ad], kat: b.ad, ikon: b.ikon, g: h[0].g, haberler: h, goruldu: (b.ad === "Kampüs" || b.ad === "Keşfet") };
   });
   /* Köşe yazıları (public yazarlar.html "Yazarlar" vitrini ve kose-yazisi.html; ad, unvan ve başlık aynen). */
-  /* g: yazının konusuna uygun haber görseli (yazar portresi yok; public sitede de baş harf) */
+  /* g: yazının konusuna uygun haber görseli (yazar portresi yok; public sitede de baş harf)
+     izlenme ve saat: sözlük haberler[] (bolum "Köşe", aynı başlık). sure: ilk yazı kose-yazisi.html "5 dk"; ötekiler sözlükte yok →
+     VARSAYIM (onaylanmadı, K48): sözlükteki 25 köşe yazısının süre ortancası 4 dk. */
   D.koseYazilari = [
-    { ad: "Aylin Sezer", unvan: "Köşe Yazarı", baslik: "Kütüphanelerin gece de açık kalması bir lütuf değil, ihtiyaç", sure: "5 dk", g: "yks" },
-    { ad: "Elif Aras", unvan: "Finans Editörü", baslik: "Faiz sabit kaldı ama kredi faizleri neden düşmüyor", g: "faiz" },
-    { ad: "Mert Yalın", unvan: "Savunma Editörü", baslik: "Hava savunmasında ikinci teslimatın anlamı", g: "kaan" },
-    { ad: "Zeynep Ak", unvan: "Dünya Editörü", baslik: "Brüksel'de göç pazarlığı yine ertelendi", g: "ab-goc" },
-    { ad: "Deniz Kara", unvan: "Kadın Editörü", baslik: "Yeni eylem planında eksik kalan başlıklar", g: "kadin-girisim" }
+    { ad: "Aylin Sezer", unvan: "Köşe Yazarı", baslik: "Kütüphanelerin gece de açık kalması bir lütuf değil, ihtiyaç", sure: "5 dk", izlenme: "14,9 B", saat: "07.00", g: "yks" },
+    { ad: "Elif Aras", unvan: "Finans Editörü", baslik: "Faiz sabit kaldı ama kredi faizleri neden düşmüyor", sure: "4 dk", izlenme: "14,9 B", saat: "13.45", g: "faiz" },
+    { ad: "Mert Yalın", unvan: "Savunma Editörü", baslik: "Hava savunmasında ikinci teslimatın anlamı", sure: "4 dk", izlenme: "4,0 B", saat: "13.30", g: "kaan" },
+    { ad: "Zeynep Ak", unvan: "Dünya Editörü", baslik: "Brüksel'de göç pazarlığı yine ertelendi", sure: "4 dk", izlenme: "6,8 B", saat: "09.00", g: "ab-goc" },
+    { ad: "Deniz Kara", unvan: "Kadın Editörü", baslik: "Yeni eylem planında eksik kalan başlıklar", sure: "4 dk", izlenme: "9,5 B", saat: "13.50", g: "kadin-girisim" }
   ];
 
   /* Bugün Senin İçin: örnek üyenin (D.uye) takipleriyle eşleşen günün haberleri. Yeni haber yok; D.bolumler'den seçilir. */

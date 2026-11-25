@@ -44,35 +44,35 @@ window.D = {
     { konu: "AB göç paketi", maddeler: ["AB dışişleri bakanları paketin taslağını görüştü.", "Oylama ocak ayına bırakıldı."] }
   ],
 
-  /* Bölüm haberleri (public ana sayfa bölümleri + sözlük); site menüsünün sırası */
+  /* Bölüm haberleri (public ana sayfa bölümleri + sözlük); site menüsünün sırası. saat: sözlük haberler[] aynı başlık (K48: her liste satırında kategori · saat) */
   bolumler: [
     { ad: "Gündem", ikon: "fa-newspaper", baslik: "Türkiye'de Bugün", haberler: [
-      { baslik: "Yargı paketi Meclis komisyonunda kabul edildi", yazar: "Mehmet Koçak", sure: "3 dk", izlenme: "8,4 B", g: "tbmm" },
-      { baslik: "İstanbul'da Kirazlı–Halkalı metrosu açılıyor", yazar: "Mehmet Koçak", sure: "3 dk", izlenme: "23,1 B", g: "metro" },
-      { baslik: "Deprem bölgesinde kalıcı konutların yüzde 70'i tamamlandı", yazar: "Sibel Arslan", sure: "3 dk", izlenme: "5,2 B", g: "konteyner" } ] },
+      { baslik: "Yargı paketi Meclis komisyonunda kabul edildi", saat: "14.50", yazar: "Mehmet Koçak", sure: "3 dk", izlenme: "8,4 B", g: "tbmm" },
+      { baslik: "İstanbul'da Kirazlı–Halkalı metrosu açılıyor", saat: "14.10", yazar: "Mehmet Koçak", sure: "3 dk", izlenme: "23,1 B", g: "metro" },
+      { baslik: "Deprem bölgesinde kalıcı konutların yüzde 70'i tamamlandı", saat: "07.30", yazar: "Sibel Arslan", sure: "3 dk", izlenme: "5,2 B", g: "konteyner" } ] },
     { ad: "Spor", ikon: "fa-futbol", baslik: "Sahada Bu Hafta", haberler: [
-      { baslik: "Süper Lig'de 14. hafta: derbi öncesi son durum", yazar: "Burak Tan", sure: "3 dk", izlenme: "3,8 B", g: "superlig" },
-      { baslik: "Basketbolda Avrupa kupalarında üç galibiyet", yazar: "Gizem Aktaş", sure: "3 dk", izlenme: "19,6 B", g: "basket" },
-      { baslik: "Voleybol Kadın Millî Takımı finalde", yazar: "Murat Tekin", sure: "3 dk", izlenme: "7,1 B", g: "voleybol" } ] },
+      { baslik: "Süper Lig'de 14. hafta: derbi öncesi son durum", saat: "07.40", yazar: "Burak Tan", sure: "3 dk", izlenme: "3,8 B", g: "superlig" },
+      { baslik: "Basketbolda Avrupa kupalarında üç galibiyet", saat: "12.45", yazar: "Gizem Aktaş", sure: "3 dk", izlenme: "19,6 B", g: "basket" },
+      { baslik: "Voleybol Kadın Millî Takımı finalde", saat: "07.05", yazar: "Murat Tekin", sure: "3 dk", izlenme: "7,1 B", g: "voleybol" } ] },
     { ad: "Finans", ikon: "fa-chart-column", baslik: "Piyasa ve Cüzdan", haberler: [
-      { baslik: "Merkez Bankası politika faizini yüzde 42,5'te sabit tuttu", yazar: "Elif Aras", sure: "3 dk", izlenme: "27,5 B", g: "faiz" },
-      { baslik: "Altının gramı haftaya yükselişle başladı", yazar: "Nazlı Öztürk", sure: "3 dk", izlenme: "3,8 B", g: "altin" },
-      { baslik: "Borsa şirketlerinin dokuz aylık kârı yüzde 18 geriledi", yazar: "Nazlı Öztürk", sure: "5 dk", izlenme: "8,8 B", g: "borsa" } ] },
+      { baslik: "Merkez Bankası politika faizini yüzde 42,5'te sabit tuttu", saat: "14.00", yazar: "Elif Aras", sure: "3 dk", izlenme: "27,5 B", g: "faiz" },
+      { baslik: "Altının gramı haftaya yükselişle başladı", saat: "10.25", yazar: "Nazlı Öztürk", sure: "3 dk", izlenme: "3,8 B", g: "altin" },
+      { baslik: "Borsa şirketlerinin dokuz aylık kârı yüzde 18 geriledi", saat: "15.35", yazar: "Nazlı Öztürk", sure: "5 dk", izlenme: "8,8 B", g: "borsa" } ] },
     { ad: "Kadın", ikon: "fa-person-dress", baslik: "Kadınların Gündemi", haberler: [
-      { baslik: "Kadın girişimcilere sıfır faizli kredi desteği", yazar: "Gülşen Ateş", sure: "3 dk", izlenme: "11,7 B", g: "kadin-girisim" },
-      { baslik: "Meme kanseri taramasında yaş sınırı 40'a indi", yazar: "Deniz Kara", sure: "3 dk", izlenme: "8,4 B", g: "tarama" } ] },
+      { baslik: "Kadın girişimcilere sıfır faizli kredi desteği", saat: "12.10", yazar: "Gülşen Ateş", sure: "3 dk", izlenme: "11,7 B", g: "kadin-girisim" },
+      { baslik: "Meme kanseri taramasında yaş sınırı 40'a indi", saat: "13.15", yazar: "Deniz Kara", sure: "3 dk", izlenme: "8,4 B", g: "tarama" } ] },
     { ad: "Savunma", ikon: "fa-shield-halved", baslik: "Savunma Sanayiinde Son Durum", haberler: [
-      { baslik: "KAAN'ın ikinci prototipi test uçuşunda", yazar: "Mert Yalın", sure: "2 dk", izlenme: "14,9 B", g: "kaan" },
-      { baslik: "Yeni insansız deniz aracı envantere girdi", yazar: "Mert Yalın", sure: "3 dk", izlenme: "3,8 B", g: "ida" } ] },
+      { baslik: "KAAN'ın ikinci prototipi test uçuşunda", saat: "13.20", yazar: "Mert Yalın", sure: "2 dk", izlenme: "14,9 B", g: "kaan" },
+      { baslik: "Yeni insansız deniz aracı envantere girdi", saat: "07.40", yazar: "Mert Yalın", sure: "3 dk", izlenme: "3,8 B", g: "ida" } ] },
     { ad: "Dünya", ikon: "fa-earth-europe", baslik: "Dünyada Bugün", haberler: [
-      { baslik: "AB dışişleri bakanları Brüksel'de genişleme gündemini ele aldı", yazar: "Zeynep Ak", sure: "3 dk", izlenme: "6,9 B", g: "bruksel" },
-      { baslik: "G7 ülkeleri kritik mineraller için ortak tedarik planı hazırladı", yazar: "Zeynep Ak", sure: "5 dk", izlenme: "3,7 B", g: "maden" } ] },
+      { baslik: "AB dışişleri bakanları Brüksel'de genişleme gündemini ele aldı", saat: "16.05", yazar: "Zeynep Ak", sure: "3 dk", izlenme: "6,9 B", g: "bruksel" },
+      { baslik: "G7 ülkeleri kritik mineraller için ortak tedarik planı hazırladı", saat: "15.50", yazar: "Zeynep Ak", sure: "5 dk", izlenme: "3,7 B", g: "maden" } ] },
     { ad: "Kampüs", ikon: "fa-graduation-cap", baslik: "Kampüste Bu Hafta", haberler: [
-      { baslik: "ÖSYM, 2027 sınav takviminin tamamını yayımladı", yazar: "Ece Demirel", sure: "6 dk", izlenme: "11,1 B", g: "osym" },
-      { baslik: "Kış dönemi kulüp tanıtım haftası 1 Aralık'ta başlıyor", yazar: "Aslı Gür", sure: "4 dk", izlenme: "13,1 B", g: "kulup" } ] },
+      { baslik: "ÖSYM, 2027 sınav takviminin tamamını yayımladı", saat: "15.30", yazar: "Ece Demirel", sure: "6 dk", izlenme: "11,1 B", g: "osym" },
+      { baslik: "Kış dönemi kulüp tanıtım haftası 1 Aralık'ta başlıyor", saat: "15.40", yazar: "Aslı Gür", sure: "4 dk", izlenme: "13,1 B", g: "kulup" } ] },
     { ad: "Keşfet", ikon: "fa-compass", baslik: "Keşfet", haberler: [
-      { baslik: "Restore edilen tarihî tiyatro binası yeniden perde açtı", yazar: "İrem Su", sure: "6 dk", izlenme: "7,7 B", g: "akm" },
-      { baslik: "Geleneksel ekşi maya ekmek atölyeleri kentlerde yaygınlaşıyor", yazar: "Ozan Er", sure: "5 dk", izlenme: "9,5 B", g: "eksimaya" } ] }
+      { baslik: "Restore edilen tarihî tiyatro binası yeniden perde açtı", saat: "15.45", yazar: "İrem Su", sure: "6 dk", izlenme: "7,7 B", g: "akm" },
+      { baslik: "Geleneksel ekşi maya ekmek atölyeleri kentlerde yaygınlaşıyor", saat: "15.40", yazar: "Ozan Er", sure: "5 dk", izlenme: "9,5 B", g: "eksimaya" } ] }
   ],
 
   /* Akış (akis.html: günün 12 videosu, sonu var) */
