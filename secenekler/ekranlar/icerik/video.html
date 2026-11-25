@@ -53,11 +53,13 @@
   var secAd = KAT[sec][0], X = sec ? V.filter(function(v){ return v.kat === secAd; }) : V;
   var YOL = 'ekranlar/icerik/video.html';
 
-  function kart(v){ var h = K.kartVideo(v, { tur: v.tur }); return v.kat === 'Teknoloji' ? h.replace('fa-newspaper"></i>Teknoloji', 'fa-microchip"></i>Teknoloji') : h; }
+  /* K44-3: izlenme ikonlu (fa-eye) bilgi: kitin kartı "14,2 B izlenme" yazıyor (ikon eşleşmiyor), burada K.meta'nın ikonlu biçimine çevrilir */
+  function kart(v){ var h = K.kartVideo(v, { tur: v.tur }).replace(K.meta([v.izlenme + ' izlenme']), K.meta([v.izlenme])); return v.kat === 'Teknoloji' ? h.replace('fa-newspaper"></i>Teknoloji', 'fa-microchip"></i>Teknoloji') : h; }
   function isk(w, h, c){ return '<i class="k-isk' + (c ? ' ' + c : '') + '" style="width:' + w + ';height:' + h + 'px"></i>'; }
   var cipler = '<div class="k-cip-satiri"><div class="k-ray s8" data-tek role="group" aria-label="Kategori">' + KAT.map(function(k, i){
     return K.cip(k[0], { secili: i === sec, attr: 'data-href="' + K.u(YOL, k[1] ? 'kategori=' + k[1] : '') + '"' }); }).join('') + '</div></div>';
-  var kapak = '<header class="k-kapak" style="background-image:' + G('kar-sokak') + '"><h1>Video Haber</h1><p>Gündemin kısa ve kaynaklı videoları</p></header>';
+  /* sayfa başı: .k-bbas → kitin görselli banner'ı (K43/K44-8; sayfa → fotoğraf eşlemesi kitte, K.banner) */
+  var kapak = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Video Haber</h1><p>Gündemin kısa ve kaynaklı videoları</p></div>';
 
   var liste = '';
   if (DUR === 'bos') liste = K.bos({ ikon: 'fa-circle-play', baslik: 'Bu kategoride video yok', aciklama: secAd + ' için yeni video yayımlanınca burada görünür.', eylem: { metin: 'Tümü\'ne dön', tur: 'sade', href: K.u(YOL) } });
@@ -75,20 +77,21 @@
   var DUZ = DUR === 'hata' || (DUR === 'cevrimdisi' && Q.get('onbellek') === '0');
   if (DUR === 'yukleniyor') {
     var kartIsk = '<div class="k-isk-grup">' + isk('100%', 196, 'kontrol') + isk('46%', 12) + isk('100%', 17) + isk('72%', 17) + '</div>';
-    e.innerHTML = isk('100%', 224, '', '') + '<div class="k-yaprak"><div class="k-ray s8 i-r">' + isk('64px', 36) + isk('76px', 36) + isk('62px', 36) + isk('58px', 36) + isk('64px', 36) + '</div>' +
+    e.innerHTML = kapak + '<div><div class="k-ray s8 i-r">' + isk('64px', 36) + isk('76px', 36) + isk('62px', 36) + isk('58px', 36) + isk('64px', 36) + '</div>' +
       '<div class="vl" role="status" aria-label="Yükleniyor">' + kartIsk + kartIsk + '</div></div><div class="k-son"></div>';
   } else if (DUZ) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: DUR === 'cevrimdisi' ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') }) + '<div class="k-son"></div>';
   else e.innerHTML = (DUR === 'yenileniyor' ? '<div class="k-ust-bosluk"></div>' + K.yenile(['cekiliyor', 'birak', 'bitti'].indexOf(HAL) > -1 ? HAL : 'yenileniyor') : '') +
-    kapak + '<div class="k-yaprak">' + cipler + liste + '<div class="k-son"></div></div>';
+    kapak + cipler + liste + '<div class="k-son"></div>';
 
-  if (DUZ) K.ustCubuk({ geri: true, baslik: 'Video Haber', eylemler: ['ara'] });
-  else K.ustCubuk({ tur: 'foto', geri: true, baslik: 'Video Haber', gorsel: 'kar-sokak', eylemler: ['ara'], dar: DUR === 'yenileniyor' });
+  K.ustCubuk({ geri: true, buyuk: !DUZ, baslik: 'Video Haber', eylemler: ['ara'] });
   K.altCubuk('bolum');
   K.oynatici();
 
   /* seçili çip görünür yere kayar */
   var sc = e.querySelector('.k-cip-satiri .k-cip[aria-pressed="true"]');
-  if (sc && sec > 0) sc.parentNode.scrollLeft = sc.offsetLeft - 16;
+  /* seçili çip görünür yere kayar; kitin banner'ı (K.banner, DOMContentLoaded) içeriği taşıyınca kaydırma sıfırlandığı için ondan sonra */
+  function cipKay(){ if (sc && sec > 0) sc.parentNode.scrollLeft = sc.offsetLeft - 16; }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function(){ setTimeout(cipKay, 0); }); else setTimeout(cipKay, 0);
   if (DUR === 'daha-fazla' && !TAM) e.scrollTop = e.scrollHeight;
   if (DUR === 'cevrimdisi' && !DUZ) {
     var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });

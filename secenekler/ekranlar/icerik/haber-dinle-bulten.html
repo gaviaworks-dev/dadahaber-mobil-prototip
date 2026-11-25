@@ -39,6 +39,9 @@
 .ds{display:grid;grid-template-columns:50px minmax(0,1fr);gap:var(--b-12);padding:var(--b-8) 0;cursor:pointer}
 .ds time{font-size:13px;font-weight:var(--y-kalin);color:var(--metin-3);font-variant-numeric:tabular-nums;padding-top:var(--b-4)}
 .k-sd-satir small .k-dalga{margin-right:var(--b-8)}
+/* KİT ADAYI: k-sd-satir görselli — zaman damgalı ses satırına haberin kendi görseli (K44-8); saat satır başında olduğu için görsel SAĞDA (K44-2, çizelge istisnası), .k-cz .gr ölçüsü */
+.k-sd-satir.g{grid-template-columns:50px minmax(0,1fr) 64px}
+.k-sd-satir>.gr{width:64px;height:64px;border-radius:var(--k-ic);background-size:cover;background-position:center}
 /* iskelet yerleşimi (yalnız ölçek değişkenleri) */
 .i-r{padding-top:var(--b-12);padding-bottom:var(--b-12)}
 .i-s{display:flex;gap:var(--b-12);padding:var(--b-12) 0}
@@ -53,13 +56,14 @@
 (function(){
   var Q = K.q, DUR = K.durum, e = document.getElementById('ekran'), TAM = document.documentElement.classList.contains('tam');
   var CAL = DUR === 'caliyor', CEV = DUR === 'cevrimdisi';
-  /* kaynak: public haber-dinle-detay.html */
-  var B = { kusak: 'Gün Ortası', ikon: 'fa-cloud-sun', baslik: 'Gün Ortası, 23 Kasım: sabahtan bu yana 8 haber 9 dakikada', tarih: '23 Kas · 12.30', sure: '9 dk', top: '9:00', dinlenme: '7,4 B',
+  /* kaynak: public haber-dinle-detay.html. K44-8: kapak = bültenin baş haberinin görseli (kredi kartı); her haberin kendi görseli 4. alanda
+     (kredi-karti/yks/anten/iklim/antrenman = D.akis'teki aynı haber; kar-istanbul = D.manset[4]; tbmm = teklif Meclis komisyonunda; ida = savunma yatırım programı, haber-dinle.html ile aynı) */
+  var B = { kusak: 'Gün Ortası', ikon: 'fa-cloud-sun', g: 'kredi-karti', baslik: 'Gün Ortası, 23 Kasım: sabahtan bu yana 8 haber 9 dakikada', tarih: '23 Kas · 12.30', sure: '9 dk', top: '9:00', dinlenme: '7,4 B',
     spot: 'Günün öne çıkan sekiz haberi, kaynaklarıyla birlikte kısa ve sakin bir dille. Bülteni baştan dinleyebilir ya da aşağıdaki listeden istediğin habere geçebilirsin.',
-    haber: [['00:00', 'Finans', 'Kredi kartında asgari ödeme oranı ocakta değişmeyecek'], ['01:05', 'Gündem', 'Marmara\'da kar yağışı nedeniyle 14 ilde okullar tatil edildi'],
-      ['02:10', 'Kampüs', '2027 YKS başvuruları 3 Şubat\'ta başlıyor, sınav 19-20 Haziran\'da'], ['03:15', 'Kadın', 'Doğum izninin 24 haftaya çıkarılmasını öngören teklif komisyonda'],
-      ['04:30', 'Savunma', 'Savunma sanayiinde 2027 yatırım programı açıklandı'], ['05:40', 'Dünya', 'BM İklim Konferansı uzatmalı oturumla sona erdi'],
-      ['06:55', 'Teknoloji', '5G hizmeti ilk aşamada 11 ilde kullanıma açıldı'], ['08:00', 'Spor', 'Süper Lig\'de devre arası transfer dönemi 5 Ocak\'ta açılacak']],
+    haber: [['00:00', 'Finans', 'Kredi kartında asgari ödeme oranı ocakta değişmeyecek', 'kredi-karti'], ['01:05', 'Gündem', 'Marmara\'da kar yağışı nedeniyle 14 ilde okullar tatil edildi', 'kar-istanbul'],
+      ['02:10', 'Kampüs', '2027 YKS başvuruları 3 Şubat\'ta başlıyor, sınav 19-20 Haziran\'da', 'yks'], ['03:15', 'Kadın', 'Doğum izninin 24 haftaya çıkarılmasını öngören teklif komisyonda', 'tbmm'],
+      ['04:30', 'Savunma', 'Savunma sanayiinde 2027 yatırım programı açıklandı', 'ida'], ['05:40', 'Dünya', 'BM İklim Konferansı uzatmalı oturumla sona erdi', 'iklim'],
+      ['06:55', 'Teknoloji', '5G hizmeti ilk aşamada 11 ilde kullanıma açıldı', 'anten'], ['08:00', 'Spor', 'Süper Lig\'de devre arası transfer dönemi 5 Ocak\'ta açılacak', 'antrenman']],
     desifre: [['00:00', 'İyi günler, 23 Kasım öğle bülteni. Bankacılık Düzenleme ve Denetleme Kurumu, dün kredi kartı asgari ödeme oranlarının ocak ayında da değişmeyeceğini açıkladı.'],
       ['01:05', 'Marmara\'da etkili olan kar yağışı nedeniyle İstanbul dahil 14 ilde okullar bugün tatil edildi. Valilikler yarın için kararını öğleden sonra açıklayacak.'],
       ['02:10', 'Ölçme, Seçme ve Yerleştirme Merkezi 2027 sınav takvimini yayımladı. YKS başvuruları 3 Şubat\'ta başlayacak.'],
@@ -75,13 +79,13 @@
   var panel = '<div class="sp-p"><div class="sp-a">' + K.btn({ metin: CAL ? 'Duraklat · 6:22 kaldı' : 'Dinle · ' + B.sure, ikon: CAL ? 'fa-pause' : 'fa-headphones', tur: 'birincil', boy: 'buyuk', attr: 'data-oynat' }) +
     K.btn({ metin: '1×', tur: 'sade', boy: 'buyuk', attr: 'data-sayfa="hiz" aria-label="Oynatma hızı"' }) + K.indir(indir) + '</div>' +
     (CAL ? K.ilerleme(29) + '<div class="sp-s"><span>2:38</span><span>' + B.top + '</span></div>' : '') + '</div>';
-  var bas = '<div class="sb"><div class="sb-u"><span class="sb-a">' + K.I(B.ikon) + '</span><span class="t">' + K.ustSatir({ tur: 'Bülten', kat: B.kusak, ikon: 'fa-headphones' }) +
+  var bas = '<div class="sb"><div class="sb-u"><span class="sb-a" style="background-image:' + G(B.g) + '"></span><span class="t">' + K.ustSatir({ tur: 'Bülten', kat: B.kusak, ikon: 'fa-headphones' }) +
     '<b>Dada Haber</b><small>Sesli bülten · Editör kontrolünde</small></span></div><h1>' + B.baslik + '</h1>' +
-    '<div class="k-zamansatir"><span>' + K.I('fa-calendar-day') + B.tarih + '</span><span>' + K.I('fa-headphones') + B.sure + '</span><span>' + K.I('fa-list-ul') + B.haber.length + ' haber</span></div></div>' + panel +
+    '<div class="k-zamansatir"><span>' + K.I('fa-calendar-day') + B.tarih + '</span><span>' + K.I('fa-clock') + B.sure + '</span><span>' + K.I('fa-list-ul') + B.haber.length + ' haber</span><span>' + K.I('fa-headphones') + B.dinlenme + '</span></div></div>' + panel +
     '<div class="sb" style="padding-top:0">' + (CEV ? K.serit({ tur: 'basari', ikon: 'fa-circle-check', metin: 'İndirildi', alt: 'Bağlantı yokken de dinleyebilirsin.' }) : '') +
     '<p class="k-spot">' + B.spot + '</p><p class="k-not">' + K.I('fa-circle-info') + 'Yapay zekâ ile seslendirildi, yayından önce editör tarafından kontrol edildi.</p></div>';
   var haberler = '<section class="k-bl">' + K.bb({ baslik: 'Bültendeki Haberler', ikon: 'fa-list-ul', sayi: B.haber.length }) + '<div class="k-satirlar">' +
-    B.haber.map(function(h, i){ var s = K.sdSatir({ saat: h[0], kat: h[1], baslik: h[2], sure: fark(i) });
+    B.haber.map(function(h, i){ var s = K.sdSatir({ saat: h[0], kat: h[1], baslik: h[2], sure: fark(i) }).replace('class="k-sd-satir', 'class="k-sd-satir g').replace(/<\/a>$/, '<span class="gr" style="background-image:' + G(h[3]) + '"></span></a>');
       return CAL && i === SIRA ? s.replace('<small>', '<small><span class="k-dalga"><i></i><i></i><i></i></span>Şimdi okunuyor · ') : s; }).join('') + '</div></section>';
   var desifre = '<section class="k-bl" id="desifre">' + K.bb({ baslik: 'Deşifre', ikon: 'fa-file-lines', not: 'Dokun, o ana geç' }) + '<div class="k-ic">' +
     B.desifre.map(function(d, i){ return '<div class="ds" data-an><time>' + d[0] + '</time><p class="k-desifre"><span' + (CAL && i === SIRA ? ' class="on"' : '') + '>' + d[1] + '</span></p></div>'; }).join('') + '</div></section>';
@@ -89,7 +93,7 @@
 
   var DUZ = DUR === 'hata' || DUR === 'bulunamadi' || (CEV && Q.get('indirili') === '0');
   if (DUR === 'yukleniyor') e.innerHTML = '<div class="k-ust-bosluk"></div><div class="sb" role="status" aria-label="Yükleniyor"><div class="sb-u">' + isk('88px', 88, 'kontrol') + '<div class="k-isk-grup" style="flex:1">' + isk('50%', 12) + isk('40%', 15) + isk('70%', 12) + '</div></div>' +
-    '<div class="k-isk-grup i-m16">' + isk('100%', 22) + isk('84%', 22) + isk('60%', 13) + '</div><div class="i-m16">' + isk('100%', 52, 'kontrol') + '</div></div><div class="k-satirlar">' + K.iskelet('satir', 3).replace(/<i class="k-isk" style="width:88px;height:88px"><\/i>/g, '') + '</div>';
+    '<div class="k-isk-grup i-m16">' + isk('100%', 22) + isk('84%', 22) + isk('60%', 13) + '</div><div class="i-m16">' + isk('100%', 52, 'kontrol') + '</div></div><div class="k-satirlar">' + K.iskelet('satir', 3) + '</div>';
   else if (DUZ) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: DUR === 'bulunamadi' ? 'bulunamadi' : CEV ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') }) + '<div class="k-son yalin"></div>';
   else e.innerHTML = '<div class="k-ust-bosluk"></div>' + bas + haberler + desifre + sonra;
   K.ustCubuk({ geri: true, baslik: 'Haber Dinle', eylemler: DUZ ? [] : ['kaydet', 'paylas'] });

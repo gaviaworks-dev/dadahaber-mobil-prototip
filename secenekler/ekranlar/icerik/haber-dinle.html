@@ -33,35 +33,39 @@
   var Q = K.q, DUR = K.durum, HAL = Q.get('hal'), e = document.getElementById('ekran'), TAM = document.documentElement.classList.contains('tam');
   var CANLI = K.spikerCanli(), BUL = K.u('ekranlar/icerik/haber-dinle-bulten.html'), YOL = 'ekranlar/icerik/haber-dinle.html';
   var IK = { 'Teknoloji': 'fa-microchip' };
-  /* kaynak: public haber-dinle.html "Bugünün sesli haberleri" (saat, kategori, başlık) */
+  /* kaynak: public haber-dinle.html "Bugünün sesli haberleri" (saat, kategori, başlık).
+     K44 (8): her sesli haberin kendi görseli (g); aynı haber D'de varsa onun anahtarı (kar-istanbul = D.manset[4], bruksel = D.bolumler Dünya, antrenman = D.akis transfer, tbmm = D.liste bütçe görüşmeleri),
+     yoksa assets/gorsel/haber/KAYNAK.txt'ten konuya en uygun kare. Çizelgede saat satır başında: görsel sağda (K44 istisna). */
   var S = [
-    { saat: '16.05', kat: 'Gündem', baslik: 'Marmara\'da kar yağışı: İstanbul\'da okullar yarın da tatil' },
-    { saat: '16.05', kat: 'Dünya', baslik: 'AB dışişleri bakanları Brüksel\'de genişleme gündemini ele aldı' },
-    { saat: '16.05', kat: 'Savunma', baslik: 'Savunma sanayiinde 2027 yatırım programı açıklandı' },
-    { saat: '16.00', kat: 'Spor', baslik: 'Süper Lig\'de devre arası transfer dönemi 5 Ocak\'ta açılacak' },
-    { saat: '15.30', kat: 'Gündem', baslik: '2027 bütçesinin görüşmeleri Genel Kurul\'da başladı' },
-    { saat: '14.25', kat: 'Savunma', baslik: 'Savunma ve havacılık ihracatı ekimde yıllık bazda yüzde 18 arttı' },
-    { saat: '14.05', kat: 'Finans', baslik: 'Borsa İstanbul öğle saatlerinde yüzde 0,4 ekside' },
-    { saat: '14.03', kat: 'Spor', baslik: 'Millî takımın aralık kampı aday kadrosu açıklandı' },
-    { saat: '13.40', kat: 'Teknoloji', baslik: 'Yapay zekâ ile üretilen içerikte etiketleme rehberi taslağı görüşe açıldı' },
-    { saat: '13.20', kat: 'Kadın', baslik: 'Kadın kooperatiflerine hibe başvuruları 15 Aralık\'ta başlıyor' },
-    { saat: '12.40', kat: 'Kampüs', baslik: 'KPSS lisans oturumu başvuruları mayısta alınacak' },
+    { saat: '16.05', kat: 'Gündem', baslik: 'Marmara\'da kar yağışı: İstanbul\'da okullar yarın da tatil', g: 'kar-istanbul' },
+    { saat: '16.05', kat: 'Dünya', baslik: 'AB dışişleri bakanları Brüksel\'de genişleme gündemini ele aldı', g: 'bruksel' },
+    { saat: '16.05', kat: 'Savunma', baslik: 'Savunma sanayiinde 2027 yatırım programı açıklandı', g: 'ida' },
+    { saat: '16.00', kat: 'Spor', baslik: 'Süper Lig\'de devre arası transfer dönemi 5 Ocak\'ta açılacak', g: 'antrenman' },
+    { saat: '15.30', kat: 'Gündem', baslik: '2027 bütçesinin görüşmeleri Genel Kurul\'da başladı', g: 'tbmm' },
+    { saat: '14.25', kat: 'Savunma', baslik: 'Savunma ve havacılık ihracatı ekimde yıllık bazda yüzde 18 arttı', g: 'kaan' },
+    { saat: '14.05', kat: 'Finans', baslik: 'Borsa İstanbul öğle saatlerinde yüzde 0,4 ekside', g: 'borsa' },
+    { saat: '14.03', kat: 'Spor', baslik: 'Millî takımın aralık kampı aday kadrosu açıklandı', g: 'milli' },
+    { saat: '13.40', kat: 'Teknoloji', baslik: 'Yapay zekâ ile üretilen içerikte etiketleme rehberi taslağı görüşe açıldı', g: 'veri-merkezi' },
+    { saat: '13.20', kat: 'Kadın', baslik: 'Kadın kooperatiflerine hibe başvuruları 15 Aralık\'ta başlıyor', g: 'kadin-girisim' },
+    { saat: '12.40', kat: 'Kampüs', baslik: 'KPSS lisans oturumu başvuruları mayısta alınacak', g: 'yks' },
     { saat: '12.30', kusak: 'gun-ortasi' },
-    { saat: '12.10', kat: 'Finans', baslik: 'Konut kredisi faizlerinde kasımda sınırlı düşüş görüldü' },
-    { saat: '08.55', kat: 'Dünya', baslik: 'BM Genel Kurulu insani yardım fonu için ek bütçeyi onayladı' },
+    { saat: '12.10', kat: 'Finans', baslik: 'Konut kredisi faizlerinde kasımda sınırlı düşüş görüldü', g: 'faiz' },
+    { saat: '08.55', kat: 'Dünya', baslik: 'BM Genel Kurulu insani yardım fonu için ek bütçeyi onayladı', g: 'ab-meclis' },
     { saat: '07.00', kusak: 'sabah-ozeti' }
   ];
-  /* yayın kuşakları: public "Yayın saatleri" tablosu + bültenler */
+  /* yayın kuşakları: public "Yayın saatleri" tablosu + bültenler. g = bültenin baş haberinin görseli (K44-8): Gün Ortası ilk haber kredi kartı (public haber-dinle-detay),
+     Sabah Özeti günün manşeti (D.manset[0] asgari ücret), Hafta Özeti haftanın kapanış gelişmesi (22 Kas Plan ve Bütçe Komisyonu son gün, tbmm) */
   var KU = {
-    'sabah-ozeti': { ad: 'Sabah Özeti', ikon: 'fa-sun', saat: '07.00', sure: '6 dk', ac: 'Güne başlamadan bilinmesi gereken haberler', baslik: 'Sabah Özeti: güne başlamadan bilmen gereken 6 haber', ek: '6 haber' },
-    'gun-ortasi': { ad: 'Gün Ortası', ikon: 'fa-cloud-sun', saat: '12.30', sure: '9 dk', ac: 'Sabahtan bu yana öne çıkan sekiz haber', baslik: 'Gün Ortası, 23 Kasım: sabahtan bu yana 8 haber 9 dakikada', ek: '8 haber', dinlenme: '7,4 B' },
+    'sabah-ozeti': { ad: 'Sabah Özeti', ikon: 'fa-sun', saat: '07.00', sure: '6 dk', ac: 'Güne başlamadan bilinmesi gereken haberler', g: 'asgari', baslik: 'Sabah Özeti: güne başlamadan bilmen gereken 6 haber', ek: '6 haber' },
+    'gun-ortasi': { ad: 'Gün Ortası', ikon: 'fa-cloud-sun', saat: '12.30', sure: '9 dk', ac: 'Sabahtan bu yana öne çıkan sekiz haber', g: 'kredi-karti', baslik: 'Gün Ortası, 23 Kasım: sabahtan bu yana 8 haber 9 dakikada', ek: '8 haber', dinlenme: '7,4 B' },
     'aksam-bulteni': { ad: 'Akşam Bülteni', ikon: 'fa-moon', saat: '18.00', sure: '9 dk', ac: 'Günün öne çıkan sekiz haberi', baslik: 'Akşam Bülteni, 23 Kasım: günün 8 haberi 9 dakikada', yakinda: true },
-    'hafta-ozeti': { ad: 'Hafta Özeti', ikon: 'fa-calendar-week', saat: 'Pazar 10.00', sure: '15 dk', ac: 'Haftanın on gelişmesi, kaynaklarıyla', baslik: 'Hafta Özeti, 22 Kasım: haftanın on gelişmesi, kaynaklarıyla', ek: '10 gelişme', dun: true }
+    'hafta-ozeti': { ad: 'Hafta Özeti', ikon: 'fa-calendar-week', saat: 'Pazar 10.00', sure: '15 dk', ac: 'Haftanın on gelişmesi, kaynaklarıyla', g: 'tbmm', baslik: 'Hafta Özeti, 22 Kasım: haftanın on gelişmesi, kaynaklarıyla', ek: '10 gelişme', dun: true }
   };
-  /* Gün Ortası bülteninin içindeki sesli haberler (public haber-dinle-detay.html): kategori süzgecinde de görünür (DADAHABER-10 §5) */
-  var GO = [['Finans', 'Kredi kartında asgari ödeme oranı ocakta değişmeyecek'], ['Gündem', 'Marmara\'da kar yağışı nedeniyle 14 ilde okullar tatil edildi'], ['Kampüs', '2027 YKS başvuruları 3 Şubat\'ta başlıyor, sınav 19-20 Haziran\'da'],
-    ['Kadın', 'Doğum izninin 24 haftaya çıkarılmasını öngören teklif komisyonda'], ['Savunma', 'Savunma sanayiinde 2027 yatırım programı açıklandı'], ['Dünya', 'BM İklim Konferansı uzatmalı oturumla sona erdi'],
-    ['Teknoloji', '5G hizmeti ilk aşamada 11 ilde kullanıma açıldı'], ['Spor', 'Süper Lig\'de devre arası transfer dönemi 5 Ocak\'ta açılacak']];
+  /* Gün Ortası bülteninin içindeki sesli haberler (public haber-dinle-detay.html): kategori süzgecinde de görünür (DADAHABER-10 §5).
+     [kategori, başlık, görsel]: kredi-karti/yks/anten/iklim/antrenman = D.akis'teki aynı haber; kar-istanbul = D.manset[4]; tbmm = teklif Meclis komisyonunda; ida = S ile aynı */
+  var GO = [['Finans', 'Kredi kartında asgari ödeme oranı ocakta değişmeyecek', 'kredi-karti'], ['Gündem', 'Marmara\'da kar yağışı nedeniyle 14 ilde okullar tatil edildi', 'kar-istanbul'], ['Kampüs', '2027 YKS başvuruları 3 Şubat\'ta başlıyor, sınav 19-20 Haziran\'da', 'yks'],
+    ['Kadın', 'Doğum izninin 24 haftaya çıkarılmasını öngören teklif komisyonda', 'tbmm'], ['Savunma', 'Savunma sanayiinde 2027 yatırım programı açıklandı', 'ida'], ['Dünya', 'BM İklim Konferansı uzatmalı oturumla sona erdi', 'iklim'],
+    ['Teknoloji', '5G hizmeti ilk aşamada 11 ilde kullanıma açıldı', 'anten'], ['Spor', 'Süper Lig\'de devre arası transfer dönemi 5 Ocak\'ta açılacak', 'antrenman']];
 
   var KAT = [['Tümü', ''], ['Gündem', 'gundem'], ['Finans', 'finans'], ['Spor', 'spor'], ['Dünya', 'dunya'], ['Kadın', 'kadin'], ['Savunma', 'savunma'], ['Kampüs', 'kampus'], ['Teknoloji', 'teknoloji']];
   var KS = ['sabah-ozeti', 'gun-ortasi', 'aksam-bulteni', 'hafta-ozeti'];
@@ -79,8 +83,8 @@
 
   /* sesli haber ve bülten satırları (kit çizelgesi) */
   function satirlar(L){ var X = L.map(function(x){
-      if (x.kusak){ var k = KU[x.kusak]; return { saat: x.saat, tur: 'Bülten', kat: k.ad, ikon: k.ikon, baslik: k.baslik, yazar: k.sure, sure: k.ek, izlenme: k.dinlenme ? k.dinlenme + ' dinlenme' : '', _b: 1 }; }
-      return { saat: x.saat, kat: x.kat, ikon: IK[x.kat] || K.ikon(x.kat), tur: x.tur, baslik: x.baslik }; });
+      if (x.kusak){ var k = KU[x.kusak]; return { saat: x.saat, tur: 'Bülten', kat: k.ad, ikon: k.ikon, baslik: k.baslik, g: k.g, yazar: k.sure, sure: k.ek, izlenme: k.dinlenme ? K.I('fa-headphones') + k.dinlenme : '', _b: 1 }; }
+      return { saat: x.saat, kat: x.kat, ikon: IK[x.kat] || K.ikon(x.kat), tur: x.tur, baslik: x.baslik, g: x.g }; });
     var h = K.cizelge(X, { toplam: X.length }), d = document.createElement('div'); d.innerHTML = h;
     [].forEach.call(d.querySelectorAll('.k-cz > a'), function(a, i){ if (X[i]._b) a.href = BUL; else { a.removeAttribute('href'); a.setAttribute('role', 'button'); a.setAttribute('data-dinle', ''); a.setAttribute('aria-label', 'Dinle: ' + X[i].baslik); } });
     return d.innerHTML.replace(/ · \d+ haber<\/small>/, ' · ' + X.length + ' ses</small>'); }
@@ -96,9 +100,9 @@
     govde = '<div class="kb">' + K.serit({ ikon: k.ikon, metin: k.ad + ' · ' + (k.dun ? 'her ' : 'her gün ') + k.saat + ' · ' + k.sure, alt: k.ac }) + '</div>';
     if (k.yakinda) govde += '<div class="kb">' + K.cagri({ ikon: k.ikon, baslik: 'Bugünün bülteni 18.00\'de', aciklama: 'Yaklaşık 1 sa 55 dk sonra', eylem: { metin: 'Hatırlat', ikon: 'fa-bell', attr: 'data-toast="18.00\'de hatırlatacağız"' } }) + '</div>';
     else govde += '<div class="k-ic">' + (k.dun ? satirlar([{ saat: '10.00', kusak: kus }]).replace('<span>Bugün</span>', '<span>Dün</span>').replace(D.simdi.tarih.replace(' 2026', '') + ' ' + D.simdi.gun, '22 Kasım Pazar') : satirlar([S.filter(function(x){ return x.kusak === kus; })[0]])) + '</div>';
-    if (kus === 'gun-ortasi') govde += '<section class="k-bl sik">' + K.bb({ baslik: 'Bu Bültende', ikon: 'fa-list-ul', sayi: GO.length }) + '<div class="k-ic">' + satirlar(GO.map(function(x){ return { saat: '12.30', kat: x[0], baslik: x[1], tur: 'Gün Ortası' }; })) + '</div></section>';
+    if (kus === 'gun-ortasi') govde += '<section class="k-bl sik">' + K.bb({ baslik: 'Bu Bültende', ikon: 'fa-list-ul', sayi: GO.length }) + '<div class="k-ic">' + satirlar(GO.map(function(x){ return { saat: '12.30', kat: x[0], baslik: x[1], g: x[2], tur: 'Gün Ortası' }; })) + '</div></section>';
   } else {
-    var L = sec ? S.filter(function(x){ return x.kat === secAd; }).concat(GO.filter(function(x){ return x[0] === secAd; }).map(function(x){ return { saat: '12.30', kat: x[0], baslik: x[1], tur: 'Gün Ortası' }; })).sort(function(a, b){ return a.saat < b.saat ? 1 : -1; }) : S;
+    var L = sec ? S.filter(function(x){ return x.kat === secAd; }).concat(GO.filter(function(x){ return x[0] === secAd; }).map(function(x){ return { saat: '12.30', kat: x[0], baslik: x[1], g: x[2], tur: 'Gün Ortası' }; })).sort(function(a, b){ return a.saat < b.saat ? 1 : -1; }) : S;
     govde = (sec ? '' : '<div class="kb">' + K.cagri({ ikon: 'fa-moon', baslik: 'Sıradaki: Akşam Bülteni 18.00', aciklama: 'Günün 8 haberi 9 dakikada', eylem: { metin: 'Hatırlat', ikon: 'fa-bell', attr: 'data-toast="18.00\'de hatırlatacağız"' } }) + '</div>') +
       '<div class="k-ic">' + satirlar(L) + '</div>';
     if (!sec) govde += '<div class="k-ic">' + satirlar([{ saat: '10.00', kusak: 'hafta-ozeti' }]).replace('<span>Bugün</span>', '<span>Dün</span>').replace(D.simdi.tarih.replace(' 2026', '') + ' ' + D.simdi.gun, '22 Kasım Pazar') + '</div>';
@@ -111,7 +115,7 @@
   var bas = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Haber Dinle</h1><p>Günün haberleri sesli, kısa ve kaynaklı</p></div>';
   var DUZ = DUR === 'hata' || (DUR === 'cevrimdisi' && Q.get('onbellek') === '0');
   if (DUR === 'yukleniyor') e.innerHTML = bas + '<div role="status" aria-label="Yükleniyor"><div class="sp">' + isk('100%', 64, 'kart') + '</div><div class="k-bl sik k-ray s8">' + isk('64px', 36) + isk('76px', 36) + isk('62px', 36) + isk('58px', 36) + '</div>' +
-    '<div class="k-satirlar">' + K.iskelet('satir', 5).replace(/<i class="k-isk" style="width:88px;height:88px"><\/i>/g, '') + '</div></div><div class="k-son"></div>';
+    '<div class="k-satirlar">' + K.iskelet('satir', 5) + '</div></div><div class="k-son"></div>'; /* satır iskeletinde görsel sağda: çizelgeyle aynı (K44 istisna) */
   else if (DUZ) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: DUR === 'cevrimdisi' ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') }) + '<div class="k-son"></div>';
   else e.innerHTML = (DUR === 'yenileniyor' ? '<div class="k-ust-bosluk"></div>' + K.yenile(['cekiliyor', 'birak', 'bitti'].indexOf(HAL) > -1 ? HAL : 'yenileniyor') : '') + bas + spk +
     '<section class="k-bl">' + K.bb({ baslik: 'Sesli Haberler', ikon: 'fa-headphones' }) + cipler + kusaklar + govde + '</section><div class="k-son"></div>';
@@ -120,9 +124,10 @@
   K.altCubuk('dinle');
   K.oynatici();
   var sc = e.querySelector('.k-cip-satiri .k-cip[aria-pressed="true"]');
-  if (sc && sec > 0) sc.parentNode.scrollLeft = sc.offsetLeft - 16;
+  /* seçili çip görünür yere kayar; kitin banner'ı (K.banner, DOMContentLoaded) içeriği taşıyınca kaydırma sıfırlandığı için ondan sonra */
+  function cipKay(){ if (sc && sec > 0) sc.parentNode.scrollLeft = sc.offsetLeft - 16; if (kc && kus) kc.parentNode.scrollLeft = kc.offsetLeft - 16; }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function(){ setTimeout(cipKay, 0); }); else setTimeout(cipKay, 0);
   var kc = e.querySelector('.ku .k-cip[aria-pressed="true"]');
-  if (kc && kus) kc.parentNode.scrollLeft = kc.offsetLeft - 16;
   if (DUR === 'daha-fazla' && !TAM) e.scrollTop = e.scrollHeight;
   if (DUR === 'cevrimdisi' && !DUZ) {
     var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });

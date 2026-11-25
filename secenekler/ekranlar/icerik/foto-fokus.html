@@ -54,7 +54,8 @@
 
   var cipler = '<div class="k-cip-satiri"><div class="k-ray s8" data-tek role="group" aria-label="Tema">' + TEMA.map(function(k, i){
     return K.cip(k[0], { secili: i === sec, attr: 'data-href="' + K.u(YOL, k[1] ? 'kategori=' + k[1] : '') + '"' }); }).join('') + '</div></div>';
-  var kapak = '<header class="k-kapak" style="background-image:' + G('balon') + '"><h1>Foto Fokus</h1><p>Türkiye ve dünyadan foto muhabirlerimizin kareleri</p></header>';
+  /* sayfa başı: .k-bbas → kitin görselli banner'ı (K43/K44-8; sayfa → fotoğraf eşlemesi kitte, K.banner) */
+  var kapak = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Foto Fokus</h1><p>Türkiye ve dünyadan foto muhabirlerimizin kareleri</p></div>';
   var liste;
   if (DUR === 'bos') liste = K.bos({ ikon: 'fa-camera', baslik: 'Bu temada galeri yok', aciklama: TEMA[sec][0] + ' temasında yeni galeri yayımlanınca burada görünür.', eylem: { metin: 'Tümü\'ne dön', tur: 'sade', href: K.u(YOL) } });
   else {
@@ -64,18 +65,19 @@
   var DUZ = DUR === 'hata' || (DUR === 'cevrimdisi' && Q.get('onbellek') === '0');
   if (DUR === 'yukleniyor') {
     var ki = '<div class="k-isk-grup">' + isk('100%', 128, 'kontrol') + isk('100%', 15) + isk('70%', 15) + '</div>';
-    e.innerHTML = isk('100%', 224) + '<div class="k-yaprak" role="status" aria-label="Yükleniyor"><div class="k-ray s8 i-r">' + isk('64px', 36) + isk('70px', 36) + isk('78px', 36) + isk('110px', 36) + '</div>' +
+    e.innerHTML = kapak + '<div role="status" aria-label="Yükleniyor"><div class="k-ray s8 i-r">' + isk('64px', 36) + isk('70px', 36) + isk('78px', 36) + isk('110px', 36) + '</div>' +
       '<div class="fl"><div class="k-isk-grup">' + isk('100%', 262, 'kontrol') + isk('100%', 18) + isk('64%', 18) + '</div></div><div class="fi">' + ki + ki + '</div></div><div class="k-son"></div>';
   } else if (DUZ) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: DUR === 'cevrimdisi' ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') }) + '<div class="k-son"></div>';
   else e.innerHTML = (DUR === 'yenileniyor' ? '<div class="k-ust-bosluk"></div>' + K.yenile(['cekiliyor', 'birak', 'bitti'].indexOf(HAL) > -1 ? HAL : 'yenileniyor') : '') +
-    kapak + '<div class="k-yaprak">' + cipler + liste + '<div class="k-son"></div></div>';
+    kapak + cipler + liste + '<div class="k-son"></div>';
 
-  if (DUZ) K.ustCubuk({ geri: true, baslik: 'Foto Fokus', eylemler: ['ara'] });
-  else K.ustCubuk({ tur: 'foto', geri: true, baslik: 'Foto Fokus', gorsel: 'balon', eylemler: ['ara'], dar: DUR === 'yenileniyor' });
+  K.ustCubuk({ geri: true, buyuk: !DUZ, baslik: 'Foto Fokus', eylemler: ['ara'] });
   K.altCubuk('bolum');
   K.oynatici();
   var sc = e.querySelector('.k-cip-satiri .k-cip[aria-pressed="true"]');
-  if (sc && sec > 0) sc.parentNode.scrollLeft = sc.offsetLeft - 16;
+  /* seçili çip görünür yere kayar; kitin banner'ı (K.banner, DOMContentLoaded) içeriği taşıyınca kaydırma sıfırlandığı için ondan sonra */
+  function cipKay(){ if (sc && sec > 0) sc.parentNode.scrollLeft = sc.offsetLeft - 16; }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function(){ setTimeout(cipKay, 0); }); else setTimeout(cipKay, 0);
   if (DUR === 'daha-fazla' && !TAM) e.scrollTop = e.scrollHeight;
   if (DUR === 'cevrimdisi' && !DUZ) {
     var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'Kaydedilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });

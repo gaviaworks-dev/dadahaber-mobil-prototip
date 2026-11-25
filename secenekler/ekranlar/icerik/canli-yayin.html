@@ -20,6 +20,11 @@
 <script src="../../_ortak/cerceve.js"></script>
 <script src="../../_ortak/icerik-ek.js"></script>
 <script src="../../kit/kit.js"></script>
+<style>
+/* KİT ADAYI: k-dbas — görselsiz detay başlığı (video-detay.html, infografik-detay.html ile aynı). Yayın başlığı .k-bbas değil: .k-bbas kitin sayfa banner'ına (K.banner) dönüşür */
+.dbas{padding:var(--b-16) var(--kenar) 0}
+.dbas h1{margin-top:var(--b-12);font-size:24px;line-height:1.18;font-weight:var(--y-kalin);letter-spacing:-.02em}
+</style>
 </head>
 <body>
 <div class="ekran" id="ekran"></div>
@@ -38,11 +43,12 @@
       ['13.00', 'Oturum Meclis Başkanının açılışıyla başladı', 'Genel Kurul görüşmelerinin 12 gün sürmesi ve bütçenin yıl sonundan önce oylanması planlanıyor.', 'TBMM']],
     program: [['13.00', 'TBMM Genel Kurulu · 2027 bütçe görüşmeleri', 'Grup konuşmaları sürüyor · Meclis TV yayını', true], ['17.00', 'Valilik kar koordinasyon toplantısı sonrası açıklama', 'İstanbul Valiliği · yaklaşık 20 dk'],
       ['19.30', 'Akşam bülteni canlı: günün sekiz başlığı', 'Dada Haber stüdyosu · 25 dk'], ['21.00', 'Ekonomi Masası canlı: bütçenin ilk günü', 'Can Demir ve konukları · 40 dk']],
-    biten: [{ tur: 'Sona erdi', alt: 'Siyaset', saat: '22 Kas', baslik: 'Plan ve Bütçe Komisyonu\'nda son gün oturumu', yazar: 'TBMM', sure: '3 sa 10 dk' },
-      { tur: 'Sona erdi', alt: 'Dünya', saat: '21 Kas', baslik: 'BM İklim Konferansı kapanış oturumu', yazar: 'Antalya', sure: '1 sa 52 dk' },
-      { tur: 'Sona erdi', alt: 'Kampüs', saat: '21 Kas', baslik: 'ÖSYM 2027 sınav takvimi tanıtım toplantısı', yazar: 'Ankara', sure: '48 dk', g: 'osym', md: '48 dk' }],
-    ilgili: [{ tur: 'Canlı', alt: 'Siyaset', saat: '23 Kas', baslik: 'TBMM\'de 2027 bütçesi görüşmeleri: gelişmeler dakika dakika', yazar: 'Ayşe Yıldız', sure: 'Son giriş 15.42', izlenme: '21,7 B', href: K.git('canliAnlatim') },
-      { alt: 'Siyaset', saat: '22 Kas', baslik: 'Plan ve Bütçe Komisyonu\'nda bütçe görüşmeleri tamamlandı', sure: '2 dk', izlenme: '7,1 B' }]
+    /* K44-8: her yayının kendi görseli (tbmm = Meclis komisyonu; iklim = D.akis'teki iklim konferansı haberiyle aynı) */
+    biten: [{ tur: 'Sona erdi', alt: 'Siyaset', saat: '22 Kas', baslik: 'Plan ve Bütçe Komisyonu\'nda son gün oturumu', yazar: 'TBMM', sure: '3 sa 10 dk', g: 'tbmm', md: 'İzle' },
+      { tur: 'Sona erdi', alt: 'Dünya', saat: '21 Kas', baslik: 'BM İklim Konferansı kapanış oturumu', yazar: 'Antalya', sure: '1 sa 52 dk', g: 'iklim', md: 'İzle' },
+      { tur: 'Sona erdi', alt: 'Kampüs', saat: '21 Kas', baslik: 'ÖSYM 2027 sınav takvimi tanıtım toplantısı', yazar: 'Ankara', sure: '48 dk', g: 'osym', md: 'İzle' }],
+    ilgili: [{ tur: 'Canlı', alt: 'Siyaset', saat: '23 Kas', baslik: 'TBMM\'de 2027 bütçesi görüşmeleri: gelişmeler dakika dakika', yazar: 'Ayşe Yıldız', sure: 'Son giriş 15.42', izlenme: '21,7 B', href: K.git('canliAnlatim'), g: 'tbmm' },
+      { alt: 'Siyaset', saat: '22 Kas', baslik: 'Plan ve Bütçe Komisyonu\'nda bütçe görüşmeleri tamamlandı', sure: '2 dk', izlenme: '7,1 B', g: 'ankara-kar' }]
   };
   var hata = DUR === 'cevrimdisi' && Q.get('onbellek') === '0' ? 'cevrimdisi' : '';
   K.ustCubuk({ geri: true, baslik: 'Canlı Yayın', eylemler: hata || DUR === 'yukleniyor' ? [] : ['paylas'], golgeli: true });
@@ -65,7 +71,7 @@
     if (DUR === 'mobil-veri') oyn = oyn.replace('Mobil veride videolar kendiliğinden oynamaz · Canlı', 'Mobil veride videolar kendiliğinden oynamaz');
   }
   var bilgi = DUR === 'yayin-yok' ? '' : '<div class="k-ic" style="padding-top:var(--b-16)"><div class="k-zamansatir"><span>' + K.I('fa-video') + Y.bas + '</span><span>' + K.I('fa-rotate') + Y.son + '</span><span>' + K.I('fa-eye') + Y.izleyici + '</span></div></div>' +
-    '<div class="k-bbas" style="padding-top:var(--b-16)">' + K.katEt(Y.kat, 'fa-newspaper') + '<h1 style="margin-top:var(--b-12)">' + Y.baslik + '</h1><div class="k-imza">' + K.avatar(Y.yazar) + '<span class="t"><b>' + Y.yazar + '</b><small>' + Y.unvan + '</small></span></div></div>' +
+    '<div class="dbas">' + K.katEt(Y.kat, 'fa-newspaper') + '<h1>' + Y.baslik + '</h1><div class="k-imza">' + K.avatar(Y.yazar) + '<span class="t"><b>' + Y.yazar + '</b><small>' + Y.unvan + '</small></span></div></div>' +
     '<div class="k-ic"><p class="k-spot">' + Y.spot + '</p></div>' +
     '<section class="k-bl">' + K.bb({ baslik: 'Oturumdan Öne Çıkanlar', canli: true, sayi: Y.akis.length }) + '<div class="k-ic">' +
       Y.akis.map(function(x, i){ return K.canliGiris({ saat: x[0], baslik: x[1], metin: x[2], yeni: i === 0 }).replace(/<\/div><\/div>$/, K.meta(['Kaynak: ' + x[3]]) + '</div></div>'); }).join('') + '</div></section>';

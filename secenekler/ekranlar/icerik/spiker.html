@@ -30,10 +30,6 @@
 /* KİT ADAYI (düzeltme): kit .k-oy .sure −4 üst boşlukla 44'lük kaydırıcıya biniyor */
 .k-oy .sure{margin-top:0}
 /* yerleşim: oynatıcının altındaki bölümler */
-.sk ol{list-style:none;counter-reset:s}
-.sk li{counter-increment:s;display:grid;grid-template-columns:32px minmax(0,1fr);gap:var(--b-12);padding:var(--b-12) 0;border-top:1px solid var(--cizgi);font-size:15.5px;line-height:1.32}
-.sk li:first-child{border-top:0}
-.sk li::before{content:counter(s);font-weight:var(--y-kalin);color:var(--marka-metin);font-variant-numeric:tabular-nums}
 .sp{padding:0 var(--kenar)}
 /* iskelet yerleşimi (yalnız ölçek değişkenleri) */
 .i-r{padding-top:var(--b-12);padding-bottom:var(--b-12)}
@@ -50,7 +46,13 @@
   var Q = K.q, DUR = K.durum, e = document.getElementById('ekran'), S = D.spiker;
   var YOK = DUR === 'yayin-yok' || !K.spikerCanli(), SES = DUR === 'ses', CEV = DUR === 'cevrimdisi';
   function isk(w, h, c){ return '<i class="k-isk' + (c ? ' ' + c : '') + '" style="width:' + w + ';height:' + h + 'px"></i>'; }
-  var sirada = '<section class="k-bl sik">' + K.bb({ baslik: 'Sıradaki Başlıklar', ikon: 'fa-list-ul', sayi: S.sirada.length }) + '<div class="k-ic sk"><ol>' + S.sirada.map(function(s){ return '<li><span>' + s + '</span></li>'; }).join('') + '</ol></div></section>';
+  /* K44 (1, 8): sıradaki başlıklar kitin liste satırıyla, her haberin kendi görseli solda. Görsel ve bilgi D'deki aynı haberden:
+     asgari = D.gunun5.liste[0] (aynı başlık), faiz = D.gunun5.liste[1] / D.bolumler Finans (PPK kararı), kar-istanbul = D.manset[4] (Marmara karı) */
+  var SR = [ { kat: 'Gündem', baslik: S.sirada[0], g: D.gunun5.liste[0].g, sure: D.gunun5.liste[0].sure },
+    { kat: 'Finans', baslik: S.sirada[1], g: D.gunun5.liste[1].g, sure: D.gunun5.liste[1].sure },
+    { kat: 'Gündem', baslik: S.sirada[2], g: D.manset[4].g } ];
+  function siraSatir(){ return '<div class="k-satirlar">' + SR.map(function(h){ return K.satir(h); }).join('') + '</div>'; }
+  var sirada = '<section class="k-bl sik">' + K.bb({ baslik: 'Sıradaki Başlıklar', ikon: 'fa-list-ul', sayi: S.sirada.length }) + siraSatir() + '</section>';
   var bultenler = '<section class="k-bl sik">' + K.bb({ baslik: 'Bültenler', ikon: 'fa-radio' }) + K.cipler(S.bultenler.map(function(b){ return { metin: b }; }), 0) + '</section>';
 
   var DUZ = DUR === 'hata' || (CEV && Q.get('onbellek') === '0');
@@ -87,7 +89,7 @@
     if (t.closest('[data-kucult]')) { K.spikerBaslat(); if (history.length > 1) history.back(); else location.href = K.git('dinle'); return; }
     if (t.closest('[data-goruntu]')) { var p = new URLSearchParams(location.search); if (SES) p.delete('durum'); else p.set('durum', 'ses'); location.search = p.toString(); return; }
     if (t.closest('.k-oy .dn .ana')) { var a = t.closest('.ana'), oyn = !!a.querySelector('.fa-pause'); a.innerHTML = K.I(oyn ? 'fa-play' : 'fa-pause'); a.closest('.k-oy').classList.toggle('dur', oyn); return; }
-    if (t.closest('[data-sirada]')) { K.sayfa({ baslik: 'Sıradakiler', alt: 'Dada Spiker · ' + S.bulten, icerik: '<div class="sk"><ol>' + S.sirada.map(function(s){ return '<li><span>' + s + '</span></li>'; }).join('') + '</ol></div>' }); return; }
+    if (t.closest('[data-sirada]')) { K.sayfa({ baslik: 'Sıradakiler', alt: 'Dada Spiker · ' + S.bulten, icerik: siraSatir() }); return; }
     var y = t.closest('[data-yeniden]'); if (!y) return;
     y.classList.add('is-yukleniyor'); y.innerHTML = K.I('fa-circle-notch', 'fa-spin') + '<span>Deneniyor</span>';
     setTimeout(function(){ var p = new URLSearchParams(location.search); ['durum', 'hata', 'onbellek'].forEach(function(x){ p.delete(x); }); location.search = p.toString(); }, 1200); });

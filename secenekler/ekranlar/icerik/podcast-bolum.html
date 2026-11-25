@@ -82,7 +82,7 @@
   var ilgili = D.liste.haberler[4];
   var sayfa = '<div class="k-ust-bosluk"></div><div class="sb"><div class="sb-u"><span class="sb-a" style="background-image:' + G(PB.g) + '"></span><span class="t">' + K.ustSatir({ tur: 'Podcast', kat: PB.seri, ikon: 'fa-podcast' }) +
       '<b>' + PB.yazar + '</b><small>' + PB.unvan + ' · ' + PB.no + '</small></span></div><h1>' + PB.baslik + '</h1>' +
-      '<div class="k-zamansatir"><span>' + K.I('fa-calendar-day') + PB.tarih + '</span><span>' + K.I('fa-clock') + PB.sure + '</span><span>' + K.I('fa-podcast') + PB.dinlenme + ' dinlenme</span></div></div>' + panel +
+      '<div class="k-zamansatir"><span>' + K.I('fa-calendar-day') + PB.tarih + '</span><span>' + K.I('fa-clock') + PB.sure + '</span><span>' + K.I('fa-headphones') + PB.dinlenme + '</span></div></div>' + panel +
     '<div class="sb" style="padding-top:0">' + (ind === 'indirildi' ? K.serit({ tur: 'basari', ikon: 'fa-circle-check', metin: 'İndirildi', alt: 'Bağlantı yokken de dinleyebilirsin.' }) : ind === 'indiriliyor' ? K.serit({ ikon: 'fa-circle-down', metin: 'İndiriliyor · %62', alt: 'Bitince çevrimdışı dinleyebilirsin.' }) : '') +
       '<p class="k-spot">' + PB.spot + '</p></div>' +
     '<section class="k-bl">' + K.bb({ baslik: 'Bölüm Notları', ikon: 'fa-file-lines' }) + '<div class="k-ic k-govde">' + PB.notlar.map(function(p){ return '<p>' + p + '</p>'; }).join('') + '</div></section>' +

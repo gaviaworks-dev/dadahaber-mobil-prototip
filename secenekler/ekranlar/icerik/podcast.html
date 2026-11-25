@@ -62,7 +62,8 @@
 
   var cipler = '<div class="k-cip-satiri"><div class="k-ray s8" data-tek role="group" aria-label="Yayın periyodu">' + SEC.map(function(s, i){
     return K.cip(s[0], { secili: i === sec, ikon: s[1] ? PER[s[1]][1] : null, attr: 'data-href="' + K.u(YOL, s[1] ? 'periyot=' + s[1] : '') + '"' }); }).join('') + '</div></div>';
-  var kapak = '<header class="k-kapak" style="background-image:' + G('carsi') + '"><h1>Podcast</h1><p>Gündemi uzmanlarıyla dinleyerek takip et</p></header>';
+  /* sayfa başı: .k-bbas → kitin görselli banner'ı (K43/K44-8; sayfa → fotoğraf eşlemesi kitte, K.banner) */
+  var kapak = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Podcast</h1><p>Gündemi uzmanlarıyla dinleyerek takip et</p></div>';
   var govde;
   if (DUR === 'bos') govde = K.bos({ ikon: 'fa-podcast', baslik: 'Bu periyotta program yok', aciklama: 'Yeni program yayımlanınca burada görünür.', eylem: { metin: 'Tümü\'ne dön', tur: 'sade', href: K.u(YOL) } });
   else {
@@ -75,20 +76,21 @@
   if (DUR === 'yukleniyor') {
     var ks = '<div class="k-isk-grup" style="width:232px;flex:none">' + isk('100%', 174, 'kontrol') + isk('80%', 16) + isk('60%', 12) + '</div>';
     var rs = '<div class="i-s">' + isk('64px', 64) + '<div class="k-isk-grup" style="flex:1">' + isk('40%', 11) + isk('100%', 15) + isk('50%', 11) + '</div></div>';
-    e.innerHTML = isk('100%', 224) + '<div class="k-yaprak" role="status" aria-label="Yükleniyor"><div class="k-ray s8 i-r">' + isk('64px', 36) + isk('150px', 36) + isk('120px', 36) + '</div>' +
+    e.innerHTML = kapak + '<div role="status" aria-label="Yükleniyor"><div class="k-ray s8 i-r">' + isk('64px', 36) + isk('150px', 36) + isk('120px', 36) + '</div>' +
       '<div class="k-ray serbest pr">' + ks + ks + '</div><div class="k-satirlar k-bl">' + rs + rs + rs + '</div></div><div class="k-son"></div>';
   } else if (DUZ) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: DUR === 'cevrimdisi' ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') }) + '<div class="k-son"></div>';
   else e.innerHTML = (DUR === 'yenileniyor' ? '<div class="k-ust-bosluk"></div>' + K.yenile(['cekiliyor', 'birak', 'bitti'].indexOf(HAL) > -1 ? HAL : 'yenileniyor') : '') +
-    kapak + '<div class="k-yaprak">' + cipler + govde + '<div class="k-son"></div></div>';
+    kapak + cipler + govde + '<div class="k-son"></div>';
 
-  if (DUZ) K.ustCubuk({ geri: true, baslik: 'Podcast', eylemler: ['ara'] });
-  else K.ustCubuk({ tur: 'foto', geri: true, baslik: 'Podcast', gorsel: 'carsi', eylemler: ['ara'], dar: DUR === 'yenileniyor' });
+  K.ustCubuk({ geri: true, buyuk: !DUZ, baslik: 'Podcast', eylemler: ['ara'] });
   K.altCubuk('dinle');
   K.oynatici();
   /* tek oynatıcı: podcast bölümü oynayınca Spiker duraklar (kitin bölüm satırı Spiker'ı başlatıyordu; burada podcast'e bağlandı) */
   [].forEach.call(e.querySelectorAll('.k-pd-satir > .k-ikon'), function(b){ b.removeAttribute('data-spiker'); b.setAttribute('data-pd', ''); });
   var sc = e.querySelector('.k-cip-satiri .k-cip[aria-pressed="true"]');
-  if (sc && sec > 0) sc.parentNode.scrollLeft = sc.offsetLeft - 16;
+  /* seçili çip görünür yere kayar; kitin banner'ı (K.banner, DOMContentLoaded) içeriği taşıyınca kaydırma sıfırlandığı için ondan sonra */
+  function cipKay(){ if (sc && sec > 0) sc.parentNode.scrollLeft = sc.offsetLeft - 16; }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function(){ setTimeout(cipKay, 0); }); else setTimeout(cipKay, 0);
   if (DUR === 'daha-fazla' && !TAM) e.scrollTop = e.scrollHeight;
   if (DUR === 'cevrimdisi' && !DUZ) {
     var bt = K.toast('Çevrimdışısın', { bant: true, eylem: 'İndirilenler', eylemFn: function(){ location.href = K.git('kaydedilenler'); } });
