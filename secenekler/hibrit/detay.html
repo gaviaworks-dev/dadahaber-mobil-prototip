@@ -14,7 +14,7 @@
 <script src="hibrit.js"></script>
 <script src="hikaye-modu.js"></script>
 <style>
-/* Detay (K19: HB-4 "Kişisel önce" tabanı, bütün hibritlerde aynı). Sıra Beyar'dan (K20): kapak + başlık → bilgi satırı (saat, güncelleme, süre)
+/* Detay (K19: HB-4 "Kişisel önce" tabanı, bütün hibritlerde aynı). Sıra Beyar'dan (K20; K28: içerik paneli kapağın üstüne biner, Kaydet sağ üstte, 15 sn'de 1 dk düğmesi yok): kapak + başlık → bilgi satırı (saat, güncelleme, süre)
    → açıklama (spot) → K17 derinlik sekmeleri 15 sn · 1 dk · Tam metin → K18 bölüm sekmeleri (Bana etkisi · Neden önemli · Bundan sonra; dokununca
    ya da yana kaydırınca yerinde değişir, aşağı kaydırma yok) → kaynaklar yatay şerit (vurgusuz) → yorum → sıradaki haberler.
    "Hikâye modunda oku" sayfaya serpiştirilir: açıklamanın altında, 15 sn sonunda, tam metnin ortasında, bölümlerin sonunda ve okuma çubuğunda.
@@ -28,7 +28,9 @@
 .ust-d.dolu{background:color-mix(in srgb,var(--zemin) 94%,transparent);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-bottom-color:var(--cizgi)}
 .ust-d.dolu .d{background:transparent;border-color:transparent;color:var(--metin)}
 .ust-d.dolu .bt{opacity:1}
-.kapak{position:relative;display:flex;flex-direction:column;justify-content:flex-end;padding:0 var(--kenar) 24px;color:#fff;isolation:isolate;background-size:cover;background-position:center}
+.ust-d .d.on{color:var(--marka)}
+.ust-d.dolu .d.on{color:var(--marka-metin)}
+.kapak{position:sticky;top:0;z-index:0;display:flex;flex-direction:column;justify-content:flex-end;padding:0 var(--kenar) 48px;color:#fff;isolation:isolate;background-size:cover;background-position:center}
 .kapak::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,rgba(10,10,10,.94) 8%,rgba(10,10,10,.55) 44%,rgba(10,10,10,.05) 72%,rgba(10,10,10,.35))}
 .kapak .kat{display:inline-flex;align-items:center;gap:var(--ikon-bosluk);font-size:13px;font-weight:var(--y-kalin);color:var(--marka)}
 .kapak h1{margin-top:12px;font-size:31px;line-height:1.1;letter-spacing:-.028em}
@@ -132,7 +134,9 @@
 .ilgili small{display:block;margin-top:6px;font-size:12.5px;color:var(--metin-3)}
 .ilgili .gr{width:76px;height:76px;border-radius:var(--k-kontrol)}
 .ortak-alt{padding:0 var(--kenar)}
-.bas-alt{padding:14px var(--kenar) 0}
+/* içerik paneli: kapağın üstüne biner, yukarı kaydırınca görselin üzerinden geçer (ana sayfa hero'su gibi yuvarlak köşe; K28) */
+.yaprak{position:relative;z-index:1;margin-top:-24px;background:var(--zemin);border-radius:var(--k-buyuk) var(--k-buyuk) 0 0}
+.bas-alt{padding:20px var(--kenar) 0}
 .ozet-p{margin-top:16px;font-size:var(--mb);line-height:1.62}
 .ozet-p+.ozet-p{margin-top:12px}
 .bas-alt .zaman{margin-top:0}
@@ -181,7 +185,7 @@ html[data-tema="koyu"] .boy input{accent-color:var(--marka)}
 <div class="ust-d" id="ust">
   <a class="d" id="geri" aria-label="Geri"><i class="fa-solid fa-chevron-left"></i></a>
   <span class="bt" id="ustbas"></span>
-  <span class="bos"></span>
+  <button class="d" type="button" id="kaydet" aria-label="Kaydet" aria-pressed="false"><i class="fa-solid fa-bookmark"></i></button>
   <span class="il" id="il"></span>
 </div>
 <nav class="okuma" id="okuma" aria-label="Okuma çubuğu"></nav>
@@ -233,7 +237,7 @@ html[data-tema="koyu"] .boy input{accent-color:var(--marka)}
     '<button type="button" role="tab" data-d="1">1 dk<small>Özet</small></button>' +
     '<button type="button" role="tab" data-d="2">Tam metin<small>' + d.sure + '</small></button></div></div>';
   var p0 = '<section class="panel" data-p="0">' + ai + '<ul class="madde">' + d.ozet.map(li).join('') + '</ul>' +
-    '<button class="gec" type="button" data-git="1">1 dakikalık özete geç<i class="fa-solid fa-arrow-right"></i></button></section>';
+    '</section>';
   var p1 = '<section class="panel" data-p="1">' + ai + '<ul class="madde">' + d.ozet.map(li).join('') + '</ul>' +
     '<p class="ozet-p">' + d.govde[0].p + '</p><p class="ozet-p">' + d.govde[1].p + '</p>' +
     '<button class="gec" type="button" data-git="2">Haberin tamamını oku<i class="fa-solid fa-arrow-right"></i></button></section>';
@@ -242,10 +246,10 @@ html[data-tema="koyu"] .boy input{accent-color:var(--marka)}
   var y = d.yorumlar[0];
   var alt = '<div class="ortak-alt"><section class="blk"><h2>Yorumlar · ' + d.yorumSayisi + '</h2><a class="yorum"><div class="ys"><span class="av">' + y.ad.charAt(0) + '</span><b>' + y.ad + '</b>' + y.zaman + '</div><p>' + y.metin + '</p><span class="tum">Bütün yorumları oku<i class="fa-solid fa-chevron-right"></i></span></a></section>' +
     '<section class="blk ilgili"><h2>Sıradaki Haberler</h2>' + d.ilgili.map(function(x){ return '<a href="' + H.detay() + '"><div><h3>' + x.baslik + '</h3><small>' + x.kat + ' · ' + x.sure + '</small></div><div class="gr" style="background-image:' + G(x.g) + '"></div></a>'; }).join('') + '</section></div>';
-  $('e').innerHTML = kapak + basAlt + seg + p0 + p1 + p2 + bolumler + kyn + alt + '<div class="dip"></div>';
+  $('e').innerHTML = kapak + '<div class="yaprak">' + basAlt + seg + p0 + p1 + p2 + bolumler + kyn + alt + '<div class="dip"></div></div>';
   $('okuma').innerHTML = '<button class="dinle" type="button"><i class="fa-solid fa-play"></i>Dinle · ' + d.dinle + '</button>' +
     '<button class="hmd" type="button" ' + HMD + ' aria-label="Hikâye modunda oku"><i class="fa-solid fa-layer-group"></i></button>' +
-    '<button type="button" aria-label="Kaydet"><i class="fa-solid fa-bookmark"></i></button><button type="button" aria-label="Paylaş"><i class="fa-solid fa-share-nodes"></i></button><button class="aa" type="button" aria-label="Yazı boyutu" id="aa">Aa</button>';
+    '<button type="button" aria-label="Paylaş"><i class="fa-solid fa-share-nodes"></i></button><button class="aa" type="button" aria-label="Yazı boyutu" id="aa">Aa</button>';
 
   var e = $('e'), segK = e.querySelector('.seg-kap');
   /* derinlik değişince içerik yerinde değişir; sekmeler üste yapışmışsa yeni içeriğin başı sekmelerin hemen altında kalır */
@@ -253,7 +257,7 @@ html[data-tema="koyu"] .boy input{accent-color:var(--marka)}
     e.querySelectorAll('.seg button').forEach(function(b){ var on = +b.dataset.d === n; b.classList.toggle('etkin', on); b.setAttribute('aria-selected', on); });
     e.querySelectorAll('.panel').forEach(function(p){ p.classList.toggle('etkin', +p.dataset.p === n); });
     $('kayar').style.transform = 'translateX(' + (n * 100) + '%)';
-    var ust = segK.offsetTop; if (e.scrollTop > ust) e.scrollTop = ust;
+    var ust = segK.offsetTop + segK.offsetParent.offsetTop; if (e.scrollTop > ust) e.scrollTop = ust;
   }
   var bs = 0;
   function bolum(n){
@@ -288,6 +292,7 @@ html[data-tema="koyu"] .boy input{accent-color:var(--marka)}
   }
   e.addEventListener('scroll', kaydir, { passive: true });
   window.HikayeModuKapandi = kaydir;
+  $('kaydet').addEventListener('click', function(){ var on = this.getAttribute('aria-pressed') !== 'true'; this.setAttribute('aria-pressed', on); this.classList.toggle('on', on); });
   $('aa').addEventListener('click', function(){ document.body.classList.add('aa-acik'); });
   $('perde').addEventListener('click', function(){ document.body.classList.remove('aa-acik'); });
   $('boy').addEventListener('input', function(){ document.documentElement.style.setProperty('--mb', this.value + 'px'); });

@@ -26,11 +26,14 @@ html[data-tema="koyu"]{--cam-z:rgba(14,14,16,.86)}
 .dar .cb .orta{opacity:1}
 .cb .sag{margin-left:auto;display:flex}
 /* görselli başlık: detay kapağının (400) yarısı */
-.buyuk{position:relative;height:200px;display:flex;flex-direction:column;justify-content:flex-end;padding:0 var(--kenar) 16px;color:#fff;isolation:isolate;background-size:cover;background-position:center}
+.buyuk{position:sticky;top:0;z-index:0;height:224px;display:flex;flex-direction:column;justify-content:flex-end;padding:0 var(--kenar) 40px;color:#fff;isolation:isolate;background-size:cover;background-position:center}
 .buyuk::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,rgba(10,10,10,.9) 0%,rgba(10,10,10,.45) 55%,rgba(10,10,10,.5) 100%)}
 .buyuk h1{font-size:34px;line-height:1;font-weight:var(--y-kalin);letter-spacing:-.03em}
 .buyuk p{margin-top:6px;font-size:14px;color:rgba(255,255,255,.8);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 body:not(.dar) .cb .geri,body:not(.dar) .cb .dd{color:#fff}
+/* içerik paneli görselin üstüne biner, yukarı kaydırınca görselin üzerinden geçer (K28) */
+.yaprak{position:relative;z-index:1;margin-top:-24px;background:var(--zemin);border-radius:var(--k-buyuk) var(--k-buyuk) 0 0;padding-top:6px}
+.yaprak>.cr:first-child{margin-top:0;border-radius:var(--k-buyuk) var(--k-buyuk) 0 0}
 /* yapışkan çip satırı + Liste/Çizelge anahtarı */
 .cr{position:sticky;top:calc(var(--ust-guvenli) + 48px);z-index:60;background:var(--zemin);display:flex;align-items:center;border-bottom:1px solid var(--cizgi);margin-top:10px}
 .dar .cr{background:var(--cam-z);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px)}
@@ -208,9 +211,9 @@ body:not(.cizelge) .cizelge-kip{display:none}
     '<div class="gc" role="group" aria-label="Görünüm"><button type="button" data-kip="liste" aria-pressed="true" aria-label="Liste"><i class="fa-solid fa-list"></i></button><button type="button" data-kip="cizelge" aria-pressed="false" aria-label="Çizelge"><i class="fa-solid fa-timeline"></i></button></div></nav>';
 
   var o = '';
-  o += bas + cr;
+  o += bas + '<div class="yaprak">' + cr;
   if (C.olay === 'bas') o += go + one; else o += one;
-  o += satirlar + cz + '<div class="son"></div>';
+  o += satirlar + cz + '<div class="son"></div></div>';
   var e = document.getElementById('ekran');
   e.innerHTML = o;
 
@@ -223,7 +226,7 @@ body:not(.cizelge) .cizelge-kip{display:none}
     var c = ev.target.closest('.cp'); if (c) document.querySelectorAll('.cp').forEach(function(x){ x.classList.toggle('etkin', x === c); });
     var t = ev.target.closest('[data-takip]'); if (t) { var a = t.classList.toggle('acik'); t.innerHTML = a ? '<i class="fa-solid fa-check"></i>Takipte' : '<i class="fa-solid fa-plus"></i>Takip et'; }
   });
-  function dar(){ var v = e.scrollTop > 110; document.body.classList.toggle('dar', v); document.body.setAttribute('data-durum', v ? '' : 'acik'); }
+  function dar(){ var v = e.scrollTop > 130; document.body.classList.toggle('dar', v); document.body.setAttribute('data-durum', v ? '' : 'acik'); }
   e.addEventListener('scroll', dar, { passive: true }); dar();
   var Q = new URLSearchParams(location.search);
   if (Q.get('kip') === 'cizelge') kip('cizelge');
