@@ -17,7 +17,7 @@
    Bütün hibritlerde aynı. Akış videoları sesli olduğu için Spiker burada duraklar; mini oynatıcı gösterilmez. */
 .ekran{scroll-snap-type:y mandatory;background:#000}
 html.tam .ekran{scroll-snap-type:none}
-.ust-a{position:absolute;left:0;right:0;top:var(--ust-guvenli);z-index:70;height:52px;padding:0 8px 0 var(--kenar);display:flex;align-items:center;gap:10px;color:#fff;pointer-events:none}
+.ust-a{position:absolute;left:0;right:0;top:var(--ust-guvenli);z-index:70;height:52px;padding:0 var(--kenar);display:flex;align-items:center;gap:10px;color:#fff;pointer-events:none}
 .ust-a>*{pointer-events:auto}
 .ust-a h1{font-size:22px;letter-spacing:-.02em}
 .ust-a small{font-size:13px;color:rgba(255,255,255,.75);white-space:nowrap}
@@ -27,12 +27,12 @@ html.tam .ekran{scroll-snap-type:none}
 .kart>.gr{position:absolute;inset:0}
 .kart::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.72) 68%,rgba(0,0,0,.92) 100%)}
 .kart-ic{position:absolute;left:0;right:0;bottom:calc(var(--ac-h) + 22px);z-index:2;padding:0 56px 0 var(--kenar)}
-.cip{display:inline-flex;align-items:center;gap:var(--ikon-bosluk);height:30px;padding:0 10px;border-radius:var(--k-ic);background:var(--cam);border:1px solid var(--cam-cizgi);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);font-size:12px;font-weight:var(--y-kalin);letter-spacing:.1em;text-transform:uppercase}
-.cip i{color:var(--marka)}
+.cip{display:inline-flex;align-items:center;gap:var(--ikon-bosluk);height:30px;padding:0 10px;border-radius:var(--k-ic);background:var(--cam);border:1px solid var(--cam-cizgi);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);font-size:12.5px;font-weight:var(--y-kalin);white-space:nowrap}
+.cip i{color:var(--marka);font-size:11px}
 .kart h2{margin-top:12px;font-size:26px;line-height:1.14;letter-spacing:-.02em;text-wrap:pretty}
-.kart h2 a{display:block}
-.kart h2 a i{font-size:15px;margin-left:6px;color:rgba(255,255,255,.7);vertical-align:2px}
-.meta-a{margin-top:12px;display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,.78);white-space:nowrap}
+.kart h2 a{display:block;min-height:44px}
+.kart h2 a i{font-size:15px;margin-left:var(--ikon-bosluk);color:rgba(255,255,255,.7);vertical-align:2px}
+.meta.meta-a{margin-top:12px;font-size:13px;color:rgba(255,255,255,.78)}
 .meta-a i{color:var(--marka);font-size:11px}
 .oy{position:absolute;left:var(--kenar);right:var(--kenar);bottom:calc(var(--ac-h) + 8px);z-index:3;height:3px;border-radius:var(--k-cubuk);background:rgba(255,255,255,.25);overflow:hidden}
 .oy i{display:block;height:100%;width:38%;background:var(--marka)}
@@ -58,9 +58,9 @@ html.tam .ekran{scroll-snap-type:none}
   document.getElementById('say').textContent = 'Günün ' + A.toplam + ' videosu';
   document.getElementById('ekran').innerHTML = L.map(function(v, i){
     var s = L.map(function(_, j){ return '<i class="' + (j === i ? 'ok' : '') + '"></i>'; }).join('');
-    return '<article class="kart"><div class="gr" data-g="' + v.g + '"></div><div class="sira" aria-hidden="true">' + s + '<b class="tnum">' + (i + 1) + '/' + A.toplam + '</b></div>' +
-      '<div class="kart-ic"><span class="cip"><i class="fa-solid fa-play"></i>' + v.kat + '</span><h2><a href="' + H.detay() + '">' + v.baslik + '<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></a></h2>' +
-      '<div class="meta-a"><span class="ik"><i class="fa-solid fa-clock"></i>' + v.sure + '</span>' + (v.izlenme ? '<span class="ay"></span><span class="ik"><i class="fa-solid fa-eye"></i>' + v.izlenme + '</span>' : '') + '</div>' +
+    return '<article class="kart"><div class="gr" data-g="' + v.g + '"></div><div class="sira" aria-hidden="true">' + s + '<b class="tnum">' + (i + 1) + ' / ' + A.toplam + '</b></div>' +
+      '<div class="kart-ic"><span class="cip"><i class="fa-solid ' + H.ikon(v.kat) + '"></i>' + v.kat + '</span><h2><a href="' + H.detay() + '">' + v.baslik + '<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></a></h2>' +
+      H.meta([H.vid(v.sure), v.izlenme], 'meta-a') +
       '</div><div class="oy"><i style="width:' + (i === 0 ? 38 : 0) + '%"></i></div></article>';
   }).join('') + '<section class="yuk" aria-label="Yükleniyor"><p>Sıradaki videolar yükleniyor</p><i class="a"></i><i class="b"></i><i class="c"></i></section>';
   H.altCubuk('akis', true);

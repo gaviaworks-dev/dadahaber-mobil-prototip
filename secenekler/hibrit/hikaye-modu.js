@@ -8,16 +8,16 @@
     var d = D.detay, par = d.govde.filter(function(b){ return b.p; });
     kartlar = [
       { c: 'koyu-k k1', u: 'acik', h: '<div class="zm" style="background-image:' + G(d.g) + '"></div><div class="or"></div>' +
-        '<span class="et"><i class="fa-solid ' + d.ikon + '"></i>' + d.kat + '</span><h1>' + d.baslik + '</h1><div class="bil">' + d.yazar + ' · ' + d.tarih + ' · ' + d.saat + '</div>' },
+        '<span class="et"><i class="fa-solid ' + d.ikon + '"></i>' + d.yol.join(' · ') + '</span><h1>' + d.baslik + '</h1><div class="bil">' + d.yazar + ' · ' + d.tarih.replace(/ \d{4}$/, '') + ' · ' + d.saat + '</div>' },
       { c: 'sari-k k2', u: 'koyu', h: '<div class="dev" aria-hidden="true">15<small>sn</small></div><span class="et"><i class="fa-solid fa-stopwatch"></i>15 saniyede</span><ol class="ol">' +
         d.ozet.map(function(o){ return '<li>' + o + '</li>'; }).join('') + '</ol>' },
-      { c: 'koyu-k k3', u: 'acik', h: '<div class="tr">“</div><span class="et"><i class="fa-solid fa-circle-exclamation"></i>Neden önemli?</span><p class="bk">' + d.nedenOnemli + '</p>' },
+      { c: 'koyu-k k3', u: 'acik', h: '<div class="tr">“</div><span class="et"><i class="fa-solid fa-circle-exclamation"></i>Neden önemli</span><p class="bk">' + d.nedenOnemli + '</p>' },
       { c: 'acik-k k4', u: 'tema', h: '<div class="ik"><i class="fa-solid fa-wallet"></i></div><span class="et"><i class="fa-solid fa-user"></i>Bana etkisi</span><p class="bk">' + d.banaEtkisi + '</p>' },
       { c: 'koyu-k k5', u: 'acik', h: '<div class="zm" style="background-image:' + G('tbmm') + '"></div><div class="or"></div><span class="et"><i class="fa-solid fa-scale-balanced"></i>Taraflar ne istiyor?</span>' +
         '<div class="tf"><b><i class="fa-solid fa-helmet-safety"></i>İşçi tarafı</b><p>' + ilk(par[2].p) + '</p></div><div class="tf"><b><i class="fa-solid fa-briefcase"></i>İşveren tarafı</b><p>' + ilk(par[3].p) + '</p></div>' },
-      { c: 'acik-k k6', u: 'tema', h: '<span class="et"><i class="fa-solid fa-calendar-days"></i>Bundan sonra</span>' +
+      { c: 'acik-k k6', u: 'tema', h: '<span class="et"><i class="fa-solid fa-forward"></i>Bundan sonra</span>' +
         '<div class="tk"><div><i class="fa-solid fa-people-group"></i><span>4 Aralık · İlk toplantı, Ankara</span></div><div><i class="fa-solid fa-gavel"></i><span>Aralık son haftası · Karar bekleniyor</span></div><div><i class="fa-solid fa-calendar-check"></i><span>1 Ocak 2027 · Yeni ücret geçerli</span></div></div>' +
-        '<p class="nt">' + d.bundanSonra + '</p><div class="dg"><button type="button" class="ana" data-hm-kapat><i class="fa-solid fa-align-left"></i>Metne dön</button><button type="button" class="iki" data-spiker-yok aria-label="Dinle"><i class="fa-solid fa-headphones"></i>' + d.dinle + '</button></div>' }
+        '<p class="nt">' + d.bundanSonra + '</p><div class="dg"><button type="button" class="ana" data-hm-kapat><i class="fa-solid fa-file-lines"></i>Metne dön</button><button type="button" class="iki" data-spiker-yok><i class="fa-solid fa-play"></i>Dinle · ' + d.dinle + '</button></div>' }
     ];
     el = document.createElement('div'); el.className = 'hm'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Hikâye modu');
     el.innerHTML = kartlar.map(function(k){ return '<section class="hm-k ' + k.c + '">' + k.h + '</section>'; }).join('') +

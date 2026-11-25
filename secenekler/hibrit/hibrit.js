@@ -52,6 +52,13 @@
   function bul(ad){ return D.bolumler.filter(function(b){ return b.ad === ad; })[0]; }
   function bas(ad){ return ad.split(' ').map(function(p){ return p.charAt(0); }).join('').slice(0, 2); }
   H.bas = bas;
+  /* tek bilgi satırı (K35): öğeler ' · ' ile; ikon yok. Video süresi için H.vid(s) (başında fa-play) */
+  H.meta = function(o, cls){ return '<div class="meta' + (cls ? ' ' + cls : '') + '">' + o.filter(Boolean).map(function(x){ return '<span>' + x + '</span>'; }).join('') + '</div>'; };
+  H.vid = function(s){ return '<i class="fa-solid fa-play"></i>' + s; };
+  /* kategori ikonu (bölüm adından) ve tek kategori etiketi (K35) */
+  H.ikon = function(kat){ var b = bul(kat); return b ? b.ikon : 'fa-newspaper'; };
+  H.katEt = function(metin, ikon, cls){ return '<span class="kat-et' + (cls ? ' ' + cls : '') + '"><i class="fa-solid ' + ikon + '"></i>' + metin + '</span>'; };
+  H.canli = function(m){ return '<span class="canli-et"><span class="canli-nokta"></span>' + (m || 'Canlı') + '</span>'; };
 
   /* ---------- Ana sayfa blokları ---------- */
   var B = H.B = {};
@@ -66,7 +73,7 @@
     if (v === 'buyuk') {
       var ad = b.ad.replace(' Baskısı', '<br>Baskısı');
       return '<section class="bs"><div class="gun">' + gun + '</div><h1>' + ad + '</h1>' +
-        '<div class="snr"><i class="fa-solid fa-clock"></i><b>' + H.saat() + '</b> güncellendi' + AY + 'sonraki baskı <b>' + b.sonraki + '</b></div></section>';
+        '<div class="snr"><i class="fa-solid fa-rotate"></i><b>' + H.saat() + '</b> güncellendi' + AY + 'sonraki baskı <b>' + b.sonraki + '</b></div></section>';
     }
     if (v === 'selam') {
       return '<section class="bs selam"><div class="gun">' + gun + ' · ' + H.saat() + '</div><h1>İyi günler, ' + D.uye.ad + '</h1>' +
@@ -96,14 +103,14 @@
       '<div class="ms-ray ks' + (k ? ' kucuk' : '') + '" data-ms>' + D.manset.map(function(m){
         return '<a href="' + H.detay() + '"><div class="gr" style="background-image:' + G(m.g) + '">' + (m.medya && !k ? '<span class="md"><i class="fa-solid fa-play"></i>' + m.medya[0] + '</span>' : '') + '</div>' +
           '<div class="etk">' + m.kat + '<span>· ' + m.sure + '</span></div><h3' + (k ? ' class="uc"' : '') + '>' + m.baslik + '</h3>' +
-          (k ? '' : '<div class="meta">' + m.yazar + AY + '<i class="fa-solid fa-eye"></i>' + m.izlenme + '</div>') + '</a>';
+          (k ? '' : H.meta([m.yazar, m.izlenme])) + '</a>';
       }).join('') + '</div>' + (k ? '' : '<div class="sayac" data-sayac>' + D.manset.map(function(_, i){ return '<span' + (i === 0 ? ' class="on"' : '') + '></span>'; }).join('') + '</div>') + '</section>';
   };
   /* bölüm: her bölümün kendi kart düzeni (AS-A) */
   var DUZEN = { 'Gündem': 'lead', 'Spor': 'ray', 'Finans': 'kare', 'Kadın': 'iki', 'Savunma': 'ust', 'Dünya': 'no', 'Kampüs': 'kare', 'Keşfet': 'ray' };
   B.b = function(ad, sinir){
     var b = bul(ad), hs = b.haberler.slice(0, sinir ? +sinir : 9), du = DUZEN[ad], d = H.detay(), o = '';
-    function m(h){ return '<div class="meta">' + h.yazar + AY + '<i class="fa-solid fa-clock"></i>' + h.sure + '</div>'; }
+    function m(h){ return H.meta([h.yazar, h.sure]); }
     if (du === 'lead' || du === 'ust') {
       var l = hs[0];
       o += du === 'lead'
@@ -115,7 +122,7 @@
     } else if (du === 'kare') {
       o += '<ul class="b-kare">' + hs.map(function(h){ return '<li><a href="' + d + '"><div><h4 class="uc">' + h.baslik + '</h4>' + m(h) + '</div><div class="gr" style="background-image:' + G(h.g) + '"></div></a></li>'; }).join('') + '</ul>';
     } else if (du === 'iki') {
-      o += '<div class="b-iki">' + hs.slice(0, 2).map(function(h){ return '<a href="' + d + '"><div class="gr" style="background-image:' + G(h.g) + '"></div><h4 class="uc">' + h.baslik + '</h4><div class="meta">' + h.sure + '</div></a>'; }).join('') + '</div>';
+      o += '<div class="b-iki">' + hs.slice(0, 2).map(function(h){ return '<a href="' + d + '"><div class="gr" style="background-image:' + G(h.g) + '"></div><h4 class="uc">' + h.baslik + '</h4>' + H.meta([h.sure]) + '</a>'; }).join('') + '</div>';
     } else {
       o += '<ol class="b-no">' + hs.map(function(h){ return '<li><a href="' + d + '"><div><h4>' + h.baslik + '</h4>' + m(h) + '</div></a></li>'; }).join('') + '</ol>';
     }
@@ -141,7 +148,7 @@
   B.duo = function(){ return '<div class="duo"><a class="ayr">' + havaIc(1) + '</a><a class="ayr">' + namazIc(1) + '</a></div>'; };
   B.piyasa = function(cls){
     var p = D.piyasa;
-    return '<a class="ayr' + (cls ? ' ' + cls : '') + '"><div class="ayr-b"><i class="fa-solid fa-chart-line"></i>Piyasalar<em>' + p.guncelleme + ' · satış · 15 dk gecikmeli</em></div><div class="py-g">' +
+    return '<a class="ayr' + (cls ? ' ' + cls : '') + '"><div class="ayr-b"><i class="fa-solid fa-chart-column"></i>Piyasalar<em>' + p.guncelleme + ' · satış · 15 dk gecikmeli</em></div><div class="py-g">' +
       p.liste.map(function(x){ return '<div><small>' + x.ad + '</small><b>' + x.deger + '</b><em class="' + x.yon + '">' + (x.yon === 'y' ? '▲' : '▼') + ' %' + x.degisim + '</em></div>'; }).join('') + '</div></a>';
   };
   B.podcast = function(){
@@ -154,12 +161,12 @@
   };
   B.akis = function(){
     return '<section class="bl"><div class="bb"><h2><span class="bi"><i class="fa-solid fa-mobile-screen-button"></i></span>Akış</h2><a href="' + H.u('akis.html') + '">' + D.akis.toplam + ' video<i class="fa-solid fa-chevron-right"></i></a></div><div class="ak-ray ks">' +
-      D.akis.liste.map(function(v){ return '<a href="' + H.u('akis.html') + '" style="background-image:' + G(v.g) + '"><span class="s"><i class="fa-solid fa-play"></i>' + v.sure + '</span><small>' + v.kat + '</small><b>' + v.baslik + '</b></a>'; }).join('') + '</div></section>';
+      D.akis.liste.map(function(v){ return '<a href="' + H.u('akis.html') + '" style="background-image:' + G(v.g) + '"><span class="s"><i class="fa-solid fa-play"></i>' + v.sure + '</span><small><i class="fa-solid ' + H.ikon(v.kat) + '"></i>' + v.kat + '</small><b>' + v.baslik + '</b></a>'; }).join('') + '</div></section>';
   };
   /* AS-F kutuları */
   B.mac = function(ic){
     var m = D.mac;
-    var h = '<a class="kt mac' + (ic ? ' gen' : '') + '"><div class="u"><span class="cn"><span class="canli-nokta"></span>Canlı</span><span>' + m.lig + '</span></div>' +
+    var h = '<a class="kt mac' + (ic ? ' gen' : '') + '"><div class="u">' + H.canli() + '<span>' + m.lig + '</span></div>' +
       '<div class="s"><span class="tk"><span class="ar">' + m.evKod + '</span><b>' + m.ev + '</b></span><span class="sk"><b>' + m.skor + '</b><small>' + m.dakika + '</small></span>' +
       '<span class="tk sag"><span class="ar">' + m.depKod + '</span><b>' + m.dep + '</b></span></div></a>';
     return ic ? h : '<div class="kt-tek">' + h + '</div>';
@@ -175,7 +182,7 @@
   B.spiker = function(v){
     var s = D.spiker, yy = '<span class="yy"><span class="canli-nokta"></span>YAYINDA</span>';
     if (v === 'kare') return '<div class="kt spk" style="background-image:' + G(s.gorsel) + '">' + yy + '<b>Dada Spiker</b><small>' + s.bulten + ' · ' + s.sure + '</small><button class="oyn" type="button" data-spiker aria-label="Spiker\'ı dinle"><i class="fa-solid fa-play"></i></button></div>';
-    if (v === 'serit') return '<div class="kt-tek sik"><div class="kt spk serit"><span class="yuz" style="background-image:' + G(s.gorsel) + '"></span><span class="t">' + yy + '<b style="display:block;font-size:15px">Dada Spiker · ' + s.bulten + '</b><small>' + s.sirada[0] + '</small></span><button class="oyn" type="button" data-spiker aria-label="Spiker\'ı dinle"><i class="fa-solid fa-play"></i></button></div></div>';
+    if (v === 'serit') return '<div class="kt-tek sik"><div class="kt spk serit"><span class="yuz" style="background-image:' + G(s.gorsel) + '"></span><span class="t">' + yy + '<b>Dada Spiker · ' + s.bulten + '</b><small>' + s.sirada[0] + '</small></span><button class="oyn" type="button" data-spiker aria-label="Spiker\'ı dinle"><i class="fa-solid fa-play"></i></button></div></div>';
     return '<div class="kt-tek"><div class="kt spk genis"><span class="yuz" style="background-image:' + G(s.gorsel) + '"></span><div class="ic">' + yy + '<b>Dada Spiker</b><small>' + s.bulten + ' · ' + s.sure + '</small><ol>' +
       s.sirada.map(function(x){ return '<li><span>' + x + '</span></li>'; }).join('') + '</ol><button class="oyn" type="button" data-spiker><i class="fa-solid fa-play"></i>Bülteni dinle</button></div></div></div>';
   };
@@ -216,7 +223,7 @@
     var g = gecen(s) % TOPLAM, i = Math.min(2, Math.floor(g / (TOPLAM / 3)));
     mo.classList.toggle('dur', s.dur != null);
     mo.querySelector('.t b').textContent = D.spiker.sirada[i];
-    mo.querySelector('.t small span.y').textContent = 'Dada Spiker · ' + D.spiker.bulten + ' · ' + (i + 1) + '/3';
+    mo.querySelector('.t small span.y').textContent = 'Dada Spiker · ' + D.spiker.bulten + ' · ' + (i + 1) + ' / 3';
     mo.querySelector('.il i').style.width = (g / TOPLAM * 100).toFixed(1) + '%';
     mo.querySelector('[data-mo-oynat] i').className = 'fa-solid ' + (s.dur != null ? 'fa-play' : 'fa-pause');
   }

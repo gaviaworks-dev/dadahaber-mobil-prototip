@@ -9,7 +9,7 @@ window.D = {
   manset: [
     { kat: "Gündem", ikon: "fa-newspaper", baslik: "Asgari ücret görüşmelerinde ilk toplantı 4 Aralık'ta yapılacak", yazar: "Hakan Uysal", sure: "3 dk", tarih: "23 Kas", izlenme: "24,6 B", g: "asgari", medya: ["Video · 2:14", "Dinle · 3 dk"] },
     { kat: "Spor", ikon: "fa-futbol", baslik: "Millî takımın aday kadrosu açıklandı", yazar: "Burak Tan", sure: "2 dk", tarih: "23 Kas", izlenme: "18,2 B", g: "milli" },
-    { kat: "Finans", ikon: "fa-chart-line", baslik: "Rüzgâr enerjisinde yeni yatırım ihalesi", yazar: "Can Demir", sure: "2 dk", tarih: "23 Kas", izlenme: "19,6 B", g: "ruzgar" },
+    { kat: "Finans", ikon: "fa-chart-column", baslik: "Rüzgâr enerjisinde yeni yatırım ihalesi", yazar: "Can Demir", sure: "2 dk", tarih: "23 Kas", izlenme: "19,6 B", g: "ruzgar" },
     { kat: "Dünya", ikon: "fa-earth-europe", baslik: "AB dışişleri bakanları göç paketini görüştü", yazar: "Zeynep Ak", sure: "3 dk", tarih: "23 Kas", izlenme: "23,1 B", g: "ab-goc" },
     { kat: "Gündem", ikon: "fa-newspaper", baslik: "İstanbul Valiliği: okullar 24 Kasım'da da tatil", yazar: "Sibel Arslan", sure: "1 dk", tarih: "23 Kas", izlenme: "52,1 B", g: "kar-istanbul" }
   ],
@@ -54,11 +54,11 @@ window.D = {
       { baslik: "Süper Lig'de 14. hafta: derbi öncesi son durum", yazar: "Burak Tan", sure: "3 dk", izlenme: "3,8 B", g: "superlig" },
       { baslik: "Basketbolda Avrupa kupalarında üç galibiyet", yazar: "Gizem Aktaş", sure: "3 dk", izlenme: "19,6 B", g: "basket" },
       { baslik: "Voleybol Kadın Millî Takımı finalde", yazar: "Murat Tekin", sure: "3 dk", izlenme: "7,1 B", g: "voleybol" } ] },
-    { ad: "Finans", ikon: "fa-chart-line", baslik: "Piyasa ve Cüzdan", haberler: [
+    { ad: "Finans", ikon: "fa-chart-column", baslik: "Piyasa ve Cüzdan", haberler: [
       { baslik: "Merkez Bankası politika faizini yüzde 42,5'te sabit tuttu", yazar: "Elif Aras", sure: "3 dk", izlenme: "27,5 B", g: "faiz" },
       { baslik: "Altının gramı haftaya yükselişle başladı", yazar: "Nazlı Öztürk", sure: "3 dk", izlenme: "3,8 B", g: "altin" },
       { baslik: "Borsa şirketlerinin dokuz aylık kârı yüzde 18 geriledi", yazar: "Nazlı Öztürk", sure: "5 dk", izlenme: "8,8 B", g: "borsa" } ] },
-    { ad: "Kadın", ikon: "fa-venus", baslik: "Kadınların Gündemi", haberler: [
+    { ad: "Kadın", ikon: "fa-person-dress", baslik: "Kadınların Gündemi", haberler: [
       { baslik: "Kadın girişimcilere sıfır faizli kredi desteği", yazar: "Gülşen Ateş", sure: "3 dk", izlenme: "11,7 B", g: "kadin-girisim" },
       { baslik: "Meme kanseri taramasında yaş sınırı 40'a indi", yazar: "Deniz Kara", sure: "3 dk", izlenme: "8,4 B", g: "tarama" } ] },
     { ad: "Savunma", ikon: "fa-shield-halved", baslik: "Savunma Sanayiinde Son Durum", haberler: [
