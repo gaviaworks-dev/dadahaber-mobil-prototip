@@ -106,7 +106,7 @@
     'Sakin Akış': 'ekranlar/icerik/sakin-akis.html', 'Video Haber': 'ekranlar/icerik/video.html', 'Foto Fokus': 'ekranlar/icerik/foto-fokus.html', 'İnfografik': 'ekranlar/icerik/infografik.html',
     'Podcast': 'ekranlar/icerik/podcast.html', 'Haber Dinle': 'ekranlar/icerik/haber-dinle.html', 'Yazarlar': 'ekranlar/icerik/yazarlar.html', 'Kadın Yazarlar': 'ekranlar/icerik/yazarlar.html', 'Arşiv': 'ekranlar/icerik/arsiv.html' };
   var BOLUM_KOD = { 'Gündem': '', 'Spor': 'spor', 'Finans': 'finans', 'Kadın': 'kadin', 'Savunma': 'savunma', 'Dünya': 'dunya', 'Kampüs': 'kampus', 'Keşfet': 'kesfet' };
-  function kodla(x){ return String(x).toLocaleLowerCase('tr').replace(/ı/g, 'i').replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ş/g, 's').replace(/ö/g, 'o').replace(/ç/g, 'c').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
+  function kodla(x){ return String(x).toLocaleLowerCase('tr').replace(/ı/g, 'i').replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ş/g, 's').replace(/ö/g, 'o').replace(/ç/g, 'c').replace(/[îâû]/g, function(c){ return { 'î': 'i', 'â': 'a', 'û': 'u' }[c]; }).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
   K.kodla = kodla;
   K.altYol = function(ad, bolum){ if (ALT_YOL[ad]) return K.u(ALT_YOL[ad]); var b = BOLUM_KOD[bolum]; return K.git('liste', (b ? 'bolum=' + b + '&' : '') + 'konu=' + kodla(ad)); };
   K.bolumYol = function(bolum){ var b = BOLUM_KOD[bolum]; return K.git('liste', b ? 'bolum=' + b : ''); };
@@ -255,7 +255,7 @@
     [/yks|kpss|ales|ösym|sınav|burs|kyk/, 'yks'], [/üniversite|öğrenci|kampüs|mezun|staj|kariyer/, 'osym'],
     [/kaan|hürjet|uçak|siha|iha|hava savunma|füze|roket|tatbikat|savunma/, 'kaan'], [/enerji hattı|boru hattı|doğal gaz|elektrik|enerji|güneş|rüzgar/, 'ruzgar'], [/gemi|insansız deniz|fırkateyn|liman|deniz aracı/, 'ida'],
     [/brüksel|avrupa birliği|\bab\b|nato|zirve|diplomasi/, 'bruksel'], [/göç|sığınmacı|vize/, 'ab-goc'],
-    [/5g|fiber|mobil hat|anten|internet/, 'anten'], [/yapay zek|veri|dijital|siber|teknoloji|yazılım|e-devlet|yarı iletken/, 'veri-merkezi'],
+    [/5g|fiber|mobil hat|anten|internet/, 'anten'], [/yapay zek|veri merkez|veri paylaş|dijital|siber|teknoloji|yazılım|e-devlet|yarı iletken|bulut/, 'veri-merkezi'],
     [/kadın|şiddet|eşitlik|anne/, 'kadin-girisim'], [/sağlık|aşı|hastane|tarama|grip|kanser|hekim/, 'tarama'],
     [/tiyatro|konser|sanat|müze|festival|sinema|kitap|konservatuvar/, 'akm'], [/iklim|sıcak|kuraklık|baraj/, 'iklim'], [/enerji|güneş|rüzgar|elektrik|doğal gaz/, 'ruzgar'],
     [/maden/, 'maden'], [/fındık|buğday|tarım|çarşı|market|gıda|fiyat|ihracat|ticaret/, 'carsi'], [/balık|boğaz/, 'balikci'], [/ankara|başkent/, 'ankara-kar'], [/istanbul/, 'kar-istanbul']];
