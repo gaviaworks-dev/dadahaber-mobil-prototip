@@ -80,4 +80,21 @@
     b.haberler.forEach(function(x){ if (!h.some(function(y){ return y.baslik === x.baslik; })) h.push({ baslik: x.baslik, g: x.g, yazar: x.yazar, sure: x.sure }); });
     return { kod: KOD[b.ad], kat: b.ad, ikon: b.ikon, g: h[0].g, haberler: h, goruldu: (b.ad === "Kampüs" || b.ad === "Keşfet") };
   });
+  /* Köşe yazıları (public yazarlar.html "Yazarlar" vitrini ve kose-yazisi.html; ad, unvan ve başlık aynen). */
+  D.koseYazilari = [
+    { ad: "Aylin Sezer", unvan: "Köşe Yazarı", baslik: "Kütüphanelerin gece de açık kalması bir lütuf değil, ihtiyaç", sure: "5 dk" },
+    { ad: "Elif Aras", unvan: "Finans Editörü", baslik: "Faiz sabit kaldı ama kredi faizleri neden düşmüyor" },
+    { ad: "Mert Yalın", unvan: "Savunma Editörü", baslik: "Hava savunmasında ikinci teslimatın anlamı" },
+    { ad: "Zeynep Ak", unvan: "Dünya Editörü", baslik: "Brüksel'de göç pazarlığı yine ertelendi" },
+    { ad: "Deniz Kara", unvan: "Kadın Editörü", baslik: "Yeni eylem planında eksik kalan başlıklar" }
+  ];
+
+  /* Bugün Senin İçin: örnek üyenin (D.uye) takipleriyle eşleşen günün haberleri. Yeni haber yok; D.bolumler'den seçilir. */
+  function bul(bolum, i){ var b = D.bolumler.filter(function(x){ return x.ad === bolum; })[0]; var h = b.haberler[i]; return { kat: bolum, ikon: b.ikon, baslik: h.baslik, yazar: h.yazar, sure: h.sure, g: h.g }; }
+  D.seninIcin = [
+    { neden: "Galatasaray", h: bul("Spor", 0) },
+    { neden: "Faiz", h: bul("Finans", 0) },
+    { neden: "İstanbul", h: bul("Gündem", 1) },
+    { neden: "Savunma Sanayii", h: bul("Savunma", 0) }
+  ];
 })();
