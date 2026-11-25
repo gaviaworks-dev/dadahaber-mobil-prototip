@@ -51,7 +51,7 @@
     yorumlar: [{ ad: 'Pınar Er', rozet: 'Düzenli okur', zaman: '40 dakika önce', metin: 'Saat saat valilik açıklamalarını tek sayfada görmek işime yaradı. Sabahtan beri buradan takip ediyorum.', begeni: 31 },
       { ad: 'Kaan Duru', rozet: 'Okur', zaman: '25 dakika önce', metin: 'Vapur seferlerindeki iptallerin listesi de eklenebilir mi?', begeni: 12 },
       { ad: 'Dada Haber Editör', rozet: 'Editör', zaman: '15 dakika önce', metin: 'Teşekkürler. Şehir Hatları\'nın güncel sefer bilgisini aldığımızda akışa ekleyeceğiz.', begeni: 7 }],
-    ilgili: [{ baslik: 'Kar yağışı nedeniyle okulların tatil edildiği iller listesi güncellendi', yazar: 'Mehmet Koçak', sure: '2 dk', saat: '23 Kas', izlenme: '45,6 B' }, { baslik: 'Kış lastiği zorunluluğu: hangi araçlar kapsamda, ceza ne kadar?', yazar: 'Sibel Arslan', sure: '3 dk', saat: '23 Kas', izlenme: '18,9 B' },
+    ilgili: [{ baslik: 'Kar yağışı nedeniyle okulların tatil edildiği iller listesi güncellendi', yazar: 'Mehmet Koçak', sure: '2 dk', saat: '23 Kas', izlenme: '45,6 B', g: 'kar-istanbul' }, { baslik: 'Kış lastiği zorunluluğu: hangi araçlar kapsamda, ceza ne kadar?', yazar: 'Sibel Arslan', sure: '3 dk', saat: '23 Kas', izlenme: '18,9 B', g: 'koy-yolu' },
       { baslik: 'Doğal gaz tüketimi soğuk havayla birlikte rekor seviyeye yaklaştı', yazar: 'Mehmet Koçak', sure: '3 dk', saat: '22 Kas', izlenme: '9,4 B' }, { baslik: 'Meteoroloji\'den hafta sonu için Ege ve Akdeniz\'e kuvvetli yağış uyarısı', yazar: 'Mehmet Koçak', sure: '2 dk', saat: '22 Kas', izlenme: '7,8 B' }]
   };
   /* kaynak: dadahaber-prototip/dakika-dakika-zirve.html (sona erdi) */
@@ -77,7 +77,7 @@
     kaynaklar: [{ kurum: 'Dışişleri Bakanlığı', aciklama: 'Yüksek düzeyli diyalog toplantısına ilişkin basın açıklaması · 22 Kasım 2026' }, { kurum: 'Ticaret Bakanlığı', aciklama: 'Gümrük Birliği teknik çalışma grubu duyurusu · 22 Kasım 2026' }, { kurum: 'Avrupa Birliği Başkanlığı', aciklama: 'Toplantı programı ve gündem başlıkları' }],
     yorumlar: [{ ad: 'Okan Tekin', rozet: 'Düzenli okur', zaman: 'dün 18.20', metin: 'Gümrük Birliği kısmını en net burada okudum. Çalışma grubunun ocaktaki toplantısını da takip edecek misiniz?', begeni: 15 },
       { ad: 'Dada Haber Editör', rozet: 'Editör', zaman: 'dün 18.45', metin: 'Evet. Konunun sayfasını takip edersen çalışma grubuyla ilgili yeni gelişmelerde bildirim alırsın.', begeni: 7 }],
-    ilgili: [{ baslik: 'Türkiye–AB toplantısında Gümrük Birliği için takvim belirlendi', sure: '4 dk', saat: '22 Kas', izlenme: '12,8 B', alt: 'Dünya' }]
+    ilgili: [{ baslik: 'Türkiye–AB toplantısında Gümrük Birliği için takvim belirlendi', sure: '4 dk', saat: '22 Kas', izlenme: '12,8 B', alt: 'Dünya', g: 'bruksel' }]
   };
   var A = DUR === 'bitti' ? BITTI : CANLI, YENI = DUR === 'yeni' ? 2 : 0, KILIT = DUR === 'kilit';
 
@@ -93,7 +93,8 @@
     if (A.bitti) L = L.slice().reverse(); /* sona erdi: eskiden yeniye */
     return L.map(function(x, i){ return giris(x, !A.bitti && i === 0 && !YENI); }).join('');
   }
-  function satirlar(L){ return '<div class="k-satirlar">' + L.map(function(x){ return K.satir({ alt: x.alt || A.kat, saat: x.saat, baslik: x.baslik, yazar: x.yazar, sure: x.sure, izlenme: x.izlenme }, { href: K.git('detay') }); }).join('') + '</div>'; }
+  /* K44 kural 8: ilgili haberlere konuya uygun görsel (KAYNAK.txt): okul tatili → karlı İstanbul, kış lastiği → karlı yol, Gümrük Birliği → Brüksel; doğal gaz ve yağış uyarısına uygun görsel yok */
+  function satirlar(L){ return '<div class="k-satirlar">' + L.map(function(x){ return K.satir({ alt: x.alt || A.kat, saat: x.saat, baslik: x.baslik, yazar: x.yazar, sure: x.sure, izlenme: x.izlenme, g: x.g }, { href: K.git('detay') }); }).join('') + '</div>'; }
 
   var hata = DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : DUR === 'bulunamadi' ? (Q.get('hata') === 'kaldirildi' ? 'kaldirildi' : 'bulunamadi') : (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? 'cevrimdisi' : '';
   if (hata) { e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: hata }) + '<div class="k-son yalin"></div>'; K.ustCubuk({ geri: true }); bagla(); return; }

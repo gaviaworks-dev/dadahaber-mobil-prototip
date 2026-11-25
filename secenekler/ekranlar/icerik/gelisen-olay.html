@@ -38,13 +38,14 @@
     ['4 Aralık 2026 · planlanan', 'İlk toplantı', 'Komisyonun yıl sonuna kadar en az dört kez toplanması bekleniyor; yeni ücret 1 Ocak 2027\'den itibaren geçerli olacak.']
   ];
   /* kaynak: public konu.html · Asgari Ücret 2027 Haberleri (37 haber) + sözlük saatleri; ilk haber D.detay'ın haberi (görsel asgari) */
+  /* K44 kural 8: konuya uygun görsel (KAYNAK.txt): kira payı → çarşı (D'deki aynı konu), küçük işletme → kart terminali, enflasyon → Merkez Bankası, komisyon → Ankara bakanlıklar; işçi konfederasyonları ve geçen yılın kararı yazılı */
   var X = [
     { alt: 'Gündem', baslik: 'Asgari ücret görüşmelerinde ilk toplantı 4 Aralık\'ta yapılacak', yazar: 'Hakan Uysal', sure: '3 dk', izlenme: '24,6 B', saat: '14.05', g: 'asgari' },
     { alt: 'Gündem', baslik: 'İşçi konfederasyonları ortak talep metni için toplanıyor', yazar: 'Hakan Uysal', sure: '4 dk', izlenme: '5,8 B', saat: '06.30' },
-    { alt: 'Gündem', baslik: 'Asgari ücretle geçinen hanelerde kira payı yüzde 40\'ı aştı', yazar: 'Ayşe Yıldız', sure: '3 dk', izlenme: '9,7 B', saat: '22 Kas' },
-    { alt: 'Gündem', baslik: 'İşveren temsilcileri küçük işletmeler için destek önerdi', yazar: 'Sibel Arslan', sure: '2 dk', izlenme: '11,1 B', saat: '22 Kas' },
-    { alt: 'Gündem', baslik: 'Ekim enflasyonu yüzde 32,1: ücret pazarlığına etkisi', yazar: 'Ayşe Yıldız', sure: '5 dk', izlenme: '4,4 B', saat: '22 Kas' },
-    { alt: 'Gündem', baslik: 'Komisyon nasıl çalışır? Üyeler ve oylama usulü', yazar: 'Ayşe Yıldız', sure: '6 dk', izlenme: '3,0 B', saat: '21 Kas' },
+    { alt: 'Gündem', baslik: 'Asgari ücretle geçinen hanelerde kira payı yüzde 40\'ı aştı', yazar: 'Ayşe Yıldız', sure: '3 dk', izlenme: '9,7 B', saat: '22 Kas', g: 'carsi' },
+    { alt: 'Gündem', baslik: 'İşveren temsilcileri küçük işletmeler için destek önerdi', yazar: 'Sibel Arslan', sure: '2 dk', izlenme: '11,1 B', saat: '22 Kas', g: 'kredi-karti' },
+    { alt: 'Gündem', baslik: 'Ekim enflasyonu yüzde 32,1: ücret pazarlığına etkisi', yazar: 'Ayşe Yıldız', sure: '5 dk', izlenme: '4,4 B', saat: '22 Kas', g: 'faiz' },
+    { alt: 'Gündem', baslik: 'Komisyon nasıl çalışır? Üyeler ve oylama usulü', yazar: 'Ayşe Yıldız', sure: '6 dk', izlenme: '3,0 B', saat: '21 Kas', g: 'ankara-kar' },
     { alt: 'Gündem', baslik: 'Geçen yılın asgari ücret kararı nasıl alınmıştı?', yazar: 'Hakan Uysal', sure: '4 dk', izlenme: '8,3 B', saat: '21 Kas' }
   ];
   X.forEach(function(h){ h.ikon = 'fa-newspaper'; });

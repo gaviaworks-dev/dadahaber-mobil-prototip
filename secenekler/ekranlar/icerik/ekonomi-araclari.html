@@ -34,11 +34,12 @@
   var HAB = [['Emeklilik', 'Emeklilere yılbaşı zammı için ilk hesaplamalar', 'Nazlı Öztürk', '14.10', '3 dk', '6,9 B'],
     ['Kira', 'Kira artışında yasal sınır ve sözleşme yenileme süreci', 'Elif Aras', '10.35', '4 dk', '6,1 B'],
     ['Vergi', 'Gelir vergisi dilimleri 2027 için güncellendi', 'Nazlı Öztürk', '10.05', '2 dk', '5,8 B'],
-    ['Kredi', 'İhtiyaç kredisinde toplam maliyet oranı nasıl okunur', 'Elif Aras', '10.45', '5 dk', '9,2 B'],
+    ['Kredi', 'İhtiyaç kredisinde toplam maliyet oranı nasıl okunur', 'Elif Aras', '10.45', '5 dk', '9,2 B', 'kredi-karti'],
     ['Birikim', 'Acil durum fonu kaç aylık gidere denk gelmeli', 'Nazlı Öztürk', '22 Kas', '3 dk', '4,9 B'],
     ['Asgari Ücret', 'Asgari ücret tespit komisyonu ilk toplantısını aralıkta yapacak', 'Tolga Bayram', '06.30', '3 dk', '13,1 B', 'asgari'],
     ['Enflasyon', "Ekim'de yıllık enflasyon yüzde 32,9 oldu", 'Can Demir', '11.55', '4 dk', '6,9 B', 'carsi'],
-    ['Maaş', 'Fazla mesai ücreti nasıl hesaplanıyor', 'Elif Aras', '22 Kas', '3 dk', '14,6 B']];
+    ['Maaş', 'Fazla mesai ücreti nasıl hesaplanıyor', 'Elif Aras', '22 Kas', '3 dk', '14,6 B', 'asgari']];
+  /* K44 kural 8: kredi → kart terminali, fazla mesai → atölyede çalışan (asgari); emeklilik, kira, vergi ve birikim haberlerine uygun görsel yok, yazılı */
   function haber(x){ return { alt: x[0], ikon: 'fa-calculator', baslik: x[1], yazar: x[2], saat: x[3], sure: x[4], izlenme: x[5], g: x[6] }; }
 
   var HATA = DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? 'cevrimdisi' : '';

@@ -34,10 +34,11 @@
     { tur: 'Canlı Yayın', ikon: 'fa-video', kat: 'Siyaset', baslik: '2027 bütçesinin görüşmeleri Genel Kurul\'da başladı', g: 'tbmm', alt: '13.00\'ten beri · 4,8 B izleyici', izlenme: '4,8 B', href: K.u('ekranlar/icerik/canli-yayin.html'),
       son: [['15.42', 'Muhalefet partileri adına ilk konuşmalar tamamlandı'], ['15.05', 'Bakan, faiz giderleri tahminini açıkladı']] }
   ];
+  /* K44 kural 8: kapanan takiplere konuya uygun görsel (KAYNAK.txt): komisyon → TBMM, iklim konferansı → iklim */
   var BITEN = [
     { tur: 'Sona erdi', alt: 'Dünya', saat: '22 Kas', baslik: 'Türkiye–AB yüksek düzeyli diyalog toplantısı: dakika dakika', yazar: 'Kaan Yücel', sure: '17.40\'ta kapandı', izlenme: '15,3 B', g: 'bruksel', href: K.git('canliAnlatim', 'durum=bitti') },
-    { tur: 'Sona erdi', alt: 'Siyaset', saat: '22 Kas', baslik: 'Plan ve Bütçe Komisyonu\'nda son gün oturumu', yazar: 'Ozan Er', sure: '19.20\'de kapandı', izlenme: '7,1 B', href: K.u('ekranlar/icerik/canli-yayin.html', 'durum=yayin-yok') },
-    { tur: 'Sona erdi', alt: 'Dünya', saat: '21 Kas', baslik: 'BM İklim Konferansı kapanış oturumu', yazar: 'Ozan Er', sure: '22.05\'te kapandı', izlenme: '41,5 B', href: K.u('ekranlar/icerik/canli-yayin.html', 'durum=yayin-yok') }
+    { tur: 'Sona erdi', alt: 'Siyaset', saat: '22 Kas', baslik: 'Plan ve Bütçe Komisyonu\'nda son gün oturumu', yazar: 'Ozan Er', sure: '19.20\'de kapandı', izlenme: '7,1 B', g: 'tbmm', href: K.u('ekranlar/icerik/canli-yayin.html', 'durum=yayin-yok') },
+    { tur: 'Sona erdi', alt: 'Dünya', saat: '21 Kas', baslik: 'BM İklim Konferansı kapanış oturumu', yazar: 'Ozan Er', sure: '22.05\'te kapandı', izlenme: '41,5 B', g: 'iklim', href: K.u('ekranlar/icerik/canli-yayin.html', 'durum=yayin-yok') }
   ];
   /* Keşfet › Anlık (DADAHABER-10) */
   var ANLIK = [['Son Dakika', K.git('sonDakika')], ['Canlı Gündem', K.git('canliGundem')], ['Canlı Yayın', K.u('ekranlar/icerik/canli-yayin.html')], ['Dakika Dakika', K.git('canliAnlatim')], ['Bugün Ne Oldu?', K.u('ekranlar/icerik/bugun-ne-oldu.html')], ['Gündem Takvimi', K.git('takvim')], ['Güncellenen Haberler', K.u('ekranlar/icerik/guncellenen-haberler.html')]];

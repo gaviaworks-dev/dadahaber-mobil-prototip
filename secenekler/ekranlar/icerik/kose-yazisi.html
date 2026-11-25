@@ -82,7 +82,8 @@
     '<section class="k-bl">' + K.bb({ baslik: 'Yazar', ikon: GORUS, baglanti: { metin: 'Bütün yazarlar', href: K.git('yazarlar') } }) + '<div class="k-satirlar">' + K.yazarSatir({ ad: k.ad, unvan: k.unvan }).replace('data-takip', 'data-takip data-yazar-takip').replace('<a href=', '<a class="k-dk44" href=') + '</div></section>' +
     '<section class="k-bl k-ic" id="yorumlar">' + (cevrim ? K.bb({ baslik: 'Yorumlar', ikon: 'fa-comment', sayi: Y.yorumlar.length, yalin: true }) + K.serit({ ikon: 'fa-comment', metin: 'Yorumlar kapalı', alt: 'Bağlantı gelince okuyup yazabilirsin' }) : K.yorumlar({ Y: Y.yorumlar })) + '</section>' +
     '<section class="k-bl">' + K.bb({ baslik: 'Yazarın Diğer Yazıları', ikon: 'fa-newspaper', baglanti: { metin: 'Tümü', href: K.git('yazar') } }) + '<div class="k-satirlar">' +
-      Y.diger.map(function(x){ return K.satir({ alt: 'Görüş', saat: x.saat, baslik: x.baslik, yazar: k.ad, sure: x.sure, izlenme: x.izlenme }, { ikon: GORUS, href: K.git('kose') }); }).join('') + '</div></section>' +
+      /* K44 kural 7: köşe satırı (K.koseSatir): yazarın baş harfi, ad · unvan, başlık, ikonlu bilgiler, kaydet */
+      Y.diger.map(function(x){ return K.koseSatir({ ad: k.ad, unvan: k.unvan, baslik: x.baslik, sure: x.sure }, { tarih: x.saat, izlenme: x.izlenme }); }).join('') + '</div></section>' +
     '<div class="k-son okuma"></div></div>';
   e.innerHTML = kapak + panel;
   K.ustCubuk({ tur: 'foto', geri: true, baslik: k.baslik, eylemler: ['kaydet'], gorsel: k.g, ilerleme: true, esik: 280 });

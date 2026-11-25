@@ -34,12 +34,17 @@
   var HAB = [{ alt: 'Gündem', saat: '23 Kas', baslik: 'Hatay ve Kahramanmaraş’ta 4 bin kalıcı konut daha teslim edildi', yazar: 'Sibel Arslan', sure: '3 dk', izlenme: '10,6 B', g: 'konteyner' },
     { alt: 'Toplum', saat: '22 Kas', baslik: 'AFAD, deprem çantası hazırlığı için güncel listeyi yayımladı', yazar: 'Mehmet Koçak', sure: '2 dk', izlenme: '8,4 B' },
     { alt: 'Kişisel Finans', saat: '22 Kas', baslik: 'Zorunlu deprem sigortasında 2027 primleri belli oldu', yazar: 'Sibel Arslan', sure: '3 dk', izlenme: '12,0 B', ikon: 'fa-chart-column' },
-    { alt: 'Üniversiteler', saat: '21 Kas', baslik: 'Deprem bölgesindeki üniversitelerde kalıcı kampüs inşaatı sürüyor', yazar: 'Mehmet Koçak', sure: '4 dk', izlenme: '5,1 B', ikon: 'fa-graduation-cap' }];
-  var VID = [{ alt: 'Gündem', saat: '21 Kas', sure: '2:25', baslik: 'Deprem bölgesinde kalıcı konut teslimleri sürüyor', yazar: 'Sibel Arslan', izlenme: '10,3 B' },
-    { alt: 'Gündem', saat: '20 Kas', sure: '1:40', baslik: 'İstanbul\'da okullarda deprem tatbikatı yapıldı', yazar: 'Mehmet Koçak', izlenme: '7,8 B' },
-    { alt: 'Kampüs', saat: '19 Kas', sure: '3:52', baslik: 'Deprem bölgesinden üniversiteye: üç öğrencinin hikâyesi', yazar: 'Selin Koç', izlenme: '6,2 B' },
-    { alt: 'Gündem', saat: '18 Kas', sure: '2:58', baslik: 'Kentsel dönüşümde riskli yapı tespiti nasıl yapılıyor', yazar: 'Ayşe Yıldız', izlenme: '9,0 B' }];
-  var YAZ = [['Sibel Arslan', 'Saha Muhabiri'], ['Mehmet Koçak', 'Gündem Editörü'], ['Ayşe Yıldız', 'Haber Müdürü'], ['Nazlı Öztürk', 'Kişisel Finans Muhabiri'], ['Gülşen Ateş', 'Sağlık Muhabiri'], ['İrem Su', 'Bilim ve Çevre Muhabiri']];
+    { alt: 'Üniversiteler', saat: '21 Kas', baslik: 'Deprem bölgesindeki üniversitelerde kalıcı kampüs inşaatı sürüyor', yazar: 'Mehmet Koçak', sure: '4 dk', izlenme: '5,1 B', ikon: 'fa-graduation-cap', g: 'osym' }];
+  var VID = [{ alt: 'Gündem', saat: '21 Kas', sure: '2:25', baslik: 'Deprem bölgesinde kalıcı konut teslimleri sürüyor', yazar: 'Sibel Arslan', izlenme: '10,3 B', g: 'konteyner' },
+    { alt: 'Gündem', saat: '20 Kas', sure: '1:40', baslik: 'İstanbul\'da okullarda deprem tatbikatı yapıldı', yazar: 'Mehmet Koçak', izlenme: '7,8 B', g: 'yks' },
+    { alt: 'Kampüs', saat: '19 Kas', sure: '3:52', baslik: 'Deprem bölgesinden üniversiteye: üç öğrencinin hikâyesi', yazar: 'Selin Koç', izlenme: '6,2 B', g: 'kulup' },
+    { alt: 'Gündem', saat: '18 Kas', sure: '2:58', baslik: 'Kentsel dönüşümde riskli yapı tespiti nasıl yapılıyor', yazar: 'Ayşe Yıldız', izlenme: '9,0 B', g: 'kar-sokak' }];
+  /* K44 kural 8: görseli olmayan sonuçlara konuya uygun görsel (KAYNAK.txt): kampüs → osym, konut teslimi → konteyner, okulda tatbikat → yks, öğrenciler → kulup, riskli yapı → kar-sokak.
+     AFAD çantası ve deprem sigortası için uygun görsel yok: yazılı satır.
+     K44 kural 7: yazar sonuçları köşe satırı (K.koseSatir): baş harf · ad · unvan, altında yazarın bu aramaya uyan son içeriği; uyan içeriği olmayanlarda sözlükteki son yazısı (yazarlar.html ile aynı) */
+  var YAZ = [['Sibel Arslan', 'Saha Muhabiri', HAB[0].baslik, HAB[0].saat, HAB[0].sure, HAB[0].izlenme], ['Mehmet Koçak', 'Gündem Editörü', HAB[1].baslik, HAB[1].saat, HAB[1].sure, HAB[1].izlenme],
+    ['Ayşe Yıldız', 'Haber Müdürü', VID[3].baslik, VID[3].saat, '', VID[3].izlenme], ['Nazlı Öztürk', 'Kişisel Finans Muhabiri', 'Borsa şirketlerinin dokuz aylık kârı yüzde 18 geriledi'],
+    ['Gülşen Ateş', 'Sağlık Muhabiri', 'Kars\'ta peynir atölyesi kuran üç kadın ürünlerini Avrupa\'ya gönderiyor'], ['İrem Su', 'Bilim ve Çevre Muhabiri', 'Restore edilen tarihî tiyatro binası yeniden perde açtı']];
   var KON = ['Deprem', 'Kalıcı Konut', 'AFAD', 'Kentsel Dönüşüm', 'Deprem Sigortası', 'Hatay', 'Kahramanmaraş', 'Afet Hazırlığı'];
   var BUGUN = DUR === 'tur-bos';
   var SAY = BUGUN ? [15, 1, 0, 6, 8] : [224, 186, 24, 6, 8];
@@ -48,8 +53,8 @@
   var sorgu = DUR === 'oneri' ? 'deprm' : DUR === 'bos' ? 'Kartal kentsel dönüşüm' : 'deprem';
 
   function haber(h){ return K.satir(h, { ikon: h.ikon }); }
-  function video(v){ return K.satir({ tur: 'Video', alt: v.alt, saat: v.saat, baslik: v.baslik, yazar: K.vid(v.sure), sure: v.yazar, izlenme: v.izlenme }, { href: K.git('videoDetay') }); }
-  function yazar(y){ return K.yazarSatir({ ad: y[0], unvan: y[1] }).replace('<a href=', '<a class="k-dk44" href='); }
+  function video(v){ return K.satir({ tur: 'Video', alt: v.alt, saat: v.saat, baslik: v.baslik, yazar: v.g ? v.yazar : K.vid(v.sure), sure: v.g ? '' : v.yazar, izlenme: v.izlenme, g: v.g }, { href: K.git('videoDetay'), md: v.g ? v.sure : '' }); }
+  function yazar(y){ return K.koseSatir({ ad: y[0], unvan: y[1], baslik: y[2], sure: y[4] }, { tarih: y[3], izlenme: y[5], href: K.git('yazar'), kaydet: false }); }
   function konular(){ return '<div class="k-ic"><div class="k-cip-izgara">' + KON.map(function(k){ return '<a class="k-cip" href="' + K.git('etiket') + '">' + K.I('fa-hashtag') + k + '</a>'; }).join('') + '</div></div>'; }
   function blok(i, baslik, ikon, ic){ return '<section class="k-bl sik">' + K.bb({ baslik: baslik, ikon: ikon, sayi: SAY[i], baglanti: { metin: 'Tümünü Gör' } }).replace('<a>', '<a data-sekme-git="' + i + '">') + ic + '</section>'; }
   function liste(i){

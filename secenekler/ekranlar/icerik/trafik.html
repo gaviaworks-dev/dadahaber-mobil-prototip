@@ -52,21 +52,22 @@
     [11, 1, '00.00', 'Emniyet', 'Kış lastiği zorunluluğu başlıyor', "Ticari araçlar, 1 Nisan'a kadar", 'Kural', 'sari'],
     [11, 3, '10.00', 'KGM', "Bolu Tüneli'nde bakım çalışması", 'Gece 01.00–05.00 arası', 'Çalışma', '']];
   /* kaynak: public trafik-ulasim.html haber listesi (etiketler) + araclar/ornek_veri.json (saat, yazar, süre, okunma) */
-  var HAB = [['Trafik', "İstanbul'da akşam trafiğinde yoğunluk yüzde 68'e çıktı", 'Ayşe Yıldız', '07.35', '2 dk', '9,4 B'],
+  var HAB = [['Trafik', "İstanbul'da akşam trafiğinde yoğunluk yüzde 68'e çıktı", 'Ayşe Yıldız', '07.35', '2 dk', '9,4 B', 'kar-sokak'],
     ['Kış lastiği', "Ticari araçlarda kış lastiği zorunluluğu 1 Aralık'ta başlıyor", 'Sibel Arslan', '15.10', '3 dk', '3,6 B', 'koy-yolu'],
     ['Bolu Dağı', 'Sis nedeniyle görüş mesafesi 50 metreye düştü', 'Ayşe Yıldız', '07.10', '4 dk', '2,9 B'],
     ['Metro', 'M2 hattında hafta sonu bakım çalışması', 'Sibel Arslan', '22 Kas', '3 dk', '14,2 B', 'metro'],
     ['Havalimanı', 'Havalimanlarında kasım ayı yolcu sayısı açıklandı', 'Sibel Arslan', '22 Kas', '4 dk', '9,6 B'],
-    ['Toplu taşıma', "Ankara'da yeni otobüs hatları hizmete girdi", 'Hakan Uysal', '22 Kas', '2 dk', '8,1 B'],
-    ['Demiryolu', 'Hızlı trende yeni sefer saatleri yürürlükte', 'Hakan Uysal', '21 Kas', '3 dk', '6,7 B'],
-    ['Deniz ulaşımı', 'Fırtına nedeniyle bazı vapur seferleri iptal edildi', 'Sibel Arslan', '21 Kas', '5 dk', '5,9 B']];
+    ['Toplu taşıma', "Ankara'da yeni otobüs hatları hizmete girdi", 'Hakan Uysal', '22 Kas', '2 dk', '8,1 B', 'ankara-kar'],
+    ['Demiryolu', 'Hızlı trende yeni sefer saatleri yürürlükte', 'Hakan Uysal', '21 Kas', '3 dk', '6,7 B', 'metro'],
+    ['Deniz ulaşımı', 'Fırtına nedeniyle bazı vapur seferleri iptal edildi', 'Sibel Arslan', '21 Kas', '5 dk', '5,9 B', 'balikci']];
+  /* K44 kural 8: konuya uygun görsel (KAYNAK.txt): İstanbul trafiği → İstanbul sokağı, Ankara otobüs → Ankara caddesi, hızlı tren → raylı sistem (metro), vapur → Galata (balikci); sis ve havalimanı yazılı */
 
   function yol(y){ return '<div class="x-yol" data-sehir="' + y[5] + '"><span class="t"><b>' + y[0] + '</b>' + (y[1] || y[3] || y[4] ? K.meta([y[1], y[3], y[4]]) : '') + '</span>' + K.etiket(y[2], { tur: ETK[y[2]] }) + '</div>'; }
   function gunAd(a, g){ return a === 10 && g === 23 ? 'Bugün' : g + ' ' + AY[a] + ' ' + GUN[new Date(2026, a, g).getDay()]; }
   function duyuru(L){ var dl = null;
     return L.map(function(x, i){ var k = x[0] + '-' + x[1], a = k !== dl ? '<div class="k-ayrac"><span>' + gunAd(x[0], x[1]) + '</span><span>' + (k === '10-23' ? '23 Kasım ' + GUN[1] : '') + '</span></div>' : ''; dl = k;
       return a + '<div class="k-cz' + (i === 0 ? ' ilk' : '') + '"><span class="sa">' + x[2] + '</span><span class="ci"></span><span class="no"></span><div class="yazi"><div>' +
-        '<span class="k-ustsatir"><span class="s">' + x[3] + '</span></span><h3>' + x[4] + '</h3><div class="k-ab">' + K.meta([x[5]]) + K.etiket(x[6], { tur: x[7] }) + '</div></div></div></div>'; }).join(''); }
+        '<span class="k-ustsatir"><span class="sol"><span class="s">' + x[3] + '</span></span></span><h3>' + x[4] + '</h3><div class="k-ab">' + K.meta([x[5]]) + K.etiket(x[6], { tur: x[7] }) + '</div></div></div></div>'; }).join(''); }
   function haber(x){ return { alt: x[0], ikon: 'fa-car', baslik: x[1], yazar: x[2], saat: x[3], sure: x[4], izlenme: x[5], g: x[6] }; }
 
   var BOS = DUR === 'bos', IL = BOS ? (Q.get('il') || 'Trabzon') : '';

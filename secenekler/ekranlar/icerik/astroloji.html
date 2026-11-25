@@ -58,7 +58,7 @@
     ['Gökyüzü', 'Aralığın ilk dolunayı 24 Kasım\'da', 'Deniz Kara', '3 dk', '3,6 B', '13.45'],
     ['Kültür', 'Astrolojinin tarihine kısa bir bakış', 'Gülşen Ateş', '4 dk', '2,9 B', 'Dün'],
     ['Bilim', 'Astronomi ile astroloji arasındaki fark ne', 'Gülşen Ateş', '3 dk', '14,2 B', '12.05'],
-    ['Gözlem', 'Kış aylarında gökyüzü gözlemi için en iyi yerler', 'Gülşen Ateş', '4 dk', '9,6 B', 'Dün'],
+    ['Gözlem', 'Kış aylarında gökyüzü gözlemi için en iyi yerler', 'Gülşen Ateş', '4 dk', '9,6 B', 'Dün', 'balon'], /* K44 kural 8: gözlem yeri → Kapadokya gökyüzü (balon); öteki astroloji haberlerine uygun görsel yok, yazılı */
     ['Kültür', 'Anadolu\'da yıldızlarla ilgili halk inanışları', 'Gülşen Ateş', '2 dk', '8,1 B', '21 Kas'],
     ['Haftalık', 'Haftanın burç yorumları: 23–29 Kasım', 'Burcu Yaman', '3 dk', '14,2 B', 'Dün']];
 
@@ -75,7 +75,7 @@
       '<div style="margin-top:var(--b-16)">' + K.btn({ metin: 'Koç burcu rehberi', sagIkon: 'fa-chevron-right', tur: 'sade', boy: 'buyuk', tam: true, href: BZ('koc') }) + '</div></div></section>';
   var not = '<section class="k-bl sik"><div class="k-ic">' + K.serit({ ikon: 'fa-circle-info', metin: 'Burç yorumları hakkında', alt: NOT }) + '</div></section>';
   var haberler = '<section class="k-bl">' + K.bb({ baslik: 'Astroloji Haberleri', ikon: 'fa-newspaper', sayi: 54, baglanti: { metin: 'Tümü', href: K.u('hibrit/liste.html', { bolum: 'kadin' }) } }) +
-    '<div class="k-satirlar">' + HABER.map(function(x){ return K.satir({ alt: x[0], ikon: 'fa-star', baslik: x[1], yazar: x[2], sure: x[3], izlenme: x[4], saat: x[5] }); }).join('') + '</div></section>';
+    '<div class="k-satirlar">' + HABER.map(function(x){ return K.satir({ alt: x[0], ikon: 'fa-star', baslik: x[1], yazar: x[2], sure: x[3], izlenme: x[4], saat: x[5], g: x[6] }); }).join('') + '</div></section>';
 
   var DUZ = DUR === 'hata' || (DUR === 'cevrimdisi' && Q.get('onbellek') === '0');
   if (DUR === 'yukleniyor') { var isk = ''; for (var i = 0; i < 12; i++) isk += '<i class="k-isk kontrol" style="display:block;height:92px"></i>';

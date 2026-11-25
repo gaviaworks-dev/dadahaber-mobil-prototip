@@ -27,18 +27,19 @@
 (function(){
   var e = document.getElementById('ekran'), Q = K.q, DUR = K.durum, I = K.I, HAL = Q.get('hal'), BOS = DUR === 'bos';
   /* kaynak: public arsiv.html "21 Kasım 2026 haberleri" (142 haber; ilk sayfa) */
+  /* K44 kural 8: görseli olmayanlara konuya uygun görsel (KAYNAK.txt): fiyat beklenti anketi → Merkez Bankası (faiz), KYK → üniversite (osym), eylem planı → kadın emeği (kadin-girisim), grip aşısı → sağlık (tarama); Balkan turu için uygun görsel yok
   var X = [['Siyaset', 'Bütçe görüşmelerinde ikinci tur Plan ve Bütçe Komisyonu\'nda başladı', 'Ayşe Yıldız', '4 dk', '12,7 B', 'tbmm'],
-    ['Enflasyon', 'Kasım ayı fiyat beklenti anketinin ilk sonuçları paylaşıldı', 'Hakan Uysal', '3 dk', '8,0 B'],
+    ['Enflasyon', 'Kasım ayı fiyat beklenti anketinin ilk sonuçları paylaşıldı', 'Hakan Uysal', '3 dk', '8,0 B', 'faiz'],
     ['Avrupa', 'AB dışişleri bakanları göç paketini Brüksel\'de görüştü', 'Zeynep Ak', '3 dk', '23,1 B', 'ab-goc'],
     ['Futbol', 'Süper Lig\'de 13. haftanın açılış maçında gol çıkmadı', 'Mehmet Koçak', '2 dk', '24,4 B', 'superlig'],
-    ['Burslar', 'KYK burs ödemeleri hesaplara aktarılmaya başlandı', 'Ayşe Yıldız', '2 dk', '30,2 B'],
+    ['Burslar', 'KYK burs ödemeleri hesaplara aktarılmaya başlandı', 'Ayşe Yıldız', '2 dk', '30,2 B', 'osym'],
     ['Toplum', 'Meteoroloji Marmara için kar uyarısı yaptı', 'Mehmet Koçak', '2 dk', '19,5 B', 'kar-sokak'],
     ['Savunma Teknolojileri', 'İnsansız deniz aracı açık deniz testine çıktı', 'Hakan Uysal', '4 dk', '11,3 B', 'ida'],
-    ['Kadın Hakları', 'Kadına yönelik şiddetle mücadelede yeni eylem planı taslağı paylaşıldı', 'Mehmet Koçak', '5 dk', '7,6 B'],
+    ['Kadın Hakları', 'Kadına yönelik şiddetle mücadelede yeni eylem planı taslağı paylaşıldı', 'Mehmet Koçak', '5 dk', '7,6 B', 'kadin-girisim'],
     ['Borsa', 'Borsa İstanbul haftayı yüzde 1,8 yükselişle kapattı', 'Mehmet Koçak', '2 dk', '9,8 B', 'borsa'],
     ['Gündem', 'Deprem bölgesinde kalıcı konut teslimleri sürüyor', 'Sibel Arslan', '2 dk', '10,3 B', 'konteyner'],
     ['Diplomasi', 'Dışişleri Bakanı Balkan turunun ilk durağında temaslarda bulundu', 'Mehmet Koçak', '3 dk', '5,4 B'],
-    ['Toplum', 'Grip aşısı için ikinci randevu dönemi açıldı', 'Ayşe Yıldız', '2 dk', '13,9 B']];
+    ['Toplum', 'Grip aşısı için ikinci randevu dönemi açıldı', 'Ayşe Yıldız', '2 dk', '13,9 B', 'tarama']];
   var AY = ['Kasım 2026', 'Ekim 2026', 'Eylül 2026', 'Ağustos 2026', 'Temmuz 2026', 'Haziran 2026', 'Mayıs 2026', 'Nisan 2026', 'Mart 2026', 'Şubat 2026', 'Ocak 2026', 'Aralık 2025'];
   var GA = ['Pzt', 'Paz', 'Cmt', 'Cum', 'Per', 'Çar', 'Sal'], GUNLER = [];
   for (var d = 23; d >= 1; d--) GUNLER.push([d, GA[(23 - d) % 7]]);

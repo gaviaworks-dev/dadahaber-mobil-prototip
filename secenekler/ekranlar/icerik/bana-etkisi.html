@@ -8,11 +8,11 @@
   BANA ETKİSİ · E-280–E-285 · kök: Liste (büyük başlık) · alt çubukta "Bölümler" seçili.
   Üye: büyük başlık → profil çipleri (Öğrenci, Çalışan, Emekli, Ev sahibi, Kiracı, Esnaf; panelle aynı) → "Yapay zekâ ile hazırlandı" →
   Senin İçin Ne Değişti? (6 kart; kitin bölüm kartı: başlık, metin, kaynak satırı) → Profiline Göre Haberler (96).
-  Misafir ya da profilsiz üye (?uye=0): profil seç çağrısı (çoklu seçim, cihazda tutulur) → Bana Etkisi Haberleri.
+  Misafir (?uye=0): K44 kural 6 — yalnız tek giriş çağrısı (K.bos, "Giriş yap"); Bana Etkisi içeriği yalnız üyeye.
   Parametreler: ?uye=0 · ?durum=yukleniyor | bos | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0 → önbellek yok) · ?tema=koyu · ?calan=1
   Kaynak: public bana-etkisi.html (profiller ve ikonları, "Kiracı" profilinin altı başlığı ve kaynakları, haber listesi aynen); panel tasarim-kararlari "Bana etkisi · profile göre".
   Varsayımlar (onaylanmadı): örnek üye Ece'nin profili Kiracı (sitede yalnız Kiracı profilinin içeriği var); profil metinleri AI ile üretilir (panelde "AI ile üret" varsayılanı) ve etiketlenir;
-  haber satırındaki profil etiketi haberin başlığından çıkarıldı; misafirin seçimi cihazda (C30 varsayımı).
+  haber satırındaki profil etiketi haberin başlığından çıkarıldı. Misafire tek giriş çağrısı (K44).
 -->
 <link rel="stylesheet" href="../../_ortak/cerceve.css">
 <link rel="stylesheet" href="../../_ortak/marka.css">
@@ -38,9 +38,10 @@
     ['fa-truck', 'Taşınma ve adres', 'Yeni adresini 20 gün içinde e-Devlet\'ten bildirmen gerekiyor; gecikmede idari para cezası uygulanıyor.', 'Nüfus Hizmetleri Kanunu']];
   /* kaynak: public bana-etkisi.html "Bana Etkisi Haberleri" (96; ilk sayfa) */
   var HABER = [['Kiracı', 'Kiracıysan kasımda neler değişti? Altı başlıkta özet', 'Ozan Er', '2 dk', '14,8 B'], ['Çalışan', 'Asgari ücret görüşmeleri bordroya ne zaman yansır?', 'Nilay Ersoy', '5 dk', '8,8 B', 'asgari'],
-    ['Emekli', 'Emekli ocak zammı hesabı: hangi veriler belirleyici?', 'Ozan Er', '3 dk', '14,1 B'], ['Öğrenci', 'KYK bursu ve kredi ödemeleri için yeni takvim', 'Ozan Er', '6 dk', '7,4 B', '', '22 Kas'],
-    ['Esnaf', 'Esnafa yönelik kredi destek paketi kimleri kapsıyor?', 'Nilay Ersoy', '4 dk', '12,7 B', '', '22 Kas'], ['Ev sahibi', 'Ev sahipleri için kira geliri beyan takvimi', 'Nilay Ersoy', '2 dk', '6,0 B', '', '22 Kas'],
-    ['', 'Kış lastiği zorunluluğu servis ve ticari araçları nasıl etkiliyor?', 'İrem Su', '5 dk', '11,3 B', 'kar-sokak', '21 Kas'], ['', 'Elektrik faturasında kademe sınırı değişti: kim etkilenir?', 'İrem Su', '3 dk', '4,6 B', '', '21 Kas']];
+    ['Emekli', 'Emekli ocak zammı hesabı: hangi veriler belirleyici?', 'Ozan Er', '3 dk', '14,1 B'], ['Öğrenci', 'KYK bursu ve kredi ödemeleri için yeni takvim', 'Ozan Er', '6 dk', '7,4 B', 'osym', '22 Kas'],
+    ['Esnaf', 'Esnafa yönelik kredi destek paketi kimleri kapsıyor?', 'Nilay Ersoy', '4 dk', '12,7 B', 'carsi', '22 Kas'], ['Ev sahibi', 'Ev sahipleri için kira geliri beyan takvimi', 'Nilay Ersoy', '2 dk', '6,0 B', '', '22 Kas'],
+    ['', 'Kış lastiği zorunluluğu servis ve ticari araçları nasıl etkiliyor?', 'İrem Su', '5 dk', '11,3 B', 'kar-sokak', '21 Kas'], ['', 'Elektrik faturasında kademe sınırı değişti: kim etkilenir?', 'İrem Su', '3 dk', '4,6 B', 'ruzgar', '21 Kas']];
+  /* K44 kural 8: KYK → üniversite (osym), esnaf → çarşı (carsi), elektrik → enerji santrali (ruzgar); kiracı, emekli ve ev sahibi haberlerine uygun görsel yok, yazılı */
   var SECILI = 'Kiracı';
 
   var bas = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Bana Etkisi</h1><p>Gündemdeki kararların öğrenci, çalışan, emekli ya da kiracı için anlamı</p></div>';
@@ -51,23 +52,19 @@
     '<div style="display:grid;gap:var(--b-12)">' + KART.map(function(k, i){ return K.bolumKart({ ikon: k[0], baslik: k[1], sira: i + 1, toplam: KART.length, icerik: '<p class="duz">' + k[2] + '</p><p class="not">' + k[3] + '</p>' }); }).join('') + '</div></div></section>';
   var haber = function(b){ return '<section class="k-bl">' + K.bb({ baslik: b, ikon: 'fa-newspaper', sayi: 96 }) + '<div class="k-satirlar">' +
     HABER.map(function(h){ return K.satir({ alt: h[0] || 'Bana Etkisi', saat: h[6], baslik: h[1], yazar: h[2], sure: h[3], izlenme: h[4], g: h[5] }, { ikon: PIK[h[0]] || 'fa-user' }); }).join('') + '</div></section>'; };
-  var misafir = '<div class="k-ic">' + K.bolumKart({ ikon: 'fa-user', baslik: 'Profilini seç', icerik: '<p class="duz">Gündemdeki kararların sana etkisini öne çıkaralım. Bir ya da birkaç profil seçebilirsin.</p>' +
-    '<div class="k-cip-izgara" style="margin-top:var(--b-16)">' + PROFIL.map(function(p){ return K.cip(p[0], { ikon: p[1], buyuk: true }); }).join('') + '</div>' +
-    K.btn({ metin: 'Kaydet', tur: 'birincil', tam: true, attr: 'style="margin-top:var(--b-16)" data-toast="Profilin bu cihaza kaydedildi"' }) +
-    '<p class="k-not">' + I('fa-circle-info') + '<span>Seçimin bu cihazda tutulur; giriş yaparsan her cihazda seninle olur.</span></p>' +
-    K.btn({ metin: 'Giriş yap', ikon: 'fa-right-to-bracket', tur: 'metin', href: K.git('giris'), attr: 'style="margin-top:var(--b-4)"' }) }) + '</div>';
-
+  /* K44 kural 6 (Yasin Bey): Bana Etkisi yalnız üyeye; misafire yalnız tek giriş çağrısı (profil seçimi, kartlar ve haberler gösterilmez) */
+  var misafir = K.bos({ ikon: 'fa-user', baslik: 'Bana Etkisi üyelere özel', aciklama: 'Giriş yap, profilini seç; gündemdeki kararların sana etkisini burada görelim.', eylem: { metin: 'Giriş yap', ikon: 'fa-right-to-bracket', href: K.git('giris') } });
   var hata = DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? 'cevrimdisi' : '';
   if (DUR === 'yukleniyor') e.innerHTML = bas + '<div class="k-ic"><div style="display:flex;gap:var(--b-8)">' + [96, 92, 88].map(function(w){ return '<i class="k-isk" style="width:' + w + 'px;height:36px;flex:none"></i>'; }).join('') + '</div>' +
     '<div style="display:grid;gap:var(--b-12);margin-top:var(--b-24)"><i class="k-isk kart" style="height:150px"></i><i class="k-isk kart" style="height:150px"></i><i class="k-isk kart" style="height:150px"></i></div></div><div class="k-son"></div>';
   else if (hata) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: hata }) + '<div class="k-son"></div>';
-  else if (!K.uye) e.innerHTML = bas + misafir + haber('Bana Etkisi Haberleri') + '<div class="k-son"></div>';
+  else if (!K.uye) e.innerHTML = bas + misafir + '<div class="k-son"></div>';
   else if (DUR === 'bos') e.innerHTML = bas + cipler + K.bos({ ikon: 'fa-user', baslik: 'Bugün profilin için yeni başlık yok', aciklama: 'Kiracıları ilgilendiren bir karar ya da düzenleme olunca burada görürsün.', eylem: { metin: 'Bütün Bana Etkisi haberleri', tur: 'sade', href: K.u('hibrit/liste.html', 'bolum=kesfet') } }) + '<div class="k-son"></div>';
   else e.innerHTML = bas + cipler + kartlar + haber('Profiline Göre Haberler') + '<div class="k-son"></div>';
 
   /* seçili profil çipi görünür yere kayar */
   var sc = e.querySelector('.k-ray[data-tek] .k-cip[aria-pressed="true"]'); if (sc) sc.parentNode.scrollLeft = sc.offsetLeft - sc.parentNode.offsetLeft - parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--kenar'));
-  K.ustCubuk({ geri: K.git('kesfet'), baslik: 'Bana Etkisi', buyuk: !hata, eylemler: ['paylas'] });
+  K.ustCubuk({ geri: K.git('kesfet'), baslik: 'Bana Etkisi', buyuk: !hata, eylemler: K.uye ? ['paylas'] : [] });
   K.altCubuk('bolum');
   K.oynatici();
   if (DUR === 'cevrimdisi' && !hata) {

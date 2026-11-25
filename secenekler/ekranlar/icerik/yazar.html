@@ -41,7 +41,8 @@
   var takip = K.uye ? K.btn({ metin: 'Takip et', ikon: 'fa-plus', tur: 'birincil', tam: true, secili: false, attr: 'data-takip' })
     : K.btn({ metin: 'Takip et', ikon: 'fa-plus', tur: 'birincil', tam: true, attr: 'data-sayfa="tetik" data-eylem="takip"' });
   var profil = '<div class="k-profil">' + K.avatar(Y.ad, 'l', 'koyu', true) + '<div class="t"><h1>' + Y.ad + '</h1><small>' + K.I('fa-feather-pointed') + Y.unvan + '</small></div></div>';
-  var liste = X.map(function(h){ return K.satir(h, { href: K.git('kose') }); }).join('');
+  /* K44 kural 7: yazar sayfasında köşe satırı (K.koseSatir): baş harf, ad · unvan, başlık, tarih + ikonlu süre ve görüntülenme, kaydet */
+  var liste = X.map(function(h){ return K.koseSatir({ ad: Y.ad, unvan: Y.unvan, baslik: h.baslik, sure: h.sure }, { tarih: h.saat, izlenme: h.izlenme }); }).join('');
   if (DUR === 'daha-fazla') liste += (HAL === 'son' || HAL === 'hata' ? '' : K.iskelet('satir', 1)) + K.dahaFazla(HAL === 'son' || HAL === 'hata' ? HAL : 'yukleniyor');
 
   var DUZ = DUR === 'hata' || DUR === 'bulunamadi' || (DUR === 'cevrimdisi' && Q.get('onbellek') === '0');

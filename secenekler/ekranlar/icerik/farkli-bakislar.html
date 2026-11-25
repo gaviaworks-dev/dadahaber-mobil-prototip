@@ -36,6 +36,9 @@
     ['Bir Avrupa haber ajansı', 'Dünya basını', 'Avrupa ile karşılaştırma', 'Üç ülkenin pilot verisi', 'Nötr'], ['Bir iş dergisi', 'Dünya basını', 'Hizmet sektörü', 'Sektör görüşmeleri', 'Temkinli'],
     ['Çalışma ekonomisti', 'Uzman', 'Ölçüm yöntemi', 'Akademik çalışma', 'Eleştirel']];
   /* kaynak: public farkli-bakislar.html "Farklı Bakışlar Arşivi" (48; ilk sayfa) */
+  /* K44 kural 8: konuya uygun görsel (KAYNAK.txt); su tarifesi, elektrikli otomobil, uzaktan çalışma ve sokak hayvanları için uygun görsel yok, yazılı */
+  var GOR = { 'Kış lastiği zorunluluğu: yol güvenliği mi, ek maliyet mi?': 'koy-yolu', 'Yapay zekâ etiketi: şeffaflık mı, sansür kaygısı mı?': 'veri-merkezi',
+    'Kampüste kısa dönem staj: fırsat mı, ucuz emek mi?': 'kulup', 'Okullarda telefon yasağı: veliler ve öğretmenler ne diyor?': 'yks' };
   var ARSIV = [['Kış lastiği zorunluluğu: yol güvenliği mi, ek maliyet mi?', 'Nilay Ersoy', '4 dk', '4,4 B', 'Geçen hafta'], ['Yapay zekâ etiketi: şeffaflık mı, sansür kaygısı mı?', 'Nilay Ersoy', '2 dk', '9,7 B', 'İki hafta önce'],
     ['Kampüste kısa dönem staj: fırsat mı, ucuz emek mi?', 'Ozan Er', '5 dk', '3,0 B', 'Üç hafta önce'], ['Kademeli su tarifesi: tasarruf mu, yük mü?', 'İrem Su', '3 dk', '8,3 B'],
     ['Elektrikli otomobil vergisi: teşvik mi, gelir kaybı mı?', 'Nilay Ersoy', '6 dk', '13,6 B'], ['Uzaktan çalışma: üretkenlik verileri ne söylüyor?', 'İrem Su', '4 dk', '6,9 B'],
@@ -52,7 +55,7 @@
     K.tablo({ sutunlar: ['Kaynak', 'Grup', 'Ana vurgu', 'Dayandığı veri', 'Ton'], satirlar: TABLO.map(function(r){ return [r[0], r[1], r[2], r[3], K.etiket(r[4], { tur: TON[r[4]] })]; }) }) +
     '<p class="k-not">' + I('fa-circle-info') + '20-22 Kasım 2026 arasında yayımlanan 13 içerik incelendi.</p></div></section>';
   var arsiv = '<section class="k-bl">' + K.bb({ baslik: 'Önceki Konular', ikon: 'fa-scale-balanced', sayi: 48 }) + '<div class="k-satirlar">' +
-    ARSIV.map(function(a){ return K.satir({ tur: a[4], alt: 'Farklı Bakışlar', baslik: a[0], yazar: a[1], sure: a[2], izlenme: a[3] }, { ikon: 'fa-scale-balanced' }); }).join('') + '</div></section>';
+    ARSIV.map(function(a){ return K.satir({ tur: a[4], alt: 'Farklı Bakışlar', baslik: a[0], yazar: a[1], sure: a[2], izlenme: a[3], g: GOR[a[0]] }, { ikon: 'fa-scale-balanced' }); }).join('') + '</div></section>';
 
   var hata = DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? 'cevrimdisi' : '';
   if (DUR === 'yukleniyor') e.innerHTML = bas + '<div class="k-ic"><div class="k-isk-grup"><i class="k-isk" style="width:44%;height:24px"></i><i class="k-isk" style="height:24px"></i><i class="k-isk" style="width:70%;height:24px"></i></div>' +

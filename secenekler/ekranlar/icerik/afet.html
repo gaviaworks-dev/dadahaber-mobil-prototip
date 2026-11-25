@@ -58,11 +58,12 @@
     ['Deprem anında', 'Çök, kapan, tutun: sağlam bir masanın yanına çök, başını ve enseni koru, sarsıntı geçene kadar tutun. Asansör ve merdiven kullanma, pencere kenarından uzak dur.'],
     ['Deprem sonrasında', 'Gaz ve elektrik tesisatını kapat, hasarlı binaya girme. Resmî açıklamaları AFAD ve valilik hesaplarından takip et; doğrulanmamış iddiaları paylaşma.']];
   /* kaynak: public afet-acil-durum.html haber listesi (etiketler) + araclar/ornek_veri.json (saat, yazar, süre, okunma); görsel yalnız D'de bu habere verilmiş olan (konteyner) */
+  /* K44 kural 8: görseli olmayan satırlara konuya uygun görsel (assets/gorsel/haber/KAYNAK.txt): tatbikat → sınav salonu (yks), riskli yapı → eski yapılar (kar-sokak); uygun görseli olmayanlar yazılı */
   var HAB = [['Deprem', "Balıkesir Sındırgı'da 4,1 büyüklüğünde deprem", 'Hakan Uysal', '07.40', '5 dk', '21,3 B'],
     ['AFAD', 'Deprem sonrası hasar tespit çalışmaları tamamlandı', 'Sibel Arslan', '15.00', '2 dk', '4,8 B', 'konteyner'],
-    ['Tatbikat', 'Okullarda deprem tatbikatı haftası başlıyor', 'Hakan Uysal', '12.10', '3 dk', '3,6 B'],
+    ['Tatbikat', 'Okullarda deprem tatbikatı haftası başlıyor', 'Hakan Uysal', '12.10', '3 dk', '3,6 B', 'yks'],
     ['Meteoroloji', 'Doğu Karadeniz için sel uyarısı', 'Ayşe Yıldız', '22 Kas', '4 dk', '2,9 B'],
-    ['Kentsel dönüşüm', 'Riskli yapı tespitinde başvuru süresi uzatıldı', 'Ayşe Yıldız', '22 Kas', '3 dk', '14,2 B'],
+    ['Kentsel dönüşüm', 'Riskli yapı tespitinde başvuru süresi uzatıldı', 'Ayşe Yıldız', '22 Kas', '3 dk', '14,2 B', 'kar-sokak'],
     ['Sigorta', 'Zorunlu deprem sigortasında yeni tarife yürürlükte', 'Sibel Arslan', '22 Kas', '4 dk', '9,6 B'],
     ['Gönüllülük', 'AFAD gönüllü eğitimlerine kayıtlar açıldı', 'Sibel Arslan', '21 Kas', '2 dk', '8,1 B'],
     ['Bilim', "Kandilli: Marmara'daki küçük depremler olağan aktivite içinde", 'Ayşe Yıldız', '21 Kas', '3 dk', '6,7 B']];
@@ -74,7 +75,7 @@
   function duyuru(L){ var dl = null;
     return L.map(function(x, i){ var a = x[0] !== dl ? '<div class="k-ayrac"><span>' + gunAd(x[0]) + '</span><span>' + (x[0] === 23 ? '23 Kasım ' + GUN[1] : '') + '</span></div>' : ''; dl = x[0];
       return a + '<div class="k-cz' + (i === 0 ? ' ilk' : '') + '"><span class="sa">' + x[1] + '</span><span class="ci"></span><span class="no"></span><div class="yazi"><div>' +
-        '<span class="k-ustsatir"><span class="s">' + x[2] + '</span></span><h3>' + x[3] + '</h3><div class="k-ab">' + K.meta([x[4]]) + K.etiket(x[5], { tur: x[6] }) + '</div></div></div></div>'; }).join(''); }
+        '<span class="k-ustsatir"><span class="sol"><span class="s">' + x[2] + '</span></span></span><h3>' + x[3] + '</h3><div class="k-ab">' + K.meta([x[4]]) + K.etiket(x[5], { tur: x[6] }) + '</div></div></div></div>'; }).join(''); }
   function haber(x){ return { alt: x[0], ikon: 'fa-house-crack', baslik: x[1], yazar: x[2], saat: x[3], sure: x[4], izlenme: x[5], g: x[6] }; }
 
   var BOS = DUR === 'bos', EN = DEP[1];

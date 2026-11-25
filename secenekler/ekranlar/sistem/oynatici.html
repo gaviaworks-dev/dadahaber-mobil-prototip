@@ -60,7 +60,7 @@
   function arkaDinle(){
     var X = D.gunun5.liste.map(function(x){ return { alt: x.kat, baslik: x.baslik, sure: x.ses, g: x.g }; });
     e.innerHTML = '<div class="k-ust-bosluk"></div><section class="k-bl sik">' + K.bb({ baslik: 'Dada Spiker', ikon: 'fa-radio' }) + '<div class="k-ic">' + K.spiker() + '</div></section>' +
-      '<section class="k-bl">' + K.bb({ baslik: 'Sesli Haberler', ikon: 'fa-headphones', not: 'Günün 5\'i · ' + D.gunun5.dinleme }) + '<div class="k-satirlar">' + X.map(function(h){ return K.satir(h, { kaydet: false }); }).join('') + '</div></section><div class="k-son"></div>';
+      '<section class="k-bl">' + K.bb({ baslik: 'Sesli Haberler', ikon: 'fa-headphones', not: 'Günün 5\'i · ' + D.gunun5.dinleme }) + '<div class="k-satirlar">' + X.map(function(h){ return K.satir(h); }) /* K44 kural 1: kaydet satırda kalır */.join('') + '</div></section><div class="k-son"></div>';
     K.ustCubuk({ baslik: 'Haber Dinle', eylemler: ['ara', 'hesap'] });
     K.altCubuk('dinle'); }
 

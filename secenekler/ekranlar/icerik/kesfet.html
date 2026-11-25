@@ -6,7 +6,7 @@
 <title>Keşfet</title>
 <!--
   KEŞFET MERKEZİ · E-222–E-225 · kök: Liste (görselli başlık + içerik paneli) · alt çubukta "Bölümler" seçili (Keşfet sekizinci bölüm).
-  Yapı (DADAHABER-10 › Keşfet): Keşfet Formatları (8 döşeme: 7 format + Bana Etkisi, public kesfet.html sekmeleri) → Günün 5'i rayı →
+  Yapı (DADAHABER-10 › Keşfet): Keşfet Formatları (8 döşeme: 7 format + Bana Etkisi, public kesfet.html sekmeleri; misafirde Bana Etkisi yok, K44) → Günün 5'i rayı →
   Anlık (7 satır) → Konular (Teknoloji ve Bilim, Sağlık ve Yaşam, Kültür ve Sanat) → Medya ve Arşiv (çipler) → Keşfet'ten Haberler.
   Parametreler: ?durum=yukleniyor | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0 → önbellek yok) · ?uye=0 · ?tema=koyu · ?calan=1
   Kaynak: public kesfet.html (format açıklamaları, künyeler, "Keşfet'ten Haberler"), D.gunun5.
@@ -50,6 +50,7 @@
     ['fa-leaf', 'Sakin Akış', 'Bildirimsiz, sarsıcı görüntüsüz, günde iki özetle haber.', 'Kişisel ayar', sayfa('sakin-akis')],
     ['fa-user', 'Bana Etkisi', 'Öğrenci, çalışan, emekli ya da kiracı için ne değişti?', '6 profil', sayfa('bana-etkisi')]
   ];
+  if (!K.uye) FORMAT.pop(); /* K44 kural 6: Bana Etkisi yalnız üyeye; misafirde döşeme gösterilmez */
   var ANLIK = [
     ['fa-bolt', 'Son Dakika', 'Teyit edilmiş gelişmeler, saat sırasıyla', K.git('sonDakika')],
     ['fa-tower-broadcast', 'Canlı Gündem', 'Süren olayları tek sayfada izle', K.git('canliGundem')],
@@ -66,12 +67,13 @@
   ];
   var MEDYA = [['fa-circle-play', 'Video Haber', K.git('video')], ['fa-camera', 'Foto Fokus', K.git('fotoFokus')], ['fa-chart-pie', 'İnfografik', K.git('infografik')],
     ['fa-podcast', 'Podcast', K.git('podcast')], ['fa-headphones', 'Haber Dinle', K.git('dinle')], ['fa-feather-pointed', 'Yazarlar', K.git('yazarlar')], ['fa-box-archive', 'Arşiv', sayfa('arsiv')]];
-  /* kaynak: public kesfet.html "Keşfet'ten Haberler" (1538 haber; ilk sayfa). Konuya uygun görsel yok: yazılı satır */
+  /* kaynak: public kesfet.html "Keşfet'ten Haberler" (1538 haber; ilk sayfa).
+     K44 kural 8: konuya uygun görsel (KAYNAK.txt): yapay zekâ → veri merkezi, aile hekimliği → sağlık (tarama), sinema → kültür merkezi (akm), haberleşme uydusu → anten; uçuş, iklim ve kitap fuarı yazılı */
   var HABER = [
-    { alt: 'Yapay Zekâ', baslik: 'Yapay zekâ ile üretilen içeriklere etiket zorunluluğu için taslak hazırlandı', yazar: 'İrem Su', sure: '6 dk', izlenme: '11,5 B' },
-    { alt: 'Sağlık', baslik: 'Aile hekimliğinde randevu sistemine akşam saatleri ekleniyor', yazar: 'Nilay Ersoy', sure: '5 dk', izlenme: '7,8 B' },
-    { alt: 'Sinema', baslik: 'Yerli filmlerin gişedeki payı bu yıl yüzde 46\'ya ulaştı', yazar: 'İrem Su', sure: '3 dk', izlenme: '13,1 B' },
-    { alt: 'Uzay', saat: '22 Kas', baslik: 'Yerli haberleşme uydusunun yörünge testleri tamamlandı', yazar: 'Nilay Ersoy', sure: '6 dk', izlenme: '10,3 B' },
+    { alt: 'Yapay Zekâ', baslik: 'Yapay zekâ ile üretilen içeriklere etiket zorunluluğu için taslak hazırlandı', yazar: 'İrem Su', sure: '6 dk', izlenme: '11,5 B', g: 'veri-merkezi' },
+    { alt: 'Sağlık', baslik: 'Aile hekimliğinde randevu sistemine akşam saatleri ekleniyor', yazar: 'Nilay Ersoy', sure: '5 dk', izlenme: '7,8 B', g: 'tarama' },
+    { alt: 'Sinema', baslik: 'Yerli filmlerin gişedeki payı bu yıl yüzde 46\'ya ulaştı', yazar: 'İrem Su', sure: '3 dk', izlenme: '13,1 B', g: 'akm' },
+    { alt: 'Uzay', saat: '22 Kas', baslik: 'Yerli haberleşme uydusunun yörünge testleri tamamlandı', yazar: 'Nilay Ersoy', sure: '6 dk', izlenme: '10,3 B', g: 'anten' },
     { alt: 'Seyahat', saat: '22 Kas', baslik: 'Kış sezonunda yurt içi uçuş sayısı geçen yıla göre yüzde 9 arttı', yazar: 'Kerem Aksoy', sure: '4 dk', izlenme: '11,7 B' },
     { alt: 'İklim', saat: '22 Kas', baslik: 'Ekim ayı ölçümlerde son 50 yılın en sıcak ekimi olarak kaydedildi', yazar: 'Ozan Er', sure: '2 dk', izlenme: '13,1 B' },
     { alt: 'Kitap', saat: '22 Kas', baslik: 'İstanbul kitap fuarı bu yıl 780 bin ziyaretçiyle kapandı', yazar: 'Ozan Er', sure: '5 dk', izlenme: '14,1 B' }

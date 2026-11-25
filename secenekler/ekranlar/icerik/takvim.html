@@ -71,7 +71,8 @@
     var hafta = TUR === 'ekonomik' ? (g < 100 ? 'Bu hafta' : 'Gelecek hafta') : '';
     return '<div class="k-ayrac" data-ayrac="' + g + '"><span>' + (g === 23 ? 'Bugün' : GUNAD[g]) + '</span><span>' + (g === 23 ? GUNAD[g] : hafta) + '</span></div>'; }
   function satir(x, i){ var sinav = TUR === 'sinav', kat = x[2], kurum = sinav ? '' : x[3], sa = sinav ? (x[1] === 'Bugün' ? '23' : x[1].split(' ')[0]) : x[1];
-    var ust = '<span class="k-ustsatir">' + K.katEt(kat, sinav ? 'fa-graduation-cap' : IK[kat]) + (kurum ? '<span class="nk">·</span><span class="s">' + kurum + '</span>' : '') + (sinav ? '<span class="nk">·</span><span class="s">' + x[1] + ' · ' + x[3] + '</span>' : '') + '</span>';
+    /* K44 kural 5: üst bilgi satırı kırılmaz, yana kayar (kitin .sol kabı) */
+    var ust = '<span class="k-ustsatir"><span class="sol">' + K.katEt(kat, sinav ? 'fa-graduation-cap' : IK[kat]) + (kurum ? '<span class="nk">·</span><span class="s">' + kurum + '</span>' : '') + (sinav ? '<span class="nk">·</span><span class="s">' + x[1] + ' · ' + x[3] + '</span>' : '') + '</span></span>';
     return '<div class="k-cz' + (i === 0 ? ' ilk' : '') + '" data-gun="' + x[0] + '" data-f="' + (x[7] || kat) + '"><span class="sa">' + sa + '</span><span class="ci"></span><span class="no"></span><div><div>' + ust +
       '<h3>' + x[4] + '</h3><div class="k-ab">' + K.meta([x[5]]) + (x[6] ? K.etiket(x[6], { tur: ONEM[x[6]] }) : '') + '</div></div>' +
       K.ikonBtn({ ikon: 'fa-calendar-plus', etiket: 'Takvime ekle', secili: false, attr: 'data-takvim' }) + '</div></div>'; }

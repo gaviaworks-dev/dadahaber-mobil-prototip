@@ -35,24 +35,25 @@
       { alt: 'Finans', kat: 'Finans', saat: '15.10', baslik: 'Merkez Bankası politika faizini yüzde 42,5\'te sabit tuttu', yazar: 'Elif Aras', sure: '3 dk', g: 'faiz' },
       { alt: 'Gündem', kat: 'Gündem', saat: '14.25', baslik: 'Asgari ücret görüşmelerinde ilk toplantı 4 Aralık\'ta yapılacak', yazar: 'Hakan Uysal', sure: '3 dk', g: 'asgari' },
       { alt: 'Dünya', kat: 'Dünya', saat: '14.15', baslik: 'AB dışişleri bakanları göç paketini görüştü', yazar: 'Zeynep Ak', sure: '3 dk', g: 'ab-goc' },
-      { alt: 'Dada Doğrula', kat: 'Gündem', ikon: 'fa-clipboard-check', saat: '11.50', baslik: 'Asgari ücrete ocakta yüzde 60 zam yapılacağı iddiası yanıltıcı', yazar: 'Dada Doğrula' }]],
+      { alt: 'Dada Doğrula', kat: 'Gündem', ikon: 'fa-clipboard-check', saat: '11.50', baslik: 'Asgari ücrete ocakta yüzde 60 zam yapılacağı iddiası yanıltıcı', yazar: 'Dada Doğrula', g: 'asgari' }]],
     ['Dün', '22 Kasım 2026', [
-      { alt: 'Spor', kat: 'Spor', saat: '23.05', baslik: 'Beşiktaş deplasmanda üç puanı iki golle aldı', yazar: 'Emre Sönmez', sure: '2 dk' },
+      { alt: 'Spor', kat: 'Spor', saat: '23.05', baslik: 'Beşiktaş deplasmanda üç puanı iki golle aldı', yazar: 'Emre Sönmez', sure: '2 dk', g: 'superlig' },
       { alt: 'Dada Bağlam', kat: 'Gündem', ikon: 'fa-folder-open', saat: '21.10', baslik: 'İstanbul\'un su sorunu: barajlardan musluğa bir yıl', yazar: 'Dada Bağlam', sure: '6 dk' },
       { alt: 'Kampüs', kat: 'Kampüs', saat: '19.00', baslik: 'YKS 2027 başvuru takvimi açıklandı', yazar: 'Selin Koç', sure: '3 dk', g: 'yks' },
-      { alt: 'Uzay', kat: 'Keşfet', saat: '12.30', baslik: 'Yerli haberleşme uydusunun yörünge testleri tamamlandı' }]]];
+      { alt: 'Uzay', kat: 'Keşfet', saat: '12.30', baslik: 'Yerli haberleşme uydusunun yörünge testleri tamamlandı', g: 'anten' }]]];
+  /* K44 kural 8: konuya uygun görsel (KAYNAK.txt): asgari ücret, Süper Lig → stat, uydu → anten; su sorunu dosyası ve kitap fuarı videosu yazılı */
   var IZLE = [
     ['Bugün', '23 Kasım 2026', [
       { alt: 'Gündem', kat: 'Gündem', saat: '10.05', baslik: 'Marmara\'da kar: İstanbul\'da sabah saatlerinden görüntüler', v: '0:48', g: 'kar-sokak' },
       { alt: 'Siyaset', kat: 'Gündem', saat: '09.30', baslik: 'Plan ve Bütçe Komisyonu\'nda günün özeti', v: '2:14', g: 'tbmm' }]],
     ['Dün', '22 Kasım 2026', [
-      { alt: 'Uzay', kat: 'Keşfet', saat: '21.40', baslik: 'Yerli haberleşme uydusunun yörünge testi nasıl yapıldı?', v: '3:05' },
+      { alt: 'Uzay', kat: 'Keşfet', saat: '21.40', baslik: 'Yerli haberleşme uydusunun yörünge testi nasıl yapıldı?', v: '3:05', g: 'anten' },
       { alt: 'Dünya', kat: 'Dünya', saat: '18.10', baslik: 'Türkiye–AB toplantısı sonrası ortak basın toplantısı', v: '4:12', g: 'bruksel' }]],
     ['21 Kasım', 'Cumartesi', [
       { alt: 'Kültür ve Yaşam', kat: 'Keşfet', saat: '19.20', baslik: 'Kitap fuarında son gün: en çok ziyaret edilen bölümler', v: '1:36' }]]];
   var DINLE = [['Bugün', '23 Kasım 2026', [[D.podcast[0], 26]]], ['Dün', '22 Kasım 2026', [[D.podcast[1], 100], [D.podcast[2], 62]]]];
 
-  function satir(h){ return h.v ? K.satir({ alt: h.alt, kat: h.kat, saat: h.saat, baslik: h.baslik, sure: K.vid(h.v), g: h.g }, { md: h.g ? h.v : '', href: K.git('videoDetay') })
+  function satir(h){ return h.v ? K.satir({ alt: h.alt, kat: h.kat, saat: h.saat, baslik: h.baslik, sure: h.g ? '' : K.vid(h.v), g: h.g }, { md: h.g ? h.v : '', href: K.git('videoDetay') })
     : K.satir(h, { ikon: h.ikon }); }
   function gunler(L){ return L.map(function(g){ return '<div class="k-ayrac"><span>' + g[0] + '</span><span>' + g[1] + '</span></div><div>' +
     g[2].map(function(x){ return Array.isArray(x) ? K.podcastSatir(x[0], { ilerleme: x[1] }) : satir(x); }).join('') + '</div>'; }).join(''); }

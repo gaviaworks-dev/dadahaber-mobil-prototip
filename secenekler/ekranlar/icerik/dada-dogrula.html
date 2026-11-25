@@ -35,14 +35,17 @@
   function etiket(k){ var x = KARAR[k]; return K.etiket(k, { tur: x[0], ikon: x[1] }); }
   /* kaynak: public dada-dogrula.html "Son İncelemeler" (186; ilk sayfa) */
   var LISTE = [['Yanıltıcı', 'Asgari ücrete ocakta yüzde 60 zam yapılacağı iddiası', 'Kerem Aksoy', '2 dk', '21,3 B'],
-    ['Bağlam dışı', 'Kar altındaki köprü görüntüsünün bu hafta çekildiği iddiası', 'İrem Su', '4 dk', '14,3 B'],
-    ['Yanlış', 'Kış lastiği zorunluluğunun kaldırıldığı iddiası', 'İrem Su', '2 dk', '7,6 B'],
+    ['Bağlam dışı', 'Kar altındaki köprü görüntüsünün bu hafta çekildiği iddiası', 'İrem Su', '4 dk', '14,3 B', 'kar-istanbul'],
+    ['Yanlış', 'Kış lastiği zorunluluğunun kaldırıldığı iddiası', 'İrem Su', '2 dk', '7,6 B', 'koy-yolu'],
     ['Doğru', 'Organ bağışı kayıtlarının bu yıl yüzde 12 arttığı bilgisi', 'Ozan Er', '6 dk', '12,9 B'],
     ['Eksik', 'Kira artışlarının yavaşladığına dair paylaşılan grafik', 'Ozan Er', '4 dk', '6,2 B'],
-    ['Doğrulanamadı', 'YKS\'de soru sayısının azaltılacağı iddiası', 'Nilay Ersoy', '2 dk', '11,5 B'],
-    ['Yanlış', 'Bankaların hesaplara yeni bir işlem ücreti getirdiği mesajı', 'İrem Su', '5 dk', '4,8 B'],
-    ['Doğru', 'Yerli uydunun ilk görüntüleri gönderdiği bilgisi', 'İrem Su', '3 dk', '10,1 B']];
-  function satir(x, i){ return '<a class="k-satir yazi" data-karar="' + x[0] + '" href="' + (i === 0 ? ac : K.git('detay')) + '"><div>' + etiket(x[0]) + '<h3>' + x[1] + '</h3><div class="k-ab">' + K.meta([x[2], x[3], x[4]]) + K.kaydet() + '</div></div></a>'; }
+    ['Doğrulanamadı', 'YKS\'de soru sayısının azaltılacağı iddiası', 'Nilay Ersoy', '2 dk', '11,5 B', 'yks'],
+    ['Yanlış', 'Bankaların hesaplara yeni bir işlem ücreti getirdiği mesajı', 'İrem Su', '5 dk', '4,8 B', 'kredi-karti'],
+    ['Doğru', 'Yerli uydunun ilk görüntüleri gönderdiği bilgisi', 'İrem Su', '3 dk', '10,1 B', 'anten']];
+  /* K44 kural 1: kitin satırı (K.satir; görsel solda, kaydet satırda); üst bilgi satırında karar etiketi.
+     K44 kural 8: konuya uygun görsel (KAYNAK.txt): kar → karlı İstanbul, kış lastiği → karlı yol, YKS → sınav salonu, banka ücreti → kart terminali, uydu → anten; organ bağışı ve kira grafiğine uygun görsel yok */
+  function satir(x, i){ return K.satir({ baslik: x[1], yazar: x[2], sure: x[3], izlenme: x[4], g: x[5] }, { href: i === 0 ? ac : K.git('detay') })
+    .replace('<a class="k-satir', '<a data-karar="' + x[0] + '" class="k-satir').replace('<span class="sol">', '<span class="sol">' + etiket(x[0])); }
 
   /* ---------- merkez ---------- */
   var bas = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Dada Doğrula</h1><p>Gündemdeki iddiaları kaynağıyla inceliyor, kararımızı gerekçesiyle açıklıyoruz</p></div>';
@@ -66,9 +69,9 @@
   var KAYNAK = [{ kurum: 'Çalışma ve Sosyal Güvenlik Bakanlığı', aciklama: 'Asgari Ücret Tespit Komisyonu toplantı duyurusu · 22 Kasım 2026' },
     { kurum: 'İşçi konfederasyonu basın birimi', aciklama: 'Yazılı yanıt · 22 Kasım 2026' }, { kurum: 'Resmî Gazete', aciklama: 'Asgari Ücret Yönetmeliği, komisyonun çalışma usulü' }];
   var ILGILI = [{ alt: 'Gündem', baslik: 'Asgari ücret görüşmelerinde ilk toplantı 4 Aralık\'ta yapılacak', yazar: 'Hakan Uysal', sure: '3 dk', izlenme: '24,6 B', g: 'asgari' },
-    { alt: 'Dada Bağlam', ikon: 'fa-folder-open', baslik: 'Asgari ücret: kim, ne istiyor?', yazar: 'Nazlı Öztürk', sure: '3 dk', izlenme: '6,9 B' },
-    { alt: 'Bağlam dışı', ikon: 'fa-calendar-xmark', baslik: 'Kar altındaki köprü görüntüsünün bu hafta çekildiği iddiası', yazar: 'İrem Su', sure: '4 dk', izlenme: '14,3 B' },
-    { alt: 'Yanlış', ikon: 'fa-circle-xmark', baslik: 'Kış lastiği zorunluluğunun kaldırıldığı iddiası', yazar: 'İrem Su', sure: '2 dk', izlenme: '7,6 B' }];
+    { alt: 'Dada Bağlam', ikon: 'fa-folder-open', baslik: 'Asgari ücret: kim, ne istiyor?', yazar: 'Nazlı Öztürk', sure: '3 dk', izlenme: '6,9 B', g: 'asgari' },
+    { alt: 'Bağlam dışı', ikon: 'fa-calendar-xmark', baslik: 'Kar altındaki köprü görüntüsünün bu hafta çekildiği iddiası', yazar: 'İrem Su', sure: '4 dk', izlenme: '14,3 B', g: 'kar-istanbul' },
+    { alt: 'Yanlış', ikon: 'fa-circle-xmark', baslik: 'Kış lastiği zorunluluğunun kaldırıldığı iddiası', yazar: 'İrem Su', sure: '2 dk', izlenme: '7,6 B', g: 'koy-yolu' }];
   var dBas = '<div class="k-ust-bosluk"></div><div class="k-ic" style="padding-top:var(--b-8)">' + K.katEt('Dada Doğrula', 'fa-clipboard-check', { ek: 'İnceleme' }) +
     '<h1 style="margin-top:var(--b-12);font-size:31px;line-height:1.1;letter-spacing:-.028em">Asgari ücrete ocakta yüzde 60 zam yapılacağı iddiası yanıltıcı</h1>' +
     '<div class="k-imza">' + K.avatar('Kerem Aksoy', 'm') + '<span class="t"><b>Kerem Aksoy</b><small>Doğrulama Editörü</small></span></div>' +

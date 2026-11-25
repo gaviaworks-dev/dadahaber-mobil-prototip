@@ -31,16 +31,18 @@
   var BU = 'ekranlar/icerik/gunun-5i.html';
   /* kaynak: public gunun-5-i.html "Önceki Günler" (365 baskı; ilk sayfa) */
   var ONCEKI = [
-    ['22 Kas', '22 Kasım: bütçe görüşmeleri, kira verisi, Kafkasya\'da enerji hattı', 'İrem Su', '4 dk', '9,9 B'],
-    ['21 Kas', '21 Kasım: enflasyon beklentisi, kitap fuarı, millî takım kadrosu', 'İrem Su', '2 dk', '3,2 B'],
-    ['20 Kas', '20 Kasım: Hazine ihaleleri, kış lastiği, AB zirvesi hazırlığı', 'Nilay Ersoy', '5 dk', '8,5 B'],
-    ['19 Kas', '19 Kasım: işsizlik verisi, organ bağışı, YKS takvimi', 'Nilay Ersoy', '3 dk', '13,8 B'],
-    ['18 Kas', '18 Kasım: konut satışları, deprem tatbikatı, Süper Lig', 'Nilay Ersoy', '6 dk', '7,1 B'],
-    ['17 Kas', '17 Kasım: memur zammı takvimi, uydu testleri, iklim raporu', 'İrem Su', '4 dk', '12,4 B'],
-    ['16 Kas', '16 Kasım: hafta sonu özeti, kar uyarısı, sınav sonuçları', 'İrem Su', '2 dk', '5,7 B'],
-    ['15 Kas', '15 Kasım: ihracat rakamları, sağlık taraması, festival', 'İrem Su', '5 dk', '11,0 B']
+    ['22 Kas', '22 Kasım: bütçe görüşmeleri, kira verisi, Kafkasya\'da enerji hattı', 'İrem Su', '4 dk', '9,9 B', 'tbmm'],
+    ['21 Kas', '21 Kasım: enflasyon beklentisi, kitap fuarı, millî takım kadrosu', 'İrem Su', '2 dk', '3,2 B', 'faiz'],
+    ['20 Kas', '20 Kasım: Hazine ihaleleri, kış lastiği, AB zirvesi hazırlığı', 'Nilay Ersoy', '5 dk', '8,5 B', 'koy-yolu'],
+    ['19 Kas', '19 Kasım: işsizlik verisi, organ bağışı, YKS takvimi', 'Nilay Ersoy', '3 dk', '13,8 B', 'yks'],
+    ['18 Kas', '18 Kasım: konut satışları, deprem tatbikatı, Süper Lig', 'Nilay Ersoy', '6 dk', '7,1 B', 'superlig'],
+    ['17 Kas', '17 Kasım: memur zammı takvimi, uydu testleri, iklim raporu', 'İrem Su', '4 dk', '12,4 B', 'anten'],
+    ['16 Kas', '16 Kasım: hafta sonu özeti, kar uyarısı, sınav sonuçları', 'İrem Su', '2 dk', '5,7 B', 'kar-istanbul'],
+    ['15 Kas', '15 Kasım: ihracat rakamları, sağlık taraması, festival', 'İrem Su', '5 dk', '11,0 B', 'tarama']
   ];
-  function onceki(x){ return K.satir({ alt: 'Günün 5\'i', saat: x[0], baslik: x[1], yazar: x[2], sure: x[3], izlenme: x[4] }, { ikon: 'fa-sun', href: K.u(BU) }); }
+  /* K44 kural 8: önceki baskıya, başlıklarından görseli olan ilk konunun görseli (KAYNAK.txt): bütçe → TBMM, enflasyon → Merkez Bankası, kış lastiği → karlı yol, YKS → sınav salonu,
+     Süper Lig → stat, uydu → anten, kar uyarısı → karlı İstanbul, sağlık taraması → tarama */
+  function onceki(x){ return K.satir({ alt: 'Günün 5\'i', saat: x[0], baslik: x[1], yazar: x[2], sure: x[3], izlenme: x[4], g: x[5] }, { ikon: 'fa-sun', href: K.u(BU) }); }
 
   /* bugünün baskısı */
   var kalan = G5.liste.slice(OKUNAN).reduce(function(t, x){ return t + parseInt(x.sure, 10); }, 0);

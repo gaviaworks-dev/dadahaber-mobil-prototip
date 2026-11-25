@@ -48,16 +48,17 @@
     { kurum: 'Kuraklık eylem planı', aciklama: 'Su idaresi meclis kararı, Aralık 2025' }];
   var YORUM = [{ ad: 'Gül Erdem', rozet: 'Düzenli okur', zaman: '3 saat önce', metin: 'Zaman çizgisi çok işe yaradı; tarife değişikliğinin ne zaman başladığını hiç bilmiyordum.', begeni: 9 },
     { ad: 'Dada Haber Editör', rozet: 'Editör', zaman: '2 saat önce', metin: 'Teşekkürler. Doluluk verisi açıklandıkça dosyanın son satırını güncelliyoruz.', begeni: 3 }];
-  var ILGILI = [{ alt: 'Dada Bağlam', baslik: 'Emisyon ticaret sistemi nedir, kimleri kapsar?', yazar: 'İrem Su', sure: '6 dk', izlenme: '5,3 B' },
+  var ILGILI = [{ alt: 'Dada Bağlam', baslik: 'Emisyon ticaret sistemi nedir, kimleri kapsar?', yazar: 'İrem Su', sure: '6 dk', izlenme: '5,3 B', g: 'iklim' },
     { alt: 'İklim', baslik: 'Barajlardaki doluluk oranı İstanbul\'da yüzde 38\'e geriledi', yazar: 'Ayşe Yıldız', sure: '3 dk', izlenme: '11,7 B' },
     { alt: 'İklim', baslik: 'Konya Ovası\'nda yeraltı suyu seviyesi bir yılda 3 metre düştü', yazar: 'Ozan Er', sure: '2 dk', izlenme: '3,9 B' },
     { alt: 'Veri ve Harita', baslik: 'Büyükşehirlerde su tüketimi tek tabloda', yazar: 'Ozan Er', sure: '5 dk', izlenme: '9,2 B' }];
-  /* kaynak: public dada-baglam.html "Dada Bağlam Dosyaları" (24 dosya; ilk sayfa) */
+  /* kaynak: public dada-baglam.html "Dada Bağlam Dosyaları" (24 dosya; ilk sayfa)
+     K44 kural 8: emisyon ticareti → iklim, yapay zekâ yasası → veri merkezi; su, kira, şarj ağı ve enerji hattı dosyalarına uygun görsel yok, yazılı */
   var DOSYALAR = [['İstanbul\'un su sorunu: barajlardan musluğa', 'İrem Su', '5 dk', '12,4 B'], ['Asgari ücret: kim, ne istiyor?', 'Nazlı Öztürk', '3 dk', '6,9 B', 'asgari'],
     ['Faiz kararı cebine nasıl yansır?', 'İrem Su', '6 dk', '12,2 B', 'faiz'], ['KAAN programı: prototipten seri üretime takvim', 'Mert Yalın', '4 dk', '5,5 B', 'kaan'],
     ['AB göç paketi: Türkiye için ne değişir?', 'Hande Polat', '2 dk', '10,8 B', 'ab-goc'], ['YKS 2027 rehberi: başvurudan tercihe', 'Ozan Er', '5 dk', '4,1 B', 'yks'],
-    ['Deprem bölgesinde konut: rakamlarla iki yıl', 'Kerem Aksoy', '3 dk', '9,4 B', 'konteyner'], ['Emisyon ticaret sistemi nedir, kimleri kapsar?', 'İrem Su', '6 dk', '5,3 B'],
-    ['Kira artışlarında yeni dönem: neler değişti?', 'Ozan Er', '4 dk', '8,0 B'], ['Avrupa\'nın yapay zekâ yasası neyi düzenliyor?', 'İrem Su', '2 dk', '13,3 B'],
+    ['Deprem bölgesinde konut: rakamlarla iki yıl', 'Kerem Aksoy', '3 dk', '9,4 B', 'konteyner'], ['Emisyon ticaret sistemi nedir, kimleri kapsar?', 'İrem Su', '6 dk', '5,3 B', 'iklim'],
+    ['Kira artışlarında yeni dönem: neler değişti?', 'Ozan Er', '4 dk', '8,0 B'], ['Avrupa\'nın yapay zekâ yasası neyi düzenliyor?', 'İrem Su', '2 dk', '13,3 B', 'veri-merkezi'],
     ['Elektrikli araç şarj ağı: nerede, ne kadar?', 'İrem Su', '5 dk', '6,6 B'], ['Doğu Akdeniz enerji hattı: taraflar ve takvim', 'İrem Su', '3 dk', '11,9 B']];
   var BASLIK = 'İstanbul\'un su sorunu: barajlardan musluğa bir yıl';
   var ac = K.u(BU, 'dosya=1');

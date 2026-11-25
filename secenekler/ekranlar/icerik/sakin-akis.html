@@ -37,13 +37,17 @@
     ['', 'Emekli öğretmenler köy okullarında gönüllü ders veriyor', 'Nilay Ersoy', '3 dk', '9,0 B', '22 Kas'], ['', 'Endemik bitki tohumları gen bankasında koruma altına alındı', 'Nilay Ersoy', '6 dk', '14,3 B', '22 Kas'],
     ['', 'Engelli ziyaretçiler için dokunsal müze rehberleri hazırlandı', 'İrem Su', '4 dk', '11,1 B', '21 Kas'], ['', 'Kent bostanlarında yetişen sebzeler aşevlerine gönderiliyor', 'Nilay Ersoy', '2 dk', '12,9 B', '21 Kas']];
 
+  /* K44 kural 8: haberin kendi görseli (D: AB göç paketi, YKS) ya da konuya uygun görsel (KAYNAK.txt); kitap fuarı, sahil temizliği, organ bağışı, köy okulları, tohum bankası ve müze rehberi yazılı */
+  var GOR = { 'Marmara\'da kar nedeniyle 14 ilde okullar tatil': 'kar-istanbul', 'Piyasalar güne faiz kararı beklentisiyle başlıyor': 'borsa', 'Aile hekimliğinde akşam randevusu dönemi başlıyor': 'tarama',
+    'AB göç paketinde oylama ocağa kaldı': 'ab-meclis', 'YKS 2027 başvuru tarihleri belli oldu': 'yks', 'Mahalle kütüphaneleri gece açık kalmaya başladı': 'yks',
+    'Gıda israfına karşı askıda yemek uygulaması genişletildi': 'eksimaya', 'Kent bostanlarında yetişen sebzeler aşevlerine gönderiliyor': 'carsi' };
   var bas = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Sakin Akış</h1><p>Bildirimsiz, sarsıcı görüntüsüz, günde iki özetle haber</p></div>';
   var serit = '<div class="k-ic"><div class="k-serit uyari">' + I('fa-leaf') + '<span><b>Sakin Akış açık</b><small>Son Dakika bildirimleri susturuldu</small></span><button type="button" data-sakin>Ayarlar</button></div></div>';
   var ozet = '<section class="k-bl sik">' + K.bb({ baslik: 'Sabah ve Akşam Özeti', ikon: 'fa-leaf' }) + '<div class="k-satirlar">' + OZET.map(function(o){
     return '<div class="k-ayrac" style="padding-top:var(--b-8)"><span>' + o[0] + '</span><span>' + o[1] + '</span></div>' +
-      o[2].map(function(x){ return K.satir({ alt: x[0], baslik: x[1], sure: x[2] }); }).join(''); }).join('') + '</div></section>';
+      o[2].map(function(x){ return K.satir({ alt: x[0], baslik: x[1], sure: x[2], g: GOR[x[1]] }); }).join(''); }).join('') + '</div></section>';
   var iyi = '<section class="k-bl">' + K.bb({ baslik: 'İyi Gelen Haberler', ikon: 'fa-seedling', sayi: 214 }) + '<div class="k-satirlar">' +
-    IYI.map(function(x){ return K.satir({ tur: x[0], alt: 'Sakin Akış', saat: x[5], baslik: x[1], yazar: x[2], sure: x[3], izlenme: x[4] }, { ikon: 'fa-leaf' }); }).join('') +
+    IYI.map(function(x){ return K.satir({ tur: x[0], alt: 'Sakin Akış', saat: x[5], baslik: x[1], yazar: x[2], sure: x[3], izlenme: x[4], g: GOR[x[1]] }, { ikon: 'fa-leaf' }); }).join('') +
     (DUR === 'daha-fazla' ? (HAL === 'son' || HAL === 'hata' ? '' : K.iskelet('satir', 1)) + K.dahaFazla(HAL === 'son' || HAL === 'hata' ? HAL : 'yukleniyor') : '') + '</div></section>';
 
   var hata = DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? 'cevrimdisi' : '';

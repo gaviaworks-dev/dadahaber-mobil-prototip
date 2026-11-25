@@ -41,7 +41,9 @@
     T.map(function(t){ return K.cip(t, { ikon: 'fa-heart', sayi: DUR === 'bos' ? null : S.filter(function(x){ return x.neden === t; }).length, attr: 'data-suz="' + t + '"' }); }).join('') +
     '<a class="k-cip" href="' + K.git('tercihler') + '">' + I('fa-pen') + 'Düzenle</a></div>';
   var mac = '<div class="k-ic" data-neden="Galatasaray" style="padding-top:var(--b-16)">' + K.mac() + '</div>';
-  var liste = '<div class="k-satirlar">' + S.map(function(x){ return K.satir(Object.assign({ alt: x.neden, ikon: 'fa-heart' }, x.h), { href: x.kose ? K.git('kose') : K.git('detay') }).replace('<a class="k-satir', '<a data-neden="' + x.neden + '" class="k-satir'); }).join('') +
+  /* K44 kural 7: köşe yazısı köşe satırıyla (K.koseSatir) */
+  var liste = '<div class="k-satirlar">' + S.map(function(x){ return (x.kose ? K.koseSatir(KY).replace('<a class="k-kose-satir', '<a data-neden="' + x.neden + '" class="k-kose-satir')
+      : K.satir(Object.assign({ alt: x.neden, ikon: 'fa-heart' }, x.h), { href: K.git('detay') }).replace('<a class="k-satir', '<a data-neden="' + x.neden + '" class="k-satir')); }).join('') +
     (DUR === 'daha-fazla' ? (HAL === 'son' || HAL === 'hata' ? '' : K.iskelet('satir', 1)) + K.dahaFazla(HAL === 'son' || HAL === 'hata' ? HAL : 'yukleniyor') : '') + '</div>';
   var misafir = '<div class="k-ic">' + K.bolumKart({ ikon: 'fa-heart', baslik: 'Konu seç, haberlerin sana göre gelsin', icerik:
       '<p class="duz">Takım, şehir ya da konu seç; seçtiklerinle ilgili haberler burada ve ana sayfanda öne çıksın.</p>' +

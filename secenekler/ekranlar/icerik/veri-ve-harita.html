@@ -36,9 +36,10 @@
   var SAYI = [['Asgari ücret · 2025', '22.104 TL', '2015\'te 1.000 TL', 'TÜİK · 22.11.2026'], ['Kira · İstanbul', '%74', 'Yıllık artış', 'TÜİK · 21.11.2026'],
     ['İhracat · Otomotiv', '%17', '2025 payı', 'TİM · 20.11.2026'], ['Elektrikli araç', '42 bin', '3. çeyrek satış', 'ODMD · 19.11.2026']];
   /* kaynak: public veri-ve-harita.html "Veri ve Harita Haberleri" (138; ilk sayfa) */
+  /* K44 kural 8: müze → kültür merkezi (akm); kira, işsizlik, konut, trafik kazası, baraj ve otomotiv verilerine uygun görsel yok, yazılı */
   var HABER = [['Kira artışı büyükşehirlerde yavaşlıyor: il il son veriler', 'Ozan Er', '5 dk', '8,1 B'], ['İşsizlik oranı ekimde yüzde 8,6 oldu', 'Nilay Ersoy', '3 dk', '13,4 B'],
     ['Konut satışları ekimde yüzde 12 arttı: en çok satış yapılan iller', 'Ozan Er', '6 dk', '6,7 B'], ['Yenilenebilir enerjinin elektrik üretimindeki payı yüzde 58\'e ulaştı', 'Ozan Er', '3 dk', '12,0 B', 'ruzgar', '22 Kas'],
-    ['Müze ziyaretçi sayısı yılın ilk on ayında 28 milyona ulaştı', 'Nilay Ersoy', '2 dk', '13,9 B', '', '22 Kas'], ['Trafik kazalarında can kaybı yılın ilk dokuz ayında yüzde 8 azaldı', 'Ozan Er', '5 dk', '11,3 B', '', '22 Kas'],
+    ['Müze ziyaretçi sayısı yılın ilk on ayında 28 milyona ulaştı', 'Nilay Ersoy', '2 dk', '13,9 B', 'akm', '22 Kas'], ['Trafik kazalarında can kaybı yılın ilk dokuz ayında yüzde 8 azaldı', 'Ozan Er', '5 dk', '11,3 B', '', '22 Kas'],
     ['Barajlardaki doluluk oranları: büyükşehirler karşılaştırması', 'İrem Su', '3 dk', '3,9 B', '', '21 Kas'], ['Otomotiv ihracatı ekimde 3,4 milyar dolar oldu', 'İrem Su', '4 dk', '9,2 B', '', '21 Kas']];
 
   var TAB = Q.get('gorunum') === 'tablo' ? 1 : 0;

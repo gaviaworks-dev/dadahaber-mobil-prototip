@@ -26,17 +26,18 @@
   var X = [
     { alt: 'Faiz Oranları', baslik: 'Merkez Bankası politika faizini yüzde 42,5 seviyesinde sabit tuttu', yazar: 'Elif Aras', sure: '3 dk', izlenme: '27,5 B', saat: '14.00', g: 'faiz' },
     { alt: 'Enflasyon', baslik: 'Kasım ayı piyasa katılımcıları anketinde yıl sonu beklentisi geriledi', yazar: 'Elif Aras', sure: '3 dk', izlenme: '9,4 B', saat: '07.40' },
-    { alt: 'Türkiye Ekonomisi', baslik: 'Merkez Bankası brüt rezervleri 158 milyar dolara yükseldi', yazar: 'Can Demir', sure: '2 dk', izlenme: '13,2 B', saat: '07.15' },
+    { alt: 'Türkiye Ekonomisi', baslik: 'Merkez Bankası brüt rezervleri 158 milyar dolara yükseldi', yazar: 'Can Demir', sure: '2 dk', izlenme: '13,2 B', saat: '07.15', g: 'altin' },
     { alt: 'Döviz', baslik: 'Kur korumalı mevduat bakiyesi bir haftada 40 milyar lira azaldı', yazar: 'Elif Aras', sure: '3 dk', izlenme: '8,7 B', saat: '22 Kas' },
     { alt: 'Bankacılık', baslik: 'Kredi büyüme sınırlarında yeni düzenleme yürürlüğe girdi', yazar: 'Nazlı Öztürk', sure: '4 dk', izlenme: '11,0 B', saat: '22 Kas' },
-    { alt: 'Faiz Oranları', baslik: 'Para Politikası Kurulu toplantı özeti yayımlandı', yazar: 'Can Demir', sure: '5 dk', izlenme: '7,1 B', saat: '22 Kas' },
-    { alt: 'Enflasyon', baslik: 'Merkez Bankası Başkanı bütçe sunumunda enflasyon hedefini açıkladı', yazar: 'Can Demir', sure: '4 dk', izlenme: '18,4 B', saat: '22 Kas' },
-    { alt: 'Bankacılık', baslik: 'Kredi kartı azami faiz oranları aralık ayı için ilan edildi', yazar: 'Nazlı Öztürk', sure: '2 dk', izlenme: '16,5 B', saat: '22 Kas' },
+    { alt: 'Faiz Oranları', baslik: 'Para Politikası Kurulu toplantı özeti yayımlandı', yazar: 'Can Demir', sure: '5 dk', izlenme: '7,1 B', saat: '22 Kas', g: 'faiz' },
+    { alt: 'Enflasyon', baslik: 'Merkez Bankası Başkanı bütçe sunumunda enflasyon hedefini açıkladı', yazar: 'Can Demir', sure: '4 dk', izlenme: '18,4 B', saat: '22 Kas', g: 'tbmm' },
+    { alt: 'Bankacılık', baslik: 'Kredi kartı azami faiz oranları aralık ayı için ilan edildi', yazar: 'Nazlı Öztürk', sure: '2 dk', izlenme: '16,5 B', saat: '22 Kas', g: 'kredi-karti' },
     { alt: 'Enflasyon', baslik: 'Finansal İstikrar Raporu\'nda hane halkı borçluluğuna dikkat çekildi', yazar: 'Can Demir', sure: '4 dk', izlenme: '5,6 B', saat: '21 Kas' },
     { alt: 'Türkiye Ekonomisi', baslik: 'Cari işlemler dengesi eylülde fazla verdi', yazar: 'Elif Aras', sure: '3 dk', izlenme: '9,8 B', saat: '21 Kas' },
     { alt: 'Kişisel Finans', baslik: 'Zorunlu karşılık oranlarındaki değişiklik mevduata nasıl yansır', yazar: 'Nazlı Öztürk', sure: '4 dk', izlenme: '10,2 B', saat: '21 Kas' },
-    { alt: 'Döviz', baslik: 'Haftalık menkul kıymet verilerinde yabancı girişi sürdü', yazar: 'Nazlı Öztürk', sure: '3 dk', izlenme: '6,3 B', saat: '21 Kas' }
+    { alt: 'Döviz', baslik: 'Haftalık menkul kıymet verilerinde yabancı girişi sürdü', yazar: 'Nazlı Öztürk', sure: '3 dk', izlenme: '6,3 B', saat: '21 Kas', g: 'borsa' }
   ];
+  /* K44 kural 8: konuya uygun görsel (KAYNAK.txt): rezerv → altın, PPK → Merkez Bankası, bütçe sunumu → TBMM, kredi kartı → kart terminali, menkul kıymet → borsa; öteki veriler yazılı */
   X.forEach(function(h){ h.ikon = 'fa-chart-column'; }); /* hepsi Finans bölümünde (sözlük) */
 
   /* Takip et: üyede düğme kendisi (kit data-takip, kısa bildirim); misafirde giriş tetik paneli (C30 varsayımı onaylanmadı) */

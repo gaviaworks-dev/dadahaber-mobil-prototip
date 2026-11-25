@@ -9,7 +9,7 @@
   Yapı: büyük başlık → sekmeler (İlgi alanları · Takım · Şehir · Bana Etkisi; yapışık) → sekmenin içeriği:
         İlgi alanları: konu seçimiyle aynı çip ızgarası (çoklu) · Takım: takım ara + takım kutuları (ana sayfadaki "Takımını Ekle" buraya gelir)
         · Şehir: seçili şehir + Şehir seç alt sayfası · Bana Etkisi: profil çipleri (Öğrenci, Çalışan, Emekli, Ev sahibi, Kiracı, Esnaf; çoklu).
-  Parametreler: ?sekme=ilgi|takim|sehir|etkisi · ?uye=0 (tercihler bu cihazda şeridi) · ?tema=koyu · ?calan=1
+  Parametreler: ?sekme=ilgi|takim|sehir|etkisi · ?uye=0 (tercihler bu cihazda şeridi; K44: Bana Etkisi sekmesi yok) · ?tema=koyu · ?calan=1
   Veri: public hesabim-tercihler.html (İlgi Alanları 10 konu, Bana Etkisi Profili 6 seçenek ve açıklaması, Şehrin İstanbul), public sözlük puan_tablosu (18 Süper Lig takımı), D.uye (Galatasaray).
   Varsayımlar (onaylanmadı): örnek üyede seçili ilgi alanları (Ekonomi, Spor, Dünya, Savunma, Teknoloji) ve Bana Etkisi profili (Çalışan, Kiracı).
 -->
@@ -27,6 +27,7 @@
 (function(){
   var e = document.getElementById('ekran'), Q = K.q;
   var SK = [['ilgi', 'İlgi alanları'], ['takim', 'Takım'], ['sehir', 'Şehir'], ['etkisi', 'Bana Etkisi']];
+  if (!K.uye) SK.pop(); /* K44 kural 6: Bana Etkisi yalnız üyeye; misafirde sekmesi yok */
   var si = Math.max(0, SK.map(function(x){ return x[0]; }).indexOf(Q.get('sekme')));
   /* kaynak: dadahaber-prototip/hesabim-tercihler.html */
   var ILGI = [['Ekonomi', 'fa-chart-column', 1], ['Teknoloji', 'fa-microchip', 1], ['Spor', 'fa-futbol', 1], ['Kültür ve sanat', 'fa-masks-theater', 0], ['Sağlık', 'fa-heart-pulse', 0],
@@ -49,7 +50,7 @@
     return '<div class="k-ic" style="padding-top:var(--b-16)">' + izgara(PROFIL) + not('Birden fazla profil seçebilirsin. Haberlerde "Bana etkisi" bölümü bu profile göre öne çıkar.') + '</div>' +
       K.grup('', [{ ikon: 'fa-user', baslik: 'Bana Etkisi', alt: 'Profiline göre haberler', href: K.u('ekranlar/icerik/bana-etkisi.html') }]);
   }
-  e.innerHTML = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Tercihler</h1><p>İlgi alanların, takımın, şehrin ve Bana Etkisi profilin.</p></div>' +
+  e.innerHTML = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>Tercihler</h1><p>İlgi alanların, takımın, şehrin' + (K.uye ? ' ve Bana Etkisi profilin' : '') + '.</p></div>' +
     (!K.uye ? '<div class="k-ic" style="padding-bottom:var(--b-8)">' + K.serit({ ikon: 'fa-mobile-screen', metin: 'Tercihlerin bu telefonda', alt: 'Giriş yaparsan her cihazda seninle.' }) + '</div>' : '') +
     '<div style="position:sticky;top:var(--k-ub-h);z-index:60;background:var(--zemin)">' + K.sekmeler(SK.map(function(x){ return x[1]; }), si) + '</div><div id="tr-govde">' + govde(si) + '</div><div class="k-son"></div>';
   K.ustCubuk({ geri: true, baslik: 'Tercihler', buyuk: true });

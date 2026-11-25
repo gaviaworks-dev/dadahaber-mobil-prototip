@@ -74,8 +74,9 @@
   if (DUZ) o += K.hata({ tur: DUR === 'cevrimdisi' ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') });
   else {
     o += '<div class="k-bbas"><h1>Yazarlar</h1><p>Köşe yazarlarımız, editörlerimiz ve muhabirlerimiz</p></div>';
-    if (DUR === 'yukleniyor') o += '<section class="k-bl sik">' + K.iskelet('ray') + '</section><div class="k-satirlar" role="status" aria-label="Yükleniyor">' + isk + '</div>';
-    else o += '<section class="k-bl sik">' + K.bb({ baslik: 'Köşe Yazıları', ikon: 'fa-quote-left' }) + K.ray(D.koseYazilari.map(K.kose).join('')) + '</section>' +
+    if (DUR === 'yukleniyor') o += '<section class="k-bl sik"><div class="k-satirlar">' + K.iskelet('satir', 2) + '</div></section><div class="k-satirlar" role="status" aria-label="Yükleniyor">' + isk + '</div>';
+    /* K44 kural 7: Köşe Yazıları sarı kart rayı yerine köşe satırları (K.koseSatir) */
+    else o += '<section class="k-bl sik">' + K.bb({ baslik: 'Köşe Yazıları', ikon: 'fa-quote-left', sayi: D.koseYazilari.length }) + '<div class="k-satirlar">' + D.koseYazilari.map(function(k){ return K.koseSatir(k); }).join('') + '</div></section>' +
       '<section class="k-bl">' + K.bb({ baslik: 'Yazar Dizini', ikon: 'fa-feather-pointed', sayi: Y.length }) + '<div class="k-cip-satiri">' + K.cipler(C, sec) + '</div><div id="dizin">' + liste(sec) + '</div></section>';
   }
   e.innerHTML = o + '<div class="k-son"></div>';

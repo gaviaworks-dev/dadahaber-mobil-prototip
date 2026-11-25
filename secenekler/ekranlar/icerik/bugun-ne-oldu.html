@@ -28,19 +28,20 @@
 (function(){
   var e = document.getElementById('ekran'), Q = K.q, DUR = K.durum, I = K.I, HAL = Q.get('hal');
   /* kaynak: public bugun-ne-oldu.html (23 Kasım 2026 Pazartesi · 12 gelişme) */
+  /* K44 kural 8: D'de görseli olan aynı haberlere kendi görseli (bütçe tbmm, havalimanı kar-sokak, asgari, millî takım, YKS, AB göç); otoyol, Kocaeli-Sakarya ve AFAD uyarısı yazılı */
   var X = [
     ['16.05', 'İstanbul Valiliği: okullar yarın da tatil', 'Kar yağışının yarın öğle saatlerine kadar sürmesi beklendiği için İstanbul\'da bütün okullarda eğitime bir gün daha ara verildi.', 'Gündem', 'İstanbul Valiliği', 'kar-istanbul'],
-    ['15.42', 'Bütçe görüşmelerinde siyasi parti gruplarının ilk konuşmaları tamamlandı', 'TBMM Genel Kurulu\'nda 2027 bütçesinin tümü üzerindeki görüşmeler sürüyor; grup konuşmalarının ardından bakanlıkların bütçelerine geçilecek.', 'Siyaset', 'TBMM'],
-    ['15.20', 'İstanbul havalimanlarında kar nedeniyle 46 sefer iptal edildi', 'İptaller ağırlıkla iç hat seferlerinde. Havayolu şirketleri yolculara uçuş durumunu yola çıkmadan kontrol etmelerini önerdi.', 'Gündem', 'DHMİ'],
+    ['15.42', 'Bütçe görüşmelerinde siyasi parti gruplarının ilk konuşmaları tamamlandı', 'TBMM Genel Kurulu\'nda 2027 bütçesinin tümü üzerindeki görüşmeler sürüyor; grup konuşmalarının ardından bakanlıkların bütçelerine geçilecek.', 'Siyaset', 'TBMM', 'tbmm'],
+    ['15.20', 'İstanbul havalimanlarında kar nedeniyle 46 sefer iptal edildi', 'İptaller ağırlıkla iç hat seferlerinde. Havayolu şirketleri yolculara uçuş durumunu yola çıkmadan kontrol etmelerini önerdi.', 'Gündem', 'DHMİ', 'kar-sokak'],
     ['14.40', 'Kuzey Marmara Otoyolu\'nda ağır tonajlı araç geçişine kısıtlama', 'Kısıtlama yağış sona erene kadar sürecek. Tırlar için Kınalı ve Akyazı yönlerinde bekleme alanları açıldı.', 'Gündem', 'Karayolları Genel Müdürlüğü'],
-    ['14.05', 'Asgari ücret tespit komisyonu ilk toplantısını 4 Aralık\'ta yapacak', 'Komisyon, işçi ve işveren temsilcilerinin taleplerini ilk toplantıda dinleyecek; yeni tutarın aralık sonunda açıklanması bekleniyor.', 'Finans', 'Çalışma ve Sosyal Güvenlik Bakanlığı'],
+    ['14.05', 'Asgari ücret tespit komisyonu ilk toplantısını 4 Aralık\'ta yapacak', 'Komisyon, işçi ve işveren temsilcilerinin taleplerini ilk toplantıda dinleyecek; yeni tutarın aralık sonunda açıklanması bekleniyor.', 'Finans', 'Çalışma ve Sosyal Güvenlik Bakanlığı', 'asgari'],
     ['14.00', 'Merkez Bankası politika faizini yüzde 42,5\'te sabit tuttu', 'Para Politikası Kurulu olağanüstü toplantısında, enflasyon beklentilerindeki iyileşmenin sürdüğünü ancak sıkı duruşun korunacağını açıkladı.', 'Finans', 'TCMB', 'faiz'],
-    ['13.48', 'Millî takımın aralık kampı aday kadrosu açıklandı', 'Aday kadroda 31 oyuncu yer aldı; kamp 8 Aralık\'ta Antalya\'da başlayacak.', 'Spor', 'TFF'],
+    ['13.48', 'Millî takımın aralık kampı aday kadrosu açıklandı', 'Aday kadroda 31 oyuncu yer aldı; kamp 8 Aralık\'ta Antalya\'da başlayacak.', 'Spor', 'TFF', 'milli'],
     ['13.20', 'KAAN\'ın ikinci prototipi ilk test uçuşunu gerçekleştirdi', 'Uçuş yaklaşık 40 dakika sürdü. Test programının gelecek yıl boyunca iki prototiple sürdürülmesi planlanıyor.', 'Savunma', 'TUSAŞ', 'kaan'],
     ['12.25', 'Kocaeli ve Sakarya\'da da okullar tatil edildi', 'İki ilin valilikleri, kar yağışı ve buzlanma nedeniyle yarın da eğitime ara verildiğini duyurdu.', 'Gündem', 'Kocaeli ve Sakarya valilikleri'],
-    ['11.40', 'ÖSYM, 2027 YKS başvuru tarihlerini açıkladı', 'Başvurular 6 Şubat\'ta başlayıp 2 Mart\'ta sona erecek; sınav haziranın üçüncü haftasında yapılacak.', 'Kampüs', 'ÖSYM'],
+    ['11.40', 'ÖSYM, 2027 YKS başvuru tarihlerini açıkladı', 'Başvurular 6 Şubat\'ta başlayıp 2 Mart\'ta sona erecek; sınav haziranın üçüncü haftasında yapılacak.', 'Kampüs', 'ÖSYM', 'yks'],
     ['11.30', 'AFAD\'dan sürücülere kış lastiği ve zincir uyarısı', 'AFAD, zorunlu olmadıkça yola çıkılmamasını ve araçta battaniye, su ve yedek şarj bulundurulmasını istedi.', 'Gündem', 'AFAD'],
-    ['10.15', 'AB dışişleri bakanları göç paketinde uzlaşıya varamadı', 'Brüksel\'deki toplantıda sığınma başvurularının paylaşımı konusunda görüş ayrılığı sürdü; konu aralıktaki zirveye kaldı.', 'Dünya', 'AB Konseyi']
+    ['10.15', 'AB dışişleri bakanları göç paketinde uzlaşıya varamadı', 'Brüksel\'deki toplantıda sığınma başvurularının paylaşımı konusunda görüş ayrılığı sürdü; konu aralıktaki zirveye kaldı.', 'Dünya', 'AB Konseyi', 'ab-goc']
   ];
   var GUN = [['Sal', 17], ['Çar', 18], ['Per', 19], ['Cum', 20], ['Cmt', 21], ['Paz', 22], ['Pzt', 23]];
   var SEC = DUR === 'bos' ? 0 : 6;
