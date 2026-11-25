@@ -130,7 +130,7 @@
     return ust(O, alt2) +
       '<div class="k-ic" style="padding-top:var(--b-16)">' + K.serit({ ikon: 'fa-chart-column', metin: 'Geçmiş veri yok', alt: 'Bu enstrüman için grafik ve geçmiş fiyat yayımlanmıyor.' }) + '</div>' +
       '<section class="k-bl">' + K.bb({ baslik: 'Bugün', ikon: 'fa-clock' }) + '<div class="k-ic">' + K.tablo({ cls: 'sol', sutunlar: ['Bugün', 'Değer'], satirlar: O.tablo.concat([['Değişim', yon(O.deg, O.yon)]]) }) + '</div></section>' +
-      '<section class="k-bl">' + K.bb({ baslik: g === 'endeks' ? 'Öteki Endeksler' : 'Bağlı Enstrümanlar', ikon: 'fa-chart-column', baglanti: { metin: GAD[g], href: K.u('ekranlar/icerik/piyasalar.html', 'sekme=' + ({ doviz: 'doviz', altin: 'altin', kripto: 'kripto', endeks: 'borsa', emtia: 'ekran' })[g]) } }) +
+      '<section class="k-bl">' + K.bb({ baslik: g === 'endeks' ? 'Öteki Endeksler' : 'Bağlı Enstrümanlar', ikon: 'fa-chart-column', baglanti: { metin: GAD[g], href: K.altYol(({ doviz: 'Döviz', altin: 'Altın', kripto: 'Kripto Para', endeks: 'Borsa', emtia: 'Piyasa Ekranı' })[g], 'Finans') } }) +
         '<div class="k-ray s10">' + bagli.join('') + '</div></section>' +
       haberBlok(hl, h[1], V.HABER_SAYI[h[0]]);
   }

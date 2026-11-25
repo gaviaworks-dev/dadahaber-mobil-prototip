@@ -62,10 +62,10 @@
       '<section class="k-bl">' + K.bb({ baslik: 'Künye', ikon: 'fa-circle-info' }) + '<div class="k-ic">' +
         K.tablo({ cls: 'sol', sutunlar: ['Bilgi', 'Değer'], satirlar: [['Kod', H.kod], ['Şirket', H.ad], ['Piyasa', 'Borsa İstanbul Pay Piyasası'], ['En aktif sırası', H.sira + ' / 592'], ['İşlem saatleri', '10.00–18.00'], ['Veri gecikmesi', '15 dakika']] }) + '</div></section>' +
       '<section class="k-bl">' + K.bb({ baslik: 'Endeksler', ikon: 'fa-chart-column', not: 'Borsa İstanbul' }) + '<div class="k-ray s10">' + V.END.map(function(x){ return py([x[0], x[1], x[2], x[3]], V.href(x[0])); }).join('') + '</div></section>' +
-      '<section class="k-bl">' + K.bb({ baslik: 'Öteki Hisseler', ikon: 'fa-chart-column', baglanti: { metin: 'Borsa', href: K.u('ekranlar/icerik/piyasalar.html', 'sekme=borsa') } }) +
+      '<section class="k-bl">' + K.bb({ baslik: 'Öteki Hisseler', ikon: 'fa-chart-column', baglanti: { metin: 'Borsa', href: K.altYol('Borsa', 'Finans') } }) +
         '<div class="k-ray s10">' + ote.map(function(x){ return py([x[0], x[2], x[3], x[4]], V.href(x[0])); }).join('') + '</div></section>' +
       '<section class="k-bl">' + K.bb({ baslik: 'Borsa Haberleri', ikon: 'fa-newspaper', sayi: DUR === 'bos' ? null : V.HABER_SAYI.borsa }) +
-        (DUR === 'bos' ? K.bos({ ikon: 'fa-newspaper', baslik: 'Bu hisseyle ilgili haber yok', aciklama: 'Yeni haber gelince burada görünür.', eylem: { metin: 'Borsa', ikon: 'fa-chart-column', tur: 'sade', href: K.u('ekranlar/icerik/piyasalar.html', 'sekme=borsa') } })
+        (DUR === 'bos' ? K.bos({ ikon: 'fa-newspaper', baslik: 'Bu hisseyle ilgili haber yok', aciklama: 'Yeni haber gelince burada görünür.', eylem: { metin: 'Borsa', ikon: 'fa-chart-column', tur: 'sade', href: K.altYol('Borsa', 'Finans') } })
           : '<div class="k-ic">' + not(H.kod + ' için ayrı haber yok; Borsa İstanbul gündemi gösteriliyor.') + '</div><div class="k-satirlar">' + V.HABER.borsa.slice(0, 5).map(function(h){ return K.satir(h); }).join('') + '</div>') +
         '<div class="k-ic">' + not('Fiyat ve yorumlar yatırım danışmanlığı değildir; veriler 15 dakika gecikmeli ve bilgilendirme amaçlıdır.') + '</div></section>';
   }
@@ -74,7 +74,7 @@
   var DUZ = DUR === 'hata' || BUL || (DUR === 'cevrimdisi' && Q.get('onbellek') === '0');
   if (DUR === 'yukleniyor') e.innerHTML = '<div class="k-ust-bosluk"></div><div class="k-ic" style="padding-top:var(--b-8)">' + K.iskelet('metin', 3) +
     '<div style="padding-top:var(--b-24)"><i class="k-isk kontrol" style="width:100%;height:48px"></i></div><div style="padding-top:var(--b-24)">' + K.iskelet('metin', 10) + '</div></div><div class="k-son"></div>';
-  else if (DUZ) e.innerHTML = '<div class="k-ust-bosluk"></div>' + (BUL ? K.bos({ ikon: 'fa-magnifying-glass', baslik: 'Hisse bulunamadı', aciklama: '"' + kod + '" kodlu bir hisse yok ya da işlem görmüyor. Kodu Borsa listesinde ara.', eylem: { metin: 'Borsa', ikon: 'fa-chart-column', tur: 'birincil', href: K.u('ekranlar/icerik/piyasalar.html', 'sekme=borsa') } })
+  else if (DUZ) e.innerHTML = '<div class="k-ust-bosluk"></div>' + (BUL ? K.bos({ ikon: 'fa-magnifying-glass', baslik: 'Hisse bulunamadı', aciklama: '"' + kod + '" kodlu bir hisse yok ya da işlem görmüyor. Kodu Borsa listesinde ara.', eylem: { metin: 'Borsa', ikon: 'fa-chart-column', tur: 'birincil', href: K.altYol('Borsa', 'Finans') } })
     : K.hata({ tur: DUR === 'cevrimdisi' ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') })) + '<div class="k-son"></div>';
   else e.innerHTML = '<div class="k-ust-bosluk"></div>' + sayfa() + '<div class="k-son"></div>';
 

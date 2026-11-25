@@ -12,6 +12,14 @@
      Sorgu: ?sekme=ekran|doviz|altin|borsa|kripto|faiz|akaryakit · &sira=artan|azalan|hacim (Borsa, Kripto) · &ara=<metin> (Borsa, Kripto arama dolu) · &tum=1 (uzun liste açık; varsayılan ilk 20 satır + "hepsini göster")
             ?durum=cevirici (sekmenin hesaplayıcı alt sayfası: Döviz/Kripto çevirici, Altın hesaplayıcı, Kredi hesaplayıcı, Yakıt maliyeti) | yukleniyor | yenileniyor (&hal=cekiliyor|birak|bitti)
             | bos (aramada sonuç yok; sekme yoksa Borsa) | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0)
+     KONU SAYFASI KİPİ (Yasin Bey, 25 Kasım: finans alt sayfaları sitedeki mantıkla açılır; menü, Bölümler ve bölüm listesinden K.altYol ile gelinir):
+     ?konu=doviz|altin|borsa|kripto|faiz|akaryakit → sekme çubuğu yok; görselli banner (başlık = sitedeki sayfa adı, altında sitedeki banner alt metni + güncelleme saati) →
+     konunun bilgi blokları sitedeki sırayla, hesaplayıcı sayfada açık kart (alt sayfa düğmesi değil) → konunun haberleri (sitenin ilk sayfası, 8 haber; "Tümü" bölüm listesini o konuyla açar) → yatırım uyarısı.
+       doviz: Döviz Kurları tablosu → Döviz Çevirici → 4 haber → Bu Hafta Takvimde → 4 haber (public doviz.html'deki gibi takvim haber akışının arasında)
+       altin: Altın Fiyatları tablosu → Altın Hesaplayıcı → haberler · kripto: Kripto Para Fiyatları (Piyasa değeri/Artan/Azalan, arama) → Kripto Çevirici → haberler
+       borsa: Endeksler ve Hisseler (endeks kartları) → Hisseler (En aktif/Artan/Azalan/Hacim, arama) → Endeksler paneli (BİST 100/30/Banka/Sınai) → haberler; Günün Hareketlileri yalnız sekmeli kipte (sitenin borsa.html'inde yok)
+       faiz: Politika · Mevduat · Kredi tabloları → Kredi Hesaplayıcı → haberler · akaryakit: Pompa Fiyatları (il seçici, tablo) → Yakıt Maliyeti → haberler
+     Konu kipinde de &sira, &ara, &tum ve ?durum= (yukleniyor, yenileniyor, cevirici, bos, hata, cevrimdisi) aynı işlevlerle çalışır; banner fotoğrafı .k-bbas[data-g] (akaryakıtta uygun fotoğraf yok: koyu zemin).
      Veri: piyasa-veri.js (window.PV; public sayfalar + sözlük, kaynakları orada); güncelleme saati D.piyasa. -->
 <link rel="stylesheet" href="../../_ortak/cerceve.css">
 <link rel="stylesheet" href="../../_ortak/marka.css">
@@ -24,6 +32,14 @@
 <style>
 /* hesaplayıcı alanlarının arası (kit alanı tek başına) */
 .x-hesap > * + *{margin-top:var(--b-12)}
+/* KİT ADAYI: araç kartı — hamilelik.html'deki x-arac ile aynı (sayfada açık hesaplayıcı kabı; kitte k-grup-k yalnız satır taşıyor) */
+.x-arac{padding:var(--b-16);border-radius:var(--k-kart);background:var(--k-yuzey)}
+.x-arac .k-kutu-b{margin-bottom:var(--b-12)}
+.x-arac .k-girdi{background:var(--zemin)}
+.x-arac .k-serit{margin-top:var(--b-16);background:var(--zemin)}
+.x-arac .k-serit>i{color:var(--marka-metin)}
+/* Endeksler paneli: iki sütunlu sayı ızgarası (hamilelik.html ile aynı yerel ek) */
+.k-istat.iki{grid-template-columns:repeat(2,1fr)}
 </style>
 </head>
 <body>
@@ -36,6 +52,16 @@
   var sec = Q.get('sekme') || (DUR === 'bos' ? 'borsa' : 'ekran');
   var si = Math.max(0, SK.map(function(x){ return x[0]; }).indexOf(sec));
   sec = SK[si][0];
+  /* konu sayfası kipi: ad, banner alt metni (public sayfanın banner görev satırının kısaltması; banner alt satırı tek satır), banner fotoğrafı (assets/gorsel/haber/KAYNAK.txt), liste konusu (K.altYol biçimi) */
+  var KONUL = {
+    doviz: { ad: 'Döviz', alt: 'Kurlar, çevirici, haberler', g: 'faiz', kod: 'doviz' },
+    altin: { ad: 'Altın', alt: 'Gram, çeyrek, cumhuriyet, ons', g: 'altin', kod: 'altin' },
+    borsa: { ad: 'Borsa', alt: 'Endeksler, hisseler, şirketler', g: 'borsa', kod: 'borsa' },
+    kripto: { ad: 'Kripto Para', alt: 'Fiyatlar, çevirici, haberler', g: 'veri-merkezi', kod: 'kripto-para' },
+    faiz: { ad: 'Faiz Oranları', alt: 'Politika, mevduat ve kredi', g: 'faiz', kod: 'faiz-oranlari' },
+    akaryakit: { ad: 'Akaryakıt Fiyatları', alt: 'İllere göre pompa fiyatları', g: '', kod: 'akaryakit-fiyatlari', saat: '06.00' } };
+  var KONU = KONUL[Q.get('konu')] ? Q.get('konu') : '';
+  if (KONU) { sec = KONU; si = SK.map(function(x){ return x[0]; }).indexOf(sec); }
   /* arama ve sıralama (Borsa, Kripto) */
   var ARA = DUR === 'bos' ? 'XYZ' : (Q.get('ara') || ''), SIRA = Q.get('sira') || '', TUM = Q.get('tum') === '1', ILK = 20;
 
@@ -46,12 +72,33 @@
   function tablo(o, hrefs){ var h = K.tablo(o), i = h.indexOf('<tbody>'), n = 0;
     return h.slice(0, i) + h.slice(i).replace(/<tr/g, function(m){ var u = hrefs && hrefs[n++]; return u ? '<tr data-href="' + u + '"' : m; }); }
   function py(x, h){ return (h ? '<a class="k-py" href="' + h + '">' : '<div class="k-py">') + '<small>' + x[0] + '</small><b>' + x[1] + '</b><em class="' + x[3] + '">' + (x[3] === 'y' ? '▲' : x[3] === 'd' ? '▼' : '') + ' ' + x[2] + '</em>' + (h ? '</a>' : '</div>'); }
-  function hesapBtn(k){ return '<div style="padding-top:var(--b-16)">' + K.btn({ metin: V.HESAP[k].baslik.charAt(0).toUpperCase() + V.HESAP[k].baslik.slice(1), ikon: 'fa-calculator', tur: 'sade', tam: true, attr: 'data-hesap="' + k + '"' }) + '</div>'; }
+  /* hesaplayıcı alanları: sekmeli kipte alt sayfada (hesap), konu kipinde sayfada açık kartta (hesapKart); public sayfadaki örnek değerlerle */
+  function hesapAlanlar(k, sayfa){
+    var h = V.HESAP[k];
+    var alan = function(a){ return K.alan({ etiket: a[0], deger: a[1], odak: !!sayfa && !!a[3], sag: K.etiket(a[2]) }).replace('<input ', '<input inputmode="decimal" ').replace('class="k-alan-e"', 'class="k-alan-e k-dk44"'); };
+    var al = h.alanlar.map(alan);
+    if (h.degis) al.splice(1, 0, '<div style="display:flex;justify-content:center">' + K.ikonBtn({ ikon: 'fa-right-left', etiket: 'Birimleri değiştir', tur: 'dolu' }) + '</div>');
+    return '<div class="x-hesap">' + al.join('') + '</div>';
+  }
+  /* public sayfadaki kart başlıkları */
+  var HBAS = { doviz: 'Döviz Çevirici', kripto: 'Kripto Çevirici', altin: 'Altın Hesaplayıcı', faiz: 'Kredi Hesaplayıcı', akaryakit: 'Yakıt Maliyeti' };
+  function hesapKart(k){ var h = V.HESAP[k];
+    return '<div class="x-arac"><div class="k-kutu-b">' + K.I('fa-calculator') + HBAS[k] + '<em>' + h.alt + '</em></div>' + hesapAlanlar(k) + K.serit({ ikon: 'fa-calculator', metin: h.not }) + '</div>'; }
+  function hesapBtn(k){ return '<div style="padding-top:var(--b-16)">' + (KONU ? hesapKart(k) : K.btn({ metin: V.HESAP[k].baslik.charAt(0).toUpperCase() + V.HESAP[k].baslik.slice(1), ikon: 'fa-calculator', tur: 'sade', tam: true, attr: 'data-hesap="' + k + '"' })) + '</div>'; }
   var BASLIK = { ekran: 'Piyasa Haberleri', doviz: 'Döviz Haberleri', altin: 'Altın Haberleri', borsa: 'Borsa Haberleri', kripto: 'Kripto Para Haberleri', faiz: 'Faiz Haberleri', akaryakit: 'Akaryakıt Haberleri' };
+  function satirlar(L){ return '<div class="k-satirlar">' + L.map(function(h){ return K.satir(h); }).join('') + '</div>'; }
+  var UYARI = '<div class="k-ic" style="padding-top:var(--b-16)">' + K.serit({ ikon: 'fa-circle-info', metin: 'Yatırım uyarısı', alt: 'Fiyat, oran ve yorumlar yatırım danışmanlığı değildir; veriler 15 dakika gecikmeli ve bilgilendirme amaçlıdır.' }) + '</div>';
+  /* sekmeli kip: 5 haber, Tümü → Finans · konu kipi: sitenin ilk sayfası (8 haber), Tümü → bölüm listesi o konuyla; Döviz'de "Bu Hafta Takvimde" 4. haberden sonra (public doviz.html) */
   function haberler(k){
-    return '<section class="k-bl">' + K.bb({ baslik: BASLIK[k], ikon: 'fa-newspaper', sayi: V.HABER_SAYI[k], baglanti: { metin: 'Tümü', href: K.git('liste', 'bolum=finans') } }) +
-      '<div class="k-satirlar">' + V.HABER[k].slice(0, 5).map(function(h){ return K.satir(h); }).join('') + '</div>' +
-      '<div class="k-ic" style="padding-top:var(--b-16)">' + K.serit({ ikon: 'fa-circle-info', metin: 'Yatırım uyarısı', alt: 'Fiyat, oran ve yorumlar yatırım danışmanlığı değildir; veriler 15 dakika gecikmeli ve bilgilendirme amaçlıdır.' }) + '</div></section>';
+    var bb = K.bb({ baslik: BASLIK[k], ikon: 'fa-newspaper', sayi: V.HABER_SAYI[k], baglanti: { metin: 'Tümü', href: K.git('liste', 'bolum=finans' + (KONU ? '&konu=' + KONUL[KONU].kod : '')) } });
+    if (!KONU) return '<section class="k-bl">' + bb + satirlar(V.HABER[k].slice(0, 5)) + UYARI + '</section>';
+    if (k !== 'doviz') return '<section class="k-bl">' + bb + satirlar(V.HABER[k]) + UYARI + '</section>';
+    return '<section class="k-bl">' + bb + satirlar(V.HABER[k].slice(0, 4)) + '</section>' + takvimBlok() + '<section class="k-bl">' + satirlar(V.HABER[k].slice(4)) + UYARI + '</section>';
+  }
+  function takvimBlok(){
+    return '<section class="k-bl">' + K.bb({ baslik: 'Bu Hafta Takvimde', ikon: 'fa-calendar-day', baglanti: { metin: 'Takvim', href: K.git('takvim', 'tur=ekonomik') } }) + '<div class="k-ic">' +
+      K.tablo({ cls: 'sol', sutunlar: ['Zaman', 'Olay', 'Önem'], satirlar: V.TAKVIM.map(function(r){ return [ad(r[1], r[0]), ad(r[3], r[2] + ' · ' + r[4]), K.etiket(r[5], { tur: r[5] === 'Yüksek' ? 'kirmizi' : '' })]; }) }) +
+      not('Kuru etkileyebilecek veri ve kararlar · Türkiye saatiyle') + '</div></section>';
   }
   /* uzun liste ilk 20 satırla açılır; haberler gömülmesin (public 50 satırı tek sayfada gösterir) */
   function tumBtn(n, ne){ return '<div style="padding-top:var(--b-12)">' + K.btn({ metin: n + ' ' + ne + ' hepsini göster', ikon: 'fa-chevron-down', tur: 'sade', tam: true, attr: 'data-tum' }) + '</div>'; }
@@ -83,15 +130,28 @@
     return L.slice(0, 5).map(function(r){ return py([r[0], r[2], r[3], r[4]], V.href(r[0])); }).join('');
   }
   var SIRALAR = ['', 'artan', 'azalan', 'hacim'];
-  function borsa(){
-    return '<section class="k-bl sik">' + K.bb({ baslik: 'Endeksler', ikon: 'fa-chart-column', not: 'Borsa İstanbul' }) +
-        '<div class="k-ray s10">' + V.END.map(function(x){ return py([x[0], x[1], x[2], x[3]], V.href(x[0])); }).join('') + '</div></section>' +
-      '<section class="k-bl">' + K.bb({ baslik: 'Günün Hareketlileri', ikon: 'fa-chart-column', not: 'İlk 50 hisse içinden' }) +
-        '<div class="k-ic" data-hrk>' + K.segment(HRK, 0) + '</div><div class="k-ray s10" id="x-hrk" style="padding-top:var(--b-12)">' + hareketli(0) + '</div></section>' +
-      '<section class="k-bl">' + K.bb({ baslik: 'Hisseler', ikon: 'fa-chart-column', not: '<span data-say>' + hisseler().length + ' / 592 hisse</span>' }) +
+  function endeksRay(baslik){ return '<section class="k-bl sik">' + K.bb({ baslik: baslik, ikon: 'fa-chart-column', not: 'Borsa İstanbul' }) +
+        '<div class="k-ray s10">' + V.END.map(function(x){ return py([x[0], x[1], x[2], x[3]], V.href(x[0])); }).join('') + '</div></section>'; }
+  function hisseBlok(){ return '<section class="k-bl">' + K.bb({ baslik: 'Hisseler', ikon: 'fa-chart-column', not: '<span data-say>' + hisseler().length + ' / 592 hisse</span>' }) +
         '<div class="k-ic" data-ara>' + K.ara({ yer: 'Hisse kodu ya da şirket', ses: false, deger: ARA }) + '</div>' +
         '<div style="padding-top:var(--b-12)">' + K.cipler(['En aktif', 'Artan', 'Azalan', 'Hacim'], Math.max(0, SIRALAR.indexOf(SIRA)), { cls: 'x-sira' }) + '</div>' +
-        '<div id="x-liste">' + hisseTablo() + '</div></section>' + haberler('borsa');
+        '<div id="x-liste">' + hisseTablo() + '</div></section>'; }
+  function borsa(){
+    return endeksRay('Endeksler') +
+      '<section class="k-bl">' + K.bb({ baslik: 'Günün Hareketlileri', ikon: 'fa-chart-column', not: 'İlk 50 hisse içinden' }) +
+        '<div class="k-ic" data-hrk>' + K.segment(HRK, 0) + '</div><div class="k-ray s10" id="x-hrk" style="padding-top:var(--b-12)">' + hareketli(0) + '</div></section>' +
+      hisseBlok() + haberler('borsa');
+  }
+  /* konu kipi (public borsa.html sırası): endeks kartları → hisse tablosu → Endeksler paneli (açılış, önceki kapanış, işlem hacmi, gün içi aralık) → haberler */
+  var ESEG = ['BİST 100', 'BİST 30', 'Banka', 'Sınai'];
+  function endeksDetay(i){ var x = V.END[i];
+    return K.istat([[x[1], 'Son · puan'], [x[9], 'Açılış'], [x[6], 'Önceki kapanış'], [x[10], 'İşlem hacmi']]).replace('class="k-istat"', 'class="k-istat iki"').replace(/<a>/g, '<div>').replace(/<\/a>/g, '</div>') +
+      '<div class="k-ic">' + not('Değişim ' + yon(x[2], x[3]) + ' · gün içi en düşük ' + x[7] + ', en yüksek ' + x[8]) +
+      '<div style="padding-top:var(--b-12)">' + K.btn({ metin: x[0] + ' ayrıntısı', sagIkon: 'fa-chevron-right', tur: 'sade', tam: true, href: V.href(x[0]) }) + '</div></div>'; }
+  function borsaKonu(){
+    return endeksRay('Endeksler ve Hisseler') + hisseBlok() +
+      '<section class="k-bl">' + K.bb({ baslik: 'Endeksler', ikon: 'fa-chart-column', not: '23 Kasım · ' + P.guncelleme }) +
+        '<div class="k-ic" data-end>' + K.segment(ESEG, 0) + '</div><div id="x-end">' + endeksDetay(0) + '</div></section>' + haberler('borsa');
   }
   /* ---------- Kripto ---------- */
   function kriptolar(){
@@ -111,7 +171,7 @@
   }
   var KSIRA = ['', 'artan', 'azalan'];
   function kripto(){
-    return '<section class="k-bl sik">' + K.bb({ baslik: 'Kripto Para', ikon: 'fa-chart-column', not: '<span data-say>' + kriptolar().length + ' / 12.480 kripto</span>' }) +
+    return '<section class="k-bl sik">' + K.bb({ baslik: KONU ? 'Kripto Fiyatları' : 'Kripto Para', ikon: 'fa-chart-column', not: '<span data-say>' + kriptolar().length + ' / 12.480 kripto</span>' }) +
         '<div class="k-ic" data-ara>' + K.ara({ yer: 'Kripto kodu ya da adı', ses: false, deger: ARA }) + '</div>' +
         '<div style="padding-top:var(--b-12)">' + K.cipler(['Piyasa değeri', 'Artan', 'Azalan'], Math.max(0, KSIRA.indexOf(SIRA)), { cls: 'x-sira' }) + '</div>' +
         '<div id="x-liste">' + kriptoTablo() + '</div><div class="k-ic">' + hesapBtn('kripto') + '</div></section>' + haberler('kripto');
@@ -130,13 +190,11 @@
     if (k === 'doviz') return '<section class="k-bl sik">' + K.bb({ baslik: 'Döviz Kurları', ikon: 'fa-chart-column', not: 'Serbest piyasa' }) + '<div class="k-ic">' +
         tablo({ cls: 'sol', sutunlar: ['Döviz', 'Alış', 'Satış', 'Değişim', 'Gün içi en düşük – en yüksek'], satirlar: V.DVZ.map(function(r){ return [ad(r[0], r[1]), r[2], r[3], yon(r[4], r[5]), r[6] + ' – ' + r[7]]; }) },
           V.DVZ.map(function(r){ return V.href(r[0]); })) + hesapBtn('doviz') + not('Serbest piyasa kurları · 15 dakika gecikmeli · 23 Kasım 2026, ' + P.guncelleme) + '</div></section>' +
-      '<section class="k-bl">' + K.bb({ baslik: 'Bu Hafta Takvimde', ikon: 'fa-calendar-day', baglanti: { metin: 'Takvim', href: K.git('takvim', 'tur=ekonomik') } }) + '<div class="k-ic">' +
-        K.tablo({ cls: 'sol', sutunlar: ['Zaman', 'Olay', 'Önem'], satirlar: V.TAKVIM.map(function(r){ return [ad(r[1], r[0]), ad(r[3], r[2] + ' · ' + r[4]), K.etiket(r[5], { tur: r[5] === 'Yüksek' ? 'kirmizi' : '' })]; }) }) +
-        not('Kuru etkileyebilecek veri ve kararlar · Türkiye saatiyle') + '</div></section>' + haberler('doviz');
+      (KONU ? '' : takvimBlok()) + haberler('doviz');
     if (k === 'altin') return '<section class="k-bl sik">' + K.bb({ baslik: 'Altın Fiyatları', ikon: 'fa-chart-column', not: 'Kapalıçarşı' }) + '<div class="k-ic">' +
         tablo({ cls: 'sol', sutunlar: ['Tür', 'Alış', 'Satış', 'Değişim', 'Gün içi en düşük – en yüksek'], satirlar: V.ALT.map(function(r){ return [ad(r[0], r[1]), r[2], r[3], yon(r[4], r[5]), r[6] + ' – ' + r[7]]; }) },
           V.ALT.map(function(r){ return V.href(r[0]); })) + hesapBtn('altin') + not('Serbest piyasa fiyatları, TL · 15 dakika gecikmeli · 23 Kasım 2026, ' + P.guncelleme) + '</div></section>' + haberler('altin');
-    if (k === 'borsa') return borsa();
+    if (k === 'borsa') return KONU ? borsaKonu() : borsa();
     if (k === 'kripto') return kripto();
     if (k === 'faiz') return '<section class="k-bl sik">' + K.bb({ baslik: 'Politika Faizleri', ikon: 'fa-building-columns' }) + '<div class="k-ic">' +
         K.tablo({ cls: 'sol', sutunlar: ['Faiz', 'Oran', 'Önceki', 'Karar'], satirlar: V.FZ1.map(function(r){ return [ad(r[0], r[1]), r[2], r[3], r[4]]; }) }) + '</div></section>' +
@@ -152,9 +210,13 @@
     return '';
   }
 
-  var bas = '<div class="k-bbas"><h1>Piyasalar</h1><p>Güncelleme ' + P.guncelleme + ' · 15 dk gecikmeli · satış</p></div>';
+  var KB = KONUL[KONU];
+  /* konu kipi: banner başlığı konu adı, fotoğrafı konuya göre (data-g; "" koyu zemin); sekme çubuğu yok */
+  var bas = KONU ? '<div class="k-bbas" data-g="' + KB.g + '"><h1>' + KB.ad + '</h1><p>Güncelleme ' + (KB.saat || P.guncelleme) + ' · ' + KB.alt + '</p></div>'
+    : '<div class="k-bbas"><h1>Piyasalar</h1><p>Güncelleme ' + P.guncelleme + ' · 15 dk gecikmeli · satış</p></div>';
+  if (KONU) document.title = KB.ad;
   /* alt çizgili sekmeler: yazı 16'dan başlar (kit .k-sekmeler iç boşluğu); denetimde tam genişlik sayılır */
-  var sek = K.sekmeler(SK.map(function(x){ return x[1]; }), si).replace('class="k-sekmeler"', 'class="k-sekmeler" data-tam-genis');
+  var sek = KONU ? '' : K.sekmeler(SK.map(function(x){ return x[1]; }), si).replace('class="k-sekmeler"', 'class="k-sekmeler" data-tam-genis');
   var DUZ = DUR === 'hata' || (DUR === 'cevrimdisi' && Q.get('onbellek') === '0');
   if (DUR === 'yukleniyor') e.innerHTML = '<div class="k-ust-bosluk"></div>' + bas + sek + '<div class="k-ic" style="padding-top:var(--b-24)">' + K.iskelet('metin', 12) + '</div><div class="k-son"></div>';
   else if (DUZ) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: DUR === 'cevrimdisi' ? 'cevrimdisi' : (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') }) + '<div class="k-son"></div>';
@@ -166,11 +228,12 @@
   var ss = e.querySelector('.k-sekmeler [aria-selected="true"]');
   if (ss && si > 2) ss.parentNode.scrollLeft = ss.offsetLeft - ss.parentNode.offsetLeft;
 
-  K.ustCubuk({ geri: true, baslik: 'Piyasalar', buyuk: !DUZ, eylemler: DUZ ? [] : ['paylas'] });
-  K.altCubuk('ana');
+  K.ustCubuk({ geri: true, baslik: KONU ? KB.ad : 'Piyasalar', buyuk: !DUZ, eylemler: DUZ ? [] : ['paylas'] });
+  /* konu sayfasına menü, Bölümler ve bölüm listesinden gelinir: alt çubukta Bölümler */
+  K.altCubuk(KONU ? 'bolum' : 'ana');
   K.oynatici();
 
-  function adres(){ var q = new URLSearchParams(location.search); q.set('sekme', sec); q.delete('durum');
+  function adres(){ var q = new URLSearchParams(location.search); if (!KONU) q.set('sekme', sec); q.delete('durum');
     if (SIRA) q.set('sira', SIRA); else q.delete('sira'); if (ARA) q.set('ara', ARA); else q.delete('ara'); history.replaceState(null, '', '?' + q.toString()); }
   function listeYenile(){ var l = document.getElementById('x-liste'); if (l) l.innerHTML = sec === 'kripto' ? kriptoTablo() : hisseTablo(); }
 
@@ -184,6 +247,8 @@
     if (sr) { SIRA = (sec === 'kripto' ? KSIRA : SIRALAR)[[].indexOf.call(sr.parentNode.children, sr)]; listeYenile(); adres(); }
     var hk = ev.target.closest('[data-hrk] .k-segment button');
     if (hk) document.getElementById('x-hrk').innerHTML = hareketli([].indexOf.call(hk.parentNode.children, hk));
+    var ek = ev.target.closest('[data-end] .k-segment button');
+    if (ek) document.getElementById('x-end').innerHTML = endeksDetay([].indexOf.call(ek.parentNode.children, ek));
     if (ev.target.closest('[data-temizle], [data-ara] .temizle')) { ARA = ''; var inp = document.querySelector('[data-ara] input'); if (inp) inp.value = ''; var t0 = document.querySelector('[data-ara] .temizle'); if (t0) t0.remove(); listeYenile(); adres(); }
     if (ev.target.closest('[data-tum]')) { TUM = true; listeYenile(); var q1 = new URLSearchParams(location.search); q1.set('tum', '1'); history.replaceState(null, '', '?' + q1.toString()); }
     var hs = ev.target.closest('[data-hesap]');
@@ -195,10 +260,7 @@
   /* hesaplayıcı alt sayfası (E-352 ve sekme hesaplayıcıları): public sayfadaki örnek değerlerle; sistem sayısal klavyesi açılır (çizilmez) */
   function hesap(k){
     var h = V.HESAP[k];
-    var alan = function(a){ return K.alan({ etiket: a[0], deger: a[1], odak: !!a[3], sag: K.etiket(a[2]) }).replace('<input ', '<input inputmode="decimal" ').replace('class="k-alan-e"', 'class="k-alan-e k-dk44"'); };
-    var al = h.alanlar.map(alan);
-    if (h.degis) al.splice(1, 0, '<div style="display:flex;justify-content:center">' + K.ikonBtn({ ikon: 'fa-right-left', etiket: 'Birimleri değiştir', tur: 'dolu' }) + '</div>');
-    K.sayfa({ baslik: h.baslik, alt: h.alt, icerik: '<div class="x-hesap">' + al.join('') + '</div><div style="padding-top:var(--b-16)">' + K.serit({ ikon: 'fa-calculator', metin: h.not }) + '</div>' +
+    K.sayfa({ baslik: h.baslik, alt: h.alt, icerik: hesapAlanlar(k, true) + '<div style="padding-top:var(--b-16)">' + K.serit({ ikon: 'fa-calculator', metin: h.not }) + '</div>' +
       '<p class="k-grup-n">Tutara dokununca telefonun sayısal klavyesi açılır.</p>' });
   }
   if (DUR === 'cevirici') hesap(V.HESAP[sec] ? sec : 'doviz');

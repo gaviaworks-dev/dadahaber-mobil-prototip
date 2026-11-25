@@ -7,10 +7,15 @@
 <!--
   TAKVİM · E-286–E-292 · kök: Liste (büyük başlık; çizelge kalıbı) · alt çubukta "Bölümler" seçili. Üç takvim tek kalıp:
     ?tur=gundem (varsayılan) Gündem Takvimi (Keşfet) · ?tur=ekonomik Ekonomik Takvim (Finans) · ?tur=sinav Sınav Takvimi (Kampüs).
-  Yapı: büyük başlık → gün şeridi (gündem ve ekonomik; kitin .k-gunler, dokununca o günün etkinlikleri) → süzgeç çipleri (konu / ülke / sınav) →
-  gün ya da dönem ayracı (.k-ayrac) → saat sütunlu etkinlik satırları (kitin çizelgesi .k-cz): konu · kurum, başlık, ayrıntı, önem etiketi, Takvime ekle (B-25) → kaynak notu.
+  Yapı: görselli banner (K43; başlık = sitedeki sayfa adı, fotoğraf tura göre .k-bbas[data-g]) → gün şeridi (gündem ve ekonomik; kitin .k-gunler, dokununca o günün etkinlikleri) → süzgeç çipleri (konu / ülke / sınav) →
+  gün ya da dönem ayracı (.k-ayrac) → saat sütunlu etkinlik satırları (kitin çizelgesi .k-cz): konu · kurum, başlık, ayrıntı, önem etiketi, Takvime ekle (B-25) → kaynak notu →
+    konunun haberleri (Yasin Bey, 25 Kasım: önce bilgi blokları sonra haberler; sitenin ilk sayfası, 8 haber: Takvim Haberleri · Sınav Haberleri · Gündem Takvimi Haberleri;
+    "Tümü" bölüm listesini o konuyla açar) → Ekonomik Takvim'de yatırım uyarısı (sitede sayfanın sonunda).
+    Haberler: public ekonomik-takvim.html, sinav-takvimi.html, gundem-takvimi.html kart sırası; alan değerleri ornek_veri.json kaydından (23 Kasım saatle, öncekiler tarihle).
+    Sitedeki kartla sözlük ayrışan iki haber sözlükten alındı: "2027 YKS başvuruları 5 Şubat'ta başlıyor" (site kartı 3 Şubat; takvim satırı da 5 Şubat) ve "Kış lastiği zorunluluğu 1 Aralık'ta başlıyor".
   Parametreler: ?tur=gundem|ekonomik|sinav · ?durum=yukleniyor | bos (seçilen günde etkinlik yok) | hata (&hata=zaman-asimi) | cevrimdisi (&onbellek=0 → önbellek yok)
     · ?uye=0 · ?tema=koyu · ?calan=1
+  Banner alt satırı tek satır: sitenin görev satırı ekonomik ve gündemde kısaltıldı.
   Kaynak: public gundem-takvimi.html, ekonomik-takvim.html, sinav-takvimi.html (etkinlik, saat, kurum, ayrıntı, önem, notlar aynen).
   Varsayımlar (onaylanmadı): önem etiketi renkleri (Önemli ve Yüksek sarı, Orta gri; sınavda Sınav sarı, Sonuç yeşil); gün şeridinde seçim yokken bütün takvim görünür;
   "Takvime ekle" telefonun takvimine ekler ve kısa bildirim gösterir; sınav takviminde gün şeridi yok (aylara yayılıyor).
@@ -36,7 +41,7 @@
   /* [grup (gün kodu ya da dönem), saat ya da tarih, konu, kurum, başlık, ayrıntı, önem, süzgeç] */
   var T = {
     /* kaynak: public gundem-takvimi.html "Önümüzdeki Günler" (23 Kasım – 4 Aralık) */
-    gundem: { baslik: 'Gündem Takvimi', aciklama: 'Önümüzdeki günlerin açıklama, toplantı ve etkinlik takvimi', geri: K.git('kesfet'), gunSerit: true,
+    gundem: { baslik: 'Gündem Takvimi', aciklama: 'Açıklama, toplantı ve etkinlik takvimi', geri: K.git('kesfet'), gunSerit: true,
       suzgec: ['Tümü', 'Finans', 'Siyaset', 'Eğitim', 'Dünya', 'Spor', 'Toplum', 'Sağlık', 'Türkiye', 'Çalışma Hayatı'],
       not: 'Takvim, kurumların duyurduğu tarihlere dayanır; değişiklik olursa güncellenir.',
       X: [[23, '10.00', 'Ekonomi', 'TÜİK', 'Tüketici güven endeksi · Kasım', 'Önceki 84,1', 'Önemli', 'Finans'], [23, '14.00', 'Siyaset', 'TBMM', 'Genel Kurul\'da bütçe görüşmeleri', 'Bakanlık bütçeleri', 'Önemli', 'Siyaset'],
@@ -46,9 +51,9 @@
         [101, '09.00', 'Sağlık', '', 'Dünya AIDS Günü', 'Ücretsiz test noktaları açılıyor', '', 'Sağlık'], [102, '10.00', 'Eğitim', 'ÖSYM', '2027 YKS başvuru kılavuzu yayımlanıyor', 'Başvurular şubatta', '', 'Eğitim'],
         [103, '10.00', 'Ekonomi', 'TÜİK', 'Kasım ayı enflasyon verisi', 'Önceki yıllık %31,2', 'Önemli', 'Finans'], [104, '11.00', 'Çalışma hayatı', '', 'Asgari Ücret Tespit Komisyonu ilk toplantısı', 'Ankara', 'Önemli', 'Çalışma Hayatı']] },
     /* kaynak: public ekonomik-takvim.html "Bu Hafta" ve "Gelecek Hafta" (23 Kasım 2026, 08.30 itibarıyla) */
-    ekonomik: { baslik: 'Ekonomik Takvim', aciklama: 'Veri açıklamaları, faiz kararları ve piyasayı etkileyecek tarihler', geri: K.u('hibrit/liste.html', 'bolum=finans'), gunSerit: true,
+    ekonomik: { baslik: 'Ekonomik Takvim', aciklama: 'Veri açıklamaları ve faiz kararları', geri: K.u('hibrit/liste.html', 'bolum=finans'), gunSerit: true,
       suzgec: ['Tümü', 'Türkiye', 'ABD', 'Euro Bölgesi'],
-      not: 'Saatler Türkiye saatiyle. Beklenti, piyasa katılımcıları anketinin ortanca değeridir. Bu sayfadaki oran ve yorumlar yatırım danışmanlığı kapsamında değildir.',
+      not: 'Saatler Türkiye saatiyle. Beklenti, piyasa katılımcıları anketinin ortanca değeridir.',
       X: [[23, '10.00', 'Türkiye', '', 'Tüketici Güven Endeksi · Kasım', 'Önceki 84,1 · Beklenti 85,0', 'Yüksek'], [23, '14.00', 'Türkiye', 'TCMB', 'Para Politikası Kurulu · Faiz kararı', 'Açıklandı %42,50 · Beklenti %42,50', 'Yüksek'],
         [23, '15.30', 'ABD', '', 'Haftalık işsizlik başvuruları', 'Önceki 231 bin · Beklenti 228 bin', 'Orta'], [24, '10.00', 'Türkiye', '', 'Kapasite Kullanım Oranı · Kasım', 'Önceki %74,2 · Beklenti %74,5', 'Orta'],
         [24, '18.00', 'ABD', '', 'Tüketici Güven Endeksi · Kasım', 'Önceki 98,7 · Beklenti 99,5', 'Orta'], [26, '16.30', 'ABD', '', 'Çekirdek PCE fiyat endeksi · Ekim', 'Önceki %2,7 · Beklenti %2,8', 'Yüksek'],
@@ -66,6 +71,38 @@
         ['Nisan – Temmuz 2027', '9 May', 'ALES', '10.15', '2027-ALES/1 sınavı', 'Başvuru 7–15 Nis · Sonuç 27 May', 'Sınav', 'ALES ve YDS'], ['Nisan – Temmuz 2027', '19 Haz', 'YKS', '10.15', 'YKS 1. oturum · TYT', 'AYT ve YDT 20 Haziran\'da', 'Sınav', 'YKS'],
         ['Nisan – Temmuz 2027', '20 Haz', 'YKS', '10.15', 'YKS 2. ve 3. oturum · AYT, YDT', 'Sonuç 17 Tem', 'Sınav', 'YKS'], ['Nisan – Temmuz 2027', '18 Tem', 'KPSS', '10.15', '2027-KPSS Lisans GY-GK oturumu', 'ÖABT 19 Tem · Sonuç 12 Ağu', 'Sınav', 'KPSS']] }
   }[TUR];
+  /* konunun haberleri (sitenin ilk sayfası): [alt, başlık, yazar, süre, görüntülenme, saat, görsel (assets/gorsel/haber; konusu tutmuyorsa yok)] */
+  var HB = {
+    ekonomik: { baslik: 'Takvim Haberleri', sayi: 58, ikon: 'fa-chart-column', tum: 'bolum=finans&konu=ekonomik-takvim', X: [
+      ['Faiz Oranları', 'Merkez Bankası politika faizini yüzde 42,5\'te sabit tuttu', 'Elif Aras', '3 dk', '27,5 B', '14.00', 'faiz'],
+      ['Enflasyon', 'Kasım enflasyon verisi 3 Aralık\'ta açıklanacak', 'Tolga Bayram', '4 dk', '15,2 B', '14.25', 'carsi'],
+      ['Büyüme', 'Üçüncü çeyrek büyüme verisi 1 Aralık\'ta açıklanacak', 'Elif Aras', '2 dk', '14,6 B', '13.40'],
+      ['ABD', 'ABD\'de PCE verisi Fed\'in aralık kararı için izleniyor', 'Can Demir', '5 dk', '6,1 B', '10.30', 'borsa'],
+      ['Euro Bölgesi', 'Euro Bölgesi\'nde öncü imalat PMI verisi 27 Kasım\'da açıklanacak', 'Nazlı Öztürk', '4 dk', '9,2 B', '15.00'],
+      ['Dış Ticaret', 'Dış ticaret verisi öncesi ihracatçıların beklentisi', 'Elif Aras', '3 dk', '5,2 B', '22 Kas'],
+      ['İstihdam', 'ABD tarım dışı istihdam verisi 5 Aralık\'ta açıklanacak', 'Nazlı Öztürk', '4 dk', '4,9 B', '22 Kas'],
+      ['Rehber', 'Ekonomik takvim nasıl okunur: önceki, beklenti ve açıklanan değer', 'Tolga Bayram', '2 dk', '4,3 B', '22 Kas']] },
+    sinav: { baslik: 'Sınav Haberleri', sayi: 47, ikon: 'fa-graduation-cap', tum: 'bolum=kampus&konu=sinav-takvimi', X: [
+      ['YKS', '2027 YKS başvuruları 5 Şubat\'ta başlıyor', 'Sevgi Tarhan', '3 dk', '13,6 B', '08.15', 'yks'],
+      ['Takvim', 'ÖSYM, 2027 sınav takviminin tamamını yayımladı', 'Ece Demirel', '6 dk', '11,1 B', '15.30', 'osym'],
+      ['e-YDS', 'e-YDS\'de aralık oturumlarının başvuruları sürüyor', 'Selin Koç', '3 dk', '13,2 B', '07.30', 'yks'],
+      ['KPSS', 'KPSS-2026/7 tercih kılavuzu yayımlandı', 'Selin Koç', '3 dk', '10,6 B', '07.20', 'yks'],
+      ['KPSS', '2027 KPSS lisans oturumları temmuz ayında yapılacak', 'Ece Demirel', '6 dk', '14,3 B', '09.30', 'yks'],
+      ['YÖKDİL', 'YÖKDİL ilkbahar oturumunun başvuru tarihleri belli oldu', 'Selin Koç', '4 dk', '6,7 B', '22 Kas', 'yks'],
+      ['ALES', '2027 ALES ve YDS takvimi yayımlandı', 'Selin Koç', '4 dk', '14,6 B', '10.45', 'yks'],
+      ['Rehber', 'Sınav günü için kimlik ve giriş belgesi kontrol listesi', 'Aslı Gür', '2 dk', '11,3 B', '22 Kas', 'yks']] },
+    gundem: { baslik: 'Takvim Haberleri', sayi: 64, ikon: 'fa-calendar-day', tum: 'bolum=kesfet&konu=gundem-takvimi', X: [
+      ['Finans', 'TCMB faiz kararı 25 Kasım\'da açıklanacak', 'Nilay Ersoy', '3 dk', '6,7 B', '12.55', 'faiz'],
+      ['Siyaset', 'Bütçe görüşmeleri Genel Kurul\'da sürüyor', 'Ozan Er', '5 dk', '5,9 B', '09.45', 'tbmm'],
+      ['Finans', 'Kasım enflasyonu 3 Aralık\'ta açıklanacak', 'İrem Su', '2 dk', '4,8 B', '09.45', 'carsi'],
+      ['Toplum', '25 Kasım\'da 81 ilde farkındalık etkinlikleri düzenlenecek', 'Ozan Er', '3 dk', '3,6 B', '22 Kas'],
+      ['Gündem', 'Kış lastiği zorunluluğu 1 Aralık\'ta başlıyor', 'İrem Su', '3 dk', '14,1 B', '14.40', 'koy-yolu'],
+      ['Çalışma hayatı', 'Asgari ücret için ilk toplantı 4 Aralık\'ta', 'İrem Su', '3 dk', '14,2 B', '22 Kas', 'asgari'],
+      ['Spor', 'Bu hafta Avrupa kupalarında dört Türk takımı sahada', 'İrem Su', '4 dk', '9,6 B', '21 Kas', 'superlig'],
+      ['Kültür', 'Aralıkta açılacak sergiler ve festivaller', 'Ozan Er', '2 dk', '8,1 B', '21 Kas', 'akm']] }
+  }[TUR];
+  /* banner fotoğrafı: ekonomik → Merkez Bankası binası, sınav → sınav salonu, gündem → TBMM (KAYNAK.txt) */
+  var BG = { ekonomik: 'faiz', sinav: 'yks', gundem: 'tbmm' }[TUR];
 
   function ayrac(g){ if (TUR === 'sinav') return '<div class="k-ayrac"><span>' + g + '</span><span></span></div>';
     var hafta = TUR === 'ekonomik' ? (g < 100 ? 'Bu hafta' : 'Gelecek hafta') : '';
@@ -79,16 +116,20 @@
   var dl = null, liste = T.X.map(function(x, i){ var a = x[0] !== dl ? ayrac(x[0]) : ''; dl = x[0]; return a + satir(x, i); }).join('');
 
   var BOS = DUR === 'bos';
-  var bas = '<div class="k-ust-bosluk"></div><div class="k-bbas"><h1>' + T.baslik + '</h1><p>' + T.aciklama + '</p></div>';
+  var bas = '<div class="k-ust-bosluk"></div><div class="k-bbas" data-g="' + BG + '"><h1>' + T.baslik + '</h1><p>' + T.aciklama + '</p></div>';
   var gunler = T.gunSerit ? K.gunler({ secili: BOS ? 6 : -1 }) : '';
   var suzgec = '<div class="k-ray s8" data-tek style="padding-top:var(--b-12)">' + T.suzgec.map(function(s, i){ return K.cip(s, { secili: i === 0, attr: 'data-suz="' + (i ? s : '') + '"' }); }).join('') + '</div>';
   var not = '<p class="k-not">' + I('fa-circle-info') + '<span>' + T.not + '</span></p>';
+  /* takvimden sonra konunun haberleri (sitedeki sıra); ekonomik takvimde sayfa sonunda yatırım uyarısı */
+  var haberler = '<section class="k-bl">' + K.bb({ baslik: HB.baslik, ikon: 'fa-newspaper', sayi: HB.sayi, baglanti: { metin: 'Tümü', href: K.git('liste', HB.tum) } }) +
+    '<div class="k-satirlar">' + HB.X.map(function(x){ var h = { alt: x[0], ikon: HB.ikon, baslik: x[1], yazar: x[2], sure: x[3], izlenme: x[4], saat: x[5] }; if (x[6]) h.g = x[6]; return K.satir(h); }).join('') + '</div>' +
+    (TUR === 'ekonomik' ? '<div class="k-ic" style="padding-top:var(--b-16)">' + K.serit({ ikon: 'fa-circle-info', metin: 'Yatırım uyarısı', alt: 'Bu sayfadaki oran ve yorumlar yatırım danışmanlığı kapsamında değildir; veriler bilgilendirme amaçlıdır.' }) + '</div>' : '') + '</section>';
   var bosB = K.bos({ ikon: 'fa-calendar-day', baslik: 'Seçilen günde etkinlik yok', aciklama: 'Başka bir gün seç ya da bütün takvime bak.', eylem: { metin: 'Bütün takvim', tur: 'sade', attr: 'data-tum' } });
 
   var hata = DUR === 'hata' ? (Q.get('hata') === 'zaman-asimi' ? 'zaman-asimi' : 'sunucu') : (DUR === 'cevrimdisi' && Q.get('onbellek') === '0') ? 'cevrimdisi' : '';
   if (DUR === 'yukleniyor') e.innerHTML = bas + gunler + '<div class="k-satirlar" style="padding-top:var(--b-16)">' + K.iskelet('satir', 5).replace(/<i class="k-isk" style="width:88px;height:88px"><\/i>/g, '<i class="k-isk daire" style="width:44px;height:44px;justify-self:end"></i>') + '</div><div class="k-son"></div>';
   else if (hata) e.innerHTML = '<div class="k-ust-bosluk"></div>' + K.hata({ tur: hata }) + '<div class="k-son"></div>';
-  else e.innerHTML = bas + gunler + suzgec + '<div data-liste' + (BOS ? ' hidden' : '') + '><div class="k-ic">' + liste + not + '</div></div><div data-bos' + (BOS ? '' : ' hidden') + '>' + bosB + '</div><div class="k-son"></div>';
+  else e.innerHTML = bas + gunler + suzgec + '<div data-liste' + (BOS ? ' hidden' : '') + '><div class="k-ic">' + liste + not + '</div></div><div data-bos' + (BOS ? '' : ' hidden') + '>' + bosB + '</div>' + haberler + '<div class="k-son"></div>';
 
   var sg = e.querySelector('.k-gun[aria-selected="true"]'); if (sg) sg.parentNode.scrollLeft = sg.parentNode.scrollWidth;
   K.ustCubuk({ geri: T.geri, baslik: T.baslik, buyuk: !hata, eylemler: ['paylas'] });
