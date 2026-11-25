@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>Ekran denetimi</title>
 <!-- Dada Haber Mobil · EKRAN DENETİMİ (TEK YAZAR: lider). Bütün ekranları (dizin.js) 390×844 çerçevede, açık ve koyu temada ölçer:
-     1 taşma (yatay) · 2 kenar 16px · 3 dokunma alanı ≥44×44 · 4 binme (aynı katmandaki dokunulabilir/yazı öğeleri) · 5 satıra kırılan bilgi (meta satırı) · 6 ikon kuralı K32 · 7 bilgi satırı (K48): kesilen öğe (kap dışında kalan, üç noktayla kısalan; yana kayan kap hariç) ve bilgi satırına binen öğe 0 · 8 görselsiz liste satırı (K48) · 9 kategori yanında saati olmayan liste satırı (K44/K48) · 10 seçili alt konu çipi ile listedeki haberlerin konusu uyuşmuyor (K49).
+     1 taşma (yatay) · 2 kenar 16px · 3 dokunma alanı ≥44×44 · 4 binme (aynı katmandaki dokunulabilir/yazı öğeleri) · 5 satıra kırılan bilgi (meta satırı) · 6 ikon kuralı K32 · 7 bilgi satırı (K48): kesilen öğe (kap dışında kalan, üç noktayla kısalan; yana kayan kap hariç) ve bilgi satırına binen öğe 0 · 8 görselsiz liste satırı (K48) · 9 kategori yanında saati olmayan liste satırı (K44/K48) · 10 seçili alt konu çipi ile listedeki haberlerin konusu uyuşmuyor (K49) · 11 Kaydedilenler bağlamı dışında liste, kart ya da tile içinde kaydet düğmesi (K51).
      ?sec=E-001,E-002 yalnız seçilenler · ?dosya=ekranlar/icerik/video,ekranlar/icerik/galeri dosya önekiyle · ?tema=acik|koyu yalnız bir tema · ?grup=icerik. Sonuç sayfada tablo + #json (headless --dump-dom ile okunur). -->
 <style>
 body{font:13px/1.4 -apple-system,system-ui,sans-serif;margin:16px;color:#111}
@@ -51,8 +51,14 @@ pre{white-space:pre-wrap}
     if (!R.length) return d.querySelector('.k-bos') ? [] : ['konu "' + ad + '": liste boş']; /* tasarlanmış boş hal (K.bos) muaf */
     R.forEach(function(r){ var u = r.querySelector('.k-ustsatir') || r; if (u.textContent.indexOf(ad) < 0) kotu.push(u.textContent.replace(/\s+/g, ' ').trim().slice(0, 30)); });
     return kotu.length ? ['konu "' + ad + '": ' + kotu.length + '/' + R.length + ' satır başka konuda (' + kotu.slice(0, 2).join(' ; ') + ')'] : []; }
+
+  /* K51 (Beyar): liste, kart ve tile biçimindeki haber öğesinde kaydet düğmesi yok; yalnız detayda (üst çubuk, okuma çubuğu), uzun basma menüsünde ve Kaydedilenler bağlamında */
+  function kaydetKarti(d){ var w = d.defaultView, yol = w.location.pathname + w.location.search, bas = [].map.call(d.querySelectorAll('.k-ub h1,.k-ub .bs,.k-ub-b,.k-bbas h1,.k-kapak h1,header h1'), function(x){ return x.textContent; }).join(' ');
+    if (/kaydedilenler/.test(yol) || /Kaydedilen|Okunacaklar/.test(bas)) return [];
+    return [].filter.call(d.querySelectorAll('.k-kay, button[aria-label="Kaydet"], [data-kaydet]'), function(b){ return !b.closest('.k-ub,.k-okuma,.k-sayfa,.k-menu,.k-baglam,.ust,.okuma') && b.closest('a,li,article,.k-satir,.k-kose-satir,[class*="k-kart"],.bk,.one,.k-ray > *'); })
+      .map(function(b){ var k = b.closest('a,li,article,[class*="k-kart"],.k-satir,.bk') || b; return (k.className || k.tagName).toString().split(' ')[0] + ' «' + k.textContent.trim().slice(0, 24) + '»'; }); }
   function olc(d, w){
-    var H = { tasma: [], kenar: [], dokun: [], binme: [], kirilma: [], ikon: [], bilgi: [], gorselsiz: [], saatsiz: [], konu: konuUyumu(d) }, root = d.documentElement, all = [].slice.call(d.body.querySelectorAll('*'));
+    var H = { tasma: [], kenar: [], dokun: [], binme: [], kirilma: [], ikon: [], bilgi: [], gorselsiz: [], saatsiz: [], konu: konuUyumu(d), kaydet: kaydetKarti(d) }, root = d.documentElement, all = [].slice.call(d.body.querySelectorAll('*'));
     var DIS = '.durum,.durum *,.ec,[data-denetim-yok],[data-denetim-yok] *';
     all.forEach(function(el){
       if (el.matches(DIS) || gizliAta(el, w)) return;

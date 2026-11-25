@@ -219,7 +219,7 @@
     return '<a class="k-kart-a' + (o.basili ? ' is-basili' : '') + '" href="' + (o.href || K.git('detay')) + '"><div class="gr"' + bg(h.g) + '>' + medya(h) + '</div>' + (o.ustSatir !== false ? K.ustSatir(h, Object.assign({ sag: h.sure }, o)) : '') + '<h3>' + h.baslik + '</h3>' + K.meta([h.yazar, h.izlenme]) + '</a>'; };
   K.kartK = function(h, o){ o = o || {}; return '<a class="k-kart-k" href="' + (o.href || K.git('detay')) + '"><div class="gr"' + bg(h.g) + '>' + medya(h) + '</div><h4>' + h.baslik + '</h4>' + K.meta([h.yazar, h.sure]) + '</a>'; };
   K.kartGenis = function(h, o){ o = o || {};
-    return '<a class="k-kart-genis" href="' + (o.href || K.git('detay')) + '"><div class="gr"' + bg(h.g) + '>' + medya(h) + '</div>' + K.ustSatir(h, Object.assign({ sag: h.sure }, o)) + '<h2>' + h.baslik + '</h2><div class="k-ab">' + K.meta([h.yazar, h.izlenme]) + K.kaydet(o.kaydedildi) + '</div></a>'; };
+    return '<a class="k-kart-genis" href="' + (o.href || K.git('detay')) + '"><div class="gr"' + bg(h.g) + '>' + medya(h) + '</div>' + K.ustSatir(h, Object.assign({ sag: h.sure }, o)) + '<h2>' + h.baslik + '</h2><div class="k-ab">' + K.meta([h.yazar, h.izlenme]) + '</div></a>'; }; /* K51: kartta kaydet yok */
   var FOTO_BASLIK = {
     "Beşiktaş Türk Telekom'u 84-80 geçti": 'basket', "Fenerbahçe Beko tek mağlubiyetle liderliğini sürdürüyor": 'basket', "Beşiktaş'ın kaleci listesinde iki isim öne çıkıyor": 'antrenman',
     "Anadolu Efes THY Avrupa Ligi'nde Dörtlü Final biletini aldı": 'basket', "Fenerbahçe Beko çift maç haftasında iki galibiyet aldı": 'basket', "Galatasaray derbi öncesi son antrenmanını yaptı": 'antrenman',
@@ -275,7 +275,7 @@
       : '<div>' + K.ustSatir(h, o) + '<h3>' + h.baslik + '</h3><div class="k-ab">' + K.meta([h.yazar, h.sure, h.izlenme]) + (o.indir ? K.indir(o.indir) : '') + (o.kaydet === true || o.kaydedildi === true ? K.kaydet(o.kaydedildi) : '') + '</div>' +
         (o.durum === 'bekliyor' ? K.etiket('Onay bekliyor', { ikon: 'fa-hourglass-half' }) : '') + '</div>';
     /* K44 (Yasin Bey): görsel solda; yanında kategori/il · saat, altında başlık, altında yazar ve ikonlu bilgiler. Çizelge istisna (görsel sağda).
-       K48 (Beyar): satırda kaydet yok (detayda ve uzun basma menüsünde); yalnız Kaydedilenler bağlamı (kayıtlı satır: { kaydedildi: true } ya da { kaydet: true }) düğmeyi gösterir, orada kayıttan çıkarır. Görsel her satırda (K.gorsel). */
+       K48/K51 (Beyar): liste, kart ve tile biçimindeki hiçbir haber öğesinde kaydet yok (detayda, uzun basma menüsünde ve Kaydedilenler'de); yalnız Kaydedilenler bağlamı (kayıtlı satır: { kaydedildi: true } ya da { kaydet: true }) düğmeyi gösterir, orada kayıttan çıkarır. Görsel her satırda (K.gorsel). */
     return '<a class="' + cls + '" href="' + (o.href || K.git('detay')) + '">' + (o.secim ? K.onay('', { secili: o.secili }) : '') + (g ? '<div class="gr"' + bg(g) + '>' + (o.md ? K.md(o.md) : '') + '</div>' : '') + gov + '</a>';
   };
   K.kartVideo = function(v, o){ o = o || {};

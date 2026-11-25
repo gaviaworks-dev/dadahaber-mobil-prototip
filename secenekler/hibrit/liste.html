@@ -69,8 +69,6 @@ header.buyuk p{margin-top:var(--b-8);font-size:14px;color:rgba(255,255,255,.8);w
 /* alt satır: tek bilgi satırı (.meta) + Kaydet düğmesi */
 .ab{display:flex;align-items:center;margin-top:8px}
 .ab .meta{margin-top:0;flex:1;min-width:0}
-.ab .kay{flex:none;width:44px;height:44px;margin:-6px -12px -6px auto;display:grid;place-items:center;font-size:16px;color:var(--metin-2)}
-.ab .kay.on{color:var(--marka-metin)}
 /* liste satırları */
 .ls{padding:0 var(--kenar)}
 .grup{display:flex;align-items:center;justify-content:space-between;padding:22px 0 4px;font-size:13px;font-weight:var(--y-kalin);color:var(--metin-3)}
@@ -489,7 +487,7 @@ body:not(.cizelge) .cizelge-kip{display:none}
     if (!saatsiz) p.push('<span class="s">' + h.saat + '</span>');
     return '<span class="mt">' + p.join('<span class="nk">·</span>') + '</span>';
   }
-  function ab(h){ return '<div class="ab">' + H.meta([h.yazar, h.sure, h.izlenme]) + '<button class="kay" type="button" aria-label="Kaydet" aria-pressed="false"><i class="fa-solid fa-bookmark"></i></button></div>'; }
+  function ab(h){ return '<div class="ab">' + H.meta([h.yazar, h.sure, h.izlenme]) + '</div>'; } /* K51: kartta kaydet yok (detayda, uzun basma menüsünde ve Kaydedilenler'de) */
 
   /* Gelişen Olaylar: D.liste haberleri konuya göre (LS-D'deki gruplar; yeni haber yok) */
   var OLAY = [
@@ -700,7 +698,6 @@ body:not(.cizelge) .cizelge-kip{display:none}
   }
   document.addEventListener('click', function(ev){
     var b = ev.target.closest('[data-kip]'); if (b) kip(b.dataset.kip);
-    var k = ev.target.closest('.kay'); if (k) { ev.preventDefault(); var kon = k.classList.toggle('on'); k.setAttribute('aria-pressed', kon); return; }
     var t = ev.target.closest('[data-olay-takip]'); if (t) { var a = t.classList.toggle('acik'); t.innerHTML = a ? '<i class="fa-solid fa-check"></i>Takipte' : '<i class="fa-solid fa-plus"></i>Takip et'; }
   });
   /* bölüm araçları: sekmeli blokta panel geçişi (segment görünümü kitte); Canlı Skor'da dal süzgeci */

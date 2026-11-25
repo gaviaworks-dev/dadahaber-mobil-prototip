@@ -55,7 +55,7 @@
     Object.keys(KARAR).map(function(k){ return K.cip(k, { ikon: KARAR[k][1], attr: 'data-suz="' + k + '"' }); }).join('') + '</div>';
   var one = '<div class="k-ic" style="padding-top:var(--b-16)"><a class="k-kart-genis" href="' + ac + '"><div class="gr" style="background-image:' + G('asgari') + '"></div>' +
     '<div style="display:flex;align-items:center;gap:var(--b-8);margin-top:var(--b-12)">' + etiket('Yanıltıcı') + K.etiket('İncelendi · 3 kaynak', { ikon: 'fa-building-columns' }) + '</div>' +
-    '<h2>Asgari ücrete ocakta yüzde 60 zam yapılacağı iddiası yanıltıcı</h2><div class="k-ab">' + K.meta(['Kerem Aksoy', '4 dk', '11.40 Güncellendi']) + K.kaydet() + '</div></a></div>';
+    '<h2>Asgari ücrete ocakta yüzde 60 zam yapılacağı iddiası yanıltıcı</h2><div class="k-ab">' + K.meta(['Kerem Aksoy', '4 dk', '11.40 Güncellendi']) + '</div></a></div>'; /* K51: kartta kaydet yok */
   var liste = '<section class="k-bl">' + K.bb({ baslik: 'Son İncelemeler', ikon: 'fa-clipboard-check', sayi: 186 }) + '<div class="k-satirlar">' + LISTE.slice(1).map(function(x, i){ return satir(x, i + 1); }).join('') +
     (DUR === 'daha-fazla' ? (HAL === 'son' || HAL === 'hata' ? '' : K.iskelet('satir', 1)) + K.dahaFazla(HAL === 'son' || HAL === 'hata' ? HAL : 'yukleniyor') : '') + '</div></section>';
   var gonder = '<section class="k-bl"><div class="k-ic">' + K.cagri({ ikon: 'fa-paper-plane', baslik: 'İddia gönder', aciklama: 'Gördüğün bir iddiayı bize ilet; ekibimiz öncelik sırasına göre inceler.', eylem: { metin: 'Gönder', attr: 'data-iddia' } }) + '</div></section>';
