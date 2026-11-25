@@ -329,14 +329,19 @@
     ? '<div class="mh"><div class="mh-u"><span class="av">' + D.uye.ad.charAt(0) + '</span><span class="t"><b>' + D.uye.ad + '</b><small><i class="fa-solid fa-fire"></i>' + D.uye.seri + ' günlük okuma serisi</small></span><a class="pr">Profilim' + ok + '</a></div>' +
       '<div class="mh-k"><a><i class="fa-solid fa-bookmark"></i>Kaydedilenler</a><a><i class="fa-solid fa-heart"></i>Takiplerim</a><a><i class="fa-solid fa-bell"></i>Bildirimler<span class="n">3</span></a></div></div>'
     : '<div class="mh"><b class="mr">Merhaba</b><p>Haberleri kaydetmek, konuları takip etmek ve yorum yazmak için giriş yap.</p><div class="mh-g"><a class="a"><i class="fa-solid fa-right-to-bracket"></i>Giriş yap</a><a class="b">Üye ol</a></div></div>';
-  var sat = function(ik, ad, ek, cls){ return '<a class="ms' + (cls ? ' ' + cls : '') + '"><i class="fa-solid ' + ik + '"></i><span>' + ad + '</span>' + (ek || '') + '</a>'; };
+  var sat = function(ik, ad, ek, cls, href){ return '<a class="ms' + (cls ? ' ' + cls : '') + '"' + (href ? ' href="' + href + '"' : '') + '><i class="fa-solid ' + ik + '"></i><span>' + ad + '</span>' + (ek || '') + '</a>'; };
+  /* K41: yeni ekranlara bağlantı (tema ve misafir korunur) */
+  var EK = function(yol){ var u = new URL('../ekranlar/' + yol, location.href); if (H.tema) u.searchParams.set('tema', H.tema); if (!H.uye) u.searchParams.set('uye', '0'); return u.href; };
   M.innerHTML = '<div class="mu"><span class="logo" role="img" aria-label="Dada Haber"></span><button class="dd" type="button" data-menu-kapat aria-label="Menüyü kapat"><i class="fa-solid fa-xmark"></i></button></div><div class="mi">' + hesap +
     '<nav class="mn">' + sat('fa-house', 'Ana Sayfa', '', 'on') +
       '<span class="mt">Bölümler</span>' + D.bolumler.map(function(b){ return '<details class="ma"><summary><i class="fa-solid ' + b.ikon + '"></i><span>' + b.ad + '</span><i class="fa-solid fa-chevron-down cv"></i></summary>' +
         '<div class="mc"><a class="tm" href="' + H.liste() + '">Bütün ' + b.ad + ' haberleri' + ok + '</a>' + (ALT[b.ad] || []).map(function(x){ return '<a>' + x + '</a>'; }).join('') + '</div></details>'; }).join('') +
       '<span class="mt">Dinle ve izle</span>' + sat('fa-headphones', 'Haber Dinle', '<span class="cn"><span class="canli-nokta"></span>Yayında</span>') + sat('fa-mobile-screen-button', 'Akış', '<em>12 video</em>') + sat('fa-podcast', 'Podcast') + sat('fa-circle-play', 'Video Haber') + sat('fa-camera', 'Foto Fokus') + sat('fa-chart-pie', 'İnfografik') +
+      '<span class="mt">Servisler ve araçlar</span>' + sat('fa-triangle-exclamation', 'Afet ve Acil Durum', '', '', EK('icerik/afet.html')) + sat('fa-car', 'Trafik ve Ulaşım', '', '', EK('icerik/trafik.html')) +
+        sat('fa-calculator', 'Ekonomi Araçları', '', '', EK('icerik/ekonomi-araclari.html')) + sat('fa-scroll', 'Resmî İlanlar', '', '', EK('icerik/resmi-ilanlar.html')) +
+        sat('fa-baby', 'Hamilelik', '', '', EK('icerik/hamilelik.html')) + sat('fa-star', 'Astroloji', '', '', EK('icerik/astroloji.html')) +
       '<span class="mt">Dada</span>' + sat('fa-feather-pointed', 'Yazarlar') + sat('fa-bolt', 'Son Dakika') + sat('fa-calendar-day', 'Gündem Takvimi') + sat('fa-message', 'Görüş Bildir') + '</nav>' +
-    '<div class="mf"><a class="ms"><i class="fa-solid fa-circle-half-stroke"></i><span>Görünüm: <b>Sistem</b></span><i class="fa-solid fa-chevron-down cv"></i></a><a class="ms"><i class="fa-solid fa-font"></i><span>Yazı boyutu: <b>Orta</b></span><i class="fa-solid fa-chevron-down cv"></i></a>' +
+    '<div class="mf">' + sat('fa-language', 'Dil: <b>Türkçe</b>', '<i class="fa-solid fa-chevron-right cv"></i>', '', EK('sistem/dil-sec.html')) + sat('fa-people-group', 'Dada Ailesi', '<i class="fa-solid fa-chevron-right cv"></i>', '', EK('icerik/dada-ailesi.html')) + '<a class="ms"><i class="fa-solid fa-circle-half-stroke"></i><span>Görünüm: <b>Sistem</b></span><i class="fa-solid fa-chevron-down cv"></i></a><a class="ms"><i class="fa-solid fa-font"></i><span>Yazı boyutu: <b>Orta</b></span><i class="fa-solid fa-chevron-down cv"></i></a>' +
       '<div class="mf-bag"><a>Hakkımızda</a><a>Künye</a><a>İletişim</a><a>Gizlilik Politikası</a></div></div></div>';
   document.addEventListener('click', function(ev){
     if (ev.target.closest('[data-menu]')) document.body.classList.add('menu-acik');

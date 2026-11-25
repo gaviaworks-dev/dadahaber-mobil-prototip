@@ -73,7 +73,10 @@
     gecmis: 'ekranlar/hesap/gecmis.html', bildirimler: 'ekranlar/hesap/bildirim-merkezi.html', bildirimTercih: 'ekranlar/hesap/bildirim-tercihleri.html',
     tercihler: 'ekranlar/hesap/tercihler.html', ayarlar: 'ekranlar/hesap/ayarlar.html', gorunum: 'ekranlar/hesap/gorunum.html',
     geriBildirim: 'ekranlar/hesap/geri-bildirim.html', hakkinda: 'ekranlar/hesap/hakkinda.html', yasal: 'ekranlar/hesap/yasal.html',
-    iletisim: 'ekranlar/hesap/iletisim.html', yardim: 'ekranlar/hesap/yardim.html'
+    iletisim: 'ekranlar/hesap/iletisim.html', yardim: 'ekranlar/hesap/yardim.html',
+    afet: 'ekranlar/icerik/afet.html', trafik: 'ekranlar/icerik/trafik.html', ekonomiAraclari: 'ekranlar/icerik/ekonomi-araclari.html', ekonomiAraci: 'ekranlar/icerik/ekonomi-araci.html',
+    resmiIlanlar: 'ekranlar/icerik/resmi-ilanlar.html', resmiIlan: 'ekranlar/icerik/resmi-ilan.html', hamilelik: 'ekranlar/icerik/hamilelik.html', hamilelikHafta: 'ekranlar/icerik/hamilelik-hafta.html',
+    astroloji: 'ekranlar/icerik/astroloji.html', burc: 'ekranlar/icerik/burc.html', dilSec: 'ekranlar/sistem/dil-sec.html', dadaAilesi: 'ekranlar/icerik/dada-ailesi.html'
   };
   K.u = function(yol, ek){
     var p = String(yol).split('?'), q = new URLSearchParams(p[1] || '');
@@ -657,8 +660,9 @@
       '<nav class="k-mn">' + sat('fa-house', 'Ana Sayfa', '', K.git('ana'), (o.etkin || 'ana') === 'ana') +
       '<span class="k-grup-b">Bölümler</span>' + D.bolumler.map(function(b){ return '<details class="k-ma"><summary>' + I(b.ikon) + '<span>' + b.ad + '</span>' + I('fa-chevron-down', 'cv') + '</summary><div class="k-mc"><a class="tm" href="' + K.git('liste') + '">Bütün ' + b.ad + ' haberleri' + ok + '</a>' + (K.ALT[b.ad] || []).map(function(x){ return '<a href="' + K.git('liste') + '">' + x + '</a>'; }).join('') + '</div></details>'; }).join('') +
       '<span class="k-grup-b">Dinle ve izle</span>' + sat('fa-headphones', 'Haber Dinle', '<span class="cn"><span class="canli-nokta"></span>Yayında</span>', K.git('dinle')) + sat('fa-mobile-screen-button', 'Akış', '<em>' + D.akis.toplam + ' video</em>', K.git('akis')) + sat('fa-podcast', 'Podcast', '', K.git('podcast')) + sat('fa-circle-play', 'Video Haber', '', K.git('video')) + sat('fa-camera', 'Foto Fokus', '', K.git('fotoFokus')) + sat('fa-chart-pie', 'İnfografik', '', K.git('infografik')) +
+      '<span class="k-grup-b">Servisler ve araçlar</span>' + sat('fa-triangle-exclamation', 'Afet ve Acil Durum', '', K.git('afet')) + sat('fa-car', 'Trafik ve Ulaşım', '', K.git('trafik')) + sat('fa-calculator', 'Ekonomi Araçları', '', K.git('ekonomiAraclari')) + sat('fa-scroll', 'Resmî İlanlar', '', K.git('resmiIlanlar')) + sat('fa-baby', 'Hamilelik', '', K.git('hamilelik')) + sat('fa-star', 'Astroloji', '', K.git('astroloji')) +
       '<span class="k-grup-b">Dada</span>' + sat('fa-feather-pointed', 'Yazarlar', '', K.git('yazarlar')) + sat('fa-bolt', 'Son Dakika', '', K.git('sonDakika')) + sat('fa-calendar-day', 'Gündem Takvimi', '', K.git('takvim')) + sat('fa-message', 'Görüş Bildir', '', K.git('geriBildirim')) + '</nav>' +
-      '<div class="k-mf">' + sat('fa-circle-half-stroke', 'Görünüm: <b>Sistem</b>', I('fa-chevron-down', 'cv'), K.git('gorunum')) + sat('fa-font', 'Yazı boyutu: <b>Orta</b>', I('fa-chevron-down', 'cv'), '', false).replace('class="k-ms"', 'class="k-ms" data-sayfa="yazi"') +
+      '<div class="k-mf">' + sat('fa-language', 'Dil: <b>Türkçe</b>', I('fa-chevron-right', 'cv'), K.git('dilSec')) + sat('fa-people-group', 'Dada Ailesi', I('fa-chevron-right', 'cv'), K.git('dadaAilesi')) + sat('fa-circle-half-stroke', 'Görünüm: <b>Sistem</b>', I('fa-chevron-down', 'cv'), K.git('gorunum')) + sat('fa-font', 'Yazı boyutu: <b>Orta</b>', I('fa-chevron-down', 'cv'), '', false).replace('class="k-ms"', 'class="k-ms" data-sayfa="yazi"') +
         '<div class="k-mf-bag"><a href="' + K.git('hakkinda') + '">Hakkımızda</a><a href="' + K.git('yasal') + '">Künye</a><a href="' + K.git('iletisim') + '">İletişim</a><a href="' + K.git('yasal') + '">Gizlilik Politikası</a></div></div></div></nav>');
     var c = katman(m, perde, yer, o.acik ? true : 'kapali'); c.kalici = true;
     if (!o.yer) K._cekmece = c;
