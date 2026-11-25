@@ -5,7 +5,7 @@
 <title>Ekran denetimi</title>
 <!-- Dada Haber Mobil · EKRAN DENETİMİ (TEK YAZAR: lider). Bütün ekranları (dizin.js) 390×844 çerçevede, açık ve koyu temada ölçer:
      1 taşma (yatay) · 2 kenar 16px · 3 dokunma alanı ≥44×44 · 4 binme (aynı katmandaki dokunulabilir/yazı öğeleri) · 5 satıra kırılan bilgi (meta satırı) · 6 ikon kuralı K32.
-     ?sec=E-001,E-002 yalnız seçilenler · ?tema=acik|koyu yalnız bir tema · ?grup=icerik. Sonuç sayfada tablo + #json (headless --dump-dom ile okunur). -->
+     ?sec=E-001,E-002 yalnız seçilenler · ?dosya=ekranlar/icerik/video,ekranlar/icerik/galeri dosya önekiyle · ?tema=acik|koyu yalnız bir tema · ?grup=icerik. Sonuç sayfada tablo + #json (headless --dump-dom ile okunur). -->
 <style>
 body{font:13px/1.4 -apple-system,system-ui,sans-serif;margin:16px;color:#111}
 table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid #ddd;padding:4px 6px;text-align:left;vertical-align:top}
@@ -21,9 +21,9 @@ pre{white-space:pre-wrap}
 <script src="dizin.js"></script>
 <script>
 (function(){
-  var Q = new URLSearchParams(location.search), sec = (Q.get('sec') || '').split(',').filter(Boolean), tq = Q.get('tema'), gq = Q.get('grup');
+  var Q = new URLSearchParams(location.search), dsy = (Q.get('dosya') || '').split(',').filter(Boolean), sec = (Q.get('sec') || '').split(',').filter(Boolean), tq = Q.get('tema'), gq = Q.get('grup');
   var IS = [];
-  (window.DIZIN || []).forEach(function(g){ if (gq && g.kod !== gq) return; g.ekranlar.forEach(function(e){ if (sec.length && sec.indexOf(e.id) < 0) return;
+  (window.DIZIN || []).forEach(function(g){ if (gq && g.kod !== gq) return; g.ekranlar.forEach(function(e){ if (sec.length && sec.indexOf(e.id) < 0) return; if (dsy.length && !dsy.some(function(x){ return e.dosya.indexOf(x) === 0; })) return;
     ['acik', 'koyu'].forEach(function(t){ if (!tq || tq === t) IS.push({ id: e.id, ad: e.ad, dosya: e.dosya, tema: t }); }); }); });
   /* K32: dolu görünmeyen (çizgi/çerçeve) ikonlar */
   var IKON_YASAK = ['fa-table-cells-large', 'fa-table-cells', 'fa-table-list', 'fa-border-all', 'fa-text-height', 'fa-square', 'fa-square-full'];
